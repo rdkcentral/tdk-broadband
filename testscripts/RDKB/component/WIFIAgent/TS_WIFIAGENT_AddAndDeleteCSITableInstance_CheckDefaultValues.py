@@ -56,7 +56,7 @@ paramName : Device.WiFi.X_RDK_CSI.[i].</input_parameters>
 3. Add a new instance to the CSI data table using Device.WiFi.X_RDK_CSI.
 4. Check if a valid instance number is returned greater than 0 is returned.
 5. Query Device.WiFi.X_RDK_CSI.[i].Enable and Device.WiFi.X_RDK_CSI.[i].ClientMaclist and ensure that they have default values false and empty respectively.
-6. Set Device.WiFi.X_RDK_CSI.[i].Enable to true and Device.WiFi.X_RDK_CSI.[i].ClientMaclist to AA:BB:CC:DD:EE:FF and cross check with GET.
+6. Set Device.WiFi.X_RDK_CSI.[i].Enable to true and Device.WiFi.X_RDK_CSI.[i].ClientMaclist to aabbccddeeff and cross check with GET.
 7. Delete the newly added CSI table instance using Device.WiFi.X_RDK_CSI.[i].
 8. Revert to initial state if required.
 9. Unload the modules</automation_approch>
@@ -154,7 +154,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         print "The default values of the new CSI Table instance - %s is false and %s is empty as expected" %(enable_param, ClientMaclist_param);
 
                         #Check if are able to set new values to both parameters
-                        hostMacAddress = "AA:BB:CC:DD:EE:FF";
+                        hostMacAddress = "aabbccddeeff";
                         step = step + 1;
                         tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Set");
                         actualresult1, details1 = setTR181Value(tdkTestObj, enable_param, "true", "boolean");

@@ -255,6 +255,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         hostMacAddress, step = GetClientMAC(obj, step);
 
         if hostMacAddress != "" :
+            #Convert hostMacAddress to string without ":" separator
+            hostMacAddress = hostMacAddress.replace(":", "");
             #Add a new CSI Object
             step = step + 1;
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_AddObject");
