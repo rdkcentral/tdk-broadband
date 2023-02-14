@@ -122,7 +122,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     getMethod = "getChannelBandwidth"
     primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-    #Calling the method to execute wifi_getRadioExtChannel()
+    #Calling the method to execute wifi_getRadioOperatingChannelBandwidth()
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
     initBandwidth = details.split(":")[1].strip()
 
@@ -137,7 +137,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         expectedresult="SUCCESS";
         radioIndex = 1
-        setMethod = "setChannelBandwidth"
+        setMethod = "setRadioOperatingChannelBandwidth"
         primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
         #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
@@ -212,7 +212,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                                 expectedresult = "SUCCESS";
                                 radioIndex = 1
-                                setMethod = "getRadioExtChannel"
+                                getMethod = "getRadioExtChannel"
                                 primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
                                 #Calling the method to execute wifi_getRadioExtChannel()
@@ -282,7 +282,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Reverting the channel bandwidth
             expectedresult="SUCCESS";
             radioIndex = 1
-            setMethod = "setChannelBandwidth"
+            setMethod = "setRadioOperatingChannelBandwidth"
             primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
             #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()

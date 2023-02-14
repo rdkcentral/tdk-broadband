@@ -235,7 +235,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             #if channel bandwidth is not from ["20MHz","80MHz","160MHz"], set the BW as 80MHz and then do the set extension channel
             if initBandwidth not in ["20MHz","80MHz","160MHz"]:
-                setMethod = "setChannelBandwidth"
+                setMethod = "setRadioOperatingChannelBandwidth"
                 primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
                 #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()

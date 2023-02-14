@@ -220,7 +220,7 @@ if "SUCCESS" in loadmodulestatus.upper():
            if initBandwidth not in ["20MHz","80MHz","160MHz"]:
                expectedresult="SUCCESS";
                radioIndex = idx
-               setMethod = "setChannelBandwidth"
+               setMethod = "setRadioOperatingChannelBandwidth"
                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
                #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
