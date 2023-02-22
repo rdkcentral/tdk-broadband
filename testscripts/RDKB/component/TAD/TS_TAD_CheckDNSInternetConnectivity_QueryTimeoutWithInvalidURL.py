@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>12</version>
+  <version>19</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_TAD_CheckDNSInternetConnectivity_QueryTimeoutWithInvalidURL</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -103,14 +103,18 @@ Type : unsigned integer</input_parameters>
 14. Set Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryTimeout to a new value and validate with get.
 15. Get the value of Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry and store it.
 16. Set Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry to 0. Validate with get.
-17. Start the DNS queries by setting Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNow to true. Need not cross check this parameter with get.
-18. Check if the query result Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNowResult is "BUSY" within the timeout limit specified.
-19. After the timeout limit has elapsed, get Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNowResult and check if the value returned is 2 (for DISCONNECTED). Else return failure.
-20. Revert  Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry  to initial value.
-21. Revert Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryTimeout to initial value.
-22. Revert the WAN interface enable state if required using Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.Enable.
-23. Revert to the initial Test URL configuration if required.
-24. Revert to the initial Device.Diagnostics.X_RDK_DNSInternet.Enable state if required.</automation_approch>
+17. Get the DNS Server type using the parameter Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.ServerType and check if the value is from ["IPv4", "IPv6", "IPv4*IPv6", "IPv4+IPv6"]
+18, Get the maximum number of DNS Servers from the platform properties file.
+19. Loop through the DNS Servers using Device.DNS.Client.Server.{i}.Type and get the number of valid DNS Servers for DHCPv4/dhcpV6 server types.
+20. Multiply the total number of DNS servers that will send the queries as per the parameter Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.ServerType with the Query Time out value SET. Convert this sleep time to micro seconds. This value will be the effective query time out.
+21. Start the DNS queries by setting Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNow to true. Need not cross check this parameter with get.
+22. Sleep for the effective query time out duration before querying the result status.
+23. Check if the query result Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNowResult is "DISCONNECTED" after the effective query time out.
+24. Revert  Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry  to initial value.
+25. Revert Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryTimeout to initial value.
+26. Revert the WAN interface enable state if required using Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.Enable.
+27. Revert to the initial Test URL configuration if required.
+28. Revert to the initial Device.Diagnostics.X_RDK_DNSInternet.Enable state if required.</automation_approch>
     <expected_output>All individual DNS queries issued in response to on-demand checks should be guarded by a no response timeout specified by the parameter X_RDK_DNSInternet.WANInterface.{i}.QueryTimeout. If no response to a single DNS query is detected within the time set by X_RDK_DNSInternet.WANInterface.{i}.QueryTimeout with the Retry Limit as 0 and invalid Test URL, that DNS query should abort with failure and the Query Result should be populated as "DISCONNECTED" (state = 2).</expected_output>
     <priority>High</priority>
     <test_stub_interface>tad</test_stub_interface>
@@ -122,6 +126,153 @@ Type : unsigned integer</input_parameters>
   <script_tags />
 </xml>
 '''
+def calculateSleep(obj, sysobj, step, wanInterface, queryTimeOut):
+    expectedresult = "SUCCESS";
+    serversForIPv4 = 0;
+    serversForIPv6 = 0;
+    serversForIPv4AndIPv6 = 0;
+    serversForIPv4OrIPv6 = 0;
+    totalServers = -1;
+    sleepTime = -1;
+    possibleDNSServerTypeList = ["IPv4", "IPv6", "IPv4*IPv6", "IPv4+IPv6"];
+
+    paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".ServerType";
+    print "\nTEST STEP %d : Get the initial value of %s" %(step, paramName);
+    print "EXPECTED RESULT %d : The initial value of %s should be retrieved successfully" %(step, paramName);
+    tdkTestObj, actualresult, DNSserverType = getDNSParameterValue(obj, expectedresult, paramName);
+
+    if expectedresult in actualresult and DNSserverType != "":
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, DNSserverType);
+        print "TEST EXECUTION RESULT : SUCCESS";
+
+        if DNSserverType in possibleDNSServerTypeList:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print "DNS Server Type is Valid";
+
+            #Get the maximum number of DNS servers from platform properties
+            proceedFlag = 1;
+            step = step + 1;
+            print "\nTEST STEP %d : Get the maximum number of DNS Servers from platform properties" %step;
+            print "EXPECTED RESULT %d : Should get the maximum number of DNS Servers from platform properties" %step;
+            cmd = "sh %s/tdk_utility.sh parseConfigFile MAX_DNS_SERVERS" %TDK_PATH;
+            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+            print cmd;
+            actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd);
+
+            if expectedresult in actualresult and details.isdigit():
+                maxServers = int(details);
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print "ACTUAL RESULT : Maximum Number of DNS Servers is : %d" %maxServers;
+                print "TEST EXECUTION RESULT : SUCCESS";
+
+                print "\n*****Finding the effective query time out duration*****";
+                for index in range(1, maxServers + 1):
+                    step = step + 1;
+                    paramName = "Device.DNS.Client.Server." + str(index) + ".Type";
+                    print "\nTEST STEP %d : Get the value of %s" %(step, paramName);
+                    print "EXPECTED RESULT %d : The value of %s should be retrieved successfully" %(step, paramName);
+                    tdkTestObj, actualresult, type = getDNSParameterValue(obj, expectedresult, paramName);
+
+                    if expectedresult in actualresult and type != "":
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, type);
+                        print "TEST EXECUTION RESULT : SUCCESS";
+
+                        #Ensure that DNS Server value is not empty
+                        step = step + 1;
+                        paramName = "Device.DNS.Client.Server." + str(index) + ".DNSServer";
+                        print "\nTEST STEP %d : Get the value of %s" %(step, paramName);
+                        print "EXPECTED RESULT %d : The value of %s should be retrieved successfully" %(step, paramName);
+                        tdkTestObj, actualresult, details = getDNSParameterValue(obj, expectedresult, paramName);
+
+                        if expectedresult in actualresult and details != "":
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
+                            print "TEST EXECUTION RESULT : SUCCESS";
+
+                            if type == "DHCPv4" :
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                serversForIPv4 = serversForIPv4 + 1;
+                                serversForIPv4AndIPv6 = serversForIPv4AndIPv6 + 1;
+                                serversForIPv4OrIPv6 = serversForIPv4OrIPv6 + 1;
+                            elif type == "DHCPv6":
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                serversForIPv6 = serversForIPv6 + 1;
+                                serversForIPv4AndIPv6 = serversForIPv4AndIPv6 + 1;
+                                serversForIPv4OrIPv6 = serversForIPv4OrIPv6 + 1;
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print "DNS Server Type NOT Valid";
+                                proceedFlag = 0;
+                                break;
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
+                            print "TEST EXECUTION RESULT : FAILURE";
+                            proceedFlag = 0;
+                            break;
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, type);
+                        print "TEST EXECUTION RESULT : FAILURE";
+                        proceedFlag = 0;
+                        break;
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print "ACTUAL RESULT : Maximum Number of DNS Servers is : %d" %details;
+                print "TEST EXECUTION RESULT : FAILURE";
+                proceedFlag = 0;
+
+            #Determine the total number of DNS servers to be considered
+            if proceedFlag == 1:
+                if DNSserverType == "IPv4":
+                    totalServers = serversForIPv4;
+                elif DNSserverType == "IPv6":
+                    totalServers = serversForIPv6;
+                elif DNSserverType == "IPv4*IPv6":
+                    totalServers = serversForIPv4AndIPv6;
+                elif DNSserverType == "IPv4+IPv6":
+                    totalServers = serversForIPv4OrIPv6;
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print "DNS Server Type NOT Valid";
+                    proceedFlag = 0;
+
+            #Determine the required sleepTime
+            if proceedFlag == 1:
+                #Sleep time in msec
+                sleepTime = totalServers * queryTimeOut;
+                #Convert to micro seconds
+                sleepTime = sleepTime * 1000;
+                print "Sleeptime is equal to total DNS servers %d multiplied by Query time out %d" %(totalServers, queryTimeOut);
+                print "\nRequired sleep time after starting the DNS queries and before querying the result status is %d microseconds (effective query time out)" %sleepTime;
+                print "\n*****Effective Query Time out duration determined*****";
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print "DNS Server Type is NOT Valid";
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, DNSserverType);
+        print "TEST EXECUTION RESULT : FAILURE";
+
+    return sleepTime, step;
+
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkbVariables import *
@@ -224,20 +375,17 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                 print "TEST EXECUTION RESULT : SUCCESS";
 
                                 if details.isdigit():
+                                    #The timeout is given in msec
                                     timeout = int(details);
-                                    #The tiemout is given in msec, need to convert to seconds
-                                    timeoutInSec = timeout/1000;
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "Initial timeout in seconds is : %d" %timeoutInSec;
+                                    print "Initial timeout in milliseconds is : %d" %timeout;
 
                                     #Set the timeout to a new value
-                                    if timeout == 5000:
-                                        setTimeout = 6000;
-                                        setTimeoutInSec = 6;
+                                    if timeout == 100:
+                                        setTimeout = 150;
                                     else:
-                                        setTimeout = 5000;
-                                        setTimeoutInSec = 5;
+                                        setTimeout = 100;
 
                                     step = step + 1;
                                     print "\nTEST STEP %d : Set %s to %d" %(step, paramName, setTimeout);
@@ -283,75 +431,49 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                                     print "ACTUAL RESULT %d: %s set successfully" %(step, paramName);
                                                     print "TEST EXECUTION RESULT : SUCCESS";
 
-                                                    #Start the DNS queries by setting Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryNow to true
+                                                    #Calculate the required sleep time
                                                     step = step + 1;
-                                                    paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNow";
-                                                    tdkTestObj, actualresult, details = setQueryNow(obj, step, paramName, "true", expectedresult);
+                                                    microSecondsSleep, step = calculateSleep(obj, sysobj, step, wanInterface, setTimeout);
 
-                                                    if expectedresult in actualresult:
-                                                        #Set the result status of execution
-                                                        tdkTestObj.setResultStatus("SUCCESS");
-                                                        print "DNS queries started successfully";
+                                                    if microSecondsSleep > 0:
+                                                        #Start the DNS queries, sleep for the determined duration and then query the result status
+                                                        param1 = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNow";
+                                                        param2 = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
+                                                        print "\nStart the DNS queries using %s, sleep for %d microseconds and then query the result status using %s" %(param1, microSecondsSleep, param2);
+                                                        cmd = "sh %s/tdk_platform_utility.sh getQueryResult %s %s" %(TDK_PATH, str(microSecondsSleep), str(wanInterface);
+                                                        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                                                        print cmd;
+                                                        actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd);
 
-                                                        #Check the DNS Query result status every 1s interval within the timeout and it should be BUSY
-                                                        resultFlag = 1;
-                                                        for iteration in range(1, setTimeoutInSec):
-                                                            print "\n****Iteration %d****" %iteration;
-                                                            print "Sleeping 1s duration which is within the timeout limit before querying the DNS result status";
-                                                            sleep(1);
-                                                            step = step + 1;
-                                                            paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
-                                                            tdkTestObj, actualresult, details = getQueryNowResult(obj, step, paramName, expectedresult);
-                                                            print "\nIteration %d : %s" %(iteration, details);
-
-                                                            if details != "BUSY":
-                                                                resultFlag = 0;
-                                                                break;
-                                                            else:
-                                                                continue;
-
-                                                        #Check if query result remained busy
-                                                        step = step + 1;
-                                                        print "\nTEST STEP %d : Check if the DNS query result status is BUSY within the timeout limit" %step;
-                                                        print "EXPECTED RESULT %d : The DNS query result status should be BUSY within the timeout limit" %step;
-
-                                                        if resultFlag == 1:
+                                                        if expectedresult in actualresult and details.isdigit():
+                                                            details = int(details);
                                                             #Set the result status of execution
                                                             tdkTestObj.setResultStatus("SUCCESS");
-                                                            print "ACTUAL RESULT %d : DNS query result is retrieved as %s" %(step, details);
-                                                            print "TEST EXECUTION RESULT : SUCCESS";
+                                                            print "\nThe Query Result is : %d" %details;
 
-                                                            #Check the final DNS Query result status after timeout, the status should be DISCONNECTED
-                                                            print "\nSleeping 1s duration which is beyond the timeout limit before querying the DNS result status";
-                                                            sleep(1);
+                                                            #Check the DNS Query result status is DISCONNECTED
                                                             step = step + 1;
-                                                            paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
-                                                            tdkTestObj, actualresult, details = getQueryNowResult(obj, step, paramName, expectedresult);
+                                                            print "TEST STEP %d : Check if the DNS query result status is DISCONNECTED" %step;
+                                                            print "EXPECTED RESULT %d : The DNS query result status should be DISCONNECTED" %step;
 
-                                                            #DNS query result status is expected to be "DISCONNECTED"
-                                                            step = step + 1;
-                                                            print "TEST STEP %d : Check if the final DNS query result status is DISCONNECTED" %step;
-                                                            print "EXPECTED RESULT %d : The final DNS query result status should be DISCONNECTED" %step;
-
-                                                            if expectedresult in actualresult and details == "DISCONNECTED":
+                                                            if expectedresult in actualresult and details == 2:
                                                                 #Set the result status of execution
                                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                                print "ACTUAL RESULT %d : Final DNS query result is retrieved as %s" %(step, details);
+                                                                print "ACTUAL RESULT %d : DNS query result is retrieved as %d which is DISCONNECTED" %(step, details);
                                                                 print "TEST EXECUTION RESULT : SUCCESS";
                                                             else:
                                                                 #Set the result status of execution
                                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                                print "ACTUAL RESULT %d : Final DNS query result is retrieved as %s which is not expected" %(step, details);
+                                                                print "ACTUAL RESULT %d : DNS query result is retrieved as %d which is not expected" %(step, details);
                                                                 print "TEST EXECUTION RESULT : FAILURE";
                                                         else:
                                                             #Set the result status of execution
                                                             tdkTestObj.setResultStatus("FAILURE");
-                                                            print "ACTUAL RESULT %d : DNS query result is retrieved as %s which is not expected" %(step, details);
-                                                            print "TEST EXECUTION RESULT : FAILURE";
+                                                            print "\nThe Query Result is : %s which is NOT expected" %details;
                                                     else:
                                                         #Set the result status of execution
                                                         tdkTestObj.setResultStatus("FAILURE");
-                                                        print "DNS queries NOT started successfully";
+                                                        print "Sleep Time could not be determined successfully, cannot proceed further...";
 
                                                     #Revert Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry to initial value
                                                     step = step + 1;
