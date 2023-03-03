@@ -73,7 +73,7 @@ methodName   :   getRadioExtChannel
 radioIndex   :   5G radio index</input_parameters>
     <automation_approch>1. Load the wifihal module
 2. Get the initial radio operating channel bandwidth using wifi_getRadioOperatingChannelBandwidth().
-3. Check if the initial operating channel bandwidth is not from the extension channel bandwidth list ["40MHz", "80MHz"]. If not, set the operating channel bandwidth using wifi_setRadioOperatingChannelBandwidth() to 20MHz which does not support extension channels.
+3. Check if the initial operating channel bandwidth is not from the extension channel bandwidth list ["40MHz"]. If not, set the operating channel bandwidth using wifi_setRadioOperatingChannelBandwidth() to 20MHz which does not support extension channels.
 4. Validate the SET with GET API if required.
 5. Get the initial extension channel using wifi_getRadioExtChannel() and check if they are from the possible list of values ['AboveControlChannel', 'BelowControlChannel', 'Auto'].
 6. Set the extension channel to a new value using wifi_setRadioExtChannel(). The SET operation is expected to return failure as extension channel set operation is not supported by operating channel bandwidths other than 40MHz and 80MHz.
@@ -153,7 +153,7 @@ def setExtChannel(radioIndex):
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT : Set operation failed; Details : %s " %details
+                        print "ACTUAL RESULT : Set operation success; Details : %s " %details
                         #Get the result of execution
                         print "[TEST EXECUTION RESULT] : FAILURE";
 
@@ -224,8 +224,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
 
-            #if channel bandwidth is from ["40MHz","80MHz"], set the BW as 20MHz (which is invalid for extension channels) and then do the set extension channel
-            if initBandwidth in ["40MHz","80MHz"]:
+            #if channel bandwidth is from ["40MHz"], set the BW as 20MHz (which is invalid for extension channels) and then do the set extension channel
+            if initBandwidth in ["40MHz"]:
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
                 tdkTestObj.addParameter("methodName","setRadioOperatingChannelBandwidth");
                 tdkTestObj.addParameter("radioIndex", radioIndex);
@@ -312,7 +312,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                     #Get the result of execution
                     print "[TEST EXECUTION RESULT] : FAILURE";
 
-            #if channel bandwidth is not from ["40MHz","80MHz"], do the set extension channel directly
+            #if channel bandwidth is not from ["40MHz"], do the set extension channel directly
             else:
                 setExtChannel(radioIndex);
         else:
