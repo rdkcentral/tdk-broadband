@@ -196,7 +196,7 @@ if "SUCCESS" in loadModuleresult.upper():
                                     print "[TEST STEP 3]: Setting external port";
                                     print "[EXPECTED RESULT 3]: Should not set default gateway as Server IP";
                                     print "[ACTUAL RESULT 3]: %s" %details;
-                                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                    print "[TEST EXECUTION RESULT] : SUCCESS"
                                     print "Can not set default gateway as Server IP\n"
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
@@ -204,7 +204,7 @@ if "SUCCESS" in loadModuleresult.upper():
                                     print "[TEST STEP 3]: Setting external port";
                                     print "[EXPECTED RESULT 3]: Should not set default gateway as Server IP";
                                     print "[ACTUAL RESULT 3]: %s" %details;
-                                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                    print "[TEST EXECUTION RESULT] : FAILURE";
                                     print "Failure in validating invalid IP\n"
 
                             else:

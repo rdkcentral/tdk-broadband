@@ -2,7 +2,7 @@
 # If not stated otherwise in this file or this component's Licenses.txt
 # file the following copyright and licenses apply:
 #
-# Copyright 2016 RDK Management
+# Copyright 2023 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>8</version>
+  <version>9</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_ADVANCEDCONFIG_HNSValidationForPortNumbers</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -87,14 +87,14 @@ Input:
 7.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console   
 8.advancedconfigstub will validate the available result (from ssp_setParameterValue as zero) with expected result (zero) and the result is updated in agent console log and json output variable
 9.TestManager will publish the result in GUI as SUCCESS/FAILURE based on the response from AdvancedConfig_Set and AdvancedConfig_AddObject functions.</automation_approch>
-    <except_output>Checkpoint 1:
+    <expected_output>Checkpoint 1:
 Check if HNS has validation check for port numbers
 CheckPoint 2:
 Success log should be available in Agent Console Log
 CheckPoint 3:
 TDK agent Test Function will log the test case result as SUCCESS based on API response 
 CheckPoint 4:
-TestManager GUI will publish the result as SUCCESS in Execution page</except_output>
+TestManager GUI will publish the result as SUCCESS in Execution page</expected_output>
     <priority>High</priority>
     <test_stub_interface>none</test_stub_interface>
     <test_script>TS_ADVANCEDCONFIG_HNSValidationForPortNumbers</test_script>
@@ -209,7 +209,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                                         print "[TEST STEP 5]: Setting external port with invalid port number ";
                                         print "[EXPECTED RESULT 5]: Should not set external port with invalid port number";
                                         print "[ACTUAL RESULT 5]: %s" %details;
-                                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                        print "[TEST EXECUTION RESULT] : SUCCESS"
                                         print "Validated Invalid Port number\n"
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
@@ -217,7 +217,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 					print "[TEST STEP 5]: Setting external port with invalid port number ";
                                         print "[EXPECTED RESULT 5]: Should not set external port with invalid port number";
                                         print "[ACTUAL RESULT 5]: %s" %details;
-                                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                        print "[TEST EXECUTION RESULT] : FAILURE";
                                         print "Failed to Validate Invalid Port Number \n"
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");

@@ -2,7 +2,7 @@
 # If not stated otherwise in this file or this component's Licenses.txt
 # file the following copyright and licenses apply:
 #
-# Copyright 2020 RDK Management
+# Copyright 2023 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>6</version>
+  <version>7</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_ADVANCEDCONFIG_DMZHostAsGatewayIP</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -179,7 +179,7 @@ if "SUCCESS" in loadModuleresult.upper():
                             print "[TEST STEP 2]: Setting DMZ internalIP";
                             print "[EXPECTED RESULT 2]: Should not set the DMZ internal IP";
                             print "[ACTUAL RESULT 2]: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                            print "[TEST EXECUTION RESULT] : SUCCESS"
                             print "DMZ host ip cannot be set as the gateway ip\n"
                     else:
                             tdkTestObj.setResultStatus("FAILURE");
@@ -187,7 +187,7 @@ if "SUCCESS" in loadModuleresult.upper():
                             print "[TEST STEP 2]: Setting DMZ internalIP";
                             print "[EXPECTED RESULT 2]: Should not set the DMZ internal IP";
                             print "[ACTUAL RESULT 2]: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                            print "[TEST EXECUTION RESULT] : FAILURE";
                             print "DMZ host should not be set as gateway ip, but it is set and hence a failure\n"
             else:
                     tdkTestObj.setResultStatus("FAILURE");
