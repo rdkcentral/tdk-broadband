@@ -440,7 +440,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                                         param1 = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNow";
                                                         param2 = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
                                                         print "\nStart the DNS queries using %s, sleep for %d microseconds and then query the result status using %s" %(param1, microSecondsSleep, param2);
-                                                        cmd = "sh %s/tdk_platform_utility.sh getQueryResult %s %s" %(TDK_PATH, str(microSecondsSleep), str(wanInterface);
+                                                        cmd = "sh %s/tdk_platform_utility.sh getQueryResult %s %s" %(TDK_PATH, str(microSecondsSleep), str(wanInterface));
                                                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                                         print cmd;
                                                         actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd);

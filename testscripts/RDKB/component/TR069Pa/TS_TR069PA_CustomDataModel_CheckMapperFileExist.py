@@ -49,6 +49,7 @@
   <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
+    <box_type>RPI</box_type>
     <!--  -->
   </box_types>
   <rdk_versions>
@@ -123,7 +124,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         print "[TEST EXECUTION RESULT] : SUCCESS";
         #Restore the device state saved before reboot
         obj1.restorePreviousStateAfterReboot();
-        sleep(180);
+        sleep(300);
 
         tdkTestObj = obj2.createTestStep('ExecuteCmd');
         cmd = "syscfg get custom_data_model_file_name";

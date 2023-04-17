@@ -49,6 +49,7 @@
   <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
+    <box_type>RPI</box_type>
     <!--  -->
   </box_types>
   <rdk_versions>
@@ -142,7 +143,6 @@ if "SUCCESS" in loadmodulestatus.upper():
             print "ACTUAL RESULT 2: %s" %details;
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
-
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
 

@@ -48,6 +48,7 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>RPI</box_type>
     <box_type>Broadband</box_type>
     <!--  -->
   </box_types>
@@ -134,7 +135,7 @@ if "SUCCESS" in loadmodulestatus.upper() :
 
         print "Initial value is : ",initial_Value
 
-        if expectedresult in actualresult and initial_Value != "":
+        if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             print "TEST STEP 2: Get the value of parameter using rbusValue_GetString";

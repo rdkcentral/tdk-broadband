@@ -49,6 +49,7 @@
   <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
+    <box_type>RPI</box_type>
     <!--  -->
   </box_types>
   <rdk_versions>
@@ -173,7 +174,6 @@ if "SUCCESS" in loadmodulestatus.upper():
                    obj.restorePreviousStateAfterReboot();
                    #waiting for device to restore state  after reboot
                    print "Waiting for device to restore previous state after reboot";
-                   sleep(180);
 
                    tdkTestObj = obj.createTestStep('WIFIAgent_Get');
                    tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")

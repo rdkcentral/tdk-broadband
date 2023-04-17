@@ -48,6 +48,7 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>RPI</box_type>
     <box_type>Broadband</box_type>
     <!--  -->
   </box_types>
