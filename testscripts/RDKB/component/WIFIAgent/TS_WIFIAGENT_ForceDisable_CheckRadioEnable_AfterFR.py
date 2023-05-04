@@ -87,8 +87,10 @@ Device.WiFi.Radio.2.Enable are disabled
   <script_tags />
 </xml>
 '''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+from tdkutility import *;
 from time import sleep;
 
 #Test component to be tested
@@ -164,73 +166,81 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
 
                 if expectedresult in actualresult:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 4: Initiate factory reset ";
-                   print "ACTUAL RESULT 4: %s" %details;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
-                   #Restore the device state saved before reboot
-                   obj.restorePreviousStateAfterReboot();
-                   #waiting for device to restore state  after reboot
-                   print "Waiting for device to restore previous state after reboot";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print "TEST STEP 4: Initiate factory reset ";
+                    print "ACTUAL RESULT 4: %s" %details;
+                    #Get the result of execution
+                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #Restore the device state saved before reboot
+                    obj.restorePreviousStateAfterReboot();
 
-                   tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-                   tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
-                   tdkTestObj.executeTestCase("expectedresult");
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
-                   if expectedresult in actualresult and "false" in details:
-                      details = details.split("VALUE:")[1].split(" ")[0].strip();
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 5: Check if  WiFi Force Disable is false after Factory Reset";
-                      print "EXPECTED RESULT 5: Should get WiFi Force Disable  as false";
-                      print "ACTUAL RESULT 5: %s" %details;
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #Wait for the WiFi namespace to come up upto 3 minutes (6 iterations of 30s)
+                    found, tdkTestObj = wait_for_namespace(obj, 6, 30, "Device.WiFi.", expectedresult);
 
-                      tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-                      tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.Enable")
-                      tdkTestObj.executeTestCase("expectedresult");
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails();
-                      if expectedresult in actualresult and "true" in details:
-                         details = details.split("VALUE:")[1].split(" ")[0].strip();
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 6: Check if Radio enable status for 2.4GHz is true after Factory reset";
-                         print "EXPECTED RESULT 6: Radio enable status for 2.4GHz should be true after Factory reset";
-                         print "ACTUAL RESULT 6: default value is :%s" %details
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
+                    if found == 1:
+                        tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+                        tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
+                        tdkTestObj.executeTestCase("expectedresult");
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
 
-                         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-                         tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Enable")
-                         tdkTestObj.executeTestCase("expectedresult");
-                         actualresult = tdkTestObj.getResult();
-                         details = tdkTestObj.getResultDetails();
-                         if expectedresult in actualresult and  "true" in details:
+                        if expectedresult in actualresult and "false" in details:
                             details = details.split("VALUE:")[1].split(" ")[0].strip();
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 7: Check if Radio enable status for 5GHz is true after Factory reset";
-                            print "EXPECTED RESULT 7: Radio enable status for 5GHz should be true after Factory reset";
-                            print "ACTUAL RESULT 7: default value is : %s" %details
+                            print "TEST STEP 5: Check if  WiFi Force Disable is false after Factory Reset";
+                            print "EXPECTED RESULT 5: Should get WiFi Force Disable  as false";
+                            print "ACTUAL RESULT 5: %s" %details;
                             print "[TEST EXECUTION RESULT] : SUCCESS";
-                         else:
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "TEST STEP 7: Check if Radio enable status for 5GHz is true after Factory reset";
-                             print "EXPECTED RESULT 7: Radio enable status for 5GHz should be true after Factory reset";
-                             print "ACTUAL RESULT 7: default value is :%s" %details
-                             print "[TEST EXECUTION RESULT] : FAILURE";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 6: Check if Radio enable status for 2.4GHz is true after Factory reset";
-                          print "EXPECTED RESULT 6: Radio enable status for 2.4GHz should be true after Factory reset";
-                          print "ACTUAL RESULT 6: default value is :%s" %details
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 5: Check if  WiFi Force Disable is false after Factory Reset";
-                       print "EXPECTED RESULT 5: Should get WiFi Force Disable  as false";
-                       print "ACTUAL RESULT 5: %s" %details;
-                       print "[TEST EXECUTION RESULT] : FAILURE";
+
+                            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+                            tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.Enable")
+                            tdkTestObj.executeTestCase("expectedresult");
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+
+                            if expectedresult in actualresult and "true" in details:
+                                details = details.split("VALUE:")[1].split(" ")[0].strip();
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print "TEST STEP 6: Check if Radio enable status for 2.4GHz is true after Factory reset";
+                                print "EXPECTED RESULT 6: Radio enable status for 2.4GHz should be true after Factory reset";
+                                print "ACTUAL RESULT 6: default value is :%s" %details
+                                print "[TEST EXECUTION RESULT] : SUCCESS";
+
+                                tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+                                tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Enable")
+                                tdkTestObj.executeTestCase("expectedresult");
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+
+                                if expectedresult in actualresult and  "true" in details:
+                                    details = details.split("VALUE:")[1].split(" ")[0].strip();
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print "TEST STEP 7: Check if Radio enable status for 5GHz is true after Factory reset";
+                                    print "EXPECTED RESULT 7: Radio enable status for 5GHz should be true after Factory reset";
+                                    print "ACTUAL RESULT 7: default value is : %s" %details
+                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print "TEST STEP 7: Check if Radio enable status for 5GHz is true after Factory reset";
+                                    print "EXPECTED RESULT 7: Radio enable status for 5GHz should be true after Factory reset";
+                                    print "ACTUAL RESULT 7: default value is :%s" %details
+                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print "TEST STEP 6: Check if Radio enable status for 2.4GHz is true after Factory reset";
+                                print "EXPECTED RESULT 6: Radio enable status for 2.4GHz should be true after Factory reset";
+                                print "ACTUAL RESULT 6: default value is :%s" %details
+                                print "[TEST EXECUTION RESULT] : FAILURE";
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print "TEST STEP 5: Check if  WiFi Force Disable is false after Factory Reset";
+                            print "EXPECTED RESULT 5: Should get WiFi Force Disable  as false";
+                            print "ACTUAL RESULT 5: %s" %details;
+                            print "[TEST EXECUTION RESULT] : FAILURE";
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "Device.WiFi. namespace not available after Factory Reset";
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");

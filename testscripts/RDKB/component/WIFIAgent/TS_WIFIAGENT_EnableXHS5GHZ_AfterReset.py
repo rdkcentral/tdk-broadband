@@ -87,8 +87,10 @@ Device.WiFi.SSID.4.Status</input_parameters>
   <script_tags />
 </xml>
 '''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+from tdkutility import *;
 from time import sleep;
 
 #Test component to be tested
@@ -146,73 +148,38 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
 
-            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-            tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Enable")
-            tdkTestObj.executeTestCase("expectedresult");
-            actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
+            #Wait for the WiFi namespace to come up upto 3 minutes (6 iterations of 30s)
+            found, tdkTestObj = wait_for_namespace(obj, 6, 30, "Device.WiFi.", expectedresult);
 
-            if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the XHS enable state";
-                print "EXPECTED RESULT 3: Should get the XHS enable state";
-                curState = details.split("VALUE:")[1].split(' ')[0];
-                print "ACTUAL RESULT 3: Initial XHS state is %s" %orgState;
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+            if found == 1:
+                tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+                tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Enable")
+                tdkTestObj.executeTestCase("expectedresult");
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
 
-                if curState == "false":
+                if expectedresult in actualresult:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if XHS 5GHZ SSID is disabled after reset";
-                    print "EXPECTED RESULT 4: XHS 5GHZ SSID should be disabled after reset";
-                    print "ACTUAL RESULT 4: XHS 5GHZ SSID state is %s " %details;
+                    print "TEST STEP 3: Get the XHS enable state";
+                    print "EXPECTED RESULT 3: Should get the XHS enable state";
+                    curState = details.split("VALUE:")[1].split(' ')[0];
+                    print "ACTUAL RESULT 3: Initial XHS state is %s" %orgState;
                     #Get the result of execution
                     print "[TEST EXECUTION RESULT] : SUCCESS";
 
-                    #Enable Mesh and check its status
-                    tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-                    tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Enable")
-                    tdkTestObj.addParameter("paramValue","true")
-                    tdkTestObj.addParameter("paramType","boolean")
-                    tdkTestObj.executeTestCase("expectedresult");
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails();
-
-                    if expectedresult in actualresult:
-                        #Set the result status of execution
+                    if curState == "false":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Enable XHS 5GHZ SSID";
-                        print "EXPECTED RESULT 5: Should enable  XHS 5GHZ SSID";
-                        print "ACTUAL RESULT 5: XHS 5GHZ SSID enable state is %s " %details;
+                        print "TEST STEP 4: Check if XHS 5GHZ SSID is disabled after reset";
+                        print "EXPECTED RESULT 4: XHS 5GHZ SSID should be disabled after reset";
+                        print "ACTUAL RESULT 4: XHS 5GHZ SSID state is %s " %details;
                         #Get the result of execution
                         print "[TEST EXECUTION RESULT] : SUCCESS";
 
-            	        sleep(20);
-                        tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-                        tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Status")
-                        tdkTestObj.executeTestCase("expectedresult");
-                        actualresult = tdkTestObj.getResult();
-            	        details = tdkTestObj.getResultDetails();
-                        status = details.split("VALUE:")[1].split(' ')[0];
-
-            	        if expectedresult in actualresult and "Up" in status:
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Check if XHS 5GHZ status is Up";
-                            print "EXPECTED RESULT 6: XHS 5GHZ should be Up";
-                            print "ACTUAL RESULT 6: Status is %s" %status;
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Check if XHS 5GHZ status is Up";
-                            print "EXPECTED RESULT 6: XHS 5GHZ should be Up";
-                            print "ACTUAL RESULT 6: Status is %s " %status;
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-
-                        #change XHS SSID state to previous one
+                        #Enable Mesh and check its status
                         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                         tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Enable")
-                        tdkTestObj.addParameter("paramValue",orgState)
+                        tdkTestObj.addParameter("paramValue","true")
                         tdkTestObj.addParameter("paramType","boolean")
                         tdkTestObj.executeTestCase("expectedresult");
                         actualresult = tdkTestObj.getResult();
@@ -221,39 +188,81 @@ if "SUCCESS" in loadmodulestatus.upper():
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 7: Restore Enable state of XHS 5GHZ";
-                            print "EXPECTED RESULT 7: Should Restore Enable state of XHS 5GHZ";
-                            print "ACTUAL RESULT 7: Details: %s " %details;
+                            print "TEST STEP 5: Enable XHS 5GHZ SSID";
+                            print "EXPECTED RESULT 5: Should enable  XHS 5GHZ SSID";
+                            print "ACTUAL RESULT 5: XHS 5GHZ SSID enable state is %s " %details;
                             #Get the result of execution
                             print "[TEST EXECUTION RESULT] : SUCCESS";
+
+                            sleep(20);
+                            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+                            tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Status")
+                            tdkTestObj.executeTestCase("expectedresult");
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+                            status = details.split("VALUE:")[1].split(' ')[0];
+
+                            if expectedresult in actualresult and "Up" in status:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print "TEST STEP 6: Check if XHS 5GHZ status is Up";
+                                print "EXPECTED RESULT 6: XHS 5GHZ should be Up";
+                                print "ACTUAL RESULT 6: Status is %s" %status;
+                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print "TEST STEP 6: Check if XHS 5GHZ status is Up";
+                                print "EXPECTED RESULT 6: XHS 5GHZ should be Up";
+                                print "ACTUAL RESULT 6: Status is %s " %status;
+                                print "[TEST EXECUTION RESULT] : FAILURE";
+
+                            #change XHS SSID state to previous one
+                            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+                            tdkTestObj.addParameter("paramName","Device.WiFi.SSID.4.Enable")
+                            tdkTestObj.addParameter("paramValue",orgState)
+                            tdkTestObj.addParameter("paramType","boolean")
+                            tdkTestObj.executeTestCase("expectedresult");
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+
+                            if expectedresult in actualresult:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print "TEST STEP 7: Restore Enable state of XHS 5GHZ";
+                                print "EXPECTED RESULT 7: Should Restore Enable state of XHS 5GHZ";
+                                print "ACTUAL RESULT 7: Details: %s " %details;
+                                #Get the result of execution
+                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print "TEST STEP 7: Restore Enable state of XHS 5GHZ";
+                                print "EXPECTED RESULT 7: Should Restore Enable state of XHS 5GHZ";
+                                print "ACTUAL RESULT 7: Details: %s " %details;
+                                #Get the result of execution
+                                print "[TEST EXECUTION RESULT] : FAILURE";
                         else:
-                            #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 7: Restore Enable state of XHS 5GHZ";
-                            print "EXPECTED RESULT 7: Should Restore Enable state of XHS 5GHZ";
-                            print "ACTUAL RESULT 7: Details: %s " %details;
+                            print "TEST STEP 5: Enable XHS 5GHZ SSID";
+                            print "EXPECTED RESULT 5: Should enable XHS 5GHZ SSID";
+                            print "ACTUAL RESULT 5: XHS 5GHZ SSID state is %s " %details;
                             #Get the result of execution
                             print "[TEST EXECUTION RESULT] : FAILURE";
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Enable XHS 5GHZ SSID";
-                        print "EXPECTED RESULT 5: Should enable XHS 5GHZ SSID";
-                        print "ACTUAL RESULT 5: XHS 5GHZ SSID state is %s " %details;
+                        print "TEST STEP 4: Check if XHS 5GHZ SSID is disabled after reset";
+                        print "EXPECTED RESULT 4: XHS 5GHZ SSID should be disabled after reset";
+                        print "ACTUAL RESULT 4: XHS 5GHZ SSID state is %s " %details;
                         #Get the result of execution
                         print "[TEST EXECUTION RESULT] : FAILURE";
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if XHS 5GHZ SSID is disabled after reset";
-                    print "EXPECTED RESULT 4: XHS 5GHZ SSID should be disabled after reset";
-                    print "ACTUAL RESULT 4: XHS 5GHZ SSID state is %s " %details;
-                    #Get the result of execution
+                    print "TEST STEP 3: Get the state of XHS 5GHZ SSID";
+                    print "EXPECTED RESULT 3: Should get the enable state of XHS 5GHZ SSID";
+                    print "ACTUAL RESULT 3: Failed to get XHS 5GHZ SSID enable state. Details is %s" %details;
                     print "[TEST EXECUTION RESULT] : FAILURE";
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the state of XHS 5GHZ SSID";
-                print "EXPECTED RESULT 3: Should get the enable state of XHS 5GHZ SSID";
-                print "ACTUAL RESULT 3: Failed to get XHS 5GHZ SSID enable state. Details is %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print "Device.WiFi. namespace not available after Factory Reset";
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
@@ -268,8 +277,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         print "EXPECTED RESULT 1: Should get the enable state of XHS 5GHZ SSID";
         print "ACTUAL RESULT 1: Failed to get XHS 5GHZ SSID enable state. Details is %s" %details;
         print "[TEST EXECUTION RESULT] : FAILURE";
+
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print "Failed to load wifi module";
+    obj.setLoadModuleStatus("FAILURE");
+    print "Module loading failed";
+

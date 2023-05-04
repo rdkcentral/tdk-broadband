@@ -81,8 +81,11 @@
   <script_tags />
 </xml>
 '''
+
 #use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+from tdkutility import *;
+from time import sleep;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
 #IP and Port of box, No need to change,
@@ -119,24 +122,13 @@ if "SUCCESS" in loadmodulestatus.upper():
         print "[TEST EXECUTION RESULT] : SUCCESS";
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
-        tdkTestObj = obj.createTestStep("WIFIAgent_Get");
-        tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.3.Security.KeyPassphrase");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            ap3securitypasspharse = details.split("VALUE:")[1].split(' ')[0];
-            print "TEST STEP 2: Get WiFi AccessPoint Security Passpharse ";
-            print "EXPECTED RESULT 2: Should get the WIFI Access Point 3 Security passphrase value successfully";
-            print "ACTUAL RESULT 2: %s" %ap3securitypasspharse;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        #Wait for the WiFi namespace to come up upto 3 minutes (6 iterations of 30s)
+        found, tdkTestObj = wait_for_namespace(obj, 6, 30, "Device.WiFi.", expectedresult);
+
+        if found == 1:
             tdkTestObj = obj.createTestStep("WIFIAgent_Get");
-            tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.4.Security.KeyPassphrase");
+            tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.3.Security.KeyPassphrase");
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
@@ -144,42 +136,61 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                details1 = tdkTestObj.getResultDetails();
-                ap4securitypasspharse = details1.split("VALUE:")[1].split(' ')[0];
-                print "TEST STEP 3: Get WiFi AccessPoint Security Passpharse ";
-                print "EXPECTED RESULT 3: Should get the WIFI Access Point 4 security passphrase value successfully";
-                print "ACTUAL RESULT 3: %s" %ap4securitypasspharse;
+                details = tdkTestObj.getResultDetails();
+                ap3securitypasspharse = details.split("VALUE:")[1].split(' ')[0];
+                print "TEST STEP 2: Get WiFi AccessPoint Security Passpharse ";
+                print "EXPECTED RESULT 2: Should get the WIFI Access Point 3 Security passphrase value successfully";
+                print "ACTUAL RESULT 2: %s" %ap3securitypasspharse;
                 #Get the result of execution
                 print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.4.Security.KeyPassphrase");
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
 
-                if ap3securitypasspharse == ap4securitypasspharse:
+                if expectedresult in actualresult:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Compare the AP3 security Passpharse and AP4 Security Passpharse ";
-                    print "EXPECTED RESULT 4: Value of 2.4Ghz passphrase and 5 Ghz passphrase should be same";
-                    print "ACTUAL RESULT 4:Home Security KeyPassphrase Values are same after reset : Validated %s" %details;
+                    details1 = tdkTestObj.getResultDetails();
+                    ap4securitypasspharse = details1.split("VALUE:")[1].split(' ')[0];
+                    print "TEST STEP 3: Get WiFi AccessPoint Security Passpharse ";
+                    print "EXPECTED RESULT 3: Should get the WIFI Access Point 4 security passphrase value successfully";
+                    print "ACTUAL RESULT 3: %s" %ap4securitypasspharse;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+
+                    if ap3securitypasspharse == ap4securitypasspharse:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print "TEST STEP 4: Compare the AP3 security Passpharse and AP4 Security Passpharse ";
+                        print "EXPECTED RESULT 4: Value of 2.4Ghz passphrase and 5 Ghz passphrase should be same";
+                        print "ACTUAL RESULT 4:Home Security KeyPassphrase Values are same after reset : Validated %s" %details;
+                        #Get the result of execution
+                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "TEST STEP 4: Compare the AP3 security Passpharse nd AP4 Security Passpharse ";
+                        print "EXPECTED RESULT 4: Value of 2.4Ghz passphrase and 5 Ghz passphrase should be same";
+                        print "ACTUAL RESULT 4:Home Security KeyPassphrase Values are not same after Reboot : Failure %s" %details;
+                        #Get the result of execution
+                        print "[TEST EXECUTION RESULT] : FAILURE";
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Compare the AP3 security Passpharse nd AP4 Security Passpharse ";
-                    print "EXPECTED RESULT 4: Value of 2.4Ghz passphrase and 5 Ghz passphrase should be same";
-                    print "ACTUAL RESULT 4:Home Security KeyPassphrase Values are not same after Reboot : Failure %s" %details;
-                    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    details1 = tdkTestObj.getResultDetails();
+                    print "TEST STEP 3: Get WiFi AccessPoint Security Passpharse ";
+                    print "EXPECTED RESULT 3: Should get the WIFI Access Point security passpharse value successfully";
+                    print "ACTUAL RESULT 3: %s" %details1;
+                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                details1 = tdkTestObj.getResultDetails();
-                print "TEST STEP 3: Get WiFi AccessPoint Security Passpharse ";
-                print "EXPECTED RESULT 3: Should get the WIFI Access Point security passpharse value successfully";
-                print "ACTUAL RESULT 3: %s" %details1;
+                details = tdkTestObj.getResultDetails();
+                print "TEST STEP 2: Get WiFi AccessPoint Security Passpharse ";
+                print "EXPECTED RESULT 2: Should get the WIFI Access Point Security passpharse value successfully";
+                print "ACTUAL RESULT 2: %s" %details;
                 print "[TEST EXECUTION RESULT] : %s" %actualresult;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 2: Get WiFi AccessPoint Security Passpharse ";
-            print "EXPECTED RESULT 2: Should get the WIFI Access Point Security passpharse value successfully";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            print "Device.WiFi. namespace not available after Factory Reset";
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
@@ -188,6 +199,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         print "ACTUAL RESULT 1: %s" %details;
         #Get the result of execution
         print "[TEST EXECUTION RESULT] : FAILURE";
+
     obj.unloadModule("wifiagent");
 else:
     print "FAILURE to load wifiagent module";

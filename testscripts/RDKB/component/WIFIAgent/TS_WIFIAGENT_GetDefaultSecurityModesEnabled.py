@@ -68,9 +68,12 @@ Device.WiFi.AccessPoint.{i}.Security.ModeEnabled
 </xml>
 
 '''
+
 #use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import re;
+from tdkutility import *;
+from time import sleep;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
 #IP and Port of box, No need to change,
@@ -108,40 +111,47 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
-        print "TEST STEP 2 : Check if the default security modes are enabled";
-        i =1;
-        while i<=16:
-            tdkTestObj = obj.createTestStep("WIFIAgent_Get");
-            tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%d.Security.ModeEnabled"%i);
-            expectedresult="SUCCESS";
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            Mode = tdkTestObj.getResultDetails();
-            Mode=Mode.split("VALUE:")[1].split(' ')[0];
+        #Wait for the WiFi namespace to come up upto 3 minutes (6 iterations of 30s)
+        found, tdkTestObj = wait_for_namespace(obj, 6, 30, "Device.WiFi.", expectedresult);
 
-            tdkTestObj = obj.createTestStep("WIFIAgent_Get");
-            tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%d.Security.ModesSupported"%i);
-            expectedresult="SUCCESS";
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult1 = tdkTestObj.getResult();
-            supportedModes = tdkTestObj.getResultDetails();
-            supportedModes=supportedModes.split("VALUE:")[1].split(' ')[0];
-            if expectedresult in (actualresult and actualresult1) and Mode!= "" and supportedModes!="":
-               if  Mode in  supportedModes:
-                   print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  has %s expected value"%(i,Mode);
-                   i=i+1;
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
-               else:
-                   print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "[TEST EXECUTION RESULT] : FAILURE";
-                   break;
-            else:
-                print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
-                tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
-                break;
+        if found == 1:
+            print "TEST STEP 2 : Check if the default security modes are enabled";
+            i =1;
+            while i<=16:
+                tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%d.Security.ModeEnabled"%i);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                Mode = tdkTestObj.getResultDetails();
+                Mode=Mode.split("VALUE:")[1].split(' ')[0];
+
+                tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%d.Security.ModesSupported"%i);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult1 = tdkTestObj.getResult();
+                supportedModes = tdkTestObj.getResultDetails();
+                supportedModes=supportedModes.split("VALUE:")[1].split(' ')[0];
+                if expectedresult in (actualresult and actualresult1) and Mode!= "" and supportedModes!="":
+                    if  Mode in  supportedModes:
+                        print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  has %s expected value"%(i,Mode);
+                        i=i+1;
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                    else:
+                        print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        break;
+                else:
+                    print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    break;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print "Device.WiFi. namespace not available after Factory Reset";
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
@@ -150,6 +160,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         print "ACTUAL RESULT 1: %s" %Mode;
         #Get the result of execution
         print "[TEST EXECUTION RESULT] : FAILURE";
+
     obj.unloadModule("wifiagent");
 else:
     print "FAILURE to load wifiagent module";
