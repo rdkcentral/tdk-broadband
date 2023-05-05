@@ -140,22 +140,6 @@ AC_ARG_ENABLE([rdkb_telcovoice_manager],
 AM_CONDITIONAL([RDKB_TELCOVOICE_MANAGER], [test x$rdkb_telcovoice_manager = xtrue])
 
 
-AC_ARG_ENABLE([fwupgrade_manager],
-        AS_HELP_STRING([--enable-fwupgrade_manager],[enable fwupgrade_manager]),
-        [
-          case "${enableval}" in
-             yes) fwupgrade_manager=true
-                  SUBDIR_WANMANAGER+=" jsonhal_lib FWUpgradeHAL_Stub "
-                  echo FWUpgrade Manager is enabled;;
-             no) fwupgrade_manager=false ;;
-          *) AC_MSG_ERROR([bad value ${enableval} for --enable-fwupgrade_manager ]) ;;
-           esac
-           ],
-         [echo "FWUpgrade Manager is not enabled"])
-
-AM_CONDITIONAL([FWUPGRADE_MANAGER], [test x$fwupgrade_manager = xtrue])
-
-
 AC_ARG_ENABLE([rdkb_xdsl_ppp_manager],
         AS_HELP_STRING([--enable-rdkb_xdsl_ppp_manager],[enable rdkb_xdsl_ppp_manager]),
         [
