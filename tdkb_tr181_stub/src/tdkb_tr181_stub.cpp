@@ -113,7 +113,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Get(IN const Json::Value& req, OUT Json::Val
 }
 
 /***************************************************************************
- *Function name :TDKB_TR181Stub _Set
+ *Function name :TDKB_TR181Stub_Set
  *Descrption    : Component Set Param Value API functionality checking
  * @param [in]  req - ParamName : Holds the name of the parameter
  * @param [in]  req - ParamValue : Holds the value of the parameter
@@ -136,6 +136,22 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Set(IN const Json::Value& req, OUT Json::Val
     setResult=ssp_setParameterValue(&ParamName[0],&ParamValue[0],&Type[0],1);
     if(setResult==0)
     {
+#ifdef RDK_ONEWIFI
+        if ((!ParamName.compare(0, 24, "Device.WiFi.AccessPoint.")) || (!ParamName.compare(0, 17, "Device.WiFi.SSID.")))
+        {
+            printf("Apply the AP settings\n");
+            apRet = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+        }
+        else if (!ParamName.compare(0, 18, "Device.WiFi.Radio."))
+        {
+            printf("Apply the Radio settings\n");
+            apRet = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+        }
+
+        //Sleep for 1s for SET to get reflected in GET
+        printf("Waiting 1s after apply settings\n");
+        sleep(1);
+#else
         if ((!ParamName.compare(0, 20, "Device.WiFi.Radio.1.")) || (!ParamName.compare(0, 26, "Device.WiFi.AccessPoint.1.")) || (!ParamName.compare(0,19,"Device.WiFi.SSID.1.")) || (!ParamName.compare(0, 26, "Device.WiFi.AccessPoint.3.")) || (!ParamName.compare(0,19,"Device.WiFi.SSID.3.")))
         {
             printf("Apply the wifi settings for 2.4GHZ\n");
@@ -146,6 +162,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Set(IN const Json::Value& req, OUT Json::Val
             printf("Apply the wifi settings for 5GHZ\n");
             apRet = ssp_setParameterValue((char *)"Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting", (char *)"true", (char *)"boolean",commit);
         }
+#endif
        if(apRet == 0)
        {
             DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
@@ -371,6 +388,23 @@ void TDKB_TR181Stub::TDKB_TR181Stub_SetOnly(IN const Json::Value& req, OUT Json:
     setResult=ssp_setParameterValue(&ParamName[0],&ParamValue[0],&Type[0],1);
     if(setResult==0)
     {
+
+#ifdef RDK_ONEWIFI
+        if ((!ParamName.compare(0, 24, "Device.WiFi.AccessPoint.")) || (!ParamName.compare(0, 17, "Device.WiFi.SSID.")))
+        {
+            printf("Apply the AP settings\n");
+            apRet = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+        }
+        else if (!ParamName.compare(0, 18, "Device.WiFi.Radio."))
+        {
+            printf("Apply the Radio settings\n");
+            apRet = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+        }
+
+        //Sleep for 1s for SET to get reflected in GET
+        printf("Waiting 1s after apply settings\n");
+        sleep(1);
+#else
         if ((!ParamName.compare(0, 20, "Device.WiFi.Radio.1.")) || (!ParamName.compare(0, 26, "Device.WiFi.AccessPoint.1.")) || (!ParamName.compare(0,19,"Device.WiFi.SSID.1.")) || (!ParamName.compare(0, 26, "Device.WiFi.AccessPoint.3.")) || (!ParamName.compare(0,19,"Device.WiFi.SSID.3.")))
         {
             printf("Apply the wifi settings for 2.4GHZ\n");
@@ -382,6 +416,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_SetOnly(IN const Json::Value& req, OUT Json:
             apRet = ssp_setParameterValue((char *)"Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting", (char *)"true", (char *)"boolean",commit);
         }
 
+#endif
         if(apRet == 0)
         {
             DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set\n");
