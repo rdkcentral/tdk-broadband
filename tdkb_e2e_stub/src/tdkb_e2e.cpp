@@ -150,6 +150,24 @@ void TDKB_E2E::tdkb_e2e_Set(IN const Json::Value& req, OUT Json::Value& response
         response["details"]="tdkb_e2e_Set::SET API Validation is Failure";
         DEBUG_PRINT(DEBUG_TRACE,"\n tdkb_e2e_Set --->Error in Set API Validation of WIFI Agent in DUT !!! \n");
     }
+
+#ifdef RDK_ONEWIFI
+    if ((!strncmp(ParamName, "Device.WiFi.AccessPoint.", 24)) || (!strncmp(ParamName, "Device.WiFi.SSID.", 17)))
+    {
+        printf("Apply the AP settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+    }
+    else if ((!strncmp(ParamName, "Device.WiFi.Radio.", 18)))
+    {
+        printf("Apply the Radio settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+    }
+
+    //Sleep for 1s for SET to get reflected in GET
+    printf("Waiting 1s after apply settings\n");
+    sleep(1);
+
+#else
     if ((!strncmp(ParamName, "Device.WiFi.Radio.1.", 20)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.1.", 19)))
     {
         printf("Apply the wifi settings for 2.4GHZ\n");
@@ -160,6 +178,8 @@ void TDKB_E2E::tdkb_e2e_Set(IN const Json::Value& req, OUT Json::Value& response
         printf("Apply the wifi settings for 5GHZ\n");
         retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting", (char *)"true", (char *)"boolean",commit);
     }
+#endif
+
     if((0 == returnValue) && (0 == retVal))
     {
         bReturn = TEST_SUCCESS;
@@ -197,6 +217,8 @@ void TDKB_E2E::tdkb_e2e_SetMultipleParams(IN const Json::Value& req, OUT Json::V
     int index = 0;
     int size = 0;
     int commit = 1;
+    int radioApplySettingsFlag = 0;
+    int apApplySettingsFlag = 0;
     strcpy(params,req["paramList"].asCString());
     DEBUG_PRINT(DEBUG_TRACE,"\ntdkb_e2e_SetMultipleParams:: ParamList input is %s\n",params);
     char *list = strtok (params, "|");
@@ -232,6 +254,35 @@ void TDKB_E2E::tdkb_e2e_SetMultipleParams(IN const Json::Value& req, OUT Json::V
        response["details"]="tdkb_e2e_SetMultipleParams::SET API Validation is Failure";
        DEBUG_PRINT(DEBUG_TRACE,"\n tdkb_e2e_SetMultipleParams: Failed to set multiple parameters !!! \n");
    }
+
+#ifdef RDK_ONEWIFI
+    for (index = 0; index < (num_spaces); index++)
+    {
+        if ((!strncmp(paramlist[index], "Device.WiFi.AccessPoint.", 24)) || (!strncmp(paramlist[index], "Device.WiFi.SSID.", 17)))
+        {
+            if (apApplySettingsFlag == 0) 
+            {			
+                printf("Apply the AP settings\n");
+                retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+                apApplySettingsFlag = 1;
+            }
+        }
+        else if ((!strncmp(paramlist[index], "Device.WiFi.Radio.", 18)))
+        {
+            if (radioApplySettingsFlag == 0)
+            {
+                printf("Apply the Radio settings\n");
+                retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+                radioApplySettingsFlag = 1;
+            }
+        }
+    }
+
+    //Sleep for 1s for SET to get reflected in GET
+    printf("Waiting 1s after apply settings\n");
+    sleep(1);
+
+#else
    if ((!strncmp(paramlist[0], "Device.WiFi.Radio.1.", 20)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.1.", 19)))
     {
         printf("Apply the wifi settings for 2.4GHZ\n");
@@ -242,6 +293,8 @@ void TDKB_E2E::tdkb_e2e_SetMultipleParams(IN const Json::Value& req, OUT Json::V
         printf("Apply the wifi settings for 5GHZ\n");
         retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting", (char *)"true", (char *)"boolean",commit);
     }
+
+#endif
     if((0 == returnValue) && (0 == retVal))
     {
         response["result"]="SUCCESS";

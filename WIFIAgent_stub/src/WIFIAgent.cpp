@@ -235,6 +235,23 @@ void WIFIAgent::WIFIAgent_Set(IN const Json::Value& req, OUT Json::Value& respon
         DEBUG_PRINT(DEBUG_TRACE,"\n tdk_wifiagent_set --->Error in Set API Validation of WIFI Agent in DUT !!! \n");
     }
 
+#ifdef RDK_ONEWIFI
+    if ((!strncmp(ParamName, "Device.WiFi.AccessPoint.", 24)) || (!strncmp(ParamName, "Device.WiFi.SSID.", 17)))
+    {
+        printf("Apply the AP settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+    }
+    else if ((!strncmp(ParamName, "Device.WiFi.Radio.", 18)))
+    {
+        printf("Apply the Radio settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+    }
+
+    //Sleep for 1s for SET to get reflected in GET
+    printf("Waiting 1s after apply settings\n");
+    sleep(1);
+#else
+
     if ((!strncmp(ParamName, "Device.WiFi.Radio.1.", 20)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.1.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.3.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.3.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.5.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.5.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.7.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.7.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.9.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.9.", 19)))
     {
         printf("Apply the wifi settings for 2.4GHZ\n");
@@ -250,6 +267,7 @@ void WIFIAgent::WIFIAgent_Set(IN const Json::Value& req, OUT Json::Value& respon
         printf("Apply the wifi settings for 6GHZ\n");
         retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.3.X_CISCO_COM_ApplySetting",(char *)"true",(char *)"boolean",commit);
     }
+#endif
 
     if((0 == returnValue) && (0 == retVal))
     {
@@ -290,6 +308,8 @@ void WIFIAgent::WIFIAgent_SetMultiple(IN const Json::Value& req, OUT Json::Value
     int index = 0;
     int size = 0;
     int commit = 1;
+    int radioApplySettingsFlag = 0;
+    int apApplySettingsFlag = 0;
 
     strcpy(params,req["paramList"].asCString());
 
@@ -336,6 +356,34 @@ void WIFIAgent::WIFIAgent_SetMultiple(IN const Json::Value& req, OUT Json::Value
        DEBUG_PRINT(DEBUG_TRACE,"\n WIFIAgent_SetMultiple: Failed to set multiple parameters !!! \n");
    }
 
+#ifdef RDK_ONEWIFI
+    for (index = 0; index < (num_spaces); index++)
+    {
+        if ((!strncmp(paramlist[index], "Device.WiFi.AccessPoint.", 24)) || (!strncmp(paramlist[index], "Device.WiFi.SSID.", 17)))
+        {
+            if (apApplySettingsFlag == 0)
+            {
+                printf("Apply the AP settings\n");
+                retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+                apApplySettingsFlag = 1;
+            }
+        }
+        else if ((!strncmp(paramlist[index], "Device.WiFi.Radio.", 18)))
+        {
+            if (radioApplySettingsFlag == 0)
+            {
+                printf("Apply the Radio settings\n");
+                retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+                radioApplySettingsFlag = 1;
+            }
+        }
+    }
+
+    //Sleep for 1s for SET to get reflected in GET
+    printf("Waiting 1s after apply settings\n");
+    sleep(1);
+#else
+
    if ((!strncmp(paramlist[0], "Device.WiFi.Radio.1.", 20)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.1.", 19)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.3.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.3.", 19)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.5.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.5.", 19)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.7.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.7.", 19)) || (!strncmp(paramlist[0], "Device.WiFi.AccessPoint.9.", 26)) || (!strncmp(paramlist[0], "Device.WiFi.SSID.9.", 19)))
     {
         printf("Apply the wifi settings for 2.4GHZ\n");
@@ -351,6 +399,7 @@ void WIFIAgent::WIFIAgent_SetMultiple(IN const Json::Value& req, OUT Json::Value
         printf("Apply the wifi settings for 6GHZ\n");
         retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.3.X_CISCO_COM_ApplySetting",(char *)"true",(char *)"boolean",commit);
     }
+#endif
 
     if((0 == returnValue) && (0 == retVal))
     {
@@ -424,6 +473,23 @@ void WIFIAgent::WIFIAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& re
         return;
     }
 
+#ifdef RDK_ONEWIFI
+    if ((!strncmp(ParamName, "Device.WiFi.AccessPoint.", 24)) || (!strncmp(ParamName, "Device.WiFi.SSID.", 17)))
+    {
+        printf("Apply the AP settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+    }
+    else if ((!strncmp(ParamName, "Device.WiFi.Radio.", 18)))
+    {
+        printf("Apply the Radio settings\n");
+        retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+    }
+
+    //Sleep for 1s for SET to get reflected in GET
+    printf("Waiting 1s after apply settings\n");
+    sleep(1);
+#else
+
     if ((!strncmp(ParamName, "Device.WiFi.Radio.1.", 20)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.1.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.3.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.3.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.5.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.5.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.7.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.7.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.9.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.9.", 19)))
     {
         printf("Apply the wifi settings for 2.4GHZ\n");
@@ -439,6 +505,7 @@ void WIFIAgent::WIFIAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& re
         printf("Apply the wifi settings for 6GHZ\n");
         retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.3.X_CISCO_COM_ApplySetting",(char *)"true",(char *)"boolean",commit);
     }
+#endif
 
     if((0 == returnValue) && (0 == retVal))
     {
@@ -1051,6 +1118,22 @@ void WIFIAgent::WIFIAgent_Set_LargeValue(IN const Json::Value& req, OUT Json::Va
     {
         DEBUG_PRINT(DEBUG_TRACE,"\nWIFIAgent_Set_LargeValue --->Set operation success in DUT !!! \n");
 
+#ifdef RDK_ONEWIFI
+        if ((!strncmp(ParamName, "Device.WiFi.AccessPoint.", 24)) || (!strncmp(ParamName, "Device.WiFi.SSID.", 17)))
+        {
+            printf("Apply the AP settings\n");
+            retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyAccessPointSettings",(char *)"true",(char *)"boolean",commit);
+        }
+        else if ((!strncmp(ParamName, "Device.WiFi.Radio.", 18)))
+        {
+            printf("Apply the Radio settings\n");
+            retVal = ssp_setParameterValue((char *)"Device.WiFi.ApplyRadioSettings",(char *)"true",(char *)"boolean",commit);
+        }
+
+        //Sleep for 1s for SET to get reflected in GET
+        printf("Waiting 1s after apply settings\n");
+        sleep(1);
+#else
         if ((!strncmp(ParamName, "Device.WiFi.Radio.1.", 20)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.1.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.1.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.3.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.3.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.5.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.5.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.7.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.7.", 19)) || (!strncmp(ParamName, "Device.WiFi.AccessPoint.9.", 26)) || (!strncmp(ParamName, "Device.WiFi.SSID.9.", 19)))
         {
             printf("Apply the wifi settings for 2.4GHZ\n");
@@ -1066,6 +1149,7 @@ void WIFIAgent::WIFIAgent_Set_LargeValue(IN const Json::Value& req, OUT Json::Va
             printf("Apply the wifi settings for 6GHZ\n");
             retVal = ssp_setParameterValue((char *)"Device.WiFi.Radio.3.X_CISCO_COM_ApplySetting",(char *)"true",(char *)"boolean",commit);
         }
+#endif
 
         if(0 == retVal)
         {
