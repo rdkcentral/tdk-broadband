@@ -33,8 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>Get the Device.X_RDK_WanManager.Policy and  check the policy is one from
-FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, MULTIWAN_MODE</synopsis>
+  <synopsis>Get the Device.X_RDK_WanManager.Policy and  check the policy is one from the list of expected modes</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -60,22 +59,20 @@ FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, 
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_WANMANAGER_08</test_case_id>
-    <test_objective>Get the Device.X_RDK_WanManager.Policy and  check the policy is one from
-FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, MULTIWAN_MODE</test_objective>
+    <test_objective>Get the Device.X_RDK_WanManager.Policy and  check the policy is one from the list of expected modes</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script
 3.Wan Manager should be enabled</pre_requisite>
     <api_or_interface_used>TDKB_TR181Stub</api_or_interface_used>
-    <input_parameters>Device.X_RDK_WanManager.Policy</input_parameters>
+    <input_parameters>Device.X_RDK_WanManager.Policy
+Device.X_RDK_WanManager.Group.1.Policy</input_parameters>
     <automation_approch>1] Load the module
 2]Get the WANMANAGER Policy value
-4]Check if the policy is one from
-FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, MULTIWAN_MODE
+4]Check if the policy is one from the list of expected modes
 5]Unload the module</automation_approch>
-    <expected_output>WANMANAGER policy is one from
-FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, MULTIWAN_MODE
+    <expected_output>WANMANAGER policy is one from the list of expected modes
 </expected_output>
     <priority>High</priority>
     <test_stub_interface>WAN_MANAGER</test_stub_interface>
@@ -87,63 +84,100 @@ FIXED_MODE_ON_BOOTUP, FIXED_MODE, PRIMARY_PRIORITY, PRIMARY_PRIORITY_ON_BOOTUP, 
   <script_tags />
 </xml>
 '''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from WanManager_Utility import *;
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","RDKB");
-
+sysobj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WANMANAGER_GetWANManagerPolicy');
-
+sysobj.configureTestCase(ip,port,'TS_WANMANAGER_GetWANManagerPolicy');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-
+loadmodulestatus1 =sysobj.getLoadModuleResult();
 print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
 
-if "SUCCESS" in loadmodulestatus.upper() :
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
+    sysobj.setLoadModuleStatus("SUCCESS");
     expectedresult="SUCCESS";
-    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.Policy");
-    #Execute the test case in DUT
+
+    #Get the parameter name in line with the Wan Manager DML version enabled
+    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+    command= "sh %s/tdk_utility.sh parseConfigFile WANMANAGER_UNIFICATION_ENABLE" %TDK_PATH;
+    tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    policy=details.strip().replace("\\n", "");
-    if expectedresult in actualresult and policy != "":
+    enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+    print "TEST STEP 1: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
+    print "EXPECTED RESULT 1: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+
+    if expectedresult in actualresult and enableFlag != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Check the value of wanmanager policy ";
-        print "EXPECTED RESULT 1: Should get wanmanager policy";
-        print "ACTUAL RESULT 1: The value received is %s" %policy;
+        print "ACTUAL RESULT 1: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
         #Get the result of execution
         print "[TEST EXECUTION RESULT] : SUCCESS";
-        if policy in ExpectedPolicyList:
+
+        if enableFlag == "TRUE":
+            ParamName = "Device.X_RDK_WanManager.Group.1.Policy";
+            ExpectedPolicyList = ExpectedPolicyList_Unified;
+        else:
+            ParamName = "Device.X_RDK_WanManager.Policy";
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName", ParamName);
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        policy=details.strip().replace("\\n", "");
+
+        if expectedresult in actualresult and policy != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Check  if the policy is one from:",ExpectedPolicyList;
-            print "EXPECTED RESULT 2: policy value should be within the expected list";
-            print "ACTUAL RESULT 2: policy value is within the expected list";
+            print "TEST STEP 2 :Check the value of wanmanager policy ";
+            print "EXPECTED RESULT 2: Should get wanmanager policy";
+            print "ACTUAL RESULT 2: The value received is %s" %policy;
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
+
+            if policy in ExpectedPolicyList:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print "TEST STEP 3 :Check  if the policy is one from:",ExpectedPolicyList;
+                print "EXPECTED RESULT 3: policy value should be within the expected list";
+                print "ACTUAL RESULT 3: policy value is within the expected list";
+                #Get the result of execution
+                print "[TEST EXECUTION RESULT] : SUCCESS";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print "TEST STEP 3 :Check the check the policy is one from :",ExpectedPolicyList;
+                print "EXPECTED RESULT 3: policy value should be within the expected list";
+                print "ACTUAL RESULT 3: policy value is not within the expected list";
+                #Get the result of execution
+                print "[TEST EXECUTION RESULT] : FAILURE";
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Check the check the policy is one from :",ExpectedPolicyList;
-            print "EXPECTED RESULT 2: policy value should be within the expected list";
-            print "ACTUAL RESULT 2: policy value is not within the expected list";
+            print "TEST STEP 2 :Check the value of wanmanager policy";
+            print "EXPECTED RESULT 2: Should get wanmanager policy";
+            print "ACTUAL RESULT 2: The value received is %s" %policy;
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : FAILURE";
-
     else:
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Check the value of wanmanager policy";
-        print "EXPECTED RESULT 1: Should get wanmanager policy";
-        print "ACTUAL RESULT 1: The value received is %s" %policy;
+        print "ACTUAL RESULT 1: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
         #Get the result of execution
         print "[TEST EXECUTION RESULT] : FAILURE";
+
     obj.unloadModule("tdkbtr181");
+    sysobj.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print "Failed to load module";
+    obj.setLoadModuleStatus("FAILURE");
+    sysobj.setLoadModuleStatus("FAILURE");

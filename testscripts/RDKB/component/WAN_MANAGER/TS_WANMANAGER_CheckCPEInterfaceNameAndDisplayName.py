@@ -2,7 +2,7 @@
 # If not stated otherwise in this file or this component's Licenses.txt
 # file the following copyright and licenses apply:
 #
-# Copyright 2021 RDK Management
+# Copyright 2023 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>4</version>
+  <version>6</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_WANMANAGER_CheckCPEInterfaceNameAndDisplayName</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -68,10 +68,14 @@
     <api_or_interface_used>TDKB_TR181Stub</api_or_interface_used>
     <input_parameters>Device.X_RDK_WanManager.CPEInterfaceNumberOfEntries
 Device.X_RDK_WanManager.CPEInterface.{i}.Name
-Device.X_RDK_WanManager.CPEInterface.{i}.DisplayName</input_parameters>
+Device.X_RDK_WanManager.CPEInterface.{i}.DisplayName
+Device.X_RDK_WanManager.Interface.{i}.Name
+Device.X_RDK_WanManager.Interface.{i}.DisplayName
+</input_parameters>
     <automation_approch>1]Load the module
 2] Get the number of CPE interfaces
-3] Get the CPE interface Name and Display Name and check if the value associated are as expected
+3] Get the expected interface names and display names from utility file
+4] Get the CPE interface Name and Display Name using TR181 parameters (V1/V2 DMLs whichever applicable) and check if the values retrieved are as expected
 intrName - dsl0, eth3, veip0
 disName  -  DSL,WANOE,GPON
 4]Unload the module</automation_approch>
@@ -86,6 +90,7 @@ disName  -  DSL,WANOE,GPON
   <script_tags />
 </xml>
 '''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from WanManager_Utility import *;
@@ -122,6 +127,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
         print "EXPECTED RESULT 1: Should get the no of CPE Interfaces";
         print "ACTUAL RESULT 1: The value received is :",noOfEntries;
         #Get the result of execution
+        print "[TEST EXECUTION RESULT] : SUCCESS";
 
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         command= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH;
@@ -130,63 +136,111 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         devicetype = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        if expectedresult in actualresult and devicetype != "":
-           if devicetype == "RPI":
-              interName=intrName;
-              dispName=disName
-           else:
-               interName=interfaceName;
-               dispName=displayName;
 
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "TEST STEP 2:Check if CPE interface name and display name are as expected";
-        print "Expected CPE interface names is %s" %interName;
-        print "Expected CPE display names is %s" %dispName;
-        n = noOfEntries;
-        flag = 0;
-        for interface in range(1,noOfEntries+1):
-            i=0;
-            for inter in range(0,noOfEntries):
-                expectedresult="SUCCESS";
-                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.%i.Name" %interface);
-                #Execute the test case in DUT
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and details == interName[inter]:
-                    flag =1;
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print"Device.X_RDK_WanManager.CPEInterface.%i.Name is %s" %(interface,details);
-                    break;
-            if flag == 1:
-                intr =inter+1;
-                expectedresult="SUCCESS";
-                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.%i.DisplayName" %intr);
-                #Execute the test case in DUT
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and details == dispName[inter]:
-                    flag = 1;
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print"Device.X_RDK_WanManager.CPEInterface.%i.DisplayName is %s which is a expected value" %(intr,details);
-                else:
-                    flag = 0;
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "Display Name of CPE interace Device.X_RDK_WanManager.CPEInterface.%i.DisplayName is %s but expected is %s"%(intr,details,dispName[i]);
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "The CPE interface name is %s which is not among the listed interface name" %details;
-        # setting the script status
-        if flag ==1:
+        if expectedresult in actualresult and devicetype != "":
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Listed CPE interfaces have expected Display name and interafce name";
+            print "TEST STEP 2: Get the DEVICE TYPE"
+            print "EXPECTED RESULT 2: Should get the device type";
+            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
+
+            if devicetype == "RPI":
+                interName=intrName;
+                dispName=disName
+            else:
+                interName=interfaceName;
+                dispName=displayName;
+
+            #Get the parameter name in line with the Wan Manager DML version enabled
+            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+            command= "sh %s/tdk_utility.sh parseConfigFile WANMANAGER_UNIFICATION_ENABLE" %TDK_PATH;
+            expectedresult="SUCCESS";
+            tdkTestObj.addParameter("command", command);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+            print "TEST STEP 3: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
+            print "EXPECTED RESULT 3: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+
+            if expectedresult in actualresult and enableFlag != "":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print "ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+                #Get the result of execution
+                print "[TEST EXECUTION RESULT] : SUCCESS";
+
+                if enableFlag == "TRUE":
+                    ParamNamePrefix = "Device.X_RDK_WanManager.Interface.";
+                else:
+                    ParamNamePrefix = "Device.X_RDK_WanManager.CPEInterface.";
+
+                print "TEST STEP 4:Check if CPE interface name and display name are as expected";
+                print "Expected CPE interface names is %s" %interName;
+                print "Expected CPE display names is %s" %dispName;
+
+                #Flag to check if retrieved values are as expected
+                flag = 0;
+
+                for interface in range(1, noOfEntries+1):
+                    expectedresult="SUCCESS";
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                    ParamName = ParamNamePrefix + str(interface) + ".Name";
+                    tdkTestObj.addParameter("ParamName", ParamName);
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+
+                    if expectedresult in actualresult and details == interName[interface - 1]:
+                        flag =1;
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print"%s is %s" %(ParamName,details);
+
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                        ParamName = ParamNamePrefix + str(interface) + ".DisplayName";
+                        tdkTestObj.addParameter("ParamName", ParamName);
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+
+                        if expectedresult in actualresult and details == dispName[interface - 1]:
+                            flag = 1;
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print "%s is %s which is the expected value" %(ParamName,details);
+                        else:
+                            flag = 0;
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print "%s is NOT %s which is the expected value" %(ParamName,details);
+                    else:
+                        flag = 0;
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "The CPE interface name is %s which is not among the listed interface name" %details;
+
+                # setting the script status
+                if flag == 1:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print "ACTUAL RESULT 4: Listed CPE interfaces have expected Display name and interafce name";
+                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print "ACTUAL RESULT 4: Listed CPE interfaces does not have expected Display name and interafce name";
+                    print "[TEST EXECUTION RESULT] : FAILURE";
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print "ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+                #Get the result of execution
+                print "[TEST EXECUTION RESULT] : FAILURE";
         else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Listed CPE interfaces does not have expected Display name and interafce name";
+            print "TEST STEP 2: Get the DEVICE TYPE"
+            print "EXPECTED RESULT 2: Should get the device type";
+            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            #Get the result of execution
             print "[TEST EXECUTION RESULT] : FAILURE";
     else:
         tdkTestObj.setResultStatus("FAILURE");
@@ -195,9 +249,10 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
         print "ACTUAL RESULT 1: The value received is :",noOfEntries;
         #Get the result of execution
         print "[TEST EXECUTION RESULT] : FAILURE";
+
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     sysobj.setLoadModuleStatus("FAILURE");
+    print "Failed to load module";
+    obj.setLoadModuleStatus("FAILURE");
+    sysobj.setLoadModuleStatus("FAILURE");

@@ -2,7 +2,7 @@
 # If not stated otherwise in this file or this component's Licenses.txt
 # file the following copyright and licenses apply:
 #
-# Copyright 2021 RDK Management
+# Copyright 2023 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>9</version>
+  <version>11</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_WANMANAGER_CheckDefaultValue_onFR</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>Check if the default value of Device.X_RDK_WanManager.Enable is true ,Device.X_RDK_WanManager.Policy is PRIMARY_PRIORITY and</synopsis>
+  <synopsis>Check if the default value of Wan Manager Enable and Wan Manager Policy is as expected</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -59,7 +59,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_WANMANAGER_09</test_case_id>
-    <test_objective>Check if the default value of Device.X_RDK_WanManager.Enable is true ,Device.X_RDK_WanManager.Policy is PRIMARY_PRIORITY </test_objective>
+    <test_objective>Check if the default value of Wan Manager Enable and Wan Manager Policy is as expected</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
@@ -69,12 +69,13 @@
 TDKB_TR181Stub_Get</api_or_interface_used>
     <input_parameters>Device.X_CISCO_COM_DeviceControl.FactoryReset
 Device.X_RDK_WanManager.Policy
+Device.X_RDK_WanManager.Group.1.Policy
 Device.X_RDK_WanManager.Enable</input_parameters>
     <automation_approch>1] Load the module
 2] Perform Factory reset on the DUT
-3] Check if the default value of Device.X_RDK_WanManager.Enable is true ,Device.X_RDK_WanManager.Policy is PRIMARY_PRIORITY
+3] Check if the default value of Wan Manager Enable and Wan Manager Policy is as expected
 4]Unload the module</automation_approch>
-    <expected_output> Default value of Device.X_RDK_WanManager.Enable is true ,Device.X_RDK_WanManager.Policy is PRIMARY_PRIORITY </expected_output>
+    <expected_output> Default value of Wan Manager Enable and Wan Manager Policy is as expected</expected_output>
     <priority>High</priority>
     <test_stub_interface>WAN_MANAGER</test_stub_interface>
     <test_script>TS_WANMANAGER_CheckDefaultValue_onFR</test_script>
@@ -85,6 +86,7 @@ Device.X_RDK_WanManager.Enable</input_parameters>
   <script_tags />
 </xml>
 '''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from time import sleep;
@@ -133,34 +135,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         obj.restorePreviousStateAfterReboot();
         sleep(180);
 
+        #Get the parameter name in line with the Wan Manager DML version enabled
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-        command= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH;
+        command= "sh %s/tdk_utility.sh parseConfigFile WANMANAGER_UNIFICATION_ENABLE" %TDK_PATH;
         expectedresult="SUCCESS";
         tdkTestObj.addParameter("command", command);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        devicetype = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        if expectedresult in actualresult and devicetype != "":
-            #Set the result status of execution
+        enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
+        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+
+        if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the DEVICE TYPE"
-            print "EXPECTED RESULT 2: Should get the device type";
-            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
 
-            if devicetype == "RPI":
-                compareValue ="FIXED_MODE";
+            if enableFlag == "TRUE":
+                compareValue = "AUTOWAN_MODE";
+                ParamName = "Device.X_RDK_WanManager.Group.1.Policy";
             else:
-                compareValue ="PRIMARY_PRIORITY";
+                compareValue = "PRIMARY_PRIORITY";
+                ParamName = "Device.X_RDK_WanManager.Policy";
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-            tdkTestObj.addParameter("ParamName", "Device.X_RDK_WanManager.Policy");
+            tdkTestObj.addParameter("ParamName", ParamName);
             expectedresult="SUCCESS";
             #Execute the test case in DUT
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
+
             if expectedresult in actualresult and details == compareValue:
                 details = details.strip().replace("\\n", "");
                 tdkTestObj.setResultStatus("SUCCESS");
@@ -176,6 +183,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
                 details = details.strip().replace("\\n", "");
+
                 if expectedresult in actualresult and details == "true":
                     details = details.strip().replace("\\n", "");
                     tdkTestObj.setResultStatus("SUCCESS");
@@ -201,9 +209,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the DEVICE TYPE"
-            print "EXPECTED RESULT 2: Should get the device type";
-            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : FAILURE";
     else:
@@ -213,6 +219,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print "ACTUAL RESULT 1: %s" %details;
         #Get the result of execution
         print "[TEST EXECUTION RESULT] :FAILURE";
+
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");

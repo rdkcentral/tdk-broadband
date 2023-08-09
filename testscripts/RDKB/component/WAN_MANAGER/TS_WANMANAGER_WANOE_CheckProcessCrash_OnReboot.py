@@ -83,31 +83,28 @@
   <script_tags />
 </xml>
 '''
+
 import tdklib;
 import time;
 from WanManager_Utility import *;
 #Test component to be tested
 sysObj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
 obj1 = tdklib.TDKScriptingLibrary("tdkbtr181","RDKB");
-tadobj = tdklib.TDKScriptingLibrary("tad","RDKB");
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 sysObj.configureTestCase(ip,port,'TS_WANMANAGER_WANOE_CheckProcessCrash_OnReboot');
 obj1.configureTestCase(ip,port,'TS_WANMANAGER_WANOE_CheckProcessCrash_OnReboot');
-tadobj.configureTestCase(ip,port,'TS_WANMANAGER_WANOE_CheckProcessCrash_OnReboot');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =sysObj.getLoadModuleResult();
 loadmodulestatus2 =obj1.getLoadModuleResult();
-loadmodulestatus3 = tadobj.getLoadModuleResult();
 
-if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and loadmodulestatus3.upper()):
+if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     #Set the result status of execution
     sysObj.setLoadModuleStatus("SUCCESS");
     obj1.setLoadModuleStatus("SUCCESS");
-    tadobj.setLoadModuleStatus("SUCCESS");
     expectedresult="SUCCESS";
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
@@ -130,39 +127,43 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
             i =1;
         else:
             i=2;
-        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.%s.Wan.Enable" %i);
-        #Execute the test case in DUT
+
+        #Get the parameter name in line with the Wan Manager DML version enabled
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        command= "sh %s/tdk_utility.sh parseConfigFile WANMANAGER_UNIFICATION_ENABLE" %TDK_PATH;
+        tdkTestObj.addParameter("command", command);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details == "true":
+        enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
+        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+
+        if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Check if WANOE is enabled";
-            print "EXPECTED RESULT 2: Should get the status of WANOE";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : SUCCESS";
 
-            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-            tdkTestObj.addParameter("command", "grep -rin \"RDKB_PROCESS_CRASHED\" /rdklogs/logs/");
-            expectedresult="SUCCESS";
+            if enableFlag == "TRUE":
+                ParamName = "Device.X_RDK_WanManager.Interface." + str(i) + ".VirtualInterface.1.Enable";
+            else:
+                ParamName = "Device.X_RDK_WanManager.CPEInterface." + str(i) + ".Wan.Enable";
 
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName",ParamName);
             #Execute the test case in DUT
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails().strip().replace(" ",",");
-            if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
-                #Set the result status of execution
+            details = tdkTestObj.getResultDetails();
+
+            if expectedresult in actualresult and details == "true":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if any process crashed before reboot ";
-                print "ACTUAL RESULT 3: Log files does not have any process crashed logs";
+                print "TEST STEP 3 :Check if WANOE is enabled";
+                print "EXPECTED RESULT 3: Should get the status of WANOE";
+                print "ACTUAL RESULT 3: The value received is :",details;
                 #Get the result of execution
                 print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                sysObj.initiateReboot();
-                time.sleep(300);
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", "grep -rin \"RDKB_PROCESS_CRASHED\" /rdklogs/logs/");
@@ -172,30 +173,62 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace(" ",",");
+
                 if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if any process crashed after reboot"
+                    print "TEST STEP 4: Check if any process crashed before reboot ";
+                    print "EXPECTED RESULT 4: No process should be crashed prior to reboot";
                     print "ACTUAL RESULT 4: Log files does not have any process crashed logs";
                     #Get the result of execution
                     print "[TEST EXECUTION RESULT] : SUCCESS";
+
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    sysObj.initiateReboot();
+                    time.sleep(300);
+
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    tdkTestObj.addParameter("command", "grep -rin \"RDKB_PROCESS_CRASHED\" /rdklogs/logs/");
+                    expectedresult="SUCCESS";
+
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace(" ",",");
+
+                    if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print "TEST STEP 5: Check if any process crashed after reboot"
+                        print "EXPECTED RESULT 5: No process should be crashed after reboot";
+                        print "ACTUAL RESULT 5: Log files does not have any process crashed logs";
+                        #Get the result of execution
+                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print "TEST STEP 5: Check if any process crashed after reboot";
+                        print "EXPECTED RESULT 5: No process should be crashed after reboot";
+                        print "ACTUAL RESULT 5: %s"%details;
+                        print "[TEST EXECUTION RESULT] : FAILURE";
                 else:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if any process crashed after reboot";
-                    print "ACTUAL RESULT 4: %s"%details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print "TEST STEP 4: Check if any process crashed before reboot ";
+                    print "EXPECTED RESULT 4: No process should be crashed prior to reboot";
+                    print "ACTUAL RESULT 4: Log files  have process crashed logs :%s "%details;
+                    #Get the result of execution
+                    print "[TEST EXECUTION RESULT] :FAILURE";
             else:
-                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if any process crashed before reboot ";
-                print "ACTUAL RESULT 3: Log files  have process crashed logs :%s "%details;
+                print "TEST STEP 3 :Check if WANOE is enabled";
+                print "EXPECTED RESULT 3: Should get the status of WANOE enabled";
+                print "ACTUAL RESULT 3: The value received is :",details;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print "[TEST EXECUTION RESULT] : FAILURE";
         else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Check if WANOE is enabled";
-            print "EXPECTED RESULT 2: Should get the status of WANOE enabled";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
             #Get the result of execution
             print "[TEST EXECUTION RESULT] : FAILURE";
     else:
@@ -209,7 +242,6 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
 
     sysObj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
-    tadobj.unloadModule("tad");
 else:
     print "Failed to load sysutil module";
     sysObj.setLoadModuleStatus("FAILURE");
