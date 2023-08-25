@@ -44,6 +44,7 @@ limitations under the License.
 #include "ssp_tdk_mbus_wrp.h"
 #include "ssp_tdk_wrp.h"
 
+ANSC_HANDLE bus_handle_client;
 extern char subsystem_prefix[32];
 PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController      = NULL;
 PCOMPONENT_COMMON_DM            g_pComponent_Common_Dm  = NULL;

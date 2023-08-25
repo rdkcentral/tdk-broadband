@@ -49,6 +49,8 @@
 #define BUFFER_LEN 32
 #endif
 
+extern ANSC_HANDLE bus_handle_client;
+
 int CosaDmlMTAGetMtaLog(ANSC_HANDLE handle, unsigned long* count, PCOSA_DML_MTALOG_FULL* ppConf);
 
 /*******************************************************************************************

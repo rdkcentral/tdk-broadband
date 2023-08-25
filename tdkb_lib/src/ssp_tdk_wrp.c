@@ -41,6 +41,7 @@
 #include "diag.h"
 #endif
 
+extern ANSC_HANDLE bus_handle_client;
 char subsystem_prefix[32]={0};
 extern  PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController;
 unsigned int    g_PingTest_WriteID;

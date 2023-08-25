@@ -60,7 +60,4 @@
 
 #define  ANSC_TRACE_MODULE_ID                       ANSC_TRACE_ID_SSP
 
-
-
-ANSC_HANDLE bus_handle_client;
 #endif

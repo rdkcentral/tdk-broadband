@@ -484,7 +484,7 @@ int ssp_ethsw_stub_hal_SetPortAdminStatus(int portId, char *portAdminstatus)
 	else
 	{
 		DEBUG_PRINT(DEBUG_TRACE, "Invalid value provided\n");
-		setAdminStatus = (CCSP_HAL_ETHSW_DUPLEX_MODE) INVALID_VALUE;
+		setAdminStatus = (CCSP_HAL_ETHSW_ADMIN_STATUS) INVALID_VALUE;
 	}
 
 	DEBUG_PRINT(DEBUG_TRACE, "Entering the ssp_EthSw_SetPortAdminStatus wrapper\n");
