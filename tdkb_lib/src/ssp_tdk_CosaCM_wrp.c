@@ -42,6 +42,7 @@
 #include <unistd.h>
 #include "cm_hal.h"
 
+extern ANSC_HANDLE bus_handle_client;
 ANSC_HANDLE cm_handle = NULL;
 PCOSA_BACKEND_MANAGER_OBJECT g_pCosaBEManager;
 

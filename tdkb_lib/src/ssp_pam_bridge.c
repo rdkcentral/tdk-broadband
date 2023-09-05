@@ -58,6 +58,8 @@
 
 #define BUFFER_SIZE       1023
 
+extern ANSC_HANDLE bus_handle_client;
+
 ANSC_STATUS
 CosaDmlDiInit
     (
