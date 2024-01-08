@@ -67,8 +67,8 @@ radioIndex : 0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 radio = "2.4G"
 
@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioSupportedFrequencyBands');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,39 +90,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    #Script to load the configuration file of the component
-	    tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-	    #Giving the method name to invoke the api for getting Supported Frequency band. ie,wifi_getRadioSupportedFrequencyBands()
-	    tdkTestObj.addParameter("methodName","getRadioSupportedFrequencyBands");
-	    #Radio index is 0 for 2.4GHz and 1 for 5GHz
-	    tdkTestObj.addParameter("radioIndex",idx);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    SupportedFreqBands = tdkTestObj.getResultDetails();
-	    ExpectedFreqList=['2.4GHz','2.4G_11AX']
-	    if expectedresult in actualresult and SupportedFreqBands.split(":")[1] in ExpectedFreqList:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: Get the Radio Supported Frequency bands for 2.4GHz";
-		print "EXPECTED RESULT 1: Should get the Radio Supported Frequency bands for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %SupportedFreqBands;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: Get the Radio Supported Frequency bands for 2.4GHz";
-		print "EXPECTED RESULT 1: Should get the Radio Supported Frequency bands for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %SupportedFreqBands;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+        #Giving the method name to invoke the api for getting Supported Frequency band. ie,wifi_getRadioSupportedFrequencyBands()
+        tdkTestObj.addParameter("methodName","getRadioSupportedFrequencyBands");
+        #Radio index is 0 for 2.4GHz and 1 for 5GHz
+        tdkTestObj.addParameter("radioIndex",idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        SupportedFreqBands = tdkTestObj.getResultDetails();
+        ExpectedFreqList=['2.4GHz','2.4G_11AX']
+        if expectedresult in actualresult and SupportedFreqBands.split(":")[1] in ExpectedFreqList:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the Radio Supported Frequency bands for 2.4GHz");
+            print("EXPECTED RESULT 1: Should get the Radio Supported Frequency bands for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %SupportedFreqBands);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the Radio Supported Frequency bands for 2.4GHz");
+            print("EXPECTED RESULT 1: Should get the Radio Supported Frequency bands for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %SupportedFreqBands);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzIfConfigUporDown');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 def GetApStatus(idx):
     expectedresult="SUCCESS";
     apIndex = idx
@@ -118,7 +118,7 @@ def GetApStatus(idx):
         tdkTestObj.setResultStatus("SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-    return (tdkTestObj, actualresult, details);    
+    return (tdkTestObj, actualresult, details);
 
 def IfConfigDown(idx):
     #Primitive test case which associated to this Script
@@ -133,16 +133,16 @@ def IfConfigDown(idx):
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print"TEST STEP:To invoke the wifi_ifConfigDown() api for 2.4GHz";
-        print"EXPECTED RESULT:wifi_ifConfigDown() api should return SUCCESS for 2.4GHz";
-        print"ACTUAL RESULT:%s"%details;
-        print"[TEST EXECUTION RESULT]:SUCCESS";
+        print("TEST STEP:To invoke the wifi_ifConfigDown() api for 2.4GHz");
+        print("EXPECTED RESULT:wifi_ifConfigDown() api should return SUCCESS for 2.4GHz");
+        print("ACTUAL RESULT:%s"%details);
+        print("[TEST EXECUTION RESULT]:SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print"TEST STEP:To invoke the wifi_ifConfigDown() api for 2.4GHz";
-        print"EXPECTED RESULT:wifi_ifConfigDown() api should return SUCCESS for 2.4GHz";
-        print"ACTUAL RESULT:%s"%details;
-        print"[TEST EXECUTION RESULT]:FAILURE";
+        print("TEST STEP:To invoke the wifi_ifConfigDown() api for 2.4GHz");
+        print("EXPECTED RESULT:wifi_ifConfigDown() api should return SUCCESS for 2.4GHz");
+        print("ACTUAL RESULT:%s"%details);
+        print("[TEST EXECUTION RESULT]:FAILURE");
     return (tdkTestObj, actualresult, details);
 
 def IfConfigUp(idx):
@@ -158,16 +158,16 @@ def IfConfigUp(idx):
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print"TEST STEP:To invoke the wifi_ifConfigUp() api for 2.4GHz";
-        print"EXPECTED RESULT:wifi_ifConfigUp() api should return SUCCESS for 2.4GHz";
-        print"ACTUAL RESULT:%s"%details;
-        print"[TEST EXECUTION RESULT]:SUCCESS";
+        print("TEST STEP:To invoke the wifi_ifConfigUp() api for 2.4GHz");
+        print("EXPECTED RESULT:wifi_ifConfigUp() api should return SUCCESS for 2.4GHz");
+        print("ACTUAL RESULT:%s"%details);
+        print("[TEST EXECUTION RESULT]:SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print"TEST STEP:To invoke the wifi_ifConfigUp() api for 2.4GHz";
-        print"EXPECTED RESULT:wifi_ifConfigUp() api should return SUCCESS for 2.4GHz";
-        print"ACTUAL RESULT:%s"%details;
-        print"[TEST EXECUTION RESULT]:FAILURE";
+        print("TEST STEP:To invoke the wifi_ifConfigUp() api for 2.4GHz");
+        print("EXPECTED RESULT:wifi_ifConfigUp() api should return SUCCESS for 2.4GHz");
+        print("ACTUAL RESULT:%s"%details);
+        print("[TEST EXECUTION RESULT]:FAILURE");
     return (tdkTestObj, actualresult, details);
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -175,82 +175,82 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    tdkTestObj, actualresult, details =  GetApStatus(idx);
-	    status_initial = details.split(":")[1].strip();
-	    if status_initial == 'Up':
-		print"Calling the wifi_ifConfigDown() api";
-		IfConfigDown(idx);
-		tdkTestObj, actualresult, details =  GetApStatus(idx);
-		status_down = details.split(":")[1].strip();
-		if status_down == 'Disable':
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api";
-		    print"EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz";
-		    print"ACTUAL RESULT:Ap staus changed to 'Disable' for 2.4GHz";
-		    print"[TEST EXECUTION RESULT]:SUCCESS";
-		    print"Calling the wifi_ifConfigUp() api for reverting the ApStatus back to initial value";
-		    IfConfigUp(idx);
-		    tdkTestObj, actualresult, details =  GetApStatus(idx);
-		    status_up = details.split(":")[1].strip();
-		    if status_up == 'Up':
-			tdkTestObj.setResultStatus("SUCCESS");
-			print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api for reverting the ApStatus back to initial value";
-			print"EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz";
-			print"ACTUAL RESULT:Ap staus changed to 'Up' for 2.4GHz";
-			print"[TEST EXECUTION RESULT]:SUCCESS";
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api for reverting the ApStatus back to initial value";
-			print"EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz";
-			print"ACTUAL RESULT:Ap staus is not changed to 'Up' for 2.4GHz";
-			print"[TEST EXECUTION RESULT]:FAILURE";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api";
-		    print"EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz";
-		    print"ACTUAL RESULT:Ap staus is not changed to 'Disable' for 2.4GHz";
-		    print"[TEST EXECUTION RESULT]:FAILURE";
-	    elif status_initial == 'Disable':
-		print"Calling the wifi_ifConfigUp() api";
-		IfConfigUp(idx);
-		tdkTestObj, actualresult, details =  GetApStatus(idx);
-		status_up = details.split(":")[1].strip();
-		if status_up == 'Up':
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api";
-		    print"EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz";
-		    print"ACTUAL RESULT:Ap staus changed to 'Up' for 2.4GHz";
-		    print"[TEST EXECUTION RESULT]:SUCCESS";
-		    print"Calling the wifi_ifConfigDown() api for reverting the ApStatus back to initial value";
-		    IfConfigDown(idx);
-		    tdkTestObj, actualresult, details =  GetApStatus(idx);
-		    status_down = details.split(":")[1].strip();
-		    if status_down == 'Disable':
-			tdkTestObj.setResultStatus("SUCCESS");
-			print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api for reverting the ApStatus back to initial value";
-			print"EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz";
-			print"ACTUAL RESULT:Ap staus changed to 'Disable' for 2.4GHz";
-			print"[TEST EXECUTION RESULT]:SUCCESS";
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api for reverting the ApStatus back to initial value";
-			print"EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz";
-			print"ACTUAL RESULT:Ap staus is not changed to 'Disable' for 2.4GHz";
-			print"[TEST EXECUTION RESULT]:FAILURE";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print"TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api";
-		    print"EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz";
-		    print"ACTUAL RESULT:Ap staus is not changed to 'Up' for 2.4GHz";
-		    print"[TEST EXECUTION RESULT]:FAILURE";
-	    else:
-		print"Get Ap Status is not returning value from list of Ap Status ['Up', 'Disable']";
+        tdkTestObj, actualresult, details =  GetApStatus(idx);
+        status_initial = details.split(":")[1].strip();
+        if status_initial == 'Up':
+            print("Calling the wifi_ifConfigDown() api");
+            IfConfigDown(idx);
+            tdkTestObj, actualresult, details =  GetApStatus(idx);
+            status_down = details.split(":")[1].strip();
+            if status_down == 'Disable':
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api");
+                print("EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz");
+                print("ACTUAL RESULT:Ap staus changed to 'Disable' for 2.4GHz");
+                print("[TEST EXECUTION RESULT]:SUCCESS");
+                print("Calling the wifi_ifConfigUp() api for reverting the ApStatus back to initial value");
+                IfConfigUp(idx);
+                tdkTestObj, actualresult, details =  GetApStatus(idx);
+                status_up = details.split(":")[1].strip();
+                if status_up == 'Up':
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api for reverting the ApStatus back to initial value");
+                    print("EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz");
+                    print("ACTUAL RESULT:Ap staus changed to 'Up' for 2.4GHz");
+                    print("[TEST EXECUTION RESULT]:SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api for reverting the ApStatus back to initial value");
+                    print("EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz");
+                    print("ACTUAL RESULT:Ap staus is not changed to 'Up' for 2.4GHz");
+                    print("[TEST EXECUTION RESULT]:FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api");
+                print("EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz");
+                print("ACTUAL RESULT:Ap staus is not changed to 'Disable' for 2.4GHz");
+                print("[TEST EXECUTION RESULT]:FAILURE");
+        elif status_initial == 'Disable':
+            print("Calling the wifi_ifConfigUp() api");
+            IfConfigUp(idx);
+            tdkTestObj, actualresult, details =  GetApStatus(idx);
+            status_up = details.split(":")[1].strip();
+            if status_up == 'Up':
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api");
+                print("EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz");
+                print("ACTUAL RESULT:Ap staus changed to 'Up' for 2.4GHz");
+                print("[TEST EXECUTION RESULT]:SUCCESS");
+                print("Calling the wifi_ifConfigDown() api for reverting the ApStatus back to initial value");
+                IfConfigDown(idx);
+                tdkTestObj, actualresult, details =  GetApStatus(idx);
+                status_down = details.split(":")[1].strip();
+                if status_down == 'Disable':
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api for reverting the ApStatus back to initial value");
+                    print("EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz");
+                    print("ACTUAL RESULT:Ap staus changed to 'Disable' for 2.4GHz");
+                    print("[TEST EXECUTION RESULT]:SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigDown() api for reverting the ApStatus back to initial value");
+                    print("EXPECTED RESULT:Ap status should change to 'Disable' for 2.4GHz");
+                    print("ACTUAL RESULT:Ap staus is not changed to 'Disable' for 2.4GHz");
+                    print("[TEST EXECUTION RESULT]:FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP:Get the Ap Status to validate whether the status has changed after invoking wifi_ifConfigUp() api");
+                print("EXPECTED RESULT:Ap status should change to 'Up' for 2.4GHz");
+                print("ACTUAL RESULT:Ap staus is not changed to 'Up' for 2.4GHz");
+                print("[TEST EXECUTION RESULT]:FAILURE");
+        else:
+            print("Get Ap Status is not returning value from list of Ap Status ['Up', 'Disable']");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -89,10 +89,10 @@ wifiobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApBeaconInterval');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 wifiloadmodulestatus = wifiobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus);
 
 if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,7 +101,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
     ## Check if a invalid index is returned
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
@@ -114,10 +114,10 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in actualresult :
             initial = details.split("VALUE:")[1].split(' ')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-            print "EXPECTED RESULT 1: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-            print "ACTUAL RESULT 1 : %s" %initial;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+            print("EXPECTED RESULT 1: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+            print("ACTUAL RESULT 1 : %s" %initial);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #Invoke the set api and set the value to
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
             tdkTestObj.addParameter("radioIndex",idx);
@@ -129,10 +129,10 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2 : Invoke the HAL API wifi_setApBeaconInterval() and set to 150";
-                print "EXPECTED RESULT 2: Should invoke the HAL API wifi_setApBeaconInterval() and set to 150";
-                print "ACTUAL RESULT 2 : %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 2 : Invoke the HAL API wifi_setApBeaconInterval() and set to 150");
+                print("EXPECTED RESULT 2: Should invoke the HAL API wifi_setApBeaconInterval() and set to 150");
+                print("ACTUAL RESULT 2 : %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Set BeaconInterval back to the initial value
                 tdkTestObj = wifiobj.createTestStep("WIFIAgent_Set");
                 tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
@@ -144,10 +144,10 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
 
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value";
-                    print "EXPECTED RESULT 3: Should set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value";
-                    print "ACTUAL RESULT 3: %s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 3: Set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value");
+                    print("EXPECTED RESULT 3: Should set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     #Check if the value is set properly by cross checking with Get
                     tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
                     tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
@@ -158,39 +158,38 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                     if expectedresult in actualresult :
                         set_value = details.split("VALUE:")[1].split(' ')[0];
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-                        print "EXPECTED RESULT 4: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-                        print "ACTUAL RESULT 4 : %s" %set_value;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 4 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+                        print("EXPECTED RESULT 4: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+                        print("ACTUAL RESULT 4 : %s" %set_value);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-                        print "EXPECTED RESULT 4: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-                        print "ACTUAL RESULT 4 : %s" %details;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 4 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+                        print("EXPECTED RESULT 4: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+                        print("ACTUAL RESULT 4 : %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value";
-                    print "EXPECTED RESULT 3: Should set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value";
-                    print "ACTUAL RESULT 3: %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 3: Set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value");
+                    print("EXPECTED RESULT 3: Should set the value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval to initial value");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2 : Invoke the HAL API wifi_setApBeaconInterval() and set to 150";
-                print "EXPECTED RESULT 2: Should invoke the HAL API wifi_setApBeaconInterval() and set to 150";
-                print "ACTUAL RESULT 2 : %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2 : Invoke the HAL API wifi_setApBeaconInterval() and set to 150");
+                print("EXPECTED RESULT 2: Should invoke the HAL API wifi_setApBeaconInterval() and set to 150");
+                print("ACTUAL RESULT 2 : %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-            print "ACTUAL RESULT 1: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval";
-            print "EXPECTED RESULT 1 :%s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1 : Get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+            print("ACTUAL RESULT 1: Should get the current value of Device.WiFi.Radio.1.X_COMCAST-COM_BeaconInterval");
+            print("EXPECTED RESULT 1 :%s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load  module";
+    print("Failed to load  module");
     obj.setLoadModuleStatus("FAILURE");
     wifiobj.setLoadModuleStatus("FAILURE");
-

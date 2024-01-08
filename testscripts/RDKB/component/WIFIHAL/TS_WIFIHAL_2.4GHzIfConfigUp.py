@@ -99,7 +99,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzIfConfigUp');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -107,36 +107,36 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    #Primitive test case which associated to this Script
-	    tdkTestObj = obj.createTestStep('WIFIHAL_IfConfigUporDown');
-	    #Giving the method name to invoke the api wifi_ifConfigUp()
-	    tdkTestObj.addParameter("methodName","ifConfigUp");
-	    #Ap index is 0 for 2.4GHz and 1 for 5GHz
-	    tdkTestObj.addParameter("apIndex",idx);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    if expectedresult in actualresult:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP : Call wifi_ifConfigUp() api for 2.4GHz";
-		print "EXPECTED RESULT : wifi_ifConfigUp() api should return SUCCESS for 2.4GHz";
-		print "ACTUAL RESULT : %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP : Call wifi_ifConfigUp() api for 2.4GHz";
-		print "EXPECTED RESULT : wifi_ifConfigUp() api should return SUCCESS for 2.4GHz";
-		print "ACTUAL RESULT : %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
+        #Primitive test case which associated to this Script
+        tdkTestObj = obj.createTestStep('WIFIHAL_IfConfigUporDown');
+        #Giving the method name to invoke the api wifi_ifConfigUp()
+        tdkTestObj.addParameter("methodName","ifConfigUp");
+        #Ap index is 0 for 2.4GHz and 1 for 5GHz
+        tdkTestObj.addParameter("apIndex",idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Call wifi_ifConfigUp() api for 2.4GHz");
+            print("EXPECTED RESULT : wifi_ifConfigUp() api should return SUCCESS for 2.4GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Call wifi_ifConfigUp() api for 2.4GHz");
+            print("EXPECTED RESULT : wifi_ifConfigUp() api should return SUCCESS for 2.4GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

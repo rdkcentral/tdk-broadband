@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApAssociatedDevicesHighWatermar
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,34 +111,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    getMethod = "getApAssociatedDevicesHighWatermarkThresholdReached"
-	    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-	    radioIndex = idx
-	    #Calling the method to execute wifi_getApAssociatedDevicesHighWatermarkThresholdReached()
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	
-	    if expectedresult in actualresult:
-		outputValue = details.split(":")[1].strip()
-		print "TEST STEP: Get the AssociatedDevicesHighWatermarkThresholdReached"
-		print "EXPECTED RESULT: Should get the number of times the current total number of associated device has reached the HighWatermarkThreshold value"
-		print "ACTUAL RESULT : Received the AssociatedDevicesHighWatermarkThresholdReached as ",outputValue
-		print "AssociatedDevicesHighWatermarkThresholdReached",outputValue
-		print "TEST EXECUTION RESULT :SUCCESS"
-		tdkTestObj.setResultStatus("SUCCESS");
-	    else:
-		print "TEST STEP: Get the AssociatedDevicesHighWatermarkThresholdReached"
-		print "EXPECTED RESULT: Should get the number of times the current total number of associated device has reached the HighWatermarkThreshold value"
-		print "ACTUAL RESULT : wifi_getApAssociatedDevicesHighWatermarkThresholdReached() call failed"
-		print "TEST EXECUTION RESULT :FAILURE"
-		tdkTestObj.setResultStatus("FAILURE");
+        expectedresult="SUCCESS";
+        getMethod = "getApAssociatedDevicesHighWatermarkThresholdReached"
+        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        radioIndex = idx
+        #Calling the method to execute wifi_getApAssociatedDevicesHighWatermarkThresholdReached()
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+
+        if expectedresult in actualresult:
+            outputValue = details.split(":")[1].strip()
+            print("TEST STEP: Get the AssociatedDevicesHighWatermarkThresholdReached")
+            print("EXPECTED RESULT: Should get the number of times the current total number of associated device has reached the HighWatermarkThreshold value")
+            print("ACTUAL RESULT : Received the AssociatedDevicesHighWatermarkThresholdReached as ",outputValue)
+            print("AssociatedDevicesHighWatermarkThresholdReached",outputValue)
+            print("TEST EXECUTION RESULT :SUCCESS")
+            tdkTestObj.setResultStatus("SUCCESS");
+        else:
+            print("TEST STEP: Get the AssociatedDevicesHighWatermarkThresholdReached")
+            print("EXPECTED RESULT: Should get the number of times the current total number of associated device has reached the HighWatermarkThreshold value")
+            print("ACTUAL RESULT : wifi_getApAssociatedDevicesHighWatermarkThresholdReached() call failed")
+            print("TEST EXECUTION RESULT :FAILURE")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

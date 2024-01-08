@@ -87,7 +87,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzDisableApEncryption');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,75 +96,75 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    apIndex = idx
-	    getMethod = "getApSecurityModeEnabled"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        apIndex = idx
+        getMethod = "getApSecurityModeEnabled"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-	    if expectedresult in actualresult:
-		ModeEnabled_initial = details.split(":")[1].strip();
-		#Script to load the configuration file of the component
-		tdkTestObj = obj.createTestStep("WIFIHAL_ParamRadioIndex");
-		#Giving the method name to invoke the api wifi_disableApEncryption()
-		tdkTestObj.addParameter("methodName","disableApEncryption")
-		#Radio index is 0 for 2.4GHz and 1 for 5GHz
-		tdkTestObj.addParameter("radioIndex", idx);
-		expectedresult="SUCCESS";
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails();
-		print "details",details;
-		if expectedresult in actualresult:
-		    expectedresult="SUCCESS";
-		    apIndex = idx
-		    getMethod = "getApSecurityModeEnabled"
-		    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-		    if expectedresult in actualresult:
-			ModeEnabled_final = details.split(":")[1].strip();
-			if ModeEnabled_final == 'None':
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "TEST STEP 1: To disable Ap Encryption by calling wifi_disableApEncryption api for 2.4GHz";
-			    print "EXPECTED RESULT 1: The ModeEnabled should be changed to 'None' state after invoking wifi_disableApEncryption() api for 2.4GHz";
-			    print "ACTUAL RESULT 1: The ModeEnabled is changed to 'None' state";
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : SUCCESS";
-			    #Revert the mode security to initial value
-			    expectedresult="SUCCESS"
-			    apIndex = idx
-			    setMethod = "setApSecurityModeEnabled"
-			    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-			    #Calling the method to execute wifi_setApSecurityModeEnabled()
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, ModeEnabled_initial, setMethod)
-			    if expectedresult in actualresult:
-				print "Successfully reverted the ApSecurityModeEnabled to initial value";
-				tdkTestObj.setResultStatus("SUCCESS");
-			    else:
-				print "Unable to revert the ApSecurityModeEnabled";
-				tdkTestObj.setResultStatus("FAILURE");
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "TEST STEP 1: To disable Ap Encryption by calling wifi_disableApEncryption api for 2.4GHz";
-			    print "EXPECTED RESULT 1: The ModeEnabled should be changed to 'None' state after invoking wifi_disableApEncryption() api for 2.4GHz";
-			    print "ACTUAL RESULT 1: The ModeEnabled is NOT changed to 'None' state";
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : FAILURE";
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print"wifi_getApSecurityModeEnabled() operation failed after invoking wifi_disableApEncryption() api for 2.4GHz";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print"wifi_disableApEncryption() operation failed for 2.4GHz";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print"wifi_getApSecurityModeEnabled() operation failed for 2.4GHz";
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        if expectedresult in actualresult:
+            ModeEnabled_initial = details.split(":")[1].strip();
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("WIFIHAL_ParamRadioIndex");
+            #Giving the method name to invoke the api wifi_disableApEncryption()
+            tdkTestObj.addParameter("methodName","disableApEncryption")
+            #Radio index is 0 for 2.4GHz and 1 for 5GHz
+            tdkTestObj.addParameter("radioIndex", idx);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            print("details",details);
+            if expectedresult in actualresult:
+                expectedresult="SUCCESS";
+                apIndex = idx
+                getMethod = "getApSecurityModeEnabled"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                if expectedresult in actualresult:
+                    ModeEnabled_final = details.split(":")[1].strip();
+                    if ModeEnabled_final == 'None':
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 1: To disable Ap Encryption by calling wifi_disableApEncryption api for 2.4GHz");
+                        print("EXPECTED RESULT 1: The ModeEnabled should be changed to 'None' state after invoking wifi_disableApEncryption() api for 2.4GHz");
+                        print("ACTUAL RESULT 1: The ModeEnabled is changed to 'None' state");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        #Revert the mode security to initial value
+                        expectedresult="SUCCESS"
+                        apIndex = idx
+                        setMethod = "setApSecurityModeEnabled"
+                        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                        #Calling the method to execute wifi_setApSecurityModeEnabled()
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, ModeEnabled_initial, setMethod)
+                        if expectedresult in actualresult:
+                            print("Successfully reverted the ApSecurityModeEnabled to initial value");
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("Unable to revert the ApSecurityModeEnabled");
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 1: To disable Ap Encryption by calling wifi_disableApEncryption api for 2.4GHz");
+                        print("EXPECTED RESULT 1: The ModeEnabled should be changed to 'None' state after invoking wifi_disableApEncryption() api for 2.4GHz");
+                        print("ACTUAL RESULT 1: The ModeEnabled is NOT changed to 'None' state");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("wifi_getApSecurityModeEnabled() operation failed after invoking wifi_disableApEncryption() api for 2.4GHz");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("wifi_disableApEncryption() operation failed for 2.4GHz");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getApSecurityModeEnabled() operation failed for 2.4GHz");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

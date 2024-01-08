@@ -49,7 +49,7 @@
     <input_parameters>methodName : getRadioUpTime
 RadioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
-2. Using WIFIHAL_GetOrSetParamULongValue invoke wifi_getRadioUpTime() 
+2. Using WIFIHAL_GetOrSetParamULongValue invoke wifi_getRadioUpTime()
 3. Check if the value received is greater than zero, if yes return SUCCESS, else return FAILURE
 4. Unload wifihal module</automation_approch>
     <except_output>RadioUpTime &gt; 0</except_output>
@@ -63,8 +63,8 @@ RadioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *
 
 radio = "5G"
@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioUpTime');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,36 +89,35 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult = "SUCCESS"
-	    radioIndex = idx
-	    getMethod = "getRadioUpTime"
-	    primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        expectedresult = "SUCCESS"
+        radioIndex = idx
+        getMethod = "getRadioUpTime"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
 
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    if expectedresult in actualresult:
-		upTime = details.split(":")[1].strip()
-		if int(upTime) > 0:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP : Check if Radio Up Time is greater than 0"
-		    print "EXPECTED RESULT : Radio up time should is greater than 0"
-		    print "ACTUAL RESULT : Radio up time is greater than 0"
-		    print "Radio UpTime = %s"%upTime
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP : Check if Radio Up Time is greater than 0"
-		    print "EXPECTED RESULT : Radio up time should is greater than 0"
-		    print "ACTUAL RESULT : Radio up time is greater than 0"
-		    print "Radio UpTime = %s"%upTime
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "wifi_getRadioUpTime() call failed"
+        if expectedresult in actualresult:
+            upTime = details.split(":")[1].strip()
+            if int(upTime) > 0:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : Check if Radio Up Time is greater than 0")
+                print("EXPECTED RESULT : Radio up time should is greater than 0")
+                print("ACTUAL RESULT : Radio up time is greater than 0")
+                print("Radio UpTime = %s"%upTime)
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : Check if Radio Up Time is greater than 0")
+                print("EXPECTED RESULT : Radio up time should is greater than 0")
+                print("ACTUAL RESULT : Radio up time is greater than 0")
+                print("Radio UpTime = %s"%upTime)
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getRadioUpTime() call failed")
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

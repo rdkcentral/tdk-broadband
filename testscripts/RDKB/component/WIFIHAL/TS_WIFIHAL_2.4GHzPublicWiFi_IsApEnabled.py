@@ -103,8 +103,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_IsApEnabled');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,7 +113,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -123,10 +123,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         getMethod = "getApEnable"
@@ -139,12 +139,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             enable = details.split(":")[1].strip()
 
             if "Enabled" in enable:
-                print "Public WiFi Access Point is Enabled"
+                print("Public WiFi Access Point is Enabled")
                 tdkTestObj.setResultStatus("SUCCESS");
                 oldEnable = 1
                 newEnable = 0
             else:
-                print "Public WiFi Access Point is Enabled"
+                print("Public WiFi Access Point is Enabled")
                 oldEnable = 0
                 newEnable = 1
 
@@ -153,43 +153,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod)
 
             if expectedresult in actualresult :
-                print "Public WiFi Access Point Enable state toggled using set"
+                print("Public WiFi Access Point Enable state toggled using set")
                 # Get the New AP enable status
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
                 if expectedresult in actualresult and enable not in details.split(":")[1].strip():
-                    print "Public WiFi Access Point getEnable Success, verified with setEnable() api"
+                    print("Public WiFi Access Point getEnable Success, verified with setEnable() api")
 
                     #Revert back to original Enable status
                     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
 
                     if expectedresult in actualresult :
-                        print "Enable status reverted back";
+                        print("Enable status reverted back");
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "Couldn't revert enable status"
+                        print("Couldn't revert enable status")
                         tdkTestObj.setResultStatus("SUCCESS");
                 else:
-                    print "getApEnable() failed"
+                    print("getApEnable() failed")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "setApEnable() failed"
+                print("setApEnable() failed")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "getApEnable() failed"
+            print("getApEnable() failed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

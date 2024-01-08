@@ -77,7 +77,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApVlanID');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -85,33 +85,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	expectedresult="SUCCESS";
-	getMethod = "getApVlanID"
-	primitive = 'WIFIHAL_GetOrSetParamIntValue'
+        expectedresult="SUCCESS";
+        getMethod = "getApVlanID"
+        primitive = 'WIFIHAL_GetOrSetParamIntValue'
 
-	#Calling the method from wifiUtility to execute test case and set result status for the test.
-	tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
 
-	if expectedresult in actualresult:
-     	    print "getApVlanID function successful, %s"%details
+        if expectedresult in actualresult:
+            print("getApVlanID function successful, %s"%details)
             apVlanID = int(details.split(":")[1].strip())
-	    tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the getApVlanID API";
-	    print "EXPECTED RESULT 1: Function Should return a Vlan ID(int) value";
-	    print "ACTUAL RESULT 1: Vlan ID value associated with AP received Successfully: %d"%apVlanID;
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    print "getApVlanID failed, %s"%details
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the getApVlanID API");
+            print("EXPECTED RESULT 1: Function Should return a Vlan ID(int) value");
+            print("ACTUAL RESULT 1: Vlan ID value associated with AP received Successfully: %d"%apVlanID);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            print("getApVlanID failed, %s"%details)
             tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1: Get the getApVlanID API";
-	    print "EXPECTED RESULT 1: Function Should return a Vlan ID(int) value";
-	    print "ACTUAL RESULT 1:Failed to receive a Vlan ID value: %s"%details;
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the getApVlanID API");
+            print("EXPECTED RESULT 1: Function Should return a Vlan ID(int) value");
+            print("ACTUAL RESULT 1:Failed to receive a Vlan ID value: %s"%details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

@@ -103,14 +103,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApSecurityKeyPassphrase');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -146,23 +146,23 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if finalPassphrase == setPhrase:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Compare the set and get values of KeyPassphrase"
-                        print "EXPECTED RESULT :Set and get values of KeyPassphrase should be the same"
-                        print "ACTUAL RESULT : Set and get values are the same"
-                        print "Set KeyPassphrase : ",setPhrase
-                        print "Get KeyPassphrase : ",finalPassphrase
-                        print "TEST EXECUTION RESULT : SUCCESS"
+                        print("TEST STEP : Compare the set and get values of KeyPassphrase")
+                        print("EXPECTED RESULT :Set and get values of KeyPassphrase should be the same")
+                        print("ACTUAL RESULT : Set and get values are the same")
+                        print("Set KeyPassphrase : ",setPhrase)
+                        print("Get KeyPassphrase : ",finalPassphrase)
+                        print("TEST EXECUTION RESULT : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Compare the set and get values of KeyPassphrase"
-                        print "EXPECTED RESULT :Set and get values of KeyPassphrase should be the same"
-                        print "ACTUAL RESULT : Set and get values are NOT the same"
-                        print "Set KeyPassphrase : ",setPhrase
-                        print "Get KeyPassphrase : ",finalPassphrase
-                        print "TEST EXECUTION RESULT : FAILURE"
+                        print("TEST STEP : Compare the set and get values of KeyPassphrase")
+                        print("EXPECTED RESULT :Set and get values of KeyPassphrase should be the same")
+                        print("ACTUAL RESULT : Set and get values are NOT the same")
+                        print("Set KeyPassphrase : ",setPhrase)
+                        print("Get KeyPassphrase : ",finalPassphrase)
+                        print("TEST EXECUTION RESULT : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "wifi_getApSecurityKeyPassphrase() function failed"
+                    print("wifi_getApSecurityKeyPassphrase() function failed")
 
                 expectedresult="SUCCESS";
                 setMethod = "setApSecurityKeyPassphrase"
@@ -173,18 +173,18 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Successfully revered the KeyPassphrase to initial value"
+                    print("Successfully revered the KeyPassphrase to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to revert the KeyPassphrase"
+                    print("Unable to revert the KeyPassphrase")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "wifi_setApSecurityKeyPassphrase() call failed"
+                print("wifi_setApSecurityKeyPassphrase() call failed")
         else:
-            print "wifi_getApSecurityKeyPassphrase() function failed"
+            print("wifi_getApSecurityKeyPassphrase() function failed")
             tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

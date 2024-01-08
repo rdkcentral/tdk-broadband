@@ -110,7 +110,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_FactoryReset');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 def GetOperation_PIN(radioIndex):
     #get the ApWpsDevicePIN
     expectedresult="SUCCESS";
@@ -118,12 +118,12 @@ def GetOperation_PIN(radioIndex):
     primitive = 'WIFIHAL_GetOrSetParamULongValue'
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
     if expectedresult in actualresult:
-	tdkTestObj.setResultStatus("SUCCESS");
-	PIN = int(details.split(":")[1].strip());
-	return PIN;
+        tdkTestObj.setResultStatus("SUCCESS");
+        PIN = int(details.split(":")[1].strip());
+        return PIN;
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print"getApWpsDevicePIN() operation failed for %d radioIndex"%radioIndex;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("getApWpsDevicePIN() operation failed for %d radioIndex"%radioIndex);
 
 def SetOperation_PIN(radioIndex,setPIN):
     #set the ApWpsDevicePIN
@@ -133,10 +133,10 @@ def SetOperation_PIN(radioIndex,setPIN):
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setPIN, setMethod)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-	print"Successfully set the DevicePIN to ",setPIN;
+        print("Successfully set the DevicePIN to ",setPIN);
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print"setApWpsDevicePIN() operation failed for %d radioIndex"%radioIndex;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("setApWpsDevicePIN() operation failed for %d radioIndex"%radioIndex);
 
 def GetOperation_KeyPassphrase(radioIndex):
     #get the ApSecurityKeyPassphrase
@@ -145,12 +145,12 @@ def GetOperation_KeyPassphrase(radioIndex):
     primitive = 'WIFIHAL_GetOrSetParamStringValue'
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
     if expectedresult in actualresult:
-	tdkTestObj.setResultStatus("SUCCESS");
-	KeyPassphrase = details.split(":")[1].strip();
-	return KeyPassphrase;
+        tdkTestObj.setResultStatus("SUCCESS");
+        KeyPassphrase = details.split(":")[1].strip();
+        return KeyPassphrase;
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print"getApSecurityKeyPassphrase() operation failed for %d radioIndex"%radioIndex;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("getApSecurityKeyPassphrase() operation failed for %d radioIndex"%radioIndex);
 
 def SetOperation_KeyPassphrase(radioIndex,setKeyPassphrase):
     #set the ApSecurityKeyPassphrase
@@ -159,11 +159,11 @@ def SetOperation_KeyPassphrase(radioIndex,setKeyPassphrase):
     primitive = 'WIFIHAL_GetOrSetParamStringValue'
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setKeyPassphrase, setMethod)
     if expectedresult in actualresult:
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Successfully set the KeyPassphrase to ",setKeyPassphrase;
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("Successfully set the KeyPassphrase to ",setKeyPassphrase);
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print"setApSecurityKeyPassphrase() operation failed for %d radioIndex"%radioIndex;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("setApSecurityKeyPassphrase() operation failed for %d radioIndex"%radioIndex);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -172,19 +172,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         DevicePIN0_initial =  GetOperation_PIN(idx0);
-        print "DevicePIN initially for 2.4GHz = ",DevicePIN0_initial;
+        print("DevicePIN initially for 2.4GHz = ",DevicePIN0_initial);
         DevicePIN1_initial =  GetOperation_PIN(idx1);
-        print "DevicePIN initially for 5GHz = ",DevicePIN1_initial;
+        print("DevicePIN initially for 5GHz = ",DevicePIN1_initial);
         KeyPassphrase0_initial = GetOperation_KeyPassphrase(idx0);
-        print "KeyPassphrase initially for 2.4GHz = ",KeyPassphrase0_initial;
+        print("KeyPassphrase initially for 2.4GHz = ",KeyPassphrase0_initial);
         KeyPassphrase1_initial = GetOperation_KeyPassphrase(idx1);
-        print "KeyPassphrase initially for 5GHz = ",KeyPassphrase1_initial;
+        print("KeyPassphrase initially for 5GHz = ",KeyPassphrase1_initial);
         setPIN = 23344556;
         SetOperation_PIN(idx0,setPIN);
         SetOperation_PIN(idx1,setPIN);
@@ -192,13 +192,13 @@ if "SUCCESS" in loadmodulestatus.upper():
         SetOperation_KeyPassphrase(idx0,setKeyPassphrase);
         SetOperation_KeyPassphrase(idx1,setKeyPassphrase);
         DevicePIN0_set =  GetOperation_PIN(idx0);
-        print "DevicePIN after set for 2.4GHz = ",DevicePIN0_set;
+        print("DevicePIN after set for 2.4GHz = ",DevicePIN0_set);
         DevicePIN1_set =  GetOperation_PIN(idx1);
-        print "DevicePIN after set for 5GHz = ",DevicePIN1_set;
+        print("DevicePIN after set for 5GHz = ",DevicePIN1_set);
         KeyPassphrase0_set = GetOperation_KeyPassphrase(idx0);
-        print "KeyPassphrase after set for 2.4GHz = ",KeyPassphrase0_set;
+        print("KeyPassphrase after set for 2.4GHz = ",KeyPassphrase0_set);
         KeyPassphrase1_set = GetOperation_KeyPassphrase(idx1);
-        print "KeyPassphrase after set for 5GHz = ",KeyPassphrase1_set;
+        print("KeyPassphrase after set for 5GHz = ",KeyPassphrase1_set);
         #call the factory reset api
         #Primitive test case which associated to this Script
         tdkTestObj = obj.createTestStep('WIFIHAL_FactoryReset');
@@ -210,65 +210,65 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-	    print"details",details;
+            print("details",details);
             #Waiting for Factory Reset operation to be reflected
             sleep(150);
-	    DevicePIN0_reset =  GetOperation_PIN(idx0);
-	    print "DevicePIN after factoryReset for 2.4GHz = ",DevicePIN0_reset;
-	    DevicePIN1_reset =  GetOperation_PIN(idx1);
-	    print "DevicePIN after factoryReset for 5GHz = ",DevicePIN1_reset;
-	    KeyPassphrase0_reset = GetOperation_KeyPassphrase(idx0);
-	    print "KeyPassphrase after factoryReset for 2.4GHz = ",KeyPassphrase0_reset;
-	    KeyPassphrase1_reset = GetOperation_KeyPassphrase(idx1);
-	    print "KeyPassphrase after factoryReset for 5GHz = ",KeyPassphrase1_reset;
-	    if KeyPassphrase0_reset != KeyPassphrase0_set and KeyPassphrase1_reset != KeyPassphrase1_set:
+            DevicePIN0_reset =  GetOperation_PIN(idx0);
+            print("DevicePIN after factoryReset for 2.4GHz = ",DevicePIN0_reset);
+            DevicePIN1_reset =  GetOperation_PIN(idx1);
+            print("DevicePIN after factoryReset for 5GHz = ",DevicePIN1_reset);
+            KeyPassphrase0_reset = GetOperation_KeyPassphrase(idx0);
+            print("KeyPassphrase after factoryReset for 2.4GHz = ",KeyPassphrase0_reset);
+            KeyPassphrase1_reset = GetOperation_KeyPassphrase(idx1);
+            print("KeyPassphrase after factoryReset for 5GHz = ",KeyPassphrase1_reset);
+            if KeyPassphrase0_reset != KeyPassphrase0_set and KeyPassphrase1_reset != KeyPassphrase1_set:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print"TEST STEP:To invoke the wifi_factoryReset() api and check whether the KeyPassphrase is not equal to the set value";
-                print"EXPECTED RESULT:The KeyPassphrase should not be equal to the set value after factory reset for both 2.4GHz and 5GHz";
-                print"ACTUAL RESULT:The KeyPassphrase is changed after the factory reset for both 2.4GHz and 5GHz";
-                print"[TEST EXECUTION RESULT]:SUCCESS";
+                print("TEST STEP:To invoke the wifi_factoryReset() api and check whether the KeyPassphrase is not equal to the set value");
+                print("EXPECTED RESULT:The KeyPassphrase should not be equal to the set value after factory reset for both 2.4GHz and 5GHz");
+                print("ACTUAL RESULT:The KeyPassphrase is changed after the factory reset for both 2.4GHz and 5GHz");
+                print("[TEST EXECUTION RESULT]:SUCCESS");
                 #Revert the KeyPassphrase to initial value
-                print"[REVERTING THE KEYPASSPHRASE TO INITIAL VALUE...]";
+                print("[REVERTING THE KEYPASSPHRASE TO INITIAL VALUE...]");
                 SetOperation_KeyPassphrase(idx0,KeyPassphrase0_initial);
                 SetOperation_KeyPassphrase(idx1,KeyPassphrase1_initial);
                 if DevicePIN0_reset != DevicePIN0_set and DevicePIN1_reset != DevicePIN1_set:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print"TEST STEP:To invoke the wifi_factoryReset() api and check whether the DevicePIN is not equal to the set value";
-                    print"EXPECTED RESULT:The DevicePIN should not be equal to the set value after factory reset for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The DevicePIN is changed after the factory reset for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:SUCCESS";
+                    print("TEST STEP:To invoke the wifi_factoryReset() api and check whether the DevicePIN is not equal to the set value");
+                    print("EXPECTED RESULT:The DevicePIN should not be equal to the set value after factory reset for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The DevicePIN is changed after the factory reset for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:SUCCESS");
                     #Revert the DevicePIN to initial value
-                    print"[REVERTING THE DEVICEPIN TO INITIAL VALUE...]";
+                    print("[REVERTING THE DEVICEPIN TO INITIAL VALUE...]");
                     SetOperation_PIN(idx0,DevicePIN0_initial);
                     SetOperation_PIN(idx1,DevicePIN1_initial);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print"TEST STEP:To invoke the wifi_factoryReset() api and check whether the DevicePIN is not equal to the set value";
-                    print"EXPECTED RESULT:The DevicePIN should not be equal to the set value after factory reset for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The DevicePIN is not changed after the factory reset for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:FAILURE";
+                    print("TEST STEP:To invoke the wifi_factoryReset() api and check whether the DevicePIN is not equal to the set value");
+                    print("EXPECTED RESULT:The DevicePIN should not be equal to the set value after factory reset for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The DevicePIN is not changed after the factory reset for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:FAILURE");
                     #Revert the DevicePIN to initial value
-                    print"[REVERTING THE DEVICEPIN TO INITIAL VALUE...]";
+                    print("[REVERTING THE DEVICEPIN TO INITIAL VALUE...]");
                     SetOperation_PIN(idx0,DevicePIN0_initial);
                     SetOperation_PIN(idx1,DevicePIN1_initial);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-	        print"TEST STEP:To invoke the wifi_factoryReset() api and check whether the KeyPassphrase is not equal to the set value";
-                print"EXPECTED RESULT:The KeyPassphrase should not be equal to the set value after factory reset for both 2.4GHz and 5GHz";
-                print"ACTUAL RESULT:The KeyPassphrase is not changed after the factory reset for both 2.4GHz and 5GHz";
-                print"[TEST EXECUTION RESULT]:FAILURE";
+                print("TEST STEP:To invoke the wifi_factoryReset() api and check whether the KeyPassphrase is not equal to the set value");
+                print("EXPECTED RESULT:The KeyPassphrase should not be equal to the set value after factory reset for both 2.4GHz and 5GHz");
+                print("ACTUAL RESULT:The KeyPassphrase is not changed after the factory reset for both 2.4GHz and 5GHz");
+                print("[TEST EXECUTION RESULT]:FAILURE");
                 #Revert the KeyPassphrase to initial value
-                print"[REVERTING THE KEYPASSPHRASE TO INITIAL VALUE...]";
+                print("[REVERTING THE KEYPASSPHRASE TO INITIAL VALUE...]");
                 SetOperation_KeyPassphrase(idx0,KeyPassphrase0_initial);
                 SetOperation_KeyPassphrase(idx1,KeyPassphrase1_initial);
                 #Revert the DevicePIN to initial value
-                print"[REVERTING THE DEVICEPIN TO INITIAL VALUE...]";
+                print("[REVERTING THE DEVICEPIN TO INITIAL VALUE...]");
                 SetOperation_PIN(idx0,DevicePIN0_initial);
                 SetOperation_PIN(idx1,DevicePIN1_initial);
         else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print"wifi_factoryReset() operation failed";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_factoryReset() operation failed");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

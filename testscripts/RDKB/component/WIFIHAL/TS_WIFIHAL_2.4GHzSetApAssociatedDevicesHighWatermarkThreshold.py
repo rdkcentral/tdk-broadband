@@ -53,7 +53,7 @@ ApIndex : 0</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Using WIFIHAL_GetOrSetParamUIntValue invoke wifi_getApAssociatedDevicesHighWatermarkThreshold() and save the get value
 3. Choose a threshpold value less than maxAssociatedDevice and using  WIFIHAL_GetOrSetParamUIntValue invoke wifi_setApAssociatedDevicesHighWatermarkThreshold()
-4. Invoke wifi_getApAssociatedDevicesHighWatermarkThreshold() to get the previously set value. 
+4. Invoke wifi_getApAssociatedDevicesHighWatermarkThreshold() to get the previously set value.
 5. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 6. Revert the WatermarkThreshold back to initial value
 7. Unload wifihal module</automation_approch>
@@ -68,8 +68,8 @@ ApIndex : 0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 import random;
 
@@ -85,7 +85,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApAssociatedDevicesHighWatermarkThreshold');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,98 +93,97 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx;
-	    getMethod = "getApAssociatedDevicesHighWatermarkThreshold"
-	    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        expectedresult="SUCCESS";
+        apIndex = idx;
+        getMethod = "getApAssociatedDevicesHighWatermarkThreshold"
+        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-	    if expectedresult in actualresult:
-		initThreshold = details.split(":")[1].strip()
+        if expectedresult in actualresult:
+            initThreshold = details.split(":")[1].strip()
 
-		#The HighWatermarkThreshold value that is lesser than or equal to MaxAssociatedDevices
-		getMethodToCheck = "getApMaxAssociatedDevices"
-		apIndex = idx;
-		primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+            #The HighWatermarkThreshold value that is lesser than or equal to MaxAssociatedDevices
+            getMethodToCheck = "getApMaxAssociatedDevices"
+            apIndex = idx;
+            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethodToCheck)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethodToCheck)
 
-		if expectedresult in actualresult:
-		    maxAssociatedDevice = details.split(":")[1].strip()
+            if expectedresult in actualresult:
+                maxAssociatedDevice = details.split(":")[1].strip()
 
-		    r = range(0,int(maxAssociatedDevice))
-		    setThreshold = random.choice(r)
+                r = list(range(0,int(maxAssociatedDevice)))
+                setThreshold = random.choice(r)
 
-		    expectedresult="SUCCESS";
-		    apIndex = idx;
-		    setMethod = "setApAssociatedDevicesHighWatermarkThreshold"
-		    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                expectedresult="SUCCESS";
+                apIndex = idx;
+                setMethod = "setApAssociatedDevicesHighWatermarkThreshold"
+                primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setThreshold, setMethod)
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setThreshold, setMethod)
 
-		    if expectedresult in actualresult:
-			expectedresult="SUCCESS";
-			apIndex = idx;
-			getMethod = "getApAssociatedDevicesHighWatermarkThreshold"
-			primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                if expectedresult in actualresult:
+                    expectedresult="SUCCESS";
+                    apIndex = idx;
+                    getMethod = "getApAssociatedDevicesHighWatermarkThreshold"
+                    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-			if expectedresult in actualresult:
-			    finalThreshold = details.split(":")[1].strip()
-			    if int(finalThreshold) == setThreshold:
-				print "TEST STEP: Comparing set and get values of ApAssociatedDevicesHighWatermarkThreshold"
-				print "EXPECTED RESULT: Set and get values should be the same"
-				print "ACTUAL RESULT : Set and get values are the same"
-				print "Set value: %s"%setThreshold
-				print "Get value: %s"%finalThreshold
-				print "TEST EXECUTION RESULT :SUCCESS"
-				tdkTestObj.setResultStatus("SUCCESS");
-			    else:
-				print "TEST STEP: Comparing set and get values of ApAssociatedDevicesHighWatermarkThreshold"
-				print "EXPECTED RESULT: Set and get values should be the same"
-				print "ACTUAL RESULT : Set and get values are NOT the same"
-				print "Set value: %s"%setThreshold
-				print "Get value: %s"%finalThreshold
-				print "TEST EXECUTION RESULT :FAILURE"
-				tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult:
+                        finalThreshold = details.split(":")[1].strip()
+                        if int(finalThreshold) == setThreshold:
+                            print("TEST STEP: Comparing set and get values of ApAssociatedDevicesHighWatermarkThreshold")
+                            print("EXPECTED RESULT: Set and get values should be the same")
+                            print("ACTUAL RESULT : Set and get values are the same")
+                            print("Set value: %s"%setThreshold)
+                            print("Get value: %s"%finalThreshold)
+                            print("TEST EXECUTION RESULT :SUCCESS")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("TEST STEP: Comparing set and get values of ApAssociatedDevicesHighWatermarkThreshold")
+                            print("EXPECTED RESULT: Set and get values should be the same")
+                            print("ACTUAL RESULT : Set and get values are NOT the same")
+                            print("Set value: %s"%setThreshold)
+                            print("Get value: %s"%finalThreshold)
+                            print("TEST EXECUTION RESULT :FAILURE")
+                            tdkTestObj.setResultStatus("FAILURE");
 
-			    #Revert back to initial value
-			    setMethod = "setApAssociatedDevicesHighWatermarkThreshold"
-			    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-			    setThreshold = int(initThreshold)
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setThreshold, setMethod)
+                        #Revert back to initial value
+                        setMethod = "setApAssociatedDevicesHighWatermarkThreshold"
+                        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                        setThreshold = int(initThreshold)
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setThreshold, setMethod)
 
-			    if expectedresult in actualresult:
-				tdkTestObj.setResultStatus("SUCCESS");
-				print "Successfully reverted back to inital value"
-			    else:
-				tdkTestObj.setResultStatus("FAILURE");
-				print "Unable to revert to initial value"
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "getApAssociatedDevicesHighWatermarkThreshold() function call failed after set operation"
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "setApAssociatedDevicesHighWatermarkThreshold() function call failed"
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "getApMaxAssociatedDevices() function call failed"	
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "getApAssociatedDevicesHighWatermarkThreshold() function call failed"
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Successfully reverted back to inital value")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Unable to revert to initial value")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("getApAssociatedDevicesHighWatermarkThreshold() function call failed after set operation")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("setApAssociatedDevicesHighWatermarkThreshold() function call failed")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("getApMaxAssociatedDevices() function call failed")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("getApAssociatedDevicesHighWatermarkThreshold() function call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-	 

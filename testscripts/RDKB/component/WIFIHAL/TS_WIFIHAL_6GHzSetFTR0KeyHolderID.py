@@ -106,7 +106,7 @@ def HextoUnicodeConversion(num_hex_values, hex_values):
     #Handle the condition when the Key Holder ID is 0x0, the unicode equivalent is Null
     if unicode_key_id == "\x00":
         unicode_key_id = "Null";
-    print "The Equivalent unicode string value of the FTR0 Key Holder ID is : %s" %unicode_key_id;
+    print("The Equivalent unicode string value of the FTR0 Key Holder ID is : %s" %unicode_key_id);
     return unicode_key_id
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -133,8 +133,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetFTR0KeyHolderID');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -144,52 +144,52 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     ## Check if an invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
         tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
         if apIndex == -1:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
         else:
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetFTKeyHolderID");
             tdkTestObj, actualresult, details = getKeyHolder(tdkTestObj, apIndex);
 
-            print "\nTEST STEP 2: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID for 5G private AP";
-            print "EXPECTED RESULT 2: Should get the FTR0 Key Holder ID using the HAL API successfully";
+            print("\nTEST STEP 2: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID for 5G private AP");
+            print("EXPECTED RESULT 2: Should get the FTR0 Key Holder ID using the HAL API successfully");
 
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details;
+                print("ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if proper Hex values are retrieved and convert them to corresponding string value
-                print "\nTEST STEP 3 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values";
-                print "EXPECTED RESULT 3 : FTR0 Key Holder ID should be retrieved as one or more Hex Values";
+                print("\nTEST STEP 3 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values");
+                print("EXPECTED RESULT 3 : FTR0 Key Holder ID should be retrieved as one or more Hex Values");
 
                 details = details.split("Key Holder ID");
                 #Compute the number of Hex values by subtracting the first two list elements as they are debug prints
                 details.remove(details[0]);
                 details.remove(details[0]);
                 num_hex_values = len(details);
-                print "Number of Hex values : %d" %num_hex_values;
+                print("Number of Hex values : %d" %num_hex_values);
 
                 #Retrieve each of the value separately in a list
                 hex_values = [];
                 for iteration in range(0, num_hex_values):
                     hex_values.append(details[iteration].split(" : ")[1]);
-                    print "FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values[iteration]);
+                    print("FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values[iteration]));
 
                 if num_hex_values >= 1:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values;
+                    print("ACTUAL RESULT 3: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Covert to corresponding unicode string
                     initial_KeyHolder = HextoUnicodeConversion(num_hex_values, hex_values);
@@ -200,130 +200,130 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     setValue = str(randint(0, 100)) + choice(string.ascii_letters) + str(randint(0, 100));
                     tdkTestObj, actualresult, details = setKeyHolder(tdkTestObj, apIndex, radioIndex, setValue);
 
-                    print "\nTEST STEP 4: Invoke the HAL API wifi_setFTR0KeyHolderID() to set the FTR0 Key Holder ID for 5G private AP";
-                    print "EXPECTED RESULT 4: Should set the FTR0 Key Holder ID to %s using the HAL API successfully" %setValue;
+                    print("\nTEST STEP 4: Invoke the HAL API wifi_setFTR0KeyHolderID() to set the FTR0 Key Holder ID for 5G private AP");
+                    print("EXPECTED RESULT 4: Should set the FTR0 Key Holder ID to %s using the HAL API successfully" %setValue);
 
                     if expectedresult in actualresult :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: API was invoked successfully; Details : %s" %details;
+                        print("ACTUAL RESULT 4: API was invoked successfully; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check the SET with GET API
                         tdkTestObj, actualresult, details = getKeyHolder(tdkTestObj, apIndex);
 
-                        print "\nTEST STEP 5: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID Set operation";
-                        print "EXPECTED RESULT 5: Should get the FTR0 Key Holder ID using the HAL API successfully";
+                        print("\nTEST STEP 5: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID Set operation");
+                        print("EXPECTED RESULT 5: Should get the FTR0 Key Holder ID using the HAL API successfully");
 
                         if expectedresult in actualresult :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 5: API was invoked successfully after SET operation; Details : %s" %details;
+                            print("ACTUAL RESULT 5: API was invoked successfully after SET operation; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if proper Hex values are retrieved and convert them to corresponding string value
-                            print "\nTEST STEP 6 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values after set operation";
-                            print "EXPECTED RESULT 6 : FTR0 Key Holder ID should be retrieved as one or more Hex Values after set operation";
+                            print("\nTEST STEP 6 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values after set operation");
+                            print("EXPECTED RESULT 6 : FTR0 Key Holder ID should be retrieved as one or more Hex Values after set operation");
 
                             details = details.split("Key Holder ID");
                             #Compute the number of Hex values by subtracting the first two list elements as they are debug prints
                             details.remove(details[0]);
                             details.remove(details[0]);
                             num_hex_values = len(details);
-                            print "Number of Hex values : %d" %num_hex_values;
+                            print("Number of Hex values : %d" %num_hex_values);
 
                             #Retrieve each of the value separately in a list
                             hex_values_final = [];
                             for iteration in range(0, num_hex_values):
                                 hex_values_final.append(details[iteration].split(" : ")[1]);
-                                print "FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values_final[iteration]);
+                                print("FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values_final[iteration]));
 
                             if num_hex_values >= 1:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 6: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values_final;
+                                print("ACTUAL RESULT 6: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values_final);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Covert to corresponding unicode string
                                 final_KeyHolder = HextoUnicodeConversion(num_hex_values, hex_values_final);
 
-                                print "\nTEST STEP 7 : Check if the SET value and GET value of FTR0 Key Holder ID match";
-                                print "EXPECTED RESULT 7 :Tthe SET value and GET value of FTR0 Key Holder ID should match";
+                                print("\nTEST STEP 7 : Check if the SET value and GET value of FTR0 Key Holder ID match");
+                                print("EXPECTED RESULT 7 :Tthe SET value and GET value of FTR0 Key Holder ID should match");
 
-                                print "SET FTR0 Key Holder ID : %s" %setValue;
-                                print "GET FTR0 Key Holder ID : %s" %final_KeyHolder;
+                                print("SET FTR0 Key Holder ID : %s" %setValue);
+                                print("GET FTR0 Key Holder ID : %s" %final_KeyHolder);
 
                                 if setValue == final_KeyHolder:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT 7: The SET value and GET value of FTR0 Key Holder ID match";
+                                    print("ACTUAL RESULT 7: The SET value and GET value of FTR0 Key Holder ID match");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     #Revert to initial FT Key Holder ID
                                     if initial_KeyHolder == "Null":
                                         initial_KeyHolder = "";
                                     tdkTestObj, actualresult, details = setKeyHolder(tdkTestObj, apIndex, radioIndex, initial_KeyHolder);
 
-                                    print "\nTEST STEP 8: Invoke the HAL API wifi_setFTR0KeyHolderID() to revert to initial value";
-                                    print "EXPECTED RESULT 8: Should set the Key Holder ID to %s using the HAL API successfully" %initial_KeyHolder;
+                                    print("\nTEST STEP 8: Invoke the HAL API wifi_setFTR0KeyHolderID() to revert to initial value");
+                                    print("EXPECTED RESULT 8: Should set the Key Holder ID to %s using the HAL API successfully" %initial_KeyHolder);
 
                                     if expectedresult in actualresult :
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT 8: Revert operation success; Details : %s" %details;
+                                        print("ACTUAL RESULT 8: Revert operation success; Details : %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else :
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT 8: Revert operation failed; Details : %s" %details;
+                                        print("ACTUAL RESULT 8: Revert operation failed; Details : %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT 7: The SET value and GET value of FT Key Holder ID does not match";
+                                    print("ACTUAL RESULT 7: The SET value and GET value of FT Key Holder ID does not match");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 6: FTR0 Key Holder ID is not retrieved as one or more Hex values";
+                                print("ACTUAL RESULT 6: FTR0 Key Holder ID is not retrieved as one or more Hex values");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 5: API was not invoked successfully after SET operation; Details : %s" %details;
+                            print("ACTUAL RESULT 5: API was not invoked successfully after SET operation; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: API was not invoked successfully; Details : %s" %details;
+                        print("ACTUAL RESULT 4: API was not invoked successfully; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: FTR0 Key Holder ID is not retrieved as two Hex values";
+                    print("ACTUAL RESULT 3: FTR0 Key Holder ID is not retrieved as two Hex values");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: API invocation failed; Details : %s" %details;
+                print("ACTUAL RESULT 2: API invocation failed; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

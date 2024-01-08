@@ -80,14 +80,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetRadioCtsProtectionEnable');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult = "SUCCESS"
@@ -100,21 +100,21 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Set the RadioCtsProtectionEnable using the HAL API wifi_setRadioCtsProtectionEnable()"
-        print "EXPECTED RESULT 1: The API should set RadioCtsProtectionEnable successfully"
+        print("\nTEST STEP 1: Set the RadioCtsProtectionEnable using the HAL API wifi_setRadioCtsProtectionEnable()")
+        print("EXPECTED RESULT 1: The API should set RadioCtsProtectionEnable successfully")
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: The API returns success; Details : %s" %details;
+            print("ACTUAL RESULT 1: The API returns success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: The API returns failure; Details : %s" %details;
+            print("ACTUAL RESULT 1: The API returns failure; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

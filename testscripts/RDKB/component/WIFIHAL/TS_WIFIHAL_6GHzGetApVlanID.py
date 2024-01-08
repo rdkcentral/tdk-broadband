@@ -80,8 +80,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApVlanID');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamIntValue');
@@ -102,30 +102,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2 : Invoke the HAL API wifi_getApVlanID() to get the 6G AP VLANID";
-        print "EXPECTED RESULT 2 : The HAL API wifi_getApVlanID() should be invoked successfully";
+        print("\nTEST STEP 2 : Invoke the HAL API wifi_getApVlanID() to get the 6G AP VLANID");
+        print("EXPECTED RESULT 2 : The HAL API wifi_getApVlanID() should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : wifi_getApVlanID() invocation success; Details :  %s"%details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 2 : wifi_getApVlanID() invocation success; Details :  %s"%details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             apVlanID = details.split(":")[1].strip();
             if apVlanID != "" and apVlanID.isdigit():
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Vlan ID value associated with AP received successfully: %s"%apVlanID;
+                print("Vlan ID value associated with AP received successfully: %s"%apVlanID);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Vlan ID value associated with AP not received as expected: %s"%apVlanID;
+                print("Vlan ID value associated with AP not received as expected: %s"%apVlanID);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2 : wifi_getApVlanID() invocation failed; Details :  %s"%details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2 : wifi_getApVlanID() invocation failed; Details :  %s"%details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -108,8 +108,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApWpaEncryptionMode');
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,114 +118,114 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-	    expectedresult="SUCCESS";
-	    supportedApWpaEncryptionModes = "sh %s/tdk_utility.sh parseConfigFile SUPPORTED_APWPA_ENCRYPTIONMODES" %TDK_PATH;
-	    tdkTestObj.addParameter("command", supportedApWpaEncryptionModes);
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    supportedApWpaEncryptionModes = tdkTestObj.getResultDetails().strip();
-	    supportedApWpaEncryptionModes = supportedApWpaEncryptionModes.replace("\\n", "");
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+        expectedresult="SUCCESS";
+        supportedApWpaEncryptionModes = "sh %s/tdk_utility.sh parseConfigFile SUPPORTED_APWPA_ENCRYPTIONMODES" %TDK_PATH;
+        tdkTestObj.addParameter("command", supportedApWpaEncryptionModes);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        supportedApWpaEncryptionModes = tdkTestObj.getResultDetails().strip();
+        supportedApWpaEncryptionModes = supportedApWpaEncryptionModes.replace("\\n", "");
 
-	    if supportedApWpaEncryptionModes and expectedresult in actualresult:
-		tdkTestObj.setResultStatus("SUCCESS");
-		supportedModes = supportedApWpaEncryptionModes.split(",");
-		print "TEST STEP : Get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file";
-		print "EXPECTED RESULT : Should get the list of supported ApWpaEncryption Modes";
-		print "ACTUAL RESULT : Got the list of supported ApWpaEncryption Modes as %s" %supportedModes;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
+        if supportedApWpaEncryptionModes and expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            supportedModes = supportedApWpaEncryptionModes.split(",");
+            print("TEST STEP : Get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file");
+            print("EXPECTED RESULT : Should get the list of supported ApWpaEncryption Modes");
+            print("ACTUAL RESULT : Got the list of supported ApWpaEncryption Modes as %s" %supportedModes);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		expectedresult="SUCCESS";
-		apIndex = idx
-		getMethod = "getApWpaEncryptionMode"
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            expectedresult="SUCCESS";
+            apIndex = idx
+            getMethod = "getApWpaEncryptionMode"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-		if expectedresult in actualresult:
-		    initialMode = details.split(":")[1].strip()
-		    if initialMode in supportedModes:
-			print "ApWpaEncryptionMode function successful and returned valid Encryption Mode"
-			tdkTestObj.setResultStatus("SUCCESS");
+            if expectedresult in actualresult:
+                initialMode = details.split(":")[1].strip()
+                if initialMode in supportedModes:
+                    print("ApWpaEncryptionMode function successful and returned valid Encryption Mode")
+                    tdkTestObj.setResultStatus("SUCCESS");
 
-			for setEncMode in supportedModes:
-			    if initialMode == setEncMode:
-				continue;
-			    else:
-				expectedresult="SUCCESS";
-				apIndex = idx
-				setMethod = "setApWpaEncryptionMode"
-				primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                    for setEncMode in supportedModes:
+                        if initialMode == setEncMode:
+                            continue;
+                        else:
+                            expectedresult="SUCCESS";
+                            apIndex = idx
+                            setMethod = "setApWpaEncryptionMode"
+                            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-				#Calling the method from wifiUtility to execute test case and set result status for the test.
-				tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setEncMode, setMethod)
+                            #Calling the method from wifiUtility to execute test case and set result status for the test.
+                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setEncMode, setMethod)
 
-				if expectedresult in actualresult:
-				    expectedresult="SUCCESS";
-				    apIndex = idx
-				    getMethod = "getApWpaEncryptionMode"
-				    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                            if expectedresult in actualresult:
+                                expectedresult="SUCCESS";
+                                apIndex = idx
+                                getMethod = "getApWpaEncryptionMode"
+                                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-				    #Calling the method from wifiUtility to execute test case and set result status for the test.
-				    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-				    finalMode = details.split(":")[1].strip()
+                                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                                finalMode = details.split(":")[1].strip()
 
-				    if expectedresult in actualresult:
-					if finalMode == setEncMode:
-					    tdkTestObj.setResultStatus("SUCCESS");
-					    print "TEST STEP: Compare the set and get valus of ApWpaEncryptionMode"
-					    print "EXPECTED RESULT: Set and get values of ApWpaEncryptionMode should be same"
-					    print "ACTUAL RESULT: Set and get values of ApWpaEncryptionMode are the same"
-					    print "setApWpaEncryptionMode = ",setEncMode
-					    print "getApWpaEncryptionMode = ",finalMode
-					    print "TEST EXECUTION RESULT : SUCCESS"
-					else:
-					    tdkTestObj.setResultStatus("FAILURE");
-					    print "TEST STEP: Compare the set and get valus of ApWpaEncryptionMode"
-					    print "EXPECTED RESULT: Set and get values of ApWpaEncryptionMode should be same"
-					    print "ACTUAL RESULT: Set and get values of ApWpaEncryptionMode are NOT the same"
-					    print "setApWpaEncryptionMode = ",setEncMode
-					    print "getApWpaEncryptionMode = ",finalMode
-					    print "TEST EXECUTION RESULT : FAILURE"
-				    else:
-					print "wifi_getApWpaEncryptionMode() call failed"
-					tdkTestObj.setResultStatus("FAILURE");
+                                if expectedresult in actualresult:
+                                    if finalMode == setEncMode:
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("TEST STEP: Compare the set and get valus of ApWpaEncryptionMode")
+                                        print("EXPECTED RESULT: Set and get values of ApWpaEncryptionMode should be same")
+                                        print("ACTUAL RESULT: Set and get values of ApWpaEncryptionMode are the same")
+                                        print("setApWpaEncryptionMode = ",setEncMode)
+                                        print("getApWpaEncryptionMode = ",finalMode)
+                                        print("TEST EXECUTION RESULT : SUCCESS")
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("TEST STEP: Compare the set and get valus of ApWpaEncryptionMode")
+                                        print("EXPECTED RESULT: Set and get values of ApWpaEncryptionMode should be same")
+                                        print("ACTUAL RESULT: Set and get values of ApWpaEncryptionMode are NOT the same")
+                                        print("setApWpaEncryptionMode = ",setEncMode)
+                                        print("getApWpaEncryptionMode = ",finalMode)
+                                        print("TEST EXECUTION RESULT : FAILURE")
+                                else:
+                                    print("wifi_getApWpaEncryptionMode() call failed")
+                                    tdkTestObj.setResultStatus("FAILURE");
 
-				    #Revert the ApWpaEncryptionMode back to initial value
-				    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialMode, setMethod)
-				    if expectedresult in actualresult:
-					print "Successfully reverted back to initial value"
-					tdkTestObj.setResultStatus("SUCCESS");
-				    else:
-					print "Unable to revert to initial value"
-					tdkTestObj.setResultStatus("FAILURE");
-				else:
-				    print "wifi_setApWpaEncryptionMode() call failed"
-				    tdkTestObj.setResultStatus("FAILURE");
-				break;
-		    else:
-			print "ApWpaEncryptionMode returned is not a valid Encryption "
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "wifi_getApWpaEncryptionMode() failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else :
-		 tdkTestObj.setResultStatus("FAILURE");
-		 print "TEST STEP : Get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file";
-		 print "EXPECTED RESULT : Should get the list of supported ApWpaEncryption Modes";
-		 print "ACTUAL RESULT : Failed to get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file"
-		 #Get the result of execution
-		 print "[TEST EXECUTION RESULT] : FAILURE";
+                                #Revert the ApWpaEncryptionMode back to initial value
+                                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialMode, setMethod)
+                                if expectedresult in actualresult:
+                                    print("Successfully reverted back to initial value")
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                else:
+                                    print("Unable to revert to initial value")
+                                    tdkTestObj.setResultStatus("FAILURE");
+                            else:
+                                print("wifi_setApWpaEncryptionMode() call failed")
+                                tdkTestObj.setResultStatus("FAILURE");
+                            break;
+                else:
+                    print("ApWpaEncryptionMode returned is not a valid Encryption ")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("wifi_getApWpaEncryptionMode() failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else :
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file");
+            print("EXPECTED RESULT : Should get the list of supported ApWpaEncryption Modes");
+            print("ACTUAL RESULT : Failed to get the list of supported ApWpaEncryption Modes from /nvram/TDK/tdk_platform.properties file")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

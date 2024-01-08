@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_GetBandSteeringLog');
 #Get the result of connection with test component and DUT
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,40 +94,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "Details: %s"%details
+    print("Details: %s"%details)
 
     if expectedresult in actualresult :
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1:Check for successful invocation of API"
-       print "EXPECTED RESULT 1:API should be invoked sucessfully"
-       print "ACTUAL RESULT 1: %s"%details
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1:Check for successful invocation of API")
+        print("EXPECTED RESULT 1:API should be invoked sucessfully")
+        print("ACTUAL RESULT 1: %s"%details)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       pSteeringTime = details.split(':')[1].split(',')[0].strip()
-       pSteeringReason = details.split(':')[2].strip()
-       if pSteeringTime and pSteeringReason :
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2:Check for pSteeringTime and  pSteeringReason"
-          print "EXPECTED RESULT 2 : Should get   pSteeringTime and  pSteeringReason non empty"
-          print "ACTUAL RESULT 2: %s"%details
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check for pSteeringTime and  pSteeringReason"
-           print "EXPECTED RESULT 2 : Should get   pSteeringTime and  pSteeringReason non empty"
-           print "ACTUAL RESULT 2 : %s"%details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        pSteeringTime = details.split(':')[1].split(',')[0].strip()
+        pSteeringReason = details.split(':')[2].strip()
+        if pSteeringTime and pSteeringReason :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2:Check for pSteeringTime and  pSteeringReason")
+            print("EXPECTED RESULT 2 : Should get   pSteeringTime and  pSteeringReason non empty")
+            print("ACTUAL RESULT 2: %s"%details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for pSteeringTime and  pSteeringReason")
+            print("EXPECTED RESULT 2 : Should get   pSteeringTime and  pSteeringReason non empty")
+            print("ACTUAL RESULT 2 : %s"%details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Check for successful invocation of wifi_getBandSteeringLog"
-        print "EXPECTED RESULT 1 : Should successfully invoke wifi_getBandSteeringLog"
-        print "ACTUAL RESULT 1: Failed to invoke wifi_getBandSteeringLog"
+        print("TEST STEP 1:Check for successful invocation of wifi_getBandSteeringLog")
+        print("EXPECTED RESULT 1 : Should successfully invoke wifi_getBandSteeringLog")
+        print("ACTUAL RESULT 1: Failed to invoke wifi_getBandSteeringLog")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

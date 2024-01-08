@@ -53,8 +53,8 @@ radioIndex : 0</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Using WIFIHAL_GetOrSetParamUIntValue invoke wifi_getApRetryLimit()  and get the initial value of retry limit
 3. Using  WIFIHAL_GetOrSetParamUIntValue invoke wifi_setApRetryLimit() and set a valid value
-4. Using WIFIHAL_GetOrSetParamUIntValue 
- invoke wifi_getApRetryLimit and get the previously set value. 
+4. Using WIFIHAL_GetOrSetParamUIntValue
+ invoke wifi_getApRetryLimit and get the previously set value.
 5. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 6. Revert the RetryLimit back to initial value
 7. Unload wifihal module</automation_approch>
@@ -70,8 +70,8 @@ radioIndex : 0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 import random;
 
@@ -87,7 +87,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApRetryLimit');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,87 +95,85 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx;
-	    getMethod = "getApRetryLimit"
-	    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        expectedresult="SUCCESS";
+        apIndex = idx;
+        getMethod = "getApRetryLimit"
+        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-	    if expectedresult in actualresult:
-		initialRetryLimit = details.split(":")[1].strip()
-		r= range(1,int(initialRetryLimit))+range(int(initialRetryLimit)+1,20)
-		setRetryLimit = random.choice(r)
-		expectedresult="SUCCESS";
-		apIndex = idx;
-		setMethod = "setApRetryLimit"
-		primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        if expectedresult in actualresult:
+            initialRetryLimit = details.split(":")[1].strip()
+            r= list(range(1,int(initialRetryLimit)))+list(range(int(initialRetryLimit)+1,20))
+            setRetryLimit = random.choice(r)
+            expectedresult="SUCCESS";
+            apIndex = idx;
+            setMethod = "setApRetryLimit"
+            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setRetryLimit, setMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setRetryLimit, setMethod)
 
-		if expectedresult in actualresult:
-		    expectedresult="SUCCESS";
-		    apIndex = idx;
-		    getMethod = "getApRetryLimit"
-		    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+            if expectedresult in actualresult:
+                expectedresult="SUCCESS";
+                apIndex = idx;
+                getMethod = "getApRetryLimit"
+                primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
-		    finalRetryLimit = details.split(":")[1].strip()
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
+                finalRetryLimit = details.split(":")[1].strip()
 
-		    if expectedresult in actualresult:
-			if int(finalRetryLimit) == setRetryLimit:
-			    print "TEST STEP : Comparing the set and get values of ApRetryLimit"
-			    print "EXPECTED RESULT : Set and get ApRetryLimit should be the same"
-			    print "ACTUAL RESULT : Set and get ApRetryLimit are the same"
-			    print "TEST EXECUTION RESULT : SUCCESS"
-			    tdkTestObj.setResultStatus("SUCCESS");
+                if expectedresult in actualresult:
+                    if int(finalRetryLimit) == setRetryLimit:
+                        print("TEST STEP : Comparing the set and get values of ApRetryLimit")
+                        print("EXPECTED RESULT : Set and get ApRetryLimit should be the same")
+                        print("ACTUAL RESULT : Set and get ApRetryLimit are the same")
+                        print("TEST EXECUTION RESULT : SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
 
-			else:
-			    print "TEST STEP : Comparing the set and get values of ApRetryLimit"
-			    print "EXPECTED RESULT : Set and get ApRetryLimit should be the same"
-			    print "ACTUAL RESULT : Set and get ApRetryLimit are NOT the same"
-			    print "TEST EXECUTION RESULT : FAILURE"
-			    tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("TEST STEP : Comparing the set and get values of ApRetryLimit")
+                        print("EXPECTED RESULT : Set and get ApRetryLimit should be the same")
+                        print("ACTUAL RESULT : Set and get ApRetryLimit are NOT the same")
+                        print("TEST EXECUTION RESULT : FAILURE")
+                        tdkTestObj.setResultStatus("FAILURE");
 
-			#Revert back the ApRetryLimit to initial value
-			expectedresult="SUCCESS";
-			apIndex = idx;
-			setMethod = "setApRetryLimit"
-			setRetryLimit = int(initialRetryLimit)
-			primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                    #Revert back the ApRetryLimit to initial value
+                    expectedresult="SUCCESS";
+                    apIndex = idx;
+                    setMethod = "setApRetryLimit"
+                    setRetryLimit = int(initialRetryLimit)
+                    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setRetryLimit, setMethod)
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setRetryLimit, setMethod)
 
-			if expectedresult in actualresult:
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "Successfully reverted back to default value"
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print" Unable to revert to default value"
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Successfully reverted back to default value")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print(" Unable to revert to default value")
 
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "getApRetryLimit function failed";
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("getApRetryLimit function failed");
 
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "setApRetryLimit function failed";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("setApRetryLimit function failed");
 
-	    else:
-		print "getApRetryLimit function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getApRetryLimit function failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-
-

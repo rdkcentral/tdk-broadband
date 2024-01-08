@@ -108,7 +108,7 @@ def get_gscanfilter(tdkTestObj):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     tmp_details = tdkTestObj.getResultDetails().strip();
-    print "tmp_details is %s"%tmp_details
+    print("tmp_details is %s"%tmp_details)
     return tmp_details,actualresult
 
 def set_apscanfilter(mode,tdkTestObj):
@@ -125,8 +125,8 @@ def set_apscanfilter(mode,tdkTestObj):
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilloadmodulestatus =sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -140,11 +140,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
     if expectedresult in initial_result and details!="" :
         initial_mode= int(details[0])
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get Scan Filter mode"
-        print "EXPECTED RESULT 1: Should successfully get Scan Filter mode"
-        print "ACTUAL RESULT 1: Successfully got the Scan Filter mode and initial mode is %s"%initial_mode
+        print("TEST STEP 1: Get Scan Filter mode")
+        print("EXPECTED RESULT 1: Should successfully get Scan Filter mode")
+        print("ACTUAL RESULT 1: Successfully got the Scan Filter mode and initial mode is %s"%initial_mode)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Verify set scan filter for all 3 modes (0-WIFI_SCANFILTER_MODE_DISABLED, 1-WIFI_SCANFILTER_MODE_ENABLED, 2- WIFI_SCANFILTER_MODE_FIRST)
         for mode in range (0,3):
@@ -155,11 +155,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
             if expectedresult in set_result :
                 revert_flag = 1;
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set AccessPoint scan filter mode"
-                print "EXPECTED RESULT 2: Should successfully set the AccessPoint scan filter for mode %s"%mode
-                print "ACTUAL RESULT 2: Successfully set the AccessPoint scan filter mode %s"%set_details
+                print("TEST STEP 2: Set AccessPoint scan filter mode")
+                print("EXPECTED RESULT 2: Should successfully set the AccessPoint scan filter for mode %s"%mode)
+                print("ACTUAL RESULT 2: Successfully set the AccessPoint scan filter mode %s"%set_details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 sleep(10);
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
@@ -169,26 +169,26 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
                 #Get mode should match with set mode
                 if expectedresult in get_result and int(mode) == int(get_mode):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get AccessPoint scan filter mode and compare with set value"
-                    print "EXPECTED RESULT 3: Should successfully Get the AccessPoint scan filter for mode %s"%get_mode
-                    print "ACTUAL RESULT 3: Get Value is matching with set value %s"%get_result
+                    print("TEST STEP 3: Get AccessPoint scan filter mode and compare with set value")
+                    print("EXPECTED RESULT 3: Should successfully Get the AccessPoint scan filter for mode %s"%get_mode)
+                    print("ACTUAL RESULT 3: Get Value is matching with set value %s"%get_result)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get AccessPoint scan filter mode and compare with set value"
-                    print "EXPECTED RESULT 3: Should successfully Get the AccessPoint scan filter for mode %s"%get_mode
-                    print "ACTUAL RESULT 3: Get Value is not matching with set value %s"%get_result
+                    print("TEST STEP 3: Get AccessPoint scan filter mode and compare with set value")
+                    print("EXPECTED RESULT 3: Should successfully Get the AccessPoint scan filter for mode %s"%get_mode)
+                    print("ACTUAL RESULT 3: Get Value is not matching with set value %s"%get_result)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set AccessPoint scan filter mode"
-                print "EXPECTED RESULT 2: Should successfully set the AccessPoint scan filter for mode %s"%mode
-                print "ACTUAL RESULT 2: Failed to set the AccessPoint scan filter mode %s"%set_details
+                print("TEST STEP 2: Set AccessPoint scan filter mode")
+                print("EXPECTED RESULT 2: Should successfully set the AccessPoint scan filter for mode %s"%mode)
+                print("ACTUAL RESULT 2: Failed to set the AccessPoint scan filter mode %s"%set_details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         if revert_flag == 1:
             #Revert back to origial set filter value
@@ -196,30 +196,30 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
             revert_details,revert_result = set_apscanfilter(int(initial_mode),tdkTestObj);
             if expectedresult in revert_result :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Set AccessPoint Initial scan filter mode"
-                print "EXPECTED RESULT 4: Should successfully set the AccessPoint scan filter with initial mode %s"%initial_mode
-                print "ACTUAL RESULT 4: Successfully set the AccessPoint scan filter with initial mode %s"%revert_details
+                print("TEST STEP 4: Set AccessPoint Initial scan filter mode")
+                print("EXPECTED RESULT 4: Should successfully set the AccessPoint scan filter with initial mode %s"%initial_mode)
+                print("ACTUAL RESULT 4: Successfully set the AccessPoint scan filter with initial mode %s"%revert_details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Set AccessPoint Initial scan filter mode"
-                print "EXPECTED RESULT 4: Should successfully set the AccessPoint scan filter with initial mode %s"%initial_mode
-                print "ACTUAL RESULT 4: Failed to set the AccessPoint scan filter with initial mode %s"%revert_details
+                print("TEST STEP 4: Set AccessPoint Initial scan filter mode")
+                print("EXPECTED RESULT 4: Should successfully set the AccessPoint scan filter with initial mode %s"%initial_mode)
+                print("ACTUAL RESULT 4: Failed to set the AccessPoint scan filter with initial mode %s"%revert_details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get Scan Filter mode"
-        print "EXPECTED RESULT 1: Should successfully get Scan Filter mode"
-        print "ACTUAL RESULT 1: Failed to get Scan Filter mode %s"%initial_result
+        print("TEST STEP 1: Get Scan Filter mode")
+        print("EXPECTED RESULT 1: Should successfully get Scan Filter mode")
+        print("ACTUAL RESULT 1: Failed to get Scan Filter mode %s"%initial_result)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

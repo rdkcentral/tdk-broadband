@@ -97,7 +97,7 @@ def GetApAclDevices(tdkTestObj, radioIndex):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "Mac Details",details
+    print("Mac Details",details)
     macAddress= []
     mac_count = 0
     if expectedresult in actualresult:
@@ -110,15 +110,15 @@ def GetApAclDevices(tdkTestObj, radioIndex):
                 macAddress[i] =  macAddress[i].replace("\\", '')
             if '' in macAddress:
                 macAddress.remove('')
-        print "TEST STEP: Get the Acl Devices"
-        print "EXPECTED RESULT: Should get the list of acl devices"
-        print "List of Acl Devices MAC Address:",macAddress
-        print "TEST EXECUTION RESULT :SUCCESS"
+        print("TEST STEP: Get the Acl Devices")
+        print("EXPECTED RESULT: Should get the list of acl devices")
+        print("List of Acl Devices MAC Address:",macAddress)
+        print("TEST EXECUTION RESULT :SUCCESS")
     else:
-        print "TEST STEP: Get the Acl Devices List"
-        print "EXPECTED RESULT: Should get the total list of associated devices"
-        print "ACTUAL RESULT : wifi_getApAclDevices call failed"
-        print "TEST EXECUTION RESULT :FAILURE"
+        print("TEST STEP: Get the Acl Devices List")
+        print("EXPECTED RESULT: Should get the total list of associated devices")
+        print("ACTUAL RESULT : wifi_getApAclDevices call failed")
+        print("TEST EXECUTION RESULT :FAILURE")
         tdkTestObj.setResultStatus("FAILURE");
 
     return actualresult, mac_count, macAddress
@@ -135,18 +135,18 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzAddandGetApAclDevice');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	expectedresult = "SUCCESS"
-	radioIndex = idx
+        expectedresult = "SUCCESS"
+        radioIndex = idx
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAclDevices');
         actualresult, mac_count, macAddress = GetApAclDevices(tdkTestObj, radioIndex)
 
@@ -159,7 +159,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                         break;
                     addMAC = "02:00:00:%02x:%02x:%02x" % (random.randint(0, 255),random.randint(0, 255), random.randint(0, 255))
 
-            print "MAC to be added is ", addMAC;
+            print("MAC to be added is ", addMAC);
             #Add the new MAC to ACL list
             tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
             tdkTestObj.addParameter("methodName","addApAclDevice");
@@ -170,16 +170,16 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print"Successfully added ApAclDevice", addMAC
+                print("Successfully added ApAclDevice", addMAC)
 
                 #Invoke wifi_getApAclDevices() to verify addApAcl
                 tdkTestObj = obj.createTestStep('WIFIHAL_GetApAclDevices');
                 actualresult, mac_count, macAddress = GetApAclDevices(tdkTestObj, radioIndex)
                 if expectedresult in actualresult and mac_count>0:
                     if addMAC in macAddress:
-                        print "wifi_addApAclDevice() successfully verified using wifi_getApAclDevices()";
+                        print("wifi_addApAclDevice() successfully verified using wifi_getApAclDevices()");
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         #Delete the ACL MAC added for testing
                         tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
                         tdkTestObj.addParameter("methodName","delApAclDevice");
@@ -189,33 +189,32 @@ if "SUCCESS" in loadmodulestatus.upper():
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
                         if expectedresult in actualresult:
-                            print "TEST STEP: Delete the added Acl Device"
-                            print "EXPECTED RESULT: Should Delete the added Acl Device"
-                            print "TEST EXECUTION RESULT :SUCCESS"
+                            print("TEST STEP: Delete the added Acl Device")
+                            print("EXPECTED RESULT: Should Delete the added Acl Device")
+                            print("TEST EXECUTION RESULT :SUCCESS")
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Deleted device :", addMAC
+                            print("Deleted device :", addMAC)
                         else:
-                            print "TEST STEP: Delete the added Acl Device"
-                            print "EXPECTED RESULT: Should Delete the added Acl Device"
-                            print "TEST EXECUTION RESULT :FAILURE"
+                            print("TEST STEP: Delete the added Acl Device")
+                            print("EXPECTED RESULT: Should Delete the added Acl Device")
+                            print("TEST EXECUTION RESULT :FAILURE")
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "addApAclDevice failed not reverted back"
+                            print("addApAclDevice failed not reverted back")
                     else:
-                        print "wifi_addApAclDevice() verification using wifi_getApAclDevices() failed. New MAC not found in AclDevice list";
+                        print("wifi_addApAclDevice() verification using wifi_getApAclDevices() failed. New MAC not found in AclDevice list");
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST EXECUTION RESULT :FAILURE")
                 else:
-                    print "wifi_getApAclDevices() failed after wifi_addApAclDevice()"
+                    print("wifi_getApAclDevices() failed after wifi_addApAclDevice()")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"wifi_addApAclDevice() operation failed after add operation";
+                print("wifi_addApAclDevice() operation failed after add operation");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print"wifi_getApAclDevices() operation failed";
+            print("wifi_getApAclDevices() operation failed");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

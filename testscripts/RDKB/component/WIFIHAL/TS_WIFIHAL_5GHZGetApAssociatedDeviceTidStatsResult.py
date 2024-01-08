@@ -85,10 +85,10 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHZGetApAssociatedDeviceTidStatsResul
 wifiobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHZGetApAssociatedDeviceTidStatsResult');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysloadmodulestatus = wifiobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,7 +96,7 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the list of supported security modes
@@ -110,57 +110,56 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
             MAC = details.split("VALUE:")[1].split(' ')[0];
-            print "TEST STEP: Get the MAC of the connected client ";
-            print "ACTUAL RESULT: Should get the mac of connected client ";
-            print "EXPECTED RESULT:",MAC;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP: Get the MAC of the connected client ");
+            print("ACTUAL RESULT: Should get the mac of connected client ");
+            print("EXPECTED RESULT:",MAC);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if MAC :
-               tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceTidStatsResult');
-               tdkTestObj.addParameter("radioIndex", 1);
-               tdkTestObj.addParameter("MAC", MAC);
-               expectedresult="SUCCESS";
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               resultDetails = tdkTestObj.getResultDetails();
-               if expectedresult in actualresult :
-                  ac = resultDetails.split(':')[1].split(',')[0].strip();
-                  tid = resultDetails.split(':')[2].split(',')[0].strip();
-                  sum_time_ms = resultDetails.split(':')[3].strip();
-                  if ac  !=  "(null)"  and tid != "(null)" and sum_time_ms != 0 :
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP : Get the ac,tid,sum_time_ms"
-                     print "EXPECTED RESULT : Should successfuly get ac,tid,sum_time_ms"
-                     print "ACTUAL RESULT : %s"%resultDetails;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                  else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "TEST STEP : Get the ac,tid,sum_time_ms"
-                      print "EXPECTED RESULT : Should successfuly get ac,tid,sum_time_ms"
-                      print "ACTUAL RESULT : Failed to invoke %s"%resultDetails;
-                      print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print " ApAssociatedDeviceTidStatsResult Failed "
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceTidStatsResult');
+                tdkTestObj.addParameter("radioIndex", 1);
+                tdkTestObj.addParameter("MAC", MAC);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                resultDetails = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult :
+                    ac = resultDetails.split(':')[1].split(',')[0].strip();
+                    tid = resultDetails.split(':')[2].split(',')[0].strip();
+                    sum_time_ms = resultDetails.split(':')[3].strip();
+                    if ac  !=  "(null)"  and tid != "(null)" and sum_time_ms != 0 :
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP : Get the ac,tid,sum_time_ms")
+                        print("EXPECTED RESULT : Should successfuly get ac,tid,sum_time_ms")
+                        print("ACTUAL RESULT : %s"%resultDetails);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP : Get the ac,tid,sum_time_ms")
+                        print("EXPECTED RESULT : Should successfuly get ac,tid,sum_time_ms")
+                        print("ACTUAL RESULT : Failed to invoke %s"%resultDetails);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print(" ApAssociatedDeviceTidStatsResult Failed ")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "MAC received form TR181 param is empty"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("MAC received form TR181 param is empty")
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP: Get the MAC of the connected client ";
-            print "ACTUAL RESULT: Should get the mac of connected client "
-            print "EXPECTED RESULT:",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP: Get the MAC of the connected client ");
+            print("ACTUAL RESULT: Should get the mac of connected client ")
+            print("EXPECTED RESULT:",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     wifiobj.unloadModule("wifiagent");
 
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

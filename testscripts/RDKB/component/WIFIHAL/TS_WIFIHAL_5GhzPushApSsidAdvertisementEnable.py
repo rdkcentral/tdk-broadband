@@ -66,8 +66,8 @@ apIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 radio = "5G"
@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GhzPushApSsidAdvertisementEnable');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,59 +90,59 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApSsidAdvertisementEnable"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApSsidAdvertisementEnable"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-	    if expectedresult in actualresult :
-		tdkTestObj.setResultStatus("SUCCESS");
-		enable = details.split(":")[1].strip()
-		if "Enabled" in enable:
-		    print "Access point SSID Advertisement is Enabled"
-		    oldEnable = 1
-		    newEnable = 0
-		else:
-		    print "Access point SSID Advertisement is Disabled"
-		    oldEnable = 0
-		    newEnable = 1
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            enable = details.split(":")[1].strip()
+            if "Enabled" in enable:
+                print("Access point SSID Advertisement is Enabled")
+                oldEnable = 1
+                newEnable = 0
+            else:
+                print("Access point SSID Advertisement is Disabled")
+                oldEnable = 0
+                newEnable = 1
 
-		setMethod = "pushApSsidAdvertisementEnable"
-		#Toggle the enable status using set
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod) 
+            setMethod = "pushApSsidAdvertisementEnable"
+            #Toggle the enable status using set
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod)
 
-		if expectedresult in actualresult :
-		    print "Enable state toggled using set"
-		    # Get the New enable status
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod) 
+            if expectedresult in actualresult :
+                print("Enable state toggled using set")
+                # Get the New enable status
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-		    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
-			print "getApSsidAdvertisementEnable Success, verified along with setApSsidAdvertisementEnable() api"
-			#Revert back to original Enable status
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
+                if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                    print("getApSsidAdvertisementEnable Success, verified along with setApSsidAdvertisementEnable() api")
+                    #Revert back to original Enable status
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
 
-			if expectedresult in actualresult :
-			    print "Enable status reverted back";
-			else:
-			    print "Couldn't revert enable status"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print "getApSsidAdvertisementEnable() failed after set function"
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "pushApSsidAdvertisementEnable() failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "getApSsidAdvertisementEnable() failed"
-		tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult :
+                        print("Enable status reverted back");
+                    else:
+                        print("Couldn't revert enable status")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("getApSsidAdvertisementEnable() failed after set function")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("pushApSsidAdvertisementEnable() failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getApSsidAdvertisementEnable() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

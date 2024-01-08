@@ -117,16 +117,16 @@ def setExtChannel(radioIndex):
 
     possibleExtChannels = ['AboveControlChannel', 'BelowControlChannel', 'Auto'];
 
-    print "\nTEST STEP : Check if the initial Radio Extension Channel retrieved using wifi_getRadioExtChannel() is from the list ", possibleExtChannels;
-    print "EXPECTED RESULT : wifi_getRadioExtChannel should successfully return the radio extension channel from ", possibleExtChannels;
+    print("\nTEST STEP : Check if the initial Radio Extension Channel retrieved using wifi_getRadioExtChannel() is from the list ", possibleExtChannels);
+    print("EXPECTED RESULT : wifi_getRadioExtChannel should successfully return the radio extension channel from ", possibleExtChannels);
 
     if expectedresult in actualresult and details != "":
         initGetExtCh = details.split(":")[1].strip();
 
         if initGetExtCh in possibleExtChannels:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT : Ext Channel value string received: %s"%initGetExtCh;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT : Ext Channel value string received: %s"%initGetExtCh);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             for setExtCh in possibleExtChannels:
                 if initGetExtCh == setExtCh:
@@ -141,21 +141,21 @@ def setExtChannel(radioIndex):
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP : Check if setting the radio extension channel as %s returns failure when the current channel bandwidth is not applicable for extension channels" %setExtCh;
-                    print "EXPECTED RESULT : Setting the radio extension channel should return FAILURE";
+                    print("\nTEST STEP : Check if setting the radio extension channel as %s returns failure when the current channel bandwidth is not applicable for extension channels" %setExtCh);
+                    print("EXPECTED RESULT : Setting the radio extension channel should return FAILURE");
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT : Set operation failed; Details : %s " %details
+                        print("ACTUAL RESULT : Set operation failed; Details : %s " %details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT : Set operation success; Details : %s " %details
+                        print("ACTUAL RESULT : Set operation success; Details : %s " %details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Reverting the extension channel
                         expectedresult = "SUCCESS";
@@ -167,32 +167,32 @@ def setExtChannel(radioIndex):
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP : Revert the extension channel to %s" %initGetExtCh;
-                        print "EXPECTED RESULT : The extension channel should be reverted to the initial state successfully";
+                        print("\nTEST STEP : Revert the extension channel to %s" %initGetExtCh);
+                        print("EXPECTED RESULT : The extension channel should be reverted to the initial state successfully");
 
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT : Extension channel is successfully reverted to initial value";
+                            print("ACTUAL RESULT : Extension channel is successfully reverted to initial value");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Unable to revert the extension channel to initial value";
+                            print("Unable to revert the extension channel to initial value");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     break;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT : Ext Channel value string received: %s is not from possible extension channels list" %initGetExtCh;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT : Ext Channel value string received: %s is not from possible extension channels list" %initGetExtCh);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT : Failed to get the current extension channel";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT : Failed to get the current extension channel");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return;
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -202,7 +202,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if radioIndex == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Calling the method to execute wifi_getRadioOperatingChannelBandwidth() inorder to get the initial channel bandwidth
@@ -213,16 +213,16 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP : Get the initial operating channel bandwidth"
-        print "EXPECTED RESULT : Should successfully get the initial channel bandwidth"
+        print("\nTEST STEP : Get the initial operating channel bandwidth")
+        print("EXPECTED RESULT : Should successfully get the initial channel bandwidth")
 
         if expectedresult in actualresult and details != "":
             initBandwidth = details.split(":")[1].strip()
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT : Initial channel bandwidth is: %s " %initBandwidth;
+            print("ACTUAL RESULT : Initial channel bandwidth is: %s " %initBandwidth);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #if channel bandwidth is from ["40MHz"], set the BW as 20MHz (which is invalid for extension channels) and then do the set extension channel
             if initBandwidth in ["40MHz"]:
@@ -234,15 +234,15 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP : Set the operating channel bandwidth to 20MHz which is an invalid extension channel bandwidth"
-                print "EXPECTED RESULT : Should successfully set the channel bandwidth to 20MHz"
+                print("\nTEST STEP : Set the operating channel bandwidth to 20MHz which is an invalid extension channel bandwidth")
+                print("EXPECTED RESULT : Should successfully set the channel bandwidth to 20MHz")
 
                 if expectedresult in actualresult :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT : Set operation success; Details : %s " %details
+                    print("ACTUAL RESULT : Set operation success; Details : %s " %details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Cross check SET with GET
                     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
@@ -252,21 +252,21 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP : Check if the current operating channel bandwidth is 20MHz"
-                    print "EXPECTED RESULT : The current channel bandwidth should be retrieved as 20MHz"
+                    print("\nTEST STEP : Check if the current operating channel bandwidth is 20MHz")
+                    print("EXPECTED RESULT : The current channel bandwidth should be retrieved as 20MHz")
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT : Current channel bandwidth is: %s " %details
+                        print("ACTUAL RESULT : Current channel bandwidth is: %s " %details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         bandWidth = details.split(":")[1].strip();
                         if bandWidth == "20MHz":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Channel Bandwidth is successfully set to 20MHz";
+                            print("Channel Bandwidth is successfully set to 20MHz");
 
                             #Call the function to set extension channel
                             setExtChannel(radioIndex);
@@ -280,37 +280,37 @@ if "SUCCESS" in loadmodulestatus.upper():
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
 
-                            print "\nTEST STEP : Revert the operating channel bandwidth to ", initBandwidth;
-                            print "EXPECTED RESULT : Should successfully revert the channel bandwidth to ", initBandwidth;
+                            print("\nTEST STEP : Revert the operating channel bandwidth to ", initBandwidth);
+                            print("EXPECTED RESULT : Should successfully revert the channel bandwidth to ", initBandwidth);
 
                             if expectedresult in actualresult :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT : Revert operation success; Details: %s " %details
+                                print("ACTUAL RESULT : Revert operation success; Details: %s " %details)
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT : Revert operation failed; Details: %s " %details
+                                print("ACTUAL RESULT : Revert operation failed; Details: %s " %details)
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Channel Bandwidth is NOT successfully set to 20MHz";
+                            print("Channel Bandwidth is NOT successfully set to 20MHz");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT : Current channel bandwidth is: %s " %details
+                        print("ACTUAL RESULT : Current channel bandwidth is: %s " %details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT : Set operation failed; Details : %s " %details
+                    print("ACTUAL RESULT : Set operation failed; Details : %s " %details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             #if channel bandwidth is not from ["40MHz"], do the set extension channel directly
             else:
@@ -318,11 +318,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT : Initial channel bandwidth is: %s " %details
+            print("ACTUAL RESULT : Initial channel bandwidth is: %s " %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

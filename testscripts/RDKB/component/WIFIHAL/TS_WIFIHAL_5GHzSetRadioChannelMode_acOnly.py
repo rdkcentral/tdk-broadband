@@ -106,8 +106,8 @@ def setRadioChannelMode(tdkTestObj, index, methodName, chnmode, gOnly, nOnly, ac
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilmodulestatus =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -115,18 +115,18 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
-	radioIndex = idx
+        radioIndex = idx
 
         #Get the initial Mode
         expectedresult="SUCCESS";
         #Get the default value from properties file
         tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
         cmd = "sh %s/tdk_utility.sh parseConfigFile CHANNEL_MODES_5_AC_ONLY" %TDK_PATH;
-        print cmd;
+        print(cmd);
         expectedresult="SUCCESS";
         tdkTestObj1.addParameter("command", cmd);
         tdkTestObj1.executeTestCase(expectedresult);
@@ -135,13 +135,13 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
         details = tdkTestObj1.getResultDetails().strip();
         if details != "" and ( expectedresult in  actualresult):
             modeList = details.replace("\\n", "").split(',');
-            print "Radio modes:",modeList
+            print("Radio modes:",modeList)
             tdkTestObj1.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the value of CHANNEL_MODES_5_AC_ONLY from tdk_platform properties file";
-            print "EXPECTED RESULT 1: Should Get the value of CHANNEL_MODES_5_AC_ONLY from platform properties file";
-            print "ACTUAL RESULT 1: CHANNEL_MODES_5_AC_ONLY values from tdk_platform properties file is : ", modeList;
+            print("TEST STEP 1: Get the value of CHANNEL_MODES_5_AC_ONLY from tdk_platform properties file");
+            print("EXPECTED RESULT 1: Should Get the value of CHANNEL_MODES_5_AC_ONLY from platform properties file");
+            print("ACTUAL RESULT 1: CHANNEL_MODES_5_AC_ONLY values from tdk_platform properties file is : ", modeList);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             set_gOnly = 0
             set_nOnly = 0
@@ -154,66 +154,66 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
                 actualresult,details = setRadioChannelMode(tdkTestObj, radioIndex, "setRadioChannelMode", stdStr, set_gOnly, set_nOnly, set_acOnly);
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 2: Set the Radio Channel Mode"
-                    print "EXPECTED RESULT 2: Should successfully Set the Radio Channel Mode as : %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(stdStr, set_gOnly , set_nOnly, set_acOnly)
-                    print "ACTUAL RESULT 2: Successfully Sets the Radio Mode"
+                    print("TEST STEP 2: Set the Radio Channel Mode")
+                    print("EXPECTED RESULT 2: Should successfully Set the Radio Channel Mode as : %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(stdStr, set_gOnly , set_nOnly, set_acOnly))
+                    print("ACTUAL RESULT 2: Successfully Sets the Radio Mode")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Prmitive test case which is associated to this Script
                     tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetRadioStandard');
                     actualresult,details = getRadioChannelMode(tdkTestObj, radioIndex,"getRadioStandard");
-                    print "Details: %s"%details
+                    print("Details: %s"%details)
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 3: Get the Radio Mode using wifi_getRadioStandard"
-                        print "EXPECTED RESULT 3: Should successfully get the Radio Mode using wifi_getRadioStandard"
-                        print "ACTUAL RESULT : Successfully gets the Radio Mode. %s"%details
+                        print("TEST STEP 3: Get the Radio Mode using wifi_getRadioStandard")
+                        print("EXPECTED RESULT 3: Should successfully get the Radio Mode using wifi_getRadioStandard")
+                        print("ACTUAL RESULT : Successfully gets the Radio Mode. %s"%details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	                getStd = details.split(":")[1].split(" ")[0];
-	                gOnly = int(details.split(":")[1].split(" ")[1].strip())
-	                nOnly = int(details.split(":")[1].split(" ")[2].strip());
-	                acOnly = int(details.split(":")[1].split(" ")[3].strip());
+                        getStd = details.split(":")[1].split(" ")[0];
+                        gOnly = int(details.split(":")[1].split(" ")[1].strip())
+                        nOnly = int(details.split(":")[1].split(" ")[2].strip());
+                        acOnly = int(details.split(":")[1].split(" ")[3].strip());
                         if getStd == std and gOnly == set_gOnly and nOnly == set_nOnly and acOnly == set_acOnly:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 4: Get the Radio Mode and check if set was success"
-                            print "EXPECTED RESULT 4: Should successfully get the Std as:  %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(std, set_gOnly , set_nOnly, set_acOnly)
-                            print "ACTUAL RESULT : Successfully verified set using get operation";
+                            print("TEST STEP 4: Get the Radio Mode and check if set was success")
+                            print("EXPECTED RESULT 4: Should successfully get the Std as:  %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(std, set_gOnly , set_nOnly, set_acOnly))
+                            print("ACTUAL RESULT : Successfully verified set using get operation");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 4: Get the Radio Mode and check if set was success"
-                            print "EXPECTED RESULT 4: Should successfully get the Std as:  %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(std, set_gOnly , set_nOnly, set_acOnly)
-                            print "ACTUAL RESULT : Failed to verify  set using get operation";
+                            print("TEST STEP 4: Get the Radio Mode and check if set was success")
+                            print("EXPECTED RESULT 4: Should successfully get the Std as:  %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(std, set_gOnly , set_nOnly, set_acOnly))
+                            print("ACTUAL RESULT : Failed to verify  set using get operation");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3: Get the Radio Mode using wifi_getRadioStandard"
-                        print "EXPECTED RESULT 3: Should successfully get the Radio Mode using wifi_getRadioStandard"
-                        print "ACTUAL RESULT : Failed to get the Radio Mode. %s"%details
+                        print("TEST STEP 3: Get the Radio Mode using wifi_getRadioStandard")
+                        print("EXPECTED RESULT 3: Should successfully get the Radio Mode using wifi_getRadioStandard")
+                        print("ACTUAL RESULT : Failed to get the Radio Mode. %s"%details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Set the Radio Channel Mode"
-                    print "EXPECTED RESULT 3: Should successfully Set the Radio Channel Mode as : %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(stdStr, set_gOnly , set_nOnly, set_acOnly)
-                    print "ACTUAL RESULT 3: Failed to set the Radio Mode %s"
+                    print("TEST STEP 3: Set the Radio Channel Mode")
+                    print("EXPECTED RESULT 3: Should successfully Set the Radio Channel Mode as : %s,  gOnly = %d, nOnly = %d, acOnly = %d" %(stdStr, set_gOnly , set_nOnly, set_acOnly))
+                    print("ACTUAL RESULT 3: Failed to set the Radio Mode %s")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj1.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the value of CHANNEL_MODES_5_AC_ONLY from tdk_platform properties file";
-            print "EXPECTED RESULT 2: Should Get the value of CHANNEL_MODES_5_AC_ONLY from platform properties file";
-            print "ACTUAL RESULT 2:Failed to get CHANNEL_MODES_5_AC_ONLY values from tdk_platform properties file";
+            print("TEST STEP 2: Get the value of CHANNEL_MODES_5_AC_ONLY from tdk_platform properties file");
+            print("EXPECTED RESULT 2: Should Get the value of CHANNEL_MODES_5_AC_ONLY from platform properties file");
+            print("ACTUAL RESULT 2:Failed to get CHANNEL_MODES_5_AC_ONLY values from tdk_platform properties file");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("wifihal");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -88,7 +88,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_GetBaseBSSID');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -103,31 +103,31 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Pattern to match
     pattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})"
-  
+
     if expectedresult in actualresult:
         BSSID = details.split("Value returned is :")[1].strip();
         result = re.match(pattern,BSSID);
- 
+
         if result:
-            print "getBaseBSSID function successful, %s"%details
+            print("getBaseBSSID function successful, %s"%details)
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the Base BSSID value";
-            print "EXPECTED RESULT 1: Function Should return a Base BSSID value";
-            print "ACTUAL RESULT 1: BaseBSSID received Successfully: %s"%BSSID;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1: Get the Base BSSID value");
+            print("EXPECTED RESULT 1: Function Should return a Base BSSID value");
+            print("ACTUAL RESULT 1: BaseBSSID received Successfully: %s"%BSSID);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-            print "getBaseBSSID function failed, %s"%details
+            print("getBaseBSSID function failed, %s"%details)
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the Base BSSID value";
-            print "EXPECTED RESULT 1: Function Should return a Base BSSID value";
-            print "ACTUAL RESULT 1: Failed to Receive BaseBSSID Value: %s"%BSSID;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the Base BSSID value");
+            print("EXPECTED RESULT 1: Function Should return a Base BSSID value");
+            print("ACTUAL RESULT 1: Failed to Receive BaseBSSID Value: %s"%BSSID);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-        print "getBaseBSSID function failed";
+        print("getBaseBSSID function failed");
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

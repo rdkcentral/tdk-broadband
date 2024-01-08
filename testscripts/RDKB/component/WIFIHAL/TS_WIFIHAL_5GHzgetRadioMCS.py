@@ -100,14 +100,14 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzgetRadioMCS');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -116,20 +116,20 @@ if "SUCCESS" in loadmodulestatus.upper():
         primitive = 'WIFIHAL_GetOrSetParamIntValue'
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
         if expectedresult in actualresult :
-	    MCS = int(details.split(":")[1].strip())
+            MCS = int(details.split(":")[1].strip())
 
-	    if (-1 <= MCS and MCS <= 15) or (16 <= MCS and MCS <= 31):
-	        print "MCS value is in the valid range of [-1:15, 16:31]"
-	        tdkTestObj.setResultStatus("SUCCESS");
-	    else:
-	        print "MCS value is not in the valid range of [-1:15, 16:31]"
-	        tdkTestObj.setResultStatus("FAILURE");
+            if (-1 <= MCS and MCS <= 15) or (16 <= MCS and MCS <= 31):
+                print("MCS value is in the valid range of [-1:15, 16:31]")
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("MCS value is not in the valid range of [-1:15, 16:31]")
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-	    print "Call to getRadioMCS() failed"
-	    tdkTestObj.setResultStatus("FAILURE");
+            print("Call to getRadioMCS() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

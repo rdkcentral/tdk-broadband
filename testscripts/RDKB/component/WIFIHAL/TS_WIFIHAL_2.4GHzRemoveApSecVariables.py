@@ -97,46 +97,46 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzRemoveApSecVariables');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    #Script to load the configuration file of the component
-	    tdkTestObj = obj.createTestStep("WIFIHAL_ParamRadioIndex");
-	    #Giving the method name to invoke the api wifi_removeApSecVaribles()
-	    tdkTestObj.addParameter("methodName","removeApSecVaribles")
-	    #Radio index is 0 for 2.4GHz and 1 for 5GHz
-	    tdkTestObj.addParameter("radioIndex",idx);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    print "details",details;
-	    if expectedresult in actualresult:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: To invoke wifi_removeApSecVaribles() api for 2.4GHz";
-		print "EXPECTED RESULT 1: wifi_removeApSecVaribles() api should return SUCCESS for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: To invoke wifi_removeApSecVaribles() api for 2.4GHz";
-		print "EXPECTED RESULT 1: wifi_removeApSecVaribles() api should return SUCCESS for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("WIFIHAL_ParamRadioIndex");
+        #Giving the method name to invoke the api wifi_removeApSecVaribles()
+        tdkTestObj.addParameter("methodName","removeApSecVaribles")
+        #Radio index is 0 for 2.4GHz and 1 for 5GHz
+        tdkTestObj.addParameter("radioIndex",idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        print("details",details);
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: To invoke wifi_removeApSecVaribles() api for 2.4GHz");
+            print("EXPECTED RESULT 1: wifi_removeApSecVaribles() api should return SUCCESS for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: To invoke wifi_removeApSecVaribles() api for 2.4GHz");
+            print("EXPECTED RESULT 1: wifi_removeApSecVaribles() api should return SUCCESS for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

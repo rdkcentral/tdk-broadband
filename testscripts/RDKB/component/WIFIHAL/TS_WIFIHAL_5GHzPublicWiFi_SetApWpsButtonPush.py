@@ -91,19 +91,19 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_SetApWpsButtonPush')
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 def ButtonPushWPS(idx, step):
-    print "\n*******************Invoking AP WPS Button Push**********************";
+    print("\n*******************Invoking AP WPS Button Push**********************");
     status = 1;
     tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamStringValue');
     tdkTestObj.addParameter("radioIndex", idx);
     tdkTestObj.addParameter("methodName", "setApWpsButtonPush");
     expectedresult="SUCCESS";
 
-    print "\nTEST STEP %d: Call the function wifi_setApWpsButtonPush() for 5 GHz Public WiFi" %step;
-    print "EXPECTED RESULT %d: The API invocation should be success" %step;
+    print("\nTEST STEP %d: Call the function wifi_setApWpsButtonPush() for 5 GHz Public WiFi" %step);
+    print("EXPECTED RESULT %d: The API invocation should be success" %step);
     #Execute the test case in DUT
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
@@ -112,14 +112,14 @@ def ButtonPushWPS(idx, step):
     if expectedresult in actualresult :
         status = 0;
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s " %(step, details);
+        print("ACTUAL RESULT %d: %s " %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s " %(step, details);
+        print("ACTUAL RESULT %d: %s " %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
@@ -129,7 +129,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     expectedresult="SUCCESS";
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -139,15 +139,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "\nTEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("\nTEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         #Check if WPS is enabled or not
-        print "\nTEST STEP 2: Check if WPS is enabled by invoking the wifi_getApWpsEnable API for 5GHz Public WiFi";
-        print "EXPECTED RESULT 2:Invocation of wifi_getApWpsEnable should be success";
+        print("\nTEST STEP 2: Check if WPS is enabled by invoking the wifi_getApWpsEnable API for 5GHz Public WiFi");
+        print("EXPECTED RESULT 2:Invocation of wifi_getApWpsEnable should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getApWpsEnable");
         tdkTestObj.addParameter("radioIndex", apIndex);
@@ -159,32 +159,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Invocation of wifi_getApWpsEnable was success. Details : %s" %details;
+            print("ACTUAL RESULT 2: Invocation of wifi_getApWpsEnable was success. Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             ApWPSEnable = details.split(":")[1].strip();
-            print "ApWPSEnable received : %s" %ApWPSEnable;
+            print("ApWPSEnable received : %s" %ApWPSEnable);
             step = 3;
 
             if "Enabled" in ApWPSEnable:
-                print "Access point WPS is enabled";
+                print("Access point WPS is enabled");
                 status = ButtonPushWPS(apIndex, step);
 
                 if status == 0:
-                    print "ButtonPushWPS operation success";
+                    print("ButtonPushWPS operation success");
                     tdkTestObj.setResultStatus("SUCCESS");
                 else:
-                    print "ButtonPushWPS operation failed";
+                    print("ButtonPushWPS operation failed");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "Access point WPS is Disabled"
+                print("Access point WPS is Disabled")
                 oldEnable = 0
                 newEnable = 1
 
                 #Enable WPS
-                print "\nInvoke setApWpsEnable() to enable WPS"
-                print "\nTEST STEP %d: Toggle the enabled state using wifi_setApWPSEnable API for 5GHz Public WiFi" %step;
-                print "EXPECTED RESULT %d: wifi_setApWpsEnable should successfully toggle ApWPSEnable status to Enabled" %step;
+                print("\nInvoke setApWpsEnable() to enable WPS")
+                print("\nTEST STEP %d: Toggle the enabled state using wifi_setApWPSEnable API for 5GHz Public WiFi" %step);
+                print("EXPECTED RESULT %d: wifi_setApWpsEnable should successfully toggle ApWPSEnable status to Enabled" %step);
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                 tdkTestObj.addParameter("methodName","setApWpsEnable")
                 tdkTestObj.addParameter("radioIndex", apIndex)
@@ -193,18 +193,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
                 time.sleep(20);
-                print "Sleeping 20s for set to get reflected....";
+                print("Sleeping 20s for set to get reflected....");
 
                 if expectedresult in actualresult and details != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d:  %s" %(step, details);
+                    print("ACTUAL RESULT %d:  %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if WPS is enabled
                     step = step + 1;
-                    print "\nTEST STEP %d: Check if WPS is enabled by invoking the wifi_getApWpsEnable API for 5GHz Public WiFi" %step;
-                    print "EXPECTED RESULT %d:Invocation of wifi_getApWpsEnable should be success" %step;
+                    print("\nTEST STEP %d: Check if WPS is enabled by invoking the wifi_getApWpsEnable API for 5GHz Public WiFi" %step);
+                    print("EXPECTED RESULT %d:Invocation of wifi_getApWpsEnable should be success" %step);
                     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                     tdkTestObj.addParameter("methodName","getApWpsEnable");
                     tdkTestObj.addParameter("radioIndex", apIndex);
@@ -216,28 +216,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Invocation of wifi_getApWpsEnable was success. Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Invocation of wifi_getApWpsEnable was success. Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         ApWPSEnable = details.split(":")[1].strip();
-                        print "ApWPSEnable received : %s" %ApWPSEnable;
+                        print("ApWPSEnable received : %s" %ApWPSEnable);
 
                         if "Enabled" in ApWPSEnable:
-                            print "Access point WPS is enabled";
+                            print("Access point WPS is enabled");
                             step = step + 1;
                             status = ButtonPushWPS(apIndex, step);
 
                             if status == 0:
-                                print "ButtonPushWPS operation success";
+                                print("ButtonPushWPS operation success");
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else:
-                                print "ButtonPushWPS operation failed";
+                                print("ButtonPushWPS operation failed");
                                 tdkTestObj.setResultStatus("FAILURE");
 
                             #Revert the WPS to initial value
                             step = step + 1;
-                            print "\nTEST STEP %d: Revert the enabled state using wifi_setApWPSEnable API for 5GHz Public WiFi" %step;
-                            print "EXPECTED RESULT %d: wifi_setApWpsEnable should successfully revert ApWPSEnable status to Disabled" %step;
+                            print("\nTEST STEP %d: Revert the enabled state using wifi_setApWPSEnable API for 5GHz Public WiFi" %step);
+                            print("EXPECTED RESULT %d: wifi_setApWpsEnable should successfully revert ApWPSEnable status to Disabled" %step);
                             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                             tdkTestObj.addParameter("methodName","setApWpsEnable")
                             tdkTestObj.addParameter("radioIndex", apIndex)
@@ -246,44 +246,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
                             time.sleep(20);
-                            print "Sleeping 20s for set to get reflected....";
+                            print("Sleeping 20s for set to get reflected....");
 
                             if expectedresult in actualresult and details != "":
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Revert operation success" %(step);
+                                print("ACTUAL RESULT %d: Revert operation success" %(step));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Revert operation success" %(step);
+                                print("ACTUAL RESULT %d: Revert operation success" %(step));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
-                            print "setApWpsEnable has returned false success"
+                            print("setApWpsEnable has returned false success")
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "getApWpsEnable operation failed"
+                        print("getApWpsEnable operation failed")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 2: Invocation of wifi_setApWpsEnable operation failed";
+                    print("ACTUAL RESULT 2: Invocation of wifi_setApWpsEnable operation failed");
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("TEST EXECUTION RESULT : FAILURE");
         else:
-            print "ACTUAL RESULT 2: Invocation of wifi_getApWpsEnable operation failed"
+            print("ACTUAL RESULT 2: Invocation of wifi_getApWpsEnable operation failed")
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("TEST EXECUTION RESULT : FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

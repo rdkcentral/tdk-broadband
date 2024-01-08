@@ -82,8 +82,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApAclDevices');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,7 +94,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAclDevices');
@@ -102,9 +102,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "\nDetails: ",details;
-        print "\nTEST STEP 2 : Get the Acl Devices using the HAL API wifi_getApAclDevices"
-        print "EXPECTED RESULT 2: Should get the list of acl devices successfully"
+        print("\nDetails: ",details);
+        print("\nTEST STEP 2 : Get the Acl Devices using the HAL API wifi_getApAclDevices")
+        print("EXPECTED RESULT 2: Should get the list of acl devices successfully")
 
         if expectedresult in actualresult:
             macAddress= [];
@@ -115,19 +115,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
             if '' in macAddress:
                 macAddress.remove('')
-            print "ACTUAL RESULT 2: List of Acl Devices MAC Address:",macAddress
-            print "TEST EXECUTION RESULT :SUCCESS"
+            print("ACTUAL RESULT 2: List of Acl Devices MAC Address:",macAddress)
+            print("TEST EXECUTION RESULT :SUCCESS")
             tdkTestObj.setResultStatus("SUCCESS");
         else:
-            print "ACTUAL RESULT 2: wifi_getApAclDevices call failed"
-            print "TEST EXECUTION RESULT :FAILURE"
+            print("ACTUAL RESULT 2: wifi_getApAclDevices call failed")
+            print("TEST EXECUTION RESULT :FAILURE")
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

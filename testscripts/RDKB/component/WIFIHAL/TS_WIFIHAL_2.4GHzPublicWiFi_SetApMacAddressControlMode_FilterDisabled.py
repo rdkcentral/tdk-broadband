@@ -90,8 +90,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_SetApMacAddressCon
 #Get the loadmodule status
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
@@ -109,19 +109,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "\nTEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("\nTEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         #Invoke the API
-        print "\n*****************************Get the initial Filter Control mode*******************************";
+        print("\n*****************************Get the initial Filter Control mode*******************************");
         filter = ["Disabled", "WhiteList", "BlackList"];
-        print "\nThe different Filter Control modes are, 0 : %s, 1 : %s, 2 : %s" %(filter[0], filter[1], filter[2]);
+        print("\nThe different Filter Control modes are, 0 : %s, 1 : %s, 2 : %s" %(filter[0], filter[1], filter[2]));
 
-        print "\nTEST STEP 2: Invoke the wifi_getApMacAddressControlMode API for 2.4GHz Public WiFi";
-        print "EXPECTED RESULT 2:Invocation of wifi_getApMacAddressControlMode should be success";
+        print("\nTEST STEP 2: Invoke the wifi_getApMacAddressControlMode API for 2.4GHz Public WiFi");
+        print("EXPECTED RESULT 2:Invocation of wifi_getApMacAddressControlMode should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
         tdkTestObj.addParameter("methodName","getApMacAddressControlMode")
         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -131,21 +131,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult and details != "":
             initMode = int(details.split(":")[1].strip());
-            print "Initial Mac Address Control Mode is : %d" %initMode;
+            print("Initial Mac Address Control Mode is : %d" %initMode);
 
             #Check if the Mode is valid
             if initMode == 0 or initMode == 1 or initMode == 2:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode was success. Initial Mode : %s" %filter[initMode];
+                print("ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode was success. Initial Mode : %s" %filter[initMode]);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #For Filter Disabled, setMode = 0
-                print "\n*****************************Set to Disabled Filter Control mode*******************************";
+                print("\n*****************************Set to Disabled Filter Control mode*******************************");
                 setMode = 0;
-                print "\nTEST STEP 3: Set to Disabled filter mode by invoking the API wifi_setApMacAddressControlMode for 2.4GHz Public WiFi";
-                print "EXPECTED RESULT 3:Invocation of wifi_setApMacAddressControlMode should be success";
+                print("\nTEST STEP 3: Set to Disabled filter mode by invoking the API wifi_setApMacAddressControlMode for 2.4GHz Public WiFi");
+                print("EXPECTED RESULT 3:Invocation of wifi_setApMacAddressControlMode should be success");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
                 tdkTestObj.addParameter("methodName","setApMacAddressControlMode")
                 tdkTestObj.addParameter("radioIndex", apIndex)
@@ -157,14 +157,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Invocation of wifi_setApMacAddressControlMode was success. Details : %s" %(details);
+                    print("ACTUAL RESULT 3: Invocation of wifi_setApMacAddressControlMode was success. Details : %s" %(details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Get the Mode
                     sleep(10);
-                    print "\nTEST STEP 4: Invoke the wifi_getApMacAddressControlMode API for 2.4GHz Public WiFi";
-                    print "EXPECTED RESULT 4: Invocation of wifi_getApMacAddressControlMode should be success";
+                    print("\nTEST STEP 4: Invoke the wifi_getApMacAddressControlMode API for 2.4GHz Public WiFi");
+                    print("EXPECTED RESULT 4: Invocation of wifi_getApMacAddressControlMode should be success");
                     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
                     tdkTestObj.addParameter("methodName","getApMacAddressControlMode")
                     tdkTestObj.addParameter("radioIndex", apIndex)
@@ -174,28 +174,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                     if expectedresult in actualresult and details != "":
                         finalMode = details.split(":")[1].strip();
-                        print "Final Mac Address Control Mode is : %s" %finalMode;
+                        print("Final Mac Address Control Mode is : %s" %finalMode);
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: Invocation of wifi_getApMacAddressControlMode was success";
+                        print("ACTUAL RESULT 4: Invocation of wifi_getApMacAddressControlMode was success");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check whether the filter control mode is same as the mode set
-                        print "\nTEST STEP 5: Check if the Filter Control mode set is same as the get value for 2.4GHz Public WiFi";
-                        print "EXPECTED RESULT 5: Set and get values should be the same" ;
-                        print "Set value: %d" %setMode;
-                        print "Get value: %d" %int(finalMode);
+                        print("\nTEST STEP 5: Check if the Filter Control mode set is same as the get value for 2.4GHz Public WiFi");
+                        print("EXPECTED RESULT 5: Set and get values should be the same") ;
+                        print("Set value: %d" %setMode);
+                        print("Get value: %d" %int(finalMode));
 
                         if int(finalMode) == setMode:
-                            print "ACTUAL RESULT 5: Set and get values are the same";
-                            print "TEST EXECUTION RESULT :SUCCESS"
+                            print("ACTUAL RESULT 5: Set and get values are the same");
+                            print("TEST EXECUTION RESULT :SUCCESS")
                             tdkTestObj.setResultStatus("SUCCESS");
 
                             #Revert to initial value
-                            print "\n****************************Revert to initial Filter Control Mode************************";
-                            print "\nTEST STEP 6: Revert to initial filter mode by invoking the API wifi_setApMacAddressControlMode for 2.4GHz Public WiFi" ;
-                            print "EXPECTED RESULT 6:Invocation of wifi_setApMacAddressControlMode should be success";
+                            print("\n****************************Revert to initial Filter Control Mode************************");
+                            print("\nTEST STEP 6: Revert to initial filter mode by invoking the API wifi_setApMacAddressControlMode for 2.4GHz Public WiFi") ;
+                            print("EXPECTED RESULT 6:Invocation of wifi_setApMacAddressControlMode should be success");
                             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
                             tdkTestObj.addParameter("methodName","setApMacAddressControlMode")
                             tdkTestObj.addParameter("radioIndex", apIndex)
@@ -205,49 +205,48 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             details = tdkTestObj.getResultDetails();
 
                             if expectedresult in actualresult:
-                                print "ACTUAL RESULT 6 : Successfully reverted to initial mode";
+                                print("ACTUAL RESULT 6 : Successfully reverted to initial mode");
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
-                                print "ACTUAL RESULT 6 : Failed to revert to initial mode";
+                                print("ACTUAL RESULT 6 : Failed to revert to initial mode");
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
-                            print "ACTUAL RESULT 5: Set and get values are NOT the same";
-                            print "TEST EXECUTION RESULT :FAILURE"
+                            print("ACTUAL RESULT 5: Set and get values are NOT the same");
+                            print("TEST EXECUTION RESULT :FAILURE")
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: Invocation of wifi_getApMacAddressControlMode was failed";
+                        print("ACTUAL RESULT 4: Invocation of wifi_getApMacAddressControlMode was failed");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Invocation of wifi_setApMacAddressControlMode was failed";
+                    print("ACTUAL RESULT 3: Invocation of wifi_setApMacAddressControlMode was failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode was success. Initial Mode is invalid: %d" %initMode;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode was success. Initial Mode is invalid: %d" %initMode);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode() function call failed"
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT 2: Invocation of wifi_getApMacAddressControlMode() function call failed")
+            print("TEST EXECUTION RESULT : FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

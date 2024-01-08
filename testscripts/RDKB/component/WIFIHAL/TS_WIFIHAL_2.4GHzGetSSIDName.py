@@ -89,7 +89,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetSSIDName');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,41 +98,41 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Checking for AP Index 0, Similar way we can check for other APs
     tdkTestObjTemp, idx = getIndex(obj, radio);
-    
+
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
 
-    else:        
+    else:
 
-	    apIndex = idx;
-	    getMethod = "getSSIDName"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        apIndex = idx;
+        getMethod = "getSSIDName"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    if expectedresult in actualresult:
-		ssidName = details.split(":")[1].strip()
-		if len(ssidName) <= 32:
-		    print "Wifi_getSSIDName() function called successfully and %s"%details
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 1: Validate the wifi_getSSIDName Function";
-		    print "EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID";
-		    print "ACTUAL RESULT 1: SSID string received: %s"%ssidName;
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    print "wifi_getSSIDName function failed, %s"%details
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 1: Validate the wifi_getSSIDName Function";
-		    print "EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID";
-		    print "ACTUAL RESULT 1:Failed to receive SSID string: %s"%ssidName;
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		print "wifi_getSSIDName function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+        if expectedresult in actualresult:
+            ssidName = details.split(":")[1].strip()
+            if len(ssidName) <= 32:
+                print("Wifi_getSSIDName() function called successfully and %s"%details)
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Validate the wifi_getSSIDName Function");
+                print("EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID");
+                print("ACTUAL RESULT 1: SSID string received: %s"%ssidName);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                print("wifi_getSSIDName function failed, %s"%details)
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Validate the wifi_getSSIDName Function");
+                print("EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID");
+                print("ACTUAL RESULT 1:Failed to receive SSID string: %s"%ssidName);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("wifi_getSSIDName function failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

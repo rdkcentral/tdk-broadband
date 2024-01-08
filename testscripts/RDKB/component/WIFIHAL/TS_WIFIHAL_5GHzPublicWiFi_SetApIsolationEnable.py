@@ -87,8 +87,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_SetApIsolationEnable
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,7 +96,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -106,14 +106,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "TEST STEP 2: Invoke the wifi_getApIsolationEnable api";
-        print "EXPECTED RESULT 2:Invocation of wifi_getApIsolationEnable should be success";
+        print("TEST STEP 2: Invoke the wifi_getApIsolationEnable api");
+        print("EXPECTED RESULT 2:Invocation of wifi_getApIsolationEnable should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getApIsolationEnable")
         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -125,9 +125,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Invocation of wifi_getApIsolationEnable was success. %s" %details;
+            print("ACTUAL RESULT 2: Invocation of wifi_getApIsolationEnable was success. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             initial_enable = details.split(":")[1].strip()
 
             if "Enabled" in initial_enable:
@@ -139,8 +139,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 newEnable = 1
                 newStatus = "Enabled"
 
-            print "TEST STEP 3: Toggle the enabled state using wifi_setApIsolationEnable api";
-            print "EXPECTED RESULT 3: wifi_setApIsolationEnable should successfully toggle ApIsolationEnable status to ",newStatus ;
+            print("TEST STEP 3: Toggle the enabled state using wifi_setApIsolationEnable api");
+            print("EXPECTED RESULT 3: wifi_setApIsolationEnable should successfully toggle ApIsolationEnable status to ",newStatus) ;
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
             tdkTestObj.addParameter("methodName","setApIsolationEnable")
             tdkTestObj.addParameter("radioIndex", apIndex)
@@ -151,12 +151,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
             if expectedresult in actualresult and details != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3:  %s" %details;
+                print("ACTUAL RESULT 3:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "TEST STEP 4: Invoke  wifi_getApIsolationEnable  to verify toggling done by wifi_setApIsolationEnable api";
-                print "EXPECTED RESULT 4: wifi_getApIsolationEnable should be successfully invoked after set";
+                print("TEST STEP 4: Invoke  wifi_getApIsolationEnable  to verify toggling done by wifi_setApIsolationEnable api");
+                print("EXPECTED RESULT 4: wifi_getApIsolationEnable should be successfully invoked after set");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                 tdkTestObj.addParameter("methodName","getApIsolationEnable")
                 tdkTestObj.addParameter("radioIndex", apIndex)
@@ -166,20 +166,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                 if expectedresult in actualresult and details != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: Invocation of wifi_getApIsolationEnable was success";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 4: Invocation of wifi_getApIsolationEnable was success");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     enable = details.split(":")[1].strip();
 
                     if enable == newStatus :
-                        print "TEST STEP 5 : Verify if ApIsolationEnable set value and get value are same"
-                        print "EXPECTED RESULT 5 : wifi_getApIsolationEnable() returned enable state same as the set value"
-                        print "ACTUAL RESULT 5:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 5 : Verify if ApIsolationEnable set value and get value are same")
+                        print("EXPECTED RESULT 5 : wifi_getApIsolationEnable() returned enable state same as the set value")
+                        print("ACTUAL RESULT 5:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #Revert ApIsolationEnable to initial value
-                        print "TEST STEP 6: Revert the enabled state to %s using wifi_setApIsolationEnable api" %initial_enable;
-                        print "EXPECTED RESULT 6: wifi_setApIsolationEnable should successfully revert ApIsolationEnable status";
+                        print("TEST STEP 6: Revert the enabled state to %s using wifi_setApIsolationEnable api" %initial_enable);
+                        print("EXPECTED RESULT 6: wifi_setApIsolationEnable should successfully revert ApIsolationEnable status");
                         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                         tdkTestObj.addParameter("methodName","setApIsolationEnable")
                         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -190,47 +190,46 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         if expectedresult in actualresult and details != "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6:  %s" %details;
+                            print("ACTUAL RESULT 6:  %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6:  %s" %details;
+                            print("ACTUAL RESULT 6:  %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "TEST STEP 5 : Verify if ApIsolationEnable set value and get value are same"
-                        print "EXPECTED RESULT 5 : wifi_getApIsolationEnable() returned enable state different from the set value"
-                        print "ACTUAL RESULT 5:  %s" %details;
+                        print("TEST STEP 5 : Verify if ApIsolationEnable set value and get value are same")
+                        print("EXPECTED RESULT 5 : wifi_getApIsolationEnable() returned enable state different from the set value")
+                        print("ACTUAL RESULT 5:  %s" %details);
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: Invocation of wifi_getApIsolationEnable was failure";
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("ACTUAL RESULT 4: Invocation of wifi_getApIsolationEnable was failure");
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3:  %s" %details;
+                print("ACTUAL RESULT 3:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -77,47 +77,47 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioIEEE80211hEnabled');
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "getRadioIEEE80211hSupported"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	    enablestate = details.split(":")[1].strip(" ");
-	    if expectedresult in actualresult:
-		if 'Enabled' in enablestate :
-		    expectedresult="SUCCESS";
-		    radioIndex = idx
-		    getMethod = "getRadioIEEE80211hEnabled"
-		    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-		    if expectedresult in actualresult:
-			print"TEST STEP : Get the Radio IEEE80211h Enabled Status for 6GHz";
-			print"EXPECTED RESULT : Get the radio enabled status for 6GHz";
-			print"ACTUAL RESULT : Got the radio enabled status for 6GHz";
-			print "details",details;
-			tdkTestObj.setResultStatus("SUCCESS");
-		    else:
-			print"TEST STEP : Get the Radio IEEE80211h Enabled Status for 6GHz";
-			print"EXPECTED RESULT : Get the radio enabled status for 6GHz";
-			print"ACTUAL RESULT : Unable to get the radio enabled status for 6GHz";
-			print "details",details;
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "Radio IEEE80211h feature is not supported for 6GHz";
-		    tdkTestObj.setResultStatus("SUCCESS");
-	    else:
-		print"wifi_getRadioIEEE80211hSupported() operation failed";
-		tdkTestObj.setResultStatus("FAILURE");
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "getRadioIEEE80211hSupported"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        enablestate = details.split(":")[1].strip(" ");
+        if expectedresult in actualresult:
+            if 'Enabled' in enablestate :
+                expectedresult="SUCCESS";
+                radioIndex = idx
+                getMethod = "getRadioIEEE80211hEnabled"
+                primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                if expectedresult in actualresult:
+                    print("TEST STEP : Get the Radio IEEE80211h Enabled Status for 6GHz");
+                    print("EXPECTED RESULT : Get the radio enabled status for 6GHz");
+                    print("ACTUAL RESULT : Got the radio enabled status for 6GHz");
+                    print("details",details);
+                    tdkTestObj.setResultStatus("SUCCESS");
+                else:
+                    print("TEST STEP : Get the Radio IEEE80211h Enabled Status for 6GHz");
+                    print("EXPECTED RESULT : Get the radio enabled status for 6GHz");
+                    print("ACTUAL RESULT : Unable to get the radio enabled status for 6GHz");
+                    print("details",details);
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("Radio IEEE80211h feature is not supported for 6GHz");
+                tdkTestObj.setResultStatus("SUCCESS");
+        else:
+            print("wifi_getRadioIEEE80211hSupported() operation failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

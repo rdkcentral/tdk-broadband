@@ -103,13 +103,13 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzDelApAclDevice_InvalidIndex');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult = "SUCCESS"
@@ -117,14 +117,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         getMethod = "getApAclDeviceNum"
         primitive = 'WIFIHAL_GetOrSetParamUIntValue'
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-        print"TEST STEP 1 : Get ApAclDevice Number"
-        print"EXPECTED RESULT 1 : getApAclDeviceNum successfully retrieves the Number "
+        print("TEST STEP 1 : Get ApAclDevice Number")
+        print("EXPECTED RESULT 1 : getApAclDeviceNum successfully retrieves the Number ")
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print"ACTUAL RESULT 1 : %s"%details;
-            print"[TEST EXECUTION RESULT] : SUCCESS"
+            print("ACTUAL RESULT 1 : %s"%details);
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             deviceNum = int(details.split(":")[1].strip());
-            print"Number of ApAcl devices initially =",deviceNum;
+            print("Number of ApAcl devices initially =",deviceNum);
             #Primitive test case which associated to this Script
             tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
             #Giving the method name to invoke the api wifi_addApAclDevice()
@@ -134,33 +134,33 @@ if "SUCCESS" in loadmodulestatus.upper():
             mac_partial = "7A:36:76:41:9A:"
             x = str(randint(10,99))
             mac = mac_partial+x
-            print "Mac Address to be added : %s"%mac
+            print("Mac Address to be added : %s"%mac)
             tdkTestObj.addParameter("DeviceMacAddress",mac);
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print"TEST STEP 2 : Add the MAC address using addApAclDevice"
-            print"EXPECTED RESULT 2 : addApAclDevice should be success"
+            print("TEST STEP 2 : Add the MAC address using addApAclDevice")
+            print("EXPECTED RESULT 2 : addApAclDevice should be success")
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print"ACTUAL RESULT 2 : %s"%details;
-                print"[TEST EXECUTION RESULT] : SUCCESS"
+                print("ACTUAL RESULT 2 : %s"%details);
+                print("[TEST EXECUTION RESULT] : SUCCESS")
                 expectedresult = "SUCCESS"
                 radioIndex = idx
                 getMethod = "getApAclDeviceNum"
                 primitive = 'WIFIHAL_GetOrSetParamUIntValue'
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-                print"TEST STEP 3 : Get ApAclDevice Number"
-                print"EXPECTED RESULT 3 : getApAclDeviceNum successfully retrieves the Number "
+                print("TEST STEP 3 : Get ApAclDevice Number")
+                print("EXPECTED RESULT 3 : getApAclDeviceNum successfully retrieves the Number ")
                 if expectedresult in actualresult:
                     deviceNum_add = int(details.split(":")[1].strip());
                     deviceNum_new = deviceNum_add - deviceNum;
                     if deviceNum_new == 1:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print"ACTUAL RESULT 3 : %s"%details;
-                        print"[TEST EXECUTION RESULT] : SUCCESS"
-                        print"Number of ApAcl devices after adding =",deviceNum_add;
+                        print("ACTUAL RESULT 3 : %s"%details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                        print("Number of ApAcl devices after adding =",deviceNum_add);
                         #Primitive test case which associated to this Script
                         tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
                         #Giving the method name to invoke the api wifi_delApAclDevice
@@ -172,29 +172,29 @@ if "SUCCESS" in loadmodulestatus.upper():
                         tdkTestObj.executeTestCase(expectedresult);
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
-                        print"TEST STEP 4: delApAclDevice invoked with Invalid Index";
-                        print"EXPECTED RESULT 4: delApAclDevice should return failure";
+                        print("TEST STEP 4: delApAclDevice invoked with Invalid Index");
+                        print("EXPECTED RESULT 4: delApAclDevice should return failure");
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print"ACTUAL RESULT 4: %s"%details
-                            print"[TEST EXECUTION RESULT] : SUCCESS"
-                            print"ApAclDevice is not deleted when an Invalid Index is passed";
+                            print("ACTUAL RESULT 4: %s"%details)
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                            print("ApAclDevice is not deleted when an Invalid Index is passed");
                             expectedresult = "SUCCESS"
                             radioIndex = idx
                             getMethod = "getApAclDeviceNum"
                             primitive = 'WIFIHAL_GetOrSetParamUIntValue'
                             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-                            print"TEST STEP 5 : Get ApAclDevice Number"
-                            print"EXPECTED RESULT 5 : getApAclDeviceNum successfully retrieves the Number "
+                            print("TEST STEP 5 : Get ApAclDevice Number")
+                            print("EXPECTED RESULT 5 : getApAclDeviceNum successfully retrieves the Number ")
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print"ACTUAL RESULT 5 : %s"%details;
-                                print"[TEST EXECUTION RESULT] : SUCCESS"
+                                print("ACTUAL RESULT 5 : %s"%details);
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
                                 deviceNum_del = int(details.split(":")[1].strip());
-                                print"Number of ApAcl devices after deleting  =",deviceNum_del;
+                                print("Number of ApAcl devices after deleting  =",deviceNum_del);
                                 if deviceNum_del == deviceNum + 1:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print"Number of ApAcl devices remains unchanged when delApAclDevice is invoked with Invalid Index";
+                                    print("Number of ApAcl devices remains unchanged when delApAclDevice is invoked with Invalid Index");
                                     #Revert Operation
                                     tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
                                     #Giving the method name to invoke the api wifi_delApAclDevice
@@ -205,73 +205,72 @@ if "SUCCESS" in loadmodulestatus.upper():
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
                                     details = tdkTestObj.getResultDetails();
-                                    print"TEST STEP 6: Revert ApAclDevice to initial state";
-                                    print"EXPECTED RESULT 6: DelApAclDevice operation should be success";
+                                    print("TEST STEP 6: Revert ApAclDevice to initial state");
+                                    print("EXPECTED RESULT 6: DelApAclDevice operation should be success");
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print"ACTUAL RESULT 6: %s"%details;
-                                        print"[TEST EXECUTION RESULT] : SUCCESS"
-                                        print"DelApAclDevice returns Success";
+                                        print("ACTUAL RESULT 6: %s"%details);
+                                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                                        print("DelApAclDevice returns Success");
                                         #Cross check with getApAclDeviceNum
                                         expectedresult = "SUCCESS"
                                         radioIndex = idx
                                         getMethod = "getApAclDeviceNum"
                                         primitive = 'WIFIHAL_GetOrSetParamUIntValue'
                                         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-                                        print"TEST STEP 7: Get ApAclDevice Number"
-                                        print"EXPECTED RESULT 7 : getApAclDeviceNum successfully retrieves the Number "
+                                        print("TEST STEP 7: Get ApAclDevice Number")
+                                        print("EXPECTED RESULT 7 : getApAclDeviceNum successfully retrieves the Number ")
                                         if expectedresult in actualresult:
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print"ACTUAL RESULT 7: %s"%details;
-                                            print"[TEST EXECUTION RESULT] : SUCCESS"
+                                            print("ACTUAL RESULT 7: %s"%details);
+                                            print("[TEST EXECUTION RESULT] : SUCCESS")
                                             deviceNum_del = int(details.split(":")[1].strip());
-                                            print"Number of ApAcl devices after deleting  =",deviceNum_del;
+                                            print("Number of ApAcl devices after deleting  =",deviceNum_del);
                                             if deviceNum_del == deviceNum:
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print"Revert Operation is Success"
+                                                print("Revert Operation is Success")
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print"Revert Operation has Failed"
+                                                print("Revert Operation has Failed")
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print"wifi_getApAclDeviceNum() operation failed after revert operation"
-                                            print"ACTUAL RESULT 7: %s"%details;
-                                            print"[TEST EXECUTION RESULT] : FAILURE"
+                                            print("wifi_getApAclDeviceNum() operation failed after revert operation")
+                                            print("ACTUAL RESULT 7: %s"%details);
+                                            print("[TEST EXECUTION RESULT] : FAILURE")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print"ApAclDevice is not successfully reverted to initial state";
-                                        print"ACTUAL RESULT 6: %s"%details;
-                                        print"[TEST EXECUTION RESULT] : FAILURE"
+                                        print("ApAclDevice is not successfully reverted to initial state");
+                                        print("ACTUAL RESULT 6: %s"%details);
+                                        print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print"wifi_getApAclDeviceNum() operation failed after delete operation";
-                                    print"ACTUAL RESULT 5: %s"%details;
-                                    print"[TEST EXECUTION RESULT] : FAILURE"
+                                    print("wifi_getApAclDeviceNum() operation failed after delete operation");
+                                    print("ACTUAL RESULT 5: %s"%details);
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print"delApAclDevice returns success when Invalid Index is passed";
-                                print"ACTUAL RESULT 4: %s"%details;
-                                print"[TEST EXECUTION RESULT] : FAILURE"
+                                print("delApAclDevice returns success when Invalid Index is passed");
+                                print("ACTUAL RESULT 4: %s"%details);
+                                print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Number of ApAclDevices not incremented after add operation";
+                            print("Number of ApAclDevices not incremented after add operation");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print"wifi_getApAclDeviceNum() operation failed after add operation";
-                        print"ACTUAL RESULT 3: %s"%details;
-                        print"[TEST EXECUTION RESULT] : FAILURE"
+                        print("wifi_getApAclDeviceNum() operation failed after add operation");
+                        print("ACTUAL RESULT 3: %s"%details);
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print"wifi_addApAclDevice() operation failed";
-                    print"ACTUAL RESULT 2: %s"%details;
-                    print"[TEST EXECUTION RESULT] : FAILURE"
+                    print("wifi_addApAclDevice() operation failed");
+                    print("ACTUAL RESULT 2: %s"%details);
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"wifi_getApAclDeviceNum() operation failed";
-                print"ACTUAL RESULT 1: %s"%details;
-                print"[TEST EXECUTION RESULT] : FAILURE"
+                print("wifi_getApAclDeviceNum() operation failed");
+                print("ACTUAL RESULT 1: %s"%details);
+                print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-

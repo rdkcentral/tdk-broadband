@@ -87,8 +87,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioIfName');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,52 +97,52 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-	    expectedresult="SUCCESS";
-	    print "Get the radio interface name for 5Ghz"
-	    getRadioIf = "sh %s/tdk_utility.sh parseConfigFile RADIO_IF_5G" %TDK_PATH;
-	    tdkTestObj.addParameter("command", getRadioIf);
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    radioIf= tdkTestObj.getResultDetails().strip();
-	    radioIf = radioIf.replace("\\n", "");
-	    if radioIf:
-		#Script to load the configuration file of the component
-		tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-		#Giving the method name to invoke the api wifi_getRadioIfName()
-		tdkTestObj.addParameter("methodName","getRadioIfName")
-		#Radio index is 0 for 2.4GHz and 1 for 5GHz
-		tdkTestObj.addParameter("radioIndex",idx);
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails();
-		Ifvalue = details.split(":")[1]
-		if expectedresult in actualresult and Ifvalue == radioIf:
-		   #Set the result status of execution
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 1: Get the Radio interface name";
-		    print "EXPECTED RESULT 1: Should get the interface name ";
-		    print "ACTUAL RESULT 1: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 1: Get the Radio interface name";
-		    print "EXPECTED RESULT 1: Should get the interface name ";
-		    print "ACTUAL RESULT 1: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "FAILURE: Failed to get the value of RadioIf from /etc/tdk_platform.properties file"
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+        expectedresult="SUCCESS";
+        print("Get the radio interface name for 5Ghz")
+        getRadioIf = "sh %s/tdk_utility.sh parseConfigFile RADIO_IF_5G" %TDK_PATH;
+        tdkTestObj.addParameter("command", getRadioIf);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        radioIf= tdkTestObj.getResultDetails().strip();
+        radioIf = radioIf.replace("\\n", "");
+        if radioIf:
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+            #Giving the method name to invoke the api wifi_getRadioIfName()
+            tdkTestObj.addParameter("methodName","getRadioIfName")
+            #Radio index is 0 for 2.4GHz and 1 for 5GHz
+            tdkTestObj.addParameter("radioIndex",idx);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            Ifvalue = details.split(":")[1]
+            if expectedresult in actualresult and Ifvalue == radioIf:
+               #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the Radio interface name");
+                print("EXPECTED RESULT 1: Should get the interface name ");
+                print("ACTUAL RESULT 1: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the Radio interface name");
+                print("EXPECTED RESULT 1: Should get the interface name ");
+                print("ACTUAL RESULT 1: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("FAILURE: Failed to get the value of RadioIf from /etc/tdk_platform.properties file")
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

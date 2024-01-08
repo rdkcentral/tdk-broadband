@@ -82,8 +82,8 @@ radioIndex : 0</input_parameters>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 radio = "2.4G"
 
@@ -98,56 +98,56 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioTransmitPower');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-    	tdkTestObjTemp, idx = getIndex(obj, radio);
-    	## Check if a invalid index is returned
-    	if idx == -1:
-        	print "Failed to get radio index for radio %s\n" %radio;
-        	tdkTestObjTemp.setResultStatus("FAILURE");
-    	else: 
-	 
-		tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamULongValue');
-		#Giving the method name to invoke the api to get current transmit power ,wifi_getRadioTransmitPower()
-		tdkTestObj.addParameter("methodName","getRadioTransmitPower");
-		#Radio index is 0 for 2.4GHz and 1 for 5GHz
-		tdkTestObj.addParameter("radioIndex",idx);
-		expectedresult="SUCCESS";
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails();
-		if expectedresult in actualresult:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    transmitPower = details.split(":")[1];
-		    print "TEST STEP 1: Get the current transmit power for 2.4GHz"
-		    print "EXPECTED RESULT 1: Should get the current transmit power for 2.4GHz";
-		    print "ACTUAL RESULT 1: %s" %details;
-		    if transmitPower != "":
-			#Set the result status of execution
-			tdkTestObj.setResultStatus("SUCCESS");
-			print "TEST STEP 2: Check if the current transmit power is not a null value";
-			print "EXPECTED RESULT 2: Current transmit power should not be a null value";
-			print "ACTUAL RESULT 2: Current transmit power is not a null value";
-			print "[TEST EXECUTION RESULT] : SUCCESS";
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "TEST STEP 2: Check if the current transmit power is not a null value";
-			print "EXPECTED RESULT 2: Current transmit power should not be a null value";
-			print "ACTUAL RESULT 2: Current transmit power is a null value";
-			print "[TEST EXECUTION RESULT] : FAILURE";
-		else:
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 1: Get the current transmit power for 2.4GHz";
-		    print "EXPECTED RESULT 1: Should get the current transmit power for 2.4GHz";
-		    print "ACTUAL RESULT 1: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-        obj.unloadModule("wifihal");
+    tdkTestObjTemp, idx = getIndex(obj, radio);
+    ## Check if a invalid index is returned
+    if idx == -1:
+        print("Failed to get radio index for radio %s\n" %radio);
+        tdkTestObjTemp.setResultStatus("FAILURE");
+    else:
+
+        tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamULongValue');
+        #Giving the method name to invoke the api to get current transmit power ,wifi_getRadioTransmitPower()
+        tdkTestObj.addParameter("methodName","getRadioTransmitPower");
+        #Radio index is 0 for 2.4GHz and 1 for 5GHz
+        tdkTestObj.addParameter("radioIndex",idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            transmitPower = details.split(":")[1];
+            print("TEST STEP 1: Get the current transmit power for 2.4GHz")
+            print("EXPECTED RESULT 1: Should get the current transmit power for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            if transmitPower != "":
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Check if the current transmit power is not a null value");
+                print("EXPECTED RESULT 2: Current transmit power should not be a null value");
+                print("ACTUAL RESULT 2: Current transmit power is not a null value");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Check if the current transmit power is not a null value");
+                print("EXPECTED RESULT 2: Current transmit power should not be a null value");
+                print("ACTUAL RESULT 2: Current transmit power is a null value");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the current transmit power for 2.4GHz");
+            print("EXPECTED RESULT 1: Should get the current transmit power for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

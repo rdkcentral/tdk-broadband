@@ -77,14 +77,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetSoftBlockWaitingTime');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -98,22 +98,22 @@ if "SUCCESS" in loadmodulestatus.upper():
             details =details.split(":")[1];
             details = int(details.replace("\\n", "").strip());
             if details >= 0 :
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 2: Check if the current Soft Block Waiting Time is a positive integer value "
-               print "EXPECTED RESULT 2: Should get the Soft Block Waiting Time as a positive integer value"
-               print "ACTUAL RESULT 2: The current Soft Block Waiting Time is :",details;
-               print "TEST EXECUTION RESULT : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Check if the current Soft Block Waiting Time is a positive integer value ")
+                print("EXPECTED RESULT 2: Should get the Soft Block Waiting Time as a positive integer value")
+                print("ACTUAL RESULT 2: The current Soft Block Waiting Time is :",details);
+                print("TEST EXECUTION RESULT : SUCCESS");
             else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 2: Check if the current Soft Block Waiting Time is a positive integer value "
-               print "EXPECTED RESULT 2: Should get the Soft Block Waiting Time as a positive integer value"
-               print "ACTUAL RESULT 2: The current Soft Block Waiting Time is :",details;
-               print "TEST EXECUTION RESULT : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Check if the current Soft Block Waiting Time is a positive integer value ")
+                print("EXPECTED RESULT 2: Should get the Soft Block Waiting Time as a positive integer value")
+                print("ACTUAL RESULT 2: The current Soft Block Waiting Time is :",details);
+                print("TEST EXECUTION RESULT : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

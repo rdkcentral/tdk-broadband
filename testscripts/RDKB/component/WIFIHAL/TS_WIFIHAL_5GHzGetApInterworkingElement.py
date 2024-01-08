@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApInterworkingElement');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         radioIndex = idx
@@ -103,33 +103,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-            print "TEST STEP 1: Invoke the wifi api wifi_getApInterworkingElement()";
-            print "EXPECTED RESULT 1: Should succeesully invoke wifi_getApInterworkingElement()";
-            print "ACTUAL RESULT 1: wifi_getApInterworkingElement() invoked successfully";
-            print "TEST EXECUTION RESULT 1: SUCCESS";
+            print("TEST STEP 1: Invoke the wifi api wifi_getApInterworkingElement()");
+            print("EXPECTED RESULT 1: Should succeesully invoke wifi_getApInterworkingElement()");
+            print("ACTUAL RESULT 1: wifi_getApInterworkingElement() invoked successfully");
+            print("TEST EXECUTION RESULT 1: SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             if details != " ":
-                print "TEST STEP 2: Get the Access Point InterworkingElement details";
-                print "EXPECTED RESULT 2: Should get the Access Point InterworkingElement details successfully";
-                print "ACTUAL RESULT 2: The Access Point InterworkingElement details are :%s"%details;
-                print "TEST EXECUTION RESULT 2: SUCCESS";
+                print("TEST STEP 2: Get the Access Point InterworkingElement details");
+                print("EXPECTED RESULT 2: Should get the Access Point InterworkingElement details successfully");
+                print("ACTUAL RESULT 2: The Access Point InterworkingElement details are :%s"%details);
+                print("TEST EXECUTION RESULT 2: SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 2: Get the Access Point InterworkingElement details";
-                print "EXPECTED RESULT 2: Should get the Access Point InterworkingElement details successfully";
-                print "ACTUAL RESULT 2: The Access Point InterworkingElement details are not obtained :%s"%details;
-                print "TEST EXECUTION RESULT 2: FAILURE";
+                print("TEST STEP 2: Get the Access Point InterworkingElement details");
+                print("EXPECTED RESULT 2: Should get the Access Point InterworkingElement details successfully");
+                print("ACTUAL RESULT 2: The Access Point InterworkingElement details are not obtained :%s"%details);
+                print("TEST EXECUTION RESULT 2: FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "TEST STEP 1: Invoke the wifi api wifi_getApInterworkingElement()";
-            print "EXPECTED RESULT 1: Should succeesully invoke wifi_getApInterworkingElement()";
-            print "ACTUAL RESULT 1: wifi_getApInterworkingElement() is not invoked successfully";
-            print "TEST EXECUTION RESULT 1: FAILURE";
+            print("TEST STEP 1: Invoke the wifi api wifi_getApInterworkingElement()");
+            print("EXPECTED RESULT 1: Should succeesully invoke wifi_getApInterworkingElement()");
+            print("ACTUAL RESULT 1: wifi_getApInterworkingElement() is not invoked successfully");
+            print("TEST EXECUTION RESULT 1: FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

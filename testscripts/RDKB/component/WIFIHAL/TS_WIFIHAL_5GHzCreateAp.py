@@ -100,9 +100,9 @@ wifiobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzCreateAp');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysloadmodulestatus = wifiobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,11 +110,11 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the number of Wifi Accesspoints
-	tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
+        tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPointNumberOfEntries");
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
@@ -123,144 +123,144 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
             APCount = int(details.split("VALUE:")[1].split(' ')[0]);
-	    print "TEST STEP 1 : Get the number of Wifi Accesspoints using TR181 param ";
-            print "EXPECTED RESULT 1: Should get the number of Wifi Accesspoints ";
-            print "ACTUAL RESULT 1 : Number of Wifi Accesspoints :",APCount;
-            print "[TEST EXECUTION RESULT] 1 : SUCCESS"
+            print("TEST STEP 1 : Get the number of Wifi Accesspoints using TR181 param ");
+            print("EXPECTED RESULT 1: Should get the number of Wifi Accesspoints ");
+            print("ACTUAL RESULT 1 : Number of Wifi Accesspoints :",APCount);
+            print("[TEST EXECUTION RESULT] 1 : SUCCESS")
             #Identify a free Accesspoint to be created out of total Accesspoints
-	    newFlag = 0;
-            print " Check SSID Name of all AccessPoints to identify free AccessPoint using Wifi_getSSIDName api"
-	    for apIndex in range(1, APCount, 2):
+            newFlag = 0;
+            print(" Check SSID Name of all AccessPoints to identify free AccessPoint using Wifi_getSSIDName api")
+            for apIndex in range(1, APCount, 2):
                 expectedresult="SUCCESS";
-	        getMethod = "getSSIDName"
-	        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                getMethod = "getSSIDName"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
                 #Calling the method from wifiUtility to execute test case and set result status for the test.
-	        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
                 if expectedresult in actualresult:
-		    ssidName = details.split(":")[1].strip()
-		    print "ssidname for apindex %d = %s" %(apIndex,ssidName);
-		    if len(ssidName) <= 32:
-		        print "Wifi_getSSIDName() function called successfully and %s"%details
-		        tdkTestObj.setResultStatus("SUCCESS");
-		        #Get the result of execution
-            	        print "[TEST EXECUTION RESULT] : SUCCESS";
-		        if ssidName == "OutOfService":
-		            newapIndex = apIndex;
-			    newFlag = 1;
-		            break;
-		        else:
-		            continue;
-		    else:
-		        tdkTestObj.setResultStatus("FAILURE");
-			print "wifi_getSSIDName function failed,Failed to receive SSID string %s"%details
-		        #Get the result of execution
-            	        print "[TEST EXECUTION RESULT] : FAILURE";
-			obj.unloadModule("wifihal");
-			wifiobj.unloadModule("wifiagent");
-		        print "Exiting the script"
-		        exit();
-	        else:
-		    tdkTestObj.setResultStatus("FAILURE");
-	            print "wifi_getSSIDName function failed";
-		    obj.unloadModule("wifihal");
-		    wifiobj.unloadModule("wifiagent");
-		    print "Exiting the script"
-		    exit();
-	    if newFlag == 1 :
-	        tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP 2 : Identify a free Accesspoint to be created out of total Accesspoints"
-		print "EXPECTED RESULT 2 : Get  a free AccessPoint for 5 G"
-		print "ACTUAL RESULT  2: %d APIndex is available for 5G " %newapIndex
-		#Get the result of execution
-                print "[TEST EXECUTION RESULT] 2 : SUCCESS";
-	        #Prmitive test case which associated to this Script
-                print "new apIndex :%d" %newapIndex;
+                    ssidName = details.split(":")[1].strip()
+                    print("ssidname for apindex %d = %s" %(apIndex,ssidName));
+                    if len(ssidName) <= 32:
+                        print("Wifi_getSSIDName() function called successfully and %s"%details)
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        if ssidName == "OutOfService":
+                            newapIndex = apIndex;
+                            newFlag = 1;
+                            break;
+                        else:
+                            continue;
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("wifi_getSSIDName function failed,Failed to receive SSID string %s"%details)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        obj.unloadModule("wifihal");
+                        wifiobj.unloadModule("wifiagent");
+                        print("Exiting the script")
+                        exit();
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("wifi_getSSIDName function failed");
+                    obj.unloadModule("wifihal");
+                    wifiobj.unloadModule("wifiagent");
+                    print("Exiting the script")
+                    exit();
+            if newFlag == 1 :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2 : Identify a free Accesspoint to be created out of total Accesspoints")
+                print("EXPECTED RESULT 2 : Get  a free AccessPoint for 5 G")
+                print("ACTUAL RESULT  2: %d APIndex is available for 5G " %newapIndex)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 2 : SUCCESS");
+                #Prmitive test case which associated to this Script
+                print("new apIndex :%d" %newapIndex);
                 tdkTestObj = obj.createTestStep('WIFIHAL_CreateAp');
-	        tdkTestObj.addParameter("apIndex",newapIndex);
+                tdkTestObj.addParameter("apIndex",newapIndex);
                 tdkTestObj.addParameter("radioIndex",idx);
                 tdkTestObj.addParameter("essid","ssid_name");
-	        tdkTestObj.addParameter("hideSsid",0);
-	        expectedresult="SUCCESS";
+                tdkTestObj.addParameter("hideSsid",0);
+                expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
-	            #Set the result status of execution
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Create the new AP using wifi_createAp api with ssid_name as SSID name";
-                    print "EXPECTED RESULT 3: Should create the new AP using wifi_createAp api";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Create the new AP using wifi_createAp api with ssid_name as SSID name");
+                    print("EXPECTED RESULT 3: Should create the new AP using wifi_createAp api");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
                     time.sleep(20);
-                    print "[TEST EXECUTION RESULT] 3 : SUCCESS";
-	            #Calling the method from wifiUtility to execute test case and set result status for the test.
-	            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, newapIndex, "0", getMethod)
+                    print("[TEST EXECUTION RESULT] 3 : SUCCESS");
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, newapIndex, "0", getMethod)
                     if expectedresult in actualresult:
-		        ssidName = details.split(":")[1].strip()
-		        print "ssid name =%s " %ssidName;
-		        if ssidName == "ssid_name":
-		            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 4: Verify the ssid name of new ap created using Wifi_getSSIDName api  ";
-            	            print "EXPECTED RESULT 4: Should match with ssid name of newly created api";
-            	            print "ACTUAL RESULT 4: Successfully matched with ssid name of newly created api"
-            	            #Get the result of execution
-            	            print "[TEST EXECUTION RESULT] 4 : SUCCESS";
-		            tdkTestObj = obj.createTestStep('WIFIHAL_ParamApIndex');
-	                    tdkTestObj.addParameter("apIndex",newapIndex);
-        	            tdkTestObj.addParameter("methodName","deleteAp");
-		            expectedresult="SUCCESS";
-        	            tdkTestObj.executeTestCase(expectedresult);
-        	            actualresult = tdkTestObj.getResult();
-        	            details = tdkTestObj.getResultDetails();
-        	            if expectedresult in actualresult:
-		                #Set the result status of execution
+                        ssidName = details.split(":")[1].strip()
+                        print("ssid name =%s " %ssidName);
+                        if ssidName == "ssid_name":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 4: Verify the ssid name of new ap created using Wifi_getSSIDName api  ");
+                            print("EXPECTED RESULT 4: Should match with ssid name of newly created api");
+                            print("ACTUAL RESULT 4: Successfully matched with ssid name of newly created api")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 4 : SUCCESS");
+                            tdkTestObj = obj.createTestStep('WIFIHAL_ParamApIndex');
+                            tdkTestObj.addParameter("apIndex",newapIndex);
+                            tdkTestObj.addParameter("methodName","deleteAp");
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+                            if expectedresult in actualresult:
+                                #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 5: Delete ap created using wifi_deleteAp api";
-                                print "EXPECTED RESULT 5: wifi_deleteAp api should be SUCCESS ";
-                                print "ACTUAL RESULT 5: wifi_deleteAp api call returns SUCCESS"
+                                print("TEST STEP 5: Delete ap created using wifi_deleteAp api");
+                                print("EXPECTED RESULT 5: wifi_deleteAp api should be SUCCESS ");
+                                print("ACTUAL RESULT 5: wifi_deleteAp api call returns SUCCESS")
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] 5 : SUCCESS";
-		            else:
-		                #Set the result status of execution
+                                print("[TEST EXECUTION RESULT] 5 : SUCCESS");
+                            else:
+                                #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-			        print "TEST STEP 5: Delete ap created using wifi_deleteAp api";
-                                print "EXPECTED RESULT 5: wifi_deleteAp api should be SUCCESS ";
-                                print "ACTUAL RESULT 5: wifi_deleteAp api call returns FAILURE"
-			        #Get the result of execution
-                                print "[TEST EXECUTION RESULT] 5 : FAILURE";
-		        else:
-		            tdkTestObj.setResultStatus("FAILURE");
-		            print "TEST STEP 4: Verify the ssid name of new ap created using Wifi_getSSIDName api  ";
-            	            print "EXPECTED RESULT 4: Should match with ssid name of newly created api";
-            	            print "ACTUAL RESULT 4: Failed to match with ssid name of newly created api"
-            	            #Get the result of execution
-            	            print "[TEST EXECUTION RESULT] 4 : FAILURE";
-	            else:
-	                print "wifi_getSSIDName function failed";
-		        tdkTestObj.setResultStatus("FAILURE");
-    	        else:
-      	            tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Create the new AP using wifi_createAp api with ssid_name as SSID name";
-                    print "EXPECTED RESULT 3: Should create the new AP using wifi_createAp api";
-	            print "ACTUAL RESULT 3: %s" %details;
+                                print("TEST STEP 5: Delete ap created using wifi_deleteAp api");
+                                print("EXPECTED RESULT 5: wifi_deleteAp api should be SUCCESS ");
+                                print("ACTUAL RESULT 5: wifi_deleteAp api call returns FAILURE")
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] 5 : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Verify the ssid name of new ap created using Wifi_getSSIDName api  ");
+                            print("EXPECTED RESULT 4: Should match with ssid name of newly created api");
+                            print("ACTUAL RESULT 4: Failed to match with ssid name of newly created api")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 4 : FAILURE");
+                    else:
+                        print("wifi_getSSIDName function failed");
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Create the new AP using wifi_createAp api with ssid_name as SSID name");
+                    print("EXPECTED RESULT 3: Should create the new AP using wifi_createAp api");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] 3 : FAILURE";
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 2 : Identify a free Accesspoint to be created out of total Accesspoints"
-		print "EXPECTED RESULT 2 : Get  a free AccessPoint for 5 G"
-	        print " ACTUAL RESULT  2 : Cannot validate wifi_createAp api , as max supported APs are already created"
-	        #Get the result of execution
-                print "[TEST EXECUTION RESULT] 2 : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1 : Get the number of Wifi Accesspoints using TR181 param";
-            print "ACTUAL RESULT 1: Should get the number of Wifi Accesspoints ";
-            print "EXPECTED RESULT 1 : Failed to get the number of Wifi Accesspoints ";
-            print "[TEST EXECUTION RESULT] 1 : FAILURE"
+                    print("[TEST EXECUTION RESULT] 3 : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2 : Identify a free Accesspoint to be created out of total Accesspoints")
+                print("EXPECTED RESULT 2 : Get  a free AccessPoint for 5 G")
+                print(" ACTUAL RESULT  2 : Cannot validate wifi_createAp api , as max supported APs are already created")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 2 : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1 : Get the number of Wifi Accesspoints using TR181 param");
+            print("ACTUAL RESULT 1: Should get the number of Wifi Accesspoints ");
+            print("EXPECTED RESULT 1 : Failed to get the number of Wifi Accesspoints ");
+            print("[TEST EXECUTION RESULT] 1 : FAILURE")
     obj.unloadModule("wifihal");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load the wifihal/wifiagent module";
+    print("Failed to load the wifihal/wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
     wifiobj.setLoadModuleStatus("FAILURE");

@@ -83,8 +83,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetSSIDName');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1  =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,40 +94,40 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx  = getApIndexfor6G(sysobj, TDK_PATH);
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
 
     else:
-            apIndex = idx;
-            expectedresult="SUCCESS";
-            getMethod = "getSSIDName"
-            primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        apIndex = idx;
+        expectedresult="SUCCESS";
+        getMethod = "getSSIDName"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-            #Calling the method from wifiUtility to execute test case and set result status for the test.
-            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-            if expectedresult in actualresult:
-                ssidName = details.split(":")[1].strip()
-                if len(ssidName) <= 32:
-                    print "Wifi_getSSIDName() function called successfully and %s"%details
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Validate the wifi_getSSIDName Function";
-                    print "EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID";
-                    print "ACTUAL RESULT 1: SSID string received: %s"%ssidName;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                else:
-                    print "wifi_getSSIDName function failed, %s"%details
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Validate the wifi_getSSIDName Function";
-                    print "EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID";
-                    print "ACTUAL RESULT 1:Failed to receive SSID string: %s"%ssidName;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in actualresult:
+            ssidName = details.split(":")[1].strip()
+            if len(ssidName) <= 32:
+                print("Wifi_getSSIDName() function called successfully and %s"%details)
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Validate the wifi_getSSIDName Function");
+                print("EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID");
+                print("ACTUAL RESULT 1: SSID string received: %s"%ssidName);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                print "wifi_getSSIDName function failed";
+                print("wifi_getSSIDName function failed, %s"%details)
                 tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Validate the wifi_getSSIDName Function");
+                print("EXPECTED RESULT 1: wifigetSSIDName should return a string value of SSID");
+                print("ACTUAL RESULT 1:Failed to receive SSID string: %s"%ssidName);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("wifi_getSSIDName function failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

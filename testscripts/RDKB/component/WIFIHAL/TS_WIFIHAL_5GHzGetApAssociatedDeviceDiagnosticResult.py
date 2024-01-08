@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApAssociatedDeviceDiagnosticRes
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,9 +90,9 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
         #Prmitive test case which is associated to this Script
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceDiagnosticResult');
         tdkTestObj.addParameter("radioIndex", idx);
@@ -101,32 +101,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getApAssociatedDeviceDiagnosticResult()";
-        print "EXPECTED RESULT 1: Should successfully get the API wifi_getApAssociatedDeviceDiagnosticResult()";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getApAssociatedDeviceDiagnosticResult()");
+        print("EXPECTED RESULT 1: Should successfully get the API wifi_getApAssociatedDeviceDiagnosticResult()");
 
         if expectedresult in actualresult and "Output Array Size" in details:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: wifi_getApAssociatedDeviceDiagnosticResult() API invocation was success";
+            print("ACTUAL RESULT 1: wifi_getApAssociatedDeviceDiagnosticResult() API invocation was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Retrieve the Associated Device Diagnostic Results
             output_array_size =  details.split("Output Array Size = ")[1].split(" ")[0];
-            print "Number of associated devices : %s" %output_array_size;
+            print("Number of associated devices : %s" %output_array_size);
 
-            print "\nTEST STEP 2 : Check if the number of STAs connected > 0";
-            print "EXPECTED RESULT 2 : The number of STAs connected should be > 0";
+            print("\nTEST STEP 2 : Check if the number of STAs connected > 0");
+            print("EXPECTED RESULT 2 : The number of STAs connected should be > 0");
 
             if output_array_size.isdigit():
                 if int(output_array_size) > 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 2: Number of STAs connected : %s" %output_array_size;
+                    print("ACTUAL RESULT 2: Number of STAs connected : %s" %output_array_size);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the STA details retrieved are valid
-                    print "\nTEST STEP 3 : Check if the STA details retrieved are valid values";
-                    print "EXPECTED RESULT 3 : STA details retrieved should be valid values";
+                    print("\nTEST STEP 3 : Check if the STA details retrieved are valid values");
+                    print("EXPECTED RESULT 3 : STA details retrieved should be valid values");
 
                     status = 0;
                     for sta in range(1, int(output_array_size)+1):
@@ -147,43 +147,42 @@ if "SUCCESS" in loadmodulestatus.upper():
                         sta_dissasso = sta_details.split("Disassociations=")[1].split(",")[0];
                         sta_authfail = sta_details.split("AuthFailures=")[1].split(",")[0];
 
-                        print "\n%s: MAC = %s, Authentication State = %s, Last Data Downlink Rate = %s, Last Data Uplink Rate : %s, Signal Strength = %s, Retransmissions = %s, Operating Standard = %s, Operating Channel Bandwidth = %s, SNR = %s, Data Frames Sent Ack = %s, Data Frames Sent No Ack = %s, RSSI = %s, Disassociations = %s, Authentication Failures = %s" %(sta_to_check, sta_mac, sta_auth, sta_downlink, sta_uplink, sta_sigstrength, sta_retransmissions, sta_operstd, sta_operchanbw, sta_snr, sta_dataframessentack, sta_dataframessentnoack, sta_rssi, sta_dissasso, sta_authfail)
+                        print("\n%s: MAC = %s, Authentication State = %s, Last Data Downlink Rate = %s, Last Data Uplink Rate : %s, Signal Strength = %s, Retransmissions = %s, Operating Standard = %s, Operating Channel Bandwidth = %s, SNR = %s, Data Frames Sent Ack = %s, Data Frames Sent No Ack = %s, RSSI = %s, Disassociations = %s, Authentication Failures = %s" %(sta_to_check, sta_mac, sta_auth, sta_downlink, sta_uplink, sta_sigstrength, sta_retransmissions, sta_operstd, sta_operchanbw, sta_snr, sta_dataframessentack, sta_dataframessentnoack, sta_rssi, sta_dissasso, sta_authfail))
 
                         if sta_mac != "" and sta_auth.isdigit() and sta_downlink.isdigit() and sta_uplink.isdigit() and sta_sigstrength.lstrip('-').isdigit() and sta_retransmissions.isdigit() and sta_operstd != "" and sta_operchanbw.strip(' MHZ').isdigit() and sta_snr.isdigit() and  sta_dataframessentack.isdigit() and sta_dataframessentnoack.isdigit() and sta_rssi.lstrip('-').isdigit() and sta_dissasso.isdigit() and sta_authfail.isdigit():
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "The STA details are valid";
+                            print("The STA details are valid");
                         else:
                             status = 1;
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "The STA details are NOT valid";
+                            print("The STA details are NOT valid");
 
                     if status == 0 :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 3: STA details retrieved are valid for all connected STAs";
+                        print("ACTUAL RESULT 3: STA details retrieved are valid for all connected STAs");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 3: STA details retrieved are NOT valid for all connected STAs";
+                        print("ACTUAL RESULT 3: STA details retrieved are NOT valid for all connected STAs");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 2: Number of STAs connected : %s" %output_array_size;
+                    print("ACTUAL RESULT 2: Number of STAs connected : %s" %output_array_size);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Number of STA devices retrieved is not valid";
+                print("Number of STA devices retrieved is not valid");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: Details : %s" %details;
+            print("ACTUAL RESULT 1: Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

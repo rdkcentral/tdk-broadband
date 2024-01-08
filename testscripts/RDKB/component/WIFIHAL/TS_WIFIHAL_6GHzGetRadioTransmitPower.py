@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioTransmitPower');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -87,7 +87,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamULongValue');
@@ -99,35 +99,35 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getRadioTransmitPower() to get the current 6GHz Radio Transmit Power"
-        print "EXPECTED RESULT 1: The API should be invoked successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getRadioTransmitPower() to get the current 6GHz Radio Transmit Power")
+        print("EXPECTED RESULT 1: The API should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: The API is invoked successfully; Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 1: The API is invoked successfully; Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             transmitPower = details.split(":")[1];
 
-            print "\nTEST STEP 2: Check if the current transmit power is not an invalid value";
-            print "EXPECTED RESULT 2: Current transmit power should not be an invalid value";
+            print("\nTEST STEP 2: Check if the current transmit power is not an invalid value");
+            print("EXPECTED RESULT 2: Current transmit power should not be an invalid value");
 
             if transmitPower != "" and transmitPower.isdigit():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Current transmit power is not an invalid value; Transmit Power : %s"%transmitPower;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: Current transmit power is not an invalid value; Transmit Power : %s"%transmitPower);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Current transmit power is an invalid value; Transmit Power : %s"%transmitPower;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: Current transmit power is an invalid value; Transmit Power : %s"%transmitPower);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: The API is not invoked successfully; Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 1: The API is not invoked successfully; Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

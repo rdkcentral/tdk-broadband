@@ -81,7 +81,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_ApplyGASConfiguration');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.addParameter("comeBackDelay",comeBackDelay);
     tdkTestObj.addParameter("responseBufferingTime",responseBufferingTime);
     tdkTestObj.addParameter("queryResponseLengthLimit",queryResponseLengthLimit);
-    print "Setting the GAS configurations with the following values:\nadvertisementID=%d\npauseForServerResponse=%d\nresponseTimeout=%d\ncomeBackDelay=%d\nresponseBufferingTime=%d\nqueryResponseLengthLimit=%d\n"%(advertisementID,pauseForServerResponse,responseTimeout,comeBackDelay,responseBufferingTime,queryResponseLengthLimit);
+    print("Setting the GAS configurations with the following values:\nadvertisementID=%d\npauseForServerResponse=%d\nresponseTimeout=%d\ncomeBackDelay=%d\nresponseBufferingTime=%d\nqueryResponseLengthLimit=%d\n"%(advertisementID,pauseForServerResponse,responseTimeout,comeBackDelay,responseBufferingTime,queryResponseLengthLimit));
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
@@ -108,21 +108,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set the GAS configurations using wifi_applyGASConfiguration";
-        print "EXPECTED RESULT 1: Should be able to set GAS configurations using wifi_applyGASConfiguration successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set the GAS configurations using wifi_applyGASConfiguration");
+        print("EXPECTED RESULT 1: Should be able to set GAS configurations using wifi_applyGASConfiguration successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:  Set the GAS configurations using wifi_applyGASConfiguration";
-        print "EXPECTED RESULT 1: Should be able to set GAS configurations using wifi_applyGASConfiguration successfully";
-        print "ACTUAL RESULT 1: API returned Failure status. %s" %details;
+        print("TEST STEP 1:  Set the GAS configurations using wifi_applyGASConfiguration");
+        print("EXPECTED RESULT 1: Should be able to set GAS configurations using wifi_applyGASConfiguration successfully");
+        print("ACTUAL RESULT 1: API returned Failure status. %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioChannelStats2');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -103,7 +103,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which is associated to this Script
@@ -114,26 +114,26 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult :
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP : Get the RadioChannelStats2 info"
-           print "EXPECTED RESULT : Should successfully get the RadioChannelStats2 info"
-           print "ACTUAL RESULT : Successfully got the RadioChannelStats2 info"
-           detailList = details.split(",")
-           for i in detailList:
-               print i;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Get the RadioChannelStats2 info")
+            print("EXPECTED RESULT : Should successfully get the RadioChannelStats2 info")
+            print("ACTUAL RESULT : Successfully got the RadioChannelStats2 info")
+            detailList = details.split(",")
+            for i in detailList:
+                print(i);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Get the RadioChannelStats2 info"
-            print "EXPECTED RESULT : Should successfully get the RadioChannelStats2 info"
-            print "ACTUAL RESULT : Failed to get the RadioChannelStats2 info"
-            print "Details: %s"%details
+            print("TEST STEP : Get the RadioChannelStats2 info")
+            print("EXPECTED RESULT : Should successfully get the RadioChannelStats2 info")
+            print("ACTUAL RESULT : Failed to get the RadioChannelStats2 info")
+            print("Details: %s"%details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

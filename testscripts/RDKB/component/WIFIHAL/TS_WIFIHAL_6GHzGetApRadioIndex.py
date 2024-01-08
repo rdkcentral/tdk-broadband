@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApRadioIndex');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,14 +95,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
         tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
         if apIndex == -1:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
         else:
             #Invoking the HAL API wifi_getApRadioIndex()
@@ -115,37 +115,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Expected AP radio index value
             expectedRadioIndexValue = idx;
 
-            print "\nTEST STEP 2: Invoke the HAL API wifi_getApRadioIndex() to get the radio index of the AP %d" %apIndex;
-            print "EXPECTED RESULT 2: The HAL API ifi_getApRadioIndex() should be invoked successfully and AP radio index retrieved";
+            print("\nTEST STEP 2: Invoke the HAL API wifi_getApRadioIndex() to get the radio index of the AP %d" %apIndex);
+            print("EXPECTED RESULT 2: The HAL API ifi_getApRadioIndex() should be invoked successfully and AP radio index retrieved");
 
             if expectedresult in actualresult:
                 radioIndexValue = details.split(":")[1].strip();
-                print "ACTUAL RESULT 2 : wifi_getApRadioIndex() API invocation successful, %s"%details
+                print("ACTUAL RESULT 2 : wifi_getApRadioIndex() API invocation successful, %s"%details)
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nTEST STEP 3 : Check if the AP radio index is same as the 6G radio Index";
-                print "EXPECTED RESULT 3 : The AP radio index should be the same as the 6G radio Index"
-                print "Expected radio index value for the AP %d : %d" %(apIndex, expectedRadioIndexValue);
-                print "Actual radio index value for the AP %d : %s" %(apIndex, radioIndexValue);
+                print("\nTEST STEP 3 : Check if the AP radio index is same as the 6G radio Index");
+                print("EXPECTED RESULT 3 : The AP radio index should be the same as the 6G radio Index")
+                print("Expected radio index value for the AP %d : %d" %(apIndex, expectedRadioIndexValue));
+                print("Actual radio index value for the AP %d : %s" %(apIndex, radioIndexValue));
 
                 if radioIndexValue.isdigit() and expectedRadioIndexValue == int(radioIndexValue):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Radio Index value associated with AP received Successfully: %s"%radioIndexValue;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 3: Radio Index value associated with AP received Successfully: %s"%radioIndexValue);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Failed to receive the correct Radio Index value: %s"%radioIndexValue;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 3: Failed to receive the correct Radio Index value: %s"%radioIndexValue);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "ACTUAL RESULT 2 : wifi_getApRadioIndex() API invocation failed, %s"%details;
+                print("ACTUAL RESULT 2 : wifi_getApRadioIndex() API invocation failed, %s"%details);
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

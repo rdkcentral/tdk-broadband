@@ -96,8 +96,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApSecurityReset');
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 def GetSetApSecurityMode(obj,param,Method, idx):
     apIndex = idx;
@@ -130,63 +130,63 @@ def setApSecurityReset(idx):
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "**************************************************";
-        print "TEST STEP 8: Invoke wifi_setApSecurityReset() api";
-        print "EXPECTED RESULT 8: Should successfully invoke wifi_setApSecurityReset() api";
-        print "ACTUAL RESULT 8:wifi_setApSecurityReset() OPERATION SUCCESS";
+        print("**************************************************");
+        print("TEST STEP 8: Invoke wifi_setApSecurityReset() api");
+        print("EXPECTED RESULT 8: Should successfully invoke wifi_setApSecurityReset() api");
+        print("ACTUAL RESULT 8:wifi_setApSecurityReset() OPERATION SUCCESS");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "**************************************************";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("**************************************************");
         time.sleep(3);
         tdkTestObj, actualresult, details = GetSetApSecurityMode(obj,"0","getApSecurityModeEnabled", idx);
         if expectedresult in actualresult :
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    ResetMode = details.split(":")[1].strip();
-            print "**************************************************";
-            print "TEST STEP 9: To get the Ap Security Mode Enabled value after reset operation";
-            print "EXPECTED RESULT 9: Should successfully get the Ap Security Mode Enabled value after reset operation";
-            print "ACTUAL RESULT 9: Successfully got the Ap Security Enabled value as %s after reset operation" %ResetMode;
+            tdkTestObj.setResultStatus("SUCCESS");
+            ResetMode = details.split(":")[1].strip();
+            print("**************************************************");
+            print("TEST STEP 9: To get the Ap Security Mode Enabled value after reset operation");
+            print("EXPECTED RESULT 9: Should successfully get the Ap Security Mode Enabled value after reset operation");
+            print("ACTUAL RESULT 9: Successfully got the Ap Security Enabled value as %s after reset operation" %ResetMode);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "**************************************************";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("**************************************************");
             if ResetMode == DefaultMode :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "**************************************************";
-                print "TEST STEP 10: To invoke the api wifi_setApSecurityReset and check whether the ApSecurityModeEnabled is equal to default mode and not equal to the set mode for 2.4GHz";
-	        print "EXPECTED RESULT 10: The mode should be equal to the default mode for 2.4GHz";
-	        print "ACTUAL RESULT 10: The mode is equal to the default mode for 2.4GHz";
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : SUCCESS";
-                print "**************************************************";
-            else :
-                print "**************************************************";
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 10: To invoke the api wifi_setApSecurityReset and check whether the ApSecurityModeEnabled is equal to default mode and not equal to the set mode for 2.4GHz";
-                print "EXPECTED RESULT 10: The mode should be equal to the default mode for 2.4GHz";
-                print "ACTUAL RESULT 10: The mode is NOT equal to the default mode for 2.4GHz";
+                print("**************************************************");
+                print("TEST STEP 10: To invoke the api wifi_setApSecurityReset and check whether the ApSecurityModeEnabled is equal to default mode and not equal to the set mode for 2.4GHz");
+                print("EXPECTED RESULT 10: The mode should be equal to the default mode for 2.4GHz");
+                print("ACTUAL RESULT 10: The mode is equal to the default mode for 2.4GHz");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-                print "**************************************************";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("**************************************************");
+            else :
+                print("**************************************************");
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 10: To invoke the api wifi_setApSecurityReset and check whether the ApSecurityModeEnabled is equal to default mode and not equal to the set mode for 2.4GHz");
+                print("EXPECTED RESULT 10: The mode should be equal to the default mode for 2.4GHz");
+                print("ACTUAL RESULT 10: The mode is NOT equal to the default mode for 2.4GHz");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                print("**************************************************");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "**************************************************";
-            print "TEST STEP 9: To get the Ap Security Mode Enabled value after reset operation";
-            print "EXPECTED RESULT 9: Should successfully get the Ap Security Mode Enabled value after reset operation";
-            print "ACTUAL RESULT 9: Failed to get the Ap Security Enabled value as after reset operation";
-            print "DETAILS :",details;
+            print("**************************************************");
+            print("TEST STEP 9: To get the Ap Security Mode Enabled value after reset operation");
+            print("EXPECTED RESULT 9: Should successfully get the Ap Security Mode Enabled value after reset operation");
+            print("ACTUAL RESULT 9: Failed to get the Ap Security Enabled value as after reset operation");
+            print("DETAILS :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
-            print "**************************************************";
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("**************************************************");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "**************************************************";
-        print "TEST STEP 8: Invoke wifi_setApSecurityReset() api";
-        print "EXPECTED RESULT 8: Should successfully invoke wifi_setApSecurityReset() api";
-        print "ACTUAL RESULT 8:wifi_setApSecurityReset() OPERATION FAILED";
-        print "DETAILS:",details;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("**************************************************");
+        print("TEST STEP 8: Invoke wifi_setApSecurityReset() api");
+        print("EXPECTED RESULT 8: Should successfully invoke wifi_setApSecurityReset() api");
+        print("ACTUAL RESULT 8:wifi_setApSecurityReset() OPERATION FAILED");
+        print("DETAILS:",details);
         #Get the result of execution^M
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "**************************************************";
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("**************************************************");
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -195,195 +195,195 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-	    expectedresult="SUCCESS";
-	    Mode = "sh %s/tdk_utility.sh parseConfigFile DEFAULT_AP_SECURITY_MODE_ENABLED" %TDK_PATH;
-	    tdkTestObj.addParameter("command", Mode);
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    Mode = tdkTestObj.getResultDetails().strip();
-	    DefaultMode = Mode.strip().replace("\\n", "");
-	    if DefaultMode and expectedresult in actualresult :
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "**************************************************";
-		print "TEST STEP 1: Get the default ap security mode enabled value from /etc/tdk_platform.properties file";
-		print "EXPECTED RESULT 1: Should get the default ap security mode value";
-		print "ACTUAL RESULT 1: Got the default ap security mode value as %s" %DefaultMode;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-		print "**************************************************";
-		tdkTestObj, actualresult, details1 = GetSetApSecurityMode(obj,"0","getApSecurityModesSupported", idx);
-		if expectedresult in actualresult :
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    supportedModes = details1.split(":")[1].strip().split(',');
-                    supportedModes = [x.strip(' ') for x in supportedModes]
-		    print "**************************************************";
-		    print "TEST STEP 2: Get list of Ap Security Modes Supported"
-		    print "EXPECTED RESULT 2: Should get the list of Ap Security Modes Supported successfully";
-		    print "ACTUAL RESULT 2 : Successfully got the Ap Security Modes Supported as %s" %supportedModes;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		    print "**************************************************";
-		    tdkTestObj, actualresult, details2 = GetSetApSecurityMode(obj,"0","getApSecurityModeEnabled", idx);
-		    if expectedresult in actualresult :
-			tdkTestObj.setResultStatus("SUCCESS");
-			initMode = details2.split(":")[1].strip();
-			print "**************************************************";
-			print "TEST STEP 3: Get the initial Ap Security Mode Enabled value";
-			print "EXPECTED RESULT 3: Should the initial Ap Security Mode Enabled value successfully";
-			print "ACTUAL RESULT 3 : Successfully got the Ap Security Mode Enabled value as %s" %initMode;
-			#Get the result of execution
-			print "[TEST EXECUTION RESULT] : SUCCESS";
-			print "**************************************************";
-			if initMode in supportedModes:
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "**************************************************";
-			    print "TEST STEP 4: To check whether the initial Ap Security Mode Enabled is from the list of Ap Security Modes Supported";
-			    print "EXPECTED RESULT 4: The initial Ap Security Mode Enabled value should be from the list of Ap Security Modes Supported";
-			    print "ACTUAL RESULT 4 : Initial Ap Security Mode Enabled value is from the list of Ap Security Modes Supported";
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : SUCCESS";
-			    print "**************************************************";
-			    if initMode == DefaultMode :
-				print "The initial Ap Security Mode Enabled value is equal to the default Mode";
-				print "Setting the Ap Security Mode Enabled value to another value before invoking wifi_setApSecurityReset() api";
-				for setMode in supportedModes:
-				    if setMode == initMode :
-					continue;
-				    else:
-					print "Ap Security Mode Enabled value to be set is %s" %setMode;
-					tdkTestObj, actualresult1, details3 = GetSetApSecurityMode(obj,setMode,"setApSecurityModeEnabled", idx);
-					time.sleep(10);
-					tdkTestObj, actualresult2, details4 = GetSetApSecurityMode(obj,"0","getApSecurityModeEnabled", idx);
-					if expectedresult in actualresult1 :
-					    tdkTestObj.setResultStatus("SUCCESS");
-					    print "**************************************************";
-					    print "TEST STEP 5: To set Ap Security Mode Enabled to another value";
-					    print "EXPECTED RESULT 5: Successfully set the Ap Security Mode Enabled to another value";
-					    print "ACTUAL RESULT 5: wifi_setApSecurityModeEnabled() operation SUCCESS";
-					    #Get the result of execution
-					    print "[TEST EXECUTION RESULT] : SUCCESS";
-					    print "**************************************************";
-					    if expectedresult in actualresult2 :
-						tdkTestObj.setResultStatus("SUCCESS");
-						finalMode = details4.split(":")[1].strip();
-						print "**************************************************";
-						print "TEST STEP 6: To get the Ap Security Mode Enabled value after set operation";
-						print "EXPECTED RESULT 6: Should successfully get the Ap Security Mode Enabled value after set operation";
-						print "ACTUAL RESULT 6: Successfully got the Ap Security Enabled value as %s after set operation" %finalMode;
-						#Get the result of execution
-						print "[TEST EXECUTION RESULT] : SUCCESS";
-						print "**************************************************";
-						print "setMode = ",setMode;
-						print "getMode = ",finalMode;
-						if finalMode == setMode:
-						    tdkTestObj.setResultStatus("SUCCESS");
-						    print "**************************************************";
-						    print "TEST STEP 7: Compare the set and get values of ApSecurityModeEnabled"
-						    print "EXPECTED RESULT 7: Set and get values of ApSecurityModeEnabled should be same";
-						    print "ACTUAL RESULT 7: Set and get values of ApSecurityModeEnabled are the same";
-						    print "SUCCESSFULLY SET THE AP SECURITY MODE ENABLED TO ANOTHER VALUE AS %s" %setMode;
-						    print " SET and GET values are EQUAL";
-						    #Get the result of execution
-						    print "[TEST EXECUTION RESULT] : SUCCESS";
-						    print "**************************************************";
-						    print "======INVOKING wifi_setApSecurityReset() API======";
-						    setApSecurityReset(idx);
-						else :
-						    tdkTestObj.setResultStatus("FAILURE");
-						    print "**************************************************";
-						    print "TEST STEP 7: Compare the set and get values of ApSecurityModeEnabled"
-						    print "EXPECTED RESULT 7: Set and get values of ApSecurityModeEnabled should be same";
-						    print "ACTUAL RESULT 7: Set and get values of ApSecurityModeEnabled are NOT the same";
-						    print "FAILED TO SET THE AP SECURITY MODE ENABLED TO ANOTHER VALUE AS %s" %setMode;
-						    print "SET and GET values are NOT EQUAL";
-						    #Get the result of execution
-						    print "[TEST EXECUTION RESULT] : FAILURE";
-						    print "**************************************************";
-						#Revert the ApSecurityModeEnabled back to initial value
-						tdkTestObj, actualresult, details = GetSetApSecurityMode(obj,initMode,"setApSecurityModeEnabled", idx);
-						if expectedresult in actualresult:
-						    print "Successfully reverted the ApSecurityModeEnabled to initial value"
-						    tdkTestObj.setResultStatus("SUCCESS");
-						else:
-						    print "Unable to revert the ApSecurityModeEnabled to initial value"
-						    tdkTestObj.setResultStatus("FAILURE");
-					    else:
-						tdkTestObj.setResultStatus("FAILURE");
-						print "**************************************************";
-						print "TEST STEP 6: To get the Ap Security Mode Enabled value after set operation";
-						print "EXPECTED RESULT 6: Should successfully get the Ap Security Mode Enabled value after set operation";
-						print "ACTUAL RESULT 6: Failed to get the Ap Security Mode Enabled value after set operation";
-						print "wifi_getApSecurityModeEnabled() call failed after set operation";
-						#Get the result of execution
-						print "[TEST EXECUTION RESULT] : FAILURE";
-						print "**************************************************";
-					else:
-					    tdkTestObj.setResultStatus("FAILURE");
-					    print "**************************************************";
-					    print "TEST STEP 5: To set Ap Security Mode Enabled to another value";
-					    print "EXPECTED RESULT 5: Successfully set the Ap Security Mode Enabled to another value";
-					    print "ACTUAL RESULT 5: wifi_setApSecurityModeEnabled() operation FAILED";
-					    #Get the result of execution
-					    print "[TEST EXECUTION RESULT] : FAILURE";
-					    print "**************************************************";
-				    break;
-			    else:
-				print "The initial Ap Security Mode Enabled value is NOT equal to the default Mode";
-				print "======INVOKING wifi_setApSecurityReset() API======";
-				setApSecurityReset(idx);
-				#Revert the ApSecurityModeEnabled back to initial value
-				tdkTestObj, actualresult, details = GetSetApSecurityMode(obj,initMode,"setApSecurityModeEnabled", idx);
-				if expectedresult in actualresult:
-				    print "Successfully reverted the ApSecurityModeEnabled to initial value"
-				    tdkTestObj.setResultStatus("SUCCESS");
-				else:
-				    print "Unable to revert the ApSecurityModeEnabled to initial value"
-				    tdkTestObj.setResultStatus("FAILURE");
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "**************************************************";
-			    print "TEST STEP 4: To check whether the initial Ap Security Mode Enabled is from the list of Ap Security Modes Supported";
-			    print "EXPECTED RESULT 4: The initial Ap Security Mode Enabled value should be from the list of Ap Security Modes Supported";
-			    print "ACTUAL RESULT 4 : Initial Ap Security Mode Enabled value is NOT from the list of Ap Security Modes Supported";
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : FAILURE";
-			    print "**************************************************";
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "**************************************************";
-			print "TEST STEP 3: Get the initial Ap Security Mode Enabled value";
-			print "EXPECTED RESULT 3: Should the initial Ap Security Mode Enabled value successfully";
-			print "ACTUAL RESULT 3 : Failed to get the initial Ap Security Mode Enabled value";
-			print "wifi_getApSecurityModeEnabled() operation FAILED";
-			#Get the result of execution
-			print "[TEST EXECUTION RESULT] : FAILURE";
-			print "**************************************************";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "**************************************************";
-		    print "TEST STEP 2: Get list of Ap Security Modes Supported"
-		    print "EXPECTED RESULT 2: Should get the list of Ap Security Modes Supported successfully";
-		    print "ACTUAL RESULT 2 : Failed to get the list of Ap Security Modes Supported";
-		    print "wifi_getApSecurityModeSupported() operation FAILED";
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-		    print "**************************************************";
-	    else :
-		tdkTestObj.setResultStatus("FAILURE");
-		print "**************************************************";
-		print "TEST STEP 1: Get the default ap security mode enabled value from /etc/tdk_platform.properties file";
-		print "EXPECTED RESULT 1: Should get the default ap security mode enabled value";
-		print "ACTUAL RESULT 1: Failed to get the defacult ap security mode enabled value from /etc/tdk_platform.properties file";
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-		print "**************************************************";
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+        expectedresult="SUCCESS";
+        Mode = "sh %s/tdk_utility.sh parseConfigFile DEFAULT_AP_SECURITY_MODE_ENABLED" %TDK_PATH;
+        tdkTestObj.addParameter("command", Mode);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        Mode = tdkTestObj.getResultDetails().strip();
+        DefaultMode = Mode.strip().replace("\\n", "");
+        if DefaultMode and expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("**************************************************");
+            print("TEST STEP 1: Get the default ap security mode enabled value from /etc/tdk_platform.properties file");
+            print("EXPECTED RESULT 1: Should get the default ap security mode value");
+            print("ACTUAL RESULT 1: Got the default ap security mode value as %s" %DefaultMode);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("**************************************************");
+            tdkTestObj, actualresult, details1 = GetSetApSecurityMode(obj,"0","getApSecurityModesSupported", idx);
+            if expectedresult in actualresult :
+                tdkTestObj.setResultStatus("SUCCESS");
+                supportedModes = details1.split(":")[1].strip().split(',');
+                supportedModes = [x.strip(' ') for x in supportedModes]
+                print("**************************************************");
+                print("TEST STEP 2: Get list of Ap Security Modes Supported")
+                print("EXPECTED RESULT 2: Should get the list of Ap Security Modes Supported successfully");
+                print("ACTUAL RESULT 2 : Successfully got the Ap Security Modes Supported as %s" %supportedModes);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("**************************************************");
+                tdkTestObj, actualresult, details2 = GetSetApSecurityMode(obj,"0","getApSecurityModeEnabled", idx);
+                if expectedresult in actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    initMode = details2.split(":")[1].strip();
+                    print("**************************************************");
+                    print("TEST STEP 3: Get the initial Ap Security Mode Enabled value");
+                    print("EXPECTED RESULT 3: Should the initial Ap Security Mode Enabled value successfully");
+                    print("ACTUAL RESULT 3 : Successfully got the Ap Security Mode Enabled value as %s" %initMode);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    print("**************************************************");
+                    if initMode in supportedModes:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("**************************************************");
+                        print("TEST STEP 4: To check whether the initial Ap Security Mode Enabled is from the list of Ap Security Modes Supported");
+                        print("EXPECTED RESULT 4: The initial Ap Security Mode Enabled value should be from the list of Ap Security Modes Supported");
+                        print("ACTUAL RESULT 4 : Initial Ap Security Mode Enabled value is from the list of Ap Security Modes Supported");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        print("**************************************************");
+                        if initMode == DefaultMode :
+                            print("The initial Ap Security Mode Enabled value is equal to the default Mode");
+                            print("Setting the Ap Security Mode Enabled value to another value before invoking wifi_setApSecurityReset() api");
+                            for setMode in supportedModes:
+                                if setMode == initMode :
+                                    continue;
+                                else:
+                                    print("Ap Security Mode Enabled value to be set is %s" %setMode);
+                                    tdkTestObj, actualresult1, details3 = GetSetApSecurityMode(obj,setMode,"setApSecurityModeEnabled", idx);
+                                    time.sleep(10);
+                                    tdkTestObj, actualresult2, details4 = GetSetApSecurityMode(obj,"0","getApSecurityModeEnabled", idx);
+                                    if expectedresult in actualresult1 :
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("**************************************************");
+                                        print("TEST STEP 5: To set Ap Security Mode Enabled to another value");
+                                        print("EXPECTED RESULT 5: Successfully set the Ap Security Mode Enabled to another value");
+                                        print("ACTUAL RESULT 5: wifi_setApSecurityModeEnabled() operation SUCCESS");
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                        print("**************************************************");
+                                        if expectedresult in actualresult2 :
+                                            tdkTestObj.setResultStatus("SUCCESS");
+                                            finalMode = details4.split(":")[1].strip();
+                                            print("**************************************************");
+                                            print("TEST STEP 6: To get the Ap Security Mode Enabled value after set operation");
+                                            print("EXPECTED RESULT 6: Should successfully get the Ap Security Mode Enabled value after set operation");
+                                            print("ACTUAL RESULT 6: Successfully got the Ap Security Enabled value as %s after set operation" %finalMode);
+                                            #Get the result of execution
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                                            print("**************************************************");
+                                            print("setMode = ",setMode);
+                                            print("getMode = ",finalMode);
+                                            if finalMode == setMode:
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("**************************************************");
+                                                print("TEST STEP 7: Compare the set and get values of ApSecurityModeEnabled")
+                                                print("EXPECTED RESULT 7: Set and get values of ApSecurityModeEnabled should be same");
+                                                print("ACTUAL RESULT 7: Set and get values of ApSecurityModeEnabled are the same");
+                                                print("SUCCESSFULLY SET THE AP SECURITY MODE ENABLED TO ANOTHER VALUE AS %s" %setMode);
+                                                print(" SET and GET values are EQUAL");
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                                print("**************************************************");
+                                                print("======INVOKING wifi_setApSecurityReset() API======");
+                                                setApSecurityReset(idx);
+                                            else :
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                                print("**************************************************");
+                                                print("TEST STEP 7: Compare the set and get values of ApSecurityModeEnabled")
+                                                print("EXPECTED RESULT 7: Set and get values of ApSecurityModeEnabled should be same");
+                                                print("ACTUAL RESULT 7: Set and get values of ApSecurityModeEnabled are NOT the same");
+                                                print("FAILED TO SET THE AP SECURITY MODE ENABLED TO ANOTHER VALUE AS %s" %setMode);
+                                                print("SET and GET values are NOT EQUAL");
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : FAILURE");
+                                                print("**************************************************");
+                                            #Revert the ApSecurityModeEnabled back to initial value
+                                            tdkTestObj, actualresult, details = GetSetApSecurityMode(obj,initMode,"setApSecurityModeEnabled", idx);
+                                            if expectedresult in actualresult:
+                                                print("Successfully reverted the ApSecurityModeEnabled to initial value")
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                            else:
+                                                print("Unable to revert the ApSecurityModeEnabled to initial value")
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                        else:
+                                            tdkTestObj.setResultStatus("FAILURE");
+                                            print("**************************************************");
+                                            print("TEST STEP 6: To get the Ap Security Mode Enabled value after set operation");
+                                            print("EXPECTED RESULT 6: Should successfully get the Ap Security Mode Enabled value after set operation");
+                                            print("ACTUAL RESULT 6: Failed to get the Ap Security Mode Enabled value after set operation");
+                                            print("wifi_getApSecurityModeEnabled() call failed after set operation");
+                                            #Get the result of execution
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
+                                            print("**************************************************");
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("**************************************************");
+                                        print("TEST STEP 5: To set Ap Security Mode Enabled to another value");
+                                        print("EXPECTED RESULT 5: Successfully set the Ap Security Mode Enabled to another value");
+                                        print("ACTUAL RESULT 5: wifi_setApSecurityModeEnabled() operation FAILED");
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                        print("**************************************************");
+                                break;
+                        else:
+                            print("The initial Ap Security Mode Enabled value is NOT equal to the default Mode");
+                            print("======INVOKING wifi_setApSecurityReset() API======");
+                            setApSecurityReset(idx);
+                            #Revert the ApSecurityModeEnabled back to initial value
+                            tdkTestObj, actualresult, details = GetSetApSecurityMode(obj,initMode,"setApSecurityModeEnabled", idx);
+                            if expectedresult in actualresult:
+                                print("Successfully reverted the ApSecurityModeEnabled to initial value")
+                                tdkTestObj.setResultStatus("SUCCESS");
+                            else:
+                                print("Unable to revert the ApSecurityModeEnabled to initial value")
+                                tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("**************************************************");
+                        print("TEST STEP 4: To check whether the initial Ap Security Mode Enabled is from the list of Ap Security Modes Supported");
+                        print("EXPECTED RESULT 4: The initial Ap Security Mode Enabled value should be from the list of Ap Security Modes Supported");
+                        print("ACTUAL RESULT 4 : Initial Ap Security Mode Enabled value is NOT from the list of Ap Security Modes Supported");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        print("**************************************************");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("**************************************************");
+                    print("TEST STEP 3: Get the initial Ap Security Mode Enabled value");
+                    print("EXPECTED RESULT 3: Should the initial Ap Security Mode Enabled value successfully");
+                    print("ACTUAL RESULT 3 : Failed to get the initial Ap Security Mode Enabled value");
+                    print("wifi_getApSecurityModeEnabled() operation FAILED");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    print("**************************************************");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("**************************************************");
+                print("TEST STEP 2: Get list of Ap Security Modes Supported")
+                print("EXPECTED RESULT 2: Should get the list of Ap Security Modes Supported successfully");
+                print("ACTUAL RESULT 2 : Failed to get the list of Ap Security Modes Supported");
+                print("wifi_getApSecurityModeSupported() operation FAILED");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                print("**************************************************");
+        else :
+            tdkTestObj.setResultStatus("FAILURE");
+            print("**************************************************");
+            print("TEST STEP 1: Get the default ap security mode enabled value from /etc/tdk_platform.properties file");
+            print("EXPECTED RESULT 1: Should get the default ap security mode enabled value");
+            print("ACTUAL RESULT 1: Failed to get the defacult ap security mode enabled value from /etc/tdk_platform.properties file");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("**************************************************");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

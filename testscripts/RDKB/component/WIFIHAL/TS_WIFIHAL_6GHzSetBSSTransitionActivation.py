@@ -86,8 +86,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetBSSTransitionActivation');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         getMethod = "getBSSTransitionActivation"
@@ -126,17 +126,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Enable state toggled using set"
+                print("Enable state toggled using set")
                 #Get the New enable status
 
                 getMethod = "getBSSTransitionActivation"
                 primitive = 'WIFIHAL_GetOrSetParamBoolValue'
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
                 getValue = details.split(":")[1].strip()
-                print "getValue:",getValue
+                print("getValue:",getValue)
 
                 if expectedresult in actualresult and checkValue == getValue  :
-                    print "getBSSTransitionActivation Success, verified along with setBSSTransitionActivation() api"
+                    print("getBSSTransitionActivation Success, verified along with setBSSTransitionActivation() api")
                     #Revert back to original Enable status
 
                     setMethod = "setBSSTransitionActivation"
@@ -145,25 +145,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                     if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Reverted Successfully";
+                        print("Reverted Successfully");
                     else:
-                        print "Revert operation failed"
+                        print("Revert operation failed")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "getBSSTransitionActivation() failed after set function"
+                    print("getBSSTransitionActivation() failed after set function")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "setBSSTransitionActivation() failed"
+                print("setBSSTransitionActivation() failed")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "getBSSTransitionActivation() failed"
+            print("getBSSTransitionActivation() failed")
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

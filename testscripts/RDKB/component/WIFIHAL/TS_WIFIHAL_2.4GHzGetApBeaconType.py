@@ -86,7 +86,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApBeaconType');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,57 +94,57 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApSecurityModeEnabled"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApSecurityModeEnabled"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    if expectedresult in actualresult:
-		mode = details.split(":")[1].strip();
-		dict_valid = {'None':'None','WPA-Personal':'WPA','WPA-WPA2-Personal':'WPAand11i','WPA2-Personal':'11i'}
+        if expectedresult in actualresult:
+            mode = details.split(":")[1].strip();
+            dict_valid = {'None':'None','WPA-Personal':'WPA','WPA-WPA2-Personal':'WPAand11i','WPA2-Personal':'11i'}
 
-		getMethod = "getApBeaconType"
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            getMethod = "getApBeaconType"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-		if expectedresult in actualresult:
-		    Beaconvalue = details.split(":")[1].strip()
-		    if mode in dict_valid :
-			print "Ap Security Mode Enabled is within the valid securityMode:beaconType mapping list";
-			if Beaconvalue == dict_valid.get(mode) :
-			    print "ApBeaconType is matching with the security mode enabled %s"%details
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "TEST STEP 1: Validate the Ap BeaconType";
-			    print "EXPECTED RESULT 1: Ap BeaconType should be %s when the Ap Security Mode Enabled is %s and Ap BeaconType should be in ['None', 'Basic', 'WPA', '11i', 'WPAand11i']"%(dict_valid.get(mode),mode);
-			    print "ACTUAL RESULT 1: AP BeaconType Received: %s"%Beaconvalue;
-			    print "[TEST EXECUTION RESULT] : SUCCESS";
-			else:
-			    print "ApBeaconType is NOT matching with the security mode enabled %s"%details
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "TEST STEP 1: Validate the Ap BeaconType";
-			    print "EXPECTED RESULT 1: Ap BeaconType should be %s when the Ap Security Mode Enabled is %s and Ap BeaconType should be in ['None', 'Basic', 'WPA', '11i', 'WPAand11i']"%(dict_valid.get(mode),mode);
-			    print "ACTUAL RESULT 1: AP BeaconType Received: %s"%Beaconvalue;
-			    print "[TEST EXECUTION RESULT] : FAILURE";
-		    else :
-			print "Ap Security Mode Enabled is not within the valid securityMode:beaconType mapping list";
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "getApBeaconType() failed"
-		    obj.setLoadModuleStatus("FAILURE");
-	    else :
-		tdkTestObj.setResultStatus("FAILURE");
-		print "getApSecurityModeEnabled() failed";
+            if expectedresult in actualresult:
+                Beaconvalue = details.split(":")[1].strip()
+                if mode in dict_valid :
+                    print("Ap Security Mode Enabled is within the valid securityMode:beaconType mapping list");
+                    if Beaconvalue == dict_valid.get(mode) :
+                        print("ApBeaconType is matching with the security mode enabled %s"%details)
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 1: Validate the Ap BeaconType");
+                        print("EXPECTED RESULT 1: Ap BeaconType should be %s when the Ap Security Mode Enabled is %s and Ap BeaconType should be in ['None', 'Basic', 'WPA', '11i', 'WPAand11i']"%(dict_valid.get(mode),mode));
+                        print("ACTUAL RESULT 1: AP BeaconType Received: %s"%Beaconvalue);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        print("ApBeaconType is NOT matching with the security mode enabled %s"%details)
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 1: Validate the Ap BeaconType");
+                        print("EXPECTED RESULT 1: Ap BeaconType should be %s when the Ap Security Mode Enabled is %s and Ap BeaconType should be in ['None', 'Basic', 'WPA', '11i', 'WPAand11i']"%(dict_valid.get(mode),mode));
+                        print("ACTUAL RESULT 1: AP BeaconType Received: %s"%Beaconvalue);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else :
+                    print("Ap Security Mode Enabled is not within the valid securityMode:beaconType mapping list");
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("getApBeaconType() failed")
+                obj.setLoadModuleStatus("FAILURE");
+        else :
+            tdkTestObj.setResultStatus("FAILURE");
+            print("getApSecurityModeEnabled() failed");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

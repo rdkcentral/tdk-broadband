@@ -78,7 +78,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioChannelStats2');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -86,7 +86,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     ## Check if a invalid index is returned
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -97,22 +97,21 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "TEST STEP 1: Get the Radio channel statistics for 6GHz";
-        print "EXPECTED RESULT 1: wifi_getRadioChannelStats2 should return the radio channel statistics for 6GHz";
+        print("TEST STEP 1: Get the Radio channel statistics for 6GHz");
+        print("EXPECTED RESULT 1: wifi_getRadioChannelStats2 should return the radio channel statistics for 6GHz");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: wifi_getRadioChannelStats2 operation returned SUCCESS";
-            print "Radio Channel Stats are : ",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 1: wifi_getRadioChannelStats2 operation returned SUCCESS");
+            print("Radio Channel Stats are : ",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: wifi_getRadioChannelStats2 operation returned FAILURE";
-            print "Radio Channel Stats are : ",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 1: wifi_getRadioChannelStats2 operation returned FAILURE");
+            print("Radio Channel Stats are : ",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-

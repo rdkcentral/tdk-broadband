@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetSSIDRadioIndex');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,14 +95,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
         tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
         if apIndex == -1:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
         else:
             #Checking for 6Ghz private SSID index
@@ -117,41 +117,41 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2 : Invoke the HAL API wifi_getSSIDRadioIndex() for the 6G Private SSID index : %d" %apIndex;
-            print "EXPECTED RESULT 2 : The HAL API should be invoked successfully";
+            print("\nTEST STEP 2 : Invoke the HAL API wifi_getSSIDRadioIndex() for the 6G Private SSID index : %d" %apIndex);
+            print("EXPECTED RESULT 2 : The HAL API should be invoked successfully");
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2 : The API was invoked successfully; Details : %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2 : The API was invoked successfully; Details : %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the SSID radio index is same as the 6G radio Index
                 radioIndex = details.split(":")[1].strip();
                 #Expected Radio Index for SSID Index is defaultRadioIndex
                 defaultRadioIndex = idx;
-                print "The expected Radio Index corresponding to the 6G private SSID index %d is : %s" %(apIndex, defaultRadioIndex);
-                print "The actual Radio Index corresponding to the 6G private SSID index %d is : %s" %(apIndex, radioIndex);
+                print("The expected Radio Index corresponding to the 6G private SSID index %d is : %s" %(apIndex, defaultRadioIndex));
+                print("The actual Radio Index corresponding to the 6G private SSID index %d is : %s" %(apIndex, radioIndex));
 
-                print "\nTEST STEP 3 : Check if the SSID radio index is same as the 6G radio Index";
-                print "EXPECTED RESULT 3 : The SSID radio index should be the same as the 6G radio Index"
+                print("\nTEST STEP 3 : Check if the SSID radio index is same as the 6G radio Index");
+                print("EXPECTED RESULT 3 : The SSID radio index should be the same as the 6G radio Index")
 
                 if radioIndex.isdigit() and int(radioIndex) == defaultRadioIndex:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: The SSID radio index is same as the 6G radio Index";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 3: The SSID radio index is same as the 6G radio Index");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: The SSID radio index is not the same as the 6G radio Index";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 3: The SSID radio index is not the same as the 6G radio Index");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2 : The API was not invoked successfully; Details : %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2 : The API was not invoked successfully; Details : %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

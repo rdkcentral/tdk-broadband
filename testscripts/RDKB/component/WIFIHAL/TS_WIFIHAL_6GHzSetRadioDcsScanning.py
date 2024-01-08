@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetRadioDcsScanning');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,7 +111,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
@@ -122,15 +122,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Get the current enable state of Radio DCS scanning using the HAL API wifi_getRadioDcsScanning() for 6G radio";
-        print "EXPECTED RESULT 1: Should get current enable state of Radio DCS scanning for 6G radio successfully";
+        print("\nTEST STEP 1: Get the current enable state of Radio DCS scanning using the HAL API wifi_getRadioDcsScanning() for 6G radio");
+        print("EXPECTED RESULT 1: Should get current enable state of Radio DCS scanning for 6G radio successfully");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API invocation success; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             currState = details.split(":")[1].strip();
 
             if "Enabled" in currState:
@@ -142,7 +142,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 oldValue = 0;
                 newState = "Enabled"
 
-            print "Initial DCS Scanning enable state is : %s" %currState;
+            print("Initial DCS Scanning enable state is : %s" %currState);
 
             #Toggle Dcs scanning
             tdkTestObj.addParameter("methodName","setRadioDcsScanning");
@@ -152,15 +152,15 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2: Toggle the DCS Scanning enable to %s state using the HAL API wifi_setDcsScanning() for 6G radio" %newState;
-            print "EXPECTED RESULT 2: Should toggle the DCS Scanning enable state successfully";
+            print("\nTEST STEP 2: Toggle the DCS Scanning enable to %s state using the HAL API wifi_setDcsScanning() for 6G radio" %newState);
+            print("EXPECTED RESULT 2: Should toggle the DCS Scanning enable state successfully");
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: API invocation success; Details : %s" %details;
+                print("ACTUAL RESULT 2: API invocation success; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 #Cross check the set with get
                 tdkTestObj.addParameter("methodName","getRadioDcsScanning");
@@ -169,40 +169,40 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 3 : Invoke wifi_getDcsScanning() after the set operation";
-                print "EXPECTED RESULT 3 : The HAL API should be invoked  successfully";
+                print("\nTEST STEP 3 : Invoke wifi_getDcsScanning() after the set operation");
+                print("EXPECTED RESULT 3 : The HAL API should be invoked  successfully");
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: API invocation success; Details : %s" %details;
+                    print("ACTUAL RESULT 3: API invocation success; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     new_enable = details.split(":")[1].strip();
-                    print "\nTEST STEP 4 : Cross check if the Dcs Scanning enable SET is reflected in GET";
-                    print "EXPECTED RESULT 4 : The Dcs Scanning enable SET should be reflected in GET";
-                    print "DCS Scanning set : %s" %newState;
-                    print "DCS Scanning get : %s" %new_enable;
+                    print("\nTEST STEP 4 : Cross check if the Dcs Scanning enable SET is reflected in GET");
+                    print("EXPECTED RESULT 4 : The Dcs Scanning enable SET should be reflected in GET");
+                    print("DCS Scanning set : %s" %newState);
+                    print("DCS Scanning get : %s" %new_enable);
 
                     if new_enable == newState:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: The SET matches with GET";
+                        print("ACTUAL RESULT 4: The SET matches with GET");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: The SET does not match with GET";
+                        print("ACTUAL RESULT 4: The SET does not match with GET");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: API invocation failed; Details : %s" %details;
+                    print("ACTUAL RESULT 3: API invocation failed; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert operation
                 tdkTestObj.addParameter("methodName","setRadioDcsScanning");
@@ -215,27 +215,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Successfully reverted DCS Scanning to initial enable state";
+                    print("Successfully reverted DCS Scanning to initial enable state");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Reverting DCS Scanning to initial enable state failed";
+                    print("Reverting DCS Scanning to initial enable state failed");
 
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: API invocation failed; Details : %s" %details;
+                print("ACTUAL RESULT 2: API invocation failed; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     tdkTestObj.setResultStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

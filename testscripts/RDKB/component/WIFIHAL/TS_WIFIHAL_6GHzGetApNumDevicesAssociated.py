@@ -82,8 +82,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApNumDevicesAssociated');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the Access Point number of devices associated
@@ -104,39 +104,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2 : Invoke the HAL API wifi_getApNumDevicesAssociated";
-        print "EXPECTED RESULT 2 : The HAL API wifi_getApNumDevicesAssociated should be invoked successfully";
+        print("\nTEST STEP 2 : Invoke the HAL API wifi_getApNumDevicesAssociated");
+        print("EXPECTED RESULT 2 : The HAL API wifi_getApNumDevicesAssociated should be invoked successfully");
 
         if expectedresult in actualresult :
             ApNumDevices = details.split(":")[1].strip();
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: wifi_getApNumDevicesAssociated invoked successfully";
+            print("ACTUAL RESULT 2: wifi_getApNumDevicesAssociated invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\nTEST STEP 3: Get the number of Ap Associated Devices"
-            print "EXPECTED RESULT 3: Should get the number of Ap Associated Devices as a valid value"
+            print("\nTEST STEP 3: Get the number of Ap Associated Devices")
+            print("EXPECTED RESULT 3: Should get the number of Ap Associated Devices as a valid value")
 
             if ApNumDevices.isdigit():
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: Received the number of Ap Associated Devices as a valid value"
-                print "ApNumDevicesAssociated : %s"%ApNumDevices
-                print "TEST EXECUTION RESULT: SUCCESS"
+                print("ACTUAL RESULT 3: Received the number of Ap Associated Devices as a valid value")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT: SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Received the number of Ap Associated Devices as an invalid value"
-                print "ApNumDevicesAssociated : %s"%ApNumDevices
-                print "TEST EXECUTION RESULT: FAILURE"
+                print("ACTUAL RESULT 3: Received the number of Ap Associated Devices as an invalid value")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT: FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: wifi_getApNumDevicesAssociated() call failed"
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2: wifi_getApNumDevicesAssociated() call failed")
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetClientDetailedStatisticsEnable');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,13 +91,13 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Enable the ClientDetailedStatistics
         enable = 1;
-        print "TEST STEP 1: Enable the ClientDetailedStatistics by invoking the HAL API wifi_setClientDetailedStatisticsEnable()";
-        print "EXPECTED RESULT 1: wifi_setClientDetailedStatisticsEnable() should be invoked successfully and set to Enabled";
+        print("TEST STEP 1: Enable the ClientDetailedStatistics by invoking the HAL API wifi_setClientDetailedStatisticsEnable()");
+        print("EXPECTED RESULT 1: wifi_setClientDetailedStatisticsEnable() should be invoked successfully and set to Enabled");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","setClientDetailedStatisticsEnable");
         tdkTestObj.addParameter("radioIndex", idx);
@@ -108,14 +108,14 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1:  %s" %details;
+            print("ACTUAL RESULT 1:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Disable the ClientDetailedStatistics
             enable = 0;
-            print "TEST STEP 2: Disable the ClientDetailedStatistics by invoking the HAL API wifi_setClientDetailedStatisticsEnable()";
-            print "EXPECTED RESULT 2: wifi_setClientDetailedStatisticsEnable() should be invoked successfully and set to Disabled";
+            print("TEST STEP 2: Disable the ClientDetailedStatistics by invoking the HAL API wifi_setClientDetailedStatisticsEnable()");
+            print("EXPECTED RESULT 2: wifi_setClientDetailedStatisticsEnable() should be invoked successfully and set to Disabled");
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
             tdkTestObj.addParameter("methodName","setClientDetailedStatisticsEnable");
             tdkTestObj.addParameter("radioIndex", idx);
@@ -126,24 +126,23 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

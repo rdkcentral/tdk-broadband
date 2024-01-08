@@ -98,7 +98,7 @@ def RadioAMSDUEnable(methodName,param,idx):
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -115,15 +115,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         param = 0;
         tdkTestObj, actualresult, details = RadioAMSDUEnable(methodName,param,idx);
 
-        print "\nTEST STEP 1: Get the initial Radio AMSDU Enable status using the HAL API wifi_getRadioAMSDUEnable()";
-        print "EXPECTED RESULT 1: The HAL API wifi_getRadioAMSDUEnable() should be invoked successfully";
+        print("\nTEST STEP 1: Get the initial Radio AMSDU Enable status using the HAL API wifi_getRadioAMSDUEnable()");
+        print("EXPECTED RESULT 1: The HAL API wifi_getRadioAMSDUEnable() should be invoked successfully");
 
         if expectedresult in actualresult :
-            print "ACTUAL RESULT 1: API invoked successfully; Details : %s" %details;
-            print "TEST EXECUTION RESULT :SUCCESS"
+            print("ACTUAL RESULT 1: API invoked successfully; Details : %s" %details);
+            print("TEST EXECUTION RESULT :SUCCESS")
             tdkTestObj.setResultStatus("SUCCESS");
             enable = details.split(":")[1].strip();
-            print "Initial AMSDU Enable :" ,enable;
+            print("Initial AMSDU Enable :" ,enable);
 
             if "Enabled" in enable:
                 oldEnable = 1
@@ -138,13 +138,13 @@ if "SUCCESS" in loadmodulestatus.upper():
             methodName = "setRadioAMSDUEnable"
             tdkTestObj, actualresult, details = RadioAMSDUEnable(methodName,newEnable,idx);
 
-            print "\nTEST STEP 2: Toggle the radio AMSDU enable status to %s using the HAL API wifi_setRadioAMSDUEnable()" %newStatus;
-            print "EXPECTED RESULT 2: The set operation should be success";
+            print("\nTEST STEP 2: Toggle the radio AMSDU enable status to %s using the HAL API wifi_setRadioAMSDUEnable()" %newStatus);
+            print("EXPECTED RESULT 2: The set operation should be success");
 
 
             if expectedresult in actualresult :
-                print "ACTUAL RESULT 2: Set API returns success; Details : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS"
+                print("ACTUAL RESULT 2: Set API returns success; Details : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS")
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 # Get the New AP enable status
@@ -153,59 +153,59 @@ if "SUCCESS" in loadmodulestatus.upper():
                 param = 0;
                 tdkTestObj, actualresult, details = RadioAMSDUEnable(methodName,param,idx);
 
-                print "\nTEST STEP 3: Get the current AMSDU Enable status using wifi_setRadioAMSDUEnable()";
-                print "EXPECTED RESULT 3: The current AMSDU status should be retrieved successfully";
+                print("\nTEST STEP 3: Get the current AMSDU Enable status using wifi_setRadioAMSDUEnable()");
+                print("EXPECTED RESULT 3: The current AMSDU status should be retrieved successfully");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: GET API returns success; Details : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS"
+                    print("ACTUAL RESULT 3: GET API returns success; Details : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS")
 
                     #Check if the SET is reflected in GET
                     getValue = details.split(":")[1].strip();
-                    print "\nTEST STEP 4 : Check if the AMDSU enable SET is reflected in the GET";
-                    print "EXPECTED RESULT 4 : The AMSDU value SET is reflected in the GET";
-                    print "AMSDU value Set : ", newStatus;
-                    print "AMSDU value Get : ", getValue;
+                    print("\nTEST STEP 4 : Check if the AMDSU enable SET is reflected in the GET");
+                    print("EXPECTED RESULT 4 : The AMSDU value SET is reflected in the GET");
+                    print("AMSDU value Set : ", newStatus);
+                    print("AMSDU value Get : ", getValue);
 
                     if getValue == newStatus:
-                        print "ACTUAL RESULT 4 :The SET value is reflected in GET";
+                        print("ACTUAL RESULT 4 :The SET value is reflected in GET");
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST EXECUTION RESULT :SUCCESS")
 
                         #Revert back to original Enable status
                         methodName = "setRadioAMSDUEnable"
                         tdkTestObj, actualresult, details = RadioAMSDUEnable(methodName,oldEnable,idx);
-                        print "\nTEST STEP 5 : Revert the enable status to initial value";
-                        print "EXPECTED RESULT 5: Revert operation should be success";
+                        print("\nTEST STEP 5 : Revert the enable status to initial value");
+                        print("EXPECTED RESULT 5: Revert operation should be success");
 
                         if expectedresult in actualresult :
-                            print "ACTUAL RESULT 5:Enable status reverted back; Details : %s" %details;
-                            print "TEST EXECUTION RESULT :SUCCESS"
+                            print("ACTUAL RESULT 5:Enable status reverted back; Details : %s" %details);
+                            print("TEST EXECUTION RESULT :SUCCESS")
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "ACTUAL RESULT 5:Enable status not reverted back; Details : %s" %details;
-                            print "TEST EXECUTION RESULT :FAILURE"
+                            print("ACTUAL RESULT 5:Enable status not reverted back; Details : %s" %details);
+                            print("TEST EXECUTION RESULT :FAILURE")
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "ACTUAL RESULT 4 :The SET value is not reflected in GET";
+                        print("ACTUAL RESULT 4 :The SET value is not reflected in GET");
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST EXECUTION RESULT :FAILURE")
                 else:
-                    print "ACTUAL RESULT 3: GET API invocation fails after SET API invocation; Details : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE"
+                    print("ACTUAL RESULT 3: GET API invocation fails after SET API invocation; Details : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE")
                     tdkTestObj.setResultStatus("FAILURE");
             else :
-                print "ACTUAL RESULT 2: Set API returns failure; Details : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE"
+                print("ACTUAL RESULT 2: Set API returns failure; Details : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE")
                 tdkTestObj.setResultStatus("FAILURE");
         else :
-            print "ACTUAL RESULT 1: API not invoked successfully; Details : %s" %details;
-            print "TEST EXECUTION RESULT :FAILURE"
+            print("ACTUAL RESULT 1: API not invoked successfully; Details : %s" %details);
+            print("TEST EXECUTION RESULT :FAILURE")
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

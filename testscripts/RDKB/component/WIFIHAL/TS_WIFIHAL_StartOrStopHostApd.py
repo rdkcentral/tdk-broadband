@@ -113,7 +113,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_StartOrStopHostApd');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 def GetApStatus(radioIndex):
     expectedresult="SUCCESS";
@@ -123,7 +123,7 @@ def GetApStatus(radioIndex):
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-	return (details.split(":")[1].strip());
+        return (details.split(":")[1].strip());
     else:
         tdkTestObj.setResultStatus("FAILURE");
 
@@ -134,17 +134,17 @@ if "SUCCESS" in loadmodulestatus.upper():
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         status0_initial = GetApStatus(idx0);
-        print"InitialApStatus for 2.4GHz = ",status0_initial;
+        print("InitialApStatus for 2.4GHz = ",status0_initial);
         status1_initial = GetApStatus(idx1);
-        print"InitialApStatus for 5GHz = ",status1_initial;
+        print("InitialApStatus for 5GHz = ",status1_initial);
         if status0_initial == 'Up' or status1_initial == 'Up':
-	    print"********INVOKING wifi_stopHostApd() api********";
+            print("********INVOKING wifi_stopHostApd() api********");
             #Primitive test case which associated to this Script
             tdkTestObj = obj.createTestStep('WIFIHAL_StartorStopHostApd');
             #Giving the method name to invoke the api wifi_stopHostApd()
@@ -158,25 +158,25 @@ if "SUCCESS" in loadmodulestatus.upper():
                 time.sleep(5);
                 status0_final = GetApStatus(idx0);
                 status1_final = GetApStatus(idx1);
-                print"ApStatus for 2.4GHz after calling stopHostApd is  ",status0_final;
-                print"ApStatus for 5GHz after calling stopHostApd is  ",status1_final;
+                print("ApStatus for 2.4GHz after calling stopHostApd is  ",status0_final);
+                print("ApStatus for 5GHz after calling stopHostApd is  ",status1_final);
                 if status0_final == 'Disable' and status1_final == 'Disable':
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print"TEST STEP:To stop the HostApd using wifi_stopHostApd() api and check whether the Apstatus is changed";
-                    print"EXPECTED RESULT:The ApStatus should be changed to 'Disable' for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The ApStatus is changed to 'Disable' for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:SUCCESS";
+                    print("TEST STEP:To stop the HostApd using wifi_stopHostApd() api and check whether the Apstatus is changed");
+                    print("EXPECTED RESULT:The ApStatus should be changed to 'Disable' for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The ApStatus is changed to 'Disable' for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print"TEST STEP:To stop the HostApd using wifi_stopHostApd() api and check whether the Apstatus is changed";
-                    print"EXPECTED RESULT:The ApStatus should be changed to 'Disable' for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The ApStatus is not changed to 'Disable' for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:FAILURE";
+                    print("TEST STEP:To stop the HostApd using wifi_stopHostApd() api and check whether the Apstatus is changed");
+                    print("EXPECTED RESULT:The ApStatus should be changed to 'Disable' for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The ApStatus is not changed to 'Disable' for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"StopHostApd() operation failed";
+                print("StopHostApd() operation failed");
         elif status0_initial == 'Disable' or status1_initial == 'Disable':
-            print"********INVOKING wifi_startHostApd() api********";
+            print("********INVOKING wifi_startHostApd() api********");
             #Primitive test case which associated to this Script
             tdkTestObj = obj.createTestStep('WIFIHAL_StartorStopHostApd');
             #Giving the method name to invoke the api wifi_startHostApd()
@@ -190,27 +190,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                 time.sleep(5);
                 status0_final = GetApStatus(idx0);
                 status1_final = GetApStatus(idx1);
-                print"ApStatus for 2.4GHz after calling startHostApd is  ",status0_final;
-                print"ApStatus for 5GHz after calling startHostApd is  ",status1_final;
+                print("ApStatus for 2.4GHz after calling startHostApd is  ",status0_final);
+                print("ApStatus for 5GHz after calling startHostApd is  ",status1_final);
                 if status0_final == 'Up' and status1_final == 'Up':
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print"TEST STEP:To start the HostApd using wifi_startHostApd() api and check whether the Apstatus is changed";
-                    print"EXPECTED RESULT:The ApStatus should be changed to 'Up' for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The ApStatus is changed to 'Up' for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:SUCCESS";
+                    print("TEST STEP:To start the HostApd using wifi_startHostApd() api and check whether the Apstatus is changed");
+                    print("EXPECTED RESULT:The ApStatus should be changed to 'Up' for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The ApStatus is changed to 'Up' for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print"TEST STEP:To start the HostApd using wifi_startHostApd() api and check whether the Apstatus is changed";
-                    print"EXPECTED RESULT:The ApStatus should be changed to 'Up' for both 2.4GHz and 5GHz";
-                    print"ACTUAL RESULT:The ApStatus is not changed to 'Up' for both 2.4GHz and 5GHz";
-                    print"[TEST EXECUTION RESULT]:FAILURE";
+                    print("TEST STEP:To start the HostApd using wifi_startHostApd() api and check whether the Apstatus is changed");
+                    print("EXPECTED RESULT:The ApStatus should be changed to 'Up' for both 2.4GHz and 5GHz");
+                    print("ACTUAL RESULT:The ApStatus is not changed to 'Up' for both 2.4GHz and 5GHz");
+                    print("[TEST EXECUTION RESULT]:FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"StartHostApd() operation failed";
+                print("StartHostApd() operation failed");
         else:
-            print "wifi_getApStatus is returning invalid status";
+            print("wifi_getApStatus is returning invalid status");
             tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

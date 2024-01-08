@@ -83,8 +83,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApName');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,26 +94,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else :
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         cmd = "sh %s/tdk_utility.sh parseConfigFile AP_IF_NAME_6G" %TDK_PATH;
-        print "query:%s" %cmd
+        print("query:%s" %cmd)
         tdkTestObj.addParameter("command", cmd);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         accesspointname= tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP 2: Get the 6GHZ Private Access Point name from properties file";
-        print "EXPECTED RESULT 2 : The 6GHZ Private Access Point name should be fetched successfully"
+        print("\nTEST STEP 2: Get the 6GHZ Private Access Point name from properties file");
+        print("EXPECTED RESULT 2 : The 6GHZ Private Access Point name should be fetched successfully")
 
         if expectedresult in actualresult and accesspointname != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: AP_IF_NAME_6G : %s" %accesspointname;
+            print("ACTUAL RESULT 2: AP_IF_NAME_6G : %s" %accesspointname);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the Access Point Name using the API wifi_getApName
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
@@ -123,50 +123,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 3 : Invoke the HAL API wifi_getApName and get the 6GHz Private Access Point Name";
-            print "EXPECTED RESULT 3 : The HAL API wifi_getApName should be invoked successfully";
+            print("\nTEST STEP 3 : Invoke the HAL API wifi_getApName and get the 6GHz Private Access Point Name");
+            print("EXPECTED RESULT 3 : The HAL API wifi_getApName should be invoked successfully");
 
             if expectedresult in actualresult :
                 apName = details.split(":")[1].strip();
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: wifi_getApName invoked successfully; 6GHZ Private Access Point Name : %s" %apName;
+                print("ACTUAL RESULT 3: wifi_getApName invoked successfully; 6GHZ Private Access Point Name : %s" %apName);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nTEST STEP 4 : Check if the 6GHZ Private ApName retrieved from HAL API matches with the value from platform property file";
-                print "EXPECTED RESULT 4 : The values should match";
-                print "From platform property file apName : %s" %accesspointname;
-                print "From HAL API apName : %s" %apName;
+                print("\nTEST STEP 4 : Check if the 6GHZ Private ApName retrieved from HAL API matches with the value from platform property file");
+                print("EXPECTED RESULT 4 : The values should match");
+                print("From platform property file apName : %s" %accesspointname);
+                print("From HAL API apName : %s" %apName);
 
                 if accesspointname == apName:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: The 6GHZ Private ApName retrieved from HAL API matches with the value from platform property file";
+                    print("ACTUAL RESULT 4: The 6GHZ Private ApName retrieved from HAL API matches with the value from platform property file");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: The 6GHZ Private ApName retrieved from HAL API does not match with the value from platform property file";
+                    print("ACTUAL RESULT 4: The 6GHZ Private ApName retrieved from HAL API does not match with the value from platform property file");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: wifi_getApName not invoked successfully; Details : %s" %details;
+                print("ACTUAL RESULT 3: wifi_getApName not invoked successfully; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: AP_IF_NAME_6G : %s" %accesspointname;
+            print("ACTUAL RESULT 2: AP_IF_NAME_6G : %s" %accesspointname);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -106,27 +106,27 @@ def getchannel(index,obj) :
         currentChannel = details.split(":")[1];
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Get the Radio channel for 2.4GHz";
-        print "EXPECTED RESULT : Should get the Radio channel for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Get the Radio channel for 2.4GHz");
+        print("EXPECTED RESULT : Should get the Radio channel for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         return currentChannel;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the Radio channel for 2.4GHz";
-        print "EXPECTED RESULT : Should get the Radio channel for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Get the Radio channel for 2.4GHz");
+        print("EXPECTED RESULT : Should get the Radio channel for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
         return currentChannel;
 
 
 def getpossiblechanneltoset(index,currentChannel,obj) :
     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
     #Giving the method name to invoke the api for getting possible Radio Channel. ie,wifi_getRadioPossibleChannels()
-    tdkTestObj.addParameter("methodName","getRadioPossibleChannels"); 
+    tdkTestObj.addParameter("methodName","getRadioPossibleChannels");
     tdkTestObj.addParameter("radioIndex",index);
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
@@ -136,37 +136,37 @@ def getpossiblechanneltoset(index,currentChannel,obj) :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Get the possible Radio Channels for 2.4GHz";
-        print "EXPECTED RESULT : Should get the possible Radio Channels for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Get the possible Radio Channels for 2.4GHz");
+        print("EXPECTED RESULT : Should get the possible Radio Channels for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #if possible channels are given as a range eg: 1-11
         if "-" in details:
             #get the possible channels as a list of integers
             PossibleChannelRange = [int(x) for x in details.split(":")[1].split("-")];
-            PossibleChannels = range(PossibleChannelRange[0],PossibleChannelRange[1]+1);
-            print "Possible channels are ", PossibleChannels;
+            PossibleChannels = list(range(PossibleChannelRange[0],PossibleChannelRange[1]+1));
+            print("Possible channels are ", PossibleChannels);
             #if possible channels are given as values eg:1,2,3,4,5
         else:
             #get the possible channels as a list of integers
             PossibleChannels = [int(x) for x in details.split(":")[1].split(",")];
-            print "Possible channels are ", PossibleChannels;
+            print("Possible channels are ", PossibleChannels);
             #select a channel from possible channels which is not the current channel
         for channel in PossibleChannels:
             if channel != int(currentChannel):
                 newChannel= channel;
                 break;
-        print "New channel to set is ", newChannel;
+        print("New channel to set is ", newChannel);
         return newChannel;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the possible Radio Channels for 2.4GHz";
-        print "EXPECTED RESULT : Should get the possible Radio Channels for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Get the possible Radio Channels for 2.4GHz");
+        print("EXPECTED RESULT : Should get the possible Radio Channels for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
         return newChannel;
 
 def setnewchannel(index, newChannel, obj):
@@ -182,27 +182,27 @@ def setnewchannel(index, newChannel, obj):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Set new Radio channel for 2.4GHz";
-        print "EXPECTED RESULT : Should  set the new Radio channel for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Set new Radio channel for 2.4GHz");
+        print("EXPECTED RESULT : Should  set the new Radio channel for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         return 1
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Set new Radio channel for 2.4GHz";
-        print "EXPECTED RESULT : Should  set the new Radio channel for 2.4GHz";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Set new Radio channel for 2.4GHz");
+        print("EXPECTED RESULT : Should  set the new Radio channel for 2.4GHz");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
         return 0
 
 def revert(newEnable, index, obj) :
     #Revert Operation for AutoChannelEnable
     if newEnable == 1 :
         #If newEnable is True, set the radiochannel to a new channel and then check if AutoChannelEnable is false
-        print "Revert AutoChannelEnable to False"
+        print("Revert AutoChannelEnable to False")
         currentChannel = getchannel(index,obj);
         newChannel = getpossiblechanneltoset(index,currentChannel,obj);
         newchanset = setnewchannel(index, newChannel,obj);
@@ -211,42 +211,42 @@ def revert(newEnable, index, obj) :
             primitive = 'WIFIHAL_GetOrSetParamBoolValue'
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
             expectedresult="SUCCESS";
-            print "TEST STEP : Get AutoChannelEnable value after setRadioChannel operation"
-            print "EXPECTED RESULT: Should successfully get the AutoChannelEnable"
-            print "ACTUAL RESULT: getAutoChannelEnable : %s"%details;
+            print("TEST STEP : Get AutoChannelEnable value after setRadioChannel operation")
+            print("EXPECTED RESULT: Should successfully get the AutoChannelEnable")
+            print("ACTUAL RESULT: getAutoChannelEnable : %s"%details);
             if expectedresult in actualresult and currEnable == details.split(":")[1].strip() :
-                print "AutoChannelEnable reverted Successfully";
+                print("AutoChannelEnable reverted Successfully");
                 tdkTestObj.setResultStatus("SUCCESS");
             else :
-                print "AutoChannelEnable did not revert Successfully"
+                print("AutoChannelEnable did not revert Successfully")
                 tdkTestObj.setResultStatus("FAILURE");
         else :
-            print "Radio Channel did not change after the set operation";
+            print("Radio Channel did not change after the set operation");
             tdkTestObj.setResultStatus("FAILURE");
     else :
         #If newEnable is false, directly toggle the AutoChannelEnable to true
-        print "Revert AutoChannelEnable to True"
+        print("Revert AutoChannelEnable to True")
         setMethod = "setRadioAutoChannelEnable"
         primitive = 'WIFIHAL_GetOrSetParamBoolValue'
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
         expectedresult="SUCCESS";
-        print "TEST STEP : Get AutoChannelEnable value after set operation"
-        print "EXPECTED RESULT: Should successfully get the AutoChannelEnable"
-        print "ACTUAL RESULT: getAutoChannelEnable : %s"%details;
+        print("TEST STEP : Get AutoChannelEnable value after set operation")
+        print("EXPECTED RESULT: Should successfully get the AutoChannelEnable")
+        print("ACTUAL RESULT: getAutoChannelEnable : %s"%details);
         if expectedresult in actualresult :
             getMethod = "getAutoChannelEnable"
             primitive = 'WIFIHAL_GetOrSetParamBoolValue'
             sleep(5);
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
             expectedresult="SUCCESS";
-            print "TEST STEP : Get AutoChannelEnable value after set operation"
-            print "EXPECTED RESULT: Should successfully get the AutoChannelEnable"
-            print "ACTUAL RESULT: getAutoChannelEnable : %s"%details;
+            print("TEST STEP : Get AutoChannelEnable value after set operation")
+            print("EXPECTED RESULT: Should successfully get the AutoChannelEnable")
+            print("ACTUAL RESULT: getAutoChannelEnable : %s"%details);
             if expectedresult in actualresult and currEnable == details.split(":")[1].strip() :
-                print "AutoChannelEnable toggled Successfully to True";
+                print("AutoChannelEnable toggled Successfully to True");
                 tdkTestObj.setResultStatus("SUCCESS");
             else :
-                print "AutoChannelEnable did not toggle Successfully to True"
+                print("AutoChannelEnable did not toggle Successfully to True")
                 tdkTestObj.setResultStatus("FAILURE");
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -266,14 +266,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetRadioAutoChannelEnable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -283,96 +283,95 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
         expectedresult="SUCCESS";
         if expectedresult in actualresult :
-            print "TEST STEP 1: Get AutoChannelEnable value"
-            print "EXPECTED RESULT 1: Should successfully get the AutoChannelEnable"
-            print "ACTUAL RESULT 1: getAutoChannelEnable : %s"%details;
-            print "[TEST EXECUTION RESULT]: SUCCESS"
+            print("TEST STEP 1: Get AutoChannelEnable value")
+            print("EXPECTED RESULT 1: Should successfully get the AutoChannelEnable")
+            print("ACTUAL RESULT 1: getAutoChannelEnable : %s"%details);
+            print("[TEST EXECUTION RESULT]: SUCCESS")
             tdkTestObj.setResultStatus("SUCCESS");
             currEnable = details.split(":")[1].strip()
             if "Enabled" in currEnable:
                 oldEnable = 1
                 newEnable = 0
                 #If oldEnable is true, set the radiochannel to a new channel and then check if AutoChannelEnable is false
-                print "Initially AutoChannelEnable is Enabled"
-                print "Set radio channel to a new channel to toggle to false"
+                print("Initially AutoChannelEnable is Enabled")
+                print("Set radio channel to a new channel to toggle to false")
                 currentChannel = getchannel(idx,obj);
                 newChannel = getpossiblechanneltoset(idx,currentChannel,obj);
                 newchanset = setnewchannel(idx, newChannel,obj);
                 if newchanset == 1 :
-                   getMethod = "getAutoChannelEnable"
-                   primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-                   tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-                   expectedresult="SUCCESS";
-                   print "Radio Channel is changed successfully"
-                   print "TEST STEP 2: Get AutoChannelEnable value after setRadioChannel operation"
-                   print "EXPECTED RESULT 2: Should successfully get the AutoChannelEnable"
-                   if expectedresult in actualresult :
-                       print "ACTUAL RESULT 2: getAutoChannelEnable : %s"%details;
-                       print "[TEST EXECUTION RESULT]: SUCCESS"
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       if currEnable not in details.split(":")[1].strip() :
-                           print "AutoChannelEnable toggled Successfully to false";
-                           tdkTestObj.setResultStatus("SUCCESS");
-                           #Revert to initial value
-                           revert(newEnable,idx,obj);
-                       else :
-                           print "AutoChannelEnable did not toggle Successfully to false"
-                           tdkTestObj.setResultStatus("FAILURE");
-                   else :
-                       print "ACTUAL RESULT 2: getAutoChannelEnable : %s"%details;
-                       print "[TEST EXECUTION RESULT]: FAILURE"
-                       tdkTestObj.setResultStatus("FAILURE");
+                    getMethod = "getAutoChannelEnable"
+                    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    expectedresult="SUCCESS";
+                    print("Radio Channel is changed successfully")
+                    print("TEST STEP 2: Get AutoChannelEnable value after setRadioChannel operation")
+                    print("EXPECTED RESULT 2: Should successfully get the AutoChannelEnable")
+                    if expectedresult in actualresult :
+                        print("ACTUAL RESULT 2: getAutoChannelEnable : %s"%details);
+                        print("[TEST EXECUTION RESULT]: SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        if currEnable not in details.split(":")[1].strip() :
+                            print("AutoChannelEnable toggled Successfully to false");
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            #Revert to initial value
+                            revert(newEnable,idx,obj);
+                        else :
+                            print("AutoChannelEnable did not toggle Successfully to false")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else :
+                        print("ACTUAL RESULT 2: getAutoChannelEnable : %s"%details);
+                        print("[TEST EXECUTION RESULT]: FAILURE")
+                        tdkTestObj.setResultStatus("FAILURE");
                 else :
-                   print "Radio Channel is not changed successfully"                 
+                    print("Radio Channel is not changed successfully")
             else :
-               oldEnable = 0
-               newEnable = 1
-               #If oldEnable is false, directly toggle the AutoChannelEnable to true
-               print "Initially AutoChannelEnable is Disabled"
-               setMethod = "setRadioAutoChannelEnable"
-               tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
-               expectedresult="SUCCESS";
-               print "TEST STEP 2 : Get AutoChannelEnable value after set operation"
-               print "EXPECTED RESULT 2: Should successfully get the AutoChannelEnable"
-               if expectedresult in actualresult :
-                   print "ACTUAL RESULT 2: getAutoChannelEnable : %s"%details;
-                   print "[TEST EXECUTION RESULT]: SUCCESS"
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   getMethod = "getAutoChannelEnable"
-                   primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-                   sleep(5);
-                   tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-                   expectedresult="SUCCESS";
-                   print "TEST STEP 3: Get AutoChannelEnable value after set operation"
-                   print "EXPECTED RESULT 3: Should successfully get the AutoChannelEnable"
-                   if expectedresult in actualresult :
-                       print "ACTUAL RESULT 3: getAutoChannelEnable : %s"%details;
-                       print "[TEST EXCEUTON RESULT]: SUCCESS"
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       if currEnable not in details.split(":")[1].strip() :
-                           print "AutoChannelEnable toggled Successfully to True";
-                           tdkTestObj.setResultStatus("SUCCESS");
-                           #Revert to initial value
-                           revert(newEnable, idx, obj);
-                       else :
-                           print "AutoChannelEnable did not toggle Successfully to True"
-                           tdkTestObj.setResultStatus("FAILURE");
-                   else :
-                       print "ACTUAL RESULT 3: getAutoChannelEnable : %s"%details;
-                       print "[TEST EXCEUTON RESULT]: FAILURE"
-                       tdkTestObj.setResultStatus("FAILURE");
-               else :
-                   print "ACTUAL RESULT 2: getAutoChannelEnable : %s"%details;
-                   print "[TEST EXECUTION RESULT]: FAILURE"
-                   tdkTestObj.setResultStatus("FAILURE");
+                oldEnable = 0
+                newEnable = 1
+                #If oldEnable is false, directly toggle the AutoChannelEnable to true
+                print("Initially AutoChannelEnable is Disabled")
+                setMethod = "setRadioAutoChannelEnable"
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
+                expectedresult="SUCCESS";
+                print("TEST STEP 2 : Get AutoChannelEnable value after set operation")
+                print("EXPECTED RESULT 2: Should successfully get the AutoChannelEnable")
+                if expectedresult in actualresult :
+                    print("ACTUAL RESULT 2: getAutoChannelEnable : %s"%details);
+                    print("[TEST EXECUTION RESULT]: SUCCESS")
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    getMethod = "getAutoChannelEnable"
+                    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                    sleep(5);
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    expectedresult="SUCCESS";
+                    print("TEST STEP 3: Get AutoChannelEnable value after set operation")
+                    print("EXPECTED RESULT 3: Should successfully get the AutoChannelEnable")
+                    if expectedresult in actualresult :
+                        print("ACTUAL RESULT 3: getAutoChannelEnable : %s"%details);
+                        print("[TEST EXCEUTON RESULT]: SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        if currEnable not in details.split(":")[1].strip() :
+                            print("AutoChannelEnable toggled Successfully to True");
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            #Revert to initial value
+                            revert(newEnable, idx, obj);
+                        else :
+                            print("AutoChannelEnable did not toggle Successfully to True")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else :
+                        print("ACTUAL RESULT 3: getAutoChannelEnable : %s"%details);
+                        print("[TEST EXCEUTON RESULT]: FAILURE")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else :
+                    print("ACTUAL RESULT 2: getAutoChannelEnable : %s"%details);
+                    print("[TEST EXECUTION RESULT]: FAILURE")
+                    tdkTestObj.setResultStatus("FAILURE");
         else :
-            print "TEST STEP 1: Get AutoChannelEnable value"
-            print "EXPECTED RESULT 1: Should successfully get the AutoChannelEnable"
-            print "ACTUAL RESULT 1: getAutoChannelEnable : %s"%details;
-            print "[TEST EXECUTION RESULT]: FAILURE"
+            print("TEST STEP 1: Get AutoChannelEnable value")
+            print("EXPECTED RESULT 1: Should successfully get the AutoChannelEnable")
+            print("ACTUAL RESULT 1: getAutoChannelEnable : %s"%details);
+            print("[TEST EXECUTION RESULT]: FAILURE")
             tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

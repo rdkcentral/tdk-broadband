@@ -99,7 +99,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioOperatingParameters');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,7 +108,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetRadioOperatingParameters");
@@ -117,77 +117,77 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getRadioOperatingParameters() to retrieve the 5G Radio operating parameter values";
-        print "EXPECTED RESULT 1: Should invoke the HAL API wifi_getRadioOperatingParameters() successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getRadioOperatingParameters() to retrieve the 5G Radio operating parameter values");
+        print("EXPECTED RESULT 1: Should invoke the HAL API wifi_getRadioOperatingParameters() successfully");
 
         if expectedresult in actualresult and "Details" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Retrieve the operating parameters and validating
             invalid_flag = 0;
-            print "\nTEST STEP 2: Check if the operating parameters for the 5G radio are valid";
-            print "EXPECTED RESULT 2: The operating parameters for the 5G radio should be valid";
+            print("\nTEST STEP 2: Check if the operating parameters for the 5G radio are valid");
+            print("EXPECTED RESULT 2: The operating parameters for the 5G radio should be valid");
 
             radio_enable = details.split("Radio Enable: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nRadio Enable : ", radio_enable;
+            print("\nRadio Enable : ", radio_enable);
 
             autoChannel_enable = details.split("AutoChannel Enabled: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nAuto Channel Enable : ", autoChannel_enable;
+            print("\nAuto Channel Enable : ", autoChannel_enable);
 
             channel = details.split("Channel: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nRadio Channel : ", channel;
+            print("\nRadio Channel : ", channel);
 
             csa_beacon_count = details.split("CSA Beacon Count: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nCSA Beacon Count : ", csa_beacon_count;
+            print("\nCSA Beacon Count : ", csa_beacon_count);
 
             dcs_enabled = details.split("DCS Enabled: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nDCS Enabled : ", dcs_enabled;
+            print("\nDCS Enabled : ", dcs_enabled);
 
             dtim_period = details.split("DTIM Period: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nDTIM Period : ", dtim_period;
+            print("\nDTIM Period : ", dtim_period);
 
             beacon_interval = details.split("Beacon Interval: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nBeacon Interval : ", beacon_interval;
+            print("\nBeacon Interval : ", beacon_interval);
 
             operating_class = details.split("Operating Class: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nOperating Class : ", operating_class;
+            print("\nOperating Class : ", operating_class);
 
             fragmentation_threshold = details.split("Fragmentation Threshold: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nFragmentation Threshold : ", fragmentation_threshold;
+            print("\nFragmentation Threshold : ", fragmentation_threshold);
 
             guard_interval = details.split("Guard Interval: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nGuard Interval : ", guard_interval;
+            print("\nGuard Interval : ", guard_interval);
 
             transmit_power = details.split("Transmit Power: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nTransmit Power : ", transmit_power;
+            print("\nTransmit Power : ", transmit_power);
 
             rts_threshold = details.split("RTS Threshold: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nRTS Threshold : ", rts_threshold;
+            print("\nRTS Threshold : ", rts_threshold);
 
             radio_country_code = details.split("Radio Country Code : ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nCountry Code : ", radio_country_code;
+            print("\nCountry Code : ", radio_country_code);
 
             num_secondary_channels = details.split("Number of Secondary Channels: ")[1].strip().split(", ")[0].split(" ")[0];
-            print "\nNumber of secondary channels : ", num_secondary_channels;
+            print("\nNumber of secondary channels : ", num_secondary_channels);
 
             secondary_channels = [];
             secondary_channels = details.split("Channel Secondary: ")[1].strip().split(", ")[0].split(" ");
             if num_secondary_channels.isdigit() and int(num_secondary_channels) > 0:
                 for iteration in range(0, int(num_secondary_channels)):
                     if secondary_channels[iteration] != "":
-                        print "Secondary Channel[%d] : %s" %(iteration, secondary_channels[iteration]);
+                        print("Secondary Channel[%d] : %s" %(iteration, secondary_channels[iteration]));
                     else:
                         invalid_flag = 1;
-                        print "Secondary Channel[%d] : Not retrieved" %(iteration - 1);
+                        print("Secondary Channel[%d] : Not retrieved" %(iteration - 1));
             else :
-                print "Secondary Channels : ", secondary_channels;
+                print("Secondary Channels : ", secondary_channels);
 
             bands = details.split("Bands: ")[1].strip().split(", ")[0].split(" ");
-            print "\nRadio Bands : ", bands[0];
+            print("\nRadio Bands : ", bands[0]);
             #Remove the initial element as it is the combined hex value
             bands.remove(bands[0]);
             #Map the Bands Hexadecimal values to corresponding radio bands
@@ -199,10 +199,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                     else :
                         invalid_flag = 1;
                         radio_band = "Invalid Radio Band";
-                    print "%s : %s" %(band, radio_band);
+                    print("%s : %s" %(band, radio_band));
 
             channel_width = details.split("Channel Width: ")[1].strip().split(", ")[0].split(" ");
-            print "\nChannel Width : ", channel_width[0];
+            print("\nChannel Width : ", channel_width[0]);
             #Remove the initial element as it is the combined hex value
             channel_width.remove(channel_width[0]);
             #Map the channel width Hexadecimal values to corresponding width
@@ -214,10 +214,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                     else :
                         invalid_flag = 1;
                         chan_width = "Invalid Channel Width";
-                    print "%s : %s" %(width, chan_width);
+                    print("%s : %s" %(width, chan_width));
 
             variants = details.split("Variants: ")[1].strip().split(", ")[0].split(" ");
-            print "\n80211 Variants : ", variants[0];
+            print("\n80211 Variants : ", variants[0]);
             #Remove the initial element as it is the combined hex value
             variants.remove(variants[0]);
             #Map the 80211 Variant Hexadecimal values to corresponding width
@@ -229,10 +229,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                     else :
                         invalid_flag = 1;
                         var_80211 = "Invalid 80211 Variant";
-                    print "%s : %s" %(var, var_80211);
+                    print("%s : %s" %(var, var_80211));
 
             basic_data_rate = details.split("Basic Data Transmit Rates: ")[1].strip().split(", ")[0].split(" ");
-            print "\nBasic Data Transmit Rates : ", basic_data_rate[0];
+            print("\nBasic Data Transmit Rates : ", basic_data_rate[0]);
             #Remove the initial element as it is the combined hex value
             basic_data_rate.remove(basic_data_rate[0]);
             #Map the basic data rate Hexadecimal values to corresponding bitrates
@@ -244,10 +244,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                     else :
                         invalid_flag = 1;
                         bitrate = "Invalid Basic Data Rate";
-                    print "%s : %s" %(rate, bitrate);
+                    print("%s : %s" %(rate, bitrate));
 
             operation_data_rate = details.split("Operational Data Transmit Rates: ")[1].strip().split(" ");
-            print "\nOperational Data Rate : ", operation_data_rate[0];
+            print("\nOperational Data Rate : ", operation_data_rate[0]);
             #Remove the initial element as it is the combined hex value
             operation_data_rate.remove(operation_data_rate[0]);
             if len(operation_data_rate) > 0:
@@ -257,25 +257,25 @@ if "SUCCESS" in loadmodulestatus.upper():
                     else :
                         invalid_flag = 1;
                         bitrate = "Invalid Operational Data Rate";
-                    print "%s : %s" %(rate, bitrate);
+                    print("%s : %s" %(rate, bitrate));
 
             if (radio_enable == '0' or radio_enable == '1') and (autoChannel_enable == '0' or autoChannel_enable == '1') and channel.isdigit() and csa_beacon_count.isdigit() and (dcs_enabled == '0' or dcs_enabled == '1') and dtim_period.isdigit() and beacon_interval.isdigit() and operating_class.isdigit() and fragmentation_threshold.isdigit() and guard_interval.isdigit() and num_secondary_channels.isdigit() and bands[0] != "" and variants[0] != "" and basic_data_rate[0] != "" and operation_data_rate[0] != "" and invalid_flag != 1:
-                print "ACTUAL RESULT 2: The Operating parameter details are retrieved and all values are valid";
-                print "TEST EXECUTION RESULT 2: SUCCESS";
+                print("ACTUAL RESULT 2: The Operating parameter details are retrieved and all values are valid");
+                print("TEST EXECUTION RESULT 2: SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 2: All Operating parameter details are not valid";
-                print "TEST EXECUTION RESULT 2: FAILURE";
+                print("ACTUAL RESULT 2: All Operating parameter details are not valid");
+                print("TEST EXECUTION RESULT 2: FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

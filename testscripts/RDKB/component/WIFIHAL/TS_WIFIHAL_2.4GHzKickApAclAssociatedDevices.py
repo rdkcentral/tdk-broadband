@@ -81,7 +81,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzKickApAclAssociatedDevices');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,35 +89,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    #Calling primitive WIFIHAL_GetOrSetParamBoolValue that in turn will call wifi_kickApAclAssociatedDevices() and remove all existing connection. 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "kickApAclAssociatedDevices"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    newEnable = 1
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, getMethod)
+        #Calling primitive WIFIHAL_GetOrSetParamBoolValue that in turn will call wifi_kickApAclAssociatedDevices() and remove all existing connection.
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "kickApAclAssociatedDevices"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        newEnable = 1
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, getMethod)
 
-	    if expectedresult in actualresult :
-	       tdkTestObj.setResultStatus("SUCCESS");
-	       print "TEST STEP 1: Remove the all existing wifi connection associated with this device for 2.4GHz"
-	       print "EXPECTED RESULT 1: The api wifi_kickApAclAssociatedDevices() should return SUCCESS for 2.4 GHz"
-	       print "ACTUAL RESULT 1: The api wifi_kickApAclAssociatedDevices() returned  SUCCESS for 2.4 GHz"
-	       print "TEST EXECUTION RESULT : SUCCESS"
-	       print "Details is",details
-	    else:
-	       tdkTestObj.setResultStatus("FAILURE");
-	       print "TEST STEP 1: Remove the all existing wifi connection associated with this device for 2.4GHz"
-	       print "EXPECTED RESULT 1: The api wifi_kickApAclAssociatedDevices() should return SUCCESS for 2.4 GHz"
-	       print "ACTUAL RESULT 1: The api wifi_kickApAclAssociatedDevices() returned  FAILURE for 2.4 GHz"
-	       print "TEST EXECUTION RESULT : FAILURE"
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Remove the all existing wifi connection associated with this device for 2.4GHz")
+            print("EXPECTED RESULT 1: The api wifi_kickApAclAssociatedDevices() should return SUCCESS for 2.4 GHz")
+            print("ACTUAL RESULT 1: The api wifi_kickApAclAssociatedDevices() returned  SUCCESS for 2.4 GHz")
+            print("TEST EXECUTION RESULT : SUCCESS")
+            print("Details is",details)
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Remove the all existing wifi connection associated with this device for 2.4GHz")
+            print("EXPECTED RESULT 1: The api wifi_kickApAclAssociatedDevices() should return SUCCESS for 2.4 GHz")
+            print("ACTUAL RESULT 1: The api wifi_kickApAclAssociatedDevices() returned  FAILURE for 2.4 GHz")
+            print("TEST EXECUTION RESULT : FAILURE")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-
-

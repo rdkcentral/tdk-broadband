@@ -98,7 +98,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetUplinkMuType_NONE');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,12 +106,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
-        print "TEST STEP 1: Get and save the current UplinkMuType using wifi_getUplinkMuType ";
-        print "EXPECTED RESULT 1:Invocation of wifi_getUplinkMuType should be success";
+        print("TEST STEP 1: Get and save the current UplinkMuType using wifi_getUplinkMuType ");
+        print("EXPECTED RESULT 1:Invocation of wifi_getUplinkMuType should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
         tdkTestObj.addParameter("methodName","getUplinkMuType")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -122,17 +122,17 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API returned success status. %s" %details;
+            print("ACTUAL RESULT 1: API returned success status. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             initMutype= details.split(":")[1].strip()
             muTypeList = {"0":"WIFI_UL_MU_TYPE_NONE", "1":"WIFI_UL_MU_TYPE_HE"};
             newMu = "0"
 
-            print "Current UplinkMuType is ",muTypeList[initMutype]
-            print "TEST STEP 2: Set UplinkMuType as WIFI_UL_MU_TYPE_NONE using wifi_setUplinkMuType(), from the supported list of  ",muTypeList ;
-            print "EXPECTED RESULT 2: wifi_setUplinkMuType should successfully set UplinkMuType value to ",muTypeList[newMu] ;
+            print("Current UplinkMuType is ",muTypeList[initMutype])
+            print("TEST STEP 2: Set UplinkMuType as WIFI_UL_MU_TYPE_NONE using wifi_setUplinkMuType(), from the supported list of  ",muTypeList) ;
+            print("EXPECTED RESULT 2: wifi_setUplinkMuType should successfully set UplinkMuType value to ",muTypeList[newMu]) ;
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
             tdkTestObj.addParameter("methodName","setUplinkMuType")
             tdkTestObj.addParameter("radioIndex", idx)
@@ -143,12 +143,12 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "TEST STEP 3: Invoke  wifi_getUplinkMuType to verify set done by wifi_setUplinkMuType api";
-                print "EXPECTED RESULT 3: wifi_getUplinkMuType  should return the value set by wifi_setUplinkMuType";
+                print("TEST STEP 3: Invoke  wifi_getUplinkMuType to verify set done by wifi_setUplinkMuType api");
+                print("EXPECTED RESULT 3: wifi_getUplinkMuType  should return the value set by wifi_setUplinkMuType");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
                 tdkTestObj.addParameter("methodName","getUplinkMuType")
                 tdkTestObj.addParameter("radioIndex", idx)
@@ -157,17 +157,17 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult and newMu == details.split(":")[1].strip():
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "wifi_getUplinkMuType() returned UplinkMuType same as the set value"
-                    print "ACTUAL RESULT 3:  API returned success status. New UplinkMuType = ", muTypeList[newMu] ;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("wifi_getUplinkMuType() returned UplinkMuType same as the set value")
+                    print("ACTUAL RESULT 3:  API returned success status. New UplinkMuType = ", muTypeList[newMu]) ;
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3:  %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 3:  %s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert UplinkMuType to initial value
-                print "TEST STEP 4: Revert the UplinkMuType to %s using wifi_setUplinkMuType api" %muTypeList[initMutype];
-                print "EXPECTED RESULT 4: wifi_setUplinkMuType should successfully revert UplinkMuType value";
+                print("TEST STEP 4: Revert the UplinkMuType to %s using wifi_setUplinkMuType api" %muTypeList[initMutype]);
+                print("EXPECTED RESULT 4: wifi_setUplinkMuType should successfully revert UplinkMuType value");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
                 tdkTestObj.addParameter("methodName","setUplinkMuType")
                 tdkTestObj.addParameter("radioIndex", idx)
@@ -177,27 +177,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4:  %s" %details;
+                    print("ACTUAL RESULT 4:  %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4:  %s" %details;
+                    print("ACTUAL RESULT 4:  %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

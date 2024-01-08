@@ -82,8 +82,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetEAPParam');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,7 +95,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Check if an invalid index is returned
     if apIndex == -1:
-        print "Failed to get the 6G access point index";
+        print("Failed to get the 6G access point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetEAPParam");
@@ -104,15 +104,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the HAL API wifi_getEAP_Param() to retrieve the 5G EAP Param values";
-        print "EXPECTED RESULT 2: Should invoke the HAL API wifi_getEAP_Param() successfully";
+        print("\nTEST STEP 2: Invoke the HAL API wifi_getEAP_Param() to retrieve the 5G EAP Param values");
+        print("EXPECTED RESULT 2: Should invoke the HAL API wifi_getEAP_Param() successfully");
 
         if expectedresult in actualresult and "EAP Congiguration" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Retrieve the EAP Param structure values
             eapol_key_timeout = details.split("EAPOL Key Timeout: ")[1].split(",")[0];
@@ -123,39 +123,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             eap_req_reties = details.split("EAP Request Retries: ")[1].split(",")[0];
 
             #Print all EAP Param values
-            print "EAPOL Key Timeout = %s" %eapol_key_timeout;
-            print "EAPOL Key Retries = %s" %eapol_key_retries;
-            print "EAP Identity Request Timeout = %s" %eap_identity_timeout;
-            print "EAP Identity Request Retries = %s" %eap_identity_retries;
-            print "EAP Request Timeout = %s" %eap_req_timeout;
-            print "EAP Request Retries = %s" %eap_req_reties;
+            print("EAPOL Key Timeout = %s" %eapol_key_timeout);
+            print("EAPOL Key Retries = %s" %eapol_key_retries);
+            print("EAP Identity Request Timeout = %s" %eap_identity_timeout);
+            print("EAP Identity Request Retries = %s" %eap_identity_retries);
+            print("EAP Request Timeout = %s" %eap_req_timeout);
+            print("EAP Request Retries = %s" %eap_req_reties);
 
-            print "\nTEST STEP 3 : Check if the EAP Param structure values are valid integer values";
-            print "EXPECTED RESULT 3 : EAP Param structure values should be valid integer values";
+            print("\nTEST STEP 3 : Check if the EAP Param structure values are valid integer values");
+            print("EXPECTED RESULT 3 : EAP Param structure values should be valid integer values");
 
             if eapol_key_timeout.isdigit() and eapol_key_retries.isdigit() and eap_identity_timeout.isdigit() and eap_identity_retries.isdigit() and eap_req_timeout.isdigit() and eap_req_reties.isdigit():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: EAP Param structure values are valid";
+                print("ACTUAL RESULT 3: EAP Param structure values are valid");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Not all EAP Param structure values are valid";
+                print("ACTUAL RESULT 3: Not all EAP Param structure values are valid");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

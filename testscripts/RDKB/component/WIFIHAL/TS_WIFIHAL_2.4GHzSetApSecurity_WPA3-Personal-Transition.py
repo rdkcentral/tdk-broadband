@@ -183,26 +183,26 @@ def getAPSecurityDetails(details):
             security_key_type = "Invalid Security Key Type";
             key = "Invalid Key";
     else :
-        print "As Security Mode is %s, Security Key Type and Security Key are not retrieved" %security_mode;
+        print("As Security Mode is %s, Security Key Type and Security Key are not retrieved" %security_mode);
 
     #Print all applicable values
-    print "Security Mode : ", security_mode;
-    print "MFP : ", mfp;
-    print "Encryption Method : ", encryption_method;
-    print "WPA3 Transition : ", wpa3_transition;
-    print "Rekey Interval : ", rekey_interval;
-    print "Strict Rekey : ", strict_rekey;
-    print "Eapol Key Timeout : ", eapol_key_timeout;
-    print "Eapol Key Retries : ", eapol_key_retries;
-    print "Eap Identity Timeout : ", eap_identity_timeout;
-    print "Eap Identity Retries : ", eap_identity_retries;
-    print "Eap Timeout : ", eap_timeout;
-    print "Eap Retries : ", eap_retries;
-    print "PMKSA Caching : ", pmksa_cashing;
+    print("Security Mode : ", security_mode);
+    print("MFP : ", mfp);
+    print("Encryption Method : ", encryption_method);
+    print("WPA3 Transition : ", wpa3_transition);
+    print("Rekey Interval : ", rekey_interval);
+    print("Strict Rekey : ", strict_rekey);
+    print("Eapol Key Timeout : ", eapol_key_timeout);
+    print("Eapol Key Retries : ", eapol_key_retries);
+    print("Eap Identity Timeout : ", eap_identity_timeout);
+    print("Eap Identity Retries : ", eap_identity_retries);
+    print("Eap Timeout : ", eap_timeout);
+    print("Eap Retries : ", eap_retries);
+    print("PMKSA Caching : ", pmksa_cashing);
 
     if security_mode == "WPA-Personal" or security_mode == "WPA2-Personal" or security_mode == "WPA3-Personal" or security_mode == "WPA3-Personal-Transition" or security_mode == "WPA-WPA2-Personal" :
-        print "Seurity Key Type : ", security_key_type;
-        print "Security Key : ", key;
+        print("Seurity Key Type : ", security_key_type);
+        print("Security Key : ", key);
 
     if "Invalid" not in security_mode and mfp.isdigit() and "Invalid" not in encryption_method and wpa3_transition != "" and rekey_interval.isdigit() and strict_rekey != "" and eapol_key_timeout.isdigit() and eapol_key_retries.isdigit() and eap_identity_timeout.isdigit() and eap_identity_retries.isdigit() and eap_timeout.isdigit() and eap_retries.isdigit() and pmksa_cashing != "" and "Invalid" not in security_key_type and "Invalid" not in key:
         status = "SUCCESS";
@@ -228,7 +228,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApSecurity_WPA3-Personal-Tran
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -237,27 +237,27 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Invoke the Get AP Security API
         actualresult, details, tdkTestObj = getAPSecurity(obj, idx);
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP";
-        print "EXPECTED RESULT 1: Should successfully invoke wifi_getApSecurity()";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP");
+        print("EXPECTED RESULT 1: Should successfully invoke wifi_getApSecurity()");
 
         if expectedresult in actualresult and "AP Security details" in details:
-            print "ACTUAL RESULT 1: wifi_getApSecurity() invoked successfully";
-            print "TEST EXECUTION RESULT 1: SUCCESS";
+            print("ACTUAL RESULT 1: wifi_getApSecurity() invoked successfully");
+            print("TEST EXECUTION RESULT 1: SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             #Get the access point security details
             status, initial_values, map_to_enum_values_initial, wpa3_transition_initial = getAPSecurityDetails(details);
-            print "\nTEST STEP 2: Get the Access Point Security details and check if the initial values are valid";
-            print "EXPECTED RESULT 2: Should get the Access Point Security details successfully and the initial values should be valid";
+            print("\nTEST STEP 2: Get the Access Point Security details and check if the initial values are valid");
+            print("EXPECTED RESULT 2: Should get the Access Point Security details successfully and the initial values should be valid");
 
             if status == "SUCCESS":
-                print "ACTUAL RESULT 2: The Access Point Security details are retrieved and all initial values are valid";
-                print "TEST EXECUTION RESULT 2: SUCCESS";
+                print("ACTUAL RESULT 2: The Access Point Security details are retrieved and all initial values are valid");
+                print("TEST EXECUTION RESULT 2: SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Set AP Security
@@ -286,89 +286,89 @@ if "SUCCESS" in loadmodulestatus.upper():
                 new_values = [new_security_mode, new_mfp, new_encryption_method, new_key_type, new_key];
 
                 actualresult, details, tdkTestObj = setAPSecurity(obj, idx, new_values, new_wpa3_status);
-                print "\nTEST STEP 3 : Invoke the HAL API wifi_setApSecurity() for 2.4G private AP with Security Mode : %s, MFP : %s, Encryption Mode : %s, Key Type : %s Key : %s and WPA3-Transition to : %s" %(set_values[0], set_values[1], set_values[2], set_values[3], set_values[4], set_values[5]);
-                print "EXPECTED RESULT 3 : The HAL API should be invoked successfully";
+                print("\nTEST STEP 3 : Invoke the HAL API wifi_setApSecurity() for 2.4G private AP with Security Mode : %s, MFP : %s, Encryption Mode : %s, Key Type : %s Key : %s and WPA3-Transition to : %s" %(set_values[0], set_values[1], set_values[2], set_values[3], set_values[4], set_values[5]));
+                print("EXPECTED RESULT 3 : The HAL API should be invoked successfully");
 
                 if expectedresult in actualresult:
-                    print "ACTUAL RESULT 3: The SET API returned success; Details : %s" %details;
-                    print "TEST EXECUTION RESULT 3: SUCCESS";
+                    print("ACTUAL RESULT 3: The SET API returned success; Details : %s" %details);
+                    print("TEST EXECUTION RESULT 3: SUCCESS");
                     tdkTestObj.setResultStatus("SUCCESS");
 
                     #Cross check the SET with GET
                     actualresult, details, tdkTestObj = getAPSecurity(obj, idx)
-                    print "\nTEST STEP 4: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP after the SET operation";
-                    print "EXPECTED RESULT 4: Should successfully invoke wifi_getApSecurity()";
+                    print("\nTEST STEP 4: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP after the SET operation");
+                    print("EXPECTED RESULT 4: Should successfully invoke wifi_getApSecurity()");
 
                     if expectedresult in actualresult and "AP Security details" in details:
-                        print "ACTUAL RESULT 4: wifi_getApSecurity() invoked successfully";
-                        print "TEST EXECUTION RESULT 1: SUCCESS";
+                        print("ACTUAL RESULT 4: wifi_getApSecurity() invoked successfully");
+                        print("TEST EXECUTION RESULT 1: SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #Get the access point security details and check if the values SET are GET
                         status, final_values, map_to_enum_values_final, wpa3_transition_final = getAPSecurityDetails(details);
-                        print "\nTEST STEP 5: Get the Access Point Security details and check if the retrieved values are valid";
-                        print "EXPECTED RESULT 5: Should get the Access Point Security details successfully and the retrieved values should be valid";
+                        print("\nTEST STEP 5: Get the Access Point Security details and check if the retrieved values are valid");
+                        print("EXPECTED RESULT 5: Should get the Access Point Security details successfully and the retrieved values should be valid");
 
                         if status == "SUCCESS":
-                            print "ACTUAL RESULT 5: The Access Point Security details are retrieved and all retrieved values are valid";
-                            print "TEST EXECUTION RESULT 5: SUCCESS";
+                            print("ACTUAL RESULT 5: The Access Point Security details are retrieved and all retrieved values are valid");
+                            print("TEST EXECUTION RESULT 5: SUCCESS");
                             tdkTestObj.setResultStatus("SUCCESS");
 
-                            print "Security Mode SET : %s" %set_values[0];
-                            print "Security Mode GET : %s" %final_values[0];
-                            print "MFP SET : %s" %set_values[1];
-                            print "MFP GET : %s" %final_values[1];
-                            print "Encryption Method SET : %s" %set_values[2];
-                            print "Encryption Method GET : %s" %final_values[2];
-                            print "Key Type SET : %s" %set_values[3];
-                            print "Key Type GET : %s" %final_values[3];
-                            print "Key SET : %s" %set_values[4];
-                            print "Key GET : %s" %final_values[4];
-                            print "WPA3 Transition GET : %s" %set_values[5];
-                            print "WPA3 Transition SET : %s" %wpa3_transition_final;
+                            print("Security Mode SET : %s" %set_values[0]);
+                            print("Security Mode GET : %s" %final_values[0]);
+                            print("MFP SET : %s" %set_values[1]);
+                            print("MFP GET : %s" %final_values[1]);
+                            print("Encryption Method SET : %s" %set_values[2]);
+                            print("Encryption Method GET : %s" %final_values[2]);
+                            print("Key Type SET : %s" %set_values[3]);
+                            print("Key Type GET : %s" %final_values[3]);
+                            print("Key SET : %s" %set_values[4]);
+                            print("Key GET : %s" %final_values[4]);
+                            print("WPA3 Transition GET : %s" %set_values[5]);
+                            print("WPA3 Transition SET : %s" %wpa3_transition_final);
 
                             if (set_values[0] == final_values[0]) and (set_values[1] == final_values[1]) and (set_values[2] == final_values[2]) and (set_values[3] == final_values[3]) and (set_values[4] == final_values[4]) and (set_values[5] == wpa3_transition_final):
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "The GET values match with the SET values";
+                                print("The GET values match with the SET values");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "The GET values do not match with the SET values";
+                                print("The GET values do not match with the SET values");
                         else:
-                            print "ACTUAL RESULT 5: The Access Point Security details are retrieved and all retrieved values are not valid";
-                            print "TEST EXECUTION RESULT 5: FAILURE";
+                            print("ACTUAL RESULT 5: The Access Point Security details are retrieved and all retrieved values are not valid");
+                            print("TEST EXECUTION RESULT 5: FAILURE");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "ACTUAL RESULT 4: wifi_getApSecurity() not invoked successfully";
-                        print "TEST EXECUTION RESULT 4: FAILURE";
+                        print("ACTUAL RESULT 4: wifi_getApSecurity() not invoked successfully");
+                        print("TEST EXECUTION RESULT 4: FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
 
                     #Revert operation
                     actualresult, details, tdkTestObj = setAPSecurity(obj, idx, map_to_enum_values_initial, old_wpa3_status);
-                    print "\nTEST STEP 6 : Revert to initial AP Security state";
-                    print "EXPECTED RESULT 6 : Revert operation should be success";
+                    print("\nTEST STEP 6 : Revert to initial AP Security state");
+                    print("EXPECTED RESULT 6 : Revert operation should be success");
 
                     if expectedresult in actualresult:
-                        print "ACTUAL RESULT 6: The SET API returned success; Details : %s" %details;
-                        print "TEST EXECUTION RESULT 6: SUCCESS";
+                        print("ACTUAL RESULT 6: The SET API returned success; Details : %s" %details);
+                        print("TEST EXECUTION RESULT 6: SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "ACTUAL RESULT 6: The SET API returned failure; Details : %s" %details;
-                        print "TEST EXECUTION RESULT 6: FAILURE";
+                        print("ACTUAL RESULT 6: The SET API returned failure; Details : %s" %details);
+                        print("TEST EXECUTION RESULT 6: FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 3: The SET API returned failure; Details : %s" %details;
-                    print "TEST EXECUTION RESULT 3: FAILURE";
+                    print("ACTUAL RESULT 3: The SET API returned failure; Details : %s" %details);
+                    print("TEST EXECUTION RESULT 3: FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "ACTUAL RESULT 2: All Access Point Security details are not valid";
-                print "TEST EXECUTION RESULT 2: FAILURE";
+                print("ACTUAL RESULT 2: All Access Point Security details are not valid");
+                print("TEST EXECUTION RESULT 2: FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "ACTUAL RESULT 1: wifi_getApSecurity() is not invoked successfully";
-            print "TEST EXECUTION RESULT 1: FAILURE";
+            print("ACTUAL RESULT 1: wifi_getApSecurity() is not invoked successfully");
+            print("TEST EXECUTION RESULT 1: FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

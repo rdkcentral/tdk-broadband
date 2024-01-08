@@ -81,8 +81,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApStatus');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the Access Point Status using the API wifi_getApStatus
@@ -103,43 +103,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2 : Invoke the HAL API wifi_getApStatus and get the 6GHz Private Access Point Status";
-        print "EXPECTED RESULT 2 : The HAL API wifi_getApStatus should be invoked successfully";
+        print("\nTEST STEP 2 : Invoke the HAL API wifi_getApStatus and get the 6GHz Private Access Point Status");
+        print("EXPECTED RESULT 2 : The HAL API wifi_getApStatus should be invoked successfully");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: The HAL API wifi_getApStatus invoked successfully"
+            print("ACTUAL RESULT 2: The HAL API wifi_getApStatus invoked successfully")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             status_received = details.split(":")[1].strip();
             #List of AP status
             success_values = ['Up', 'Disable','Disabled'];
-            print "\nPermitted Status values : ", success_values;
+            print("\nPermitted Status values : ", success_values);
 
-            print "\nTEST STEP 3: Validate the wifi_getApStatus Function";
-            print "EXPECTED RESULT 3: wifi_getApStatus should return a string which should be from the permitted values list";
+            print("\nTEST STEP 3: Validate the wifi_getApStatus Function");
+            print("EXPECTED RESULT 3: wifi_getApStatus should return a string which should be from the permitted values list");
 
             if status_received in success_values:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: AP Status string received: %s is from the permitted values list"%status_received;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 3: AP Status string received: %s is from the permitted values list"%status_received);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: AP Status string received: %s is not from the permitted values list"%status_received;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3: AP Status string received: %s is not from the permitted values list"%status_received);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: The HAL API wifi_getApStatus is not invoked successfully"
+            print("ACTUAL RESULT 2: The HAL API wifi_getApStatus is not invoked successfully")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

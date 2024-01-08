@@ -55,10 +55,10 @@ methodName : setBandSteeringEnable
 
 </input_parameters>
     <automation_approch>1. Load wifihal module
-2. Using WIFIHAL_GetOrSetParamBoolValue invoke wifi_getBandSteeringCapability() to see if the BandSteering Capability is available or not. If available proceed to next step, else return SUCCESS and exit. 
+2. Using WIFIHAL_GetOrSetParamBoolValue invoke wifi_getBandSteeringCapability() to see if the BandSteering Capability is available or not. If available proceed to next step, else return SUCCESS and exit.
 3. Using  WIFIHAL_GetOrSetParamBoolValue invoke wifi_getBandSteeringEnable()
 4. Depending upon the value retrieved from previous step, toggle the enable status using wifi_setBandSteeringEnable.
-5. Invoke wifi_getBandSteeringEnable() to get the previously set value. 
+5. Invoke wifi_getBandSteeringEnable() to get the previously set value.
 6. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 7. Revert the BandSteeringEnable status back to initial value
 8. Unload wifihal module</automation_approch>
@@ -73,8 +73,8 @@ methodName : setBandSteeringEnable
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 #Test component to be tested
@@ -87,7 +87,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_SetBandSteeringEnable');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,12 +108,12 @@ if "SUCCESS" in loadmodulestatus.upper():
             enable = details.split(":")[1].strip()
 
             if expectedresult in actualresult:
-        	if "Enabled" in enable:
-            	    oldEnable = 1
-            	    newEnable = 0
-        	else:
+                if "Enabled" in enable:
+                    oldEnable = 1
+                    newEnable = 0
+                else:
                     oldEnable = 0
-            	    newEnable = 1
+                    newEnable = 1
 
                 setMethod = "setBandSteeringEnable"
                 primitive = 'WIFIHAL_GetOrSetParamBoolValue'
@@ -126,12 +126,12 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult and enable not in details.split(":")[1].strip():
                         tdkTestObj.setResultStatus("SUCCESS");
-			print "setBandSteeringEnable() success and verified using getBandSteeringEnable()"
+                        print("setBandSteeringEnable() success and verified using getBandSteeringEnable()")
                         finalGetValue = details.split(":")[1].strip()
 
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "getBandSteeringEnable() call failed after set operation"
+                        print("getBandSteeringEnable() call failed after set operation")
 
                     #Revert back to initial value
                     setMethod = "setBandSteeringEnable"
@@ -140,25 +140,24 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to inital value"
+                        print("Successfully reverted back to inital value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "setBandSteeringEnable() call failed"
+                    print("setBandSteeringEnable() call failed")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "getBandSteeringEnable() call failed"
+                print("getBandSteeringEnable() call failed")
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "BandSteeringCapability is disabled"
+            print("BandSteeringCapability is disabled")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "getBandSteeringCapability() call failed"
+        print("getBandSteeringCapability() call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

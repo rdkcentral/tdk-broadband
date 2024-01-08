@@ -81,7 +81,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzIsSSIDEnabled');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,61 +89,61 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-            expectedresult="SUCCESS";
-            ssidIndex = idx
-            getMethod = "getSSIDEnable"
-            primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-            #Get current SSID Enable status
-            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, 0, getMethod)
+        expectedresult="SUCCESS";
+        ssidIndex = idx
+        getMethod = "getSSIDEnable"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        #Get current SSID Enable status
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, 0, getMethod)
+
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            enable = details.split(":")[1].strip()
+            if "Enabled" in enable:
+                print("SSID is Enabled")
+                oldEnable = 1
+                newEnable = 0
+            else:
+                print("SSID is Disabled")
+                oldEnable = 0
+                newEnable = 1
+
+            setMethod = "setSSIDEnable"
+            #Toggle the enable status using set
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, newEnable, setMethod)
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                enable = details.split(":")[1].strip()
-                if "Enabled" in enable:
-                    print "SSID is Enabled"
-                    oldEnable = 1
-                    newEnable = 0
-                else:
-                    print "SSID is Disabled"
-                    oldEnable = 0
-                    newEnable = 1
+                print("Enable state toggled using set")
+                # Get the New SSID enable status
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, 0, getMethod)
 
-                setMethod = "setSSIDEnable"
-                #Toggle the enable status using set
-                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, newEnable, setMethod)
-
-                if expectedresult in actualresult :
+                if expectedresult in actualresult and enable not in details.split(":")[1].strip():
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Enable state toggled using set"
-                    # Get the New SSID enable status
-                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, 0, getMethod)
+                    print("getEnable Success, verified along with setEnable() api")
+                    #Revert back to original Enable status
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, oldEnable, setMethod)
 
-                    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                    if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "getEnable Success, verified along with setEnable() api"
-                        #Revert back to original Enable status
-                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, ssidIndex, oldEnable, setMethod)
-
-                        if expectedresult in actualresult :
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print "Enable status reverted back";
-                        else:
-                            print "Couldn't revert enable status"
-                            tdkTestObj.setResultStatus("FAILURE");
+                        print("Enable status reverted back");
                     else:
-                        print "getSSIDEnable failed after set function"
+                        print("Couldn't revert enable status")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "setSSIDEnable failed"
+                    print("getSSIDEnable failed after set function")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "getSSIDEnable() failed"
+                print("setSSIDEnable failed")
                 tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getSSIDEnable() failed")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

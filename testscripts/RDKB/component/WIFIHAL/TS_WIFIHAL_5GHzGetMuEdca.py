@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetMuEdca');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,7 +90,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #MU (Multi-User) EDCA (Enhanced Distributed Channel Access) includes background : 0, best effort : 1, video : 2 and voice : 3
@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step = 1;
 
         for category in range(0, 4):
-            print "\n**********Category : %s**********" %accessCategory[category];
+            print("\n**********Category : %s**********" %accessCategory[category]);
             tdkTestObj = obj.createTestStep("WIFIHAL_GetMuEdca");
             tdkTestObj.addParameter("radioIndex", idx);
             tdkTestObj.addParameter("accessCategory", category);
@@ -106,15 +106,15 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Invoke the HAL API wifi_getMuEdca() to retrieve the 5G MU-EDCA details for %s category" %(step, accessCategory[category]);
-            print "EXPECTED RESULT %d: Should invoke the HAL API wifi_getMuEdca() successfully" %step;
+            print("\nTEST STEP %d: Invoke the HAL API wifi_getMuEdca() to retrieve the 5G MU-EDCA details for %s category" %(step, accessCategory[category]));
+            print("EXPECTED RESULT %d: Should invoke the HAL API wifi_getMuEdca() successfully" %step);
 
             if expectedresult in actualresult and "MuEdca" in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: %s" %(step, details);
+                print("ACTUAL RESULT %d: %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Retrieve the MU EDCA structure values
                 aifsn = details.split("aifsn=")[1].split(",")[0];
@@ -123,38 +123,38 @@ if "SUCCESS" in loadmodulestatus.upper():
                 timer = details.split("timer=")[1].split(",")[0];
 
                 #Print all MU EDCA values
-                print "Arbitration Inter-Frame Space Number = %s" %aifsn;
-                print "Lower bound Contention Window = %s" %cw_min;
-                print "Upper bound Contention Window = %s" %cw_max;
-                print "Timer = %s" %timer;
+                print("Arbitration Inter-Frame Space Number = %s" %aifsn);
+                print("Lower bound Contention Window = %s" %cw_min);
+                print("Upper bound Contention Window = %s" %cw_max);
+                print("Timer = %s" %timer);
 
                 #Check if the values retrieved are valid
                 step = step + 1;
-                print "\nTEST STEP %d : Check if the MU EDCA structure values are valid integer values" %step;
-                print "EXPECTED RESULT %d : MU EDCA structure values should be valid integer values" %step;
+                print("\nTEST STEP %d : Check if the MU EDCA structure values are valid integer values" %step);
+                print("EXPECTED RESULT %d : MU EDCA structure values should be valid integer values" %step);
 
                 if aifsn.isdigit() and cw_min.isdigit() and cw_max.isdigit() and timer.isdigit():
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: MU EDCA structure values are all valid" %step;
+                    print("ACTUAL RESULT %d: MU EDCA structure values are all valid" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Not all MU EDCA structure values are valid" %step;
+                    print("ACTUAL RESULT %d: Not all MU EDCA structure values are valid" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: %s" %(step, details);
+                print("ACTUAL RESULT %d: %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             step = step + 1;
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

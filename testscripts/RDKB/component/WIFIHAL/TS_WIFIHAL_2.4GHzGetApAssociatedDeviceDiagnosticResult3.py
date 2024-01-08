@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApAssociatedDeviceDiagnosticR
 #Get the result of connection with test component and STB
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -104,7 +104,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which is associated to this Script
@@ -114,34 +114,34 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "Details: %s"%details
+        print("Details: %s"%details)
 
         if expectedresult in actualresult :
-           details = details.split(":")[1].strip();
-           output_array_size = details.split("=")[1].split(",")[0].strip();
-           if int(output_array_size) > 0:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP : Get the ApAssociatedDeviceDiagnosticResult3"
-              print "EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3"
-              print "ACTUAL RESULT : Successfully gets the ApAssociatedDeviceDiagnosticResult3"
-              print "output_array_size=",output_array_size
-              #print "Identified %s neighboring access points"%output_array_size
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3"
-               print "ACTUAL RESULT : No associated device found";
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            details = details.split(":")[1].strip();
+            output_array_size = details.split("=")[1].split(",")[0].strip();
+            if int(output_array_size) > 0:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : Get the ApAssociatedDeviceDiagnosticResult3")
+                print("EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3")
+                print("ACTUAL RESULT : Successfully gets the ApAssociatedDeviceDiagnosticResult3")
+                print("output_array_size=",output_array_size)
+                #print "Identified %s neighboring access points"%output_array_size
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3")
+                print("ACTUAL RESULT : No associated device found");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Get the ApAssociatedDeviceDiagnosticResult3"
-            print "EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3"
-            print "ACTUAL RESULT : Failed to get the ApAssociatedDeviceDiagnosticResult3"
+            print("TEST STEP : Get the ApAssociatedDeviceDiagnosticResult3")
+            print("EXPECTED RESULT : Should successfully get the ApAssociatedDeviceDiagnosticResult3")
+            print("ACTUAL RESULT : Failed to get the ApAssociatedDeviceDiagnosticResult3")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

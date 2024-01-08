@@ -88,8 +88,8 @@ sysObj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApDTIMInterval');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilloadmodulestatus =sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
 
 def get_Ap0DTIMInterval(tdkTestObj):
     query = "sh %s/tdk_platform_utility.sh getAp0DTIMInterval" %TDK_PATH
@@ -98,7 +98,7 @@ def get_Ap0DTIMInterval(tdkTestObj):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "DTIM Interval is ",details;
+    print("DTIM Interval is ",details);
     return details,actualresult;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
@@ -109,7 +109,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
@@ -117,97 +117,97 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
         defDTIMInt,actualresult = get_Ap0DTIMInterval(tdkTestObj);
 
         if expectedresult in actualresult and defDTIMInt != "":
-           defDTIMInt = int(defDTIMInt);
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Get the DFTIM Interval";
-           print "EXPECTED RESULT 1: Should get the DFTIM Interval ";
-           print "ACTUAL RESULT 1: The DFTIM Interval is :",defDTIMInt;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            defDTIMInt = int(defDTIMInt);
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the DFTIM Interval");
+            print("EXPECTED RESULT 1: Should get the DFTIM Interval ");
+            print("ACTUAL RESULT 1: The DFTIM Interval is :",defDTIMInt);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           r = range(1,defDTIMInt) + range(defDTIMInt+1, 256);
-           setValue = random.choice(r);
-           expectedresult="SUCCESS";
-           radioIndex = idx;
-           setMethod = "setApDTIMInterval"
-           primitive = 'WIFIHAL_GetOrSetParamIntValue'
-           print "Setting DTIM Interval to : ",setValue
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+            r = list(range(1,defDTIMInt)) + list(range(defDTIMInt+1, 256));
+            setValue = random.choice(r);
+            expectedresult="SUCCESS";
+            radioIndex = idx;
+            setMethod = "setApDTIMInterval"
+            primitive = 'WIFIHAL_GetOrSetParamIntValue'
+            print("Setting DTIM Interval to : ",setValue)
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
 
-              tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-              expectedresult="SUCCESS";
-              setDTIMInt,actualresult = get_Ap0DTIMInterval(tdkTestObj);
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                expectedresult="SUCCESS";
+                setDTIMInt,actualresult = get_Ap0DTIMInterval(tdkTestObj);
 
-              if expectedresult in actualresult and setDTIMInt != "" and int(setDTIMInt)  == setValue :
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 3: Get the DTIM Interval";
-                 print "EXPECTED RESULT 3: Should get the DTIM Interval equal to the set";
-                 print "ACTUAL RESULT 3: The DTIM  Interval is :",setDTIMInt,"  DTIM  Set Interval was :",setValue;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 3: Get the DTIM Interval";
-                  print "EXPECTED RESULT 3: Should get the DTIM  Interval equal to the set";
-                  print "ACTUAL RESULT 3: The DTIM Interval is :",setDTIMInt," DTIM  Set Interval was :",setValue;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-
-              #Revert the value
-              setValue = defDTIMInt;
-              expectedresult="SUCCESS";
-              radioIndex = idx;
-              setMethod = "setApDTIMInterval"
-              primitive = 'WIFIHAL_GetOrSetParamIntValue'
-              print " Reverting DTIM Interval to : ",setValue
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
-
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-
-                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                 expectedresult="SUCCESS";
-                 time.sleep(20);
-                 dtim,actualresult = get_Ap0DTIMInterval(tdkTestObj);
-                 if expectedresult in actualresult and dtim!= "" and  int(defDTIMInt) ==  int(dtim):
+                if expectedresult in actualresult and setDTIMInt != "" and int(setDTIMInt)  == setValue :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Get the DTIM Interval";
-                    print "EXPECTED RESULT 5: Should get the DTIM Interval ";
-                    print "ACTUAL RESULT 5: The DTIM Interval is :",dtim;
+                    print("TEST STEP 3: Get the DTIM Interval");
+                    print("EXPECTED RESULT 3: Should get the DTIM Interval equal to the set");
+                    print("ACTUAL RESULT 3: The DTIM  Interval is :",setDTIMInt,"  DTIM  Set Interval was :",setValue);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Get the DTIM Interval";
-                     print "EXPECTED RESULT 5: Should get the DTIM Interval ";
-                     print "ACTUAL RESULT 5: The DTIM Interval is :",dtim;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] :FAILURE";
-              else:
-                  print "TEST STEP 4: Revert the DTIM Interval to previous";
-                  print "EXPECTED RESULT 4: Should revert the DTIM interval to previous";
-                  print "ACTUAL RESULT 4: Revertion failed";
-                  print "TEST EXECUTION RESULT : FAILURE";
-                  tdkTestObj.setResultStatus("FAILURE");
-           else:
-               print "TEST STEP 2: Set the DTIM Interval";
-               print "EXPECTED RESULT 2: Should set the DTIM Interval to ",setValue;
-               print "ACTUAL RESULT 2: ",details;
-               print "TEST EXECUTION RESULT : FAILURE";
-               tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the DTIM Interval");
+                    print("EXPECTED RESULT 3: Should get the DTIM  Interval equal to the set");
+                    print("ACTUAL RESULT 3: The DTIM Interval is :",setDTIMInt," DTIM  Set Interval was :",setValue);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                #Revert the value
+                setValue = defDTIMInt;
+                expectedresult="SUCCESS";
+                radioIndex = idx;
+                setMethod = "setApDTIMInterval"
+                primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                print(" Reverting DTIM Interval to : ",setValue)
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    expectedresult="SUCCESS";
+                    time.sleep(20);
+                    dtim,actualresult = get_Ap0DTIMInterval(tdkTestObj);
+                    if expectedresult in actualresult and dtim!= "" and  int(defDTIMInt) ==  int(dtim):
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Get the DTIM Interval");
+                        print("EXPECTED RESULT 5: Should get the DTIM Interval ");
+                        print("ACTUAL RESULT 5: The DTIM Interval is :",dtim);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the DTIM Interval");
+                        print("EXPECTED RESULT 5: Should get the DTIM Interval ");
+                        print("ACTUAL RESULT 5: The DTIM Interval is :",dtim);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] :FAILURE");
+                else:
+                    print("TEST STEP 4: Revert the DTIM Interval to previous");
+                    print("EXPECTED RESULT 4: Should revert the DTIM interval to previous");
+                    print("ACTUAL RESULT 4: Revertion failed");
+                    print("TEST EXECUTION RESULT : FAILURE");
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 2: Set the DTIM Interval");
+                print("EXPECTED RESULT 2: Should set the DTIM Interval to ",setValue);
+                print("ACTUAL RESULT 2: ",details);
+                print("TEST EXECUTION RESULT : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the DTIM Interval";
-            print "EXPECTED RESULT 1: Should get the DTIM  Interval ";
-            print "ACTUAL RESULT 1: The DTIM Interval is :",defDTIMInt;
+            print("TEST STEP 1: Get the DTIM Interval");
+            print("EXPECTED RESULT 1: Should get the DTIM  Interval ");
+            print("ACTUAL RESULT 1: The DTIM Interval is :",defDTIMInt);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");

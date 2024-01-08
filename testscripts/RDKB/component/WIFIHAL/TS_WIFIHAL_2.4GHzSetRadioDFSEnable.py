@@ -83,7 +83,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetRadioDFSEnable');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,85 +91,85 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	expectedresult="SUCCESS";
-	radioIndex = idx;
+        expectedresult="SUCCESS";
+        radioIndex = idx;
         getMethod = "getRadioDFSSupported"
         primitive = 'WIFIHAL_GetOrSetParamBoolValue'
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
         if expectedresult in actualresult and "Enabled" in details.split(":")[1].strip():
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the device's 2.4GHZ DFS Support";
-            print "EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support";
-            print "ACTUAL RESULT 1: DFS is supported by this device for 2.4GHZ";
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 1: Get the device's 2.4GHZ DFS Support");
+            print("EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support");
+            print("ACTUAL RESULT 1: DFS is supported by this device for 2.4GHZ");
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-	    getMethod = "getRadioDFSEnable"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+            getMethod = "getRadioDFSEnable"
+            primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    if expectedresult in actualresult :
+            if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the DFS Enable state";
-                print "EXPECTED RESULT 2: DFS should be in disabled state for 2.4GHZ";
-                print "ACTUAL RESULT 2: DFS is in disabled state for 2.4GHZ";
-                print "[TEST EXECUTION RESULT] 1: SUCCESS";
+                print("TEST STEP 2: Get the DFS Enable state");
+                print("EXPECTED RESULT 2: DFS should be in disabled state for 2.4GHZ");
+                print("ACTUAL RESULT 2: DFS is in disabled state for 2.4GHZ");
+                print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-		enable = details.split(":")[1].strip()
-		if "Enabled" in enable:
-		    oldEnable = 1
-		    newEnable = 0
-		else:
-		    oldEnable = 0
-		    newEnable = 1
+                enable = details.split(":")[1].strip()
+                if "Enabled" in enable:
+                    oldEnable = 1
+                    newEnable = 0
+                else:
+                    oldEnable = 0
+                    newEnable = 1
 
-		setMethod = "setRadioDFSEnable"
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
+                setMethod = "setRadioDFSEnable"
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
 
-		if expectedresult in actualresult :
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                if expectedresult in actualresult :
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-		    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "SetEnable Success, verified with getEnable() api"
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
+                        print("SetEnable Success, verified with getEnable() api")
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
 
-			if expectedresult in actualresult :
-			    print "Enable status reverted back";
-			else:
-			    print "Couldn't revert enable status"
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-                        print "Set validation with get api failed"
-		else:
-		    print "wifi_setRadioDFSEnable() call failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
+                        if expectedresult in actualresult :
+                            print("Enable status reverted back");
+                        else:
+                            print("Couldn't revert enable status")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("Set validation with get api failed")
+                else:
+                    print("wifi_setRadioDFSEnable() call failed")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the DFS Enable state";
-                print "EXPECTED RESULT 2: DFS should be in disabled state for 2.4GHZ";
-                print "ACTUAL RESULT 2: wifi_getRadioDFSEnable() call failed"
-                print "[TEST EXECUTION RESULT] 1: FAILURE";
+                print("TEST STEP 2: Get the DFS Enable state");
+                print("EXPECTED RESULT 2: DFS should be in disabled state for 2.4GHZ");
+                print("ACTUAL RESULT 2: wifi_getRadioDFSEnable() call failed")
+                print("[TEST EXECUTION RESULT] 1: FAILURE");
 
         elif expectedresult in actualresult and "Disabled" in details.split(":")[1].strip():
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the device's 2.4GHZ DFS Support";
-            print "EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support";
-            print "ACTUAL RESULT 1: DFS is not supported by this device for 2.4GHZ";
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 1: Get the device's 2.4GHZ DFS Support");
+            print("EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support");
+            print("ACTUAL RESULT 1: DFS is not supported by this device for 2.4GHZ");
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-	else:
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the device's 2.4GHZ DFS Support";
-            print "EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support";
-            print "ACTUAL RESULT 1: Failed to get device's 2.4GHZ DFS Support status";
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("TEST STEP 1: Get the device's 2.4GHZ DFS Support");
+            print("EXPECTED RESULT 1: Should get the device's 2.4GHZ DFS Support");
+            print("ACTUAL RESULT 1: Failed to get device's 2.4GHZ DFS Support status");
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

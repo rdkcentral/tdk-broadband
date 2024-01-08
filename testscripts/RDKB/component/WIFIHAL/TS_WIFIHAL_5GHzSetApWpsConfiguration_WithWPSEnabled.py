@@ -123,13 +123,13 @@ def getApWpsConfigurationDetails(details):
     #To store the WPS Configutration values
     values = [];
     wps_mode = details.split("WPS Mode : ")[1].split(",")[0];
-    print "WPS Mode : %s" %wps_mode;
+    print("WPS Mode : %s" %wps_mode);
     values.append(wps_mode);
 
     #If WPS mode is enabled, get the WPS PIN and WPS Methods
     if "Enabled" in wps_mode:
         wps_pin = details.split("WPS device PIN: ")[1].split(",")[0];
-        print "WPS PIN : %s" %wps_pin;
+        print("WPS PIN : %s" %wps_pin);
         values.append(wps_pin);
 
         if wps_pin != "" and wps_pin.isdigit():
@@ -140,7 +140,7 @@ def getApWpsConfigurationDetails(details):
             wps_methods = details.split("WPS enabled configuration methods : ")[1].strip().split(" ");
 
             if len(wps_methods) > 0:
-                print "WPS Methods are :-";
+                print("WPS Methods are :-");
                 #Map the WPS Methods Hex values to the corresponding WPS Configuration Method
                 wps_method_dict = {'0x0001' : "USB_FLASHDRIVE", '0x0002' : "ETHERNET", '0x0004' : "LABEL", '0x0008' : "DISPLAY", '0x0010' : "EXTERNAL_NFC_TOKEN", '0x0020' : "INTEGRATED_NFC_TOKEN", '0x0040' : "NFC_INTERFACE", '0x0080' : "PUSH_BUTTON", '0x0100' : "PIN", '0x0200' : "PHYSICAL_PUSHBUTTON", '0x0400' : "PHYSICAL_DISPLAY", '0x0800' : "VIRTUAL_PUSH_BUTTON", '0x1000' : "VIRTUAL_DISPLAY", '0x2000' : "EASY_CONNECT"};
 
@@ -152,24 +152,24 @@ def getApWpsConfigurationDetails(details):
                         invalid_flag = 1;
                         wps_configuration_method = "Invalid WPS Configuration Method";
 
-                    print "%s : %s" %(method, wps_configuration_method);
+                    print("%s : %s" %(method, wps_configuration_method));
 
                 if invalid_flag == 1:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "WPS Configuration Methods lists invalid values";
+                    print("WPS Configuration Methods lists invalid values");
                 else:
                     status = "SUCCESS";
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "WPS Configuration Methods are valid values";
+                    print("WPS Configuration Methods are valid values");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "WPS Configuration Methods not retrieved";
+                print("WPS Configuration Methods not retrieved");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "WPS PIN retrieved is not valid";
+            print("WPS PIN retrieved is not valid");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "As WPS Enable Mode is Disabled, cannot retrieve the WPS PIN and WPS Methods";
+        print("As WPS Enable Mode is Disabled, cannot retrieve the WPS PIN and WPS Methods");
     return values, status;
 
 
@@ -194,8 +194,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApWpsConfiguration_WithWPSEn
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -205,30 +205,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Invoke the Get AP WPS Configuration
         actualresult, details, tdkTestObj = getApWpsConfiguration(obj, idx);
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP";
-        print "EXPECTED RESULT 1: Should invoke the HAL API successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP");
+        print("EXPECTED RESULT 1: Should invoke the HAL API successfully");
 
         if expectedresult in actualresult and "getApWpsConfiguration invoked successfully" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the WPS configuration details
             initial_values, status = getApWpsConfigurationDetails(details);
-            print "\nTEST STEP 2: Get the Access Point WPS Configuration and check if the initial values are valid";
-            print "EXPECTED RESULT 2: Should get the Access Point WPS Configuration successfully and the initial values should be valid";
+            print("\nTEST STEP 2: Get the Access Point WPS Configuration and check if the initial values are valid");
+            print("EXPECTED RESULT 2: Should get the Access Point WPS Configuration successfully and the initial values should be valid");
 
             if status == "SUCCESS":
-                print "ACTUAL RESULT 2: The Access Point WPS Configuration are retrieved and all initial values are valid";
-                print "TEST EXECUTION RESULT 2: SUCCESS";
+                print("ACTUAL RESULT 2: The Access Point WPS Configuration are retrieved and all initial values are valid");
+                print("TEST EXECUTION RESULT 2: SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Set AP WPS Configuration
@@ -238,19 +238,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                 #Get the 8 digit WPS PIN to be set
                 cmd= "sh %s/tdk_utility.sh parseConfigFile WPS_PIN" %TDK_PATH;
-                print cmd;
+                print(cmd);
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 new_pin = tdkTestObj.getResultDetails().replace("\\n", "");
 
-                print "\nTEST STEP 3: Get the 8 digit WPS PIN to be set from property file";
-                print "EXPECTED RESULT 3: Should get the 8 digit WPS PIN from property file"
+                print("\nTEST STEP 3: Get the 8 digit WPS PIN to be set from property file");
+                print("EXPECTED RESULT 3: Should get the 8 digit WPS PIN from property file")
 
                 if expectedresult in actualresult and new_pin.isdigit():
-                    print "ACTUAL RESULT 3: WPS PIN retrieved from the platform property file";
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("ACTUAL RESULT 3: WPS PIN retrieved from the platform property file");
+                    print("TEST EXECUTION RESULT :SUCCESS");
                     tdkTestObj.setResultStatus("SUCCESS");
 
                     #Set the new WPS Configuration modes as Display(0x0008) PushButton(0x0080) - Combine the Hex values of the 2 configurations using Bitwise OR
@@ -262,60 +262,60 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     radioIndex = idx;
 
                     actualresult, details, tdkTestObj = setApWpsConfiguration(obj, apIndex, radioIndex, setvalues);
-                    print "\nTEST STEP 4 : Invoke the HAL API wifi_setApWpsConfiguration() for 5G private AP with WPS Mode : %s, WPS PIN : %s and WPS Methods : %s(After combining Display-0x0008 and PushButton-0x0080 methods)" %(setvalues[0], setvalues[1], setvalues[2]);
-                    print "EXPECTED RESULT 4 : The HAL API wifi_setApWpsConfiguration() should be invoked successfully";
+                    print("\nTEST STEP 4 : Invoke the HAL API wifi_setApWpsConfiguration() for 5G private AP with WPS Mode : %s, WPS PIN : %s and WPS Methods : %s(After combining Display-0x0008 and PushButton-0x0080 methods)" %(setvalues[0], setvalues[1], setvalues[2]));
+                    print("EXPECTED RESULT 4 : The HAL API wifi_setApWpsConfiguration() should be invoked successfully");
 
                     if expectedresult in actualresult:
-                        print "ACTUAL RESULT 4: The wifi_setApWpsConfiguration() API returned success; Details : %s" %details;
-                        print "TEST EXECUTION RESULT 3: SUCCESS";
+                        print("ACTUAL RESULT 4: The wifi_setApWpsConfiguration() API returned success; Details : %s" %details);
+                        print("TEST EXECUTION RESULT 3: SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #Cross check the SET with GET
                         actualresult, details, tdkTestObj = getApWpsConfiguration(obj, idx);
-                        print "\nTEST STEP 5: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP after the SET operation";
-                        print "EXPECTED RESULT 5: Should successfully invoke wifi_getApWpsConfiguration()";
+                        print("\nTEST STEP 5: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP after the SET operation");
+                        print("EXPECTED RESULT 5: Should successfully invoke wifi_getApWpsConfiguration()");
 
                         if expectedresult in actualresult and "getApWpsConfiguration invoked successfully" in details:
-                            print "ACTUAL RESULT :5 wifi_getApWpsConfiguration() invoked successfully";
-                            print "TEST EXECUTION RESULT 1: SUCCESS";
+                            print("ACTUAL RESULT :5 wifi_getApWpsConfiguration() invoked successfully");
+                            print("TEST EXECUTION RESULT 1: SUCCESS");
                             tdkTestObj.setResultStatus("SUCCESS");
 
                             #Get the access point WPS details and check if the values SET are GET
                             final_values, status = getApWpsConfigurationDetails(details);
-                            print "\nTEST STEP 6: Get the Access Point WPS Configuration and check if the retrieved values are valid";
-                            print "EXPECTED RESULT 6: Should get the Access Point WPS Configuration successfully and the retrieved values should be valid";
+                            print("\nTEST STEP 6: Get the Access Point WPS Configuration and check if the retrieved values are valid");
+                            print("EXPECTED RESULT 6: Should get the Access Point WPS Configuration successfully and the retrieved values should be valid");
 
                             if status == "SUCCESS":
-                                print "ACTUAL RESULT 6: The Access Point WPS Configuration details are retrieved and all retrieved values are valid";
-                                print "TEST EXECUTION RESULT 5: SUCCESS";
+                                print("ACTUAL RESULT 6: The Access Point WPS Configuration details are retrieved and all retrieved values are valid");
+                                print("TEST EXECUTION RESULT 5: SUCCESS");
                                 tdkTestObj.setResultStatus("SUCCESS");
 
-                                print "WPS Mode SET : %s" %new_enable;
-                                print "WPS Mode GET : %s" %final_values[0];
-                                print "WPS PIN SET : %s" %setvalues[1];
-                                print "WPS PIN GET : %s" %final_values[1];
+                                print("WPS Mode SET : %s" %new_enable);
+                                print("WPS Mode GET : %s" %final_values[0]);
+                                print("WPS PIN SET : %s" %setvalues[1]);
+                                print("WPS PIN GET : %s" %final_values[1]);
 
                                 #Convert the WPS Methods GET to its equivalent decimal representation
                                 final_wps_methods = 0;
                                 for num_of_methods in range(2, len(final_values)):
                                     final_wps_methods = final_wps_methods | int(final_values[num_of_methods], 16);
 
-                                print "WPS Methods SET : %s" %setvalues[2];
-                                print "WPS Methods GET : %s" %final_wps_methods;
+                                print("WPS Methods SET : %s" %setvalues[2]);
+                                print("WPS Methods GET : %s" %final_wps_methods);
 
                                 if (new_enable == final_values[0]) and (setvalues[1] == final_values[1]) and (setvalues[2] == final_wps_methods):
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "The GET values match with the SET values";
+                                    print("The GET values match with the SET values");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "The GET values do not match with the SET values";
+                                    print("The GET values do not match with the SET values");
                             else:
-                                print "ACTUAL RESULT 6: The Access Point Security details are retrieved and all retrieved values are not valid";
-                                print "TEST EXECUTION RESULT 6: FAILURE";
+                                print("ACTUAL RESULT 6: The Access Point Security details are retrieved and all retrieved values are not valid");
+                                print("TEST EXECUTION RESULT 6: FAILURE");
                                 tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "ACTUAL RESULT 5: wifi_getApWpsConfiguration() not invoked successfully";
-                            print "TEST EXECUTION RESULT 5: FAILURE";
+                            print("ACTUAL RESULT 5: wifi_getApWpsConfiguration() not invoked successfully");
+                            print("TEST EXECUTION RESULT 5: FAILURE");
                             tdkTestObj.setResultStatus("FAILURE");
 
                         #Revert operation
@@ -330,40 +330,40 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         setvalues = [initial_mode, initial_values[1], initial_wps_methods];
                         actualresult, details, tdkTestObj = setApWpsConfiguration(obj, apIndex, radioIndex, setvalues);
-                        print "\nTEST STEP 7 : Revert to initial AP WPS Configuration";
-                        print "EXPECTED RESULT 7 : Revert operation should be success";
+                        print("\nTEST STEP 7 : Revert to initial AP WPS Configuration");
+                        print("EXPECTED RESULT 7 : Revert operation should be success");
 
                         if expectedresult in actualresult:
-                            print "ACTUAL RESULT 7: The SET API returned success; Details : %s" %details;
-                            print "TEST EXECUTION RESULT 7: SUCCESS";
+                            print("ACTUAL RESULT 7: The SET API returned success; Details : %s" %details);
+                            print("TEST EXECUTION RESULT 7: SUCCESS");
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "ACTUAL RESULT 7: The SET API returned failure; Details : %s" %details;
-                            print "TEST EXECUTION RESULT 7: FAILURE";
+                            print("ACTUAL RESULT 7: The SET API returned failure; Details : %s" %details);
+                            print("TEST EXECUTION RESULT 7: FAILURE");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "ACTUAL RESULT 4: The wifi_setApWpsConfiguration() API returned failure; Details : %s" %details;
-                        print "TEST EXECUTION RESULT 4: FAILURE";
+                        print("ACTUAL RESULT 4: The wifi_setApWpsConfiguration() API returned failure; Details : %s" %details);
+                        print("TEST EXECUTION RESULT 4: FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 3: 8-digit WPS PIN not retrieved from platform property file : ", new_pin ;
-                    print "TEST EXECUTION RESULT 3:FAILURE";
+                    print("ACTUAL RESULT 3: 8-digit WPS PIN not retrieved from platform property file : ", new_pin) ;
+                    print("TEST EXECUTION RESULT 3:FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "ACTUAL RESULT 2: All Access Point WPS Configuration details are not valid";
-                print "TEST EXECUTION RESULT 2: FAILURE";
+                print("ACTUAL RESULT 2: All Access Point WPS Configuration details are not valid");
+                print("TEST EXECUTION RESULT 2: FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

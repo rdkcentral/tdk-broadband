@@ -104,8 +104,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_GetApRadioIndex');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -114,7 +114,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -124,10 +124,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         #Checking for idx 8, Similary can be check for other APs 0,2,4,6,10,12,14
@@ -139,34 +139,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             radioIndexValue = details.split(":")[1].strip()
-            print "TEST STEP 2: Get the getApRadioIndex API";
-            print "EXPECTED RESULT 2: Function Should return a Radio Index value(int) value";
+            print("TEST STEP 2: Get the getApRadioIndex API");
+            print("EXPECTED RESULT 2: Function Should return a Radio Index value(int) value");
 
             if expectedRadioIndexValue == int(radioIndexValue):
-                print "getApRadioIndex function successful, %s"%details
+                print("getApRadioIndex function successful, %s"%details)
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Radio Index value associated with AP received Successfully: %s"%radioIndexValue;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: Radio Index value associated with AP received Successfully: %s"%radioIndexValue);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                print "getApRadioIndex failed, %s"%details
+                print("getApRadioIndex failed, %s"%details)
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:Failed to receive a Radio Index value: %s"%radioIndexValue;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2:Failed to receive a Radio Index value: %s"%radioIndexValue);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "getApRadioIndex failed"
+            print("getApRadioIndex failed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

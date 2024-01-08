@@ -90,21 +90,21 @@ def getApFTValues(obj, primitive, idx, api, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Invoke the HAL API wifi_%s and get the FT parameter value for 6G private AP" %(step, api);
-    print "EXPECTED RESULT %d : Invocation of wifi_%s should be success" %(step, api);
+    print("\nTEST STEP %d : Invoke the HAL API wifi_%s and get the FT parameter value for 6G private AP" %(step, api));
+    print("EXPECTED RESULT %d : Invocation of wifi_%s should be success" %(step, api));
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details;
+        print("ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else :
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: API was NOT invoked successfully; Details : %s" %details;
+        print("ACTUAL RESULT 1: API was NOT invoked successfully; Details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return actualresult, details, tdkTestObj;
 
 def HextoIntConversion(hex_value0, hex_value1):
@@ -121,7 +121,7 @@ def HextoIntConversion(hex_value0, hex_value1):
     #Concatenate the two Hex parts to get the full hex value
     hex_value = hex1 + hex0;
     mobility_id = int(hex_value, 16);
-    print "\nThe Hex value after combining the Mobility Domain IDs is : 0x%s" %hex_value;
+    print("\nThe Hex value after combining the Mobility Domain IDs is : 0x%s" %hex_value);
     return mobility_id;
 
 def PushApFTConfig(tdkTestObj, apIndex, setvalues, radioIndex):
@@ -158,8 +158,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzPushApFastTransitionConfig');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -169,14 +169,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if an invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
         tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
         if apIndex == -1:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
         else:
             #Get the initial value of BSSTransitionActivated
@@ -189,7 +189,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 initial_bss_transition_activated = details.split(":")[1].strip();
-                print "Initial BSS Transition Activated : %s" %initial_bss_transition_activated;
+                print("Initial BSS Transition Activated : %s" %initial_bss_transition_activated);
 
                 #Get the initial value of FTMobilityDomainID
                 step = step + 1;
@@ -204,8 +204,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     #Check if proper Hex values are retrieved and convert them to integer value
                     hex_value0 = details.split("ID[0] : ")[1].split(",")[0];
                     hex_value1 = details.split("ID[1] : ")[1];
-                    print "Mobility Domain ID[0] : %s" %hex_value0;
-                    print "Mobility Domain ID[1] : %s" %hex_value1;
+                    print("Mobility Domain ID[0] : %s" %hex_value0);
+                    print("Mobility Domain ID[1] : %s" %hex_value1);
 
                     if "0x" in hex_value0 and "0x" in hex_value1:
                         #Set the result status of execution
@@ -213,7 +213,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         #Covert to corresponding Integer values
                         initial_FTMDID = HextoIntConversion(hex_value0, hex_value1);
-                        print "Initial FT Mobility Domain ID : %d" %initial_FTMDID;
+                        print("Initial FT Mobility Domain ID : %d" %initial_FTMDID);
 
                         #Get the initial value of FTOverDSActivated
                         step = step + 1;
@@ -225,7 +225,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
                             initial_ft_over_ds = details.split(":")[1].strip();
-                            print "Initial FT Over DS Activated : %s" %initial_ft_over_ds;
+                            print("Initial FT Over DS Activated : %s" %initial_ft_over_ds);
 
                             #Invoke the PushApFastTransitionConfig API
                             step = step + 1;
@@ -253,19 +253,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 overDS_new_status = "Enabled";
 
                             setvalues = [bss_new_enable, new_ft_mobility, overDS_new_enable];
-                            print "New FT Values to be set for BSS TransitionActivated : %s, FT Mobility Domain ID : %d, FT Over DS Activated : %s"	%(bss_new_status, new_ft_mobility, overDS_new_status);
+                            print("New FT Values to be set for BSS TransitionActivated : %s, FT Mobility Domain ID : %d, FT Over DS Activated : %s"     %(bss_new_status, new_ft_mobility, overDS_new_status));
                             tdkTestObj = obj.createTestStep("WIFIHAL_PushApFastTransitionConfig");
                             actualresult, details = PushApFTConfig(tdkTestObj, apIndex, setvalues, idx);
 
-                            print "\nTEST STEP %d: Invoke the HAL API wifi_PushApFastTransitionConfig() for 6G private AP" %step;
-                            print "EXPECTED RESULT %d: The HAL API should be invoked successfully" %step;
+                            print("\nTEST STEP %d: Invoke the HAL API wifi_PushApFastTransitionConfig() for 6G private AP" %step);
+                            print("EXPECTED RESULT %d: The HAL API should be invoked successfully" %step);
 
                             if expectedresult in actualresult and details != "":
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: API was invoked successfully; Details : %s" %(step, details);
+                                print("ACTUAL RESULT %d: API was invoked successfully; Details : %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Cross check the PUSH operation using the GET APIs
                                 #Get the final value of BSSTransitionActivated
@@ -278,7 +278,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
                                     final_bss_transition_activated = details.split(":")[1].strip();
-                                    print "Final BSS Transition Activated : %s" %final_bss_transition_activated;
+                                    print("Final BSS Transition Activated : %s" %final_bss_transition_activated);
 
                                     #Get the final value of FTMobilityDomainID
                                     step = step + 1;
@@ -293,8 +293,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                         #Check if proper Hex values are retrieved and convert them to integer value
                                         hex_value0 = details.split("ID[0] : ")[1].split(",")[0];
                                         hex_value1 = details.split("ID[1] : ")[1];
-                                        print "Mobility Domain ID[0] : %s" %hex_value0;
-                                        print "Mobility Domain ID[1] : %s" %hex_value1;
+                                        print("Mobility Domain ID[0] : %s" %hex_value0);
+                                        print("Mobility Domain ID[1] : %s" %hex_value1);
 
                                         if "0x" in hex_value0 and "0x" in hex_value1:
                                             #Set the result status of execution
@@ -302,7 +302,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                                             #Covert to corresponding Integer values
                                             final_FTMDID = HextoIntConversion(hex_value0, hex_value1);
-                                            print "Final FT Mobility Domain ID : %d" %final_FTMDID;
+                                            print("Final FT Mobility Domain ID : %d" %final_FTMDID);
 
                                             #Get the final value of FTOverDSActivated
                                             step = step + 1;
@@ -314,94 +314,94 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                                 #Set the result status of execution
                                                 tdkTestObj.setResultStatus("SUCCESS");
                                                 final_ft_over_ds = details.split(":")[1].strip();
-                                                print "Final FT Over DS Activated : %s" %final_ft_over_ds;
+                                                print("Final FT Over DS Activated : %s" %final_ft_over_ds);
 
                                                 #Check if GET values match with SET values
                                                 step = step + 1;
-                                                print "\nTEST STEP %d: Check if GET values of FT parameters match with the SET values" %step;
-                                                print "EXPECTED RESULT %d : The GET values should match with the SET values" %step;
+                                                print("\nTEST STEP %d: Check if GET values of FT parameters match with the SET values" %step);
+                                                print("EXPECTED RESULT %d : The GET values should match with the SET values" %step);
 
-                                                print "BSS Transition Activated SET : ", bss_new_status;
-                                                print "BSS Transition Activated GET : ", final_bss_transition_activated;
-                                                print "FT Mobility Domain ID SET : ", new_ft_mobility;
-                                                print "FT Mobility Domain ID GET : ", final_FTMDID;
-                                                print "FT Over DS Activated SET : ", overDS_new_status;
-                                                print "FT Over DS Activated GET : ", final_ft_over_ds;
+                                                print("BSS Transition Activated SET : ", bss_new_status);
+                                                print("BSS Transition Activated GET : ", final_bss_transition_activated);
+                                                print("FT Mobility Domain ID SET : ", new_ft_mobility);
+                                                print("FT Mobility Domain ID GET : ", final_FTMDID);
+                                                print("FT Over DS Activated SET : ", overDS_new_status);
+                                                print("FT Over DS Activated GET : ", final_ft_over_ds);
 
                                                 if (bss_new_status == final_bss_transition_activated) and (new_ft_mobility == final_FTMDID) and (overDS_new_status == final_ft_over_ds) :
                                                     tdkTestObj.setResultStatus("SUCCESS");
-                                                    print "ACTUAL RESULT %d: GET values match with SET values" %step;
-                                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                                    print("ACTUAL RESULT %d: GET values match with SET values" %step);
+                                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                                 else:
                                                     tdkTestObj.setResultStatus("FAILURE");
-                                                    print "ACTUAL RESULT %d: GET values does NOT match with SET values" %step;
-                                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                                    print("ACTUAL RESULT %d: GET values does NOT match with SET values" %step);
+                                                    print("[TEST EXECUTION RESULT] : FAILURE");
                                             else:
                                                 #Set the result status of execution
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "Final FT Over DS Activated value not retrieved";
+                                                print("Final FT Over DS Activated value not retrieved");
                                         else:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "FT Mobility Domain ID is not retrieved as two Hex values";
+                                            print("FT Mobility Domain ID is not retrieved as two Hex values");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "Final FT Mobility Domain ID value not retrieved";
+                                        print("Final FT Mobility Domain ID value not retrieved");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "Final BSS Transition Activated value not retrieved";
+                                    print("Final BSS Transition Activated value not retrieved");
 
                                 #Revert operation
                                 step = step + 1;
                                 setvalues = [bss_old_enable, initial_FTMDID, overDS_old_enable];
-                                print "Revert FT values:- BSS TransitionActivated : %s, FT Mobility Domain ID : %d, FT Over DS Activated : %s"	%(initial_bss_transition_activated, initial_FTMDID, initial_ft_over_ds);
+                                print("Revert FT values:- BSS TransitionActivated : %s, FT Mobility Domain ID : %d, FT Over DS Activated : %s"  %(initial_bss_transition_activated, initial_FTMDID, initial_ft_over_ds));
                                 tdkTestObj = obj.createTestStep("WIFIHAL_PushApFastTransitionConfig");
                                 actualresult, details = PushApFTConfig(tdkTestObj, apIndex, setvalues, idx);
 
-                                print "\nTEST STEP %d: Invoke the HAL API wifi_PushApFastTransitionConfig() for 6G private AP and revert to initial state" %step;
-                                print "EXPECTED RESULT %d: The HAL API should be invoked successfully" %step;
+                                print("\nTEST STEP %d: Invoke the HAL API wifi_PushApFastTransitionConfig() for 6G private AP and revert to initial state" %step);
+                                print("EXPECTED RESULT %d: The HAL API should be invoked successfully" %step);
 
                                 if expectedresult in actualresult and details != "":
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Revert operation success; Details : %s" %(step, details);
+                                    print("ACTUAL RESULT %d: Revert operation success; Details : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Revert operation failed; Details : %s" %(step, details);
+                                    print("ACTUAL RESULT %d: Revert operation failed; Details : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: API was not invoked successfully; Details : %s" %(step, details);
+                                print("ACTUAL RESULT %d: API was not invoked successfully; Details : %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Initial FT Over DS Activated value not retrieved";
+                            print("Initial FT Over DS Activated value not retrieved");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "FT Mobility Domain ID is not retrieved as two Hex values";
+                        print("FT Mobility Domain ID is not retrieved as two Hex values");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Initial FT Mobility Domain ID value not retrieved";
+                    print("Initial FT Mobility Domain ID value not retrieved");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Initial BSS Transition Activated value not retrieved";
+                print("Initial BSS Transition Activated value not retrieved");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

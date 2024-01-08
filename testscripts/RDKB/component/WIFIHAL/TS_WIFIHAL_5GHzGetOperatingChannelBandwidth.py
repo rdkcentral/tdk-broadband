@@ -66,7 +66,7 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from wifiUtility import *
 
@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetOperatingChannelBandwidth');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,31 +90,31 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    bandWidthList = "20MHz, 40MHz, 80MHz, 160MHz, Auto"
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "getChannelBandwidth"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+        bandWidthList = "20MHz, 40MHz, 80MHz, 160MHz, Auto"
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "getChannelBandwidth"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-	    if expectedresult in actualresult :
-		bandWidth = details.split(":")[1].strip()
-		bandWidth=bandWidth.split("\\n")[0];
-		print bandWidth;
-		if bandWidth in bandWidthList:
-		    print "OperatingChannelBandwidth is from the list %s"%bandWidthList
-		else:
-		    print "OperatingChannelBandwidth is not from the list %s"%bandWidthList
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "GetOperatingChannelBandwidth() failed"
+        if expectedresult in actualresult :
+            bandWidth = details.split(":")[1].strip()
+            bandWidth=bandWidth.split("\\n")[0];
+            print(bandWidth);
+            if bandWidth in bandWidthList:
+                print("OperatingChannelBandwidth is from the list %s"%bandWidthList)
+            else:
+                print("OperatingChannelBandwidth is not from the list %s"%bandWidthList)
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("GetOperatingChannelBandwidth() failed")
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

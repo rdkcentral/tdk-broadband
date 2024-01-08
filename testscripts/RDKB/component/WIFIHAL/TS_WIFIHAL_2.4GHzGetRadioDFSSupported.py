@@ -76,13 +76,13 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioDFSSupported');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -91,36 +91,35 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Calling the method from wifiUtility to check whether DFS is Supported or not
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
         if expectedresult in actualresult :
-           print "TEST STEP 1 : Get DFS Support for 2.4GHz"
-           print "EXPECTED RESULT : Should successfully get the DFS Support"
-           print "ACTUAL RESULT : getRadioDFSSupported is success"
-           print "TEST EXECUTION RESULT : SUCCESS"
-           print "getRadioDFSSupport() is success"
-           tdkTestObj.setResultStatus("SUCCESS");
-           enable = details.split(":")[1].strip()
-           if "Disabled" in enable:
-               print "TEST STEP 2 : Get DFS Support for 2.4GHz"
-               print "EXPECTED RESULT: Should successfully get the DFS Support as Disabled for 2.4GHz"
-               print "ACTUAL RESULT: getRadioDFSSupported : %s"%details;
-               print "TEST EXECUTION RESULT :SUCCESS"
-               print "DFS is Disabled for 2.4GHz"
-               tdkTestObj.setResultStatus("SUCCESS");
-           else:
-               print "TEST STEP 2 : Get DFS Support for 2.4GHz"
-               print "EXPECTED RESULT: Should successfully get the DFS Support as Disabled for 2.4GHz"
-               print "ACTUAL RESULT: getRadioDFSSupported : %s"%details;
-               print "TEST EXECUTION RESULT :FAILURE"
-               print "DFS is Enabled for 2.4GHz"
-               tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1 : Get DFS Support for 2.4GHz")
+            print("EXPECTED RESULT : Should successfully get the DFS Support")
+            print("ACTUAL RESULT : getRadioDFSSupported is success")
+            print("TEST EXECUTION RESULT : SUCCESS")
+            print("getRadioDFSSupport() is success")
+            tdkTestObj.setResultStatus("SUCCESS");
+            enable = details.split(":")[1].strip()
+            if "Disabled" in enable:
+                print("TEST STEP 2 : Get DFS Support for 2.4GHz")
+                print("EXPECTED RESULT: Should successfully get the DFS Support as Disabled for 2.4GHz")
+                print("ACTUAL RESULT: getRadioDFSSupported : %s"%details);
+                print("TEST EXECUTION RESULT :SUCCESS")
+                print("DFS is Disabled for 2.4GHz")
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("TEST STEP 2 : Get DFS Support for 2.4GHz")
+                print("EXPECTED RESULT: Should successfully get the DFS Support as Disabled for 2.4GHz")
+                print("ACTUAL RESULT: getRadioDFSSupported : %s"%details);
+                print("TEST EXECUTION RESULT :FAILURE")
+                print("DFS is Enabled for 2.4GHz")
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-           print "TEST STEP 1 : Get DFS Support for 2.4GHz"
-           print "EXPECTED RESULT: Should successfully get the DFS Support"
-           print "ACTUAL RESULT: getRadioDFSSupported is failure";
-           print "TEST EXECUTION RESULT :FAILURE"
-           print "getRadioDFSSupport() failed"
-           tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1 : Get DFS Support for 2.4GHz")
+            print("EXPECTED RESULT: Should successfully get the DFS Support")
+            print("ACTUAL RESULT: getRadioDFSSupported is failure");
+            print("TEST EXECUTION RESULT :FAILURE")
+            print("getRadioDFSSupport() failed")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

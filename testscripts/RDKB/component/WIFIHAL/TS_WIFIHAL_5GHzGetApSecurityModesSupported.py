@@ -90,7 +90,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApSecurityModesSupported');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,51 +98,51 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApSecurityModesSupported"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApSecurityModesSupported"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    #Default supported modes
-            defaultSupportedModes = ['None','WEP-64','WEP-128','WPA-Personal','WPA2-Personal','WPA-WPA2-Personal','WPA-Enterprise','WPA2-Enterprise','WPA-WPA2-Enterprise','WPA3-Personal','WPA2-WPA3-Personal','WPA3-Enterprise','WPA2-WPA3-Enterprise','WPA3-Personal-Transition']
+        #Default supported modes
+        defaultSupportedModes = ['None','WEP-64','WEP-128','WPA-Personal','WPA2-Personal','WPA-WPA2-Personal','WPA-Enterprise','WPA2-Enterprise','WPA-WPA2-Enterprise','WPA3-Personal','WPA2-WPA3-Personal','WPA3-Enterprise','WPA2-WPA3-Enterprise','WPA3-Personal-Transition']
 
-            print "Supported Modes List = ",defaultSupportedModes;
-            if expectedresult in actualresult:
-                actualSupportedModes = list(details.split(":")[1].replace(" ", "").split(","));
-                print "Modes returned by the api = ",actualSupportedModes;
-                flag = 0;
-                for item in actualSupportedModes:
-                    if item in defaultSupportedModes:
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print "%s security mode is from the expected supported list"%item;
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE");
-                        flag = 1;
-                        print "%s security mode is NOT from the expected supported list"%item;
-                if flag == 1 :
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Validate the wifi_getApSecurityModesSupported Function";
-                    print "EXPECTED RESULT 1: wifi_getApSecurityModesSupported should return the modes from the supported modes list";
-                    print "ACTUAL RESULT 1: All the security modes returned by wifi_getApSecurityModesSupported are not from the supported modes list";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-                else:
+        print("Supported Modes List = ",defaultSupportedModes);
+        if expectedresult in actualresult:
+            actualSupportedModes = list(details.split(":")[1].replace(" ", "").split(","));
+            print("Modes returned by the api = ",actualSupportedModes);
+            flag = 0;
+            for item in actualSupportedModes:
+                if item in defaultSupportedModes:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Validate the wifi_getApSecurityModesSupported Function";
-                    print "EXPECTED RESULT 1: wifi_getApSecurityModesSupported should return the modes from the supported modes list";
-                    print "ACTUAL RESULT 1: All the security modes returned by wifi_getApSecurityModesSupported are from the supported modes list";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-            else:
-                print "getApSecurityModesSupported() failed"
+                    print("%s security mode is from the expected supported list"%item);
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    flag = 1;
+                    print("%s security mode is NOT from the expected supported list"%item);
+            if flag == 1 :
                 tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Validate the wifi_getApSecurityModesSupported Function");
+                print("EXPECTED RESULT 1: wifi_getApSecurityModesSupported should return the modes from the supported modes list");
+                print("ACTUAL RESULT 1: All the security modes returned by wifi_getApSecurityModesSupported are not from the supported modes list");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Validate the wifi_getApSecurityModesSupported Function");
+                print("EXPECTED RESULT 1: wifi_getApSecurityModesSupported should return the modes from the supported modes list");
+                print("ACTUAL RESULT 1: All the security modes returned by wifi_getApSecurityModesSupported are from the supported modes list");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            print("getApSecurityModesSupported() failed")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

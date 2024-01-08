@@ -52,7 +52,7 @@
 radioIndex : 1</input_parameters>
     <automation_approch>1.Load the module
 2.Using primitive test WIFIHAL_GetSSIDTrafficStats2 call the api wifi_getSSIDTrafficStats2()
-3.Parse the return values and check if they are all non empty 
+3.Parse the return values and check if they are all non empty
 4. If the api call fails, return FAILURE, else return SUCESS
 5.Unload the module.</automation_approch>
     <except_output>wifi_getSSIDTrafficStats2() api call should return success and should return non empty values for all parameters</except_output>
@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetSSIDTrafficStats2');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,41 +90,40 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    #Prmitive test case which associated to this Script
-	    tdkTestObj = obj.createTestStep('WIFIHAL_GetSSIDTrafficStats2');
-	    tdkTestObj.addParameter("radioIndex", idx);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
+        #Prmitive test case which associated to this Script
+        tdkTestObj = obj.createTestStep('WIFIHAL_GetSSIDTrafficStats2');
+        tdkTestObj.addParameter("radioIndex", idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-	    if expectedresult in actualresult :
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP : Get the traffic stats info"
-		print "EXPECTED RESULT : Should successfully get the traffic stats info"
-		print "ACTUAL RESULT : Successfully gets the traffic stats info"
-		print "Details: "
-		detailList = details.split(",")
-		for i in detailList:
-		    print i;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP : Get the traffic stats info"
-		print "EXPECTED RESULT : Should successfully get the traffic stats info"
-		print "ACTUAL RESULT : Failed to get the traffic stats info"
-		print "Details: %s"%details
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Get the traffic stats info")
+            print("EXPECTED RESULT : Should successfully get the traffic stats info")
+            print("ACTUAL RESULT : Successfully gets the traffic stats info")
+            print("Details: ")
+            detailList = details.split(",")
+            for i in detailList:
+                print(i);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Get the traffic stats info")
+            print("EXPECTED RESULT : Should successfully get the traffic stats info")
+            print("ACTUAL RESULT : Failed to get the traffic stats info")
+            print("Details: %s"%details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

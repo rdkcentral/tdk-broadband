@@ -82,8 +82,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApAclDeviceNum');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,7 +94,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         getMethod = "getApAclDeviceNum"
@@ -103,28 +103,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             deviceNum = details.split(":")[1].strip();
-            print "\nTEST STEP 2: Get the number of devices in the filter list"
-            print "EXPECTED RESULT 2: Should get the number of devices as a non empty value"
+            print("\nTEST STEP 2: Get the number of devices in the filter list")
+            print("EXPECTED RESULT 2: Should get the number of devices as a non empty value")
 
             if deviceNum != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Received the number of devices as a NON EMPTY value"
-                print "Device number : %s"%deviceNum
-                print "TEST EXECUTION RESULT: SUCCESS"
+                print("ACTUAL RESULT 2: Received the number of devices as a NON EMPTY value")
+                print("Device number : %s"%deviceNum)
+                print("TEST EXECUTION RESULT: SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Received the number of devices as an EMPTY value"
-                print "Device number : %s"%deviceNum
-                print "TEST EXECUTION RESULT: FAILURE"
+                print("ACTUAL RESULT 2: Received the number of devices as an EMPTY value")
+                print("Device number : %s"%deviceNum)
+                print("TEST EXECUTION RESULT: FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "getApAclDeviceNum() call failed"
+            print("getApAclDeviceNum() call failed")
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

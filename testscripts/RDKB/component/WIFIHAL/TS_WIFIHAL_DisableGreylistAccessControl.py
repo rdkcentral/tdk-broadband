@@ -86,111 +86,111 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_DisableGreylistAccessControl');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 wifiloadmodulestatus = wifiobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus);
 
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and sysloadmodulestatus.upper() and wifiloadmodulestatus.upper()):
-        obj.setLoadModuleStatus("SUCCESS");
-        wifiobj.setLoadModuleStatus("SUCCESS");
-        sysobj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
+    wifiobj.setLoadModuleStatus("SUCCESS");
+    sysobj.setLoadModuleStatus("SUCCESS");
 
-        tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
-        tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RadiusGreyList.Enable");
-        expectedresult="SUCCESS";
+    tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
+    tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RadiusGreyList.Enable");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    currValue = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult :
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1 : Get the current radius grey list Enable status");
+        print("ACTUAL RESULT 1: Should get the current radius grey list Enable status");
+        print("EXPECTED RESULT 1 : The current radius grey list Enable status is:",currValue);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+        if "true" in currValue:
+            oldEnable = 1
+        else:
+            oldEnable = 0
+
+        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+        tdkTestObj.addParameter("methodName","enableGreylistAccessControl");
+        tdkTestObj.addParameter("param",0);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        currValue = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult :
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 : Get the current radius grey list Enable status";
-            print "ACTUAL RESULT 1: Should get the current radius grey list Enable status";
-            print "EXPECTED RESULT 1 : The current radius grey list Enable status is:",currValue;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2 : Disable the radius grey list Enable status ");
+            print("ACTUAL RESULT 2: Should Disable the radius grey list Enable status successfully");
+            print("EXPECTED RESULT 2 :Set status:",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            if "true" in currValue:
-               oldEnable = 1
-            else:
-                oldEnable = 0
+            sleep(60);
 
-            tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-            tdkTestObj.addParameter("methodName","enableGreylistAccessControl");
-            tdkTestObj.addParameter("param",0);
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 2 : Disable the radius grey list Enable status ";
-               print "ACTUAL RESULT 2: Should Disable the radius grey list Enable status successfully";
-               print "EXPECTED RESULT 2 :Set status:",details;
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+            confFiles = ["/tmp/secath8/","/tmp/secath9"];
+            print("TEST STEP :Checking if %s are present" %confFiles);
+            for item in confFiles:
+                tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                cmd = "[ -f %s ] && echo \"File exist\" || echo \"File does not exist\""%item;
+                tdkTestObj.addParameter("command",cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if details == "File exist":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("EXEPCTED RESULT : %s conf file should be present"%item);
+                    print("ACTUAL RESULT : %s file is present"%item);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP : EXEPCTED RESULT : %s conf file should be present"%item);
+                    print("ACTUAL RESULT :%s file is not present"%item);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    break;
 
-               sleep(60);
-
-               confFiles = ["/tmp/secath8/","/tmp/secath9"];
-               print "TEST STEP :Checking if %s are present" %confFiles;
-               for item in confFiles:
-                   tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                   cmd = "[ -f %s ] && echo \"File exist\" || echo \"File does not exist\""%item;
-                   tdkTestObj.addParameter("command",cmd);
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                   if details == "File exist":
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "EXEPCTED RESULT : %s conf file should be present"%item;
-                      print "ACTUAL RESULT : %s file is present"%item;
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP : EXEPCTED RESULT : %s conf file should be present"%item;
-                       print "ACTUAL RESULT :%s file is not present"%item;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-                       break;
-
-               if oldEnable!= 0:
-                   #Revert the value to previous
-                   tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-                   tdkTestObj.addParameter("methodName","enableGreylistAccessControl");
-                   tdkTestObj.addParameter("param",oldEnable);
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
-                   if expectedresult in actualresult:
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "TEST STEP 3 : Revert the radius grey list Enable status to %s"%oldEnable;
-                       print "ACTUAL RESULT 3: Should revert the radius grey list Enable status successfully";
-                       print "EXPECTED RESULT 3 :",details;
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 3 : Revert the radius grey list Enable status to %s"%oldEnable;
-                       print "ACTUAL RESULT 3: Should revert the radius grey list Enable status successfully";
-                       print "EXPECTED RESULT 3 :",details;
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-            else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 2 : Disable the radius grey list Enable status";
-               print "ACTUAL RESULT 2: Should Disable the radius grey list Enable status successfully";
-               print "EXPECTED RESULT 2 :set status:",details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            if oldEnable!= 0:
+                #Revert the value to previous
+                tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+                tdkTestObj.addParameter("methodName","enableGreylistAccessControl");
+                tdkTestObj.addParameter("param",oldEnable);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3 : Revert the radius grey list Enable status to %s"%oldEnable);
+                    print("ACTUAL RESULT 3: Should revert the radius grey list Enable status successfully");
+                    print("EXPECTED RESULT 3 :",details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3 : Revert the radius grey list Enable status to %s"%oldEnable);
+                    print("ACTUAL RESULT 3: Should revert the radius grey list Enable status successfully");
+                    print("EXPECTED RESULT 3 :",details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1 : Get the current radius grey list Enable status";
-            print "ACTUAL RESULT 1: Should get the current radius grey list Enable status";
-            print "EXPECTED RESULT 1 :The current radius grey list Enable status is",currValue;
-            print "[TEST EXECUTION RESULT] : FAILURE";
-        obj.unloadModule("wifihal");
-        wifiobj.unloadModule("wifiagent");
-        sysobj.unloadModule("sysutil");
+            print("TEST STEP 2 : Disable the radius grey list Enable status");
+            print("ACTUAL RESULT 2: Should Disable the radius grey list Enable status successfully");
+            print("EXPECTED RESULT 2 :set status:",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1 : Get the current radius grey list Enable status");
+        print("ACTUAL RESULT 1: Should get the current radius grey list Enable status");
+        print("EXPECTED RESULT 1 :The current radius grey list Enable status is",currValue);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("wifihal");
+    wifiobj.unloadModule("wifiagent");
+    sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load  module";
+    print("Failed to load  module");
     obj.setLoadModuleStatus("FAILURE");
     wifiobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

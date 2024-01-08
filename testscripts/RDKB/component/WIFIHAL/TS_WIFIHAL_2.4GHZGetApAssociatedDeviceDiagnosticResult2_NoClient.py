@@ -96,7 +96,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHZGetApAssociatedDeviceDiagnosticResult2_NoClient');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,11 +105,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1:Invoke GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ"
-        print "EXPECTED RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ should return success status and empty buffer"
+        print("TEST STEP 1:Invoke GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ")
+        print("EXPECTED RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ should return success status and empty buffer")
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceDiagnosticResult2');
 
         #TDK stub function for the hal api wifi_getApAssociatedDeviceDiagnosticResult2, will return failure when this api returns success and an empty buffer when no client is connected. Hence making the expected result as failure.
@@ -118,21 +118,21 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         resultDetails = tdkTestObj.getResultDetails();
-        print "resultDetails:",resultDetails;
+        print("resultDetails:",resultDetails);
 
         if expectedresult in actualresult and resultDetails == "wifi_getApAssociatedDeviceDiagnosticResult2 returned empty buffer":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ returned success status and empty buffer"
+            print("ACTUAL RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ returned success status and empty buffer")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ returned failure"
+            print("ACTUAL RESULT 1: GetApAssociatedDeviceDiagnosticResult2 for 2.4GHZ returned failure")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

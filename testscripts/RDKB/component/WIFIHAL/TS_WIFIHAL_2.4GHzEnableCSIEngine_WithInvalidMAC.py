@@ -89,13 +89,13 @@ obj1.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzEnableCSIEngine_WithInvalidMAC'
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 def get_csi_info_query(obj1):
     #Getting CSI_INFO_QUERY value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile CSI_INFO_QUERY" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -106,16 +106,16 @@ def get_csi_info_query(obj1):
 
     if expectedresult in actualresult and cmd!= "":
         status = 0;
-        print "\nTEST STEP 2: Get CSI_INFO_QUERY from property file";
-        print "EXPECTED RESULT 2: Should  get CSI_INFO_QUERY from property file"
-        print "ACTUAL RESULT 2: CSI_INFO_QUERY from property file :", cmd ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("\nTEST STEP 2: Get CSI_INFO_QUERY from property file");
+        print("EXPECTED RESULT 2: Should  get CSI_INFO_QUERY from property file")
+        print("ACTUAL RESULT 2: CSI_INFO_QUERY from property file :", cmd) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
     else:
-        print "\nTEST STEP 2: Get CSI_INFO_QUERY from property file";
-        print "EXPECTED RESULT 2: Should  get CSI_INFO_QUERY from property file"
-        print "ACTUAL RESULT 2: CSI_INFO_QUERY from property file :", cmd ;
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("\nTEST STEP 2: Get CSI_INFO_QUERY from property file");
+        print("EXPECTED RESULT 2: Should  get CSI_INFO_QUERY from property file")
+        print("ACTUAL RESULT 2: CSI_INFO_QUERY from property file :", cmd) ;
+        print("TEST EXECUTION RESULT :FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
     return status, cmd;
 
@@ -123,13 +123,13 @@ def get_csi_info_query(obj1):
 def check_csi_frame_info(obj1, mac, cmd):
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     query = cmd + " | grep -i " + mac;
-    print "Query : %s" %query;
+    print("Query : %s" %query);
     tdkTestObj.addParameter("command", query);
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "Details : %s" %details;
+    print("Details : %s" %details);
 
     if expectedresult in actualresult and details != "":
         status = 0;
@@ -144,7 +144,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Enable CSI parameter for invalid MAC
@@ -163,14 +163,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "\nTEST STEP 1: Enable CSI monitoring using wifi_enableCSIEngine() for the invalid client MAC Address : %s" %mac;
-        print "EXPECTED RESULT 1: wifi_enableCSIEngine() should be invoked successfully";
+        print("\nTEST STEP 1: Enable CSI monitoring using wifi_enableCSIEngine() for the invalid client MAC Address : %s" %mac);
+        print("EXPECTED RESULT 1: wifi_enableCSIEngine() should be invoked successfully");
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1 : wifi_enableCSIEngine() invoked successfully";
+            print("ACTUAL RESULT 1 : wifi_enableCSIEngine() invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the CSI FRAME INFO Query from platform properties
             status, cmd = get_csi_info_query(obj1);
@@ -178,34 +178,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if status == 0:
                 #Check if the CSI monitoring is not enabled with invalid MAC
                 sleep(60);
-                print "\nTEST STEP 3: Get the CSI Frame Info for the invalid client MAC";
-                print "EXPECTED RESULT 3: Should not get the CSI Frame Info for the invalid client MAC";
+                print("\nTEST STEP 3: Get the CSI Frame Info for the invalid client MAC");
+                print("EXPECTED RESULT 3: Should not get the CSI Frame Info for the invalid client MAC");
                 status = check_csi_frame_info(obj1, mac, cmd);
 
                 if status == 1 :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3 : CSI Frame Info is not retrieved for invalid client MAC";
+                    print("ACTUAL RESULT 3 : CSI Frame Info is not retrieved for invalid client MAC");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3 : CSI Frame Info is retrieved for invalid client MAC";
+                    print("ACTUAL RESULT 3 : CSI Frame Info is retrieved for invalid client MAC");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "CSI FRAME INFO Query not fetched from platform properties";
+                print("CSI FRAME INFO Query not fetched from platform properties");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1 : wifi_enableCSIEngine() not invoked successfully";
+            print("ACTUAL RESULT 1 : wifi_enableCSIEngine() not invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

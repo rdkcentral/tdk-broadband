@@ -81,14 +81,14 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetBSSTransitionActivation');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -99,62 +99,58 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
         if expectedresult in actualresult :
-           tdkTestObj.setResultStatus("SUCCESS");
-           initialValue = details.split(":")[1].strip()
-           if initialValue == "TRUE" :
-	      #value to revert
-	      revertValue = 1
-              setValue = 0
-              checkvalue = "Disabled"
-	   else:
-	       revertValue = 0
-	       setValue = 1
-               checkValue = "Enabled"
+            tdkTestObj.setResultStatus("SUCCESS");
+            initialValue = details.split(":")[1].strip()
+            if initialValue == "TRUE" :
+                #value to revert
+                revertValue = 1
+                setValue = 0
+                checkvalue = "Disabled"
+            else:
+                revertValue = 0
+                setValue = 1
+                checkValue = "Enabled"
 
-           setMethod = "setBSSTransitionActivation"
-           primitive = 'WIFIHAL_GetOrSetParamIntValue'
+            setMethod = "setBSSTransitionActivation"
+            primitive = 'WIFIHAL_GetOrSetParamIntValue'
 
-           #Toggle the enable status using set
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+            #Toggle the enable status using set
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
 
-           if expectedresult in actualresult :
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "Enable state toggled using set"
-              #Get the New enable status
-	      getMethod = "getBSSTransitionActivation"
-              primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	      getValue = details.split(":")[1].strip()
-              print "getValue:",getValue
-              if expectedresult in actualresult and checkValue == getValue  :
-                 print "getBSSTransitionActivation Success, verified along with setBSSTransitionActivation() api"
-                 #Revert back to original Enable status
-		 setMethod = "setBSSTransitionActivation"
-	         primitive = 'WIFIHAL_GetOrSetParamIntValue'
-                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, revertValue, setMethod)
+            if expectedresult in actualresult :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("Enable state toggled using set")
+                #Get the New enable status
+                getMethod = "getBSSTransitionActivation"
+                primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                getValue = details.split(":")[1].strip()
+                print("getValue:",getValue)
+                if expectedresult in actualresult and checkValue == getValue  :
+                    print("getBSSTransitionActivation Success, verified along with setBSSTransitionActivation() api")
+                    #Revert back to original Enable status
+                    setMethod = "setBSSTransitionActivation"
+                    primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, revertValue, setMethod)
 
-                 if expectedresult in actualresult :
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "Enable status reverted back";
-                 else:
-                     print "Couldn't revert enable status"
-                     tdkTestObj.setResultStatus("FAILURE");
-              else:
-                   print "getBSSTransitionActivation() failed after set function"
-                   tdkTestObj.setResultStatus("FAILURE");
-           else:
-            print "setBSSTransitionActivation() failed"
-            tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult :
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Enable status reverted back");
+                    else:
+                        print("Couldn't revert enable status")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("getBSSTransitionActivation() failed after set function")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("setBSSTransitionActivation() failed")
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "getBSSTransitionActivation() failed"
+            print("getBSSTransitionActivation() failed")
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-
-
-
-

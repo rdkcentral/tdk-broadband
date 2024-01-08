@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioGuardInterval');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,7 +88,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
@@ -100,39 +100,39 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getRadioGuardInterval() for 6GHz radio";
-        print "EXPECTED RESULT 1 : The API should be invoked successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getRadioGuardInterval() for 6GHz radio");
+        print("EXPECTED RESULT 1 : The API should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
             interval = details.split(":")[1].strip("nsec");
-            print "ACTUAL RESULT 1 : The API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1 : The API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\nTEST STEP 2 : Check if the radio guard interval is a valid value from : [Auto, value between 100 - 800]";
-            print "EXPECTED RESULT 2 : The radio guard interval should be a valid value";
+            print("\nTEST STEP 2 : Check if the radio guard interval is a valid value from : [Auto, value between 100 - 800]");
+            print("EXPECTED RESULT 2 : The radio guard interval should be a valid value");
 
             if (interval == "Auto" or (interval.isdigit() and (100 <= int(interval) <= 800))):
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Radio guard interval : %s" %interval;
+                print("ACTUAL RESULT 2: Radio guard interval : %s" %interval);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Radio guard interval : %s" %interval;
+                print("ACTUAL RESULT 2: Radio guard interval : %s" %interval);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1 : The API was not invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1 : The API was not invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

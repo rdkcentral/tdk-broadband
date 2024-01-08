@@ -102,7 +102,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApRetryLimit');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,7 +110,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if expectedresult in actualresult:
             initialRetryLimit = details.split(":")[1].strip()
-            r= range(1,int(initialRetryLimit))+range(int(initialRetryLimit)+1,20)
+            r= list(range(1,int(initialRetryLimit)))+list(range(int(initialRetryLimit)+1,20))
             setRetryLimit = random.choice(r)
             setMethod = "setApRetryLimit"
             primitive = 'WIFIHAL_GetOrSetParamUIntValue'
@@ -141,21 +141,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult:
                     if int(finalRetryLimit) == setRetryLimit:
-                        print "TEST STEP : Comparing the set and get values of ApRetryLimit"
-                        print "EXPECTED RESULT : Set and get ApRetryLimit should be the same"
-                        print "ACTUAL RESULT : Set and get ApRetryLimit are the same"
-		        print "Set ApRetryLimit = ",setRetryLimit
-		        print "Get ApRetryLimit = ",finalRetryLimit
-                        print "TEST EXECUTION RESULT : SUCCESS"
+                        print("TEST STEP : Comparing the set and get values of ApRetryLimit")
+                        print("EXPECTED RESULT : Set and get ApRetryLimit should be the same")
+                        print("ACTUAL RESULT : Set and get ApRetryLimit are the same")
+                        print("Set ApRetryLimit = ",setRetryLimit)
+                        print("Get ApRetryLimit = ",finalRetryLimit)
+                        print("TEST EXECUTION RESULT : SUCCESS")
                         tdkTestObj.setResultStatus("SUCCESS");
 
                     else:
-                        print "TEST STEP : Comparing the set and get values of ApRetryLimit"
-                        print "EXPECTED RESULT : Set and get ApRetryLimit should be the same"
-                        print "ACTUAL RESULT : Set and get ApRetryLimit are NOT the same"
-		        print "Set ApRetryLimit = ",setRetryLimit
-		        print "Get ApRetryLimit = ",finalRetryLimit
-                        print "TEST EXECUTION RESULT : FAILURE"
+                        print("TEST STEP : Comparing the set and get values of ApRetryLimit")
+                        print("EXPECTED RESULT : Set and get ApRetryLimit should be the same")
+                        print("ACTUAL RESULT : Set and get ApRetryLimit are NOT the same")
+                        print("Set ApRetryLimit = ",setRetryLimit)
+                        print("Get ApRetryLimit = ",finalRetryLimit)
+                        print("TEST EXECUTION RESULT : FAILURE")
                         tdkTestObj.setResultStatus("FAILURE");
 
                     #Revert back the ApRetryLimit to initial value
@@ -168,24 +168,24 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to default value"
+                        print("Successfully reverted back to default value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print" Unable to revert to default value"
+                        print(" Unable to revert to default value")
 
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "getApRetryLimit function failed";
+                    print("getApRetryLimit function failed");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "setApRetryLimit function failed";
+                print("setApRetryLimit function failed");
 
         else:
-            print "getApRetryLimit function failed";
+            print("getApRetryLimit function failed");
             tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

@@ -83,7 +83,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzIsAutoChannelRefreshPeriodSupported');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio5);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio5;
+        print("Failed to get radio index for radio %s\n" %radio5);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -104,7 +104,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.setResultStatus("SUCCESS");
             if "Enabled" in enable:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "AutoChannelRefreshPeriod is Supported"
+                print("AutoChannelRefreshPeriod is Supported")
 
                 getMethod = "getAutoChannelRefreshPeriod"
                 primitive = 'WIFIHAL_GetOrSetParamULongValue'
@@ -113,19 +113,19 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
                     period = int(details.split(":")[1].strip())
-                    print "Refresh period retreived as %d" %period
+                    print("Refresh period retreived as %d" %period)
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print "getAutoChannelRefreshPeriod() failed"
+                    print("getAutoChannelRefreshPeriod() failed")
             else:
-                print "AutoChannelRefreshPeriod is not Supported"
+                print("AutoChannelRefreshPeriod is not Supported")
                 tdkTestObj.setResultStatus("SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print "AutoChannelRefreshPeriod() failed"
+            print("AutoChannelRefreshPeriod() failed")
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

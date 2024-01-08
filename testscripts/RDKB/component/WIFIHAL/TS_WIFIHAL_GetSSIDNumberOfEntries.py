@@ -87,8 +87,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_GetSSIDNumberOfEntries ');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,7 +97,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting SSID_NUMBER_OF_ENTRIES value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile SSID_NUMBER_OF_ENTRIES" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -105,12 +105,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().replace("\\n", "");
 
-    print "\nTEST STEP 1 : Get the Number of SSID entries from platform properties";
-    print "EXPECTED RESULT 1 : Should get the number of SSID entries from platform properties successfully";
+    print("\nTEST STEP 1 : Get the Number of SSID entries from platform properties");
+    print("EXPECTED RESULT 1 : Should get the number of SSID entries from platform properties successfully");
 
     if expectedresult in actualresult and details != "":
-        print "ACTUAL RESULT 1: SSID Number of Entries :", details ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT 1: SSID Number of Entries :", details) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamULongValue");
@@ -119,39 +119,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         ssiddetails = tdkTestObj.getResultDetails().replace("\\n", "");
 
-        print "\nTEST STEP 2: Invoke the HAL API wifi_getSSIDNumberOfEntries()";
-        print "EXPECTED RESULT 2: wifi_getSSIDNumberOfEntries() API should be invoked successfully and the ";
+        print("\nTEST STEP 2: Invoke the HAL API wifi_getSSIDNumberOfEntries()");
+        print("EXPECTED RESULT 2: wifi_getSSIDNumberOfEntries() API should be invoked successfully and the ");
 
         if expectedresult in actualresult:
-            print "ACTUAL RESULT 2: API invoked successfully : ", ssiddetails;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("ACTUAL RESULT 2: API invoked successfully : ", ssiddetails);
+            print("TEST EXECUTION RESULT :SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
             ssidnumber = ssiddetails.split(":")[1].strip();
 
-            print "\nTEST STEP 3 : Check if the value retrieved from API is same as the value in platform properties";
-            print "EXPECTED RESULT 3 : The value retrieved from the API should be the same as the value in platform properties";
+            print("\nTEST STEP 3 : Check if the value retrieved from API is same as the value in platform properties");
+            print("EXPECTED RESULT 3 : The value retrieved from the API should be the same as the value in platform properties");
 
             if ssidnumber.isdigit() and int(ssidnumber) == int(details):
-                print "ACTUAL RESULT 3: The value retrieved from the API is the same as the value in platform properties";
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 3: The value retrieved from the API is the same as the value in platform properties");
+                print("TEST EXECUTION RESULT :SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 3: The value retrieved from the API is NOT the same as the value in platform properties";
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT 3: The value retrieved from the API is NOT the same as the value in platform properties");
+                print("TEST EXECUTION RESULT :FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "ACTUAL RESULT 2: API NOT invoked successfully";
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("ACTUAL RESULT 2: API NOT invoked successfully");
+            print("TEST EXECUTION RESULT :FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "ACTUAL RESULT 1: SSID Number of Entries :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("ACTUAL RESULT 1: SSID Number of Entries :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi/sysutil module";
+    print("Failed to load wifi/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failure";
+    print("Module loading failure");

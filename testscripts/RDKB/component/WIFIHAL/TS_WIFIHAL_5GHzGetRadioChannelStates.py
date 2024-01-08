@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioChannelStates');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Invoke the HAL API getRadioPossibleChannels
@@ -102,21 +102,21 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1 : Invoke the HAL API wifi_getRadioPossibleChannels() to get the possible radio channels for 5G radio";
-        print "EXPECTED RESULT 1 : The HAL API wifi_getRadioPossibleChannels() should be invoked successfully";
+        print("\nTEST STEP 1 : Invoke the HAL API wifi_getRadioPossibleChannels() to get the possible radio channels for 5G radio");
+        print("EXPECTED RESULT 1 : The HAL API wifi_getRadioPossibleChannels() should be invoked successfully");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API invocation is success; Details : %s" %(details);
+            print("ACTUAL RESULT 1: API invocation is success; Details : %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #get the possible channels as a list
             PossibleChannels = details.split(":")[1].split(",");
-            print "Possible channels are : ", PossibleChannels;
+            print("Possible channels are : ", PossibleChannels);
             numOfChannels = len(PossibleChannels);
-            print "Number of Channels : ", numOfChannels;
+            print("Number of Channels : ", numOfChannels);
 
             #Invoke the HAL API getRadioChannels to get the Channel State
             tdkTestObj = obj.createTestStep("WIFIHAL_GetRadioChannels");
@@ -126,21 +126,21 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             chan_details = tdkTestObj.getResultDetails().strip("\\n");
 
-            print "\nTEST STEP 2 : Invoke the HAL API wifi_getRadioChannels() to get the state of each of the possible radio channels";
-            print "EXPECTED RESULT 2 : The HAL API wifi_getRadioChannels() should be invoked successfully";
+            print("\nTEST STEP 2 : Invoke the HAL API wifi_getRadioChannels() to get the state of each of the possible radio channels");
+            print("EXPECTED RESULT 2 : The HAL API wifi_getRadioChannels() should be invoked successfully");
 
             if expectedresult in actualresult and "Channel Details" in chan_details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: %s" %(chan_details);
+                print("ACTUAL RESULT 2: %s" %(chan_details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Dictionary mapping of channel state
                 channel_state_dict = {'1' : "CHAN_STATE_AVAILABLE", '2' : "CHAN_STATE_DFS_NOP_FINISHED", '3' : "CHAN_STATE_DFS_NOP_START", '4' : "CHAN_STATE_DFS_CAC_START", '5' : "CHAN_STATE_DFS_CAC_COMPLETED"};
 
-                print "\nTEST STEP 3 : Check if the channel state details of all possible channels are received and if the states are valid";
-                print "EXPECTED RESULT 3 : All possible channel state details should be retrieved and the states should be valid"
+                print("\nTEST STEP 3 : Check if the channel state details of all possible channels are received and if the states are valid");
+                print("EXPECTED RESULT 3 : All possible channel state details should be retrieved and the states should be valid")
 
                 success_flag = 0;
 
@@ -150,53 +150,53 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if search_string in chan_details :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "\nChannel State details of the channel %s is retrieved" %channel;
+                        print("\nChannel State details of the channel %s is retrieved" %channel);
                         state = chan_details.split(search_string)[1].split(" ")[1];
 
                         if state in channel_state_dict :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
                             channel_state = channel_state_dict[state];
-                            print "For Channel %s, the state is %s" %(channel, channel_state);
+                            print("For Channel %s, the state is %s" %(channel, channel_state));
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
                             success_flag = 1;
                             channel_state = "Invalid";
-                            print "For Channel %s, the state is %s" %(channel, channel_state);
+                            print("For Channel %s, the state is %s" %(channel, channel_state));
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
                         success_flag = 1;
-                        print "\nChannel State details of the channel %s is not retrieved" %channel;
+                        print("\nChannel State details of the channel %s is not retrieved" %channel);
 
                 if success_flag == 0 :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 2: Channel state details of all possible channels are received and the states are valid";
+                    print("ACTUAL RESULT 2: Channel state details of all possible channels are received and the states are valid");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 2: Channel state details of all possible channels are not received or the states are invalid";
+                    print("ACTUAL RESULT 2: Channel state details of all possible channels are not received or the states are invalid");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: %s" %(chan_details);
+                print("ACTUAL RESULT 2: %s" %(chan_details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %(details);
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

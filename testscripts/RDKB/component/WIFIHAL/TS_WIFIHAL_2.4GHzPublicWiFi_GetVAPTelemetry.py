@@ -89,9 +89,9 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_GetVAPTelemetry');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,7 +101,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -111,15 +111,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "\nTEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("\nTEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         #Get the VAPTelemetry details
-        print "\nTEST STEP 2: Invoke the HAL API wifi_getVAPTelemetry() for 2.4GHz Public WiFi";
-        print "EXPECTED RESULT 2: Should invoke wifi_getVAPTelemetry() successfully";
+        print("\nTEST STEP 2: Invoke the HAL API wifi_getVAPTelemetry() for 2.4GHz Public WiFi");
+        print("EXPECTED RESULT 2: Should invoke wifi_getVAPTelemetry() successfully");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetVAPTelemetry");
         tdkTestObj.addParameter("apIndex", apIndex);
         tdkTestObj.executeTestCase(expectedresult);
@@ -128,26 +128,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: wifi_getVAPTelemetry() invoked successfully";
+            print("ACTUAL RESULT 2: wifi_getVAPTelemetry() invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\nTEST STEP 3: Get the value of VAP Tx Overflow";
-            print "EXPECTED RESULT 3: Should get the value of VAP Tx Overflow";
+            print("\nTEST STEP 3: Get the value of VAP Tx Overflow");
+            print("EXPECTED RESULT 3: Should get the value of VAP Tx Overflow");
 
             if details != "":
-                print "Details : %s" %details;
+                print("Details : %s" %details);
                 tx_overflow = int(details.split("= ")[1]);
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: Value of Tx Overflow is : %d" %tx_overflow;
+                print("ACTUAL RESULT 3: Value of Tx Overflow is : %d" %tx_overflow);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Get the value with TR-181 parameter
                 index = apIndex + 1;
                 param = "Device.WiFi.AccessPoint." + str(index) + ".X_COMCAST-COM_TXOverflow";
-                print "\nTEST STEP 4: Get the TR181 value of %s" %param;
-                print "EXPECTED RESULT 4: Should get the TR181 value of %s" %param;
+                print("\nTEST STEP 4: Get the TR181 value of %s" %param);
+                print("EXPECTED RESULT 4: Should get the TR181 value of %s" %param);
                 tdkTestObj = obj1.createTestStep('WIFIAgent_Get');
                 tdkTestObj.addParameter("paramName",param);
                 tdkTestObj.executeTestCase(expectedresult);
@@ -158,47 +158,46 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     value = int(details.split("VALUE:")[1].split(' ')[0]);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: The TR181 value is fetched successfully : %d" %value;
+                    print("ACTUAL RESULT 4: The TR181 value is fetched successfully : %d" %value);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Compare the values retrieved via HAL API and TR-181
                     if value == tx_overflow :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "The TR181 value is the same as the value retrieved from HAL API";
+                        print("The TR181 value is the same as the value retrieved from HAL API");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "The TR181 value is not the same as the value retrieved from HAL API";
+                        print("The TR181 value is not the same as the value retrieved from HAL API");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: The TR181 value is not fetched successfully";
+                    print("ACTUAL RESULT 4: The TR181 value is not fetched successfully");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Value of Tx Overflow is : %d" %details;
+                print("ACTUAL RESULT 3: Value of Tx Overflow is : %d" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: wifi_getVAPTelemetry() was not invoked successfully";
+            print("ACTUAL RESULT 2: wifi_getVAPTelemetry() was not invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

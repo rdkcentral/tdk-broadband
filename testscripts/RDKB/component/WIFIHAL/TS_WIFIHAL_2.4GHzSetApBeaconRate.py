@@ -87,140 +87,140 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApBeaconRate');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     # Check if a invalid index is returned
     if idx == -1:
-    	print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-    	#Script to load the configuration file of the component
-	tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-	tdkTestObj.addParameter("methodName","getApBeaconRate");
-	tdkTestObj.addParameter("radioIndex",idx);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	   #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-	   print "TEST STEP 1: Get the current ap beacon rate";
-	   print "EXPECTED RESULT 1: Should get the current ap beacon rate";
-	   print "ACTUAL RESULT 1: %s" %details;
-	   #Get the result of execution
-	   print "[TEST EXECUTION RESULT] : SUCCESS";
-	   currRate = details.split(":")[1].strip();
-	   currRate_nounit = currRate.strip("Mbps")
-	   # Need to set beacon rate with a value in 
-	   expectedresult="SUCCESS";
-	   radioIndex = idx;
-	   getMethod = "getRadioBasicDataTransmitRates"
-	   primitive = "WIFIHAL_GetOrSetParamStringValue"
-	   #Invoke the api wifi_getRadioBasicDataTransmitRates() using wifiUtility function
-	   tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-	   if expectedresult in actualresult :
-	   	basicRates = details.split(":")[1].strip()
-		basicRatesList = details.split(":")[1].strip().split(",");
-		for newRate in basicRatesList:
-			if newRate == currRate_nounit :
-				continue;
-			else :
-				print "setvalue for beacon rate:",newRate
-				tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-				tdkTestObj.addParameter("param",newRate);
-				tdkTestObj.addParameter("radioIndex",idx);
-				tdkTestObj.addParameter("methodName","setApBeaconRate");
-				expectedresult="SUCCESS";
-				tdkTestObj.executeTestCase(expectedresult);
-				actualresult = tdkTestObj.getResult();
-				details = tdkTestObj.getResultDetails();
-				if expectedresult in actualresult:
-					#Set the result status of execution
-					tdkTestObj.setResultStatus("SUCCESS");
-					print "TEST STEP 2: Set the new beacon rate using wifi_setApBeaconRate";
-					print "EXPECTED RESULT 2: Should set the beacon rate using wifi_setApBeaconRate";
-					print "ACTUAL RESULT 2: %s" %details;
-					#Get the result of execution
-					print "[TEST EXECUTION RESULT] : SUCCESS";
-					time.sleep(10);
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+        tdkTestObj.addParameter("methodName","getApBeaconRate");
+        tdkTestObj.addParameter("radioIndex",idx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the current ap beacon rate");
+            print("EXPECTED RESULT 1: Should get the current ap beacon rate");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            currRate = details.split(":")[1].strip();
+            currRate_nounit = currRate.strip("Mbps")
+            # Need to set beacon rate with a value in
+            expectedresult="SUCCESS";
+            radioIndex = idx;
+            getMethod = "getRadioBasicDataTransmitRates"
+            primitive = "WIFIHAL_GetOrSetParamStringValue"
+            #Invoke the api wifi_getRadioBasicDataTransmitRates() using wifiUtility function
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+            if expectedresult in actualresult :
+                basicRates = details.split(":")[1].strip()
+                basicRatesList = details.split(":")[1].strip().split(",");
+                for newRate in basicRatesList:
+                    if newRate == currRate_nounit :
+                        continue;
+                    else :
+                        print("setvalue for beacon rate:",newRate)
+                        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+                        tdkTestObj.addParameter("param",newRate);
+                        tdkTestObj.addParameter("radioIndex",idx);
+                        tdkTestObj.addParameter("methodName","setApBeaconRate");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 2: Set the new beacon rate using wifi_setApBeaconRate");
+                            print("EXPECTED RESULT 2: Should set the beacon rate using wifi_setApBeaconRate");
+                            print("ACTUAL RESULT 2: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            time.sleep(10);
 
-					tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-					tdkTestObj.addParameter("methodName","getApBeaconRate");
-					tdkTestObj.addParameter("radioIndex",idx);
-					expectedresult="SUCCESS";
-					tdkTestObj.executeTestCase(expectedresult);
-					actualresult = tdkTestObj.getResult();
-					details = tdkTestObj.getResultDetails();
-					if expectedresult in actualresult:
-						newValue = details.split(":")[1].strip()
-						newValue_nounit = details.split(":")[1].strip("Mbps")
-						if newValue_nounit == newRate:
-							#Set the result status of execution
-							tdkTestObj.setResultStatus("SUCCESS");
-							print "TEST STEP 3: Verify the set function using get function";
-							print "EXPECTED RESULT 3: Should get the current beacon rate";
-							print "ACTUAL RESULT 3: %s" %details;
-							#Get the result of execution
-							print "[TEST EXECUTION RESULT] : SUCCESS";
-						else:
-							#Set the result status of execution
-							tdkTestObj.setResultStatus("FAILURE");
-							print "TEST STEP 3: Verify the set function using get function";
-							print "EXPECTED RESULT 3: Should get the current beacon rate";
-							print "ACTUAL RESULT 3: %s" %details;
-							#Get the result of execution
-							print "[TEST EXECUTION RESULT] : FAILURE";
-						#Revert the channel value
-						tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
-						tdkTestObj.addParameter("param",currRate);
-						tdkTestObj.addParameter("radioIndex",idx);
-						tdkTestObj.addParameter("methodName","setApBeaconRate");
-						expectedresult="SUCCESS";
-						tdkTestObj.executeTestCase(expectedresult);
-						actualresult = tdkTestObj.getResult();
-						details = tdkTestObj.getResultDetails();
-						if expectedresult in actualresult:
-							#Set the result status of execution
-							tdkTestObj.setResultStatus("SUCCESS");
-							print "TEST STEP : Revert the beacon rate using wifi_setApBeaconRate";
-							print "EXPECTED RESULT : Should revert the beacon rate using wifi_setApBeaconRate";
-							print "ACTUAL RESULT : %s" %details;
-							#Get the result of execution
-							print "[TEST EXECUTION RESULT] : SUCCESS";
-						else:
-							#Set the result status of execution
-							tdkTestObj.setResultStatus("FAILURE");
-							print "TEST STEP : Revert the beacon rate using wifi_setApBeaconRate";
-							print "EXPECTED RESULT : Should revert the beacon rate using wifi_setApBeaconRate";
-							print "ACTUAL RESULT : %s" %details;
-							#Get the result of execution
-							print "[TEST EXECUTION RESULT] : FAILURE";
-					else :
-			        		tdkTestObj.setResultStatus("FAILURE");
-						print "wifi_getApBeaconRate() call failed after set operation";
-				else:
-					tdkTestObj.setResultStatus("FAILURE");
-					print "TEST STEP 2: Set the beacon rate using wifi_setApBeaconRate";
-					print "EXPECTED RESULT 2: Should the beacon rate using wifi_setApBeaconRate";
-					print "ACTUAL RESULT 2: %s" %details;
-					#Get the result of execution
-					print "[TEST EXECUTION RESULT] : FAILURE";
-			break;
-	   else:
-           	print "getRadioBasicDataTransmitRates() call failed"
-                tdkTestObj.setResultStatus("FAILURE");				
-	else:
-           #Set the result status of execution
-	   tdkTestObj.setResultStatus("FAILURE");
-	   print "TEST STEP 1: Get the beacon rate ";
-	   print "EXPECTED RESULT 1: Should get beacon rate";
-	   print "ACTUAL RESULT 1: %s" %details;
-	   #Get the result of execution
-	   print "[TEST EXECUTION RESULT] : FAILURE";
+                            tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+                            tdkTestObj.addParameter("methodName","getApBeaconRate");
+                            tdkTestObj.addParameter("radioIndex",idx);
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+                            if expectedresult in actualresult:
+                                newValue = details.split(":")[1].strip()
+                                newValue_nounit = details.split(":")[1].strip("Mbps")
+                                if newValue_nounit == newRate:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 3: Verify the set function using get function");
+                                    print("EXPECTED RESULT 3: Should get the current beacon rate");
+                                    print("ACTUAL RESULT 3: %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 3: Verify the set function using get function");
+                                    print("EXPECTED RESULT 3: Should get the current beacon rate");
+                                    print("ACTUAL RESULT 3: %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                                #Revert the channel value
+                                tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
+                                tdkTestObj.addParameter("param",currRate);
+                                tdkTestObj.addParameter("radioIndex",idx);
+                                tdkTestObj.addParameter("methodName","setApBeaconRate");
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP : Revert the beacon rate using wifi_setApBeaconRate");
+                                    print("EXPECTED RESULT : Should revert the beacon rate using wifi_setApBeaconRate");
+                                    print("ACTUAL RESULT : %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP : Revert the beacon rate using wifi_setApBeaconRate");
+                                    print("EXPECTED RESULT : Should revert the beacon rate using wifi_setApBeaconRate");
+                                    print("ACTUAL RESULT : %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                            else :
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("wifi_getApBeaconRate() call failed after set operation");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 2: Set the beacon rate using wifi_setApBeaconRate");
+                            print("EXPECTED RESULT 2: Should the beacon rate using wifi_setApBeaconRate");
+                            print("ACTUAL RESULT 2: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    break;
+            else:
+                print("getRadioBasicDataTransmitRates() call failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the beacon rate ");
+            print("EXPECTED RESULT 1: Should get beacon rate");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");

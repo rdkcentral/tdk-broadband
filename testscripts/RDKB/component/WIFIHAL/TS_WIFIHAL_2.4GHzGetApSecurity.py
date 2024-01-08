@@ -49,7 +49,7 @@
     <input_parameters>apIndex : 2.4G private AP index</input_parameters>
     <automation_approch>1. Load the modules
 2. Invoke the HAL API wifi_getApSecurity() for 2.4G private AP. Check if API invocation is success.
-3. Retrieve the complete AP security detail values such as security mode, encryption method, WPA3-Transition enabled state, security key type, security key and others. Check if all the values are valid : 
+3. Retrieve the complete AP security detail values such as security mode, encryption method, WPA3-Transition enabled state, security key type, security key and others. Check if all the values are valid :
 security modes should be from - {'1' : "None", '2' : "WEP-64", '4' : "WEP-128", '8' : "WPA-Personal", '16' : "WPA2-Personal", '32' : "WPA-WPA2-Personal", '64' : "WPA-Enterprise", '128' : "WPA2-Enterprise", '256' : "WPA-WPA2-Enterprise", '512' : "WPA3-Personal", '1024' : "WPA3-Personal-Transition", '2048' : "WPA3-Enterprise"};
 mfp should be from - {"0" : "Disabled" , "1" : "Optional",  "2" : "Required"}
 encryption method should be from - {'0' : "None", '1' : "TKIPEncryption", '2' : "AESEncryption", '3' : "TKIPandAESEncryption"}
@@ -89,7 +89,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApSecurity');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         apIndex = idx
@@ -109,12 +109,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP";
-        print "EXPECTED RESULT 1: Should successfully invoke wifi_getApSecurity()";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getApSecurity() for 2.4G private AP");
+        print("EXPECTED RESULT 1: Should successfully invoke wifi_getApSecurity()");
 
         if expectedresult in actualresult and "AP Security details" in details:
-            print "ACTUAL RESULT 1: wifi_getApSecurity() invoked successfully";
-            print "TEST EXECUTION RESULT 1: SUCCESS";
+            print("ACTUAL RESULT 1: wifi_getApSecurity() invoked successfully");
+            print("TEST EXECUTION RESULT 1: SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             #Get the access point security details
@@ -166,45 +166,44 @@ if "SUCCESS" in loadmodulestatus.upper():
                     security_key_type = "Invalid Security Key Type";
                     key = "Invalid Key";
             else :
-                print "As Security Mode is %s, Security Key Type and Security Key are not retrieved" %security_mode;
+                print("As Security Mode is %s, Security Key Type and Security Key are not retrieved" %security_mode);
 
-            print "\nTEST STEP 2: Get the Access Point Security details and check if the values are valid";
-            print "EXPECTED RESULT 2: Should get the Access Point Security details successfully and the values should be valid";
+            print("\nTEST STEP 2: Get the Access Point Security details and check if the values are valid");
+            print("EXPECTED RESULT 2: Should get the Access Point Security details successfully and the values should be valid");
 
             #Print all applicable values
-            print "Security Mode : ", security_mode;
-            print "MFP : ", mfp;
-            print "Encryption Method : ", encryption_method;
-            print "WPA3 Transition : ", wpa3_transition;
-            print "Rekey Interval : ", rekey_interval;
-            print "Strict Rekey : ", strict_rekey;
-            print "Eapol Key Timeout : ", eapol_key_timeout;
-            print "Eapol Key Retries : ", eapol_key_retries;
-            print "Eap Identity Timeout : ", eap_identity_timeout;
-            print "Eap Identity Retries : ", eap_identity_retries;
-            print "Eap Timeout : ", eap_timeout;
-            print "Eap Retries : ", eap_retries;
-            print "PMKSA Caching : ", pmksa_cashing;
+            print("Security Mode : ", security_mode);
+            print("MFP : ", mfp);
+            print("Encryption Method : ", encryption_method);
+            print("WPA3 Transition : ", wpa3_transition);
+            print("Rekey Interval : ", rekey_interval);
+            print("Strict Rekey : ", strict_rekey);
+            print("Eapol Key Timeout : ", eapol_key_timeout);
+            print("Eapol Key Retries : ", eapol_key_retries);
+            print("Eap Identity Timeout : ", eap_identity_timeout);
+            print("Eap Identity Retries : ", eap_identity_retries);
+            print("Eap Timeout : ", eap_timeout);
+            print("Eap Retries : ", eap_retries);
+            print("PMKSA Caching : ", pmksa_cashing);
 
             if security_mode == "WPA-Personal" or security_mode == "WPA2-Personal" or security_mode == "WPA3-Personal" or security_mode == "WPA3-Personal-Transition" or security_mode == "WPA-WPA2-Personal" :
-                print "Security Key Type : ", security_key_type;
-                print "Security Key : ", key;
+                print("Security Key Type : ", security_key_type);
+                print("Security Key : ", key);
 
             if "Invalid" not in security_mode and mfp.isdigit() and "Invalid" not in encryption_method and wpa3_transition != "" and rekey_interval.isdigit() and strict_rekey != "" and eapol_key_timeout.isdigit() and eapol_key_retries.isdigit() and eap_identity_timeout.isdigit() and eap_identity_retries.isdigit() and eap_timeout.isdigit() and eap_retries.isdigit() and pmksa_cashing != "" and "Invalid" not in security_key_type and "Invalid" not in key:
-                print "ACTUAL RESULT 2: The Access Point Security details are retrieved and all values are valid";
-                print "TEST EXECUTION RESULT 2: SUCCESS";
+                print("ACTUAL RESULT 2: The Access Point Security details are retrieved and all values are valid");
+                print("TEST EXECUTION RESULT 2: SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 2: All Access Point Security details are not valid";
-                print "TEST EXECUTION RESULT 2: FAILURE";
+                print("ACTUAL RESULT 2: All Access Point Security details are not valid");
+                print("TEST EXECUTION RESULT 2: FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "ACTUAL RESULT 1: wifi_getApSecurity() is not invoked successfully";
-            print "TEST EXECUTION RESULT 1: FAILURE";
+            print("ACTUAL RESULT 1: wifi_getApSecurity() is not invoked successfully");
+            print("TEST EXECUTION RESULT 1: FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

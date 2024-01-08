@@ -86,8 +86,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetFTR0KeyHolderID');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,7 +99,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Check if an invalid index is returned
     if idx == -1:
-        print "Failed to get 6G access point index";
+        print("Failed to get 6G access point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetFTR0KeyHolderID");
@@ -109,39 +109,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID for 6G private AP";
-        print "EXPECTED RESULT 2: Should get the FTR0 Key Holder ID using the HAL API successfully";
+        print("\nTEST STEP 2: Invoke the HAL API wifi_getFTR0KeyHolderID() to retrieve the FTR0 Key Holder ID for 6G private AP");
+        print("EXPECTED RESULT 2: Should get the FTR0 Key Holder ID using the HAL API successfully");
 
         if expectedresult in actualresult and "FTR0 Key Holder ID Details -" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if proper Hex values are retrieved and convert them to corresponding string value
-            print "\nTEST STEP 3 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values";
-            print "EXPECTED RESULT 3 : FTR0 Key Holder ID should be retrieved as one or more Hex Values";
+            print("\nTEST STEP 3 : Check if the FTR0 Key Holder ID is retrieved as one or more Hex Values");
+            print("EXPECTED RESULT 3 : FTR0 Key Holder ID should be retrieved as one or more Hex Values");
 
             details = details.split("Key Holder ID");
             #Compute the number of Hex values by subtracting the first two list elements as they are debug prints
             details.remove(details[0]);
             details.remove(details[0]);
             num_hex_values = len(details);
-            print "Number of Hex values : %d" %num_hex_values;
+            print("Number of Hex values : %d" %num_hex_values);
 
             #Retrieve each of the value separately in a list
             hex_values = [];
             for iteration in range(0, num_hex_values):
                 hex_values.append(details[iteration].split(" : ")[1]);
-                print "FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values[iteration]);
+                print("FTR0 Key Holder ID[%d] : %s" %(iteration, hex_values[iteration]));
 
             if num_hex_values >= 1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values;
+                print("ACTUAL RESULT 3: FTR0 Key Holder ID is retrieved as the Hex values : ", hex_values);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Covert the Hex values to corresponding unicode string
                 unicode_string = [];
@@ -155,23 +155,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 #Handle the condition when the Key Holder ID is 0x0, the unicode equivalent is Null
                 if unicode_key_id == "\x00":
                     unicode_key_id = "Null";
-                print "The Equivalent unicode string value of the FTR0 Key Holder ID is : %s" %unicode_key_id;
+                print("The Equivalent unicode string value of the FTR0 Key Holder ID is : %s" %unicode_key_id);
 
                 #Get the command to compare the FTR0 Key Holder ID from platform property file
                 cmd= "sh %s/tdk_utility.sh parseConfigFile FTR0_KEY_HOLDER_ID_6G" %TDK_PATH;
-                print cmd;
+                print(cmd);
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 check_cmd = tdkTestObj.getResultDetails().replace("\\n", "");
 
-                print "\nTEST STEP 4: Get the command to cross check the FTR0 Key Holder ID from property file";
-                print "EXPECTED RESULT 4: Should get the FTR0 Key Holder ID check command from property file"
+                print("\nTEST STEP 4: Get the command to cross check the FTR0 Key Holder ID from property file");
+                print("EXPECTED RESULT 4: Should get the FTR0 Key Holder ID check command from property file")
 
                 if expectedresult in actualresult and check_cmd!= "":
-                    print "ACTUAL RESULT 4: FTR0 Key Holder ID check command retrieved from property file";
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("ACTUAL RESULT 4: FTR0 Key Holder ID check command retrieved from property file");
+                    print("TEST EXECUTION RESULT :SUCCESS");
                     tdkTestObj.setResultStatus("SUCCESS");
 
                     #Get the Key Holder ID using the command
@@ -181,8 +181,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().replace("\\n", "");
 
-                    print "\nTEST STEP 5: Execute the command in the DUT to obtain the Key Holder ID";
-                    print "EXPECTED RESULT 5: Should successfully execute the FTR0 Key Holder ID check command"
+                    print("\nTEST STEP 5: Execute the command in the DUT to obtain the Key Holder ID");
+                    print("EXPECTED RESULT 5: Should successfully execute the FTR0 Key Holder ID check command")
 
                     if expectedresult in actualresult :
                         #If nvram value received is not Null
@@ -192,50 +192,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         else :
                             fbt_key_id = "Null";
 
-                        print "ACTUAL RESULT 5: FTR0 Key Holder ID : ", fbt_key_id ;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT 5: FTR0 Key Holder ID : ", fbt_key_id) ;
+                        print("TEST EXECUTION RESULT :SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #check if the FTR0 Key Holder ID value from the HAL API is same as the value retrieved using the command
-                        print "\nTEST STEP 6 : Validate the FTR0 Key Holder ID value retrieved using the HAL API";
-                        print "EXPECTED RESULT 6 : The FTR0 Key Holder ID value from the HAL API should be the same as the value retrieved using the command";
+                        print("\nTEST STEP 6 : Validate the FTR0 Key Holder ID value retrieved using the HAL API");
+                        print("EXPECTED RESULT 6 : The FTR0 Key Holder ID value from the HAL API should be the same as the value retrieved using the command");
 
-                        print "FTR0 Key Holder ID from HAL API : %s" %unicode_key_id;
-                        print "Expected FTR0 Key Holder ID : %s" %fbt_key_id;
+                        print("FTR0 Key Holder ID from HAL API : %s" %unicode_key_id);
+                        print("Expected FTR0 Key Holder ID : %s" %fbt_key_id);
 
                         if unicode_key_id == fbt_key_id:
-                            print "ACTUAL RESULT 6: The values are the same";
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT 6: The values are the same");
+                            print("TEST EXECUTION RESULT :SUCCESS");
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "ACTUAL RESULT 6: The values are not the same";
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT 6: The values are not the same");
+                            print("TEST EXECUTION RESULT :FAILURE");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "ACTUAL RESULT 5: FTR0 Key Holder ID :", details ;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT 5: FTR0 Key Holder ID :", details) ;
+                        print("TEST EXECUTION RESULT :FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 4: FTR0 Key Holder ID check command from property file :", check_cmd ;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("ACTUAL RESULT 4: FTR0 Key Holder ID check command from property file :", check_cmd) ;
+                    print("TEST EXECUTION RESULT :FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: FTR0 Key Holder ID is not retrieved as one or more Hex values";
+                print("ACTUAL RESULT 3: FTR0 Key Holder ID is not retrieved as one or more Hex values");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 2: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

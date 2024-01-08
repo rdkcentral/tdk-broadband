@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApAssociatedClientDiagnosticR
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceDiagnosticResult3');
@@ -101,27 +101,27 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "Details: %s"%details
+        print("Details: %s"%details)
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getApAssociatedDeviceDiagnosticResult3()";
-        print "EXPECTED RESULT 1: Should successfully invoke wifi_getApAssociatedDeviceDiagnosticResult3()";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getApAssociatedDeviceDiagnosticResult3()");
+        print("EXPECTED RESULT 1: Should successfully invoke wifi_getApAssociatedDeviceDiagnosticResult3()");
 
         if expectedresult in actualresult and details != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1 : wifi_getApAssociatedDeviceDiagnosticResult3() invoked successfully";
+            print("ACTUAL RESULT 1 : wifi_getApAssociatedDeviceDiagnosticResult3() invoked successfully");
             size = details.split(":")[1].strip();
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             output_array_size = size.split("=")[1].split(",")[0].strip();
 
-            print "\nTEST STEP 2: The number of associated clients should be greater than 0";
-            print "EXPECTED RESULT 2: The number of associated clients should be greater than 0";
+            print("\nTEST STEP 2: The number of associated clients should be greater than 0");
+            print("EXPECTED RESULT 2: The number of associated clients should be greater than 0");
 
             if int(output_array_size) != 0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Number of associated clients : %d" %(int(output_array_size));
+                print("ACTUAL RESULT 2: Number of associated clients : %d" %(int(output_array_size)));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Get the MAC address of the client
                 mac = details.split("MAC")[1].split(",")[0].split("=")[1].strip();
 
@@ -129,7 +129,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                     #Modify the MAC to remove the colon symbols
                     mac_addr = mac.split(":");
                     mac_addr = mac_addr[0]+mac_addr[1]+mac_addr[2]+mac_addr[3]+mac_addr[4]+mac_addr[5];
-                    print "MAC Address of the client : %s" %mac_addr;
+                    print("MAC Address of the client : %s" %mac_addr);
 
                     #Get the AP associated client diagnostic result
                     tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedClientDiagnosticResult');
@@ -139,35 +139,35 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 3: Invoke the HAL API wifi_getApAssociatedClientDiagnosticResult() with the MAC Address : %s" %mac_addr;
-                    print "EXPECTED RESULT 3: wifi_getApAssociatedClientDiagnosticResult() should be invoked successfully";
+                    print("\nTEST STEP 3: Invoke the HAL API wifi_getApAssociatedClientDiagnosticResult() with the MAC Address : %s" %mac_addr);
+                    print("EXPECTED RESULT 3: wifi_getApAssociatedClientDiagnosticResult() should be invoked successfully");
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 3 : wifi_getApAssociatedClientDiagnosticResult() invoked successfully";
-                        print "Client Diagnostic Result : %s" %details;
+                        print("ACTUAL RESULT 3 : wifi_getApAssociatedClientDiagnosticResult() invoked successfully");
+                        print("Client Diagnostic Result : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 3 : wifi_getApAssociatedClientDiagnosticResult() not invoked successfully";
+                        print("ACTUAL RESULT 3 : wifi_getApAssociatedClientDiagnosticResult() not invoked successfully");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "MAC Address is not fetched successfully";
+                    print("MAC Address is not fetched successfully");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Number of associated clients : %d" %(int(output_array_size));
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: Number of associated clients : %d" %(int(output_array_size)));
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: Failed to invoke wifi_getApAssociatedDeviceDiagnosticResult3()";
+            print("ACTUAL RESULT 1: Failed to invoke wifi_getApAssociatedDeviceDiagnosticResult3()");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

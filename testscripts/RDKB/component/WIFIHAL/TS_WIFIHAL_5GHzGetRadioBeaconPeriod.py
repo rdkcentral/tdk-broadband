@@ -118,9 +118,9 @@ loadmodulestatus =obj.getLoadModuleResult();
 sysutilmodulestatus =obj1.getLoadModuleResult();
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus
-print "[PAM LOAD STATUS]  :  %s" %pamloadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus)
+print("[PAM LOAD STATUS]  :  %s" %pamloadmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper() and pamloadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -130,33 +130,33 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper() and p
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
-	radioIndex = idx
-	getMethod = "getRadioBeaconPeriod"
-	primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        radioIndex = idx
+        getMethod = "getRadioBeaconPeriod"
+        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
         #Get the default value from properties file
-    	tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
-    	cmd = "sh %s/tdk_utility.sh parseConfigFile DEFAULT_BEACON_PERIOD" %TDK_PATH;
-    	print cmd;
-    	expectedresult="SUCCESS";
+        tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
+        cmd = "sh %s/tdk_utility.sh parseConfigFile DEFAULT_BEACON_PERIOD" %TDK_PATH;
+        print(cmd);
+        expectedresult="SUCCESS";
         tdkTestObj1.addParameter("command", cmd);
         tdkTestObj1.executeTestCase(expectedresult);
         actualresult = tdkTestObj1.getResult();
-    	details = ""
-    	details = tdkTestObj1.getResultDetails().strip();
-    	defaultValue = ""
-        defaultValue = details.replace("\\n", ""); 
-    	print "Default Beacon Period:",defaultValue
-    	if defaultValue != "" and ( expectedresult in  actualresult):
-       	    tdkTestObj1.setResultStatus("SUCCESS");
-       	    print "TEST STEP 1: Get the default beacon period from tdk_platfrom properties file";
-            print "EXPECTED RESULT 1: Should Get the default beacon period form platform properties file";
-            print "ACTUAL RESULT 1:The default beacon period from tdk_platform properties file is : %s" % defaultValue;
+        details = ""
+        details = tdkTestObj1.getResultDetails().strip();
+        defaultValue = ""
+        defaultValue = details.replace("\\n", "");
+        print("Default Beacon Period:",defaultValue)
+        if defaultValue != "" and ( expectedresult in  actualresult):
+            tdkTestObj1.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the default beacon period from tdk_platfrom properties file");
+            print("EXPECTED RESULT 1: Should Get the default beacon period form platform properties file");
+            print("ACTUAL RESULT 1:The default beacon period from tdk_platform properties file is : %s" % defaultValue);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             expectedresult="SUCCESS";
 
             #save device's current state before it goes for reboot
@@ -174,52 +174,52 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper() and p
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Initiate factory reset ";
-                print "EXPECTED RESULT 2: Should inititate factory reset";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Initiate factory reset ");
+                print("EXPECTED RESULT 2: Should inititate factory reset");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Restore the device state saved before reboot
                 pamobj.restorePreviousStateAfterReboot()
-       
+
                 #Calling the method from wifiUtility to execute test case and set result status for the test.
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
                 if expectedresult in actualresult:
-                    print "getRadioBeaconPeriod function successful: %s"%details
+                    print("getRadioBeaconPeriod function successful: %s"%details)
                     tdkTestObj.setResultStatus("SUCCESS");
                     beaconPeriodValue = details.split(":")[1].strip()
                     if int(beaconPeriodValue) == int(defaultValue):
                         tdkTestObj.setResultStatus("SUCCESS");
-                 	print "TEST STEP 3: Compare the default value with received beacon period";
-                 	print "EXPECTED RESULT 3:Default value and  Received beacon period should be equal";
-                 	print "ACTUAL RESULT 3: Default value and  Received beacon period are equal: %s"%beaconPeriodValue;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 3: Compare the default value with received beacon period");
+                        print("EXPECTED RESULT 3:Default value and  Received beacon period should be equal");
+                        print("ACTUAL RESULT 3: Default value and  Received beacon period are equal: %s"%beaconPeriodValue);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3: Compare the default value with received beacon period";
-                  	print "EXPECTED RESULT 3:Default value and  Received beacon period should be equal";
-                  	print "ACTUAL RESULT 3: Default value and  Received beacon period are not equal:  %s"%beaconPeriodValue;
-                  	print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 3: Compare the default value with received beacon period");
+                        print("EXPECTED RESULT 3:Default value and  Received beacon period should be equal");
+                        print("ACTUAL RESULT 3: Default value and  Received beacon period are not equal:  %s"%beaconPeriodValue);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "getRadioBeaconPeriod function failed";
+                    print("getRadioBeaconPeriod function failed");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Initiate factory reset ";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Initiate factory reset ");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj1.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the default beacon period from tdk_platfrom properties file";
-            print "EXPECTED RESULT 1: Should Get the default beacon period form platform properties file";
-            print "ACTUAL RESULT 1: Failed to get the default beacon period : %s" % defaultValue;
+            print("TEST STEP 1: Get the default beacon period from tdk_platfrom properties file");
+            print("EXPECTED RESULT 1: Should Get the default beacon period form platform properties file");
+            print("ACTUAL RESULT 1: Failed to get the default beacon period : %s" % defaultValue);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("wifihal");
     obj1.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load wifi module/ sysutil module";
+    print("Failed to load wifi module/ sysutil module");
     obj.setLoadModuleStatus("FAILURE");

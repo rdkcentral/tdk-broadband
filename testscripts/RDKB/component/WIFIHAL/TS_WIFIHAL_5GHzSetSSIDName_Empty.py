@@ -68,8 +68,8 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 radio = "5G"
@@ -85,7 +85,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetSSIDName_Empty');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,66 +93,65 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    #Checking for AP Index 1, Similar way we can check for other APs
-	    apIndex = idx;
-	    getMethod = "getSSIDName"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-	    expectedresult="SUCCESS";
+        #Checking for AP Index 1, Similar way we can check for other APs
+        apIndex = idx;
+        getMethod = "getSSIDName"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    if expectedresult in actualresult:
-		initialName = details.split(":")[1].strip()
+        if expectedresult in actualresult:
+            initialName = details.split(":")[1].strip()
 
-		expectedresult="FAILURE";
-		apIndex = idx
-		setMethod = "setSSIDName"
-		setName = ""
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            expectedresult="FAILURE";
+            apIndex = idx
+            setMethod = "setSSIDName"
+            setName = ""
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setName, setMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setName, setMethod)
 
-		if expectedresult in actualresult:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP: Trying to set an empty value as SSID Name"
-		    print "EXPECTED RESULT : Should not set the empty value"
-		    print "ACTUAL RESULT : Unable to set the SSIDName as empty value"
-		    print "TEST EXECUTION RESULT :SUCCESS"
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP: Trying to set an empty value as SSID Name"
-		    print "EXPECTED RESULT : Should not set the empty value"
-		    print "ACTUAL RESULT : Sets the SSIDName to empty value"
-		    print "TEST EXECUTION RESULT :FAILURE"
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP: Trying to set an empty value as SSID Name")
+                print("EXPECTED RESULT : Should not set the empty value")
+                print("ACTUAL RESULT : Unable to set the SSIDName as empty value")
+                print("TEST EXECUTION RESULT :SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP: Trying to set an empty value as SSID Name")
+                print("EXPECTED RESULT : Should not set the empty value")
+                print("ACTUAL RESULT : Sets the SSIDName to empty value")
+                print("TEST EXECUTION RESULT :FAILURE")
 
-		    #Revert the SSID NAme back to initial value
-		    apIndex = idx;
-		    setMethod = "setSSIDName"
-		    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-		    expectedresult="SUCCESS";
+                #Revert the SSID NAme back to initial value
+                apIndex = idx;
+                setMethod = "setSSIDName"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                expectedresult="SUCCESS";
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialName, setMethod)
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialName, setMethod)
 
-		    if expectedresult in actualresult:
-			print "Successfully reverted back to initial value"
-			tdkTestObj.setResultStatus("SUCCESS");
-		    else:
-			print "Unable to revert to initial value"
-			tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "wifi_getSSIDName function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+                if expectedresult in actualresult:
+                    print("Successfully reverted back to initial value")
+                    tdkTestObj.setResultStatus("SUCCESS");
+                else:
+                    print("Unable to revert to initial value")
+                    tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("wifi_getSSIDName function failed");
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

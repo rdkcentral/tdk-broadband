@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioBandUtilization');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -87,7 +87,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     ## Check if a invalid index is returned
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
@@ -98,8 +98,8 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "TEST STEP 1: Get the Radio band utilization in percentage";
-        print "EXPECTED RESULT 1: Should get the Radio band utilization in percentage";
+        print("TEST STEP 1: Get the Radio band utilization in percentage");
+        print("EXPECTED RESULT 1: Should get the Radio band utilization in percentage");
 
         if expectedresult in actualresult :
             radioBandUtilization = int(details.split(":")[1]);
@@ -107,24 +107,23 @@ if "SUCCESS" in loadmodulestatus.upper():
             if 0 <= radioBandUtilization < 100 :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 1: Radio band utilization in percentage is retrieved as : %d" %radioBandUtilization;
+                print("ACTUAL RESULT 1: Radio band utilization in percentage is retrieved as : %d" %radioBandUtilization);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 1 : Radio band utilization value not in the expected range : %d" %radioBandUtilization;
+                print("ACTUAL RESULT 1 : Radio band utilization value not in the expected range : %d" %radioBandUtilization);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: Radio band utilization is not retrieved, Details : %s" %details;
+            print("ACTUAL RESULT 1: Radio band utilization is not retrieved, Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

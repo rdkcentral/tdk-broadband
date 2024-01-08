@@ -25,7 +25,7 @@
   <primitive_test_name>WIFIHAL_GetOrSetParamStringValue</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto	}</synopsis>
+  <synopsis>Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto  }</synopsis>
   <groups_id/>
   <execution_time>10</execution_time>
   <long_duration>false</long_duration>
@@ -42,7 +42,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_WIFIHAL_07</test_case_id>
-    <test_objective>Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto	}</test_objective>
+    <test_objective>Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto  }</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3. XB6, Emulator, Rpi</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
@@ -52,9 +52,9 @@
 radioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Invoke wifi_getRadioGuardInterval() to get the current guard intterval
-3.Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto	}
+3.Check if guard interval returned by wifi_getRadioGuardInterval() is from the list { 400nsec, 800nsec, Auto    }
 5. Unload wifihal module</automation_approch>
-    <except_output>Guard interval returned by wifi_getRadioGuardInterval() should be from the list { 400nsec, 800nsec, Auto	}</except_output>
+    <except_output>Guard interval returned by wifi_getRadioGuardInterval() should be from the list { 400nsec, 800nsec, Auto     }</except_output>
     <priority>High</priority>
     <test_stub_interface>WiFiAgent</test_stub_interface>
     <test_script>TS_WIFIHAL_5GHzGetRadioGuardInterval</test_script>
@@ -66,7 +66,7 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from wifiUtility import *
 
@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioGuardInterval');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,30 +90,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "getRadioGuardInterval"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "getRadioGuardInterval"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-	    if expectedresult in actualresult :
-		interval = details.split(":")[1].strip("nsec")
+        if expectedresult in actualresult :
+            interval = details.split(":")[1].strip("nsec")
 
-		if interval == "Auto" or (interval.isdigit() and (100 <= int(interval) <= 800)):
-		    print "RadioGuardInterval is from the valid range";
-		    tdkTestObj.setResultStatus("SUCCESS");
-		else:
-		    print "RadioGuardInterval is not from the valid range";
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "getRadioGuardInterval() failed"
+            if interval == "Auto" or (interval.isdigit() and (100 <= int(interval) <= 800)):
+                print("RadioGuardInterval is from the valid range");
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("RadioGuardInterval is not from the valid range");
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getRadioGuardInterval() failed")
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

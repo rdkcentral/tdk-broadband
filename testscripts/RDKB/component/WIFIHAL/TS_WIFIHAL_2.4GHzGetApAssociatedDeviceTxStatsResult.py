@@ -84,14 +84,14 @@ radio = "2.4G";
 loadmodulestatus =obj.getLoadModuleResult();
 revertflag = 0;
 flag = 1;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult="SUCCESS";
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
@@ -102,100 +102,100 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj, actualresult, default = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod);
 
         if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
 
-           if default != "true":
-              #Script to load the configuration file of the component
-              setMethod = "setRadioStatsEnable"
-              primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex,1, setMethod)
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 revertflag = 1;
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  flag  = 0;
+            if default != "true":
+                #Script to load the configuration file of the component
+                setMethod = "setRadioStatsEnable"
+                primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex,1, setMethod)
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    revertflag = 1;
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    flag  = 0;
 
-           if flag == 1:
-              tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
-              tdkTestObj.addParameter("apIndex",idx);
-              expectedresult="SUCCESS";
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails();
-              print "Entire Details:",details;
-              if expectedresult in actualresult:
-                 outputList = details.split("=")[1].strip()
-                 if "," in outputList:
-                     outputValue = outputList.split(",")[0].strip()
-                 else:
-                     outputValue = outputList.split(":Value")[0].strip()
+            if flag == 1:
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
+                tdkTestObj.addParameter("apIndex",idx);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                print("Entire Details:",details);
+                if expectedresult in actualresult:
+                    outputList = details.split("=")[1].strip()
+                    if "," in outputList:
+                        outputValue = outputList.split(",")[0].strip()
+                    else:
+                        outputValue = outputList.split(":Value")[0].strip()
 
-                 print "TEST STEP: get the associateddevice"
-                 print "expected result: should get the number of associated devices"
-                 print "Associated Device's MAC address:",outputValue
+                    print("TEST STEP: get the associateddevice")
+                    print("expected result: should get the number of associated devices")
+                    print("Associated Device's MAC address:",outputValue)
 
-                 #check if outputvalue is a mac address
-                 if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
-                    #Prmitive test case which is associated to this Script
-                    tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceTxStatsResult');
-                    tdkTestObj.addParameter("radioIndex", idx);
-                    tdkTestObj.addParameter("MAC", outputValue);
-                    expectedresult="SUCCESS";
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails();
-                    print"details",details;
-                    if expectedresult in actualresult :
-                       details = details.split(":")[1].strip();
-                       output_array_size = details.split("=")[1].strip();
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "TEST STEP : Get the ApAssociatedDeviceTxStatsResult"
-                       print "EXPECTED RESULT : Should successfully get the ApAssociatedDeviceTxStatsResult"
-                       print "ACTUAL RESULT : Successfully gets the ApAssociatedDeviceTxStatsResult"
-                       print "output_array_size=",output_array_size
-                       print "Identified %s neighboring access points"%output_array_size
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #check if outputvalue is a mac address
+                    if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
+                        #Prmitive test case which is associated to this Script
+                        tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceTxStatsResult');
+                        tdkTestObj.addParameter("radioIndex", idx);
+                        tdkTestObj.addParameter("MAC", outputValue);
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        print("details",details);
+                        if expectedresult in actualresult :
+                            details = details.split(":")[1].strip();
+                            output_array_size = details.split("=")[1].strip();
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP : Get the ApAssociatedDeviceTxStatsResult")
+                            print("EXPECTED RESULT : Should successfully get the ApAssociatedDeviceTxStatsResult")
+                            print("ACTUAL RESULT : Successfully gets the ApAssociatedDeviceTxStatsResult")
+                            print("output_array_size=",output_array_size)
+                            print("Identified %s neighboring access points"%output_array_size)
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP : Get the ApAssociatedDeviceTxStatsResult")
+                            print("EXPECTED RESULT : Should successfully get the ApAssociatedDeviceTxStatsResult")
+                            print("ACTUAL RESULT : Failed to get the ApAssociatedDeviceTxStatsResult")
+                            print("Details: %s"%details)
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Get the ApAssociatedDeviceTxStatsResult"
-                        print "EXPECTED RESULT : Should successfully get the ApAssociatedDeviceTxStatsResult"
-                        print "ACTUAL RESULT : Failed to get the ApAssociatedDeviceTxStatsResult"
-                        print "Details: %s"%details
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "Not able to  Get the ApAssociatedDeviceTxStatsResult as no device is connected or Invalid Format"
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP: get the associateddevice"
-                  print "EXPECTED RESULT: should get the number of associated devices"
-                  print "ACTUAL RESULT : Failed to get the number of associated devices"
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "RadioStatsEnable was disabled and failed on enabling";
+                        print("Not able to  Get the ApAssociatedDeviceTxStatsResult as no device is connected or Invalid Format")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP: get the associateddevice")
+                    print("EXPECTED RESULT: should get the number of associated devices")
+                    print("ACTUAL RESULT : Failed to get the number of associated devices")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("RadioStatsEnable was disabled and failed on enabling");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Get  the RadioStatsEnable status"
-            print "EXPECTED RESULT : Should successfully Get the RadioStatsEnable status"
-            print "ACTUAL RESULT :getRadioStatsEnable was successfull:",default
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP : Get  the RadioStatsEnable status")
+            print("EXPECTED RESULT : Should successfully Get the RadioStatsEnable status")
+            print("ACTUAL RESULT :getRadioStatsEnable was successfull:",default)
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if revertflag == 1:
-           default =0;
-           print "Revert operation for RadioStatsEnable";
-           setMethod = "setRadioStatsEnable"
-           primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex,default, setMethod)
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
+            default =0;
+            print("Revert operation for RadioStatsEnable");
+            setMethod = "setRadioStatsEnable"
+            primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex,default, setMethod)
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

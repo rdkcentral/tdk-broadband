@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetProxyArp');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,111 +95,111 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and "Enabled" in details or "Disabled" in details:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 1: Get the ProxyArp enabled status  for 5GHz using wifi_getProxyArp()";
-        print "EXPECTED RESULT 1: Should get ProxyArp enabled status  for 5GHz using wifi_getProxyArp()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : SUCCESS";
-	if "Enabled" in details:
-	    oldEnable = 1;
-	    newEnable = 0;
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the ProxyArp enabled status  for 5GHz using wifi_getProxyArp()");
+        print("EXPECTED RESULT 1: Should get ProxyArp enabled status  for 5GHz using wifi_getProxyArp()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        if "Enabled" in details:
+            oldEnable = 1;
+            newEnable = 0;
             expectedStatus = "Disabled"
-	else:
-	    oldEnable = 0;
-	    newEnable = 1;
+        else:
+            oldEnable = 0;
+            newEnable = 1;
             expectedStatus = "Enabled"
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	tdkTestObj.addParameter("methodName","setProxyArp");
-	tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
-	tdkTestObj.addParameter("param",newEnable);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: Toggle the ProxyArp enabled status for 5GHz";
-	    print "EXPECTED RESULT 2: Should toggle the ProxyArp enable status for 5GHz to ", expectedStatus ;
-	    print "ACTUAL RESULT 2: %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.addParameter("methodName","setProxyArp");
+        tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
+        tdkTestObj.addParameter("param",newEnable);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Toggle the ProxyArp enabled status for 5GHz");
+            print("EXPECTED RESULT 2: Should toggle the ProxyArp enable status for 5GHz to ", expectedStatus) ;
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #Script to load the configuration file of the component
-	    tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	    tdkTestObj.addParameter("methodName","getProxyArp")
-	    tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    if expectedresult in actualresult :
-		newStatus = details.split(":")[1].strip();
-		if newStatus == expectedStatus:
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Get the ProxyArp enabled status for 5GHz";
-		    print "EXPECTED RESULT 3: Should get the ProxyArp enabled status same as the set value";
-		    print "ACTUAL RESULT 3: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "ACTUAL RESULT 3: %s" %details;
-		    print "FAILURE : ProxyArp enabled status not same as the set value";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 3: Get the ProxyArp enabled status for 5GHz";
-		print "EXPECTED RESULT 3: Should get the ProxyArp enabled status same as the set value";
-		print "ACTUAL RESULT 3: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Toggle the ProxyArp enabled status for 5GHz";
-	    print "EXPECTED RESULT 2: Should toggle the ProxyArp enable status for 5GHz to ", expectedStatus ;
-	    print "ACTUAL RESULT 2: %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+            tdkTestObj.addParameter("methodName","getProxyArp")
+            tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult :
+                newStatus = details.split(":")[1].strip();
+                if newStatus == expectedStatus:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the ProxyArp enabled status for 5GHz");
+                    print("EXPECTED RESULT 3: Should get the ProxyArp enabled status same as the set value");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("FAILURE : ProxyArp enabled status not same as the set value");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the ProxyArp enabled status for 5GHz");
+                print("EXPECTED RESULT 3: Should get the ProxyArp enabled status same as the set value");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Toggle the ProxyArp enabled status for 5GHz");
+            print("EXPECTED RESULT 2: Should toggle the ProxyArp enable status for 5GHz to ", expectedStatus) ;
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-	#setting initial value to ProxyArp
-	tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	tdkTestObj.addParameter("methodName","setProxyArp");
-	tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
-	tdkTestObj.addParameter("param",oldEnable);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP : Revert the ProxyArp enabled status for 5GHz";
-	    print "EXPECTED RESULT : Should revert the ProxyArp enabled status for 5GHz";
-	    print "ACTUAL RESULT : %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP : Revert the ProxyArp enabled status for 5GHz";
-	    print "EXPECTED RESULT : Should revert the ProxyArp enabled status for 5GHz";
-	    print "ACTUAL RESULT : %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+        #setting initial value to ProxyArp
+        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+        tdkTestObj.addParameter("methodName","setProxyArp");
+        tdkTestObj.addParameter("radioIndex",passPoint_5G_Index);
+        tdkTestObj.addParameter("param",oldEnable);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Revert the ProxyArp enabled status for 5GHz");
+            print("EXPECTED RESULT : Should revert the ProxyArp enabled status for 5GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Revert the ProxyArp enabled status for 5GHz");
+            print("EXPECTED RESULT : Should revert the ProxyArp enabled status for 5GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the ProxyArp enabled status  for 5GHz using wifi_getProxyArp()";
-	print "EXPECTED RESULT 1: Should get ProxyArp enabled status  for 5GHz using wifi_getProxyArp()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the ProxyArp enabled status  for 5GHz using wifi_getProxyArp()");
+        print("EXPECTED RESULT 1: Should get ProxyArp enabled status  for 5GHz using wifi_getProxyArp()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");

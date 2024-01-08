@@ -103,20 +103,20 @@ sysObj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetRadioObssCoexistenceEnable
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
 
 #Query for the RadioObssCoexistenceEnable value
 def get_Radio0ObssCoexistenceEnable(tdkTestObj):
     query="sh %s/tdk_platform_utility.sh getRadio0ObssCoexistenceEnable" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj.addParameter("command", query);
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print " ObssCoexistenceEnable is ", details;
+    print(" ObssCoexistenceEnable is ", details);
     return details,actualresult;
 
 if "SUCCESS" in loadmodulestatus.upper() and sysutilloadmodulestatus.upper():
@@ -125,82 +125,82 @@ if "SUCCESS" in loadmodulestatus.upper() and sysutilloadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
         expectedresult="SUCCESS";
         defObssCoexistenceEnable,actualresult = get_Radio0ObssCoexistenceEnable(tdkTestObj);
-	if expectedresult in actualresult and defObssCoexistenceEnable!="Invalid Argument passed":
+        if expectedresult in actualresult and defObssCoexistenceEnable!="Invalid Argument passed":
             ObssCoexistenceEnable = int(defObssCoexistenceEnable);
-       	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 1 :Get RadioObssCoexistenceEnable obss_coex value";
-            print "EXPECTED RESULT 1 :RadioObssCoexistenceEnable obss_coex value should be present";
-            print "ACTUAL RESULT 1 :RadioObssCoexistenceEnable obss_coex value is " ,ObssCoexistenceEnable;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	    if ObssCoexistenceEnable == 1:
-	        print "RadioObssCoexistence is Enabled"
-		oldEnable = 1
-		newEnable = 0
-	    else:
-	        print "RadioObssCoexistence is Disabled"
-		oldEnable = 0
-		newEnable = 1
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    setMethod = "setRadioObssCoexistenceEnable"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    #Toggle the enable status using set
-            print "NewEnable :",newEnable;
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod)
-	    if expectedresult in actualresult :
-	        print "Enable state toggled using set"
-		# Get the New enable status
-		tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                defObssCoexistenceEnable,actualresult = get_Radio0ObssCoexistenceEnable(tdkTestObj);
-		if expectedresult in actualresult and defObssCoexistenceEnable!="" and newEnable == int(defObssCoexistenceEnable) :
-		    ObssCoexistenceEnable = int(defObssCoexistenceEnable);
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 2 : Compare the get and set values of ObssCoexistenceEnable"
-		    print" EXPECTED RESULT 2 : Get and set values of ObssCoexistenceEnable should be same"
-		    print "ACTUAL RESULT 2 : Get and set values of ObssCoexistenceEnable are same"
-		    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-		    #Revert back to original Enable status
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
-		    if expectedresult in actualresult :
-		        tdkTestObj.setResultStatus("SUCCESS");
-		        print "Enable status reverted back successfully";
-			#Get the result of execution
-                	print "[TEST EXECUTION RESULT] : SUCCESS";
-		    else:
-		        tdkTestObj.setResultStatus("FAILURE");
-		        print "Couldn't revert enable status"
-			#Get the result of execution
-                	print "[TEST EXECUTION RESULT] : FAILURE";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 2 : Compare the get and set values of ObssCoexistenceEnable"
-		    print" EXPECTED RESULT 2 : Get and set values of ObssCoexistenceEnable should be same"
-		    print "ACTUAL RESULT 2 : Get and set values of ObssCoexistenceEnable are not same"
-		    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-		print "setRadioObssCoexistenceEnable operation failed"
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-        else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1 : Get RadioObssCoexistenceEnable obss_coex value";
-            print "EXPECTED RESULT 1 : RadioObssCoexistenceEnable obss_coex value should be present";
-            print "ACTUAL RESULT 1 :RadioObssCoexistenceEnable obss_coex value not present"
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1 :Get RadioObssCoexistenceEnable obss_coex value");
+            print("EXPECTED RESULT 1 :RadioObssCoexistenceEnable obss_coex value should be present");
+            print("ACTUAL RESULT 1 :RadioObssCoexistenceEnable obss_coex value is " ,ObssCoexistenceEnable);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            if ObssCoexistenceEnable == 1:
+                print("RadioObssCoexistence is Enabled")
+                oldEnable = 1
+                newEnable = 0
+            else:
+                print("RadioObssCoexistence is Disabled")
+                oldEnable = 0
+                newEnable = 1
+            expectedresult="SUCCESS";
+            apIndex = idx
+            setMethod = "setRadioObssCoexistenceEnable"
+            primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+            #Toggle the enable status using set
+            print("NewEnable :",newEnable);
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod)
+            if expectedresult in actualresult :
+                print("Enable state toggled using set")
+                # Get the New enable status
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                defObssCoexistenceEnable,actualresult = get_Radio0ObssCoexistenceEnable(tdkTestObj);
+                if expectedresult in actualresult and defObssCoexistenceEnable!="" and newEnable == int(defObssCoexistenceEnable) :
+                    ObssCoexistenceEnable = int(defObssCoexistenceEnable);
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2 : Compare the get and set values of ObssCoexistenceEnable")
+                    print(" EXPECTED RESULT 2 : Get and set values of ObssCoexistenceEnable should be same")
+                    print("ACTUAL RESULT 2 : Get and set values of ObssCoexistenceEnable are same")
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    #Revert back to original Enable status
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
+                    if expectedresult in actualresult :
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Enable status reverted back successfully");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("Couldn't revert enable status")
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 2 : Compare the get and set values of ObssCoexistenceEnable")
+                    print(" EXPECTED RESULT 2 : Get and set values of ObssCoexistenceEnable should be same")
+                    print("ACTUAL RESULT 2 : Get and set values of ObssCoexistenceEnable are not same")
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("setRadioObssCoexistenceEnable operation failed")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1 : Get RadioObssCoexistenceEnable obss_coex value");
+            print("EXPECTED RESULT 1 : RadioObssCoexistenceEnable obss_coex value should be present");
+            print("ACTUAL RESULT 1 :RadioObssCoexistenceEnable obss_coex value not present")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load wifihal/sysutil module";
+    print("Failed to load wifihal/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

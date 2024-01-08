@@ -81,8 +81,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetIndexFromName');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %idx;
+        print("Failed to get radio index for radio %s\n" %idx);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -112,33 +112,33 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
-	        index = details.split(":")[1].strip()
+                index = details.split(":")[1].strip()
                 if int(idx) == int(index):
-	           #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP: Get the index from ssid name";
-                   print "EXPECTED RESULT: Get the index as %s"%idx;
-                   print "ACTUAL RESULT: %s" %details;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP: Get the index from ssid name");
+                    print("EXPECTED RESULT: Get the index as %s"%idx);
+                    print("ACTUAL RESULT: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP: Get the Radio number of entries";
-                    print "EXPECTED RESULT: Get the index as %s"%idx;
-                    print "ACTUAL RESULT: %s" %details;
+                    print("TEST STEP: Get the Radio number of entries");
+                    print("EXPECTED RESULT: Get the index as %s"%idx);
+                    print("ACTUAL RESULT: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "wifi_getIndexFromName() call failed"
+                tdkTestObj.setResultStatus("FAILURE");
+                print("wifi_getIndexFromName() call failed")
         else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "wifi_getApName() call failed"
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getApName() call failed")
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetAvailableBSSColor');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,7 +90,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Maximum value to be passed
@@ -102,62 +102,62 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getAvailableBSSColor() to retrieve the Color List for 6G radio";
-        print "EXPECTED RESULT 1: Should invoke the HAL API wifi_getAvailableBSSColor() successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getAvailableBSSColor() to retrieve the Color List for 6G radio");
+        print("EXPECTED RESULT 1: Should invoke the HAL API wifi_getAvailableBSSColor() successfully");
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API was invoked successfully";
+            print("ACTUAL RESULT 1: API was invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check the Number of Color returned and Color List conditions
-            print "\nTEST STEP 2 : Check if the Color List is non-empty if the number of Colors returned is greater than 0 and empty if number of Colors returned is 0";
-            print "EXPECTED RESULT 2 : The Color List should be non-empty if number of Colors returned is greater than 0 and empty if number of Colors returned is 0";
+            print("\nTEST STEP 2 : Check if the Color List is non-empty if the number of Colors returned is greater than 0 and empty if number of Colors returned is 0");
+            print("EXPECTED RESULT 2 : The Color List should be non-empty if number of Colors returned is greater than 0 and empty if number of Colors returned is 0");
             numColorReturned = details.split("NumColorReturned : ")[1].split(",")[0];
-            print "Number of Color returned : %s" %numColorReturned;
-            print "Details : %s" %details;
+            print("Number of Color returned : %s" %numColorReturned);
+            print("Details : %s" %details);
 
             if numColorReturned.isdigit() and int(numColorReturned) > 0:
                 Available_BSSColor_List = details.split("Available BSSColor List = ")[1];
-                print "Color List : %s" %Available_BSSColor_List;
+                print("Color List : %s" %Available_BSSColor_List);
 
                 if Available_BSSColor_List != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 2: The number of colors is greater than 0 and the color list is non-empty";
+                    print("ACTUAL RESULT 2: The number of colors is greater than 0 and the color list is non-empty");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 2: The number of colors is greater than 0 but the color list is empty";
+                    print("ACTUAL RESULT 2: The number of colors is greater than 0 but the color list is empty");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             elif numColorReturned.isdigit() and int(numColorReturned) == 0 and "Available BSSColor List is Empty" in details :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: The number of colors is equal to 0 and the color list is empty";
+                print("ACTUAL RESULT 2: The number of colors is equal to 0 and the color list is empty");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: The number of colors returned is invalid";
+                print("ACTUAL RESULT 2: The number of colors returned is invalid");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed";
+            print("ACTUAL RESULT 1: API invocation failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -95,29 +95,29 @@ def get_NetworkAccessType(tdkTestObj, apIndex, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "TEST STEP %d: Invoke the wifi_getInterworkingAccessNetworkType api and retrieve the Type for 5GHz Public WiFi" %step;
-    print "EXPECTED RESULT %d:Invocation of wifi_getInterworkingAccessNetworkType should be success and Type should be retrieved" %step;
+    print("TEST STEP %d: Invoke the wifi_getInterworkingAccessNetworkType api and retrieve the Type for 5GHz Public WiFi" %step);
+    print("EXPECTED RESULT %d:Invocation of wifi_getInterworkingAccessNetworkType should be success and Type should be retrieved" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s" %(step, details);
+        print("ACTUAL RESULT %d: %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         type = int(details.split(":")[1].strip());
 
         if type in range(0,16):
             tdkTestObj.setResultStatus("SUCCESS");
-            print "InterworkingAccessNetworkType = %d" %type;
+            print("InterworkingAccessNetworkType = %d" %type);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "InterworkingAccessNetworkType = %d" %type;
+            print("InterworkingAccessNetworkType = %d" %type);
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s" %(step, details);
+        print("ACTUAL RESULT %d: %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return type;
 
 def get_NetworkType(type):
@@ -154,21 +154,21 @@ def set_NetworkAccessType(tdkTestObj, apIndex, setvalue, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "TEST STEP %d: Invoke the wifi_setInterworkingAccessNetworkType api and set the type for 5GHz Public WiFi" %step;
-    print "EXPECTED RESULT %d:Invocation of wifi_setInterworkingAccessNetworkType should be success and type set successfully" %step;
+    print("TEST STEP %d: Invoke the wifi_setInterworkingAccessNetworkType api and set the type for 5GHz Public WiFi" %step);
+    print("EXPECTED RESULT %d:Invocation of wifi_setInterworkingAccessNetworkType should be success and type set successfully" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s" %(step, details);
+        print("ACTUAL RESULT %d: %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s" %(step, details);
+        print("ACTUAL RESULT %d: %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -190,8 +190,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_SetInterworkingAcces
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -200,7 +200,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -210,55 +210,54 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         step = 2;
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamUIntValue");
         initial_type = get_NetworkAccessType(tdkTestObj, apIndex, step);
-        print "Initial Interworking Network Access Type is :%d" %initial_type;
+        print("Initial Interworking Network Access Type is :%d" %initial_type);
 
         if initial_type != -1:
             #Valid Network Types
-            valid_types = range(0,16);
+            valid_types = list(range(0,16));
 
             for settype in valid_types :
                 step = step + 1;
                 network = get_NetworkType(settype);
-                print "\n*****Setting Network Type to %d : %s*****" %(settype, network);
+                print("\n*****Setting Network Type to %d : %s*****" %(settype, network));
                 set_NetworkAccessType(tdkTestObj, apIndex, settype, step);
                 step = step + 1;
                 get_type = get_NetworkAccessType(tdkTestObj, apIndex, step);
 
                 if get_type == settype:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The Set Type and Get Type are the same";
+                    print("The Set Type and Get Type are the same");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The Set Type and Get Type are not the same";
+                    print("The Set Type and Get Type are not the same");
 
             #Revert Operation
-            print "\nRevert to Initial Network Access Type";
+            print("\nRevert to Initial Network Access Type");
             step = step + 1;
             set_NetworkAccessType(tdkTestObj, apIndex, initial_type, step);
         else:
-            print "Invocation of wifi_getInterworkingAccessNetworkType is failure";
+            print("Invocation of wifi_getInterworkingAccessNetworkType is failure");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

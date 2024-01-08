@@ -85,7 +85,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApCsaDeauth');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 
 def setApCsaDeauth(obj,mode,radioIndex) :
@@ -103,88 +103,88 @@ def setApCsaDeauth(obj,mode,radioIndex) :
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    tdkTestObj,actualresult,details = setApCsaDeauth(obj,0,idx);
-	    expectedresult="SUCCESS";
-	    if expectedresult in actualresult:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "**************************************************";
-		print "TEST STEP 1: To switch the ApCsaDeauth mode to None for 2.4GHz";
-		print "EXPECTED RESULT 1: Should successfully switch the ApCsaDeauth mode to None for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-		print "**************************************************";
-		tdkTestObj,actualresult,details = setApCsaDeauth(obj,1,idx);
-		if expectedresult in actualresult:
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "**************************************************";
-		    print "TEST STEP 2: To switch the ApCsaDeauth mode to unicast for 2.4GHz";
-		    print "EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth to unicast for 2.4GHz";
-		    print "ACTUAL RESULT 2: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		    print "**************************************************";
-		    tdkTestObj,actualresult,details = setApCsaDeauth(obj,2,idx);
-		    if expectedresult in actualresult:
-			#Set the result status of execution
-			tdkTestObj.setResultStatus("SUCCESS");
-			print "**************************************************";
-			print "TEST STEP 3: To switch the ApCsaDeauth mode to broadcast for 2.4GHz";
-			print "EXPECTED RESULT 3: Should successfully switch the broadcast to broadcast for 2.4GHz";
-			print "ACTUAL RESULT 3: %s" %details;
-			#Get the result of execution
-			print "[TEST EXECUTION RESULT] : SUCCESS";
-			print "**************************************************";
-		    else :
-			#Set the result status of execution
-			tdkTestObj.setResultStatus("FAILURE");
-			print "**************************************************";
-			print "TEST STEP 3: To switch the ApCsaDeauth mode to broadcast for 2.4GHz";
-			print "EXPECTED RESULT 3: Should successfully switch the broadcast to broadcast for 2.4GHz";
-			print "ACTUAL RESULT 3: %s" %details;
-			#Get the result of execution
-			print "[TEST EXECUTION RESULT] : FAILURE";
-			print "**************************************************";
-		else :
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "**************************************************";
-		    print "TEST STEP 2: To switch the ApCsaDeauth mode to unicast for 2.4GHz";
-		    print "EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth to unicast for 2.4GHz";
-		    print "ACTUAL RESULT 2: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-		    print "**************************************************";
+        tdkTestObj,actualresult,details = setApCsaDeauth(obj,0,idx);
+        expectedresult="SUCCESS";
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("**************************************************");
+            print("TEST STEP 1: To switch the ApCsaDeauth mode to None for 2.4GHz");
+            print("EXPECTED RESULT 1: Should successfully switch the ApCsaDeauth mode to None for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("**************************************************");
+            tdkTestObj,actualresult,details = setApCsaDeauth(obj,1,idx);
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("**************************************************");
+                print("TEST STEP 2: To switch the ApCsaDeauth mode to unicast for 2.4GHz");
+                print("EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth to unicast for 2.4GHz");
+                print("ACTUAL RESULT 2: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("**************************************************");
+                tdkTestObj,actualresult,details = setApCsaDeauth(obj,2,idx);
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("**************************************************");
+                    print("TEST STEP 3: To switch the ApCsaDeauth mode to broadcast for 2.4GHz");
+                    print("EXPECTED RESULT 3: Should successfully switch the broadcast to broadcast for 2.4GHz");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    print("**************************************************");
+                else :
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("**************************************************");
+                    print("TEST STEP 3: To switch the ApCsaDeauth mode to broadcast for 2.4GHz");
+                    print("EXPECTED RESULT 3: Should successfully switch the broadcast to broadcast for 2.4GHz");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    print("**************************************************");
+            else :
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("**************************************************");
+                print("TEST STEP 2: To switch the ApCsaDeauth mode to unicast for 2.4GHz");
+                print("EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth to unicast for 2.4GHz");
+                print("ACTUAL RESULT 2: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                print("**************************************************");
 
-		    #Revert the mode to default mode(broadcast)
-		    tdkTestObj,actualresult,details = setApCsaDeauth(obj,2,idx);
-		    if expectedresult in actualresult :
-			tdkTestObj.setResultStatus("SUCCESS");
-			print "Successfully reverted the mode to default mode:broadcast for 2.4GHz";
-		    else :
-			tdkTestObj.setResultStatus("FAILURE");
-			print "Unable to revert the mode to default mode:broadcast for 2.4GHz";
-	    else :
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "**************************************************";
-		print "TEST STEP 1: To switch the ApCsaDeauth mode to None for 2.4GHz";
-		print "EXPECTED RESULT 1: Should successfully switch the ApCsaDeauth mode to None for 2.4GHz";
-		print "ACTUAL RESULT 1: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-		print "**************************************************";
+                #Revert the mode to default mode(broadcast)
+                tdkTestObj,actualresult,details = setApCsaDeauth(obj,2,idx);
+                if expectedresult in actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("Successfully reverted the mode to default mode:broadcast for 2.4GHz");
+                else :
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("Unable to revert the mode to default mode:broadcast for 2.4GHz");
+        else :
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("**************************************************");
+            print("TEST STEP 1: To switch the ApCsaDeauth mode to None for 2.4GHz");
+            print("EXPECTED RESULT 1: Should successfully switch the ApCsaDeauth mode to None for 2.4GHz");
+            print("ACTUAL RESULT 1: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("**************************************************");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

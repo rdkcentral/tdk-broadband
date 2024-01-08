@@ -117,8 +117,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_FactoryResetRadios');
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 def InvokeGetSetMethod(primitive,radioIndex,Value,MethodName):
     expectedresult="SUCCESS";
@@ -127,7 +127,7 @@ def InvokeGetSetMethod(primitive,radioIndex,Value,MethodName):
         tdkTestObj.setResultStatus("SUCCESS");
         return details;
     else:
-	tdkTestObj.setResultStatus("FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -137,9 +137,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         details_Enable0 = InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx0,"0","getChannelBandwidth");
@@ -170,8 +170,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    time.sleep(5);
+            tdkTestObj.setResultStatus("SUCCESS");
+            time.sleep(5);
             details_Enable0_reset = InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx0,"0","getChannelBandwidth");
             Channel_Bandwidth_0_reset = details_Enable0_reset.split(":")[1].strip(" ");
             details_Enable1_reset = InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx1,"0","getChannelBandwidth");
@@ -181,7 +181,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             expectedresult="SUCCESS";
             defaults= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_CHANNEL_BANDWIDTH" %TDK_PATH;
-            print defaults;
+            print(defaults);
             expectedresult="SUCCESS";
             tdkTestObj.addParameter("command", defaults);
             tdkTestObj.executeTestCase(expectedresult);
@@ -189,28 +189,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             defaultValues = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult and defaultValues!= "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 7: Should get the values from properties file"
-                print "ACTUAL RESULT 7:Default values from properties file:%s" %defaultValues;
+                print("TEST STEP 7: Should get the values from properties file")
+                print("ACTUAL RESULT 7:Default values from properties file:%s" %defaultValues);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 List= defaultValues.split(",");
-                print List[0]
-                print List[1]
+                print(List[0])
+                print(List[1])
 
             if Channel_Bandwidth_0_reset== List[0] and Channel_Bandwidth_1__reset  == List[1]:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print"TEST STEP 1:To invoke wifi_factoryResetRadio() api and check whether the ChannelBandwidth  for 2.4GHz and 5 Ghz has default values";
-                print"EXPECTED RESULT 1: ChannelBandwidth  for 2.4GHz and 5 Ghz   must have default values";
-                print"ACTUAL RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz has default values";
-                print"[TEST EXECUTION RESULT 1]:SUCCESS";
+                print("TEST STEP 1:To invoke wifi_factoryResetRadio() api and check whether the ChannelBandwidth  for 2.4GHz and 5 Ghz has default values");
+                print("EXPECTED RESULT 1: ChannelBandwidth  for 2.4GHz and 5 Ghz   must have default values");
+                print("ACTUAL RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz has default values");
+                print("[TEST EXECUTION RESULT 1]:SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"TEST STEP 1:To invoke wifi_factoryResetRadio() api and check whether the ChannelBandwidth  for 2.4GHz and 5 Ghz has default values";
-                print"EXPECTED RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz must have default values";
-                print"ACTUAL RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz does not have default values";
-                print"[TEST EXECUTION RESULT 1]:FAILURE"
+                print("TEST STEP 1:To invoke wifi_factoryResetRadio() api and check whether the ChannelBandwidth  for 2.4GHz and 5 Ghz has default values");
+                print("EXPECTED RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz must have default values");
+                print("ACTUAL RESULT 1:ChannelBandwidth  for 2.4GHz and 5 Ghz does not have default values");
+                print("[TEST EXECUTION RESULT 1]:FAILURE")
             #Reverting the values back to initial values
-            print "REVERTING  CHANNEL BANDWIDTH  TO INITIAL VALUE";
+            print("REVERTING  CHANNEL BANDWIDTH  TO INITIAL VALUE");
             InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx0,Channel_Bandwidth_initial0,"setRadioOperatingChannelBandwidth");
             InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx1,Channel_Bandwidth_initial1,"setRadioOperatingChannelBandwidth");
             details_interval0_reset = InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx0,"0","getRadioGuardInterval");
@@ -219,26 +219,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             GuardInterval1 = details_interval1_reset.split(":")[1].strip(" ");
             if GuardInterval0 == "Auto" and GuardInterval1 == "Auto" :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print"TEST STEP 2:To invoke wifi_factoryResetRadios() api and check whether the GuardInterval is Auto for both 2.4GHz and 5GHz";
-                print"EXPECTED RESULT 2:GuardInterval should be Auto for 2.4GHz and 5GHz";
-                print"ACTUAL RESULT 2:GuardInterval value is Auto for 2.4GHz and 5GHz";
-                print"[TEST EXECUTION RESULT 2]:SUCCESS";
+                print("TEST STEP 2:To invoke wifi_factoryResetRadios() api and check whether the GuardInterval is Auto for both 2.4GHz and 5GHz");
+                print("EXPECTED RESULT 2:GuardInterval should be Auto for 2.4GHz and 5GHz");
+                print("ACTUAL RESULT 2:GuardInterval value is Auto for 2.4GHz and 5GHz");
+                print("[TEST EXECUTION RESULT 2]:SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print"TEST STEP 2:To invoke wifi_factoryResetRadios() api and check whether the GuardInterval is Auto for both 2.4GHz and 5GHz";
-                print"EXPECTED RESULT 2:GuardInterval should be Auto for 2.4GHz and 5GHz";
-                print"ACTUAL RESULT 2:GuardInterval value is NOT Auto for 2.4GHz and 5GHz";
-                print"[TEST EXECUTION RESULT 2]:FAILURE";
+                print("TEST STEP 2:To invoke wifi_factoryResetRadios() api and check whether the GuardInterval is Auto for both 2.4GHz and 5GHz");
+                print("EXPECTED RESULT 2:GuardInterval should be Auto for 2.4GHz and 5GHz");
+                print("ACTUAL RESULT 2:GuardInterval value is NOT Auto for 2.4GHz and 5GHz");
+                print("[TEST EXECUTION RESULT 2]:FAILURE");
             #Reverting the values back to initial values
-            print "REVERTING GUARDINTERVAL TO INITIAL VALUE";
+            print("REVERTING GUARDINTERVAL TO INITIAL VALUE");
             InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx0,GuardInterval_initial0,"setRadioGuardInterval");
             InvokeGetSetMethod('WIFIHAL_GetOrSetParamStringValue',idx1,GuardInterval_initial1,"setRadioGuardInterval");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print"wifi_factoryResetRadios() operation";
+            print("wifi_factoryResetRadios() operation");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

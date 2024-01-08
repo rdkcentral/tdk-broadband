@@ -78,7 +78,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioDCSChannelPool');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -87,7 +87,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamStringValue');
@@ -97,33 +97,33 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1 : Invoke the HAL API wifi_getRadioDCSChannelPool for 6G radio";
-        print "EXPECTED RESULT 1 : The HAL API wifi_getRadioDCSChannelPool should be invoked successfully";
+        print("\nTEST STEP 1 : Invoke the HAL API wifi_getRadioDCSChannelPool for 6G radio");
+        print("EXPECTED RESULT 1 : The HAL API wifi_getRadioDCSChannelPool should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: wifi_getRadioDCSChannelPool invocation success, Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 1: wifi_getRadioDCSChannelPool invocation success, Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             dcsChannelNumber = details.split(":")[1].strip();
 
             #Check if the DCS Channel Pool has a maximum length of 256
-            print "\nTEST STEP 2: Validate the output of wifi_getRadioDCSChannelPool API";
-            print "EXPECTED RESULT 2: wifi_getRadioDCSChannelPool should return a string value of length less than 256";
+            print("\nTEST STEP 2: Validate the output of wifi_getRadioDCSChannelPool API");
+            print("EXPECTED RESULT 2: wifi_getRadioDCSChannelPool should return a string value of length less than 256");
 
             if len(dcsChannelNumber) <= 256:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: DCS channel Pool string received is of the expected length : %s"%dcsChannelNumber;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: DCS channel Pool string received is of the expected length : %s"%dcsChannelNumber);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: DCS Channel Pool string received is not of the expected length : %s"%dcsChannelNumber;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: DCS Channel Pool string received is not of the expected length : %s"%dcsChannelNumber);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: wifi_getRadioDCSChannelPool invocation failed, Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 1: wifi_getRadioDCSChannelPool invocation failed, Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

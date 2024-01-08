@@ -101,14 +101,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_ClearRadioResetCount');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -121,19 +121,19 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if expectedresult in actualresult:
             initCount = details.split(":")[1].strip()
-	    if int(initCount) == 0:
-	        #if the count is already 0, reset once so that the count will be incremented
+            if int(initCount) == 0:
+                #if the count is already 0, reset once so that the count will be incremented
                 tdkTestObj = obj.createTestStep("WIFIHAL_Reset");
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
-		    tdkTestObj.setResultStatus("SUCCESS");
-                    print "Reset operation SUCCESS and ResetCount incremented to 1"
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("Reset operation SUCCESS and ResetCount incremented to 1")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "wifi_reset() call failed"
+                    print("wifi_reset() call failed")
 
             #Script to load the configuration file of the component
             tdkTestObj = obj.createTestStep("WIFIHAL_ClearRadioResetCount");
@@ -143,46 +143,46 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP: Execute ClearRadioResetCount"
-	        print "EXPECTED RESULT: ClearRadioResetCount should return SUCCESS"
-	        print "ACTUAL RESULT: ClearRadioResetCount returned SUCCESS"
-	        print "TEST EXECUTION RESULT : SUCCESS"
+                print("TEST STEP: Execute ClearRadioResetCount")
+                print("EXPECTED RESULT: ClearRadioResetCount should return SUCCESS")
+                print("ACTUAL RESULT: ClearRadioResetCount returned SUCCESS")
+                print("TEST EXECUTION RESULT : SUCCESS")
 
-	        getMethod = "getRadioResetCount"
-	        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+                getMethod = "getRadioResetCount"
+                primitive = 'WIFIHAL_GetOrSetParamULongValue'
 
                 #Calling the method to execute wifi_getRadioResetCount()
-	        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	        if expectedresult in actualresult:
-	            finalCount = details.split(":")[1].strip()
-	            if int(finalCount) == 0:
-	     	        tdkTestObj.setResultStatus("SUCCESS");
-		        print "TEST STEP: Check if the RadioResetCount is 0"
-		        print "EXPECTED RESULT: Get value should be 0 after clearing"
-		        print "ACTUAL RESULT: Get value is 0"
-		        print "TEST EXECUTION RESULT :SUCCESS"
-		    else:
-		        tdkTestObj.setResultStatus("FAILURE");
-		        print "TEST STEP: Clear the RadioResetCount and then get it"
-		        print "EXPECTED RESULT: Get value should be 0 after clearing"
-		        print "ACTUAL RESULT: Get value is NOT 0"
-		        print "TEST EXECUTION RESULT :FAILURE"
-	        else:
-	            tdkTestObj.setResultStatus("FAILURE");
-	            print "wifi_getRadioResetCount() call failed after clearing"
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP: Execute ClearRadioResetCount"
-	        print "EXPECTED RESULT: ClearRadioResetCount should return SUCCESS"
-	        print "ACTUAL RESULT: ClearRadioResetCount failed"
-	        print "TEST EXECUTION RESULT : FAILURE"
+                if expectedresult in actualresult:
+                    finalCount = details.split(":")[1].strip()
+                    if int(finalCount) == 0:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP: Check if the RadioResetCount is 0")
+                        print("EXPECTED RESULT: Get value should be 0 after clearing")
+                        print("ACTUAL RESULT: Get value is 0")
+                        print("TEST EXECUTION RESULT :SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP: Clear the RadioResetCount and then get it")
+                        print("EXPECTED RESULT: Get value should be 0 after clearing")
+                        print("ACTUAL RESULT: Get value is NOT 0")
+                        print("TEST EXECUTION RESULT :FAILURE")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("wifi_getRadioResetCount() call failed after clearing")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP: Execute ClearRadioResetCount")
+                print("EXPECTED RESULT: ClearRadioResetCount should return SUCCESS")
+                print("ACTUAL RESULT: ClearRadioResetCount failed")
+                print("TEST EXECUTION RESULT : FAILURE")
         else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "wifi_getRadioResetCount() call failed"
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getRadioResetCount() call failed")
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

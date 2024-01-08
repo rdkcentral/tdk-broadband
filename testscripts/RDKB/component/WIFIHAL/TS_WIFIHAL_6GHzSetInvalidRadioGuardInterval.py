@@ -85,7 +85,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetInvalidRadioGuardInterval');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get initial guard inetrval
@@ -105,19 +105,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getRadioGuardInterval() for 6GHz radio";
-        print "EXPECTED RESULT 1 : The API should be invoked successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getRadioGuardInterval() for 6GHz radio");
+        print("EXPECTED RESULT 1 : The API should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
             initialGuardInt = details.split(":")[1].strip("nsec");
-            print "ACTUAL RESULT 1 : The API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1 : The API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if (initialGuardInt == "Auto" or (initialGuardInt.isdigit() and (100 <= int(initialGuardInt) <= 800))):
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Initial Guard Interval : %snsec" %initialGuardInt;
+                print("Initial Guard Interval : %snsec" %initialGuardInt);
 
                 #Set invalid guard interval
                 revert_flag = 0;
@@ -130,20 +130,20 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 2 : Set the guard interval to an invalid value %s using the HAL API wifi_setRadioGuradInterval()" %(initialGuardInt);
-                print "EXPECTED RESULT 2 : The invalid guard interval should not be set successfully";
+                print("\nTEST STEP 2 : Set the guard interval to an invalid value %s using the HAL API wifi_setRadioGuradInterval()" %(initialGuardInt));
+                print("EXPECTED RESULT 2 : The invalid guard interval should not be set successfully");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 2 : Set operation failed for invalid guard interval; Details : %s" %(details);
+                    print("ACTUAL RESULT 2 : Set operation failed for invalid guard interval; Details : %s" %(details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     revert_flag = 1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 2 : Set operation success for invalid guard interval; Details : %s" %(details);
+                    print("ACTUAL RESULT 2 : Set operation success for invalid guard interval; Details : %s" %(details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Cross check if the invalid value is reflected in get operation
                 expectedresult = "SUCCESS";
@@ -154,8 +154,8 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 3: Check if the HAL API wifi_getRadioGuardInterval() returns the initial guard interval after the invalid set operation";
-                print "EXPECTED RESULT 3 : The API should return the initial guard interval value after the invalid set";
+                print("\nTEST STEP 3: Check if the HAL API wifi_getRadioGuardInterval() returns the initial guard interval after the invalid set operation");
+                print("EXPECTED RESULT 3 : The API should return the initial guard interval value after the invalid set");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
@@ -163,17 +163,17 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if curr_interval == initialGuardInt:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 3: Guard Interval remains unchanged; Details : %s" %details;
-                        print "TEST EXECUTION RESULT : SUCCESS"
+                        print("ACTUAL RESULT 3: Guard Interval remains unchanged; Details : %s" %details);
+                        print("TEST EXECUTION RESULT : SUCCESS")
                     else:
                         revert_flag = 1;
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 3: Guard Interval does not remain unchanged; Details : %s" %details;
-                        print "TEST EXECUTION RESULT : FAILURE"
+                        print("ACTUAL RESULT 3: Guard Interval does not remain unchanged; Details : %s" %details);
+                        print("TEST EXECUTION RESULT : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: API invocation failed; Details : %s" %details;
-                    print "TEST EXECUTION RESULT : FAILURE"
+                    print("ACTUAL RESULT 3: API invocation failed; Details : %s" %details);
+                    print("TEST EXECUTION RESULT : FAILURE")
 
                 #Revert operation
                 if revert_flag == 1:
@@ -187,22 +187,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Revert operation was successful";
+                        print("Revert operation was successful");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "revert operation was not successful";
+                        print("revert operation was not successful");
                 else :
-                    print "Revert operation not required";
+                    print("Revert operation not required");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Initial Guard Interval : %s is not a valid value" %initialGuardInt;
+                print("Initial Guard Interval : %s is not a valid value" %initialGuardInt);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
-            print "TEST EXECUTION RESULT : FAILURE"
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
+            print("TEST EXECUTION RESULT : FAILURE")
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -107,7 +107,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetInterworkingAccessNetworkType');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -115,12 +115,12 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
-        print "TEST STEP 1: Invoke the wifi_getInterworkingAccessNetworkType api";
-        print "EXPECTED RESULT 1:Invocation of wifi_getInterworkingAccessNetworkType should be success";
+        print("TEST STEP 1: Invoke the wifi_getInterworkingAccessNetworkType api");
+        print("EXPECTED RESULT 1:Invocation of wifi_getInterworkingAccessNetworkType should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamUIntValue");
         tdkTestObj.addParameter("methodName","getInterworkingAccessNetworkType")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -132,34 +132,33 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getInterworkingAccessNetworkType was success.";
+            print("ACTUAL RESULT 1: Invocation of wifi_getInterworkingAccessNetworkType was success.");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "TEST STEP 2: Get the value of InterworkingAccessNetworkType";
-            print "EXPECTED RESULT 2 : Should get the InterworkingAccessNetworkType in the range 0 to 15";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("TEST STEP 2: Get the value of InterworkingAccessNetworkType");
+            print("EXPECTED RESULT 2 : Should get the InterworkingAccessNetworkType in the range 0 to 15");
             type = int(details.split(":")[1].strip());
             network = get_NetworkType(type);
 
             if type in range(0,16):
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "ACTUAL RESULT 2: InterworkingAccessNetworkType = %d" %type;
-                 print "The Network Type corresponds to :%s" %network;
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT 2: InterworkingAccessNetworkType = %d" %type);
+                print("The Network Type corresponds to :%s" %network);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "ACTUAL RESULT 2: InterworkingAccessNetworkType = %d" %type;
-                 print "The Type is not withn the range :%s" %network;
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 2: InterworkingAccessNetworkType = %d" %type);
+                print("The Type is not withn the range :%s" %network);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

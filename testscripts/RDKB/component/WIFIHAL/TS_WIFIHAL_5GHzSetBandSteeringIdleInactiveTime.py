@@ -25,7 +25,7 @@
   <primitive_test_name>WIFIHAL_GetOrSetParamIntValue</primitive_test_name>
   <primitive_test_version>3</primitive_test_version>
   <status>FREE</status>
-  <synopsis>To set and get the BandSteering IdleInactiveTime	for 5GHz</synopsis>
+  <synopsis>To set and get the BandSteering IdleInactiveTime    for 5GHz</synopsis>
   <groups_id/>
   <execution_time>5</execution_time>
   <long_duration>false</long_duration>
@@ -53,11 +53,11 @@ methodName : getBandSteeringIdleInactiveTime
 methodName : setBandSteeringIdleInactiveTime
 radioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
-2. Using WIFIHAL_GetOrSetParamBoolValue invoke wifi_getBandSteeringCapability() to see if the BandSteering Capability is available or not. If available proceed to next step, else return SUCCESS and exit. 
+2. Using WIFIHAL_GetOrSetParamBoolValue invoke wifi_getBandSteeringCapability() to see if the BandSteering Capability is available or not. If available proceed to next step, else return SUCCESS and exit.
 3. Using  WIFIHAL_GetOrSetParamIntValue invoke wifi_getBandSteeringIdleInactiveTime()
-4. Using WIFIHAL_GetOrSetParamIntValue 
+4. Using WIFIHAL_GetOrSetParamIntValue
  invoke wifi_setBandSteeringIdleInactiveTime and set a valid value
-5. Invoke wifi_getBandSteeringIdleInactiveTime() to get the previously set value. 
+5. Invoke wifi_getBandSteeringIdleInactiveTime() to get the previously set value.
 6. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 7. Revert the IdleInactiveTime back to initial value
 8. Unload wifihal module</automation_approch>
@@ -73,8 +73,8 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 import random;
 
@@ -91,7 +91,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetBandSteeringIdleInactiveTime');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,99 +99,97 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    getMethod = "getBandSteeringCapability"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    radioIndex = idx;
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        expectedresult="SUCCESS";
+        getMethod = "getBandSteeringCapability"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        radioIndex = idx;
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    if expectedresult in actualresult:
-		enable = details.split(":")[1].strip()
-		tdkTestObj.setResultStatus("SUCCESS");
-		if "Enabled" in enable:
+        if expectedresult in actualresult:
+            enable = details.split(":")[1].strip()
+            tdkTestObj.setResultStatus("SUCCESS");
+            if "Enabled" in enable:
 
-		    getMethod = "getBandSteeringIdleInactiveTime"
-		    primitive = 'WIFIHAL_GetOrSetParamIntValue'
-		    radioIndex = idx;
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                getMethod = "getBandSteeringIdleInactiveTime"
+                primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                radioIndex = idx;
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-		    if expectedresult in actualresult:
-			tdkTestObj.setResultStatus("SUCCESS");
-                        initGetValue = details.split(":")[1].strip();
-			setMethod = "setBandSteeringIdleInactiveTime"
-			radioIndex = idx;
-			primitive = 'WIFIHAL_GetOrSetParamIntValue'
-			r = range(5,int(initGetValue)) + range(int(initGetValue)+1, 50)
-			setValue = random.choice(r)
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    initGetValue = details.split(":")[1].strip();
+                    setMethod = "setBandSteeringIdleInactiveTime"
+                    radioIndex = idx;
+                    primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                    r = list(range(5,int(initGetValue))) + list(range(int(initGetValue)+1, 50))
+                    setValue = random.choice(r)
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
 
-			if expectedresult in actualresult:
-			    getMethod = "getBandSteeringIdleInactiveTime"
-			    radioIndex = idx;
-			    primitive = 'WIFIHAL_GetOrSetParamIntValue'
-			    #Calling the method from wifiUtility to execute test case and set result status for the test.
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    if expectedresult in actualresult:
+                        getMethod = "getBandSteeringIdleInactiveTime"
+                        radioIndex = idx;
+                        primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                        #Calling the method from wifiUtility to execute test case and set result status for the test.
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-			    if expectedresult in actualresult:
-				tdkTestObj.setResultStatus("SUCCESS");
-				finalGetValue = details.split(":")[1].strip()
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            finalGetValue = details.split(":")[1].strip()
 
-				if setValue == int(finalGetValue):
-				    print "TEST STEP: Comparing set and get values of BandSteeringIdleInactiveTime"
-				    print "EXPECTED RESULT: Set and get values should be the same"
-				    print "ACTUAL RESULT : Set and get values are the same"
-				    print "Set value: %s"%setValue
-				    print "Get value: %s"%finalGetValue
-				    print "TEST EXECUTION RESULT :SUCCESS"
-				    tdkTestObj.setResultStatus("SUCCESS");
-				else:
-				    print "TEST STEP: Comparing set and get values of BandSteeringIdleInactiveTime"
-				    print "EXPECTED RESULT: Set and get values should be the same"
-				    print "ACTUAL RESULT : Set and get values are NOT the same"
-				    print "Set value: %s"%setValue
-				    print "Get value: %s"%finalGetValue
-				    print "TEST EXECUTION RESULT :FAILURE"
-				    tdkTestObj.setResultStatus("FAILURE");
-			    else:
-				tdkTestObj.setResultStatus("FAILURE");
-				print "getBandSteeringIdleInactiveTime() call failed after set operation"
+                            if setValue == int(finalGetValue):
+                                print("TEST STEP: Comparing set and get values of BandSteeringIdleInactiveTime")
+                                print("EXPECTED RESULT: Set and get values should be the same")
+                                print("ACTUAL RESULT : Set and get values are the same")
+                                print("Set value: %s"%setValue)
+                                print("Get value: %s"%finalGetValue)
+                                print("TEST EXECUTION RESULT :SUCCESS")
+                                tdkTestObj.setResultStatus("SUCCESS");
+                            else:
+                                print("TEST STEP: Comparing set and get values of BandSteeringIdleInactiveTime")
+                                print("EXPECTED RESULT: Set and get values should be the same")
+                                print("ACTUAL RESULT : Set and get values are NOT the same")
+                                print("Set value: %s"%setValue)
+                                print("Get value: %s"%finalGetValue)
+                                print("TEST EXECUTION RESULT :FAILURE")
+                                tdkTestObj.setResultStatus("FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("getBandSteeringIdleInactiveTime() call failed after set operation")
 
-			    #Revert back to initial value
-			    setMethod = "setBandSteeringIdleInactiveTime"
-			    primitive = 'WIFIHAL_GetOrSetParamIntValue'
-			    setValue = int(initGetValue)
-			    #Calling the method from wifiUtility to execute test case and set result status for the test.
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+                        #Revert back to initial value
+                        setMethod = "setBandSteeringIdleInactiveTime"
+                        primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                        setValue = int(initGetValue)
+                        #Calling the method from wifiUtility to execute test case and set result status for the test.
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
 
-			    if expectedresult in actualresult:
-				tdkTestObj.setResultStatus("SUCCESS");
-				print "Successfully reverted back to inital value"
-			    else:
-				tdkTestObj.setResultStatus("FAILURE");
-				print "Unable to revert to initial value"
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "setBandSteeringIdleInactiveTime() call failed"
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "getBandSteeringIdleInactiveTime() call failed"
-		else:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "BandSteeringCapability is disabled"
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "getBandSteeringCapability() call failed"
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Successfully reverted back to inital value")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Unable to revert to initial value")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("setBandSteeringIdleInactiveTime() call failed")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("getBandSteeringIdleInactiveTime() call failed")
+            else:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("BandSteeringCapability is disabled")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("getBandSteeringCapability() call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-
-

@@ -89,8 +89,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetFTMobilityDomainID');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetFTMobilityDomainID");
@@ -110,31 +110,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getFTMobilityDomainID() to retrieve the Mobility Domain ID for 2.4G private AP";
-        print "EXPECTED RESULT 1: Should get the Mobility Domain ID using the HAL API successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getFTMobilityDomainID() to retrieve the Mobility Domain ID for 2.4G private AP");
+        print("EXPECTED RESULT 1: Should get the Mobility Domain ID using the HAL API successfully");
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if proper Hex values are retrieved and convert them to integer value
-            print "\nTEST STEP 2 : Check if the FT Mobility Domain ID is retrieved as two Hex Values";
-            print "EXPECTED RESULT 2 : FT Mobility Domain ID should be retrieved as two Hex Values";
+            print("\nTEST STEP 2 : Check if the FT Mobility Domain ID is retrieved as two Hex Values");
+            print("EXPECTED RESULT 2 : FT Mobility Domain ID should be retrieved as two Hex Values");
 
             hex_value0 = details.split("ID[0] : ")[1].split(",")[0];
             hex_value1 = details.split("ID[1] : ")[1];
-            print "Mobility Domain ID[0] : %s" %hex_value0;
-            print "Mobility Domain ID[1] : %s" %hex_value1;
+            print("Mobility Domain ID[0] : %s" %hex_value0);
+            print("Mobility Domain ID[1] : %s" %hex_value1);
 
             if "0x" in hex_value0 and "0x" in hex_value1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: FT Mobility Domain ID is retrieved as two Hex values";
+                print("ACTUAL RESULT 2: FT Mobility Domain ID is retrieved as two Hex values");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Covert the Hex value to corresponding integer value
                 hex0 = hex_value0.split("0x")[1];
@@ -147,24 +147,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 #Concatenate the two Hex parts to get the full hex value
                 hex_value = hex1 + hex0;
                 mobility_id = int(hex_value, 16);
-                print "\nThe Hex value after combining the Mobility Domain IDs is : 0x%s" %hex_value;
-                print "The Equivalent integer value of the Mobility Domain ID is : %d" %mobility_id;
+                print("\nThe Hex value after combining the Mobility Domain IDs is : 0x%s" %hex_value);
+                print("The Equivalent integer value of the Mobility Domain ID is : %d" %mobility_id);
 
                 #Get the command to compare the FT Mobility Domain from platform property file
                 cmd= "sh %s/tdk_utility.sh parseConfigFile FT_MOBILITY_DOMAIN_ID_2G" %TDK_PATH;
-                print cmd;
+                print(cmd);
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 check_cmd = tdkTestObj.getResultDetails().replace("\\n", "");
 
-                print "\nTEST STEP 3: Get the command to cross check the FT Mobility Domain ID from property file";
-                print "EXPECTED RESULT 3: Should get the FT Mobility Domain ID check command from property file"
+                print("\nTEST STEP 3: Get the command to cross check the FT Mobility Domain ID from property file");
+                print("EXPECTED RESULT 3: Should get the FT Mobility Domain ID check command from property file")
 
                 if expectedresult in actualresult and check_cmd!= "":
-                    print "ACTUAL RESULT 3: FT Mobility Domain ID check command from property file :", check_cmd ;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("ACTUAL RESULT 3: FT Mobility Domain ID check command from property file :", check_cmd) ;
+                    print("TEST EXECUTION RESULT :SUCCESS");
                     tdkTestObj.setResultStatus("SUCCESS");
 
                     #Get the Mobility Domain ID using the command
@@ -174,12 +174,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().replace("\\n", "");
 
-                    print "\nTEST STEP 4: Execute the command in the DUT to obtian the Mobility Domain ID";
-                    print "EXPECTED RESULT 4: Should successfully execute the FT Mobility Domain ID check command"
+                    print("\nTEST STEP 4: Execute the command in the DUT to obtian the Mobility Domain ID");
+                    print("EXPECTED RESULT 4: Should successfully execute the FT Mobility Domain ID check command")
 
                     if expectedresult in actualresult :
-                        print "ACTUAL RESULT 4: FT Mobility Domain ID :", details ;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT 4: FT Mobility Domain ID :", details) ;
+                        print("TEST EXECUTION RESULT :SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #check if the FT Mobility Domain ID value from the HAL API is same as the value retrieved using the command
@@ -192,46 +192,46 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         if fbt_mdid_value.isdigit() :
                             fbt_mdid_value = int(fbt_mdid_value);
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "FT Mobility Domain ID from HAL API : %d" %mobility_id;
-                            print "Expected FT Mobility Domain ID : %d" %fbt_mdid_value;
+                            print("FT Mobility Domain ID from HAL API : %d" %mobility_id);
+                            print("Expected FT Mobility Domain ID : %d" %fbt_mdid_value);
 
                             if fbt_mdid_value == mobility_id:
-                                print "ACTUAL RESULT 5: The values are the same";
-                                print "TEST EXECUTION RESULT :SUCCESS";
+                                print("ACTUAL RESULT 5: The values are the same");
+                                print("TEST EXECUTION RESULT :SUCCESS");
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else:
-                                print "ACTUAL RESULT 5: The values are not the same";
-                                print "TEST EXECUTION RESULT :FAILURE";
+                                print("ACTUAL RESULT 5: The values are not the same");
+                                print("TEST EXECUTION RESULT :FAILURE");
                                 tdkTestObj.setResultStatus("FAILURE");
                         else :
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "FT Mobility Domain ID is not of the expected type";
+                            print("FT Mobility Domain ID is not of the expected type");
 
                     else:
-                        print "ACTUAL RESULT 4: FT Mobility Domain ID :", details ;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT 4: FT Mobility Domain ID :", details) ;
+                        print("TEST EXECUTION RESULT :FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 3: FT Mobility Domain ID check command from property file :", check_cmd ;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("ACTUAL RESULT 3: FT Mobility Domain ID check command from property file :", check_cmd) ;
+                    print("TEST EXECUTION RESULT :FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: FT Mobility Domain ID is not retrieved as two Hex values";
+                print("ACTUAL RESULT 2: FT Mobility Domain ID is not retrieved as two Hex values");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

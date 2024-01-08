@@ -98,15 +98,15 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_GetApStatus');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     sysobj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS";
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -115,10 +115,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         expectedresult="SUCCESS";
@@ -132,34 +132,34 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         success_values = ['Up', 'Disable']
 
         if expectedresult in actualresult and details !="":
-           status_received = details.split(":")[1].strip()
-           if status_received in success_values:
-               print "wifi_getApStatus function successful, %s"%details
-               tdkTestObj.setResultStatus("SUCCESS");
-	       print "TEST STEP 2: Validate the wifi_getApStatus Function";
-	       print "EXPECTED RESULT 2: wifi_getApStatus should return a string which should be Up/Disabled";
-	       print "ACTUAL RESULT 2: AP Status string received: %s"%status_received;
-	       print "[TEST EXECUTION RESULT] : SUCCESS";
-	   else:
-	       print "wifi_getApStatus() failed, %s"%details
-	       tdkTestObj.setResultStatus("FAILURE");
-	       print "TEST STEP 2: Validate the wifi_getApStatus Function";
-	       print "EXPECTED RESULT 2: wifi_getApStatus should return a string which should be Up/Disabled";
-	       print "ACTUAL RESULT 2: Failed to get AP Status: %s"%status_received;
-	       print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	     print "wifi_getApStatus() failed"
-	     tdkTestObj.setResultStatus("FAILURE");
+            status_received = details.split(":")[1].strip()
+            if status_received in success_values:
+                print("wifi_getApStatus function successful, %s"%details)
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Validate the wifi_getApStatus Function");
+                print("EXPECTED RESULT 2: wifi_getApStatus should return a string which should be Up/Disabled");
+                print("ACTUAL RESULT 2: AP Status string received: %s"%status_received);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                print("wifi_getApStatus() failed, %s"%details)
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Validate the wifi_getApStatus Function");
+                print("EXPECTED RESULT 2: wifi_getApStatus should return a string which should be Up/Disabled");
+                print("ACTUAL RESULT 2: Failed to get AP Status: %s"%status_received);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("wifi_getApStatus() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from properties file : ", details;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from properties file : ", details);
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

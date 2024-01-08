@@ -86,7 +86,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApSecurityPreSharedKey');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,96 +94,96 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApSecurityPreSharedKey"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApSecurityPreSharedKey"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    if expectedresult in actualresult:
-		preSharedKey = details.split(":")[1].strip()
-		if (len(preSharedKey) >= 8 and len(preSharedKey) <= 64):
-		    print "getApSecurityPreSharedKey function successful,%s"%details
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 1: Validate the wifi_getApSecurityPreSharedKey Function";
-		    print "EXPECTED RESULT 1: wifi_getApSecurityPreSharedKey should return a string";
-		    print "ACTUAL RESULT 1: Preshared key string Returned: %s"%preSharedKey;
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            preSharedKey = details.split(":")[1].strip()
+            if (len(preSharedKey) >= 8 and len(preSharedKey) <= 64):
+                print("getApSecurityPreSharedKey function successful,%s"%details)
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Validate the wifi_getApSecurityPreSharedKey Function");
+                print("EXPECTED RESULT 1: wifi_getApSecurityPreSharedKey should return a string");
+                print("ACTUAL RESULT 1: Preshared key string Returned: %s"%preSharedKey);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		    expectedresult="SUCCESS";
-		    apIndex = idx
-		    setMethod = "setApSecurityPreSharedKey"
-		    setKey = "123456789123456789123456789987654321ABCD123456789EF1234567891223"
-		    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                expectedresult="SUCCESS";
+                apIndex = idx
+                setMethod = "setApSecurityPreSharedKey"
+                setKey = "123456789123456789123456789987654321ABCD123456789EF1234567891223"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setKey, setMethod)
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setKey, setMethod)
 
-		    if expectedresult in actualresult:
-			tdkTestObj.setResultStatus("SUCCESS");
-			print "TEST STEP 2: Validate the wifi_setApSecurityPreSharedKey Function";
-			print "EXPECTED RESULT 2: wifi_setApSecurityPreSharedKey should be success";
-			print "ACTUAL RESULT 2: wifi_setApSecurityPreSharedKey() is success"
-			print "[TEST EXECUTION RESULT] : SUCCESS";
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2: Validate the wifi_setApSecurityPreSharedKey Function");
+                    print("EXPECTED RESULT 2: wifi_setApSecurityPreSharedKey should be success");
+                    print("ACTUAL RESULT 2: wifi_setApSecurityPreSharedKey() is success")
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-			expectedresult="SUCCESS";
-			apIndex = idx
-			getMethod = "getApSecurityPreSharedKey"
-			primitive = 'WIFIHAL_GetOrSetParamStringValue'
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-			if expectedresult in actualresult:
-			    finalKey = details.split(":")[1].strip()
-			    if finalKey == setKey:
-				print "TEST STEP 3: Compare set nad get preSharedKeys"
-				print "EXPECTED RESULT 3: Set and get preSharedKeys should be the same"		
-				print "ACTUAL RESULT 3: Set and get preSharedKeys are SAME"
-				print "[TEST EXECUTION RESULT] : SUCCESS";
-				tdkTestObj.setResultStatus("SUCCESS");
+                    expectedresult="SUCCESS";
+                    apIndex = idx
+                    getMethod = "getApSecurityPreSharedKey"
+                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                    if expectedresult in actualresult:
+                        finalKey = details.split(":")[1].strip()
+                        if finalKey == setKey:
+                            print("TEST STEP 3: Compare set nad get preSharedKeys")
+                            print("EXPECTED RESULT 3: Set and get preSharedKeys should be the same")
+                            print("ACTUAL RESULT 3: Set and get preSharedKeys are SAME")
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            tdkTestObj.setResultStatus("SUCCESS");
 
-			    else:
-				print "TEST STEP 3: Compare set nad get preSharedKeys"
-				print "EXPECTED RESULT 3: Set and get preSharedKeys should be the same"		
-				print "ACTUAL RESULT 3: Set and get preSharedKeys are NOT SAME"
-				print "[TEST EXECUTION RESULT] : FAILURE";
-				tdkTestObj.setResultStatus("FAILURE");
+                        else:
+                            print("TEST STEP 3: Compare set nad get preSharedKeys")
+                            print("EXPECTED RESULT 3: Set and get preSharedKeys should be the same")
+                            print("ACTUAL RESULT 3: Set and get preSharedKeys are NOT SAME")
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                            tdkTestObj.setResultStatus("FAILURE");
 
-			    #Rvert to initial value
-			    #Calling the method from wifiUtility to execute test case and set result status for the test.
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, preSharedKey, setMethod)
-			    if expectedresult in actualresult:
-				print "Successfully reverted to initial value"
-				tdkTestObj.setResultStatus("SUCCESS");
-			    else:
-				print "Unable to revert to initial value"
-				tdkTestObj.setResultStatus("FAILURE");
-			else:
-			    print "getApSecurityPreSharedKey() call failed after set operation"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "TEST STEP 2: Validate the wifi_setApSecurityPreSharedKey Function";
-			print "EXPECTED RESULT 2: wifi_setApSecurityPreSharedKey should be success";
-			print "ACTUAL RESULT 2: wifi_setApSecurityPreSharedKey() failed"
-			print "[TEST EXECUTION RESULT] : FAILURE";
-		else:
-		    print "getApSecurityPreSharedKey() Function failed: %s"%details
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 1: Validate the wifi_getApSecurityPreSharedKey Function";
-		    print "EXPECTED RESULT 1: wifi_getApSecurityPreSharedKey should return a string";
-		    print "ACTUAL RESULT 1: Preshared key string Returned: %s"%preSharedKey;
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		print "getApSecurityPreSharedKey() Function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+                        #Rvert to initial value
+                        #Calling the method from wifiUtility to execute test case and set result status for the test.
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, preSharedKey, setMethod)
+                        if expectedresult in actualresult:
+                            print("Successfully reverted to initial value")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("Unable to revert to initial value")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("getApSecurityPreSharedKey() call failed after set operation")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 2: Validate the wifi_setApSecurityPreSharedKey Function");
+                    print("EXPECTED RESULT 2: wifi_setApSecurityPreSharedKey should be success");
+                    print("ACTUAL RESULT 2: wifi_setApSecurityPreSharedKey() failed")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                print("getApSecurityPreSharedKey() Function failed: %s"%details)
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Validate the wifi_getApSecurityPreSharedKey Function");
+                print("EXPECTED RESULT 1: wifi_getApSecurityPreSharedKey should return a string");
+                print("ACTUAL RESULT 1: Preshared key string Returned: %s"%preSharedKey);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("getApSecurityPreSharedKey() Function failed");
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

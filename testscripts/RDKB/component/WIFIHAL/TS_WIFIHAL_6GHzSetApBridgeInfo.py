@@ -89,8 +89,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetApBridgeInfo');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,7 +101,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which associated to this Script
@@ -112,21 +112,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the API wifi_ApBridgeInfo() for 6GHz";
-        print "EXPECTED RESULT 2: Should successfully invoke the API wifi_ApBridgeInfo() for 6GHz";
+        print("\nTEST STEP 2: Invoke the API wifi_ApBridgeInfo() for 6GHz");
+        print("EXPECTED RESULT 2: Should successfully invoke the API wifi_ApBridgeInfo() for 6GHz");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: API invocation success; Details : %s" %details;
+            print("ACTUAL RESULT 2: API invocation success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             initial_bridgeName = details.split(":")[1].split(",")[0].split("=")[1];
             initial_ip = details.split(":")[1].split(",")[1].split("=")[1];
             initial_subnet = details.split(":")[1].split(",")[2].split("=")[1];
-            print "Initial Bridgename : %s"%initial_bridgeName;
-            print "Initial IP : %s"%initial_ip;
-            print "Initial Subnet : %s"%initial_subnet;
+            print("Initial Bridgename : %s"%initial_bridgeName);
+            print("Initial IP : %s"%initial_ip);
+            print("Initial Subnet : %s"%initial_subnet);
 
             #Set new parameters to AP Bridge
             new_bridge = "newBranch2";
@@ -141,14 +141,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 3: Set the new bridge deatails using wifi_setApBridgeInfo for 6GHz";
-            print "EXPECTED RESULT 3: Should set the new bridge deatails using wifi_setApBridgeInfo for 6GHz successfully";
+            print("\nTEST STEP 3: Set the new bridge deatails using wifi_setApBridgeInfo for 6GHz");
+            print("EXPECTED RESULT 3: Should set the new bridge deatails using wifi_setApBridgeInfo for 6GHz successfully");
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: API invocation success; Details : %s" %details;
+                print("ACTUAL RESULT 3: API invocation success; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Get the bridge info after the set
                 tdkTestObj.addParameter("methodName","getApBridgeInfo");
@@ -157,41 +157,41 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 4: Get the previously set ApBridgeInfo for 5GHz";
-                print "EXPECTED RESULT 4: Should get the previously set ApBridgeInfo for 6GHz";
+                print("\nTEST STEP 4: Get the previously set ApBridgeInfo for 5GHz");
+                print("EXPECTED RESULT 4: Should get the previously set ApBridgeInfo for 6GHz");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: API invocation success; Details : %s" %details;
+                    print("ACTUAL RESULT 4: API invocation success; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Compare the bridge info get with the set values
                     final_bridge = details.split(":")[1].split(",")[0].split("=")[1];
                     final_ip = details.split(":")[1].split(",")[1].split("=")[1];
                     final_subnet = details.split(":")[1].split(",")[2].split("=")[1];
-                    print "Set Bridgename : %s, Get Bridgename : %s"%(new_bridge, final_bridge);
-                    print "Set IP : %s, Get IP : %s"%(new_ip, final_ip);
-                    print "Set Subnet : %s, Get Subnet : %s"%(new_subnet, final_subnet);
+                    print("Set Bridgename : %s, Get Bridgename : %s"%(new_bridge, final_bridge));
+                    print("Set IP : %s, Get IP : %s"%(new_ip, final_ip));
+                    print("Set Subnet : %s, Get Subnet : %s"%(new_subnet, final_subnet));
 
-                    print "\nTEST STEP 5: Cross verify if the SET is reflected in the GET";
-                    print "EXPECTED RESULT 5: The values SET should be reflected in the GET";
+                    print("\nTEST STEP 5: Cross verify if the SET is reflected in the GET");
+                    print("EXPECTED RESULT 5: The values SET should be reflected in the GET");
 
                     if new_bridge == final_bridge and new_ip == final_ip and new_subnet == final_subnet:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5: All SET values match with the GET values";
+                        print("ACTUAL RESULT 5: All SET values match with the GET values");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5: All SET values does NOT match with the GET values";
+                        print("ACTUAL RESULT 5: All SET values does NOT match with the GET values");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: API invocation failed; Details : %s" %details;
+                    print("ACTUAL RESULT 4: API invocation failed; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert the ApBridgeInfo to intiial values
                 tdkTestObj.addParameter("methodName","setApBridgeInfo");
@@ -203,33 +203,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 6 : Revert to initial state";
-                print "EXPECTED RESULT 6 : Revert operation should be success";
+                print("\nTEST STEP 6 : Revert to initial state");
+                print("EXPECTED RESULT 6 : Revert operation should be success");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 6 : Successfully reverted to initial values; Details : %s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 6 : Successfully reverted to initial values; Details : %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 6 : Revert operation failed; Details : %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 6 : Revert operation failed; Details : %s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: API invocation failed; Details : %s" %details;
+                print("ACTUAL RESULT 3: API invocation failed; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 2: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

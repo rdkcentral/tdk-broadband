@@ -89,8 +89,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetNeighboringWiFiStatus');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,14 +100,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
         tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
         if apIndex == -1:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
         else:
             #Prmitive test case which is associated to this Script
@@ -120,15 +120,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2: Successfully start the neighbor scan by invoking wifi_startNeighborScan()"
-            print "EXPECTED RESULT 2: Should successfully start the wifi_startNeighborScan";
+            print("\nTEST STEP 2: Successfully start the neighbor scan by invoking wifi_startNeighborScan()")
+            print("EXPECTED RESULT 2: Should successfully start the wifi_startNeighborScan");
 
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Successfully started wifi_startNeighborScan; Details : %s"%details;
+                print("ACTUAL RESULT 2: Successfully started wifi_startNeighborScan; Details : %s"%details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 time.sleep(10)
                 #Script to load the configuration file of the component
@@ -138,31 +138,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 3: Get the neighboring wifi status by invoking wifi_getNeighboringWiFiStatus() for 6GHz ";
-                print "EXPECTED RESULT 3: Should get the neighboring wifi status for 6GHz";
+                print("\nTEST STEP 3: Get the neighboring wifi status by invoking wifi_getNeighboringWiFiStatus() for 6GHz ");
+                print("EXPECTED RESULT 3: Should get the neighboring wifi status for 6GHz");
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: wifi_getNeighboringWiFiStatus invoked successfully; Details : %s" %details;
+                    print("ACTUAL RESULT 3: wifi_getNeighboringWiFiStatus invoked successfully; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: wifi_getNeighboringWiFiStatus not invoked successfully; Details : %s" %details;
+                    print("ACTUAL RESULT 3: wifi_getNeighboringWiFiStatus not invoked successfully; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Failed to get the result of wifi_startNeighborScan; Details : %s" %details;
+                print("ACTUAL RESULT 2: Failed to get the result of wifi_startNeighborScan; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

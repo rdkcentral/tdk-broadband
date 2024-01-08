@@ -97,7 +97,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioExtChannel');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,7 +105,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamStringValue');
@@ -115,36 +115,36 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1 : Invoke the HAL API wifi_getRadioExtChannel() to retrieve the extension channel for 6G radio";
-        print "EXPECTED RESULT 1 : The HAL API wifi_getRadioExtChannel() should be invoked successfully";
+        print("\nTEST STEP 1 : Invoke the HAL API wifi_getRadioExtChannel() to retrieve the extension channel for 6G radio");
+        print("EXPECTED RESULT 1 : The HAL API wifi_getRadioExtChannel() should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: wifi_getRadioExtChannel() invocation is success; Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 1: wifi_getRadioExtChannel() invocation is success; Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Expected extension channel values
             success_values = ['AboveControlChannel', 'BelowControlChannel', 'Auto'];
-            print "Expected extension channel values : ", success_values;
+            print("Expected extension channel values : ", success_values);
             status_received = details.split(":")[1].strip();
 
-            print "\nTEST STEP 2 : Check if the extension channel recieved is from the expected extension channel values";
-            print "EXPECTED RESULT 2 : The extension channel should be from the expected values list";
+            print("\nTEST STEP 2 : Check if the extension channel recieved is from the expected extension channel values");
+            print("EXPECTED RESULT 2 : The extension channel should be from the expected values list");
 
             if status_received in success_values :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Extension Channel value string received: %s"%status_received;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: Extension Channel value string received: %s"%status_received);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Extension Channel receieved is not from the expected values list : %s"%status_received;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: Extension Channel receieved is not from the expected values list : %s"%status_received);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: wifi_getRadioExtChannel() invocation failed; Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 1: wifi_getRadioExtChannel() invocation failed; Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

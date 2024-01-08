@@ -101,14 +101,14 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApManagementFramePowerControl');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             initFPC = details.split(":")[1].strip()
 
             #ApManagementFramePowerControl varies in the range -20dBm to 0dBm
-            r = range(-20,0)
+            r = list(range(-20,0))
             setFPC = random.choice(r)
 
             expectedresult="SUCCESS";
@@ -144,20 +144,20 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     finalFPC = details.split(":")[1].strip()
                     if int(finalFPC) == setFPC:
-                        print "TEST STEP: Comparing set and get values of ApManagementFramePowerControl"
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are the same"
-                        print "Set value: %s"%setFPC
-                        print "Get value: %s"%finalFPC
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP: Comparing set and get values of ApManagementFramePowerControl")
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are the same")
+                        print("Set value: %s"%setFPC)
+                        print("Get value: %s"%finalFPC)
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP: Comparing set and get values of ApManagementFramePowerControl"
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are NOT the same"
-                        print "Set value: %s"%setFPC
-                        print "Get value: %s"%finalFPC
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP: Comparing set and get values of ApManagementFramePowerControl")
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are NOT the same")
+                        print("Set value: %s"%setFPC)
+                        print("Get value: %s"%finalFPC)
+                        print("TEST EXECUTION RESULT :FAILURE")
                         tdkTestObj.setResultStatus("FAILURE");
 
                     #Revert back to initial value
@@ -168,21 +168,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to inital value"
+                        print("Successfully reverted back to inital value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "getApManagementFramePowerControl() function call failed after set operation"
+                    print("getApManagementFramePowerControl() function call failed after set operation")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "setApManagementFramePowerControl() function call failed"
+                print("setApManagementFramePowerControl() function call failed")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "getApManagementFramePowerControl() function call failed"
+            print("getApManagementFramePowerControl() function call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetCountryIe');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,22 +92,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and "Enabled" in details or "Disabled" in details:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 1: Get the CountryIE enabled status  for 5GHz using wifi_getCountryIe()";
-        print "EXPECTED RESULT 1: Should get CountryIE enabled status  for 5GHz using wifi_getCountryIe()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the CountryIE enabled status  for 5GHz using wifi_getCountryIe()");
+        print("EXPECTED RESULT 1: Should get CountryIE enabled status  for 5GHz using wifi_getCountryIe()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the CountryIE enabled status  for 5GHz using wifi_getCountryIe()";
-	print "EXPECTED RESULT 1: Should get CountryIE enabled status  for 5GHz using wifi_getCountryIe()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the CountryIE enabled status  for 5GHz using wifi_getCountryIe()");
+        print("EXPECTED RESULT 1: Should get CountryIE enabled status  for 5GHz using wifi_getCountryIe()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");

@@ -101,7 +101,7 @@ port = <port>
 sysobj.configureTestCase(ip,port,'TS_WIFIHAL_CreateInitialConfigFiles');
 obj.configureTestCase(ip,port,'TS_WIFIHAL_CreateInitialConfigFiles');
 def createInitialConfigfiles():
-    print "Entered to the Function"
+    print("Entered to the Function")
     #calling the wifi api wifi_createHostApdConfig to create Initial config file /nvram/log4crc
     tdkTestObj = obj.createTestStep('WIFIHAL_CreateInitialConfigFiles');
     expectedresult="SUCCESS";
@@ -113,10 +113,10 @@ def createInitialConfigfiles():
 
     if expectedresult in actualresult :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: Call the wifi_createInitialConfigFiles api to create initial configuration file";
-        print "EXPECTED RESULT 2: Should create the file /nvram/log4crc";
-        print "ACTUAL RESULT 2: Successfully created the file and execution returns SUCCESS";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 2: Call the wifi_createInitialConfigFiles api to create initial configuration file");
+        print("EXPECTED RESULT 2: Should create the file /nvram/log4crc");
+        print("ACTUAL RESULT 2: Successfully created the file and execution returns SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         time.sleep(30)
         #Calling the Function checkInitialConfigFiles to check whether the file creation
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -128,11 +128,11 @@ def createInitialConfigfiles():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Get the created initial config files";
-            print "EXPECTED RESULT 3: Should get the files created";
-            print "ACTUAL RESULT 3: Operation returned SUCCESS";
-            print "Created Files are:",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 3: Get the created initial config files");
+            print("EXPECTED RESULT 3: Should get the files created");
+            print("ACTUAL RESULT 3: Operation returned SUCCESS");
+            print("Created Files are:",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #Revert back the changes
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             query = "sh %s/tdk_platform_utility.sh removeInitialConfigFile" %TDK_PATH
@@ -143,36 +143,36 @@ def createInitialConfigfiles():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult and "Invalid Argument passed" not in details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Remove the created initial config files";
-                print "EXPECTED RESULT 4: Should remove the file";
-                print "ACTUAL RESULT 4: Successfully removed the file and execution returns SUCCESS";
-                print "details is :",details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 4: Remove the created initial config files");
+                print("EXPECTED RESULT 4: Should remove the file");
+                print("ACTUAL RESULT 4: Successfully removed the file and execution returns SUCCESS");
+                print("details is :",details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                print "TEST STEP 4: Remove the created initial config files";
-                print "EXPECTED RESULT 4: Should remove the file";
-                print "ACTUAL RESULT 4: Failed to remove the files and execution returns FAILURE";
-                print "details is :",details
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 4: Remove the created initial config files");
+                print("EXPECTED RESULT 4: Should remove the file");
+                print("ACTUAL RESULT 4: Failed to remove the files and execution returns FAILURE");
+                print("details is :",details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Get the created initial config file";
-            print "EXPECTED RESULT 3: Should get the files created initial config file";
-            print "ACTUAL RESULT 3: Failed to get the result",actualresult;
-            print "Details is :",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 3: Get the created initial config file");
+            print("EXPECTED RESULT 3: Should get the files created initial config file");
+            print("ACTUAL RESULT 3: Failed to get the result",actualresult);
+            print("Details is :",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 2: Call the function wifi_createHostApdConfig to create initial config file";
-        print "EXPECTED RESULT 2: Should create the initial config files";
-        print "ACTUAL RESULT 2: Failed to create the file and api returns failure";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 2: Call the function wifi_createHostApdConfig to create initial config file");
+        print("EXPECTED RESULT 2: Should create the initial config files");
+        print("ACTUAL RESULT 2: Failed to create the file and api returns failure");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 #Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult();
 sysloadmodulestatus = sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus);
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     #Removing the existing files in the Arm side
@@ -185,24 +185,22 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and "Invalid Argument passed" not in details:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Remove the existing initial config file";
-        print "EXPECTED RESULT 1: Should remove the file";
-        print "ACTUAL RESULT 1: Successfully removed the files and execution returns SUCCESS";
-        print "details is :",details
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Remove the existing initial config file");
+        print("EXPECTED RESULT 1: Should remove the file");
+        print("ACTUAL RESULT 1: Successfully removed the files and execution returns SUCCESS");
+        print("details is :",details)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Calling the function to execute the functionality
         createInitialConfigfiles()
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Remove the existing initial config file";
-        print "EXPECTED RESULT 1: Should remove the file";
-        print "ACTUAL RESULT 1: Failed to remove  the existing files and execution returns FAILURE";
-        print "details is :",details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Remove the existing initial config file");
+        print("EXPECTED RESULT 1: Should remove the file");
+        print("ACTUAL RESULT 1: Failed to remove  the existing files and execution returns FAILURE");
+        print("details is :",details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysobj.unloadModule("sysutil");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-
-

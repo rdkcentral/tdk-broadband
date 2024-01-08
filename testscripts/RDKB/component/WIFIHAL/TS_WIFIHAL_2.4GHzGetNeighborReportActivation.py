@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetNeighborReportActivation');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,7 +89,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
@@ -100,37 +100,37 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Get the enable value of Neighbor Report Activation using the HAL API wifi_getNeighborReportActivation() for 2.4G private AP";
-        print "EXPECTED RESULT 1: Should get the Neighbor Report Activation using the HAL API successfully";
+        print("\nTEST STEP 1: Get the enable value of Neighbor Report Activation using the HAL API wifi_getNeighborReportActivation() for 2.4G private AP");
+        print("EXPECTED RESULT 1: Should get the Neighbor Report Activation using the HAL API successfully");
 
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 1: API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\nTEST STEP 2: Check if value returned by wifi_getNeighborReportActivation API is Enabled or Disabled";
-            print "EXPECTED RESULT 2 : The value returned by wifi_getNeighborReportActivation API should be Enabled or Disabled";
+            print("\nTEST STEP 2: Check if value returned by wifi_getNeighborReportActivation API is Enabled or Disabled");
+            print("EXPECTED RESULT 2 : The value returned by wifi_getNeighborReportActivation API should be Enabled or Disabled");
             enable= details.split(":")[1].strip()
 
             if "Enabled" in enable or "Disabled" in enable:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Neighbor Report Activation = %s" %enable;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: Neighbor Report Activation = %s" %enable);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Neighbor Report Activation = %s." %enable;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 2: Neighbor Report Activation = %s." %enable);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

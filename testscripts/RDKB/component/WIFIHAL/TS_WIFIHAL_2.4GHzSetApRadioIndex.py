@@ -81,7 +81,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApRadioIndex');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -103,7 +103,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         setRadioIndex = 1
         primitive = 'WIFIHAL_GetOrSetParamIntValue'
 
-	#Calling the method from wifiUtility to execute test case and set result status for the test.
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setRadioIndex, setMethod)
 
         if expectedresult in actualresult:
@@ -119,32 +119,31 @@ if "SUCCESS" in loadmodulestatus.upper():
                 finalRadioIndex = details.split(":")[1].strip()
                 if int(finalRadioIndex) == setRadioIndex:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP: Compare the set and get radio index for the access point %s"%apIndex
-                    print "EXPECTED RESULT: Set and get radio index should be the same"
-                    print "ACTUAL RESULT: Set and get radio index are the SAME for access point %s"%apIndex
-                    print "Set RadioIndex = %s"%setRadioIndex
-                    print "Get RadioIndex = %s"%finalRadioIndex
-                    print "TEST EXECUTION RESULT: SUCCESS"
+                    print("TEST STEP: Compare the set and get radio index for the access point %s"%apIndex)
+                    print("EXPECTED RESULT: Set and get radio index should be the same")
+                    print("ACTUAL RESULT: Set and get radio index are the SAME for access point %s"%apIndex)
+                    print("Set RadioIndex = %s"%setRadioIndex)
+                    print("Get RadioIndex = %s"%finalRadioIndex)
+                    print("TEST EXECUTION RESULT: SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP: Compare the set and get radio index for the access point %s"%apIndex
-                    print "EXPECTED RESULT: Set and get radio index should be the same"
-                    print "ACTUAL RESULT: Set and get radio index are NOT SAME for access point %s"%apIndex
-                    print "Set RadioIndex = %s"%setRadioIndex
-                    print "Get RadioIndex = %s"%finalRadioIndex
-                    print "TEST EXECUTION RESULT: FAILURE"
+                    print("TEST STEP: Compare the set and get radio index for the access point %s"%apIndex)
+                    print("EXPECTED RESULT: Set and get radio index should be the same")
+                    print("ACTUAL RESULT: Set and get radio index are NOT SAME for access point %s"%apIndex)
+                    print("Set RadioIndex = %s"%setRadioIndex)
+                    print("Get RadioIndex = %s"%finalRadioIndex)
+                    print("TEST EXECUTION RESULT: FAILURE")
             else:
-                print "getApRadioIndex() call failed after set operation"
+                print("getApRadioIndex() call failed after set operation")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "setApRadioIndex() call failed"
+            print("setApRadioIndex() call failed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "getApRadioIndex() call failed"
+        print("getApRadioIndex() call failed")
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

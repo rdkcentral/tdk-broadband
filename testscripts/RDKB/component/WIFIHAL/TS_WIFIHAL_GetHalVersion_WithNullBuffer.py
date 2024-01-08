@@ -79,7 +79,7 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_GetHalVersion_WithNullBuffer');
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,12 +88,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObjTemp, idx = getIndex(obj, item);
 
         if idx == -1:
-           print "Failed to get radio index for radio %s\n" %radio;
-           tdkTestObjTemp.setResultStatus("FAILURE");
+            print("Failed to get radio index for radio %s\n" %radio);
+            tdkTestObjTemp.setResultStatus("FAILURE");
         else:
-            print"*************************************";
-            print "Querying the api for apindex%d" %idx;
-            print"**************************************";
+            print("*************************************");
+            print("Querying the api for apindex%d" %idx);
+            print("**************************************");
             #Script to load the configuration file of the component
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
             tdkTestObj.addParameter("methodName","getHalVersion");
@@ -104,23 +104,23 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 1: Query the wifi_getHalVersion api with Null Buffer";
-               print "EXPECTED RESULT 1: API call should fail with Null Buffer";
-               print "ACTUAL RESULT 1: %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Query the wifi_getHalVersion api with Null Buffer");
+                print("EXPECTED RESULT 1: API call should fail with Null Buffer");
+                print("ACTUAL RESULT 1: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1:  Query the wifi_getHalVersion api with Null Buffer";
-                print "EXPECTED RESULT 1: API call should fail with Null Buffer";
-                print "ACTUAL RESULT 1: %s" %details;
+                print("TEST STEP 1:  Query the wifi_getHalVersion api with Null Buffer");
+                print("EXPECTED RESULT 1: API call should fail with Null Buffer");
+                print("ACTUAL RESULT 1: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

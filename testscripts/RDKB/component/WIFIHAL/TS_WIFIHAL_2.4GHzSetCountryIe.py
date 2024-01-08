@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetCountryIe');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,111 +96,111 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and "Enabled" in details or "Disabled" in details:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 1: Get the CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()";
-        print "EXPECTED RESULT 1: Should get CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : SUCCESS";
-	if "Enabled" in details:
-	    oldEnable = 1;
-	    newEnable = 0;
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()");
+        print("EXPECTED RESULT 1: Should get CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        if "Enabled" in details:
+            oldEnable = 1;
+            newEnable = 0;
             expectedStatus = "Disabled"
-	else:
-	    oldEnable = 0;
-	    newEnable = 1;
+        else:
+            oldEnable = 0;
+            newEnable = 1;
             expectedStatus = "Enabled"
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	tdkTestObj.addParameter("methodName","setCountryIe");
-	tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
-	tdkTestObj.addParameter("param",newEnable);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: Toggle the CountryIE enabled status for 2.4GHz";
-	    print "EXPECTED RESULT 2: Should toggle the CountryIE enable status for 2.4GHz to ", expectedStatus ;
-	    print "ACTUAL RESULT 2: %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.addParameter("methodName","setCountryIe");
+        tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
+        tdkTestObj.addParameter("param",newEnable);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Toggle the CountryIE enabled status for 2.4GHz");
+            print("EXPECTED RESULT 2: Should toggle the CountryIE enable status for 2.4GHz to ", expectedStatus) ;
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #Script to load the configuration file of the component
-	    tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	    tdkTestObj.addParameter("methodName","getCountryIe")
-	    tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    if expectedresult in actualresult :
-		newStatus = details.split(":")[1].strip();
-		if newStatus == expectedStatus:
-		    #Set the result status of execution
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Get the CountryIE enabled status for 2.4GHz";
-		    print "EXPECTED RESULT 3: Should get the CountryIE enabled status same as the set value";
-		    print "ACTUAL RESULT 3: %s" %details;
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "ACTUAL RESULT 3: %s" %details;
-		    print "FAILURE : CountryIE enabled status not same as the set value";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 3: Get the CountryIE enabled status for 2.4GHz";
-		print "EXPECTED RESULT 3: Should get the CountryIE enabled status same as the set value";
-		print "ACTUAL RESULT 3: %s" %details;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Toggle the CountryIE enabled status for 2.4GHz";
-	    print "EXPECTED RESULT 2: Should toggle the CountryIE enable status for 2.4GHz to ", expectedStatus ;
-	    print "ACTUAL RESULT 2: %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+            tdkTestObj.addParameter("methodName","getCountryIe")
+            tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult :
+                newStatus = details.split(":")[1].strip();
+                if newStatus == expectedStatus:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the CountryIE enabled status for 2.4GHz");
+                    print("EXPECTED RESULT 3: Should get the CountryIE enabled status same as the set value");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("FAILURE : CountryIE enabled status not same as the set value");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the CountryIE enabled status for 2.4GHz");
+                print("EXPECTED RESULT 3: Should get the CountryIE enabled status same as the set value");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Toggle the CountryIE enabled status for 2.4GHz");
+            print("EXPECTED RESULT 2: Should toggle the CountryIE enable status for 2.4GHz to ", expectedStatus) ;
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-	#setting initial value to CountryIE
-	tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
-	tdkTestObj.addParameter("methodName","setCountryIe");
-	tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
-	tdkTestObj.addParameter("param",oldEnable);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP : Revert the CountryIE enabled status for 2.4GHz";
-	    print "EXPECTED RESULT : Should revert the CountryIE enabled status for 2.4GHz";
-	    print "ACTUAL RESULT : %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP : Revert the CountryIE enabled status for 2.4GHz";
-	    print "EXPECTED RESULT : Should revert the CountryIE enabled status for 2.4GHz";
-	    print "ACTUAL RESULT : %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+        #setting initial value to CountryIE
+        tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
+        tdkTestObj.addParameter("methodName","setCountryIe");
+        tdkTestObj.addParameter("radioIndex",passPoint_2G_Index);
+        tdkTestObj.addParameter("param",oldEnable);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Revert the CountryIE enabled status for 2.4GHz");
+            print("EXPECTED RESULT : Should revert the CountryIE enabled status for 2.4GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Revert the CountryIE enabled status for 2.4GHz");
+            print("EXPECTED RESULT : Should revert the CountryIE enabled status for 2.4GHz");
+            print("ACTUAL RESULT : %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()";
-	print "EXPECTED RESULT 1: Should get CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()";
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()");
+        print("EXPECTED RESULT 1: Should get CountryIE enabled status  for 2.4GHz using wifi_getCountryIe()");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");

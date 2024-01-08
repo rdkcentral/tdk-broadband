@@ -86,7 +86,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioStatus');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,66 +94,66 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "getRadioEnable"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	    if expectedresult in actualresult:
-		enable1 = details.split(":")[1].strip()
-		obj.setLoadModuleStatus("SUCCESS");
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "getRadioEnable"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        if expectedresult in actualresult:
+            enable1 = details.split(":")[1].strip()
+            obj.setLoadModuleStatus("SUCCESS");
 
-		expectedresult="SUCCESS";
-		radioIndex = idx
-		getMethod = "getRadioStatus"
-		primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-		if expectedresult in actualresult:
-		    enable = details.split(":")[1].strip()
-		    if enable == enable1:
-			if "Enabled" in enable1:
-			    oldEnable = 1
-			    newEnable = 0
-			else:
-			    oldEnable = 0
-			    newEnable = 1
-			setMethod = "setRadioEnable"
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
+            expectedresult="SUCCESS";
+            radioIndex = idx
+            getMethod = "getRadioStatus"
+            primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+            if expectedresult in actualresult:
+                enable = details.split(":")[1].strip()
+                if enable == enable1:
+                    if "Enabled" in enable1:
+                        oldEnable = 1
+                        newEnable = 0
+                    else:
+                        oldEnable = 0
+                        newEnable = 1
+                    setMethod = "setRadioEnable"
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
 
-			if expectedresult in actualresult :
-			    print "Enable state toggled using set"
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-			    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
-				print "setRadioEnable and getRadioStatus values are same"
-				#Reverting back to initial value
-				tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
+                    if expectedresult in actualresult :
+                        print("Enable state toggled using set")
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                        if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                            print("setRadioEnable and getRadioStatus values are same")
+                            #Reverting back to initial value
+                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
 
-				if expectedresult in actualresult :
-				    print "Enable status reverted back";
-				    tdkTestObj.setResultStatus("SUCCESS");
-				else:
-				    print "Couldn't revert enable status";
-				    tdkTestObj.setResultStatus("FAILURE");
-			    else:
-				print "setRadioEnable and getRadioStatus values are not same"
-				tdkTestObj.setResultStatus("FAILURE");
-			else:
-			    print "Unable to toggle the Enable state using set"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print"getRadioEnable and getRadioStatus values are not same"
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print"getRadioStatus() operation failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		   print"getRadioEnable() operation failed"
-		   tdkTestObj.setResultStatus("FAILURE");
+                            if expectedresult in actualresult :
+                                print("Enable status reverted back");
+                                tdkTestObj.setResultStatus("SUCCESS");
+                            else:
+                                print("Couldn't revert enable status");
+                                tdkTestObj.setResultStatus("FAILURE");
+                        else:
+                            print("setRadioEnable and getRadioStatus values are not same")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("Unable to toggle the Enable state using set")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("getRadioEnable and getRadioStatus values are not same")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("getRadioStatus() operation failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getRadioEnable() operation failed")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

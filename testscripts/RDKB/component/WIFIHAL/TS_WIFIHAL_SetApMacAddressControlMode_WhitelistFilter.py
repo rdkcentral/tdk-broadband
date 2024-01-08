@@ -101,7 +101,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_SetApMacAddressControlMode_WhitelistFilter');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -138,20 +138,20 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     finalMode = details.split(":")[1].strip()
                     if int(finalMode) == setMode:
-                        print "TEST STEP: Setting the MacAddress filter ControlMode with filter as whitelist for apIndex %s"%apIndex
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are the same"
-                        print "Set value: %s"%setMode
-                        print "Get value: %s"%finalMode
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP: Setting the MacAddress filter ControlMode with filter as whitelist for apIndex %s"%apIndex)
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are the same")
+                        print("Set value: %s"%setMode)
+                        print("Get value: %s"%finalMode)
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP: Setting the MacAddress filter ControlMode filter as whitelist for apIndex %s"%apIndex
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are NOT the same"
-                        print "Set value: %s"%setMode
-                        print "Get value: %s"%finalMode
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP: Setting the MacAddress filter ControlMode filter as whitelist for apIndex %s"%apIndex)
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are NOT the same")
+                        print("Set value: %s"%setMode)
+                        print("Get value: %s"%finalMode)
+                        print("TEST EXECUTION RESULT :FAILURE")
                         tdkTestObj.setResultStatus("FAILURE");
 
                     #Revert back to initial value
@@ -162,22 +162,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to inital value"
+                        print("Successfully reverted back to inital value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "getApMacAddressControlMode() function call failed after set operation"
+                    print("getApMacAddressControlMode() function call failed after set operation")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "setApMacAddressControlMode() function call failed"
+                print("setApMacAddressControlMode() function call failed")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "getApMacAddressControlMode() function call failed"
+            print("getApMacAddressControlMode() function call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

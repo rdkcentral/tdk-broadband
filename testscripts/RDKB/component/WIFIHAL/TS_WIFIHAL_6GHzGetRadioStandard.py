@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioStandard');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Invoke the HAL API to get the radio supported standards
@@ -103,16 +103,16 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         SupportedStandards = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Get the Radio Supported Standards for 6GHz using the HAL API wifi_getRadioSupportedStandards()";
-        print "EXPECTED RESULT 1: Should get the Radio Supported Standards for 6GHz";
+        print("\nTEST STEP 1: Get the Radio Supported Standards for 6GHz using the HAL API wifi_getRadioSupportedStandards()");
+        print("EXPECTED RESULT 1: Should get the Radio Supported Standards for 6GHz");
 
         if expectedresult in actualresult:
             SplitList = SupportedStandards.split(":")[1].split(",")
             ActualList = [standard.strip() for standard in SplitList];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: The radio supported standards are : %s" %SupportedStandards;
+            print("ACTUAL RESULT 1: The radio supported standards are : %s" %SupportedStandards);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the current radio standard using wifi_getRadioStandard()
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetRadioStandard");
@@ -122,41 +122,41 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2: Get the current Radio standard for 6GHz using the HAL API wifi_getRadioStandard()";
-            print "EXPECTED RESULT 2: Should get the Radio standard for 6GHz";
+            print("\nTEST STEP 2: Get the current Radio standard for 6GHz using the HAL API wifi_getRadioStandard()");
+            print("EXPECTED RESULT 2: Should get the Radio standard for 6GHz");
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: The current radio standard is : %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: The current radio standard is : %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if current standard is from the supported list
-                print "\nTEST STEP 3: Check if the current standard is from the supported list of standards";
-                print "EXPECTED RESULT 3: The current standard should be from the supported list of standards";
+                print("\nTEST STEP 3: Check if the current standard is from the supported list of standards");
+                print("EXPECTED RESULT 3: The current standard should be from the supported list of standards");
                 CurrStandard = details.split(":")[1].split(" ")[0];
 
                 if CurrStandard in ActualList :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: The current radio standard from the supported list is : %s" %CurrStandard;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 3: The current radio standard from the supported list is : %s" %CurrStandard);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: The current radio standard is : %s which is not from supported list" %CurrStandard;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 3: The current radio standard is : %s which is not from supported list" %CurrStandard);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: The current radio standard is : %s" %details;
+                print("ACTUAL RESULT 2: The current radio standard is : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: The radio supported standards are : %s" %SupportedStandards;
+            print("ACTUAL RESULT 1: The radio supported standards are : %s" %SupportedStandards);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

@@ -90,8 +90,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_SetApManagementFra
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -110,10 +110,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         getMethod = "getApManagementFramePowerControl"
@@ -124,7 +124,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             initFPC = details.split(":")[1].strip()
             #ApManagementFramePowerControl varies in the range -20dBm to 0dBm
-            r = range(-20,0)
+            r = list(range(-20,0))
             setFPC = random.choice(r)
             setMethod = "setApManagementFramePowerControl"
             primitive = 'WIFIHAL_GetOrSetParamIntValue'
@@ -141,12 +141,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     finalFPC = details.split(":")[1].strip()
 
                     if int(finalFPC) == setFPC:
-                        print "TEST STEP: Comparing set and get values of ApManagementFramePowerControl for 2.4GHz Public WiFi"
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are the same"
-                        print "Set value: %s"%setFPC
-                        print "Get value: %s"%finalFPC
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP: Comparing set and get values of ApManagementFramePowerControl for 2.4GHz Public WiFi")
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are the same")
+                        print("Set value: %s"%setFPC)
+                        print("Get value: %s"%finalFPC)
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #Revert back to initial value
@@ -157,39 +157,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Successfully reverted back to inital value"
+                            print("Successfully reverted back to inital value")
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Unable to revert to initial value"
+                            print("Unable to revert to initial value")
                     else:
-                        print "TEST STEP: Comparing set and get values of ApManagementFramePowerControl for 2.4GHz Public WiFi"
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are NOT the same"
-                        print "Set value: %s"%setFPC
-                        print "Get value: %s"%finalFPC
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP: Comparing set and get values of ApManagementFramePowerControl for 2.4GHz Public WiFi")
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are NOT the same")
+                        print("Set value: %s"%setFPC)
+                        print("Get value: %s"%finalFPC)
+                        print("TEST EXECUTION RESULT :FAILURE")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "getApManagementFramePowerControl() function call failed after set operation"
+                    print("getApManagementFramePowerControl() function call failed after set operation")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "setApManagementFramePowerControl() function call failed"
+                print("setApManagementFramePowerControl() function call failed")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "getApManagementFramePowerControl() function call failed"
+            print("getApManagementFramePowerControl() function call failed")
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

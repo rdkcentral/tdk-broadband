@@ -96,13 +96,13 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_GetATMCapable');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -110,43 +110,43 @@ if "SUCCESS" in loadmodulestatus.upper():
         radioIndex = idx
         getMethod = "getATMCapable"
         primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-        print "Before ExecuteWIFIHalCallMethod"
+        print("Before ExecuteWIFIHalCallMethod")
 
         #Calling the method from wifiUtility to execute test case and set result status for the test.
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-        print "After ExecuteWIFIHalCallMethod"
+        print("After ExecuteWIFIHalCallMethod")
 
 
         if expectedresult in actualresult:
             enablestate = details.split(":")[1].strip()
             if 'Disabled' in enablestate:
-                print "ATMCapable status is unsupported "
+                print("ATMCapable status is unsupported ")
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Validate the ATMCapable";
-                print "EXPECTED RESULT : ATM Capable status should be returned";
-                print "ACTUAL RESULT 1: getATMCapable is unsupported %s"%enablestate;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP : Validate the ATMCapable");
+                print("EXPECTED RESULT : ATM Capable status should be returned");
+                print("ACTUAL RESULT 1: getATMCapable is unsupported %s"%enablestate);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             elif 'Enabled' in enablestate:
-                print "ATMCapable status is supported "
+                print("ATMCapable status is supported ")
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Validate the ATMCapable";
-                print "EXPECTED RESULT : ATM Capable status should be returned";
-                print "ACTUAL RESULT 1: getATMCapable is supported %s"%enablestate;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP : Validate the ATMCapable");
+                print("EXPECTED RESULT : ATM Capable status should be returned");
+                print("ACTUAL RESULT 1: getATMCapable is supported %s"%enablestate);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                print "getATMCapable is failed"
+                print("getATMCapable is failed")
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Validate the ATMCapable";
-                print "EXPECTED RESULT : ATM Capable status should be returned";
-                print "ACTUAL RESULT 1: getATMCapable function is failed %s"%enablestate;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP : Validate the ATMCapable");
+                print("EXPECTED RESULT : ATM Capable status should be returned");
+                print("ACTUAL RESULT 1: getATMCapable function is failed %s"%enablestate);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
-            print "wifi_getATMpable failed";
+            print("wifi_getATMpable failed");
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

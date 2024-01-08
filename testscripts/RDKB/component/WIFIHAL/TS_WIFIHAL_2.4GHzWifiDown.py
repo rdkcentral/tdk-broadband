@@ -109,11 +109,11 @@ def wifidown (idx0,idx1):
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 4: Validate the wifi_down Function";
-        print "EXPECTED RESULT 4: wifi_down should return SUCCESS";
-        print "ACTUAL RESULT 4: wifi_down operation returned SUCCESS";
-        print "Actual result is :",details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 4: Validate the wifi_down Function");
+        print("EXPECTED RESULT 4: wifi_down should return SUCCESS");
+        print("ACTUAL RESULT 4: wifi_down operation returned SUCCESS");
+        print("Actual result is :",details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Get the Radiostatus
         radioIndex = idx0;
         getMethod = "getRadioStatus"
@@ -123,35 +123,35 @@ def wifidown (idx0,idx1):
             RadioStatus_afterwifidown = details.split(":")[1].strip()
             tdkTestObj.setResultStatus("SUCCESS");
             if "Disabled" in RadioStatus_afterwifidown:
-                print "TEST STEP 5: Get the Radio status after wifidown operation";
-                print "EXPECTED RESULT 5: Radio status should be return the state as 'Disabled'";
-                print "ACTUAL RESULT 5: Radio status returned is as 'Disabled'";
-                print "Radio status is:",RadioStatus_afterwifidown;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-                print "wifi_down operation functioned successfully";
+                print("TEST STEP 5: Get the Radio status after wifidown operation");
+                print("EXPECTED RESULT 5: Radio status should be return the state as 'Disabled'");
+                print("ACTUAL RESULT 5: Radio status returned is as 'Disabled'");
+                print("Radio status is:",RadioStatus_afterwifidown);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("wifi_down operation functioned successfully");
                 #Initializes the down radios
-	        tdkTestObj = obj.createTestStep('WIFIHAL_ParamRadioIndex');
-	        tdkTestObj.addParameter("radioIndex", idx0);
-	        tdkTestObj.addParameter("methodName", "initRadio");
-	        #Execute the test case in DUT
-	        tdkTestObj.executeTestCase(expectedresult);
-	        actualresult0 = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-	        tdkTestObj = obj.createTestStep('WIFIHAL_ParamRadioIndex');
-	        tdkTestObj.addParameter("radioIndex", idx1);
-	        tdkTestObj.addParameter("methodName", "initRadio");
-	        #Execute the test case in DUT
-	        tdkTestObj.executeTestCase(expectedresult);
-	        actualresult1 = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-	        if expectedresult in actualresult0 and expectedresult in actualresult1:
-	            tdkTestObj.setResultStatus("SUCCESS");
-		    print "wifi_initRadio operation success"
-	            print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "wifi_initRadio operation failed"
-	            print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj = obj.createTestStep('WIFIHAL_ParamRadioIndex');
+                tdkTestObj.addParameter("radioIndex", idx0);
+                tdkTestObj.addParameter("methodName", "initRadio");
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult0 = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                tdkTestObj = obj.createTestStep('WIFIHAL_ParamRadioIndex');
+                tdkTestObj.addParameter("radioIndex", idx1);
+                tdkTestObj.addParameter("methodName", "initRadio");
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult1 = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult0 and expectedresult in actualresult1:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("wifi_initRadio operation success")
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("wifi_initRadio operation failed")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #Revert back to initial value
                 setMethod = "setRadioEnable"
                 primitive = 'WIFIHAL_GetOrSetParamBoolValue'
@@ -160,28 +160,28 @@ def wifidown (idx0,idx1):
                 tdkTestObj, actualresult1, details = ExecuteWIFIHalCallMethod(obj, primitive, idx1, newEnable, setMethod)
                 if expectedresult in actualresult and expectedresult in actualresult1:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 6:Revert back the RadiostatusEnable as 'Enable'";
-                    print "EXPECTED RESULT 6:Should Revert back the RadiostatusEnable as 'Enable'";
-                    print "ACTUAL RESULT 6:Reverted back the RadiostatusEnable as 'Enable'";
+                    print("TEST STEP 6:Revert back the RadiostatusEnable as 'Enable'");
+                    print("EXPECTED RESULT 6:Should Revert back the RadiostatusEnable as 'Enable'");
+                    print("ACTUAL RESULT 6:Reverted back the RadiostatusEnable as 'Enable'");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 6:Revert back the RadiostatusEnable as 'Enable'";
-                    print "EXPECTED RESULT 6:Should Revert back the RadiostatusEnable as 'Enable'";
-                    print "ACTUAL RESULT 6:Failed to Revert back the RadiostatusEnable as 'Enable'";
+                    print("TEST STEP 6:Revert back the RadiostatusEnable as 'Enable'");
+                    print("EXPECTED RESULT 6:Should Revert back the RadiostatusEnable as 'Enable'");
+                    print("ACTUAL RESULT 6:Failed to Revert back the RadiostatusEnable as 'Enable'");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "wifi_down operation not functioned successfully";
+                print("wifi_down operation not functioned successfully");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Failed to get the Radiostatus"
+            print("Failed to get the Radiostatus")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 4: Validate the wifi_down Function";
-        print "EXPECTED RESULT 4: wifi_down should return SUCCESS";
-        print "ACTUAL RESULT 4: wifi_down operation returned FAILURE";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 4: Validate the wifi_down Function");
+        print("EXPECTED RESULT 4: wifi_down should return SUCCESS");
+        print("ACTUAL RESULT 4: wifi_down operation returned FAILURE");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
@@ -190,72 +190,72 @@ if "SUCCESS" in loadmodulestatus.upper():
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the radio status
-	expectedresult="SUCCESS";
-	radioIndex = idx0;
-	getMethod = "getRadioStatus"
+        expectedresult="SUCCESS";
+        radioIndex = idx0;
+        getMethod = "getRadioStatus"
         primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	if expectedresult in actualresult:
-	    enable = details.split(":")[1].strip()
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    if "Enabled" in enable:
-	        print "TEST STEP 1:Get the current radio status";
-		print "EXPECTED RESULT 1:Radio Status should be 'Enabled' for 2.4GHz";
-		print "ACTUAL RESULT 1: Radio status is ",enable;
-		wifidown (idx0,idx1)
-		time.sleep(10)
-	    else:
-	        print "TEST STEP 1:Get the current radio status";
-		print "EXPECTED RESULT 1:Radio Status should be 'Enabled' for 2.4GHz";
-		print "ACTUAL RESULT 1: Radio status is",enable;
-		#set radiostatus as "Enabled"
-		setMethod = "setRadioEnable"
-		newEnable = 1
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
-		if expectedresult in actualresult :
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 2:Set the Radio status as 'Enabled'";
-		    print "EXPECTED RESULT 2:Should set the Radio Status as 'Enabled' for 2.4GHz";
-		    print "ACTUAL RESULT 2: Radio status set as 'Enabled'";
-		    getMethod = "getRadioEnable"
-		    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-		    if expectedresult in actualresult:
-		        tdkTestObj.setResultStatus("SUCCESS");
-			Radioenablestatus = details.split(":")[1].strip()
-			if "Enabled" in Radioenablestatus:
-			    print "TEST STEP 3:Get the RadiostatusEnable after set operation";
-			    print "EXPECTED RESULT 3:Radio Status should be 'Enabled' state for 2.4GHz";
-			    print "ACTUAL RESULT 3: RadiostatusEnable state  is",Radioenablestatus;
-			    wifidown (idx0,idx1)
-			    time.sleep(10)
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "TEST STEP 3:Get the RadiostatusEnable after set operation";
-			    print "EXPECTED RESULT 3:Radio Status should be 'Enabled' state for 2.4GHz";
-			    print "ACTUAL RESULT 3: RadiostatusEnable state  is",Radioenablestatus;
-			    print "WIFI API 'wifi_setRadioEnable' returns false success"
-		    else:
-		        print "TEST STEP 3: Get the Radio status for 2.4GHz"
-			print "EXPECTED RESULT 3:Radio Status should be return some status for 2.4GHz";
-			print "ACTUAL RESULT 3: Failed to get the Radio status";
-		else:
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        if expectedresult in actualresult:
+            enable = details.split(":")[1].strip()
+            tdkTestObj.setResultStatus("SUCCESS");
+            if "Enabled" in enable:
+                print("TEST STEP 1:Get the current radio status");
+                print("EXPECTED RESULT 1:Radio Status should be 'Enabled' for 2.4GHz");
+                print("ACTUAL RESULT 1: Radio status is ",enable);
+                wifidown (idx0,idx1)
+                time.sleep(10)
+            else:
+                print("TEST STEP 1:Get the current radio status");
+                print("EXPECTED RESULT 1:Radio Status should be 'Enabled' for 2.4GHz");
+                print("ACTUAL RESULT 1: Radio status is",enable);
+                #set radiostatus as "Enabled"
+                setMethod = "setRadioEnable"
+                newEnable = 1
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
+                if expectedresult in actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2:Set the Radio status as 'Enabled'");
+                    print("EXPECTED RESULT 2:Should set the Radio Status as 'Enabled' for 2.4GHz");
+                    print("ACTUAL RESULT 2: Radio status set as 'Enabled'");
+                    getMethod = "getRadioEnable"
+                    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        Radioenablestatus = details.split(":")[1].strip()
+                        if "Enabled" in Radioenablestatus:
+                            print("TEST STEP 3:Get the RadiostatusEnable after set operation");
+                            print("EXPECTED RESULT 3:Radio Status should be 'Enabled' state for 2.4GHz");
+                            print("ACTUAL RESULT 3: RadiostatusEnable state  is",Radioenablestatus);
+                            wifidown (idx0,idx1)
+                            time.sleep(10)
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 3:Get the RadiostatusEnable after set operation");
+                            print("EXPECTED RESULT 3:Radio Status should be 'Enabled' state for 2.4GHz");
+                            print("ACTUAL RESULT 3: RadiostatusEnable state  is",Radioenablestatus);
+                            print("WIFI API 'wifi_setRadioEnable' returns false success")
+                    else:
+                        print("TEST STEP 3: Get the Radio status for 2.4GHz")
+                        print("EXPECTED RESULT 3:Radio Status should be return some status for 2.4GHz");
+                        print("ACTUAL RESULT 3: Failed to get the Radio status");
+                else:
                     tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 2:Set the Radio status as 'Enabled'";
-		    print "EXPECTED RESULT 2:Should set the Radio Status as 'Enabled' for 2.4GHz";
-		    print "ACTUAL RESULT 2: Failed to set the Radio status as 'Enabled'";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1:Get the Radio status";
-	    print "EXPECTED RESULT 1:Should get the Radio Status for 2.4GHz";
-	    print "ACTUAL RESULT 1: Failed to get the Radio status";
+                    print("TEST STEP 2:Set the Radio status as 'Enabled'");
+                    print("EXPECTED RESULT 2:Should set the Radio Status as 'Enabled' for 2.4GHz");
+                    print("ACTUAL RESULT 2: Failed to set the Radio status as 'Enabled'");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1:Get the Radio status");
+            print("EXPECTED RESULT 1:Should get the Radio Status for 2.4GHz");
+            print("ACTUAL RESULT 1: Failed to get the Radio status");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

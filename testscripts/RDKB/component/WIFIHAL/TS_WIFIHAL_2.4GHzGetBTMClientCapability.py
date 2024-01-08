@@ -85,118 +85,118 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetBTMClientCapability');
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS"
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	radioIndex = idx
-	getMethod = "getApNumDevicesAssociated"
-	primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	tdkTestObj = obj.createTestStep(primitive);
-	tdkTestObj.addParameter("radioIndex",radioIndex);
+        radioIndex = idx
+        getMethod = "getApNumDevicesAssociated"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        tdkTestObj = obj.createTestStep(primitive);
+        tdkTestObj.addParameter("radioIndex",radioIndex);
         tdkTestObj.addParameter("methodName",getMethod);
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    ApNumDevices = details.split(":")[1].strip();
-	    if  ApNumDevices != "" and int(ApNumDevices) > 0:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: SUCCESS"
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            ApNumDevices = details.split(":")[1].strip();
+            if  ApNumDevices != "" and int(ApNumDevices) > 0:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: SUCCESS")
 
-	        tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
                 tdkTestObj.addParameter("apIndex",radioIndex);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "Entire Details:",details;
+                print("Entire Details:",details);
                 if expectedresult in actualresult:
                     outputList = details.split("=")[1].strip()
                     if "," in outputList:
                         macAddress = outputList.split(",")[0].strip()
                     else:
                         macAddress = outputList.split(":Value")[0].strip()
-		    print " TEST STEP 2: Get the mac address of one associated device using wifi_getApAssociatedDevice api"
-		    print "EXPECTED RESULT 2 : Should get the Mac address of the associated device "
-		    print "ACTUAL RESULT 2 :  Mac address of the associated device :%s" %macAddress;
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 2 : SUCCESS";
+                    print(" TEST STEP 2: Get the mac address of one associated device using wifi_getApAssociatedDevice api")
+                    print("EXPECTED RESULT 2 : Should get the Mac address of the associated device ")
+                    print("ACTUAL RESULT 2 :  Mac address of the associated device :%s" %macAddress);
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 2 : SUCCESS");
 
-	            primitive = 'WIFIHAL_GetBTMClientCapabilityList'
-	            tdkTestObj = obj.createTestStep(primitive);
-	            tdkTestObj.addParameter("apIndex",radioIndex);
-	            tdkTestObj.addParameter("clientMAC",macAddress);
-	            tdkTestObj.addParameter("count",1);
-	            tdkTestObj.executeTestCase(expectedresult);
-	            actualresult = tdkTestObj.getResult();
-	            details = tdkTestObj.getResultDetails();
-	            if expectedresult in actualresult:
-	                tdkTestObj.setResultStatus("SUCCESS");
-	                print "TEST STEP 3: Get the BTM capability for 2.4GHz client";
-	                print "EXPECTED RESULT 3: wifi_getBTMClientCapabilityList() should return the BTM capability for 2.4GHz client";
-	                print "ACTUAL RESULT 3: wifi_getBTMClientCapabilityList() operation returned SUCCESS";
-	                print "Actual result is :",details;
-	                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    primitive = 'WIFIHAL_GetBTMClientCapabilityList'
+                    tdkTestObj = obj.createTestStep(primitive);
+                    tdkTestObj.addParameter("apIndex",radioIndex);
+                    tdkTestObj.addParameter("clientMAC",macAddress);
+                    tdkTestObj.addParameter("count",1);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 3: Get the BTM capability for 2.4GHz client");
+                        print("EXPECTED RESULT 3: wifi_getBTMClientCapabilityList() should return the BTM capability for 2.4GHz client");
+                        print("ACTUAL RESULT 3: wifi_getBTMClientCapabilityList() operation returned SUCCESS");
+                        print("Actual result is :",details);
+                        print("[TEST EXECUTION RESULT] 3: SUCCESS");
                         capability =  details.split(',')[2].split(' ')[2]
                         if capability == '1':
-		            capability = "TRUE"
-		        elif capability == '0':
-		            capability = "FALSE"
-		        else:
-		            print "ERROR: Received invalid BTM capability value from hal api. Exiting script"
-		            tdkTestObj.setResultStatus("FAILURE");
-		            obj.unloadModule("wifihal");
-		            exit()
-
-                        print "TEST STEP 4: Check if the BTM Capability value from api is matching with the client details from config file";
-                        print "EXPECTED RESULT 4: HAL output should match the BTM value specified in config file. Hal o/p is %s, config value is %s" %(capability, BTM_CLIENT_CAPABILITY);
-                        if capability == BTM_CLIENT_CAPABILITY:
-                            print "ACTUAL RESULT 4: BTM Capability value from api is matching with the client details from config file"
-                            print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                            capability = "TRUE"
+                        elif capability == '0':
+                            capability = "FALSE"
                         else:
-                            print "ACTUAL RESULT 4: BTM Capability value from api is matching with the client details from config file"
-                            print "[TEST EXECUTION RESULT] 4: FAILURE";
-	            else:
-		        tdkTestObj.setResultStatus("FAILURE");
-  		        print "TEST STEP 3: Get the BTM capability for 2.4GHz client";
-		        print "EXPECTED RESULT 3: wifi_getBTMClientCapabilityList() should return the BTM capability for 2.4GHz client";
-		        print "ACTUAL RESULT 3: Failed to get the BTM capability for 2.4GHz client";
-		        print "Actual result is :",details;
-		        print "[TEST EXECUTION RESULT] 3: FAILURE";
-		else:
-		    print " TEST STEP 2: Get the mac address of one associated device using wifi_getApAssociatedDevice api"
-		    print "EXPECTED RESULT 2 : Should get the Mac address of the asssociated device "
-		    print "ACTUAL RESULT 2 :  Failed to get Mac address of the asssociated device"
-		    tdkTestObj.setResultStatus("FAILURE");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 2 : FAILURE";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received number of Ap Associated Devices is not greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: FAILURE"
-	else:
+                            print("ERROR: Received invalid BTM capability value from hal api. Exiting script")
+                            tdkTestObj.setResultStatus("FAILURE");
+                            obj.unloadModule("wifihal");
+                            exit()
+
+                        print("TEST STEP 4: Check if the BTM Capability value from api is matching with the client details from config file");
+                        print("EXPECTED RESULT 4: HAL output should match the BTM value specified in config file. Hal o/p is %s, config value is %s" %(capability, BTM_CLIENT_CAPABILITY));
+                        if capability == BTM_CLIENT_CAPABILITY:
+                            print("ACTUAL RESULT 4: BTM Capability value from api is matching with the client details from config file")
+                            print("[TEST EXECUTION RESULT] 4: SUCCESS");
+                        else:
+                            print("ACTUAL RESULT 4: BTM Capability value from api is matching with the client details from config file")
+                            print("[TEST EXECUTION RESULT] 4: FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 3: Get the BTM capability for 2.4GHz client");
+                        print("EXPECTED RESULT 3: wifi_getBTMClientCapabilityList() should return the BTM capability for 2.4GHz client");
+                        print("ACTUAL RESULT 3: Failed to get the BTM capability for 2.4GHz client");
+                        print("Actual result is :",details);
+                        print("[TEST EXECUTION RESULT] 3: FAILURE");
+                else:
+                    print(" TEST STEP 2: Get the mac address of one associated device using wifi_getApAssociatedDevice api")
+                    print("EXPECTED RESULT 2 : Should get the Mac address of the asssociated device ")
+                    print("ACTUAL RESULT 2 :  Failed to get Mac address of the asssociated device")
+                    tdkTestObj.setResultStatus("FAILURE");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 2 : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received number of Ap Associated Devices is not greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: FAILURE")
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-	    print "getApNumDevicesAssociated() call failed"
+            print("getApNumDevicesAssociated() call failed")
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

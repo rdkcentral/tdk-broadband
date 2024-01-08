@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetWiFiTrafficStats');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -107,17 +107,17 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	radioIndex = idx
-	primitive = 'WIFIHAL_GetWifiTrafficStats'
-	tdkTestObj = obj.createTestStep(primitive);
-	tdkTestObj.addParameter("apIndex",radioIndex);
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
+        radioIndex = idx
+        primitive = 'WIFIHAL_GetWifiTrafficStats'
+        tdkTestObj = obj.createTestStep(primitive);
+        tdkTestObj.addParameter("apIndex",radioIndex);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
             trafficStats =  details.rstrip('\n').split('-')[1]
             wifi_ErrorsSent = trafficStats.split(',')[0].split(' ')[2]
             wifi_ErrorsReceived = trafficStats.split(',')[1].split(' ')[2]
@@ -128,29 +128,29 @@ if "SUCCESS" in loadmodulestatus.upper():
             wifi_MulticastPacketsSent = trafficStats.split(',')[6].split(' ')[2]
             wifi_MulticastPacketsReceived = trafficStats.split(',')[7].split(' ')[2].replace("\\n", "")
 
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 1: Get the Wifi Traffic statistics for 5GHz";
-	    print "EXPECTED RESULT 1: wifi_getWifiTrafficStats should return the wifi traffic statistics for 5GHz";
-	    print "ACTUAL RESULT 1: wifi_getWifiTrafficStats operation returned SUCCESS";
-	    print "Actual result is :",details;
-	    print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the Wifi Traffic statistics for 5GHz");
+            print("EXPECTED RESULT 1: wifi_getWifiTrafficStats should return the wifi traffic statistics for 5GHz");
+            print("ACTUAL RESULT 1: wifi_getWifiTrafficStats operation returned SUCCESS");
+            print("Actual result is :",details);
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-            print "TEST STEP 2: Check if the Wifi Traffic statistics values for 5GHz are greater than or equal to 0";
-            print "EXPECTED RESULT 2: Wifi Traffic statistics values for 5GHz should be greater than or equal to 0";
+            print("TEST STEP 2: Check if the Wifi Traffic statistics values for 5GHz are greater than or equal to 0");
+            print("EXPECTED RESULT 2: Wifi Traffic statistics values for 5GHz should be greater than or equal to 0");
             if int(wifi_ErrorsSent) >= 0 and int(wifi_ErrorsReceived) >=0 and int(wifi_UnicastPacketsSent) >=0 and int(wifi_UnicastPacketsReceived) >=0 and int(wifi_DiscardedPacketsSent) >=0 and int(wifi_DiscardedPacketsReceived) >=0 and int(wifi_MulticastPacketsSent) >=0 and int(wifi_MulticastPacketsReceived) >=0:
-                print "ACTUAL RESULT 2: Wifi Traffic statistics values for 5GHz are greater than or equal to 0";
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                print("ACTUAL RESULT 2: Wifi Traffic statistics values for 5GHz are greater than or equal to 0");
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
             else:
-                print "ACTUAL RESULT 2: Wifi Traffic statistics values for 5GHz are not greater than or equal to 0";
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-  	    print "TEST STEP 1: Get the Wifi Traffic statistics for 5GHz";
-	    print "EXPECTED RESULT 1: wifi_getWifiTrafficStats should return the Wifi traffic statistics for 5GHz";
-	    print "ACTUAL RESULT 1: Failed to get the Wifi Traffic statistics values for 5GHz";
-	    print "Actual result is :",details;
-	    print "[TEST EXECUTION RESULT] 1: FAILURE";
+                print("ACTUAL RESULT 2: Wifi Traffic statistics values for 5GHz are not greater than or equal to 0");
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the Wifi Traffic statistics for 5GHz");
+            print("EXPECTED RESULT 1: wifi_getWifiTrafficStats should return the Wifi traffic statistics for 5GHz");
+            print("ACTUAL RESULT 1: Failed to get the Wifi Traffic statistics values for 5GHz");
+            print("Actual result is :",details);
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

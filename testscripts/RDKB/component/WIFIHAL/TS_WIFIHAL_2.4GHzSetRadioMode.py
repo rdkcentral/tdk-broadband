@@ -67,7 +67,7 @@ wifi_getRadioMode()</api_or_interface_used>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from wifiUtility import *;
 from tdkbVariables import *;
@@ -106,8 +106,8 @@ def setRadioMode(tdkTestObj, index, chnmode, puremode):
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilmodulestatus =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -115,11 +115,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
-	radioIndex = idx
+        radioIndex = idx
 
         #Get the initial Mode
         expectedresult="SUCCESS";
@@ -129,31 +129,31 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
             initialStd = initial_details.split(':')[3]
             initialPureMode = initial_details.split(':')[2].split(',')[0]
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the Radio Mode"
-            print "EXPECTED RESULT : Should successfully get the Radio Mode"
-            print "ACTUAL RESULT : Successfully gets the Radio Mode: %s"%initial_details
+            print("TEST STEP 1: Get the Radio Mode")
+            print("EXPECTED RESULT : Should successfully get the Radio Mode")
+            print("ACTUAL RESULT : Successfully gets the Radio Mode: %s"%initial_details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the default value from properties file
             tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
             cmd = "sh %s/tdk_utility.sh parseConfigFile RADIO_MODES_2G" %TDK_PATH;
-            print cmd;
+            print(cmd);
             expectedresult="SUCCESS";
             tdkTestObj1.addParameter("command", cmd);
             tdkTestObj1.executeTestCase(expectedresult);
             actualresult = tdkTestObj1.getResult();
             details = ""
             details = tdkTestObj1.getResultDetails().strip();
-            modeList = details.replace("\\n", "").split(','); 
-            print "Radio modes:",modeList
+            modeList = details.replace("\\n", "").split(',');
+            print("Radio modes:",modeList)
             if details != "" and ( expectedresult in  actualresult):
                 tdkTestObj1.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the value of RADIO_MODES_2G from tdk_platform properties file";
-                print "EXPECTED RESULT 2: Should Get the value of RADIO_MODES_2G from platform properties file";
-                print "ACTUAL RESULT 2:RADIO_MODES_2G values from tdk_platform properties file is : ", modeList;
+                print("TEST STEP 2: Get the value of RADIO_MODES_2G from tdk_platform properties file");
+                print("EXPECTED RESULT 2: Should Get the value of RADIO_MODES_2G from platform properties file");
+                print("ACTUAL RESULT 2:RADIO_MODES_2G values from tdk_platform properties file is : ", modeList);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"            
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 for mode in modeList:
                     std = mode.split(':')[0]
@@ -165,40 +165,40 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
                         actualresult,details = setRadioMode(tdkTestObj, radioIndex, stdStr, int(pureMode));
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 3: Set the Radio Mode"
-                            print "EXPECTED RESULT 3: Should successfully Set the Radio Mode as puremode: %s, opStandard: %s" %(pureMode, std)
-                            print "ACTUAL RESULT 3: Successfully Sets the Radio Mode %s"%details
+                            print("TEST STEP 3: Set the Radio Mode")
+                            print("EXPECTED RESULT 3: Should successfully Set the Radio Mode as puremode: %s, opStandard: %s" %(pureMode, std))
+                            print("ACTUAL RESULT 3: Successfully Sets the Radio Mode %s"%details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Prmitive test case which is associated to this Script
                             tdkTestObj = obj.createTestStep('WIFIHAL_GetRadioMode');
                             actualresult,details = getRadioMode(tdkTestObj, radioIndex);
-                            print "Details: %s"%details
+                            print("Details: %s"%details)
                             if expectedresult in actualresult:
                                 getStd = details.split(':')[3]
                                 getPureMode = details.split(':')[2].split(',')[0]
                                 if getStd == std and getPureMode ==pureMode:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP 4: Get the Radio Mode"
-                                    print "EXPECTED RESULT 4: Should successfully get the Radio Mode"
-                                    print "ACTUAL RESULT : Successfully gets the Radio Mode %s"%details
+                                    print("TEST STEP 4: Get the Radio Mode")
+                                    print("EXPECTED RESULT 4: Should successfully get the Radio Mode")
+                                    print("ACTUAL RESULT : Successfully gets the Radio Mode %s"%details)
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP 4: Get the Radio Mode"
-                                    print "EXPECTED RESULT : Should successfully get the Radio Mode"
-                                    print "ACTUAL RESULT : Successfully gets the Radio Mode %s"%details
+                                    print("TEST STEP 4: Get the Radio Mode")
+                                    print("EXPECTED RESULT : Should successfully get the Radio Mode")
+                                    print("ACTUAL RESULT : Successfully gets the Radio Mode %s"%details)
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 3: Set the Radio Mode"
-                            print "EXPECTED RESULT 3: Should successfully Set the Radio Mode"
-                            print "ACTUAL RESULT 3: Successfully Sets the Radio Mode %s"%details
+                            print("TEST STEP 3: Set the Radio Mode")
+                            print("EXPECTED RESULT 3: Should successfully Set the Radio Mode")
+                            print("ACTUAL RESULT 3: Successfully Sets the Radio Mode %s"%details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                 #Revert radio mode to initial value
                 for mode in modeList:
                     std = mode.split(':')[0]
@@ -210,35 +210,35 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
                 actualresult,details = setRadioMode(tdkTestObj, radioIndex, stdStr, int(pureMode));
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Revert the Radio Mode"
-                    print "EXPECTED RESULT 5: Should successfully revert the Radio Mode as puremode: %s, opStandard: %s" %(pureMode, std)
-                    print "ACTUAL RESULT 5: Successfully reverts the Radio Mode %s"%details
+                    print("TEST STEP 5: Revert the Radio Mode")
+                    print("EXPECTED RESULT 5: Should successfully revert the Radio Mode as puremode: %s, opStandard: %s" %(pureMode, std))
+                    print("ACTUAL RESULT 5: Successfully reverts the Radio Mode %s"%details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Revert the Radio Mode"
-                    print "EXPECTED RESULT 5: Should successfully revert the Radio Mode"
-                    print "ACTUAL RESULT 5: Successfully reverts the Radio Mode %s"%details
+                    print("TEST STEP 5: Revert the Radio Mode")
+                    print("EXPECTED RESULT 5: Should successfully revert the Radio Mode")
+                    print("ACTUAL RESULT 5: Successfully reverts the Radio Mode %s"%details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-           	tdkTestObj1.setResultStatus("SUCCESS");
-           	print "TEST STEP 2: Get the value of RADIO_MODES_2G from tdk_platform properties file";
-                print "EXPECTED RESULT 2: Should Get the value of RADIO_MODES_2G from platform properties file";
-                print "ACTUAL RESULT 2:Failed to get RADIO_MODES_2G values from tdk_platform properties file";
+                tdkTestObj1.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the value of RADIO_MODES_2G from tdk_platform properties file");
+                print("EXPECTED RESULT 2: Should Get the value of RADIO_MODES_2G from platform properties file");
+                print("ACTUAL RESULT 2:Failed to get RADIO_MODES_2G values from tdk_platform properties file");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the Radio Mode"
-            print "EXPECTED RESULT : Should successfully get the Radio Mode"
-            print "ACTUAL RESULT : Successfully gets the Radio Mode %s"%initial_details
+            print("TEST STEP 1: Get the Radio Mode")
+            print("EXPECTED RESULT : Should successfully get the Radio Mode")
+            print("ACTUAL RESULT : Successfully gets the Radio Mode %s"%initial_details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

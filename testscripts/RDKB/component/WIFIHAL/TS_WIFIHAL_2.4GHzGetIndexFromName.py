@@ -51,7 +51,7 @@
     <input_parameters>methodName  : getIndexFromName
 ApIndex : 0</input_parameters>
     <automation_approch>1. Load wifihal module
-2. Using WIFIHAL_GetIndexFromName invoke wifi_getIndexFromName() with parameter as "ath0" 
+2. Using WIFIHAL_GetIndexFromName invoke wifi_getIndexFromName() with parameter as "ath0"
 3. Compare if the value returned is 0 , if yes return SUCCESS, else return FAILURE
 4. Unload wifihal module</automation_approch>
     <except_output>Should return 0 </except_output>
@@ -65,8 +65,8 @@ ApIndex : 0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 #Test component to be tested
@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetIndexFromName');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,32 +105,31 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-	    index = details.split(":")[1].strip()
+            index = details.split(":")[1].strip()
             if 0 == int(index):
-	        #Set the result status of execution
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP: Get the index from ssid name";
-                print "EXPECTED RESULT: Get the index as 0";
-                print "ACTUAL RESULT: %s" %details;
+                print("TEST STEP: Get the index from ssid name");
+                print("EXPECTED RESULT: Get the index as 0");
+                print("ACTUAL RESULT: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP: Get the Radio number of entries";
-                print "EXPECTED RESULT: Get the index as 0";
-                print "ACTUAL RESULT: %s" %details;
+                print("TEST STEP: Get the Radio number of entries");
+                print("EXPECTED RESULT: Get the index as 0");
+                print("ACTUAL RESULT: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "wifi_getIndexFromName() call failed"
+            tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getIndexFromName() call failed")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "wifi_getApName() call failed"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("wifi_getApName() call failed")
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

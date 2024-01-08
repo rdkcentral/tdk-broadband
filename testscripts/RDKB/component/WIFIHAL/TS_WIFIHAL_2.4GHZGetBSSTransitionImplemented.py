@@ -84,10 +84,10 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHZGetBSSTransitionImplemented')
 #Get the result of connection with test component and STB
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,7 +96,7 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
 
     else:
@@ -104,50 +104,46 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
         expectedresult="SUCCESS";
         #Getting  IS_BTM_CAPABLE value from tdk_platform_properties"
         cmd= "sh %s/tdk_utility.sh parseConfigFile BTM_CAPABILITY" %TDK_PATH;
-        print cmd;
+        print(cmd);
         expectedresult="SUCCESS";
         tdkTestObj.addParameter("command",cmd);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         platformValue = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-        print"IS_BTM_CAPABLE:",platformValue
+        print("IS_BTM_CAPABLE:",platformValue)
         if expectedresult in actualresult and platformValue!= "":
-           index = idx;
-           #Prmitive test case which is associated to this Script
-           tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamBoolValue');
-           tdkTestObj.addParameter("methodName","getBSSTransitionImplemented");
-           tdkTestObj.addParameter("radioIndex", idx);
-           expectedresult="SUCCESS";
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           details = details.split(':')[1].strip();
-           print "Details : ",details
-           if expectedresult in actualresult and platformValue == details:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP :check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device"
-              print "EXPECTED RESULT : Should check wether the BSSTransition Implemented "
-              print "ACTUAL RESULT : BSSTransition Implemented in the device"
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP :Check wether BSSTransitionImplemented"
-               print "EXPECTED RESULT : check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device"
-               print "ACTUAL RESULT :difference in api return and property file entry"
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            index = idx;
+            #Prmitive test case which is associated to this Script
+            tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamBoolValue');
+            tdkTestObj.addParameter("methodName","getBSSTransitionImplemented");
+            tdkTestObj.addParameter("radioIndex", idx);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            details = details.split(':')[1].strip();
+            print("Details : ",details)
+            if expectedresult in actualresult and platformValue == details:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP :check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device")
+                print("EXPECTED RESULT : Should check wether the BSSTransition Implemented ")
+                print("ACTUAL RESULT : BSSTransition Implemented in the device")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP :Check wether BSSTransitionImplemented")
+                print("EXPECTED RESULT : check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device")
+                print("ACTUAL RESULT :difference in api return and property file entry")
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Should  get BSS capability from property file"
-            print "ACTUAL RESULT :BSS capability from property file :",platformValue ;
+            print("TEST STEP : Should  get BSS capability from property file")
+            print("ACTUAL RESULT :BSS capability from property file :",platformValue) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] :FAILURE";
+            print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
+    print("Module loading failed");

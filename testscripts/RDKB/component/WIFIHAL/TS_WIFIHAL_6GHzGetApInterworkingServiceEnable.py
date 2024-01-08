@@ -81,8 +81,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApInterworkingServiceEnable'
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,12 +93,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
-        print "\nTEST STEP 2: Invoke the wifi_getApInterworkingServiceEnable() api for 6G private AP";
-        print "EXPECTED RESULT 2:Invocation of wifi_getApInterworkingServiceEnable should be success";
+        print("\nTEST STEP 2: Invoke the wifi_getApInterworkingServiceEnable() api for 6G private AP");
+        print("EXPECTED RESULT 2:Invocation of wifi_getApInterworkingServiceEnable should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getApInterworkingServiceEnable")
         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -110,33 +110,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Invocation of wifi_getApInterworkingServiceEnable was success; Details : %s" %details;
+            print("ACTUAL RESULT 2: Invocation of wifi_getApInterworkingServiceEnable was success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\nTEST STEP 3: Check if value returned by wifi_getApInterworkingServiceEnable() api is Enabled or Disabled";
-            print "EXPECTED RESULT 3 : The value returned by wifi_getApInterworkingServiceEnable() api should be Enabled or Disabled";
+            print("\nTEST STEP 3: Check if value returned by wifi_getApInterworkingServiceEnable() api is Enabled or Disabled");
+            print("EXPECTED RESULT 3 : The value returned by wifi_getApInterworkingServiceEnable() api should be Enabled or Disabled");
             enable= details.split(":")[1].strip()
 
             if "Enabled" in enable or "Disabled" in enable:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: ApInterworkingServiceEnable = %s" %enable;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 3: ApInterworkingServiceEnable = %s" %enable);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: ApInterworkingServiceEnable = %s." %enable;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3: ApInterworkingServiceEnable = %s." %enable);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: API invocation failed; Details :%s" %details;
+            print("ACTUAL RESULT 2: API invocation failed; Details :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -51,7 +51,7 @@
     <input_parameters>methodName : getHalVersionÂ 
 </input_parameters>
     <automation_approch>1. Load wifihal module
-2. Using WIFIHAL_GetOrSetParamStringValue invoke wifi_getHalVersion() 
+2. Using WIFIHAL_GetOrSetParamStringValue invoke wifi_getHalVersion()
 3. Verify that the value returned is not NULL
 4. Unload wifihal module</automation_approch>
     <except_output>HAL version should be returned</except_output>
@@ -65,8 +65,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 #Test component to be tested
@@ -79,7 +79,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_GetHalVersion');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,22 +94,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult:
         halVersion = details.split(":")[1].strip()
-	if halVersion != "":
-            print "wifi_getHalVersion function called successfully and %s"%details
+        if halVersion != "":
+            print("wifi_getHalVersion function called successfully and %s"%details)
             tdkTestObj.setResultStatus("SUCCESS");
-            print "HAL Version received: %s"%halVersion;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-            print "wifi_getHalVersion function called successfully and %s"%details
+            print("HAL Version received: %s"%halVersion);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            print("wifi_getHalVersion function called successfully and %s"%details)
             tdkTestObj.setResultStatus("FAILURE");
-            print "HAL Version received: %s"%halVersion;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("HAL Version received: %s"%halVersion);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "wifi_getHalVersion function call failed";
+        print("wifi_getHalVersion function call failed");
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

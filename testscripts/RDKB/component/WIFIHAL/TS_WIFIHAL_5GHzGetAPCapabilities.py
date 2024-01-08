@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetAPCapabilities');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,7 +88,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetAPCapabilities");
@@ -97,15 +97,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getAPCapabilities() to retrieve the 5G Private AP Capabilities";
-        print "EXPECTED RESULT 1: Should invoke the HAL API wifi_getAPCapabilities() successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getAPCapabilities() to retrieve the 5G Private AP Capabilities");
+        print("EXPECTED RESULT 1: Should invoke the HAL API wifi_getAPCapabilities() successfully");
 
         if expectedresult in actualresult and "Details" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API was invoked successfully";
+            print("ACTUAL RESULT 1: API was invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Retrieve the AP Capabilities structure values
             rts_threshold = details.split("RTS Threshold Supported = ")[1].split(",")[0];
@@ -117,38 +117,38 @@ if "SUCCESS" in loadmodulestatus.upper():
             bss_transition = details.split("BSS Transition Implemented = ")[1].split(",")[0].strip("\\n");
 
             #Print all AP Capabilities values
-            print "RTS Threshold Supported = %s" %rts_threshold;
-            print "Security Modes Supported = %s" %security_modes;
-            print "Onboarding Methods Supported = %s" %onboarding_methods;
-            print "WMM Supported = %s" %wmm_support;
-            print "UAPSD Supported = %s" %uapsd_support;
-            print "Interworking Service Supported = %s" %interworking_service;
-            print "BSS Transition Implemented = %s" %bss_transition;
+            print("RTS Threshold Supported = %s" %rts_threshold);
+            print("Security Modes Supported = %s" %security_modes);
+            print("Onboarding Methods Supported = %s" %onboarding_methods);
+            print("WMM Supported = %s" %wmm_support);
+            print("UAPSD Supported = %s" %uapsd_support);
+            print("Interworking Service Supported = %s" %interworking_service);
+            print("BSS Transition Implemented = %s" %bss_transition);
 
-            print "\nTEST STEP 2 : Check if the AP Capabilities structure values are non-empty";
-            print "EXPECTED RESULT 2 : AP Capabilities structure values should be non-empty";
+            print("\nTEST STEP 2 : Check if the AP Capabilities structure values are non-empty");
+            print("EXPECTED RESULT 2 : AP Capabilities structure values should be non-empty");
 
             if rts_threshold != "" and security_modes != "" and onboarding_methods != "" and wmm_support != "" and uapsd_support != "" and interworking_service != "" and bss_transition != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: AP Capabilities structure values are non-empty";
+                print("ACTUAL RESULT 2: AP Capabilities structure values are non-empty");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Not all AP Capabilities structure values are non-empty";
+                print("ACTUAL RESULT 2: Not all AP Capabilities structure values are non-empty");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

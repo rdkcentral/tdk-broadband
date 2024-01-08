@@ -81,7 +81,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetRadioChannelsInUse');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,24 +89,24 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-            expectedresult="SUCCESS";
-            radioIndex = idx
-            primitive = 'WIFIHAL_GetOrSetParamStringValue'
-            getMethod = "getRadioChannelsInUse"
-            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-            if expectedresult in actualresult :
-                chInUse = details.split(":")[1].strip();
-                print "EXPECTED RESULT: Should get the Radio Channels in use for 5GHz";
-                print "ACTUAL RESULT: %s" %details;
-            else:
-                print "Failed to get the Radio Channels in use for 5GHz";
-                print "getChannelInUse() failed"
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        getMethod = "getRadioChannelsInUse"
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+        if expectedresult in actualresult :
+            chInUse = details.split(":")[1].strip();
+            print("EXPECTED RESULT: Should get the Radio Channels in use for 5GHz");
+            print("ACTUAL RESULT: %s" %details);
+        else:
+            print("Failed to get the Radio Channels in use for 5GHz");
+            print("getChannelInUse() failed")
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

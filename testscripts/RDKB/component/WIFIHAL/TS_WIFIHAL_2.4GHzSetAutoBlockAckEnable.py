@@ -79,17 +79,17 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetAutoBlockAckEnable');
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Invoke the wifi_getAutoBlockAckEnable api";
-        print "EXPECTED RESULT 1:Invocation of wifi_getAutoBlockAckEnable should be success";
+        print("TEST STEP 1: Invoke the wifi_getAutoBlockAckEnable api");
+        print("EXPECTED RESULT 1:Invocation of wifi_getAutoBlockAckEnable should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getAutoBlockAckEnable")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -100,9 +100,9 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getAutoBlockAckEnable was success. %s" %details;
+            print("ACTUAL RESULT 1: Invocation of wifi_getAutoBlockAckEnable was success. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             enable = details.split(":")[1].strip()
             if "Enabled" in enable:
                 oldEnable = 1
@@ -112,8 +112,8 @@ if "SUCCESS" in loadmodulestatus.upper():
                 oldEnable = 0
                 newEnable = 1
                 newStatus = "Enabled"
-            print "TEST STEP 2: Toggle the enabled state using wifi_setAutoBlockAckEnable api";
-            print "EXPECTED RESULT 2: wifi_setAutoBlockAckEnable should successfully toggle AutoBlockAckEnable status to ",newStatus ;
+            print("TEST STEP 2: Toggle the enabled state using wifi_setAutoBlockAckEnable api");
+            print("EXPECTED RESULT 2: wifi_setAutoBlockAckEnable should successfully toggle AutoBlockAckEnable status to ",newStatus) ;
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
             tdkTestObj.addParameter("methodName","setAutoBlockAckEnable")
             tdkTestObj.addParameter("radioIndex", idx)
@@ -123,11 +123,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-                print "TEST STEP 3: Invoke  wifi_getAutoBlockAckEnable  to verify toggling done by wifi_setAutoBlockAckEnable api";
-                print "EXPECTED RESULT 3: wifi_getAutoBlockAckEnable should be successfully invoked after set";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("TEST STEP 3: Invoke  wifi_getAutoBlockAckEnable  to verify toggling done by wifi_setAutoBlockAckEnable api");
+                print("EXPECTED RESULT 3: wifi_getAutoBlockAckEnable should be successfully invoked after set");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                 tdkTestObj.addParameter("methodName","getAutoBlockAckEnable")
                 tdkTestObj.addParameter("radioIndex", idx)
@@ -137,17 +137,17 @@ if "SUCCESS" in loadmodulestatus.upper():
                 enable = details.split(":")[1].strip();
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Invocation of wifi_getAutoBlockAckEnable was success";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 3: Invocation of wifi_getAutoBlockAckEnable was success");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     if enable == newStatus :
-                        print "TEST STEP 4 : Verify if AutoBlockAckEnable set value and get value are same"
-                        print "EXPECTED RESULT 4 : wifi_getAutoBlockAckEnable() returned enable state same as the set value"
-                        print "ACTUAL RESULT 4:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 4 : Verify if AutoBlockAckEnable set value and get value are same")
+                        print("EXPECTED RESULT 4 : wifi_getAutoBlockAckEnable() returned enable state same as the set value")
+                        print("ACTUAL RESULT 4:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
                         #Revert AutoBlockAckEnable to initial value
-                        print "TEST STEP 5: Revert the enabled state to %s using wifi_setAutoBlockAckEnable api" %enable;
-                        print "EXPECTED RESULT 5: wifi_setAutoBlockAckEnable should successfully revert AutoBlockAckEnable status";
+                        print("TEST STEP 5: Revert the enabled state to %s using wifi_setAutoBlockAckEnable api" %enable);
+                        print("EXPECTED RESULT 5: wifi_setAutoBlockAckEnable should successfully revert AutoBlockAckEnable status");
                         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                         tdkTestObj.addParameter("methodName","setAutoBlockAckEnable")
                         tdkTestObj.addParameter("radioIndex", idx)
@@ -157,37 +157,37 @@ if "SUCCESS" in loadmodulestatus.upper():
                         details = tdkTestObj.getResultDetails();
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 5:  %s" %details;
+                            print("ACTUAL RESULT 5:  %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 5:  %s" %details;
+                            print("ACTUAL RESULT 5:  %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "TEST STEP 4 : Verify if AutoBlockAckEnable set value and get value are same"
-                        print "EXPECTED RESULT 4 : wifi_getAutoBlockAckEnable() returned enable state different from the set value"
-                        print "ACTUAL RESULT 4:  %s" %details;
+                        print("TEST STEP 4 : Verify if AutoBlockAckEnable set value and get value are same")
+                        print("EXPECTED RESULT 4 : wifi_getAutoBlockAckEnable() returned enable state different from the set value")
+                        print("ACTUAL RESULT 4:  %s" %details);
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Invocation of wifi_getAutoBlockAckEnable was failure";
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("ACTUAL RESULT 3: Invocation of wifi_getAutoBlockAckEnable was failure");
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

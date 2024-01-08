@@ -86,7 +86,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetRadiochannel');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,64 +94,64 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    #get the current cahnnel number
-	    expectedresult="SUCCESS";
-	    radioIndex = idx;
-	    getMethod = "getRadioChannel"
-	    param = 0
-	    primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        #get the current cahnnel number
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        getMethod = "getRadioChannel"
+        param = 0
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    if expectedresult in actualresult :
-		currChannel = int(details.split(":")[1].strip())
+        if expectedresult in actualresult :
+            currChannel = int(details.split(":")[1].strip())
 
-		#get the possible channel list
-		getMethod = "getRadioPossibleChannels"
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+            #get the possible channel list
+            getMethod = "getRadioPossibleChannels"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-		if expectedresult in actualresult :
-		    possibleCh = details.split(":")[1].strip().split(',')
-                    channel = int(possibleCh[0])
-		    #from possible channel list, select a channel != current channel num:, to do set operation
-		    for index in range(len(possibleCh)):
-			if int(possibleCh[index]) != currChannel:
-			    channel = int(possibleCh[index]) ;
-			    break;
-		    print "Channel to be set :",channel
-		    #setchannel with the above selected channel number
-		    setMethod = "setRadioChannel"
-		    primitive = 'WIFIHAL_GetOrSetParamULongValue'
+            if expectedresult in actualresult :
+                possibleCh = details.split(":")[1].strip().split(',')
+                channel = int(possibleCh[0])
+                #from possible channel list, select a channel != current channel num:, to do set operation
+                for index in range(len(possibleCh)):
+                    if int(possibleCh[index]) != currChannel:
+                        channel = int(possibleCh[index]) ;
+                        break;
+                print("Channel to be set :",channel)
+                #setchannel with the above selected channel number
+                setMethod = "setRadioChannel"
+                primitive = 'WIFIHAL_GetOrSetParamULongValue'
 
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, channel, setMethod)
-		    if expectedresult in actualresult :
-			print "Radio channel set"
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, channel, setMethod)
+                if expectedresult in actualresult :
+                    print("Radio channel set")
 
-			time.sleep(20)
+                    time.sleep(20)
 
-			#Verify set operation with a get operation
-			getMethod = "getRadioChannel"
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-			if expectedresult in actualresult and channel == int(details.split(":")[1].strip()):
-			    print "setRadioChannel Success, verified with getRadioChannel()"
+                    #Verify set operation with a get operation
+                    getMethod = "getRadioChannel"
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    if expectedresult in actualresult and channel == int(details.split(":")[1].strip()):
+                        print("setRadioChannel Success, verified with getRadioChannel()")
 
-			    #revert channel num
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, currChannel, setMethod)
+                        #revert channel num
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, currChannel, setMethod)
 
-			    if expectedresult in actualresult :
-                                tdkTestObj.setResultStatus("SUCCESS");
-				print "Radio channel reverted back";
-			    else:
-                                tdkTestObj.setResultStatus("FAILURE");
-				print "Couldn't revert channel num"
-			else:
-			    print "Set validation with get api failed"
-			    tdkTestObj.setResultStatus("FAILURE");
+                        if expectedresult in actualresult :
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Radio channel reverted back");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Couldn't revert channel num")
+                    else:
+                        print("Set validation with get api failed")
+                        tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

@@ -105,7 +105,7 @@ def GetorSetApSecurityRadiusServer(obj, primitive, apIndex, IPAddress, port, Rad
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "details : %s"%details;
+    print("details : %s"%details);
     return (tdkTestObj, actualresult, details);
 
 def checkApSecurityRadiusServer(apIndex):
@@ -120,11 +120,11 @@ def checkApSecurityRadiusServer(apIndex):
     #Checking if all the output values are non emtpy
 
     if all(initValues):
-        print "TEST STEP 1: Get the ApSecurityRadiusServer details"
-        print "EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values"
-        print "ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as a NON EMPTY values"
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "ApSecurityRadiusServer details : %s"%output
+        print("TEST STEP 1: Get the ApSecurityRadiusServer details")
+        print("EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values")
+        print("ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as a NON EMPTY values")
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("ApSecurityRadiusServer details : %s"%output)
         tdkTestObj.setResultStatus("SUCCESS");
         setMethod = "setApSecurityRadiusServer"
         primitive = "WIFIHAL_GetOrSetSecurityRadiusServer"
@@ -136,11 +136,11 @@ def checkApSecurityRadiusServer(apIndex):
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the ApSecurityRadiusServer details"
-            print "EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret"
-            print "ACTUAL RESULT 2: Successfully set the IPAddress, port and RadiusSecret"
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
+            print("TEST STEP 2: Set the ApSecurityRadiusServer details")
+            print("EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret")
+            print("ACTUAL RESULT 2: Successfully set the IPAddress, port and RadiusSecret")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
             getMethod = "getApSecurityRadiusServer"
             primitive = "WIFIHAL_GetOrSetSecurityRadiusServer"
             #Calling the method to execute wifi_getApSecurityRadiusServer()
@@ -152,12 +152,12 @@ def checkApSecurityRadiusServer(apIndex):
 
             if outputValues == [IPAddress, str(port), RadiusSecret]:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Comparing the set and get values of ApSecurityRadiusServer deatils"
-                print "EXPECTED RESULT 3: Set and get values should be the same"
-                print "ACTUAL RESULT 3: Set and get values are the same"
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-                print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
-                print "Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2]
+                print("TEST STEP 3: Comparing the set and get values of ApSecurityRadiusServer deatils")
+                print("EXPECTED RESULT 3: Set and get values should be the same")
+                print("ACTUAL RESULT 3: Set and get values are the same")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
+                print("Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2])
 
                 #Reverting the values to previous value
                 if initValues[0] != "0.0.0.0":
@@ -170,33 +170,33 @@ def checkApSecurityRadiusServer(apIndex):
                     tdkTestObj, actualresult, details = GetorSetApSecurityRadiusServer(obj, primitive, apIndex, IPAddress, port, RadiusSecret, setMethod)
 
                     if expectedresult in actualresult:
-                        print "Successfully reverted to initial values"
+                        print("Successfully reverted to initial values")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "Revert operation is not required as initial IP address is 0.0.0.0";
+                    print("Revert operation is not required as initial IP address is 0.0.0.0");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Comparing the set and get values of ApSecurityRadiusServer deatils"
-                print "EXPECTED RESULT 3: Set and get values should be the same"
-                print "ACTUAL RESULT 3: Set and get values are NOT the same"
-                print "[TEST EXECUTION RESULT] : FAILURE";
-                print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
-                print "Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2]
+                print("TEST STEP 3: Comparing the set and get values of ApSecurityRadiusServer deatils")
+                print("EXPECTED RESULT 3: Set and get values should be the same")
+                print("ACTUAL RESULT 3: Set and get values are NOT the same")
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
+                print("Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2])
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the ApSecurityRadiusServer details"
-            print "EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret"
-            print "ACTUAL RESULT 2: Failed to set the IPAddress, port and RadiusSecret"
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set the ApSecurityRadiusServer details")
+            print("EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret")
+            print("ACTUAL RESULT 2: Failed to set the IPAddress, port and RadiusSecret")
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1: Get the ApSecurityRadiusServer details"
-        print "EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values"
-        print "ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as an EMPTY values"
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "ApSecurityRadiusServer details : %s"%output
+        print("TEST STEP 1: Get the ApSecurityRadiusServer details")
+        print("EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values")
+        print("ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as an EMPTY values")
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("ApSecurityRadiusServer details : %s"%output)
         tdkTestObj.setResultStatus("FAILURE");
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -218,8 +218,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_SetSecurityRadiusSer
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -228,7 +228,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -238,10 +238,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP : Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT : Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT : APINDEX_2G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP : Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT : Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT : APINDEX_2G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
         compatibleModes = ["WPA-Enterprise", "WPA2-Enterprise", "WPA-WPA2-Enterprise"]
         expectedresult="SUCCESS";
@@ -252,7 +252,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             initMode = details.split(":")[1].strip()
-            print "Initial Security Mode : %s"%initMode;
+            print("Initial Security Mode : %s"%initMode);
 
             if initMode not in compatibleModes:
                 expectedresult="SUCCESS";
@@ -264,7 +264,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ModeEnabled is changed to an WPA-Enterprise type"
+                    print("ModeEnabled is changed to an WPA-Enterprise type")
                     #Calling the function to perform the settings and getting and verification of SecurityRadiusServer
                     checkApSecurityRadiusServer(apIndex);
 
@@ -276,32 +276,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
 
                     if expectedresult in actualresult:
-                        print "Successfully reverted the SecurityMode to initial value"
+                        print("Successfully reverted the SecurityMode to initial value")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "Unable to revert the SecurityMode to initial value"
+                        print("Unable to revert the SecurityMode to initial value")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to change ModeEnabled to Enterprise type"
+                    print("Unable to change ModeEnabled to Enterprise type")
             else:
                 #Calling the function to perform the settings and getting and verification of SecurityRadiusServer
                 checkApSecurityRadiusServer(apIndex);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "wifi_getApSecurityModeEnabled()call failed"
+            print("wifi_getApSecurityModeEnabled()call failed")
     else:
-        print "TEST STEP : Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT : Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT : APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP : Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT : Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT : APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

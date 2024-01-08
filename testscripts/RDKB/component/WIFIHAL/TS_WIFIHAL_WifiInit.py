@@ -96,7 +96,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_WifiInit');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,21 +110,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initialize the wifi subsystem by invoking wifi_init() HAL api";
-        print "EXPECTED RESULT 1: Should initialize the wifi subsystem by invoking wifi_init() HAL api successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initialize the wifi subsystem by invoking wifi_init() HAL api");
+        print("EXPECTED RESULT 1: Should initialize the wifi subsystem by invoking wifi_init() HAL api successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:  Initialize the wifi subsystem by invoking wifi_init() HAL api";
-        print "EXPECTED RESULT 1: SShould initialize the wifi subsystem by invoking wifi_init() HAL api successfully";
-        print "ACTUAL RESULT 1: API returned Failure status. %s" %details;
+        print("TEST STEP 1:  Initialize the wifi subsystem by invoking wifi_init() HAL api");
+        print("EXPECTED RESULT 1: SShould initialize the wifi subsystem by invoking wifi_init() HAL api successfully");
+        print("ACTUAL RESULT 1: API returned Failure status. %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

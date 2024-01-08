@@ -108,8 +108,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApBasicAuthenticationMode');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 def setApSecurityMode(obj,apIndex,setMode):
     expectedresult="SUCCESS";
@@ -137,28 +137,28 @@ def setApSecurityMode(obj,apIndex,setMode):
                 finalMode = details.split(":")[1].strip()
                 if finalMode == setMode:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP: Compare the set and get values of ApSecurityMode"
-                    print "EXPECTED RESULT: Set and get values of ApSecurityMode should be same"
-                    print "ACTUAL RESULT: Set and get values of ApSecurityMode are the same"
-                    print "setApSecurityMode = ",setMode
-                    print "getApSecurityMode = ",finalMode
-                    print "TEST EXECUTION RESULT : SUCCESS"
+                    print("TEST STEP: Compare the set and get values of ApSecurityMode")
+                    print("EXPECTED RESULT: Set and get values of ApSecurityMode should be same")
+                    print("ACTUAL RESULT: Set and get values of ApSecurityMode are the same")
+                    print("setApSecurityMode = ",setMode)
+                    print("getApSecurityMode = ",finalMode)
+                    print("TEST EXECUTION RESULT : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP: Compare the set and get values of ApSecurityMode"
-                    print "EXPECTED RESULT: Set and get values of ApSecurityMode should be same"
-                    print "ACTUAL RESULT: Set and get values of ApSecurityMode are NOT the same"
-                    print "setApSecurityMode = ",setMode
-                    print "getApSecurityMode = ",finalMode
-                    print "TEST EXECUTION RESULT : FAILURE"
+                    print("TEST STEP: Compare the set and get values of ApSecurityMode")
+                    print("EXPECTED RESULT: Set and get values of ApSecurityMode should be same")
+                    print("ACTUAL RESULT: Set and get values of ApSecurityMode are NOT the same")
+                    print("setApSecurityMode = ",setMode)
+                    print("getApSecurityMode = ",finalMode)
+                    print("TEST EXECUTION RESULT : FAILURE")
             else:
-                print "wifi_getApSecurityModeEnabled() call failed"
+                print("wifi_getApSecurityModeEnabled() call failed")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "wifi_setApSecurityModeEnabled() call failed"
+            print("wifi_setApSecurityModeEnabled() call failed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "wifi_getApSecurityModeEnabled() call failed"
+        print("wifi_getApSecurityModeEnabled() call failed")
         tdkTestObj.setResultStatus("FAILURE");
 
     return (initialApSecurity);
@@ -172,7 +172,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -185,11 +185,11 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
         if expectedresult in actualresult and supportedAuthModes != "":
             tdkTestObj.setResultStatus("SUCCESS");
             supportedModes = supportedAuthModes.split(",");
-            print "\nTEST STEP 1: Get the list of supported Authentication Modes from /etc/tdk_platform.properties file";
-            print "EXPECTED RESULT 1: Should get the list of supported Authentication Modes";
-            print "ACTUAL RESULT 1: Got the list of supported Authentication Modes as %s" %supportedModes;
+            print("\nTEST STEP 1: Get the list of supported Authentication Modes from /etc/tdk_platform.properties file");
+            print("EXPECTED RESULT 1: Should get the list of supported Authentication Modes");
+            print("ACTUAL RESULT 1: Got the list of supported Authentication Modes as %s" %supportedModes);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             apIndex = idx;
             getMethod = "getApBasicAuthenticationMode"
@@ -201,7 +201,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
                 initialMode = details.split(":")[1].strip();
                 if initialMode in supportedModes:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Initial Mode is in the supported modes list"
+                    print("Initial Mode is in the supported modes list")
 
                     #Calling the function to set the ApSecurity mode to 'None'
                     mode = 'None';
@@ -218,10 +218,10 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
                             finalMode = details.split(":")[1].strip()
                             if finalMode == 'None':
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP: Check if ApBasicAuthenticationMode is changed to None when the Security Mode enabled is None"
-                                print "EXPECTED RESULT: ApBasicAuthenticationMode should be changed to None when the Security Mode enabled is None"
-                                print "ACTUAL RESULT: ApBasicAuthenticationMode is None as expected"
-                                print "TEST EXECUTION RESULT : SUCCESS"
+                                print("TEST STEP: Check if ApBasicAuthenticationMode is changed to None when the Security Mode enabled is None")
+                                print("EXPECTED RESULT: ApBasicAuthenticationMode should be changed to None when the Security Mode enabled is None")
+                                print("ACTUAL RESULT: ApBasicAuthenticationMode is None as expected")
+                                print("TEST EXECUTION RESULT : SUCCESS")
 
                                 #Calling the method to execute wifi_getApBeaconType()
                                 getMethod = "getApBeaconType"
@@ -232,53 +232,52 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in sysloadmodulestatus.upp
                                     beaconType = details.split(":")[1].strip()
                                     if beaconType == 'None':
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "TEST STEP: Check if ApBeaconType is changed to None when the Security Mode enabled is None"
-                                        print "EXPECTED RESULT: ApBeaconType should be changed to None when the Security Mode enabled is None"
-                                        print "ACTUAL RESULT: ApBeaconType is None as expected"
-                                        print "TEST EXECUTION RESULT : SUCCESS"
+                                        print("TEST STEP: Check if ApBeaconType is changed to None when the Security Mode enabled is None")
+                                        print("EXPECTED RESULT: ApBeaconType should be changed to None when the Security Mode enabled is None")
+                                        print("ACTUAL RESULT: ApBeaconType is None as expected")
+                                        print("TEST EXECUTION RESULT : SUCCESS")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "TEST STEP: Check if ApBeaconType is changed to None when the Security Mode enabled is None"
-                                        print "EXPECTED RESULT: ApBeaconType should be changed to None when the Security Mode enabled is None"
-                                        print "ACTUAL RESULT: ApBeaconType is NOT None as expected"
-                                        print "TEST EXECUTION RESULT : FAILURE"
+                                        print("TEST STEP: Check if ApBeaconType is changed to None when the Security Mode enabled is None")
+                                        print("EXPECTED RESULT: ApBeaconType should be changed to None when the Security Mode enabled is None")
+                                        print("ACTUAL RESULT: ApBeaconType is NOT None as expected")
+                                        print("TEST EXECUTION RESULT : FAILURE")
                                 else:
-                                    print "wifi_getApBeaconType() call failed"
+                                    print("wifi_getApBeaconType() call failed")
                                     tdkTestObj.setResultStatus("FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP: Check if ApBasicAuthenticationMode is changed to None when the Security Mode enabled is None"
-                                print "EXPECTED RESULT: ApBasicAuthenticationMode should be changed to None when the Security Mode enabled is None"
-                                print "ACTUAL RESULT: ApBasicAuthenticationMode is NOT None as expected"
-                                print "TEST EXECUTION RESULT : FAILURE"
+                                print("TEST STEP: Check if ApBasicAuthenticationMode is changed to None when the Security Mode enabled is None")
+                                print("EXPECTED RESULT: ApBasicAuthenticationMode should be changed to None when the Security Mode enabled is None")
+                                print("ACTUAL RESULT: ApBasicAuthenticationMode is NOT None as expected")
+                                print("TEST EXECUTION RESULT : FAILURE")
                         else:
-                            print "wifi_getApBasicAuthenticationMode() call failed"
+                            print("wifi_getApBasicAuthenticationMode() call failed")
                             tdkTestObj.setResultStatus("FAILURE");
 
                         #Revert the security mode
                         securityMode = setApSecurityMode(obj,idx,initialSecurityMode);
                     else:
-                        print "wifi_getApSecurityModeEnabled() call failed"
+                        print("wifi_getApSecurityModeEnabled() call failed")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Initial Mode is NOT in the supported modes list"
+                    print("Initial Mode is NOT in the supported modes list")
             else:
-                print "wifi_getApBasicAuthenticationMode() call failed"
+                print("wifi_getApBasicAuthenticationMode() call failed")
                 tdkTestObj.setResultStatus("FAILURE");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Get the list of supported Authentication Modes from /etc/tdk_platform.properties file";
-            print "EXPECTED RESULT : Should get the list of supported Authentication Modes";
-            print "ACTUAL RESULT : Failed to get the list of supported AuthenticationModes from /etc/tdk_platform.properties file";
+            print("TEST STEP : Get the list of supported Authentication Modes from /etc/tdk_platform.properties file");
+            print("EXPECTED RESULT : Should get the list of supported Authentication Modes");
+            print("ACTUAL RESULT : Failed to get the list of supported AuthenticationModes from /etc/tdk_platform.properties file");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

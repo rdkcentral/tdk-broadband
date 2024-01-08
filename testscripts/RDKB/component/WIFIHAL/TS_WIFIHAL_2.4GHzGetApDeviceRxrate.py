@@ -80,14 +80,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApDeviceRxrate');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     #Validate wifi_getApAssociatedDeviceDiagnosticResult2() for 2.4GHZ
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
@@ -96,57 +96,57 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "Entire Details:",details;
+        print("Entire Details:",details);
         if expectedresult in actualresult:
-           outputList = details.split("=")[1].strip()
-           if "," in outputList:
-              outputValue = outputList.split(",")[0].strip();
-           else:
-               outputValue = outputList.split(":Value")[0].strip();
-           print "TEST STEP: get the associateddevice"
-           print "expected result: should get the number of associated devices"
-           print "Associated Device's MAC address:",outputValue
-           #check if outputvalue is a mac address
-           if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
-              #Prmitive test case which associated to this Script
-              tdkTestObj = obj.createTestStep('WIFIHAL_GetApDeviceTxRxRate');
-              tdkTestObj.addParameter("methodName","getApDeviceRxrate");
-              tdkTestObj.addParameter("apIndex", idx);
-              #Connect a device and add MAC Address
-              tdkTestObj.addParameter("MAC",outputValue);
-              expectedresult="SUCCESS";
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails();
-              print"details",details;
-              if expectedresult in actualresult :
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 details = int(details.split(":")[1].strip());
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP : Get the ApDeviceRxrate"
-                 print "EXPECTED RESULT : Should successfully get the ApDeviceRxrate"
-                 print "ACTUAL RESULT : Successfully gets the ApDeviceRxrate"
-                 print "RxRate in Mbps", details
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP : Get the ApDeviceRxrate"
-                  print "EXPECTED RESULT : Should successfully get the ApDeviceRxrate"
-                  print "ACTUAL RESULT : Failed to get the ApDeviceRxrate"
-                  print "Details: %s"%details
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "Not able to  Get the ApDeviceRxrate as no device is connected or Invalid Format"
+            outputList = details.split("=")[1].strip()
+            if "," in outputList:
+                outputValue = outputList.split(",")[0].strip();
+            else:
+                outputValue = outputList.split(":Value")[0].strip();
+            print("TEST STEP: get the associateddevice")
+            print("expected result: should get the number of associated devices")
+            print("Associated Device's MAC address:",outputValue)
+            #check if outputvalue is a mac address
+            if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
+                #Prmitive test case which associated to this Script
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApDeviceTxRxRate');
+                tdkTestObj.addParameter("methodName","getApDeviceRxrate");
+                tdkTestObj.addParameter("apIndex", idx);
+                #Connect a device and add MAC Address
+                tdkTestObj.addParameter("MAC",outputValue);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                print("details",details);
+                if expectedresult in actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    details = int(details.split(":")[1].strip());
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP : Get the ApDeviceRxrate")
+                    print("EXPECTED RESULT : Should successfully get the ApDeviceRxrate")
+                    print("ACTUAL RESULT : Successfully gets the ApDeviceRxrate")
+                    print("RxRate in Mbps", details)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP : Get the ApDeviceRxrate")
+                    print("EXPECTED RESULT : Should successfully get the ApDeviceRxrate")
+                    print("ACTUAL RESULT : Failed to get the ApDeviceRxrate")
+                    print("Details: %s"%details)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("Not able to  Get the ApDeviceRxrate as no device is connected or Invalid Format")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP: get the associateddevice"
-            print "EXPECTED RESULT: should get the number of associated devices"
-            print "ACTUAL RESULT : Failed to get the number of associated devices"
+            print("TEST STEP: get the associateddevice")
+            print("EXPECTED RESULT: should get the number of associated devices")
+            print("ACTUAL RESULT : Failed to get the number of associated devices")
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

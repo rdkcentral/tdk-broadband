@@ -84,7 +84,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetDownlinkMuType');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,12 +92,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
-        print "TEST STEP 1: Invoke the wifi_getDownlinkMuType api";
-        print "EXPECTED RESULT 1:Invocation of wifi_getDownlinkMuType should be success";
+        print("TEST STEP 1: Invoke the wifi_getDownlinkMuType api");
+        print("EXPECTED RESULT 1:Invocation of wifi_getDownlinkMuType should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
         tdkTestObj.addParameter("methodName","getDownlinkMuType")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -108,30 +108,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getDownlinkMuType was success. %s" %details;
+            print("ACTUAL RESULT 1: Invocation of wifi_getDownlinkMuType was success. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             muTypeList = {"0":"WIFI_DL_MU_TYPE_NONE", "1":"WIFI_DL_MU_TYPE_HE", "2":"WIFI_DL_MU_TYPE_MIMO", "3":"WIFI_DL_MU_TYPE_HE_MIMO"};
-            print "TEST STEP 2: Check if value returned by wifi_getDownlinkMuType api is from the list ",muTypeList ;
-            print "EXPECTED RESULT 2 : The value returned by wifi_getDownlinkMuType api should be from the above list";
+            print("TEST STEP 2: Check if value returned by wifi_getDownlinkMuType api is from the list ",muTypeList) ;
+            print("EXPECTED RESULT 2 : The value returned by wifi_getDownlinkMuType api should be from the above list");
             dlMuType= details.split(":")[1].strip()
             if dlMuType.isdigit() and 0 <= int(dlMuType) and int(dlMuType) <= 3:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "ACTUAL RESULT 2: DownlinkMuType = %s. Value is from the expected list" %muTypeList[dlMuType]
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT 2: DownlinkMuType = %s. Value is from the expected list" %muTypeList[dlMuType])
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "ACTUAL RESULT 2: DownlinkMuType = %s. Value is not within the expected range" %dlMuType
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 2: DownlinkMuType = %s. Value is not within the expected range" %dlMuType)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

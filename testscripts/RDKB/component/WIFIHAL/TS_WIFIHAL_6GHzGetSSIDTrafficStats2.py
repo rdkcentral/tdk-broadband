@@ -85,8 +85,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetSSIDTrafficStats2');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,7 +97,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         primitive = 'WIFIHAL_GetSSIDTrafficStats2'
@@ -107,28 +107,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Get the SSID traffic statistics info for 6GHz";
-        print "EXPECTED RESULT 2: wifi_getSSIDTrafficStats2 should return the SSID traffic statistics for 6GHz";
+        print("\nTEST STEP 2: Get the SSID traffic statistics info for 6GHz");
+        print("EXPECTED RESULT 2: wifi_getSSIDTrafficStats2 should return the SSID traffic statistics for 6GHz");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: wifi_getSSIDTrafficStats2 operation returned SUCCESS";
-            print "SSID Traffic Stats Info : ";
+            print("ACTUAL RESULT 2: wifi_getSSIDTrafficStats2 operation returned SUCCESS");
+            print("SSID Traffic Stats Info : ");
             detailList = details.split(",")
             for i in detailList:
-                print i;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+                print(i);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: wifi_getSSIDTrafficStats2 operation returned FAILURE";
-            print "SSID Traffic Stats Info : ",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2: wifi_getSSIDTrafficStats2 operation returned FAILURE");
+            print("SSID Traffic Stats Info : ",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

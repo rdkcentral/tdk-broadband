@@ -80,15 +80,15 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetAtmBandMode');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     sysobj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -110,31 +110,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             bandMode = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult  and bandMode != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the ATM Band Mode from /etc/tdk_platform.properties file";
-                print "EXPECTED RESULT 1: Should get the ATM Band Mode";
-                print "ACTUAL RESULT 1: Got the ATM Band Mode as %s" %bandMode;
+                print("TEST STEP 1: Get the ATM Band Mode from /etc/tdk_platform.properties file");
+                print("EXPECTED RESULT 1: Should get the ATM Band Mode");
+                print("ACTUAL RESULT 1: Got the ATM Band Mode as %s" %bandMode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if int(details) == int(bandMode):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 2: Check if the current ATM Band mode is %s" %bandMode;
-                    print "EXPECTED RESULT 2: Should get the current Band mode as %s" %bandMode;
-                    print "ACTUAL RESULT 2: The current Band mode is :",details;
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("TEST STEP 2: Check if the current ATM Band mode is %s" %bandMode);
+                    print("EXPECTED RESULT 2: Should get the current Band mode as %s" %bandMode);
+                    print("ACTUAL RESULT 2: The current Band mode is :",details);
+                    print("TEST EXECUTION RESULT : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Check if the current ATM Band mode is %s" %bandMode;
-                    print "EXPECTED RESULT 2: Should get the current Band mode as %s" %bandMode;
-                    print "ACTUAL RESULT 2: The current Band mode is :",details;
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("TEST STEP 2: Check if the current ATM Band mode is %s" %bandMode);
+                    print("EXPECTED RESULT 2: Should get the current Band mode as %s" %bandMode);
+                    print("ACTUAL RESULT 2: The current Band mode is :",details);
+                    print("TEST EXECUTION RESULT : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the ATM Band Mode from /etc/tdk_platform.properties file";
-                print "EXPECTED RESULT 1: Should get the ATM Band Mode";
-                print "ACTUAL RESULT 1: Got the ATM Band Mode as %s" %bandMode;
+                print("TEST STEP 1: Get the ATM Band Mode from /etc/tdk_platform.properties file");
+                print("EXPECTED RESULT 1: Should get the ATM Band Mode");
+                print("ACTUAL RESULT 1: Got the ATM Band Mode as %s" %bandMode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
@@ -142,5 +142,5 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApWpsConfiguration');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,7 +97,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Check if an invalid index is returned
     if apIndex == -1:
-        print "Failed to get the 6G access point index";
+        print("Failed to get the 6G access point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetApWpsConfiguration");
@@ -107,43 +107,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP";
-        print "EXPECTED RESULT 2: Should invoke the HAL API successfully";
+        print("\nTEST STEP 2: Invoke the HAL API wifi_getApWpsConfiguration() for 5G private AP");
+        print("EXPECTED RESULT 2: Should invoke the HAL API successfully");
 
         if expectedresult in actualresult and "getApWpsConfiguration invoked successfully" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details;
+            print("ACTUAL RESULT 2: API was invoked successfully; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check the enable status of WPS
-            print "\nTEST STEP 3: Check the enable status of WPS Enable";
-            print "EXPECTED RESULT 3 : Should retrieve the enable status of WPS successfully";
+            print("\nTEST STEP 3: Check the enable status of WPS Enable");
+            print("EXPECTED RESULT 3 : Should retrieve the enable status of WPS successfully");
             wps_mode = details.split("WPS Mode : ")[1].split(",")[0];
 
             if "Enabled" in wps_mode or "Disabled" in wps_mode:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: WPS Enable Mode = %s" %wps_mode;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 3: WPS Enable Mode = %s" %wps_mode);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #If WPS mode is enabled, get the WPS PIN and WPS Methods
                 if "Enabled" in wps_mode:
-                    print "\nTEST STEP 4: Get the WPS PIN";
-                    print "EXPECTED RESULT 4 : Should retrieve the WPS PIN successfully";
+                    print("\nTEST STEP 4: Get the WPS PIN");
+                    print("EXPECTED RESULT 4 : Should retrieve the WPS PIN successfully");
                     wps_pin = details.split("WPS device PIN: ")[1].split(",")[0];
 
                     if wps_pin != "" and wps_pin.isdigit():
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: WPS PIN = %s" %wps_pin;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("ACTUAL RESULT 4: WPS PIN = %s" %wps_pin);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         wps_methods = [];
                         method = "";
                         wps_configuration_method = "";
                         invalid_flag = 0;
-                        print "\nTEST STEP 4: Get the WPS Methods";
-                        print "EXPECTED RESULT 4 : Should retrieve the WPS Methods successfully";
+                        print("\nTEST STEP 4: Get the WPS Methods");
+                        print("EXPECTED RESULT 4 : Should retrieve the WPS Methods successfully");
                         wps_methods =  details.split("WPS enabled configuration methods : ")[1].strip().split(" ");
 
                         if len(wps_methods) > 0:
@@ -156,44 +156,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 else :
                                     invalid_flag = 1;
                                     wps_configuration_method = "Invalid WPS Configuration Method";
-                                print "%s : %s" %(method, wps_configuration_method);
+                                print("%s : %s" %(method, wps_configuration_method));
 
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 5: WPS Methods = ", wps_methods;
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("ACTUAL RESULT 5: WPS Methods = ", wps_methods);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if invalid_flag == 1:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "WPS Configuration Methods lists invalid values";
+                                print("WPS Configuration Methods lists invalid values");
                             else:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "WPS Configuration Methods are valid values";
+                                print("WPS Configuration Methods are valid values");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 5: WPS Methods = ", wps_methods;
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT 5: WPS Methods = ", wps_methods);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: WPS PIN = %s; Value retrieved is invalid" %wps_pin;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("ACTUAL RESULT 4: WPS PIN = %s; Value retrieved is invalid" %wps_pin);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "As WPS Enable Mode is Disabled, cannot retrieve the WPS PIN and WPS Methods";
+                    print("As WPS Enable Mode is Disabled, cannot retrieve the WPS PIN and WPS Methods");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: WPS Enable Mode = %s; Value retrieved is invalid" %wps_mode;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3: WPS Enable Mode = %s; Value retrieved is invalid" %wps_mode);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 2: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

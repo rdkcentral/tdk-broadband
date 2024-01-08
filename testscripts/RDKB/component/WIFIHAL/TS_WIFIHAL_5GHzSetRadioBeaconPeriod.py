@@ -53,7 +53,7 @@ radioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Using WIFIHAL_GetOrSetParamUIntValue invoke wifi_getRadioBeaconPeriod() and save the get value
 3. Choose a BeaconPeriod randomly and using WIFIHAL_GetOrSetParamUIntValue invoke wifi_setRadioBeaconPeriod()
-4. Invoke wifi_getRadioBeaconPeriod() to get the previously set value. 
+4. Invoke wifi_getRadioBeaconPeriod() to get the previously set value.
 5. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 6. Revert the BeaconPeriod back to initial value
 7. Unload wifihal module</automation_approch>
@@ -68,8 +68,8 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *
 import random;
 
@@ -85,7 +85,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetRadioBeaconPeriod');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,87 +93,86 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx;
-	    getMethod = "getRadioBeaconPeriod"
-	    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        getMethod = "getRadioBeaconPeriod"
+        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	    initialBeaconPeriod = details.split(":")[1].strip()
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        initialBeaconPeriod = details.split(":")[1].strip()
 
-	    if expectedresult in actualresult:
-		expectedresult="SUCCESS";
-		radioIndex = idx;
-		primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-		setMethod = "setRadioBeaconPeriod"
-		r= range(100,int(initialBeaconPeriod))+range(int(initialBeaconPeriod),1000)
-		setBeaconPeriod = random.choice(r)
-		print "Set BeaconPeriod = ",setBeaconPeriod
+        if expectedresult in actualresult:
+            expectedresult="SUCCESS";
+            radioIndex = idx;
+            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+            setMethod = "setRadioBeaconPeriod"
+            r= list(range(100,int(initialBeaconPeriod)))+list(range(int(initialBeaconPeriod),1000))
+            setBeaconPeriod = random.choice(r)
+            print("Set BeaconPeriod = ",setBeaconPeriod)
 
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setBeaconPeriod, setMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setBeaconPeriod, setMethod)
 
-		if expectedresult in actualresult:
-		    expectedresult="SUCCESS";
-		    radioIndex = idx;
-		    getMethod = "getRadioBeaconPeriod"
-		    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+            if expectedresult in actualresult:
+                expectedresult="SUCCESS";
+                radioIndex = idx;
+                getMethod = "getRadioBeaconPeriod"
+                primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-		    finalBeaconPeriod = details.split(":")[1].strip()
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                finalBeaconPeriod = details.split(":")[1].strip()
 
-		    if expectedresult in actualresult:
-			if int(finalBeaconPeriod) == setBeaconPeriod:
-			    print "TEST STEP : Comparing the set and get values of beacon period"
-			    print "EXPECTED RESULT : Set and get beacon periods should be the same"
-			    print "ACTUAL RESULT : Set and get beacon periods are the same"
-			    print "TEST EXECUTION RESULT : SUCCESS"
-			    tdkTestObj.setResultStatus("SUCCESS");
+                if expectedresult in actualresult:
+                    if int(finalBeaconPeriod) == setBeaconPeriod:
+                        print("TEST STEP : Comparing the set and get values of beacon period")
+                        print("EXPECTED RESULT : Set and get beacon periods should be the same")
+                        print("ACTUAL RESULT : Set and get beacon periods are the same")
+                        print("TEST EXECUTION RESULT : SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
 
-			else:
-			    print "TEST STEP : Comparing the set and get values of beacon period"
-			    print "EXPECTED RESULT : Set and get beacon periods should be the same"
-			    print "ACTUAL RESULT : Set and get beacon periods are NOT the same"
-			    print "TEST EXECUTION RESULT : FAILURE"
-			    tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("TEST STEP : Comparing the set and get values of beacon period")
+                        print("EXPECTED RESULT : Set and get beacon periods should be the same")
+                        print("ACTUAL RESULT : Set and get beacon periods are NOT the same")
+                        print("TEST EXECUTION RESULT : FAILURE")
+                        tdkTestObj.setResultStatus("FAILURE");
 
-			#Revert back the beacon period to initial value
-			expectedresult="SUCCESS";
-			radioIndex = idx;
-			setMethod = "setRadioBeaconPeriod"
-			primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                    #Revert back the beacon period to initial value
+                    expectedresult="SUCCESS";
+                    radioIndex = idx;
+                    setMethod = "setRadioBeaconPeriod"
+                    primitive = 'WIFIHAL_GetOrSetParamUIntValue'
 
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, int(initialBeaconPeriod), setMethod)
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, int(initialBeaconPeriod), setMethod)
 
-			if expectedresult in actualresult:
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "Successfully reverted back to default value"
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print" Unable to revert to default value"
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Successfully reverted back to default value")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print(" Unable to revert to default value")
 
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "getRadioBeaconPeriod function failed";
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("getRadioBeaconPeriod function failed");
 
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "setRadioBeaconPeriod function failed";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("setRadioBeaconPeriod function failed");
 
-	    else:
-		print "getRadioBeaconPeriod function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getRadioBeaconPeriod function failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_GetRMCapabilities_WithInvalidMAC');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,20 +96,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Invoke the HAL API wifi_getRMCapabilities() with the invalid client MAC Address : %s" %mac;
-    print "EXPECTED RESULT 1: wifi_getRMCapabilities() should not be invoked successfully with invalid client MAC";
+    print("\nTEST STEP 1: Invoke the HAL API wifi_getRMCapabilities() with the invalid client MAC Address : %s" %mac);
+    print("EXPECTED RESULT 1: wifi_getRMCapabilities() should not be invoked successfully with invalid client MAC");
 
     if expectedresult in actualresult and "operation failed" in details :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 3 : wifi_getRMCapabilities() invocation failed with invalid client MAC";
-        print "RM Capabilities details : %s" %details;
+        print("ACTUAL RESULT 3 : wifi_getRMCapabilities() invocation failed with invalid client MAC");
+        print("RM Capabilities details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 3 : wifi_getRMCapabilities() invocation is successful with invalid MAC";
+        print("ACTUAL RESULT 3 : wifi_getRMCapabilities() invocation is successful with invalid MAC");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Retrieve the Capabilities values
         capabilities_0 = details.split("capabilities[0] : ")[1].split(",")[0];
@@ -118,14 +118,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         capabilities_3 = details.split("capabilities[3] : ")[1].split(",")[0];
         capabilities_4 = details.split("capabilities[4] : ")[1];
 
-        print "Capbilities[0] : ", capabilities_0;
-        print "Capbilities[1] : ", capabilities_1;
-        print "Capbilities[2] : ", capabilities_2;
-        print "Capbilities[3] : ", capabilities_3;
-        print "Capbilities[4] : ", capabilities_4;
+        print("Capbilities[0] : ", capabilities_0);
+        print("Capbilities[1] : ", capabilities_1);
+        print("Capbilities[2] : ", capabilities_2);
+        print("Capbilities[3] : ", capabilities_3);
+        print("Capbilities[4] : ", capabilities_4);
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPushSsidAdvertisementEnable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -86,7 +86,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which associated to this Script
@@ -100,21 +100,21 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult :
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP : Call the function wifi_pushSsidAdvertisementEnable()"
-           print "EXPECTED RESULT : Should return SUCCESS"
-           print "ACTUAL RESULT : %s " %details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : Call the function wifi_pushSsidAdvertisementEnable()")
+            print("EXPECTED RESULT : Should return SUCCESS")
+            print("ACTUAL RESULT : %s " %details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Call the function wifi_pushSsidAdvertisementEnable()"
-            print "EXPECTED RESULT : Should return SUCCESS"
-            print "ACTUAL RESULT 1: %s " %details
+            print("TEST STEP : Call the function wifi_pushSsidAdvertisementEnable()")
+            print("EXPECTED RESULT : Should return SUCCESS")
+            print("ACTUAL RESULT 1: %s " %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

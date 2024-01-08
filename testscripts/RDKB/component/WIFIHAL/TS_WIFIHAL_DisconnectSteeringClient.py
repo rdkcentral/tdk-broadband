@@ -105,15 +105,15 @@ wifiObj.configureTestCase(ip,port,'TS_WIFIHAL_DisconnectSteeringClient');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 wifiloadmodulestatus =wifiObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus)
 
 # check and ensure the ssid and passphrase same for 2.4G and 5G
 def checkSteeringSSIDPassphrase(tdkTestObj, wifiObj):
     expectedresult="SUCCESS";
-    print "TEST STEP 1: Get the current KeyPassphrase, SSID"
-    print "EXPECTED RESULT 1: Should retrieve the current KeyPassphrase, SSID"
+    print("TEST STEP 1: Get the current KeyPassphrase, SSID")
+    print("EXPECTED RESULT 1: Should retrieve the current KeyPassphrase, SSID")
     getParams = "Device.WiFi.AccessPoint.1.Security.KeyPassphrase,Device.WiFi.AccessPoint.2.Security.KeyPassphrase,Device.WiFi.SSID.1.SSID,Device.WiFi.SSID.2.SSID"
     getList = getParams.split(',');
     actualresult_get = [];
@@ -125,18 +125,18 @@ def checkSteeringSSIDPassphrase(tdkTestObj, wifiObj):
         #execute the step
         tdkTestObj.executeTestCase(expectedresult);
         actualresult_get.append(tdkTestObj.getResult())
-	details = tdkTestObj.getResultDetails();
+        details = tdkTestObj.getResultDetails();
         orgValue.append( details.split("VALUE:")[1].split(' ')[0] );
 
     getFlag = 1;
     for index in range(len(getList)):
-	if expectedresult not in actualresult_get[index]:
-	    getFlag = 0;
-	    break;
+        if expectedresult not in actualresult_get[index]:
+            getFlag = 0;
+            break;
 
     if getFlag == 1:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT : Get operation SUCCESS"
+        print("ACTUAL RESULT : Get operation SUCCESS")
 
         #Check if 2.4G SSID and passphrase are same as 5G SSID and passphrase
         if orgValue[0] == orgValue[1] and orgValue[2] == orgValue[3]:
@@ -152,155 +152,155 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
-	connectFlag = 0;
-	index = [idx0,idx1];
+        connectFlag = 0;
+        index = [idx0,idx1];
         tdkTestObj = wifiObj.createTestStep("WIFIAgent_Get");
         actualresult = checkSteeringSSIDPassphrase(tdkTestObj, wifiObj)
         if expectedresult in actualresult :
-	    print "TEST STEP 2 : Check the SSID and passphrase are same for 2.4G and 5G."
-            print " EXPECTED RESULT 2 : 2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test"
-	    print " ACTUAL RESULT 2 :  2.4G SSID and passphrase are same as 5G SSID and passphrase. "
+            print("TEST STEP 2 : Check the SSID and passphrase are same for 2.4G and 5G.")
+            print(" EXPECTED RESULT 2 : 2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test")
+            print(" ACTUAL RESULT 2 :  2.4G SSID and passphrase are same as 5G SSID and passphrase. ")
             tdkTestObj.setResultStatus("SUCCESS");
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] 2 : SUCCESS";
-	    # check to which radioIndex client got connected
-	    for radioIndex in index:
-	        getMethod = "getApNumDevicesAssociated"
-	        primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	        if expectedresult in actualresult:
-		    ApNumDevices = int(details.split(":")[1].strip());
-		    if  ApNumDevices != 0:
-		       connectFlag = 1;
-		       break;
-		    else:
-		       continue;
-		else:
-		    print "wifi_getApNumDevicesAssociated failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "Exiting the script"
-		    obj.unloadModule("wifihal");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] 2 : SUCCESS");
+            # check to which radioIndex client got connected
+            for radioIndex in index:
+                getMethod = "getApNumDevicesAssociated"
+                primitive = 'WIFIHAL_GetOrSetParamULongValue'
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                if expectedresult in actualresult:
+                    ApNumDevices = int(details.split(":")[1].strip());
+                    if  ApNumDevices != 0:
+                        connectFlag = 1;
+                        break;
+                    else:
+                        continue;
+                else:
+                    print("wifi_getApNumDevicesAssociated failed")
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("Exiting the script")
+                    obj.unloadModule("wifihal");
                     wifiObj.unloadModule("wifiagent");
-		    exit();
-	    if connectFlag == 1:
-	        print "TESTSTEP 3 : Get the number of devices connected to each AP using wifi_getApNumDevicesAssociated  api"
-	        print "EXPECTED RESULT 3 : Atleast one device connected to any  AP"
-		print "ACTUAL RESULT 3 : %d device connected to radioIndex %d" %(ApNumDevices,radioIndex);
-	        tdkTestObj.setResultStatus("SUCCESS");
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] 3 : SUCCESS";
-		# Get the mac address of device
-	        apIndex = radioIndex;
-	        tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
+                    exit();
+            if connectFlag == 1:
+                print("TESTSTEP 3 : Get the number of devices connected to each AP using wifi_getApNumDevicesAssociated  api")
+                print("EXPECTED RESULT 3 : Atleast one device connected to any  AP")
+                print("ACTUAL RESULT 3 : %d device connected to radioIndex %d" %(ApNumDevices,radioIndex));
+                tdkTestObj.setResultStatus("SUCCESS");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 3 : SUCCESS");
+                # Get the mac address of device
+                apIndex = radioIndex;
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
                 tdkTestObj.addParameter("apIndex",apIndex);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "Entire Details:",details;
+                print("Entire Details:",details);
                 if expectedresult in actualresult:
                     outputList = details.split("=")[1].strip()
                     if "," in outputList:
                         macAddress = outputList.split(",")[0].strip()
                     else:
                         macAddress = outputList.split(":Value")[0].strip()
-		    print " TEST STEP 4: Get the mac address of one associated device using wifi_getApAssociatedDevice api"
-		    print "EXPECTED RESULT 4 : Should get the Mac address of the asssociated device "
-		    print "ACTUAL RESULT 4 :  Mac address of the asssociated device :%s" %macAddress;
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 4 : SUCCESS";
-		else:
-		    print " TEST STEP 4: Get the mac address of one associated device using wifi_getApAssociatedDevice api"
-		    print "EXPECTED RESULT 4 : Should get the Mac address of the asssociated device "
-		    print "ACTUAL RESULT 4 :  Failed to get Mac address of the asssociated device"
-		    tdkTestObj.setResultStatus("FAILURE");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 4 : FAILURE";
-		    print "Exiting the script"
-		    obj.unloadModule("wifihal");
+                    print(" TEST STEP 4: Get the mac address of one associated device using wifi_getApAssociatedDevice api")
+                    print("EXPECTED RESULT 4 : Should get the Mac address of the asssociated device ")
+                    print("ACTUAL RESULT 4 :  Mac address of the asssociated device :%s" %macAddress);
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 4 : SUCCESS");
+                else:
+                    print(" TEST STEP 4: Get the mac address of one associated device using wifi_getApAssociatedDevice api")
+                    print("EXPECTED RESULT 4 : Should get the Mac address of the asssociated device ")
+                    print("ACTUAL RESULT 4 :  Failed to get Mac address of the asssociated device")
+                    tdkTestObj.setResultStatus("FAILURE");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 4 : FAILURE");
+                    print("Exiting the script")
+                    obj.unloadModule("wifihal");
                     wifiObj.unloadModule("wifiagent");
-		    exit();
-                print "MacAddress :", macAddress;
-	        primitive = 'WIFIHAL_SteeringClientDisconnect';
-		tdkTestObj = obj.createTestStep(primitive);
-		tdkTestObj.addParameter("steeringgroupIndex",0);
-	        tdkTestObj.addParameter("apIndex",radioIndex);
-		tdkTestObj.addParameter("clientMAC",macAddress);
-		tdkTestObj.addParameter("disconnectType",2);
-		tdkTestObj.addParameter("reason",3);
-		tdkTestObj.executeTestCase(expectedresult);
-	        actualresult = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-	        if expectedresult in actualresult :
-		    print "TEST STEP 5:Disconnect steering client of specific mac using wifi_steering_clientDisconnect()";
-		    print "EXPECTED RESULT 5: wifi_steering_clientDisconnect() should return SUCCESS"
-		    print "ACTUAL RESULT 5:  wifi_steering_clientDisconnect() returns SUCCESS"
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 5 : SUCCESS";
-		    # check whether client get disconnected
-                    print "check whether client got disconnected"
-		    getMethod = "getApNumDevicesAssociated"
-	            primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	            if expectedresult in actualresult:
-		        ApNumDevicesNew = int(details.split(":")[1].strip());
-		        if  ApNumDevicesNew == ApNumDevices-1:
-			    print "TEST STEP 6 :Check whether client got disconnected after wifi_steering_clientDisconnect()  using wifi_getApNumDevicesAssociated  api"
-		            print "EXPECTED RESULT 6: Specific client should disconnect after wifi_steering_clientDisconnect "
-			    print "ACTUAL RESULT 6 : Client successfully disconnected after wifi_steering_clientDisconnect()"
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    #Get the result of execution
-		            print "[TEST EXECUTION RESULT] 6 : SUCCESS";
-			else:
-			    print "TEST STEP 6 :Check whether client got disconnected after wifi_steering_clientDisconnect()  using wifi_getApNumDevicesAssociated  api"
-		            print "EXPECTED RESULT 6: Specific client should disconnect after wifi_steering_clientDisconnect "
-			    print "ACTUAL RESULT 6: Client failed to disconnect after wifi_steering_clientDisconnect()"
-		            tdkTestObj.setResultStatus("FAILURE");
-		            #Get the result of execution
-		            print "[TEST EXECUTION RESULT] 6 : FAILURE";
-		    else:
-		        print "wifi_getApNumDevicesAssociated failed after wifi_steering_clientDisconnect()"
-		        tdkTestObj.setResultStatus("FAILURE");
-			print "Exiting the script"
-			obj.unloadModule("wifihal");
+                    exit();
+                print("MacAddress :", macAddress);
+                primitive = 'WIFIHAL_SteeringClientDisconnect';
+                tdkTestObj = obj.createTestStep(primitive);
+                tdkTestObj.addParameter("steeringgroupIndex",0);
+                tdkTestObj.addParameter("apIndex",radioIndex);
+                tdkTestObj.addParameter("clientMAC",macAddress);
+                tdkTestObj.addParameter("disconnectType",2);
+                tdkTestObj.addParameter("reason",3);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult :
+                    print("TEST STEP 5:Disconnect steering client of specific mac using wifi_steering_clientDisconnect()");
+                    print("EXPECTED RESULT 5: wifi_steering_clientDisconnect() should return SUCCESS")
+                    print("ACTUAL RESULT 5:  wifi_steering_clientDisconnect() returns SUCCESS")
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 5 : SUCCESS");
+                    # check whether client get disconnected
+                    print("check whether client got disconnected")
+                    getMethod = "getApNumDevicesAssociated"
+                    primitive = 'WIFIHAL_GetOrSetParamULongValue'
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+                    if expectedresult in actualresult:
+                        ApNumDevicesNew = int(details.split(":")[1].strip());
+                        if  ApNumDevicesNew == ApNumDevices-1:
+                            print("TEST STEP 6 :Check whether client got disconnected after wifi_steering_clientDisconnect()  using wifi_getApNumDevicesAssociated  api")
+                            print("EXPECTED RESULT 6: Specific client should disconnect after wifi_steering_clientDisconnect ")
+                            print("ACTUAL RESULT 6 : Client successfully disconnected after wifi_steering_clientDisconnect()")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 6 : SUCCESS");
+                        else:
+                            print("TEST STEP 6 :Check whether client got disconnected after wifi_steering_clientDisconnect()  using wifi_getApNumDevicesAssociated  api")
+                            print("EXPECTED RESULT 6: Specific client should disconnect after wifi_steering_clientDisconnect ")
+                            print("ACTUAL RESULT 6: Client failed to disconnect after wifi_steering_clientDisconnect()")
+                            tdkTestObj.setResultStatus("FAILURE");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 6 : FAILURE");
+                    else:
+                        print("wifi_getApNumDevicesAssociated failed after wifi_steering_clientDisconnect()")
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("Exiting the script")
+                        obj.unloadModule("wifihal");
                         wifiObj.unloadModule("wifiagent");
-		        exit();
-		else:
-		    print "TEST STEP 5:Disconnect steering client of specific mac using wifi_steering_clientDisconnect()";
-		    print "EXPECTED RESULT 5: wifi_steering_clientDisconnect() should return SUCCESS"
-		    print "ACTUAL RESULT 5:  wifi_steering_clientDisconnect() FAILED"
-		    tdkTestObj.setResultStatus("FAILURE");
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] 5: FAILURE";
-	    else:
-	        print "TESTSTEP 3 : Get the number of devices connected to each AP using wifi_getApNumDevicesAssociated  api"
-	        print "EXPECTED RESULT 3 : Atleast one device connected to any  AP "
-		print "ACTUAL RESULT 3: No wifi client connected "
-		tdkTestObj.setResultStatus("FAILURE");
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] 3: FAILURE";
-	        print "Exiting the script"
-		obj.unloadModule("wifihal");
+                        exit();
+                else:
+                    print("TEST STEP 5:Disconnect steering client of specific mac using wifi_steering_clientDisconnect()");
+                    print("EXPECTED RESULT 5: wifi_steering_clientDisconnect() should return SUCCESS")
+                    print("ACTUAL RESULT 5:  wifi_steering_clientDisconnect() FAILED")
+                    tdkTestObj.setResultStatus("FAILURE");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] 5: FAILURE");
+            else:
+                print("TESTSTEP 3 : Get the number of devices connected to each AP using wifi_getApNumDevicesAssociated  api")
+                print("EXPECTED RESULT 3 : Atleast one device connected to any  AP ")
+                print("ACTUAL RESULT 3: No wifi client connected ")
+                tdkTestObj.setResultStatus("FAILURE");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
+                print("Exiting the script")
+                obj.unloadModule("wifihal");
                 wifiObj.unloadModule("wifiagent");
-	        exit();
-	else:
-	    print "TEST STEP 2: Check the SSID and passphrase are same for 2.4G and 5G."
-            print " EXPECTED RESULT 2 : 2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test"
-	    print " EXPECTED RESULT 2 : 2.4G SSID and passphrase are not same as 5G SSID and passphrase "
-	    tdkTestObj.setResultStatus("FAILURE");
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] 2 : FAILURE";
+                exit();
+        else:
+            print("TEST STEP 2: Check the SSID and passphrase are same for 2.4G and 5G.")
+            print(" EXPECTED RESULT 2 : 2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test")
+            print(" EXPECTED RESULT 2 : 2.4G SSID and passphrase are not same as 5G SSID and passphrase ")
+            tdkTestObj.setResultStatus("FAILURE");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] 2 : FAILURE");
     obj.unloadModule("wifihal");
     wifiObj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifihal/wifiagent module";
+    print("Failed to load wifihal/wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

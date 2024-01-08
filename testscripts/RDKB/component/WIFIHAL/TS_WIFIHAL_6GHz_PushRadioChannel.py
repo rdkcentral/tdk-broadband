@@ -90,7 +90,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHz_PushRadioChannel');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
@@ -110,19 +110,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Get the current radio channel for 6GHz using the HAL API wifi_getRadioChannel()";
-        print "EXPECTED RESULT 1: Should get the current channel for 6GHz using the HAL API wifi_getRadioChannel()";
+        print("\nTEST STEP 1: Get the current radio channel for 6GHz using the HAL API wifi_getRadioChannel()");
+        print("EXPECTED RESULT 1: Should get the current channel for 6GHz using the HAL API wifi_getRadioChannel()");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API invocation was success; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation was success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             currentChannel = details.split(":")[1].strip();
 
             if currentChannel != "" and currentChannel.isdigit():
-                print "Current radio channel is : ", currentChannel;
+                print("Current radio channel is : ", currentChannel);
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Get the possible list of radio channels
@@ -133,27 +133,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 2 : Invoke the HAL API wifi_getRadioPossibleChannels() to get the possible radio channels for 6G radio";
-                print "EXPECTED RESULT 2 : The HAL API wifi_getRadioPossibleChannels() should be invoked successfully";
+                print("\nTEST STEP 2 : Invoke the HAL API wifi_getRadioPossibleChannels() to get the possible radio channels for 6G radio");
+                print("EXPECTED RESULT 2 : The HAL API wifi_getRadioPossibleChannels() should be invoked successfully");
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 2: API invocation is success; Details : %s" %(details);
+                    print("ACTUAL RESULT 2: API invocation is success; Details : %s" %(details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #if possible channels are given as a range eg: 1-11
                     if "-" in details:
                         #get the possible channels as a list of integers
                         PossibleChannelRange = [int(x) for x in details.split(":")[1].split("-")];
-                        PossibleChannels = range(PossibleChannelRange[0],PossibleChannelRange[1]+1);
-                        print "Possible channels are ", PossibleChannels;
+                        PossibleChannels = list(range(PossibleChannelRange[0],PossibleChannelRange[1]+1));
+                        print("Possible channels are ", PossibleChannels);
                     #if possible channels are given as values eg:1,2,3,4,5
                     else:
                         #get the possible channels as a list of integers
                         PossibleChannels = [int(x) for x in details.split(":")[1].split(",")];
-                        print "Possible channels are ", PossibleChannels;
+                        print("Possible channels are ", PossibleChannels);
 
                     #select a channel from possible channels which is not the current channel
                     newChannel = -1;
@@ -163,7 +163,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                             break;
 
                     if newChannel != -1:
-                        print "\nNew channel to set is ", newChannel;
+                        print("\nNew channel to set is ", newChannel);
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         #Push the new radio channel
@@ -176,15 +176,15 @@ if "SUCCESS" in loadmodulestatus.upper():
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP 3: Set the radio channel using wifi_pushRadioChannel()";
-                        print "EXPECTED RESULT 3: Should set the radio channel using wifi_pushRadioChannel()";
+                        print("\nTEST STEP 3: Set the radio channel using wifi_pushRadioChannel()");
+                        print("EXPECTED RESULT 3: Should set the radio channel using wifi_pushRadioChannel()");
 
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 3: API invocation success; Details : %s" %details;
+                            print("ACTUAL RESULT 3: API invocation success; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                             time.sleep(10);
 
                             #Cross check the Push radio channel with get radio channel
@@ -196,40 +196,40 @@ if "SUCCESS" in loadmodulestatus.upper():
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
 
-                            print "\nTEST STEP 4: Get the radio channel for 6GHz using the HAL API wifi_getRadioChannel() after Push Radio Channel operation";
-                            print "EXPECTED RESULT 4: Should get the radio channel for 6GHz using the HAL API wifi_getRadioChannel()";
+                            print("\nTEST STEP 4: Get the radio channel for 6GHz using the HAL API wifi_getRadioChannel() after Push Radio Channel operation");
+                            print("EXPECTED RESULT 4: Should get the radio channel for 6GHz using the HAL API wifi_getRadioChannel()");
 
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 4: API invocation was success; Details : %s" %details;
+                                print("ACTUAL RESULT 4: API invocation was success; Details : %s" %details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                                 newValue = details.split(":")[1].strip()
 
-                                print "\nTEST STEP 5: Verify the wifi_pushRadioChannel() with wifi_getrAdioChannel() for 6G radio";
-                                print "EXPECTED RESULT 5: The radio channel get should be same as the radio channel pushed";
-                                print "Radio Channel set : %d" %newChannel;
-                                print "Radio Channel get : %s" %newValue;
+                                print("\nTEST STEP 5: Verify the wifi_pushRadioChannel() with wifi_getrAdioChannel() for 6G radio");
+                                print("EXPECTED RESULT 5: The radio channel get should be same as the radio channel pushed");
+                                print("Radio Channel set : %d" %newChannel);
+                                print("Radio Channel get : %s" %newValue);
 
                                 if newValue.isdigit() and int(newValue) == int(newChannel):
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT 5: SET matches with the GET";
+                                    print("ACTUAL RESULT 5: SET matches with the GET");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT 5: Values do not match";
+                                    print("ACTUAL RESULT 5: Values do not match");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 4: API invocation failed; Details : %s" %details;
+                                print("ACTUAL RESULT 4: API invocation failed; Details : %s" %details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert the channel value
                             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamIntValue");
@@ -244,38 +244,38 @@ if "SUCCESS" in loadmodulestatus.upper():
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "Successfully reverted to the initial radio channel : ", currentChannel;
+                                print("Successfully reverted to the initial radio channel : ", currentChannel);
                             else :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "Not reverted to the initial radio channel : ", currentChannel;
+                                print("Not reverted to the initial radio channel : ", currentChannel);
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 3: API invocation success; Details : %s" %details;
+                            print("ACTUAL RESULT 3: API invocation success; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "\nNo new channel to be set from the values in possible channels list";
+                        print("\nNo new channel to be set from the values in possible channels list");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 2: API invocation failed; Details : %s" %(details);
+                    print("ACTUAL RESULT 2: API invocation failed; Details : %s" %(details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Current radio channel is empty or invalid: ", currentChannel;
+                print("Current radio channel is empty or invalid: ", currentChannel);
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     tdkTestObj.setResultStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

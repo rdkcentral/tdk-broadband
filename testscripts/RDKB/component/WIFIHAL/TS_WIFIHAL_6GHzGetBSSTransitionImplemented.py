@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetBSSTransitionImplemented');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,27 +96,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         #Getting  IS_BTM_CAPABLE value from tdk_platform_properties"
         cmd= "sh %s/tdk_utility.sh parseConfigFile BTM_CAPABILITY" %TDK_PATH;
-        print cmd;
+        print(cmd);
         tdkTestObj.addParameter("command",cmd);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         platformValue = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP 2: Get the BSS capability from property file"
-        print "EXPECTED RESULT 2: Should get the BSS capability from property file"
-        print"IS_BTM_CAPABLE:",platformValue
+        print("\nTEST STEP 2: Get the BSS capability from property file")
+        print("EXPECTED RESULT 2: Should get the BSS capability from property file")
+        print("IS_BTM_CAPABLE:",platformValue)
 
         if expectedresult in actualresult and platformValue!= "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2:BSS capability from property file :",platformValue ;
+            print("ACTUAL RESULT 2:BSS capability from property file :",platformValue) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] :SUCCESS";
+            print("[TEST EXECUTION RESULT] :SUCCESS");
 
             tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamBoolValue');
             tdkTestObj.addParameter("methodName","getBSSTransitionImplemented");
@@ -125,30 +125,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             details = details.split(':')[1].strip();
-            print "Details : ",details
+            print("Details : ",details)
 
-            print "\nTEST STEP 3:check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device"
-            print "EXPECTED RESULT 3: Should check wether the BSSTransition Implemented "
+            print("\nTEST STEP 3:check whether wifi_getBSSTransitionImplemented() returns the BSS capability of device")
+            print("EXPECTED RESULT 3: Should check wether the BSSTransition Implemented ")
 
             if expectedresult in actualresult and platformValue == details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: BSSTransition Implemented in the device"
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 3: BSSTransition Implemented in the device")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3:difference in api return and property file entry"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3:difference in api return and property file entry")
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2:BSS capability from property file :",platformValue ;
+            print("ACTUAL RESULT 2:BSS capability from property file :",platformValue) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] :FAILURE";
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

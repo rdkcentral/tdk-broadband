@@ -82,7 +82,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetRadioTrafficStats2');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,34 +91,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx;
-	    primitive = 'WIFIHAL_GetRadioTrafficStats2'
-	    tdkTestObj = obj.createTestStep(primitive);
-	    tdkTestObj.addParameter("radioIndex",idx);
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    if expectedresult in actualresult:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: Get the Radio Traffic statistics for 2.4GHz";
-		print "EXPECTED RESULT 1: wifi_getRadioTrafficStats2 should return the radio traffic statistics for 2.4GHz";
-		print "ACTUAL RESULT 1: wifi_getRadioTrafficStats2 operation returned SUCCESS";
-		print "Actual result is :",details;
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: Get the RadioTrafficStats for 2.4GHz";
-		print "EXPECTED RESULT 1: wifi_getRadioTrafficStats2 should return the radio traffic statistics for 2.4GHz";
-		print "ACTUAL RESULT 1: Failed to get the values for 2.4GHz";
-		print "Actual result is :",details;
-		print "[TEST EXECUTION RESULT] : FAILURE";
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        primitive = 'WIFIHAL_GetRadioTrafficStats2'
+        tdkTestObj = obj.createTestStep(primitive);
+        tdkTestObj.addParameter("radioIndex",idx);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the Radio Traffic statistics for 2.4GHz");
+            print("EXPECTED RESULT 1: wifi_getRadioTrafficStats2 should return the radio traffic statistics for 2.4GHz");
+            print("ACTUAL RESULT 1: wifi_getRadioTrafficStats2 operation returned SUCCESS");
+            print("Actual result is :",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the RadioTrafficStats for 2.4GHz");
+            print("EXPECTED RESULT 1: wifi_getRadioTrafficStats2 should return the radio traffic statistics for 2.4GHz");
+            print("ACTUAL RESULT 1: Failed to get the values for 2.4GHz");
+            print("Actual result is :",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");

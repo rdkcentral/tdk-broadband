@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApRoamingConsortiumElement');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -107,45 +107,45 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "TEST STEP 1: Get the RoamingConsortiumElement  for 2.4GHz using wifi_getApRoamingConsortiumElement()";
-    print "EXPECTED RESULT 1: Should get the RoamingConsortiumElement  for 2.4GHz";
+    print("TEST STEP 1: Get the RoamingConsortiumElement  for 2.4GHz using wifi_getApRoamingConsortiumElement()");
+    print("EXPECTED RESULT 1: Should get the RoamingConsortiumElement  for 2.4GHz");
     if expectedresult in actualresult :
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         entryCount = int(details.split(':')[1].strip().split(',')[0].split(' ')[1])
-        print "RoamingConsortiumElement  entryCount received is: ", entryCount
-        print "TEST STEP 2: Verify the RoamingConsortiumElements returned are within the specified range";
-        print "EXPECTED RESULT 2: RoamingConsortiumElement OUI length should be between 3 to 15";
+        print("RoamingConsortiumElement  entryCount received is: ", entryCount)
+        print("TEST STEP 2: Verify the RoamingConsortiumElements returned are within the specified range");
+        print("EXPECTED RESULT 2: RoamingConsortiumElement OUI length should be between 3 to 15");
         if entryCount == 0:
-            print "ACTUAL RESULT 1: No RoamingConsortiumElement available"
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 1: No RoamingConsortiumElement available")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
         else:
             flag =1
             for i in range(1, entryCount +1):
                 ouiLen = int(details.split(':')[1].strip().split(',')[i*2].strip().split(' ')[1])
                 if ouiLen >2 and ouiLen <16:
-                    print "Length of OUI %d : %d is within range" %(i, ouiLen)
+                    print("Length of OUI %d : %d is within range" %(i, ouiLen))
                 else:
-                    print "Error: Length of OUI %d : %d is not within range" %(i, ouiLen)
+                    print("Error: Length of OUI %d : %d is not within range" %(i, ouiLen))
                     flag = 0;
             if flag == 1:
-                print "ACTUAL RESULT 2: RoamingConsortiumElements returned are within the specified range"
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: RoamingConsortiumElements returned are within the specified range")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 2: RoamingConsortiumElements returned are not within the specified range"
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("ACTUAL RESULT 2: RoamingConsortiumElements returned are not within the specified range")
+                print("[TEST EXECUTION RESULT] :FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
     else:
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");

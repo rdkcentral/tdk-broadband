@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPushApRoamingConsortiumElement_L
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,13 +96,13 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "TEST STEP 1: Get and save the RoamingConsortiumElement  for 2.4GHz";
-    print "EXPECTED RESULT 1: Should get the RoamingConsortiumElement  for 2.4GHz";
+    print("TEST STEP 1: Get and save the RoamingConsortiumElement  for 2.4GHz");
+    print("EXPECTED RESULT 1: Should get the RoamingConsortiumElement  for 2.4GHz");
 
     if expectedresult in actualresult :
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         #extract the entryCount, ouis and its length values to be used for revert operation
@@ -123,14 +123,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         init_ouis=init_ouis[:-1]
         init_lens = init_lens[:-1]
 
-        print "TEST STEP 2: Set RoamingConsortiumElement  with an OUI of boundary length 3";
-        print "EXPECTED RESULT 2: Should successfully set RoamingConsortiumElement  with an OUI of boundary length 3";
+        print("TEST STEP 2: Set RoamingConsortiumElement  with an OUI of boundary length 3");
+        print("EXPECTED RESULT 2: Should successfully set RoamingConsortiumElement  with an OUI of boundary length 3");
 
         #Invoke the Push API
         ouiCount = 1
         ouiList = "506f9a"
         ouiLen = str(len(binascii.a2b_hex(ouiList)))
-        print ("Set the values EntryCount: " + str(ouiCount) + "  OUI: " + ouiList  + "  LenOfOUI: " + ouiLen );
+        print(("Set the values EntryCount: " + str(ouiCount) + "  OUI: " + ouiList  + "  LenOfOUI: " + ouiLen ));
         tdkTestObj = obj.createTestStep('WIFIHAL_PushApRoamingConsortiumElement');
         tdkTestObj.addParameter("apIndex", passPoint_2G_Index);
         tdkTestObj.addParameter("ouiCount", ouiCount);
@@ -141,13 +141,13 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult :
-	    print "ACTUAL RESULT 2: %s" %details;
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             #Invoke the Get API to validate the Push API
-            print "TEST STEP 3: Get the RoamingConsortiumElement  for 2.4GHz and verify push operation";
-            print "EXPECTED RESULT 3: Get RoamingConsortiumElement for 2.4GHz should reflect the last push operation";
+            print("TEST STEP 3: Get the RoamingConsortiumElement  for 2.4GHz and verify push operation");
+            print("EXPECTED RESULT 3: Get RoamingConsortiumElement for 2.4GHz should reflect the last push operation");
             tdkTestObj = obj.createTestStep("WIFIHAL_GetApRoamingConsortiumElement");
             tdkTestObj.addParameter("apIndex", passPoint_2G_Index);
             tdkTestObj.executeTestCase(expectedresult);
@@ -155,7 +155,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
 
             if expectedresult in actualresult :
-                print "ACTUAL RESULT 3: %s" %details;
+                print("ACTUAL RESULT 3: %s" %details);
 
                 #extract the entryCount, ouis and its length values to compare with pushed values
                 newEntryCount = int(details.split(':')[1].strip().split(',')[0].split(' ')[1])
@@ -174,25 +174,25 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #remove extra , at the end
                 new_ouis=new_ouis[:-1]
                 new_lens = new_lens[:-1]
-                print ("Got the values EntryCount: " + str(newEntryCount) + "  OUI: " + new_ouis + "  LenOfOUI: " + new_lens);
+                print(("Got the values EntryCount: " + str(newEntryCount) + "  OUI: " + new_ouis + "  LenOfOUI: " + new_lens));
 
                 if new_ouis == ouiList  and new_lens == ouiLen:
-                    print "Push operation successfully verified with get RoamingConsortiumElement"
+                    print("Push operation successfully verified with get RoamingConsortiumElement")
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
-                    print "Failed: Values set using push operation is not matching with get RoamingConsortiumElement output"
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("Failed: Values set using push operation is not matching with get RoamingConsortiumElement output")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "ACTUAL RESULT 3: %s" %details;
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
 
             #Revert RoamingConsortiumElement values to the initial ones
-            print "TEST STEP 4: Revert RoamingConsortiumElement to initial values";
-            print "EXPECTED RESULT 4: Should successfully revert RoamingConsortiumElement values";
+            print("TEST STEP 4: Revert RoamingConsortiumElement to initial values");
+            print("EXPECTED RESULT 4: Should successfully revert RoamingConsortiumElement values");
             tdkTestObj = obj.createTestStep('WIFIHAL_PushApRoamingConsortiumElement');
             tdkTestObj.addParameter("apIndex", passPoint_2G_Index);
             tdkTestObj.addParameter("ouiCount", entryCount);
@@ -203,25 +203,25 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
 
             if expectedresult in actualresult :
-	        print "ACTUAL RESULT 4: %s" %details;
-	        print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 4: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 4: %s" %details;
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-	    print "ACTUAL RESULT 2: %s" %details;
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-	print "ACTUAL RESULT 1: %s" %details;
-	#Get the result of execution
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

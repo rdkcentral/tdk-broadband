@@ -83,7 +83,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetRadioCountryCode');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,67 +91,67 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        getMethod = "getRadioCountryCode"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+
+        if expectedresult in actualresult:
+            countryCode = details.split(":")[1].strip()
+
             expectedresult="SUCCESS";
             radioIndex = idx;
-            getMethod = "getRadioCountryCode"
+            setMethod = "setRadioCountryCode"
             primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
             #Calling the method from wifiUtility to execute test case and set result status for the test.
-            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, countryCode, setMethod)
 
             if expectedresult in actualresult:
-                countryCode = details.split(":")[1].strip()
-
                 expectedresult="SUCCESS";
                 radioIndex = idx;
-                setMethod = "setRadioCountryCode"
+                getMethod = "getRadioCountryCode"
                 primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
                 #Calling the method from wifiUtility to execute test case and set result status for the test.
-                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, countryCode, setMethod)
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
                 if expectedresult in actualresult:
-                    expectedresult="SUCCESS";
-                    radioIndex = idx;
-                    getMethod = "getRadioCountryCode"
-                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-
-                    #Calling the method from wifiUtility to execute test case and set result status for the test.
-                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-
-                    if expectedresult in actualresult:
-                        setCode = details.split(":")[1].strip()
-                        if setCode == countryCode:
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP: Compare the set and get Radio Country Codes for 6GHz"
-                            print "EXPECTED RESULT: Set and get Country Codes should be the same"
-                            print "ACTUAL RESULT: Set ang get Country Codes are the SAME"
-                            print "Initial Country Code is %s"%countryCode
-                            print "Newly set Country Code is %s"%setCode
-                            print "TEST EXECUTION RESULT : SUCCESS"
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP: Compare the set and get Radio Country Codes for 6GHz"
-                            print "EXPECTED RESULT: Set and get Country Codes should be the same"
-                            print "ACTUAL RESULT: Set ang get Country Codes are NOT SAME"
-                            print "Initial Country Code is %s"%countryCode
-                            print "Newly set Country Code is %s"%setCode
-                            print "TEST EXECUTION RESULT : FAILURE"
+                    setCode = details.split(":")[1].strip()
+                    if setCode == countryCode:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP: Compare the set and get Radio Country Codes for 6GHz")
+                        print("EXPECTED RESULT: Set and get Country Codes should be the same")
+                        print("ACTUAL RESULT: Set ang get Country Codes are the SAME")
+                        print("Initial Country Code is %s"%countryCode)
+                        print("Newly set Country Code is %s"%setCode)
+                        print("TEST EXECUTION RESULT : SUCCESS")
                     else:
-                        print "getRadioCountryCode() call failed after set operation"
                         tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP: Compare the set and get Radio Country Codes for 6GHz")
+                        print("EXPECTED RESULT: Set and get Country Codes should be the same")
+                        print("ACTUAL RESULT: Set ang get Country Codes are NOT SAME")
+                        print("Initial Country Code is %s"%countryCode)
+                        print("Newly set Country Code is %s"%setCode)
+                        print("TEST EXECUTION RESULT : FAILURE")
                 else:
-                    print "setRadioCountryCode() call failed"
+                    print("getRadioCountryCode() call failed after set operation")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "getRadioCountryCode() call failed"
+                print("setRadioCountryCode() call failed")
                 tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getRadioCountryCode() call failed")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

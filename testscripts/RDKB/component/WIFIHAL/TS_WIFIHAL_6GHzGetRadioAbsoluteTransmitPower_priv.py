@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioAbsoluteTransmitPower_priv
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -86,24 +86,24 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-            expectedresult="SUCCESS";
-            getMethod = "getRadioAbsoluteTransmitPower_priv"
-            primitive = 'WIFIHAL_GetOrSetParamULongValue'
-            radioIndex = idx
-            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        expectedresult="SUCCESS";
+        getMethod = "getRadioAbsoluteTransmitPower_priv"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        radioIndex = idx
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-            if expectedresult in actualresult:
-                outputValue = details.split(":")[1].strip()
-                print "Call to wifi_getRadioAbsoluteTransmitPower_priv successs";
-                tdkTestObj.setResultStatus("SUCCESS");
-            else:
-                 print "Call to wifi_getRadioAbsoluteTransmitPower_priv failed";
-                 tdkTestObj.setResultStatus("FAILURE");
+        if expectedresult in actualresult:
+            outputValue = details.split(":")[1].strip()
+            print("Call to wifi_getRadioAbsoluteTransmitPower_priv successs");
+            tdkTestObj.setResultStatus("SUCCESS");
+        else:
+            print("Call to wifi_getRadioAbsoluteTransmitPower_priv failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

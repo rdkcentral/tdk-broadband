@@ -86,94 +86,93 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPushSSID');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    #Checking for AP Index 0, Similar way we can check for other APs
-	    apIndex = idx;
-	    getMethod = "getSSIDName"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-	    expectedresult="SUCCESS";
+        #Checking for AP Index 0, Similar way we can check for other APs
+        apIndex = idx;
+        getMethod = "getSSIDName"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
 
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
-	    if expectedresult in actualresult:
-		tdkTestObj.setResultStatus("SUCCESS");
-		initialName = details.split(":")[1].strip()
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            initialName = details.split(":")[1].strip()
 
-		expectedresult="SUCCESS";
-		apIndex = idx;
-		setMethod = "pushSSID"
-		setName = "ssid_0_name"
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            expectedresult="SUCCESS";
+            apIndex = idx;
+            setMethod = "pushSSID"
+            setName = "ssid_0_name"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		#Calling the method from wifiUtility to execute test case and set result status for the test.
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setName, setMethod)
+            #Calling the method from wifiUtility to execute test case and set result status for the test.
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setName, setMethod)
 
-		if expectedresult in actualresult:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    apIndex = idx;
-		    getMethod = "getSSIDName"
-		    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                apIndex = idx;
+                getMethod = "getSSIDName"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		    #Calling the method from wifiUtility to execute test case and set result status for the test.
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-		    finalName = details.split(":")[1].strip()
+                #Calling the method from wifiUtility to execute test case and set result status for the test.
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                finalName = details.split(":")[1].strip()
 
-		    if expectedresult in actualresult:
-			if finalName == setName:
-			    tdkTestObj.setResultStatus("SUCCESS");
-			    print "TEST STEP : Compare the pushSSID value and get values of SSID Name"
-			    print "EXPECTED RESULT : Value pushed to hardware and get value of SSID Name should be the same"
-			    print "ACTUAl RESULT : Value pushed to hardware and get value of SSID Name are the same"
-			    print "pushSSIDName = ",setName
-			    print "getSSIDName = ",finalName
-			    print "TEST EXECUTION RESULT :SUCCESS"
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "TEST STEP : Compare the pushSSID value and get values of SSID Name"
-			    print "EXPECTED RESULT : Value pushed to hardware and get value of SSID Name should be the same"
-			    print "ACTUAl RESULT : Value pushed to hardware and get value of SSID Name are NOT the same"
-			    print "setSSIDName = ",setName
-			    print "getSSIDName = ",finalName
-			    print "TEST EXECUTION RESULT :FAILURE"
+                if expectedresult in actualresult:
+                    if finalName == setName:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP : Compare the pushSSID value and get values of SSID Name")
+                        print("EXPECTED RESULT : Value pushed to hardware and get value of SSID Name should be the same")
+                        print("ACTUAl RESULT : Value pushed to hardware and get value of SSID Name are the same")
+                        print("pushSSIDName = ",setName)
+                        print("getSSIDName = ",finalName)
+                        print("TEST EXECUTION RESULT :SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP : Compare the pushSSID value and get values of SSID Name")
+                        print("EXPECTED RESULT : Value pushed to hardware and get value of SSID Name should be the same")
+                        print("ACTUAl RESULT : Value pushed to hardware and get value of SSID Name are NOT the same")
+                        print("setSSIDName = ",setName)
+                        print("getSSIDName = ",finalName)
+                        print("TEST EXECUTION RESULT :FAILURE")
 
-			#Revert the SSID NAme back o initial value
-			apIndex = idx;
-			setMethod = "pushSSID"
-			primitive = 'WIFIHAL_GetOrSetParamStringValue'
-			#Calling the method from wifiUtility to execute test case and set result status for the test.
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialName, setMethod)
+                    #Revert the SSID NAme back o initial value
+                    apIndex = idx;
+                    setMethod = "pushSSID"
+                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                    #Calling the method from wifiUtility to execute test case and set result status for the test.
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initialName, setMethod)
 
-			if expectedresult in actualresult:
-			    print "Successfully reverted back to initial value"
-			    tdkTestObj.setResultStatus("SUCCESS");
-			else:
-			    print "Unable to revert to initial value"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print "wifi_getSSIDName() function failed"
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "wifi_pushSSID function failed";
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "wifi_getSSIDName function failed";
-		tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult:
+                        print("Successfully reverted back to initial value")
+                        tdkTestObj.setResultStatus("SUCCESS");
+                    else:
+                        print("Unable to revert to initial value")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("wifi_getSSIDName() function failed")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("wifi_pushSSID function failed");
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("wifi_getSSIDName function failed");
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

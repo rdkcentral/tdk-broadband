@@ -95,14 +95,14 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetRadioCountryCode');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -113,27 +113,27 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getRadioCountryCode()";
-        print "EXPECTED RESULT 1 : The HAL API wifi_getRadioCountryCode() should be invoked successfully";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getRadioCountryCode()");
+        print("EXPECTED RESULT 1 : The HAL API wifi_getRadioCountryCode() should be invoked successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: API invocation is success; Details : %s" %details;
-            print "TEST EXECUTION RESULT : SUCCESS"
+            print("ACTUAL RESULT 1: API invocation is success; Details : %s" %details);
+            print("TEST EXECUTION RESULT : SUCCESS")
 
             countryCode = details.split(":")[1].strip()
             if countryCode != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Country Code returned is non-empty : %s"%countryCode;
+                print("Country Code returned is non-empty : %s"%countryCode);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Country Code returned is empty : %s"%countryCode;
+                print("Country Code returned is empty : %s"%countryCode);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: API invocation failed; Details : %s" %details;
-            print "TEST EXECUTION RESULT : FAILURE"
+            print("ACTUAL RESULT 1: API invocation failed; Details : %s" %details);
+            print("TEST EXECUTION RESULT : FAILURE")
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

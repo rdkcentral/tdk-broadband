@@ -79,11 +79,11 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from wifiUtility import *;
 
-radio = "5G" 
+radio = "5G"
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifihal","1");
@@ -96,56 +96,56 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHz_GetRadioPercentageTransmitPower')
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
-	expectedresult="SUCCESS";
-	getMethod = "getRadioPercentageTransmitPower"
-	primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	radioIndex = idx
-	#Calling the method to execute wifi_getRadioPercentageTransmitPower()
-	tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	
-	if expectedresult in actualresult :
-	    print "TEST STEP 1: Get the RadioPercentageTransmitPower of 5GHZ"
-	    print "EXPECTED RESULT 1: Should get the RadioPercentageTransmitPower of 5GHZ"
-	    print "TEST EXECUTION RESULT :SUCCESS"
-	    tdkTestObj.setResultStatus("SUCCESS");
+    else:
+        expectedresult="SUCCESS";
+        getMethod = "getRadioPercentageTransmitPower"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        radioIndex = idx
+        #Calling the method to execute wifi_getRadioPercentageTransmitPower()
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    outputValue = int(details.split(":")[1].strip())
+        if expectedresult in actualresult :
+            print("TEST STEP 1: Get the RadioPercentageTransmitPower of 5GHZ")
+            print("EXPECTED RESULT 1: Should get the RadioPercentageTransmitPower of 5GHZ")
+            print("TEST EXECUTION RESULT :SUCCESS")
+            tdkTestObj.setResultStatus("SUCCESS");
+
+            outputValue = int(details.split(":")[1].strip())
             if outputValue >= 0 and outputValue <= 100:
-	        print "TEST STEP 2: Check if  RadioPercentageTransmitPower of 5GHZ is valid"
-	        print "EXPECTED RESULT: RadioPercentageTransmitPower of 5GHZ should be a valid value"
-	        print "ACTUAL RESULT : Received RadioPercentageTransmitPower of 5GHZ as ",outputValue
-	        print "TEST EXECUTION RESULT :SUCCESS"
-	        tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Check if  RadioPercentageTransmitPower of 5GHZ is valid")
+                print("EXPECTED RESULT: RadioPercentageTransmitPower of 5GHZ should be a valid value")
+                print("ACTUAL RESULT : Received RadioPercentageTransmitPower of 5GHZ as ",outputValue)
+                print("TEST EXECUTION RESULT :SUCCESS")
+                tdkTestObj.setResultStatus("SUCCESS");
             else:
-	        print "TEST STEP 2: Check if  RadioPercentageTransmitPower of 5GHZ is valid"
-	        print "EXPECTED RESULT: RadioPercentageTransmitPower of 5GHZ should be a valid value"
-	        print "ACTUAL RESULT : Received RadioPercentageTransmitPower of 5GHZ as ",outputValue
-		print "TEST EXECUTION RESULT :FAILURE"
-		tdkTestObj.setResultStatus("FAILURE");
-	else:
-	    print "TEST STEP 1: Get the RadioPercentageTransmitPower of 5GHZ"
-	    print "EXPECTED RESULT: Should get the RadioPercentageTransmitPower of 5GHZ"
-	    print "ACTUAL RESULT : wifi_getRadioPercentageTransmitPower() call failed"
-	    print "TEST EXECUTION RESULT :FAILURE"
-	    tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Check if  RadioPercentageTransmitPower of 5GHZ is valid")
+                print("EXPECTED RESULT: RadioPercentageTransmitPower of 5GHZ should be a valid value")
+                print("ACTUAL RESULT : Received RadioPercentageTransmitPower of 5GHZ as ",outputValue)
+                print("TEST EXECUTION RESULT :FAILURE")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 1: Get the RadioPercentageTransmitPower of 5GHZ")
+            print("EXPECTED RESULT: Should get the RadioPercentageTransmitPower of 5GHZ")
+            print("ACTUAL RESULT : wifi_getRadioPercentageTransmitPower() call failed")
+            print("TEST EXECUTION RESULT :FAILURE")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

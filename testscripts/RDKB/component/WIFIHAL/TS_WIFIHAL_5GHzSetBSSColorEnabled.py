@@ -98,7 +98,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetBSSColorEnabled');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,11 +106,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Invoke the wifi_getBSSColorEnabled api";
-        print "EXPECTED RESULT 1:Invocation of wifi_getBSSColorEnabled should be success";
+        print("TEST STEP 1: Invoke the wifi_getBSSColorEnabled api");
+        print("EXPECTED RESULT 1:Invocation of wifi_getBSSColorEnabled should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getBSSColorEnabled")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -121,22 +121,22 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getBSSColorEnabled was success. %s" %details;
+            print("ACTUAL RESULT 1: Invocation of wifi_getBSSColorEnabled was success. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    enable = details.split(":")[1].strip()
-	    if "Enabled" in enable:
-	        oldEnable = 1
-	        newEnable = 0
+            enable = details.split(":")[1].strip()
+            if "Enabled" in enable:
+                oldEnable = 1
+                newEnable = 0
                 newStatus = "Disabled"
-	    else:
-	        oldEnable = 0
-	        newEnable = 1
+            else:
+                oldEnable = 0
+                newEnable = 1
                 newStatus = "Enabled"
 
-            print "TEST STEP 2: Toggle the enabled state using wifi_setBSSColorEnabled api";
-            print "EXPECTED RESULT 2: wifi_setBSSColorEnabled should successfully toggle BSSColorEnabled status to ",newStatus ;
+            print("TEST STEP 2: Toggle the enabled state using wifi_setBSSColorEnabled api");
+            print("EXPECTED RESULT 2: wifi_setBSSColorEnabled should successfully toggle BSSColorEnabled status to ",newStatus) ;
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
             tdkTestObj.addParameter("methodName","setBSSColorEnabled")
             tdkTestObj.addParameter("radioIndex", idx)
@@ -146,12 +146,12 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "TEST STEP 3: Invoke  wifi_getBSSColorEnabled  to verify toggling done by wifi_setBSSColorEnabled api";
-                print "EXPECTED RESULT 3: wifi_getBSSColorEnabled   should return the value set by wifi_setBSSColorEnabled";
+                print("TEST STEP 3: Invoke  wifi_getBSSColorEnabled  to verify toggling done by wifi_setBSSColorEnabled api");
+                print("EXPECTED RESULT 3: wifi_getBSSColorEnabled   should return the value set by wifi_setBSSColorEnabled");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                 tdkTestObj.addParameter("methodName","getBSSColorEnabled")
                 tdkTestObj.addParameter("radioIndex", idx)
@@ -160,16 +160,16 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult and enable not in details.split(":")[1].strip():
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "wifi_getBSSColorEnabled() returned enable state same as the set value"
-                    print "ACTUAL RESULT 3:  Invocation of wifi_getBSSColorEnabled was success. %s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("wifi_getBSSColorEnabled() returned enable state same as the set value")
+                    print("ACTUAL RESULT 3:  Invocation of wifi_getBSSColorEnabled was success. %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3:  %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 3:  %s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #Revert BSSColorEnabled to initial value
-                print "TEST STEP 4: Revert the enabled state to %s using wifi_setBSSColorEnabled api" %enable;
-                print "EXPECTED RESULT 4: wifi_setBSSColorEnabled should successfully revert BSSColorEnabled status";
+                print("TEST STEP 4: Revert the enabled state to %s using wifi_setBSSColorEnabled api" %enable);
+                print("EXPECTED RESULT 4: wifi_setBSSColorEnabled should successfully revert BSSColorEnabled status");
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
                 tdkTestObj.addParameter("methodName","setBSSColorEnabled")
                 tdkTestObj.addParameter("radioIndex", idx)
@@ -179,27 +179,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4:  %s" %details;
+                    print("ACTUAL RESULT 4:  %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4:  %s" %details;
+                    print("ACTUAL RESULT 4:  %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:  %s" %details;
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

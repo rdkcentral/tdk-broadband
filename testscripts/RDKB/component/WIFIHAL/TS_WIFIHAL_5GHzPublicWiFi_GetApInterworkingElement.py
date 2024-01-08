@@ -101,8 +101,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_GetApInterworkingEle
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,7 +111,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -121,10 +121,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         primitive = 'WIFIHAL_GetApInterworkingElement'
@@ -135,35 +135,35 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-            print "TEST STEP 2: Invoke the wifi api wifi_getApInterworkingElement()";
-            print "EXPECTED RESULT 2: Should succeesully invoke wifi_getApInterworkingElement()";
-            print "ACTUAL RESULT 2: wifi_getApInterworkingElement() invoked successfully";
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("TEST STEP 2: Invoke the wifi api wifi_getApInterworkingElement()");
+            print("EXPECTED RESULT 2: Should succeesully invoke wifi_getApInterworkingElement()");
+            print("ACTUAL RESULT 2: wifi_getApInterworkingElement() invoked successfully");
+            print("TEST EXECUTION RESULT : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             if details != " ":
-                print "TEST STEP 3: Get the 5GHz Public WiFi Access Point InterworkingElement details";
-                print "EXPECTED RESULT 3: Should get the Access Point InterworkingElement details successfully";
-                print "ACTUAL RESULT 3: The Access Point InterworkingElement details are : %s"%details;
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("TEST STEP 3: Get the 5GHz Public WiFi Access Point InterworkingElement details");
+                print("EXPECTED RESULT 3: Should get the Access Point InterworkingElement details successfully");
+                print("ACTUAL RESULT 3: The Access Point InterworkingElement details are : %s"%details);
+                print("TEST EXECUTION RESULT : SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3: Get the 5GHz Public WiFi Access Point InterworkingElement details";
-                print "EXPECTED RESULT 3: Should get the Access Point InterworkingElement details successfully";
-                print "ACTUAL RESULT 3: The Access Point InterworkingElement details are not obtained :%s"%details;
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("TEST STEP 3: Get the 5GHz Public WiFi Access Point InterworkingElement details");
+                print("EXPECTED RESULT 3: Should get the Access Point InterworkingElement details successfully");
+                print("ACTUAL RESULT 3: The Access Point InterworkingElement details are not obtained :%s"%details);
+                print("TEST EXECUTION RESULT : FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "TEST STEP 2: Invoke the wifi api wifi_getApInterworkingElement()";
-            print "EXPECTED RESULT 2: Should succeesully invoke wifi_getApInterworkingElement()";
-            print "ACTUAL RESULT 2: wifi_getApInterworkingElement() is not invoked successfully";
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("TEST STEP 2: Invoke the wifi api wifi_getApInterworkingElement()");
+            print("EXPECTED RESULT 2: Should succeesully invoke wifi_getApInterworkingElement()");
+            print("ACTUAL RESULT 2: wifi_getApInterworkingElement() is not invoked successfully");
+            print("TEST EXECUTION RESULT : FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
@@ -171,5 +171,4 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 else:
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

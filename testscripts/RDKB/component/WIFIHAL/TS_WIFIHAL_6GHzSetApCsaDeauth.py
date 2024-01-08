@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetApCsaDeauth');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 def setApCsaDeauth(obj,mode,apIndex) :
     #Script to load the configuration file of the component
@@ -108,87 +108,87 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
     #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         revert_flag = 1;
-        print "\n**************************************************";
+        print("\n**************************************************");
         mode = 0;
         tdkTestObj,actualresult,details = setApCsaDeauth(obj,mode,apIndex);
-        print "TEST STEP 2: To switch the ApCsaDeauth mode to None for 6GHz using the HAL API wifi_setApCsaDeauth()";
-        print "EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth mode to None for 6GHz";
+        print("TEST STEP 2: To switch the ApCsaDeauth mode to None for 6GHz using the HAL API wifi_setApCsaDeauth()");
+        print("EXPECTED RESULT 2: Should successfully switch the ApCsaDeauth mode to None for 6GHz");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: The API returns success; Details : %s" %details;
+            print("ACTUAL RESULT 2: The API returns success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "\n**************************************************";
+            print("\n**************************************************");
             mode = 1;
             tdkTestObj,actualresult,details = setApCsaDeauth(obj,mode,apIndex);
-            print "TEST STEP 3: To switch the ApCsaDeauth mode to unicast for 6GHz using the HAL API wifi_setApCsaDeauth()";
-            print "EXPECTED RESULT 3: Should successfully switch the ApCsaDeauth to unicast for 6GHz";
+            print("TEST STEP 3: To switch the ApCsaDeauth mode to unicast for 6GHz using the HAL API wifi_setApCsaDeauth()");
+            print("EXPECTED RESULT 3: Should successfully switch the ApCsaDeauth to unicast for 6GHz");
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: The API returns success; Details : %s" %details;
+                print("ACTUAL RESULT 3: The API returns success; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\n**************************************************";
+                print("\n**************************************************");
                 mode = 2;
                 tdkTestObj,actualresult,details = setApCsaDeauth(obj,mode,apIndex);
-                print "TEST STEP 4: To switch the ApCsaDeauth mode to broadcast for 6GHz using the HAL API wifi_setApCsaDeauth()";
-                print "EXPECTED RESULT 4: Should successfully switch the broadcast to broadcast for 6GHz";
+                print("TEST STEP 4: To switch the ApCsaDeauth mode to broadcast for 6GHz using the HAL API wifi_setApCsaDeauth()");
+                print("EXPECTED RESULT 4: Should successfully switch the broadcast to broadcast for 6GHz");
 
                 if expectedresult in actualresult:
                     revert_flag = 0;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: The API returns success; Details : %s" %details;
+                    print("ACTUAL RESULT 4: The API returns success; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: The API returns failure; Details : %s" %details;
+                    print("ACTUAL RESULT 4: The API returns failure; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: The API returns failure; Details : %s" %details;
+                print("ACTUAL RESULT 3: The API returns failure; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if revert_flag == 1:
-                print "\n**************************************************";
-                print "Revert the mode to default mode(broadcast)";
+                print("\n**************************************************");
+                print("Revert the mode to default mode(broadcast)");
                 mode = 2;
                 tdkTestObj,actualresult,details = setApCsaDeauth(obj,mode,apIndex);
 
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Successfully reverted the mode to default mode:broadcast for 6GHz";
+                    print("Successfully reverted the mode to default mode:broadcast for 6GHz");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to revert the mode to default mode:broadcast for 6GHz";
+                    print("Unable to revert the mode to default mode:broadcast for 6GHz");
             else :
-                print "Revert operation is not required";
+                print("Revert operation is not required");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: The API returns failure; Details : %s" %details;
+            print("ACTUAL RESULT 2: The API returns failure; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

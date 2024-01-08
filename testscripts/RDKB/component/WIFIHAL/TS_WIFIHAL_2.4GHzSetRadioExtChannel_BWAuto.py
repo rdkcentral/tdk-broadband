@@ -115,7 +115,7 @@ def ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, param, methodname):
 
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Calling the method to execute wifi_getRadioOperatingChannelBandwidth() inorder to get the initial channel bandwidth
@@ -137,193 +137,193 @@ if "SUCCESS" in loadmodulestatus.upper():
         initBandwidth = details.split(":")[1].strip()
 
         if expectedresult in actualresult :
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP : To get the initial operating channel bandwidth"
-           print "EXPECTED RESULT : To successfully get the initial channel bandwidth"
-           print "ACTUAL RESULT : %s " %details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP : To get the initial operating channel bandwidth")
+            print("EXPECTED RESULT : To successfully get the initial channel bandwidth")
+            print("ACTUAL RESULT : %s " %details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           expectedresult="SUCCESS";
-           radioIndex = idx
-           setMethod = "setRadioOperatingChannelBandwidth"
-           primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            expectedresult="SUCCESS";
+            radioIndex = idx
+            setMethod = "setRadioOperatingChannelBandwidth"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-           #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 'Auto', setMethod)
+            #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 'Auto', setMethod)
 
-           if expectedresult in actualresult :
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP : To set the operating channel bandwidth to Auto"
-              print "EXPECTED RESULT : To successfully set the channel bandwidth to Auto"
-              print "ACTUAL RESULT : %s " %details
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult in actualresult :
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : To set the operating channel bandwidth to Auto")
+                print("EXPECTED RESULT : To successfully set the channel bandwidth to Auto")
+                print("ACTUAL RESULT : %s " %details)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-              expectedresult = "SUCCESS";
-              radioIndex = idx
-              getMethod = "getChannelBandwidth"
-              primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                expectedresult = "SUCCESS";
+                radioIndex = idx
+                getMethod = "getChannelBandwidth"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-              #Calling the method to execute wifi_getRadioOperatingChannelBandwidth()
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-              bandWidth = details.split(":")[1].strip()
+                #Calling the method to execute wifi_getRadioOperatingChannelBandwidth()
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+                bandWidth = details.split(":")[1].strip()
 
-              bandWidthList = ['20MHz','40MHz','80MHz','160MHz','Auto'];
-              if expectedresult in actualresult and bandWidth in bandWidthList:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP : To get the operating channel bandwidth as a value from the list %s"%bandWidthList
-                 print "EXPECTED RESULT : To successfully get the channel bandwidth as a value from the list %s"%bandWidthList
-                 print "ACTUAL RESULT : %s " %details
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                 expectedresult = "SUCCESS";
-                 radioIndex = idx
-                 getMethod = "getRadioExtChannel"
-                 primitive = 'WIFIHAL_GetOrSetParamStringValue'
-
-                 #Calling the method to execute wifi_getRadioExtChannel()
-                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-
-                 possibleExtChannels = ['AboveControlChannel', 'BelowControlChannel', 'Auto']
-                 initGetExtCh = details.split(":")[1].strip()
-
-                 if expectedresult in actualresult and initGetExtCh in possibleExtChannels and len(initGetExtCh) <= 64:
+                bandWidthList = ['20MHz','40MHz','80MHz','160MHz','Auto'];
+                if expectedresult in actualresult and bandWidth in bandWidthList:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Get the Radio Extension Channel";
-                    print "EXPECTED RESULT : wifi_getRadioExtChannel should return a string value either AboveControlChannel or BelowControlChannel or Auto";
-                    print "ACTUAL RESULT : Ext Channel value string received: %s"%initGetExtCh;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP : To get the operating channel bandwidth as a value from the list %s"%bandWidthList)
+                    print("EXPECTED RESULT : To successfully get the channel bandwidth as a value from the list %s"%bandWidthList)
+                    print("ACTUAL RESULT : %s " %details)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                    for setExtCh in possibleExtChannels:
-                        if initGetExtCh == setExtCh:
-                            continue;
-                        else:
-                            expectedresult = "SUCCESS";
-                            radioIndex = idx
-                            setMethod = "setRadioExtChannel"
-                            primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                    expectedresult = "SUCCESS";
+                    radioIndex = idx
+                    getMethod = "getRadioExtChannel"
+                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-                            #Calling the method to execute wifi_setRadioExtChannel()
-                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setExtCh, setMethod)
+                    #Calling the method to execute wifi_getRadioExtChannel()
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-                            if expectedresult in actualresult:
-                                #Set the result status of execution
-                                tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP : To set the radio extension channel as %s " %setExtCh;
-                                print "EXPECTED RESULT : Setting the radio extension channel returns SUCCESS"
-                                print "ACTUAL RESULT : %s " %details
-                                #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                    possibleExtChannels = ['AboveControlChannel', 'BelowControlChannel', 'Auto']
+                    initGetExtCh = details.split(":")[1].strip()
 
-                                expectedresult = "SUCCESS";
-                                radioIndex = idx
-                                getMethod = "getRadioExtChannel"
-                                primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                    if expectedresult in actualresult and initGetExtCh in possibleExtChannels and len(initGetExtCh) <= 64:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP : Get the Radio Extension Channel");
+                        print("EXPECTED RESULT : wifi_getRadioExtChannel should return a string value either AboveControlChannel or BelowControlChannel or Auto");
+                        print("ACTUAL RESULT : Ext Channel value string received: %s"%initGetExtCh);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                #Calling the method to execute wifi_getRadioExtChannel()
-                                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-                                getExtCh = details.split(":")[1].strip()
-
-                                if expectedresult in actualresult and getExtCh == setExtCh:
-                                    #Set the result status of execution
-                                    tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP : To get the radio extension channel as %s " %setExtCh;
-                                    print "EXPECTED RESULT : Get radio extension channel returns %s" %setExtCh;
-                                    print "ACTUAL RESULT : %s " %details
-                                    #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                                else:
-                                    #Set the result status of execution
-                                    tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP : To get the radio extension channel as %s " %setExtCh;
-                                    print "EXPECTED RESULT : Get radio extension channel returns %s" %setExtCh;
-                                    print "ACTUAL RESULT : %s " %details
-                                    #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
-
-                                #Reverting the extension channel
+                        for setExtCh in possibleExtChannels:
+                            if initGetExtCh == setExtCh:
+                                continue;
+                            else:
                                 expectedresult = "SUCCESS";
                                 radioIndex = idx
                                 setMethod = "setRadioExtChannel"
                                 primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
                                 #Calling the method to execute wifi_setRadioExtChannel()
-                                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initGetExtCh, setMethod)
+                                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setExtCh, setMethod)
 
                                 if expectedresult in actualresult:
+                                    #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "Extension channel is successfully reverted to initial value"
+                                    print("TEST STEP : To set the radio extension channel as %s " %setExtCh);
+                                    print("EXPECTED RESULT : Setting the radio extension channel returns SUCCESS")
+                                    print("ACTUAL RESULT : %s " %details)
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                    expectedresult = "SUCCESS";
+                                    radioIndex = idx
+                                    getMethod = "getRadioExtChannel"
+                                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+
+                                    #Calling the method to execute wifi_getRadioExtChannel()
+                                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+                                    getExtCh = details.split(":")[1].strip()
+
+                                    if expectedresult in actualresult and getExtCh == setExtCh:
+                                        #Set the result status of execution
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("TEST STEP : To get the radio extension channel as %s " %setExtCh);
+                                        print("EXPECTED RESULT : Get radio extension channel returns %s" %setExtCh);
+                                        print("ACTUAL RESULT : %s " %details)
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                    else:
+                                        #Set the result status of execution
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("TEST STEP : To get the radio extension channel as %s " %setExtCh);
+                                        print("EXPECTED RESULT : Get radio extension channel returns %s" %setExtCh);
+                                        print("ACTUAL RESULT : %s " %details)
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                                    #Reverting the extension channel
+                                    expectedresult = "SUCCESS";
+                                    radioIndex = idx
+                                    setMethod = "setRadioExtChannel"
+                                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+
+                                    #Calling the method to execute wifi_setRadioExtChannel()
+                                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initGetExtCh, setMethod)
+
+                                    if expectedresult in actualresult:
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("Extension channel is successfully reverted to initial value")
+
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("Unable to revert the extension channel to initial value")
 
                                 else:
+                                    #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "Unable to revert the extension channel to initial value"
+                                    print("TEST STEP : To set the radio extension channel as %s " %setExtCh);
+                                    print("EXPECTED RESULT : Setting the radio extension channel returns SUCCESS")
+                                    print("ACTUAL RESULT : %s " %details)
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                            break;
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP : Checking if %s is a possible radio extension channel" %initGetExtCh);
+                        print("EXPECTED RESULT : wifi_getRadioExtChannel should return a string value either AboveControlChannel or BelowControlChannel or Auto");
+                        print("ACTUAL RESULT : Failed to get an extension channel from the possible channel list");
+                        print("Ext Channel value string received: %s"%initGetExtCh);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP : To get the operating channel bandwidth as a value from the list %s"%bandWidthList)
+                    print("EXPECTED RESULT : To successfully get the channel bandwidth as a value from the list %s"%bandWidthList)
+                    print("ACTUAL RESULT : %s " %details)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-                            else:
-                                #Set the result status of execution
-                                tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP : To set the radio extension channel as %s " %setExtCh;
-                                print "EXPECTED RESULT : Setting the radio extension channel returns SUCCESS"
-                                print "ACTUAL RESULT : %s " %details
-                                #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-                        break;
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP : Checking if %s is a possible radio extension channel" %initGetExtCh;
-                     print "EXPECTED RESULT : wifi_getRadioExtChannel should return a string value either AboveControlChannel or BelowControlChannel or Auto";
-                     print "ACTUAL RESULT : Failed to get an extension channel from the possible channel list";
-                     print "Ext Channel value string received: %s"%initGetExtCh;
-                     print "[TEST EXECUTION RESULT] : FAILURE";
-              else:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP : To get the operating channel bandwidth as a value from the list %s"%bandWidthList
-                  print "EXPECTED RESULT : To successfully get the channel bandwidth as a value from the list %s"%bandWidthList
-                  print "ACTUAL RESULT : %s " %details
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
+                #Reverting the channel bandwidth
+                expectedresult="SUCCESS";
+                radioIndex = idx
+                setMethod = "setRadioOperatingChannelBandwidth"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-              #Reverting the channel bandwidth
-              expectedresult="SUCCESS";
-              radioIndex = idx
-              setMethod = "setRadioOperatingChannelBandwidth"
-              primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initBandwidth, setMethod)
 
-              #Calling the method to execute wifi_setRadioOperatingChannelBandwidth()
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initBandwidth, setMethod)
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("Radio Operating Channel Bandwidth is successfully reverted to initial value")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("Unable to revert the Radio Opertaing Channel Bandwidth to initial value")
 
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "Radio Operating Channel Bandwidth is successfully reverted to initial value"
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "Unable to revert the Radio Opertaing Channel Bandwidth to initial value"
-
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP : To set the operating channel bandwidth to Auto"
-               print "EXPECTED RESULT : To successfully set the channel bandwidth to Auto"
-               print "ACTUAL RESULT : %s " %details
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : To set the operating channel bandwidth to Auto")
+                print("EXPECTED RESULT : To successfully set the channel bandwidth to Auto")
+                print("ACTUAL RESULT : %s " %details)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : To get the initial operating channel bandwidth"
-            print "EXPECTED RESULT : To successfully get the initial channel bandwidth"
-            print "ACTUAL RESULT : %s " %details
+            print("TEST STEP : To get the initial operating channel bandwidth")
+            print("EXPECTED RESULT : To successfully get the initial channel bandwidth")
+            print("ACTUAL RESULT : %s " %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

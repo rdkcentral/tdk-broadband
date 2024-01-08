@@ -86,7 +86,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetBSSColor');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,7 +95,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep("WIFIHAL_GetBSSColorValue");
@@ -104,24 +104,24 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 1: Invoke the HAL API wifi_getBSSColor() for 6G radio";
-        print "EXPECTED RESULT 1:Invocation of wifi_getBSSColor() should be success";
+        print("\nTEST STEP 1: Invoke the HAL API wifi_getBSSColor() for 6G radio");
+        print("EXPECTED RESULT 1:Invocation of wifi_getBSSColor() should be success");
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getBSSColor() was success; Details : %s" %details;
+            print("ACTUAL RESULT 1: Invocation of wifi_getBSSColor() was success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             bssColor = details.split(":")[1].strip()
-            print "\nTEST STEP 2: Check if value returned by wifi_getBSSColor() api is between 0 and 63";
-            print "EXPECTED RESULT 2 : The value returned by wifi_getBSSColor() api should be between 0 and 63";
+            print("\nTEST STEP 2: Check if value returned by wifi_getBSSColor() api is between 0 and 63");
+            print("EXPECTED RESULT 2 : The value returned by wifi_getBSSColor() api should be between 0 and 63");
 
             if bssColor.isdigit() and 1 <= int(bssColor) and int(bssColor) <= 63:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: BssColor = %s. Value is in the expected range" %bssColor
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 2: BssColor = %s. Value is in the expected range" %bssColor)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Set a random BSSColor value in the acceptable range of 1-63 excluding the initial BSS color
                 set_bsscolor =  choice([i for i in range(1,63) if i not in [int(bssColor)]]);
@@ -132,14 +132,14 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 3: Invoke the HAL API wifi_setBSSColor() with BSS Color value %d" %set_bsscolor;
-                print "EXPECTED RESULT 3: wifi_setBSSColor() should be invoked successfully";
+                print("\nTEST STEP 3: Invoke the HAL API wifi_setBSSColor() with BSS Color value %d" %set_bsscolor);
+                print("EXPECTED RESULT 3: wifi_setBSSColor() should be invoked successfully");
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Invocation of wifi_setBSSColor() was success; Details : %s" %details;
+                    print("ACTUAL RESULT 3: Invocation of wifi_setBSSColor() was success; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Invoke the GET API and cross check the SET
                     sleep(5);
@@ -149,42 +149,42 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 4: Invoke the HAL API wifi_getBSSColor() for 6G radio after the SET operation";
-                    print "EXPECTED RESULT 4:Invocation of wifi_getBSSColor() should be success";
+                    print("\nTEST STEP 4: Invoke the HAL API wifi_getBSSColor() for 6G radio after the SET operation");
+                    print("EXPECTED RESULT 4:Invocation of wifi_getBSSColor() should be success");
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: Invocation of wifi_getBSSColor() was success; Details : %s" %details;
+                        print("ACTUAL RESULT 4: Invocation of wifi_getBSSColor() was success; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         new_bsscolor = details.split(":")[1].strip();
                         if new_bsscolor.isdigit():
                             new_bsscolor = int(new_bsscolor);
 
-                            print "\nTEST STEP 5: Check if BSS color SET matches with GET";
-                            print "EXPECTED RESULT 5: The BSS color SET should match with GET";
-                            print "BSS Color Set : %d" %set_bsscolor;
-                            print "BSS Color Get : %d" %new_bsscolor;
+                            print("\nTEST STEP 5: Check if BSS color SET matches with GET");
+                            print("EXPECTED RESULT 5: The BSS color SET should match with GET");
+                            print("BSS Color Set : %d" %set_bsscolor);
+                            print("BSS Color Get : %d" %new_bsscolor);
 
                             if new_bsscolor == set_bsscolor:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 5: BSS color SET matches with GET";
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("ACTUAL RESULT 5: BSS color SET matches with GET");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 5: BSS color SET does not match with GET";
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("ACTUAL RESULT 5: BSS color SET does not match with GET");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
-                            print "The BSS Color received is not a valid integer value";
+                            print("The BSS Color received is not a valid integer value");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: Invocation of wifi_getBSSColor() was failed; Details : %s" %details;
+                        print("ACTUAL RESULT 4: Invocation of wifi_getBSSColor() was failed; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Revert operation
                     bssColor = int(bssColor);
@@ -195,37 +195,37 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 6: Invoke the HAL API wifi_setBSSColor() with BSS Color value %d" %bssColor;
-                    print "EXPECTED RESULT 6: wifi_setBSSColor() should be invoked successfully";
+                    print("\nTEST STEP 6: Invoke the HAL API wifi_setBSSColor() with BSS Color value %d" %bssColor);
+                    print("EXPECTED RESULT 6: wifi_setBSSColor() should be invoked successfully");
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 3: Revert operation was success; Details : %s" %details;
+                        print("ACTUAL RESULT 3: Revert operation was success; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 3: Revert operation failed; Details : %s" %details;
+                        print("ACTUAL RESULT 3: Revert operation failed; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Invocation of wifi_setBSSColor() was failed; Details : %s" %details;
+                    print("ACTUAL RESULT 3: Invocation of wifi_setBSSColor() was failed; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "ACTUAL RESULT 2: BssColor = %s. Value is not within the expected range" %bssColor
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 2: BssColor = %s. Value is not within the expected range" %bssColor)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: Invocation of wifi_getBSSColor() failed; Details : %s" %details;
+            print("ACTUAL RESULT 1: Invocation of wifi_getBSSColor() failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

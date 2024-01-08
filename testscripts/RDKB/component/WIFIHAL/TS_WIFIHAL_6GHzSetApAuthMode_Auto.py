@@ -81,9 +81,9 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetApAuthMode_Auto');
 sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzSetApAuthMode_Auto');
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     #Getting AP_AUTH_MODE_AUTO value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile AP_AUTH_MODE_AUTO" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
@@ -99,10 +99,10 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     setMode = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and setMode!= "":
-        print "TEST STEP : Should  get AP_AUTH_MODE_AUTO  from property file"
-        print "ACTUAL RESULT :AP_AUTH_MODE_AUTO from property file :",setMode ;
+        print("TEST STEP : Should  get AP_AUTH_MODE_AUTO  from property file")
+        print("ACTUAL RESULT :AP_AUTH_MODE_AUTO from property file :",setMode) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :SUCCESS";
+        print("[TEST EXECUTION RESULT] :SUCCESS");
 
         expectedresult = "SUCCESS";
         #Getting PRIVATE_6G_AP_INDEX value from tdk_platform_properties"
@@ -115,27 +115,27 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
             #Calling the method to execute wifi_setApAuthMode()
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
             if expectedresult in actualresult:
-                print "TEST STEP : Set the authorization mode as Auto for apIndex %s"%apIndex
-                print "EXPECTED RESULT : Should successfully set the authorization mode as Auto"
-                print "ACTUAL RESULT : Successfully sets the authorization mode as Auto"
+                print("TEST STEP : Set the authorization mode as Auto for apIndex %s"%apIndex)
+                print("EXPECTED RESULT : Should successfully set the authorization mode as Auto")
+                print("ACTUAL RESULT : Successfully sets the authorization mode as Auto")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP : Set the authorization mode as Auto for apIndex %s"%apIndex
-                print "EXPECTED RESULT : Should successfully set the authorization mode as Auto"
-                print "ACTUAL RESULT : Failed to set the authorization mode as Auto"
+                print("TEST STEP : Set the authorization mode as Auto for apIndex %s"%apIndex)
+                print("EXPECTED RESULT : Should successfully set the authorization mode as Auto")
+                print("ACTUAL RESULT : Failed to set the authorization mode as Auto")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "Failed to get the Access Point index";
+            print("Failed to get the Access Point index");
             tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Should  get AP_AUTH_MODE_AUTO  from property file"
-        print "ACTUAL RESULT :AP_AUTH_MODE_AUTO from property file :",setMode ;
+        print("TEST STEP : Should  get AP_AUTH_MODE_AUTO  from property file")
+        print("ACTUAL RESULT :AP_AUTH_MODE_AUTO from property file :",setMode) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

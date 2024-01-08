@@ -80,18 +80,18 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzWifiKickApAssociatedDevice_WithInvalidMACAddress');
 loadmodulestatus = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    
+
     else:
-    
+
         #Caling the wifi_kickApAssociatedDevice() to execute the functionality
         expectedresult = "FAILURE";
         radioIndex = idx
@@ -106,18 +106,17 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Calling the wifi api wifi_kickApAssociatedDevice() to remove the connected wifi client for 5GHz";
-            print "EXPECTED RESULT 1: Should return failure since the MAC address is invalid";
-            print "ACTUAL RESULT 1: API return status is",actualresult;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1: Calling the wifi api wifi_kickApAssociatedDevice() to remove the connected wifi client for 5GHz");
+            print("EXPECTED RESULT 1: Should return failure since the MAC address is invalid");
+            print("ACTUAL RESULT 1: API return status is",actualresult);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Calling the wifi api wifi_kickApAssociatedDevice() to remove the connected wifi client for 5GHz";
-            print "EXPECTED RESULT 1: Should return failure since the MAC address is invalid";
-            print "ACTUAL RESULT 1: API return status is",actualresult;
+            print("TEST STEP 1: Calling the wifi api wifi_kickApAssociatedDevice() to remove the connected wifi client for 5GHz");
+            print("EXPECTED RESULT 1: Should return failure since the MAC address is invalid");
+            print("ACTUAL RESULT 1: API return status is",actualresult);
             tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-    
+    print("Module loading failed");

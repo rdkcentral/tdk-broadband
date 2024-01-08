@@ -79,7 +79,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetApInterworkingServiceCapability');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -87,12 +87,12 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
-        print "TEST STEP 1: Invoke the wifi_getApInterworkingServiceCapability api";
-        print "EXPECTED RESULT 1:Invocation of wifi_getApInterworkingServiceCapability should be success";
+        print("TEST STEP 1: Invoke the wifi_getApInterworkingServiceCapability api");
+        print("EXPECTED RESULT 1:Invocation of wifi_getApInterworkingServiceCapability should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamBoolValue");
         tdkTestObj.addParameter("methodName","getApInterworkingServiceCapability")
         tdkTestObj.addParameter("radioIndex", idx)
@@ -104,31 +104,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: Invocation of wifi_getApInterworkingServiceCapability was success.";
+            print("ACTUAL RESULT 1: Invocation of wifi_getApInterworkingServiceCapability was success.");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "TEST STEP 2: Check if value returned by wifi_getApInterworkingServiceCapability api is Enabled";
-            print "EXPECTED RESULT 2 : The value returned by wifi_getApInterworkingServiceEnable api should be Enabled";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("TEST STEP 2: Check if value returned by wifi_getApInterworkingServiceCapability api is Enabled");
+            print("EXPECTED RESULT 2 : The value returned by wifi_getApInterworkingServiceEnable api should be Enabled");
             enable= details.split(":")[1].strip()
 
             if "Enabled" in enable :
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "ACTUAL RESULT 2: ApInterworkingServiceCapability = %s" %enable;
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT 2: ApInterworkingServiceCapability = %s" %enable);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "ACTUAL RESULT 2: ApInterworkingServiceCapability = %s" %enable;
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 2: ApInterworkingServiceCapability = %s" %enable);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: %s" %details;
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

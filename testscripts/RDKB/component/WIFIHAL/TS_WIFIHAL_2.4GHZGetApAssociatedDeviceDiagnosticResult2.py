@@ -79,14 +79,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHZGetApAssociatedDeviceDiagnosticR
 #Get the result of connection with test component and DUT
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which is associated to this Script
@@ -96,39 +96,36 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         resultDetails = tdkTestObj.getResultDetails();
-        print "actualresult: ",actualresult;
-        print "resultDetails:",resultDetails;
+        print("actualresult: ",actualresult);
+        print("resultDetails:",resultDetails);
 
         if expectedresult in actualresult :
-           output_array_size = resultDetails.split(':')[2].split(',')[0].strip()
-           print "output_array_size: ",output_array_size
-           cli_IPAddress = resultDetails.split(':')[3].split(',')[0].strip()
-           print "cli_IPAddress: ",cli_IPAddress
-           if int(output_array_size) > 0  and cli_IPAddress:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 1: Get the output_array_size,cli_IPAddress"
-              print "EXPECTED RESULT : Should get the output_array_size,cli_IPAddress"
-              print "ACTUAL RESULT : %s"%resultDetails;
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 1 :  Get the output_array_size,cli_IPAddress"
-               print "EXPECTED RESULT : Should get the output_array_size,cli_IPAddress";
-               print "ACTUAL RESULT : %s"%resultDetails;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            output_array_size = resultDetails.split(':')[2].split(',')[0].strip()
+            print("output_array_size: ",output_array_size)
+            cli_IPAddress = resultDetails.split(':')[3].split(',')[0].strip()
+            print("cli_IPAddress: ",cli_IPAddress)
+            if int(output_array_size) > 0  and cli_IPAddress:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the output_array_size,cli_IPAddress")
+                print("EXPECTED RESULT : Should get the output_array_size,cli_IPAddress")
+                print("ACTUAL RESULT : %s"%resultDetails);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1 :  Get the output_array_size,cli_IPAddress")
+                print("EXPECTED RESULT : Should get the output_array_size,cli_IPAddress");
+                print("ACTUAL RESULT : %s"%resultDetails);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1:Invoke GetApAssociatedDeviceDiagnosticResult2"
-            print "EXPECTED RESULT : Should successfully invoke GetApAssociatedDeviceDiagnosticResult2"
-            print "ACTUAL RESULT : Failed to invoke the GetApAssociatedDeviceDiagnosticResult2"
+            print("TEST STEP 1:Invoke GetApAssociatedDeviceDiagnosticResult2")
+            print("EXPECTED RESULT : Should successfully invoke GetApAssociatedDeviceDiagnosticResult2")
+            print("ACTUAL RESULT : Failed to invoke the GetApAssociatedDeviceDiagnosticResult2")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
+    print("Module loading failed");

@@ -88,8 +88,8 @@ sysObj.configureTestCase(ip,port,'TS_WIFIHAL_5GHz_SetApBeaconInterval');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilloadmodulestatus =sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
 
 def get_Ap1BeaconInterval(tdkTestObj):
     query = "sh %s/tdk_platform_utility.sh getAp1BeaconInterval" %TDK_PATH
@@ -98,7 +98,7 @@ def get_Ap1BeaconInterval(tdkTestObj):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "Beacon Interval is ",details;
+    print("Beacon Interval is ",details);
     return details,actualresult;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
@@ -109,7 +109,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
@@ -117,98 +117,98 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilloadmodulestatus.upper()):
         defBconInt,actualresult = get_Ap1BeaconInterval(tdkTestObj);
 
         if expectedresult in actualresult and defBconInt != "":
-           defBconInt = int(defBconInt);
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Get the Beacon Interval";
-           print "EXPECTED RESULT 1: Should get the Beacon Interval ";
-           print "ACTUAL RESULT 1: The Beacon Interval is :",defBconInt;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            defBconInt = int(defBconInt);
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the Beacon Interval");
+            print("EXPECTED RESULT 1: Should get the Beacon Interval ");
+            print("ACTUAL RESULT 1: The Beacon Interval is :",defBconInt);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           setValue = int(defBconInt+10);
+            setValue = int(defBconInt+10);
 
-           #Script to load the configuration file of the component
-           expectedresult="SUCCESS";
-           radioIndex = idx;
-           setMethod = "setApBeaconInterval"
-           primitive = 'WIFIHAL_GetOrSetParamIntValue'
-           print "Setting Beacon period to : ",setValue
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+            #Script to load the configuration file of the component
+            expectedresult="SUCCESS";
+            radioIndex = idx;
+            setMethod = "setApBeaconInterval"
+            primitive = 'WIFIHAL_GetOrSetParamIntValue'
+            print("Setting Beacon period to : ",setValue)
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
 
-              tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-              expectedresult="SUCCESS";
-              bconInt,actualresult = get_Ap1BeaconInterval(tdkTestObj);
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                expectedresult="SUCCESS";
+                bconInt,actualresult = get_Ap1BeaconInterval(tdkTestObj);
 
-              if expectedresult in actualresult and bconInt != "" and int(bconInt)  == setValue :
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 3: Get the Beacon Interval";
-                 print "EXPECTED RESULT 3: Should get the Beacon Interval equal to the set";
-                 print "ACTUAL RESULT 3: The Beacon Interval is :",bconInt,"  Beacon Set Interval was :",setValue;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 3: Get the Beacon Interval";
-                  print "EXPECTED RESULT 3: Should get the Beacon Interval equal to the set";
-                  print "ACTUAL RESULT 3: The Beacon Interval is :",bconInt,"  Beacon Set Interval was :",setValue;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-
-              #Revert the value
-              setValue = defBconInt;
-              expectedresult="SUCCESS";
-              radioIndex = idx;
-              setMethod = "setApBeaconInterval"
-              primitive = 'WIFIHAL_GetOrSetParamIntValue'
-              print "Reverting Beacon period to : ",setValue
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
-
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-
-                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                 expectedresult="SUCCESS";
-                 time.sleep(20);
-                 bcon,actualresult = get_Ap1BeaconInterval(tdkTestObj);
-                 if expectedresult in actualresult and bcon!= "" and  int(defBconInt) ==  int(bcon):
+                if expectedresult in actualresult and bconInt != "" and int(bconInt)  == setValue :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Get the Beacon Interval";
-                    print "EXPECTED RESULT 5: Should get the Beacon Interval ";
-                    print "ACTUAL RESULT 5: The Beacon Interval is :",bcon;
+                    print("TEST STEP 3: Get the Beacon Interval");
+                    print("EXPECTED RESULT 3: Should get the Beacon Interval equal to the set");
+                    print("ACTUAL RESULT 3: The Beacon Interval is :",bconInt,"  Beacon Set Interval was :",setValue);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Get the Beacon Interval";
-                     print "EXPECTED RESULT 5: Should get the Beacon Interval ";
-                     print "ACTUAL RESULT 5: The Beacon Interval is :",bcon;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] :FAILURE";
-              else:
-                  print "TEST STEP 4: Revert the Beacon Interval to previous";
-                  print "EXPECTED RESULT 4: Should revert the beacon interval to previous";
-                  print "ACTUAL RESULT 4: Revertion failed";
-                  print "TEST EXECUTION RESULT : FAILURE";
-                  tdkTestObj.setResultStatus("FAILURE");
-           else:
-               print "TEST STEP 2: Set the Beacon Interval";
-               print "EXPECTED RESULT 2: Should set the Beacon Interval to ",setValue;
-               print "ACTUAL RESULT 2: ",details;
-               print "TEST EXECUTION RESULT : FAILURE";
-               tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the Beacon Interval");
+                    print("EXPECTED RESULT 3: Should get the Beacon Interval equal to the set");
+                    print("ACTUAL RESULT 3: The Beacon Interval is :",bconInt,"  Beacon Set Interval was :",setValue);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                #Revert the value
+                setValue = defBconInt;
+                expectedresult="SUCCESS";
+                radioIndex = idx;
+                setMethod = "setApBeaconInterval"
+                primitive = 'WIFIHAL_GetOrSetParamIntValue'
+                print("Reverting Beacon period to : ",setValue)
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setValue, setMethod)
+
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    expectedresult="SUCCESS";
+                    time.sleep(20);
+                    bcon,actualresult = get_Ap1BeaconInterval(tdkTestObj);
+                    if expectedresult in actualresult and bcon!= "" and  int(defBconInt) ==  int(bcon):
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Get the Beacon Interval");
+                        print("EXPECTED RESULT 5: Should get the Beacon Interval ");
+                        print("ACTUAL RESULT 5: The Beacon Interval is :",bcon);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the Beacon Interval");
+                        print("EXPECTED RESULT 5: Should get the Beacon Interval ");
+                        print("ACTUAL RESULT 5: The Beacon Interval is :",bcon);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] :FAILURE");
+                else:
+                    print("TEST STEP 4: Revert the Beacon Interval to previous");
+                    print("EXPECTED RESULT 4: Should revert the beacon interval to previous");
+                    print("ACTUAL RESULT 4: Revertion failed");
+                    print("TEST EXECUTION RESULT : FAILURE");
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 2: Set the Beacon Interval");
+                print("EXPECTED RESULT 2: Should set the Beacon Interval to ",setValue);
+                print("ACTUAL RESULT 2: ",details);
+                print("TEST EXECUTION RESULT : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the Beacon Interval";
-            print "EXPECTED RESULT 1: Should get the Beacon Interval ";
-            print "ACTUAL RESULT 1: The Beacon Interval is :",defBconInt;
+            print("TEST STEP 1: Get the Beacon Interval");
+            print("EXPECTED RESULT 1: Should get the Beacon Interval ");
+            print("ACTUAL RESULT 1: The Beacon Interval is :",defBconInt);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");

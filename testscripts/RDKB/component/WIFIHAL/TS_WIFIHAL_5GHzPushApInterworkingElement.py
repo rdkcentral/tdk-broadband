@@ -98,16 +98,16 @@ def push_element(tdkTestObj, radioIndex, step, element):
 
     if expectedresult in actualresult:
         return_val = 0;
-        print "TEST STEP %d: Invoke the wifi api wifi_pushApInterworkingElement()" %step;
-        print "EXPECTED RESULT %d: Should successfully invoke wifi_pushApInterworkingElement()" %step;
-        print "ACTUAL RESULT %d: %s"%(step, details);
-        print "TEST EXECUTION RESULT %d: SUCCESS" %step;
+        print("TEST STEP %d: Invoke the wifi api wifi_pushApInterworkingElement()" %step);
+        print("EXPECTED RESULT %d: Should successfully invoke wifi_pushApInterworkingElement()" %step);
+        print("ACTUAL RESULT %d: %s"%(step, details));
+        print("TEST EXECUTION RESULT %d: SUCCESS" %step);
         tdkTestObj.setResultStatus("SUCCESS");
     else:
-        print "TEST STEP %d: Invoke the wifi api wifi_pushApInterworkingElement()" %step;
-        print "EXPECTED RESULT %d: Should successfully invoke wifi_pushApInterworkingElement()" %step;
-        print "ACTUAL RESULT %d: %s"%(step, details);
-        print "TEST EXECUTION RESULT %d: FAILURE" %step;
+        print("TEST STEP %d: Invoke the wifi api wifi_pushApInterworkingElement()" %step);
+        print("EXPECTED RESULT %d: Should successfully invoke wifi_pushApInterworkingElement()" %step);
+        print("ACTUAL RESULT %d: %s"%(step, details));
+        print("TEST EXECUTION RESULT %d: FAILURE" %step);
         tdkTestObj.setResultStatus("FAILURE");
     return return_val;
 
@@ -119,20 +119,20 @@ def get_element(tdkTestObj, radioIndex, step):
     actualresult = tdkTestObj.getResult();
 
     if expectedresult in actualresult:
-        print "TEST STEP %d: Invoke the wifi api wifi_getApInterworkingElement()" %step;
-        print "EXPECTED RESULT %d: Should succeesully invoke wifi_getApInterworkingElement()" %step;
-        print "ACTUAL RESULT %d: wifi_getApInterworkingElement() invoked successfully" %step;
-        print "TEST EXECUTION RESULT %d: SUCCESS" %step;
+        print("TEST STEP %d: Invoke the wifi api wifi_getApInterworkingElement()" %step);
+        print("EXPECTED RESULT %d: Should succeesully invoke wifi_getApInterworkingElement()" %step);
+        print("ACTUAL RESULT %d: wifi_getApInterworkingElement() invoked successfully" %step);
+        print("TEST EXECUTION RESULT %d: SUCCESS" %step);
         tdkTestObj.setResultStatus("SUCCESS");
         details = tdkTestObj.getResultDetails();
 
         if details != " ":
             status = 0;
             step = step + 1;
-            print "TEST STEP %d: Get the Access Point InterworkingElement details" %step;
-            print "EXPECTED RESULT %d: Should get the Access Point InterworkingElement details successfully" %step;
-            print "ACTUAL RESULT %d: The Access Point InterworkingElement details are :%s"%(step, details);
-            print "TEST EXECUTION RESULT %d: SUCCESS" %step;
+            print("TEST STEP %d: Get the Access Point InterworkingElement details" %step);
+            print("EXPECTED RESULT %d: Should get the Access Point InterworkingElement details successfully" %step);
+            print("ACTUAL RESULT %d: The Access Point InterworkingElement details are :%s"%(step, details));
+            print("TEST EXECUTION RESULT %d: SUCCESS" %step);
             tdkTestObj.setResultStatus("SUCCESS");
             interworkingEnabled = int(details.split("interworkingEnabled")[1].split("=")[1].split(",")[0].strip());
             accessNetworkType = int(details.split("accessNetworkType")[1].split("=")[1].split(",")[0].strip());
@@ -147,16 +147,16 @@ def get_element(tdkTestObj, radioIndex, step):
             hessid = str(details.split("hessid")[1].split("=")[1].strip());
             element_details = [interworkingEnabled, accessNetworkType, internetAvailable, asra, esra, uesa, venueOptionPresent, venueType, venueGroup, hessOptionPresent, hessid]
         else:
-            print "TEST STEP %d: Get the Access Point InterworkingElement details" %step;
-            print "EXPECTED RESULT %d: Should get the Access Point InterworkingElement details successfully" %step;
-            print "ACTUAL RESULT %d: The Access Point InterworkingElement details are not obtained :%s"%(step, details);
-            print "TEST EXECUTION RESULT %d: FAILURE" %step;
+            print("TEST STEP %d: Get the Access Point InterworkingElement details" %step);
+            print("EXPECTED RESULT %d: Should get the Access Point InterworkingElement details successfully" %step);
+            print("ACTUAL RESULT %d: The Access Point InterworkingElement details are not obtained :%s"%(step, details));
+            print("TEST EXECUTION RESULT %d: FAILURE" %step);
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP %d: Invoke the wifi api wifi_getApInterworkingElement()" %step;
-        print "EXPECTED RESULT %d: Should succeesully invoke wifi_getApInterworkingElement()" %step;
-        print "ACTUAL RESULT %d: wifi_getApInterworkingElement() is not invoked successfully" %step;
-        print "TEST EXECUTION RESULT %d: FAILURE" %step;
+        print("TEST STEP %d: Invoke the wifi api wifi_getApInterworkingElement()" %step);
+        print("EXPECTED RESULT %d: Should succeesully invoke wifi_getApInterworkingElement()" %step);
+        print("ACTUAL RESULT %d: wifi_getApInterworkingElement() is not invoked successfully" %step);
+        print("TEST EXECUTION RESULT %d: FAILURE" %step);
         tdkTestObj.setResultStatus("FAILURE");
     return element_details;
 
@@ -166,6 +166,7 @@ from wifiUtility import *;
 from random import randint
 from time import sleep
 import functools;
+from functools import reduce
 
 radio = "5G"
 
@@ -180,7 +181,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPushApInterworkingElement');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -188,7 +189,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         radioIndex = idx
@@ -197,7 +198,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step = 1;
         #Get the initial values and store them in initial_state
         initial_state = get_element(tdkTestObj, radioIndex, step);
-        print "Initial Interworking Element values : interworkingEnabled :%d, accessNetworkType :%d, internetAvailable :%d, asra :%d, esra :%d, uesa :%d, venueOptionPresent :%d, venueType :%d, venurGroup :%d, hessOptionPresent :%d, hessid : %s" %(initial_state[0], initial_state[1], initial_state[2], initial_state[3], initial_state[4], initial_state[5], initial_state[6], initial_state[7], initial_state[8], initial_state[9], initial_state[10]);
+        print("Initial Interworking Element values : interworkingEnabled :%d, accessNetworkType :%d, internetAvailable :%d, asra :%d, esra :%d, uesa :%d, venueOptionPresent :%d, venueType :%d, venurGroup :%d, hessOptionPresent :%d, hessid : %s" %(initial_state[0], initial_state[1], initial_state[2], initial_state[3], initial_state[4], initial_state[5], initial_state[6], initial_state[7], initial_state[8], initial_state[9], initial_state[10]));
 
         if initial_state != []:
             #Set the element values [interworkingEnabled, accessNetworkType, internetAvailable, asra, esra, uesa, venueOptionPresent, venueType, venueGroup, hessOptionPresent, hessid]
@@ -217,42 +218,41 @@ if "SUCCESS" in loadmodulestatus.upper():
             x = str(randint(10,99));
             hessid = hessid_partial+x;
             element = [interworkingEnabled, accessNetworkType, internetAvailable, asra, esra, uesa, venueOptionPresent, venueType, venueGroup, hessOptionPresent, hessid];
-            print "The Values to be pushed are : %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %s"%(interworkingEnabled, accessNetworkType, internetAvailable, asra, esra, uesa, venueOptionPresent, venueType, venueGroup, hessOptionPresent, hessid);
+            print("The Values to be pushed are : %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %s"%(interworkingEnabled, accessNetworkType, internetAvailable, asra, esra, uesa, venueOptionPresent, venueType, venueGroup, hessOptionPresent, hessid));
             #Push the element values
             step = step + 2;
             return_val = push_element(tdkTestObj1, radioIndex, step, element);
 
             if return_val == 0:
-                print "\nCross check with wifi_getApInterworkingElement API";
+                print("\nCross check with wifi_getApInterworkingElement API");
                 sleep(10);
                 step = step + 1;
                 setvalues = get_element(tdkTestObj, radioIndex, step);
 
-                if reduce(lambda x, y: x and y, map(lambda a, b: a == b, setvalues, element), True):
+                if reduce(lambda x, y: x and y, list(map(lambda a, b: a == b, setvalues, element)), True):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The values pushed by invoking wifi_pushApInterworkingElement() is same as values retrieved by wifi_GetApInterworkingElement()";
+                    print("The values pushed by invoking wifi_pushApInterworkingElement() is same as values retrieved by wifi_GetApInterworkingElement()");
                     #Revert Operation
-                    print "\n--------REVERT OPERATION---------";
+                    print("\n--------REVERT OPERATION---------");
                     #Restore Initial values
                     step = step + 2;
                     return_val = push_element(tdkTestObj1, radioIndex, step, initial_state);
 
                     if return_val == 0:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Revert Operation successful";
+                        print("Revert Operation successful");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Revert Operation failed";
+                        print("Revert Operation failed");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The values pushed by invoking wifi_pushApInterworkingElement() is not the same as values retrieved by wifi_GetApInterworkingElement()";
+                    print("The values pushed by invoking wifi_pushApInterworkingElement() is not the same as values retrieved by wifi_GetApInterworkingElement()");
             else:
-                print "wifi_pushApInterworkingElement API failed";
+                print("wifi_pushApInterworkingElement API failed");
         else:
-            print "wifi_getApInterworkingElement API failed";
+            print("wifi_getApInterworkingElement API failed");
 
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

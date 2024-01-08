@@ -89,8 +89,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzPublicWiFi_SetApSecurityMFPConf
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Getting APINDEX_5G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_5G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -108,14 +108,14 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "\nTEST STEP 2: Invoke the wifi_getApSecurityMFPConfig api";
-        print "EXPECTED RESULT 2:Invocation of wifi_getApSecurityMFPConfig should be success";
+        print("\nTEST STEP 2: Invoke the wifi_getApSecurityMFPConfig api");
+        print("EXPECTED RESULT 2:Invocation of wifi_getApSecurityMFPConfig should be success");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
         tdkTestObj.addParameter("methodName","getApSecurityMFPConfig")
         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -127,32 +127,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Invocation of wifi_getApSecurityMFPConfig was success. %s" %details;
+            print("ACTUAL RESULT 2: Invocation of wifi_getApSecurityMFPConfig was success. %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             initialConfigValue = details.split(":")[1].strip();
-            print "Initial Access Point Security MFP Config : %s" %initialConfigValue;
+            print("Initial Access Point Security MFP Config : %s" %initialConfigValue);
 
             #Check if the MFPConfig value is from the expected list
             mfpConfigValues = ["Disabled", "Optional", "Required"]
-            print "\nTEST STEP 3: The ApSecurityMFPConfig should be from the expected list : ", mfpConfigValues;
-            print "EXPECTED RESULT 3: The ApSecurityMFPConfig should be from the expected list";
+            print("\nTEST STEP 3: The ApSecurityMFPConfig should be from the expected list : ", mfpConfigValues);
+            print("EXPECTED RESULT 3: The ApSecurityMFPConfig should be from the expected list");
 
             if initialConfigValue in mfpConfigValues:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: ApSecurityMFPConfig is from the expected list";
+                print("ACTUAL RESULT 3: ApSecurityMFPConfig is from the expected list");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Setting Values
-                print "MFP Config Values to be set : ", mfpConfigValues;
+                print("MFP Config Values to be set : ", mfpConfigValues);
                 step = 3;
                 for i,word in enumerate(mfpConfigValues):
                     step = step + 1;
                     setConfigValue = mfpConfigValues[i];
-                    print "\nTEST STEP %d: Set the MFP Config to %s by invoking the API wifi_setApSecurityMFPConfig" %(step, setConfigValue);
-                    print "EXPECTED RESULT %d: The value should be set successfully" %step ;
+                    print("\nTEST STEP %d: Set the MFP Config to %s by invoking the API wifi_setApSecurityMFPConfig" %(step, setConfigValue));
+                    print("EXPECTED RESULT %d: The value should be set successfully" %step) ;
                     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
                     tdkTestObj.addParameter("methodName","setApSecurityMFPConfig")
                     tdkTestObj.addParameter("radioIndex", apIndex)
@@ -163,13 +163,13 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d:  %s" %(step, details);
+                        print("ACTUAL RESULT %d:  %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         step = step + 1;
-                        print "\nTEST STEP %d: Invoke  wifi_getApSecurityMFPConfig  to verify set operation done by wifi_setApSecurityMFPConfig api" %step;
-                        print "EXPECTED RESULT %d: wifi_getApSecurityMFPConfig should be successfully invoked after set" %step;
+                        print("\nTEST STEP %d: Invoke  wifi_getApSecurityMFPConfig  to verify set operation done by wifi_setApSecurityMFPConfig api" %step);
+                        print("EXPECTED RESULT %d: wifi_getApSecurityMFPConfig should be successfully invoked after set" %step);
                         tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
                         tdkTestObj.addParameter("methodName","getApSecurityMFPConfig")
                         tdkTestObj.addParameter("radioIndex", apIndex)
@@ -179,40 +179,40 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                         if expectedresult in actualresult and details != "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Invocation of wifi_getApSecurityMFPConfig was success" %step;
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("ACTUAL RESULT %d: Invocation of wifi_getApSecurityMFPConfig was success" %step);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                             getConfigValue = details.split(":")[1].strip();
-                            print "getConfigValue : %s" %getConfigValue;
-                            print "setConfigValue : %s" %setConfigValue;
+                            print("getConfigValue : %s" %getConfigValue);
+                            print("setConfigValue : %s" %setConfigValue);
                             step = step + 1;
 
                             if getConfigValue == setConfigValue:
-                                print "\nTEST STEP %d : Verify if ApSecurityMFPConfig set value and get value are same" %step;
-                                print "EXPECTED RESULT %d : wifi_getApSecurityMFPConfig() returned same value as the set value" %step;
-                                print "ACTUAL RESULT %d:  %s" %(step, details);
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("\nTEST STEP %d : Verify if ApSecurityMFPConfig set value and get value are same" %step);
+                                print("EXPECTED RESULT %d : wifi_getApSecurityMFPConfig() returned same value as the set value" %step);
+                                print("ACTUAL RESULT %d:  %s" %(step, details));
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else:
-                                print "TEST STEP %d : Verify if ApSecurityMFPConfig set value and get value are same" %step;
-                                print "EXPECTED RESULT %d : wifi_getApSecurityMFPConfig() returned different value than the set value" %step;
-                                print "ACTUAL RESULT %d:  %s" %(step, details);
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("TEST STEP %d : Verify if ApSecurityMFPConfig set value and get value are same" %step);
+                                print("EXPECTED RESULT %d : wifi_getApSecurityMFPConfig() returned different value than the set value" %step);
+                                print("ACTUAL RESULT %d:  %s" %(step, details));
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                                 tdkTestObj.setResultStatus("FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Invocation of wifi_getApSecurityMFPConfig was failure" %step;
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT %d: Invocation of wifi_getApSecurityMFPConfig was failure" %step);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d:  %s" %(step, details);
+                        print("ACTUAL RESULT %d:  %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                 step = step + 1;
                 #Revert ApSecurityMFPConfig to initial value
                 if initialConfigValue != getConfigValue:
-                    print "\nTEST STEP %d: Revert the ApSecurityMFPConfig to %s using wifi_setApSecurityMFPConfig api" %(step, initialConfigValue);
-                    print "EXPECTED RESULT %d: wifi_setApSecurityMFPConfig should successfully revert ApSecurityMFPConfig" %step;
+                    print("\nTEST STEP %d: Revert the ApSecurityMFPConfig to %s using wifi_setApSecurityMFPConfig api" %(step, initialConfigValue));
+                    print("EXPECTED RESULT %d: wifi_setApSecurityMFPConfig should successfully revert ApSecurityMFPConfig" %step);
                     tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
                     tdkTestObj.addParameter("methodName","setApSecurityMFPConfig")
                     tdkTestObj.addParameter("radioIndex", apIndex)
@@ -223,40 +223,39 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d:  %s" %(step, details);
+                        print("ACTUAL RESULT %d:  %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d:  %s" %(step, details);
+                        print("ACTUAL RESULT %d:  %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Revert operation is not required";
+                    print("Revert operation is not required");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: ApSecurityMFPConfig is not from the expected list";
+                print("ACTUAL RESULT 3: ApSecurityMFPConfig is not from the expected list");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

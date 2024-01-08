@@ -80,8 +80,8 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApWpsConfigurationState');
 sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzGetApWpsConfigurationState');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,34 +91,34 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     tdkTestObjTemp, idx = getApIndexfor6G(sysobj, TDK_PATH);
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApWpsConfigurationState"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-	    #Calling the method from wifiUtility to execute test case and set result status for the test.
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
-	    possibleConfigs = ["Configured","Not configured"];
-	    if expectedresult in actualresult:
-		configState = details.split(":")[1].strip()
-		if configState in possibleConfigs:
-		    print "EXPECTED OUTPUT: Output string should be either 'Configured' or 'Not configured'"
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "ApWpsConfigurationState: %s"%configState;
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    print "EXPECTED OUTPUT: Output string should be either 'Configured' or 'Not configured'"
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "ApWpsConfigurationState: %s"%configState;
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		print "wifi_getApWpsConfigurationState function call failed";
-		tdkTestObj.setResultStatus("FAILURE");
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApWpsConfigurationState"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        #Calling the method from wifiUtility to execute test case and set result status for the test.
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        possibleConfigs = ["Configured","Not configured"];
+        if expectedresult in actualresult:
+            configState = details.split(":")[1].strip()
+            if configState in possibleConfigs:
+                print("EXPECTED OUTPUT: Output string should be either 'Configured' or 'Not configured'")
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ApWpsConfigurationState: %s"%configState);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                print("EXPECTED OUTPUT: Output string should be either 'Configured' or 'Not configured'")
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ApWpsConfigurationState: %s"%configState);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("wifi_getApWpsConfigurationState function call failed");
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

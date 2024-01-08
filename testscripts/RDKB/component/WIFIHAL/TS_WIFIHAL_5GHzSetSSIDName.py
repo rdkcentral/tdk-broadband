@@ -105,7 +105,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetSSIDName');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,7 +116,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
 
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
 
     else:
@@ -155,20 +155,20 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     if finalName == setName:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Compare set and get values of SSID Name"
-                        print "EXPECTED RESULT : Set and get values of SSID Name should be the same"
-                        print "ACTUAl RESULT : Set and get values of SSID Name are the same"
-                        print "setSSIDName = ",setName
-                        print "getSSIDName = ",finalName
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP : Compare set and get values of SSID Name")
+                        print("EXPECTED RESULT : Set and get values of SSID Name should be the same")
+                        print("ACTUAl RESULT : Set and get values of SSID Name are the same")
+                        print("setSSIDName = ",setName)
+                        print("getSSIDName = ",finalName)
+                        print("TEST EXECUTION RESULT :SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Compare set and get values of SSID Name"
-                        print "EXPECTED RESULT : Set and get values of SSID Name should be the same"
-                        print "ACTUAl RESULT : Set and get values of SSID Name are NOT the same"
-                        print "setSSIDName = ",setName
-                        print "getSSIDName = ",finalName
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP : Compare set and get values of SSID Name")
+                        print("EXPECTED RESULT : Set and get values of SSID Name should be the same")
+                        print("ACTUAl RESULT : Set and get values of SSID Name are NOT the same")
+                        print("setSSIDName = ",setName)
+                        print("getSSIDName = ",finalName)
+                        print("TEST EXECUTION RESULT :FAILURE")
 
                     #Revert the SSID NAme back o initial value
                     apIndex = idx;
@@ -179,23 +179,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to initial value"
+                        print("Successfully reverted back to initial value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "wifi_getSSIDName() function failed"
+                    print("wifi_getSSIDName() function failed")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "wifi_setSSIDName function failed";
+                print("wifi_setSSIDName function failed");
         else:
-            print "wifi_getSSIDName function failed";
+            print("wifi_getSSIDName function failed");
             tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

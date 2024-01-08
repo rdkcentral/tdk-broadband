@@ -105,8 +105,8 @@ obj1.configureTestCase(ip,port,'TS_WIFIHAL_GetBeaconRate_WithGN_OpeartingStandar
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilmodulestatus =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[SYSUTIL  LOAD STATUS]  :  %s" %sysutilmodulestatus)
 
 if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -115,7 +115,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #get the current Operating Standards for 2.4GHz Channel
@@ -128,11 +128,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
             operStd = details.split("VALUE:")[1].split(' ')[0].split(',');
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the current WiFi Operating standards";
-            print "EXPECTED RESULT 1: Should get the current WiFi Operating standards";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Get the current WiFi Operating standards");
+            print("EXPECTED RESULT 1: Should get the current WiFi Operating standards");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj1.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.OperatingStandards")
@@ -144,11 +144,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the WiFi Operating standards to g,n";
-                print "EXPECTED RESULT 2: Should set the WiFi Operating standards to g,n";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the WiFi Operating standards to g,n");
+                print("EXPECTED RESULT 2: Should set the WiFi Operating standards to g,n");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Script to load the configuration file of the component
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
@@ -161,19 +161,19 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
                 if expectedresult in actualresult and "6" in details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the current ap beacon rate";
-                    print "EXPECTED RESULT 3: Should get the current ap beacon rate as 6Mbsps for g,n operating mode";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Get the current ap beacon rate");
+                    print("EXPECTED RESULT 3: Should get the current ap beacon rate as 6Mbsps for g,n operating mode");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the current ap beacon rate";
-                    print "EXPECTED RESULT 3: Should get the current ap beacon rate as 6Mbsps for g,n operating mode";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Get the current ap beacon rate");
+                    print("EXPECTED RESULT 3: Should get the current ap beacon rate as 6Mbsps for g,n operating mode");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 tdkTestObj = obj1.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.OperatingStandards")
@@ -185,40 +185,40 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysutilmodulestatus.upper()):
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Revert the operating standard to previous value";
-                    print "EXPECTED RESULT 4: Should revert the operating standard to previous value";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Revert the operating standard to previous value");
+                    print("EXPECTED RESULT 4: Should revert the operating standard to previous value");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Revert the operating standard to previous value";
-                    print "EXPECTED RESULT 4: Should revert the operating standard to previous value";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Revert the operating standard to previous value");
+                    print("EXPECTED RESULT 4: Should revert the operating standard to previous value");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the WiFi Operating standards to g,n";
-                print "EXPECTED RESULT 2: Should set the WiFi Operating standards to g,n";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the WiFi Operating standards to g,n");
+                print("EXPECTED RESULT 2: Should set the WiFi Operating standards to g,n");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the current WiFi Operating standards";
-            print "EXPECTED RESULT 1: Should get the current WiFi Operating standards";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Get the current WiFi Operating standards");
+            print("EXPECTED RESULT 1: Should get the current WiFi Operating standards");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     obj1.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

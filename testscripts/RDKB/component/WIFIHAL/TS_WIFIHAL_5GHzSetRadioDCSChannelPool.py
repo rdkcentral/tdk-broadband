@@ -55,7 +55,7 @@ radioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Using WIFIHAL_GetOrSetParamStringValue invoke wifi_getRadioPossibleChannels() and save the get value
 3. Randomly choose few radio channels from the above obtained string and using WIFIHAL_GetOrSetParamStringValue invoke wifi_setRadioDCSChannelPool()
-4. Invoke wifi_getRadioDCSChannelPool() to get the previously set value. 
+4. Invoke wifi_getRadioDCSChannelPool() to get the previously set value.
 5. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 5. Unload wifihal module</automation_approch>
     <except_output>Set and get values of DCS Channel Pool should be the same</except_output>
@@ -69,8 +69,8 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *
 import random;
 
@@ -86,7 +86,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetRadioDCSChannelPool');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,91 +94,91 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx;
-	    getMethod = "getRadioPossibleChannels"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        getMethod = "getRadioPossibleChannels"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method to execute wifi_getRadioPossibleChannels()
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+        #Calling the method to execute wifi_getRadioPossibleChannels()
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
 
-	    if expectedresult in actualresult:
-                possibleChannels = details.split(":")[1].strip().split(",")
-                setDcsChList = random.sample(possibleChannels,3)
-                setDcsChPool = ','.join(setDcsChList)
-   
-		expectedresult="SUCCESS";
-		radioIndex = idx;
-		getMethod = "getRadioDCSChannelPool"
-		primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        if expectedresult in actualresult:
+            possibleChannels = details.split(":")[1].strip().split(",")
+            setDcsChList = random.sample(possibleChannels,3)
+            setDcsChPool = ','.join(setDcsChList)
 
-		#Calling the method to execute wifi_getRadioDCSChannelPool()
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-		initialDCSChPool = details.split(":")[1].strip()
-		if expectedresult in actualresult:
-		    expectedresult="SUCCESS";
-		    radioIndex = idx;
-		    setMethod = "setRadioDCSChannelPool"
-		    primitive = 'WIFIHAL_GetOrSetParamStringValue'
-		    print "setDcsChList",setDcsChList
+            expectedresult="SUCCESS";
+            radioIndex = idx;
+            getMethod = "getRadioDCSChannelPool"
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-		    #Calling the method to execute wifi_setRadioDCSChannelPool()
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setDcsChPool, setMethod)
+            #Calling the method to execute wifi_getRadioDCSChannelPool()
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+            initialDCSChPool = details.split(":")[1].strip()
+            if expectedresult in actualresult:
+                expectedresult="SUCCESS";
+                radioIndex = idx;
+                setMethod = "setRadioDCSChannelPool"
+                primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                print("setDcsChList",setDcsChList)
 
-		    if expectedresult in actualresult:
-			    radioIndex = idx;
-			    expectedresult="SUCCESS";
-			    radioIndex = idx;
-			    getMethod = "getRadioDCSChannelPool"
-			    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                #Calling the method to execute wifi_setRadioDCSChannelPool()
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setDcsChPool, setMethod)
 
-			    #Calling the method to execute wifi_getRadioDCSChannelPool()
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+                if expectedresult in actualresult:
+                    radioIndex = idx;
+                    expectedresult="SUCCESS";
+                    radioIndex = idx;
+                    getMethod = "getRadioDCSChannelPool"
+                    primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-			    finalDCSChPool = details.split(":")[1].strip()
-			    if expectedresult in actualresult:
-				if setDcsChPool == finalDCSChPool:
-				    print "TEST STEP: Comparing the set and get value of DCS Channel Pool"
-				    print "EXPECTED RESULT : Set and get values should be the same"
-				    print "ACTUAL RESULT : Set and get values are the same"
-				    print "TEST EXECUTION RESULT : SUCCESS"
-				    print "setDcsChList:",setDcsChList
-				    print "getDcsChList: ",finalDCSChPool
-				    tdkTestObj.setResultStatus("SUCCESS");
-				else:
-				    print "TEST STEP: Comparing the set and get value of DCS Channel Pool"
-				    print "EXPECTED RESULT : Set and get values should be the same"
-				    print "ACTUAL RESULT : Set and get values are not the same"
-				    print "TEST EXECUTION RESULT : FAILURE"
-				    tdkTestObj.setResultStatus("FAILURE");
+                    #Calling the method to execute wifi_getRadioDCSChannelPool()
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-				#Revert the DCS Channel Pool back to initial value
-				tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initialDCSChPool, setMethod)
-				if expectedresult in actualresult:
-				    print "Successfully reverted DCS Channel Pool to initial value"
-				    tdkTestObj.setResultStatus("SUCCESS");
-				else:
-				    print "Unable to revert the DCS Channel Pool"
-				    tdkTestObj.setResultStatus("FAILURE");
-			    else:
-				print "wifi_getRadioDCSChannelPool() failed";
-				tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print "Wifi_setRadioDCSChannelPool() failed";
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "Wifi_getRadioDCSChannelPool() failed";
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "wifi_getRadioPossibleChannels() falied"
-		tdkTestObj.setResultStatus("FAILURE");
+                    finalDCSChPool = details.split(":")[1].strip()
+                    if expectedresult in actualresult:
+                        if setDcsChPool == finalDCSChPool:
+                            print("TEST STEP: Comparing the set and get value of DCS Channel Pool")
+                            print("EXPECTED RESULT : Set and get values should be the same")
+                            print("ACTUAL RESULT : Set and get values are the same")
+                            print("TEST EXECUTION RESULT : SUCCESS")
+                            print("setDcsChList:",setDcsChList)
+                            print("getDcsChList: ",finalDCSChPool)
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("TEST STEP: Comparing the set and get value of DCS Channel Pool")
+                            print("EXPECTED RESULT : Set and get values should be the same")
+                            print("ACTUAL RESULT : Set and get values are not the same")
+                            print("TEST EXECUTION RESULT : FAILURE")
+                            tdkTestObj.setResultStatus("FAILURE");
+
+                        #Revert the DCS Channel Pool back to initial value
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, initialDCSChPool, setMethod)
+                        if expectedresult in actualresult:
+                            print("Successfully reverted DCS Channel Pool to initial value")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("Unable to revert the DCS Channel Pool")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("wifi_getRadioDCSChannelPool() failed");
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("Wifi_setRadioDCSChannelPool() failed");
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("Wifi_getRadioDCSChannelPool() failed");
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("wifi_getRadioPossibleChannels() falied")
+            tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

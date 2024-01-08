@@ -103,7 +103,7 @@ radio = "2.4G"
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 def getRadioStatsEnable(radioIndex):
     getMethod = "getRadioStatsEnable"
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         radioIndex = idx;
@@ -132,133 +132,133 @@ if "SUCCESS" in loadmodulestatus.upper():
         revertFlag = 0;
 
         #Get Initial RadioStatEnable value
-	tdkTestObj,initial_result,initial_stat = getRadioStatsEnable(radioIndex);
+        tdkTestObj,initial_result,initial_stat = getRadioStatsEnable(radioIndex);
 
-	if expectedresult in initial_result:
+        if expectedresult in initial_result:
             #Skipped Logging in STEP1, STEP2 and STEP3 (getRadioStatsEnable and setRadioStatsEnable) since its already handled in ExecuteWIFIHalCallMethod
-	    print "TEST STEP 1: Successfully got the Radio stat enable value %s"%initial_stat
+            print("TEST STEP 1: Successfully got the Radio stat enable value %s"%initial_stat)
 
-	    if initial_stat =="Disabled":
-   	        #Enable the RadioStat value which is prerequisite to get the ApAssoiatedDeviceRxStatsResult
-	        value_to_set = 1;
+            if initial_stat =="Disabled":
+                #Enable the RadioStat value which is prerequisite to get the ApAssoiatedDeviceRxStatsResult
+                value_to_set = 1;
                 tdkTestObj,setresult,setdetails = setRadioStatsEnable(radioIndex,value_to_set);
 
                 if expectedresult in setresult:
-		    #Making the revert flag as 1 only if setRadioStatEnable is success
-		    revertFlag = 1;
-	            print "TEST STEP 2: Successfully set the Radio Stat value to Enabled"
-	            tdkTestObj,getresult,getdetails = getRadioStatsEnable(radioIndex);
+                    #Making the revert flag as 1 only if setRadioStatEnable is success
+                    revertFlag = 1;
+                    print("TEST STEP 2: Successfully set the Radio Stat value to Enabled")
+                    tdkTestObj,getresult,getdetails = getRadioStatsEnable(radioIndex);
 
                     if expectedresult in getresult and getdetails == "Enabled":
-			#Making radioStatEnable flag as 1 after verified with get method
-			radioStatEnable = 1;
-		        print "TEST STEP 3: Radio Stat value is Enabled and Verified it with Get method, Details %s"%getdetails
+                        #Making radioStatEnable flag as 1 after verified with get method
+                        radioStatEnable = 1;
+                        print("TEST STEP 3: Radio Stat value is Enabled and Verified it with Get method, Details %s"%getdetails)
 
                     else:
-			radioStatEnable = 0;
-		        print "TEST STEP 3: Failed to verify the Radio Stat value with Get call"
+                        radioStatEnable = 0;
+                        print("TEST STEP 3: Failed to verify the Radio Stat value with Get call")
                 else:
                     radioStatEnable = 0;
-	            print "TEST STEP 2: Failed to set the Radio Stat value to Enabled"
-	    else:
+                    print("TEST STEP 2: Failed to set the Radio Stat value to Enabled")
+            else:
                 radioStatEnable = 1;
-                print "RadioStat is Already Enabled"
+                print("RadioStat is Already Enabled")
 
-	    if radioStatEnable == 1:
-	        tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
-		tdkTestObj.addParameter("apIndex",int(radioIndex));
-		expectedresult="SUCCESS";
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails();
-		print "Entire Details:",details;
+            if radioStatEnable == 1:
+                tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDevice');
+                tdkTestObj.addParameter("apIndex",int(radioIndex));
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                print("Entire Details:",details);
 
-            	if expectedresult in actualresult:
-	     	    outputList = details.split("=")[1].strip()
-		    if "," in outputList:
-		        outputValue = outputList.split(",")[0].strip()
-		    else:
-			outputValue = outputList.split(":Value")[0].strip()
+                if expectedresult in actualresult:
+                    outputList = details.split("=")[1].strip()
+                    if "," in outputList:
+                        outputValue = outputList.split(",")[0].strip()
+                    else:
+                        outputValue = outputList.split(":Value")[0].strip()
 
                     tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 4: Get the Associated device MAC device"
-		    print "EXPECTED RESULT 4: Should get the associated device MAC address"
-		    print "ACTUAL RESULT 4: Associated Device's MAC address:",outputValue
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 4: Get the Associated device MAC device")
+                    print("EXPECTED RESULT 4: Should get the associated device MAC address")
+                    print("ACTUAL RESULT 4: Associated Device's MAC address:",outputValue)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        	    #check if outputvalue is a MAC address
-		    if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
-		    	#Primitive test case which is associated to this Script
-		    	tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceRxStatsResult');
-		    	print "MAC address is %s"%outputValue
-		    	tdkTestObj.addParameter("radioIndex", int(radioIndex));
-		    	tdkTestObj.addParameter("MAC", outputValue);
-		    	expectedresult="SUCCESS";
-		    	tdkTestObj.executeTestCase(expectedresult);
-		    	actualresult = tdkTestObj.getResult();
-		   	details = tdkTestObj.getResultDetails();
-		    	print"details",details;
-		    	if expectedresult in actualresult :
-		    	    tdkTestObj.setResultStatus("SUCCESS");
-		   	    print "TEST STEP 5: Get the ApAssociatedDeviceRxStatsResult"
-		            print "EXPECTED RESULT 5: Should successfully get the ApAssociatedDeviceRxStatsResult"
-		    	    print "ACTUAL RESULT 5: Successfully gets the ApAssociatedDeviceRxStatsResult"
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : SUCCESS";
-		    	    print "Details: "
-		    	    detailList = details.split(",")
-		    	    output_array_size = details.split("=")
-		    	    for i in detailList:
-			        print i;
-			    	print "output_array_size=",output_array_size
-			    	print "Identified %s neighboring access points"%output_array_size
-			    	#Get the result of execution
-			   	print "[TEST EXECUTION RESULT] : SUCCESS";
-		    	else:
-		    	    tdkTestObj.setResultStatus("FAILURE");
-		   	    print "TEST STEP 5: Get the ApAssociatedDeviceRxStatsResult"
-		            print "EXPECTED RESULT 5: Should successfully get the ApAssociatedDeviceRxStatsResult"
-		    	    print "ACTUAL RESULT 5: Failed to get the ApAssociatedDeviceRxStatsResult"
-			    #Get the result of execution
-			    print "[TEST EXECUTION RESULT] : FAILURE";
-		    else:
+                    #check if outputvalue is a MAC address
+                    if re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", outputValue.lower()):
+                        #Primitive test case which is associated to this Script
+                        tdkTestObj = obj.createTestStep('WIFIHAL_GetApAssociatedDeviceRxStatsResult');
+                        print("MAC address is %s"%outputValue)
+                        tdkTestObj.addParameter("radioIndex", int(radioIndex));
+                        tdkTestObj.addParameter("MAC", outputValue);
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        print("details",details);
+                        if expectedresult in actualresult :
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Get the ApAssociatedDeviceRxStatsResult")
+                            print("EXPECTED RESULT 5: Should successfully get the ApAssociatedDeviceRxStatsResult")
+                            print("ACTUAL RESULT 5: Successfully gets the ApAssociatedDeviceRxStatsResult")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            print("Details: ")
+                            detailList = details.split(",")
+                            output_array_size = details.split("=")
+                            for i in detailList:
+                                print(i);
+                                print("output_array_size=",output_array_size)
+                                print("Identified %s neighboring access points"%output_array_size)
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Get the ApAssociatedDeviceRxStatsResult")
+                            print("EXPECTED RESULT 5: Should successfully get the ApAssociatedDeviceRxStatsResult")
+                            print("ACTUAL RESULT 5: Failed to get the ApAssociatedDeviceRxStatsResult")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-		    	print "wifi_getApAssociatedDevice didn't return a proper MAC address in response - prerequisite is not met to get ApAssociatedDeviceRxStatsResult"
-		else:
+                        print("wifi_getApAssociatedDevice didn't return a proper MAC address in response - prerequisite is not met to get ApAssociatedDeviceRxStatsResult")
+                else:
                     tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 4: Get the Associated device MAC device"
-		    print "EXPECTED RESULT 4: Should get the associated device MAC address"
-		    print "ACTUAL RESULT 4: Failed to get Associated Device MAC address"
-		    #Get the result of execution
-		    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-                tdkTestObj.setResultStatus("FAILURE");
-	        print "Radio Stat was not enabled which is pre_requisite is get the RxStatsResult"
-
-	#Revert the value only if setRadioStat in Step 2 was success
-	if revertFlag == 1:
-            tdkTestObj,setresult,setdetails = setRadioStatsEnable(radioIndex,value_to_set);
-	    if expectedresult in setresult:
-            	tdkTestObj.setResultStatus("SUCCESS");
-           	print "TEST STEP 6: Revert the Radio Stat value"
-	        print "EXPECTED RESULT 6: Should Revert the Radio Stat value"
-	        print "ACTUAL RESULT 6: Successfully Reverted the Radio Stat value"
-           	#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 4: Get the Associated device MAC device")
+                    print("EXPECTED RESULT 4: Should get the associated device MAC address")
+                    print("ACTUAL RESULT 4: Failed to get Associated Device MAC address")
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP 6: Revert the Radio Stat value"
-	        print "EXPECTED RESULT 6: Should Revert the Radio Stat value"
-	        print "ACTUAL RESULT 6: Failed to Revert the Radio Stat value"
-           	#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    print "TEST STEP 1: Failed to get the Radio stat enable value %s"%initial_stat
+                print("Radio Stat was not enabled which is pre_requisite is get the RxStatsResult")
+
+        #Revert the value only if setRadioStat in Step 2 was success
+        if revertFlag == 1:
+            tdkTestObj,setresult,setdetails = setRadioStatsEnable(radioIndex,value_to_set);
+            if expectedresult in setresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 6: Revert the Radio Stat value")
+                print("EXPECTED RESULT 6: Should Revert the Radio Stat value")
+                print("ACTUAL RESULT 6: Successfully Reverted the Radio Stat value")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 6: Revert the Radio Stat value")
+                print("EXPECTED RESULT 6: Should Revert the Radio Stat value")
+                print("ACTUAL RESULT 6: Failed to Revert the Radio Stat value")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("TEST STEP 1: Failed to get the Radio stat enable value %s"%initial_stat)
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

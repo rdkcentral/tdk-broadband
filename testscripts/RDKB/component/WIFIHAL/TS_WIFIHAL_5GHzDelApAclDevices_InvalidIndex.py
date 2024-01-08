@@ -103,26 +103,26 @@ def revert(macAddress, olddeviceNum, index, obj):
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Added device :%s"%deviceMac
+            print("Added device :%s"%deviceMac)
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Device not added during revert operation :%s"%deviceMac
+            print("Device not added during revert operation :%s"%deviceMac)
     getMethod = "getApAclDeviceNum"
     primitive = 'WIFIHAL_GetOrSetParamUIntValue'
     #Calling "getApAclDeviceNum" to get the number of connected devices after adding back the Mac addresses
     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
     if expectedresult in actualresult:
         newdeviceNum = int(details.split(":")[1].strip());
-        print "New device count:",newdeviceNum;
+        print("New device count:",newdeviceNum);
         if newdeviceNum == olddeviceNum:
             tdkTestObj.setResultStatus("SUCCESS");
-            print"Successfully reverted back";
+            print("Successfully reverted back");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print"Not reverted back Successfully";
+            print("Not reverted back Successfully");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print"wifi_getApAclDeviceNum() operation failed after add operation";
+        print("wifi_getApAclDeviceNum() operation failed after add operation");
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
@@ -139,13 +139,13 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzDelApAclDevices_InvalidIndex');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio2);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio2;
+        print("Failed to get radio index for radio %s\n" %radio2);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         tdkTestObj = obj.createTestStep('WIFIHAL_GetApAclDevices');
@@ -154,197 +154,196 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details_new = tdkTestObj.getResultDetails();
-        print "Mac Details",details_new;
+        print("Mac Details",details_new);
         if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           getMethod = "getApAclDeviceNum"
-           primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-           tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive,idx, 0, getMethod);
-           olddeviceNum = int(details.split(":")[1].strip());
-           if olddeviceNum != "":
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 1: Get the number of devices in the filter list"
-              print "EXPECTED RESULT 1: Should get the number of devices as a non empty value"
-              print "ACTUAL RESULT 1: Received the number of devices as a NON EMPTY value"
-              print "Device number : %s"%olddeviceNum
-              print "TEST EXECUTION RESULT: SUCCESS"
-              print"Number of ApAcl devices initially : ",olddeviceNum;
-              # Generate MAC address
-              mac_partial_1 = "7A:36:76:41:9A:"
-              mac_partial_2 = "8A:46:86:51:AA:"
-              x = str(randint(10,99))
-              addMAC=[mac_partial_1+x, mac_partial_2+x];
-              macAddress= [];
-              if olddeviceNum == 0:
-                 count=2;
-                 #If olddeviceNum is 0, need to add 2 MAC addresses
-              elif olddeviceNum == 1:
-                  count=1;
-                  #If oldDeviceNum is 1, need to add 1 MAC addresses
-              else:
-                  count=0;
-                  #If olddEviceNum is any other, need not add MAC addresses
-              if olddeviceNum > 0:
-                 #Copying the initial MAC addresses
-                 macAddress = details_new.split(";")[1].split("n")
-                 for i in range(len(macAddress)):
-                     macAddress[i] =  macAddress[i].replace("\\", '').strip()
-              else:
-                  print"No mac address listed"
-                  print macAddress;
-              #Adding the mac addresses depending on the value of count
-              for i in range(0,count):
-                  tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
-                  tdkTestObj.addParameter("methodName","addApAclDevice");
-                  tdkTestObj.addParameter("apIndex",idx);
-                  tdkTestObj.addParameter("DeviceMacAddress",addMAC[i]);
-                  tdkTestObj.executeTestCase(expectedresult);
-                  actualresult = tdkTestObj.getResult();
-                  details = tdkTestObj.getResultDetails();
-                  if expectedresult in actualresult:
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print"Successfully added ApAclDevice", addMAC[i]
-                  else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print"wifi_addApAclDevice() operation failed after add operation";
-                      break
-              getMethod = "getApAclDeviceNum";
-              primitive = 'WIFIHAL_GetOrSetParamUIntValue';
-              #Get the current ApAclDevice count
-              tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
-              print "TEST STEP 2: Get ApAclDevice Number"
-              print "EXPECTED RESULT 2: getApAclDeviceNum should be successfully invoked"
-              if expectedresult in actualresult:
-                  deviceNum_add = int(details.split(":")[1].strip());
-                  print "ACTUAL RESULT 2: %s"%details
-                  print "TEST EXECUTION RESULT: SUCCESS"
-                  if deviceNum_add == (olddeviceNum + count):
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print"Number of ApAcl devices after adding =",deviceNum_add;
-                      #Deleting the ApAcl devices by passing Invalid Index
-                      tdkTestObj = obj.createTestStep('WIFIHAL_DelApAclDevices');
-                      tdkTestObj.addParameter("apIndex",100);
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails();
-                      print"TEST STEP 3: Invoke DelApAclDevice with Invalid Index";
-                      print"EXPECTED RESULT 3: DelApAclDevice should return failure"
-                      if expectedresult not in actualresult:
-                          tdkTestObj.setResultStatus("SUCCESS");
-                          print"ACTUAL RESULT 3: %s"%details;
-                          print"[TEST EXECUTION RESULT] : SUCCESS"
-                          print"DelApAclDevices returns failure when Invalid index is passed";
-                          getMethod = "getApAclDeviceNum"
-                          primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-                          # get the current ApAcl device count after trying to delete the ApAcl devices with invalid index
-                          time.sleep(2)
-                          tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
-                          print "TEST STEP 4: Get ApAclDevice Number"
-                          print "EXPECTED RESULT 4: getApAclDeviceNum should be successfully invoked"
-                          if expectedresult in actualresult:
-                              tdkTestObj.setResultStatus("SUCCESS");
-                              deviceNum_del = int(details.split(":")[1].strip());
-                              print "ACTUAL RESULT 4: %s"%details
-                              print "TEST EXECUTION RESULT: SUCCESS"
-                              if deviceNum_del == deviceNum_add:
-                                  tdkTestObj.setResultStatus("SUCCESS");
-                                  print"Number of ApAcl devices after passing Invalid Index to delApAclDevices is %d"%deviceNum_del;
-                                  print"The number of ApAclDevices remains unchanged"
-                                  #Reverting back
-                                  #Delete the added ApAclDevices by passing valid index and then restrore initial state
-                                  tdkTestObj = obj.createTestStep('WIFIHAL_DelApAclDevices');
-                                  tdkTestObj.addParameter("apIndex",idx);
-                                  tdkTestObj.executeTestCase(expectedresult);
-                                  actualresult = tdkTestObj.getResult();
-                                  details = tdkTestObj.getResultDetails();
-                                  print"Reverting back to initial state"
-                                  print"TEST STEP 5: Invoke DelApAclDevice with valid Index";
-                                  print"EXPECTED RESULT 5: DelApAclDevice should return success"
-                                  if expectedresult in actualresult:
-                                      tdkTestObj.setResultStatus("SUCCESS");
-                                      print "ACTUAL RESULT 5: %s"%details
-                                      print "TEST EXECUTION RESULT: SUCCESS"
-                                      getMethod = "getApAclDeviceNum"
-                                      primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-                                      #Calling "getApAclDeviceNum" to get the number of connected devices
-                                      time.sleep(2)
-                                      tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
-                                      print "TEST STEP 6: Get ApAclDevice Number"
-                                      print "EXPECTED RESULT 6: getApAclDeviceNum should be successfully invoked"
-                                      if expectedresult in actualresult:
-                                          newdeviceNum = int(details.split(":")[1].strip());
-                                          print"Device count after invoking delApAclDevices :%d"%newdeviceNum
-                                          tdkTestObj.setResultStatus("SUCCESS");
-                                          print"ACTUAL RESULT 6: %s"%details
-                                          print "TEST EXECUTION RESULT: SUCCESS"
-                                          print "wifi_getApAclDeviceNum()is success after wifi_delApAclDevices() is invoked by passing valid Index"
-                                          if newdeviceNum == 0:
-                                              tdkTestObj.setResultStatus("SUCCESS");
-                                              print "ApAclDevices are deleted"
-                                              #Revert to initial state
-                                              revert(macAddress, olddeviceNum, idx, obj);
-                                          else:
-                                              tdkTestObj.setResultStatus("FAILURE");
-                                              print "DelApAclDevices did not delete all devices"
-                                      else:
-                                         tdkTestObj.setResultStatus("FAILURE");
-                                         print"ACTUAL RESULT 6: %s"%details
-                                         print"[TEST EXECUTION RESULT] : FAILURE"
-                                         print "wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing valid Index"
-                                  else:
-                                      tdkTestObj.setResultStatus("FAILURE");
-                                      print"ACTUAL RESULT 5: %s"%details
-                                      print"[TEST EXECUTION RESULT] : FAILURE"
-                                      print"ApAclDevices are not deleted";
-                              else:
-                                  tdkTestObj.setResultStatus("FAILURE");
-                                  print"Number of ApAcl devices after deleting by passing Invalid Index is 0"
-                          else:
-                              tdkTestObj.setResultStatus("FAILURE");
-                              print"ACTUAL RESULT 4: %s"%details
-                              print"[TEST EXECUTION RESULT] : FAILURE"
-                              print"wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing Invalid Index";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print"ACTUAL RESULT 3: %s"%details
-                          print"[TEST EXECUTION RESULT] : FAILURE"
-                          print"wifi_delApAclDevice() operation is success when Invalid Index is passed";
-                          getMethod = "getApAclDeviceNum"
-                          primitive = 'WIFIHAL_GetOrSetParamUIntValue'
-                          #Calling "getApAclDeviceNum" to get the number of connected devices
-                          tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
-                          if expectedresult in actualresult:
-                              tdkTestObj.setResultStatus("SUCCESS");
-                              newdeviceNum = int(details.split(":")[1].strip());
-                              print"Device count after invoking delApAclDevices :%d"%newdeviceNum
-                              if newdeviceNum == 0:
-                                  tdkTestObj.setResultStatus("SUCCESS");
-                                  print "ApAclDevices are deleted"
-                                  #Revert to initial state
-                                  revert(macAddress, olddeviceNum, idx, obj);
-                              else:
-                                  tdkTestObj.setResultStatus("FAILURE");
-                                  print "DelApAclDevices did not delete all devices"
-                          else:
-                              tdkTestObj.setResultStatus("FAILURE");
-                              print "wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing Invalid Index"
-                  else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print"Device number not changed properly";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print"ACTUAL RESULT 2: %s"%details
-                  print "[TEST EXECUTION RESULT] : FAILURE"
-                  print"getApAclDeviceNum() operation failed";
+            tdkTestObj.setResultStatus("SUCCESS");
+            getMethod = "getApAclDeviceNum"
+            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive,idx, 0, getMethod);
+            olddeviceNum = int(details.split(":")[1].strip());
+            if olddeviceNum != "":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the number of devices in the filter list")
+                print("EXPECTED RESULT 1: Should get the number of devices as a non empty value")
+                print("ACTUAL RESULT 1: Received the number of devices as a NON EMPTY value")
+                print("Device number : %s"%olddeviceNum)
+                print("TEST EXECUTION RESULT: SUCCESS")
+                print("Number of ApAcl devices initially : ",olddeviceNum);
+                # Generate MAC address
+                mac_partial_1 = "7A:36:76:41:9A:"
+                mac_partial_2 = "8A:46:86:51:AA:"
+                x = str(randint(10,99))
+                addMAC=[mac_partial_1+x, mac_partial_2+x];
+                macAddress= [];
+                if olddeviceNum == 0:
+                    count=2;
+                    #If olddeviceNum is 0, need to add 2 MAC addresses
+                elif olddeviceNum == 1:
+                    count=1;
+                    #If oldDeviceNum is 1, need to add 1 MAC addresses
+                else:
+                    count=0;
+                    #If olddEviceNum is any other, need not add MAC addresses
+                if olddeviceNum > 0:
+                    #Copying the initial MAC addresses
+                    macAddress = details_new.split(";")[1].split("n")
+                    for i in range(len(macAddress)):
+                        macAddress[i] =  macAddress[i].replace("\\", '').strip()
+                else:
+                    print("No mac address listed")
+                    print(macAddress);
+                #Adding the mac addresses depending on the value of count
+                for i in range(0,count):
+                    tdkTestObj = obj.createTestStep('WIFIHAL_AddorDelApAclDevice');
+                    tdkTestObj.addParameter("methodName","addApAclDevice");
+                    tdkTestObj.addParameter("apIndex",idx);
+                    tdkTestObj.addParameter("DeviceMacAddress",addMAC[i]);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Successfully added ApAclDevice", addMAC[i])
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("wifi_addApAclDevice() operation failed after add operation");
+                        break
+                getMethod = "getApAclDeviceNum";
+                primitive = 'WIFIHAL_GetOrSetParamUIntValue';
+                #Get the current ApAclDevice count
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
+                print("TEST STEP 2: Get ApAclDevice Number")
+                print("EXPECTED RESULT 2: getApAclDeviceNum should be successfully invoked")
+                if expectedresult in actualresult:
+                    deviceNum_add = int(details.split(":")[1].strip());
+                    print("ACTUAL RESULT 2: %s"%details)
+                    print("TEST EXECUTION RESULT: SUCCESS")
+                    if deviceNum_add == (olddeviceNum + count):
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("Number of ApAcl devices after adding =",deviceNum_add);
+                        #Deleting the ApAcl devices by passing Invalid Index
+                        tdkTestObj = obj.createTestStep('WIFIHAL_DelApAclDevices');
+                        tdkTestObj.addParameter("apIndex",100);
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        print("TEST STEP 3: Invoke DelApAclDevice with Invalid Index");
+                        print("EXPECTED RESULT 3: DelApAclDevice should return failure")
+                        if expectedresult not in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ACTUAL RESULT 3: %s"%details);
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                            print("DelApAclDevices returns failure when Invalid index is passed");
+                            getMethod = "getApAclDeviceNum"
+                            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                            # get the current ApAcl device count after trying to delete the ApAcl devices with invalid index
+                            time.sleep(2)
+                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
+                            print("TEST STEP 4: Get ApAclDevice Number")
+                            print("EXPECTED RESULT 4: getApAclDeviceNum should be successfully invoked")
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                deviceNum_del = int(details.split(":")[1].strip());
+                                print("ACTUAL RESULT 4: %s"%details)
+                                print("TEST EXECUTION RESULT: SUCCESS")
+                                if deviceNum_del == deviceNum_add:
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("Number of ApAcl devices after passing Invalid Index to delApAclDevices is %d"%deviceNum_del);
+                                    print("The number of ApAclDevices remains unchanged")
+                                    #Reverting back
+                                    #Delete the added ApAclDevices by passing valid index and then restrore initial state
+                                    tdkTestObj = obj.createTestStep('WIFIHAL_DelApAclDevices');
+                                    tdkTestObj.addParameter("apIndex",idx);
+                                    tdkTestObj.executeTestCase(expectedresult);
+                                    actualresult = tdkTestObj.getResult();
+                                    details = tdkTestObj.getResultDetails();
+                                    print("Reverting back to initial state")
+                                    print("TEST STEP 5: Invoke DelApAclDevice with valid Index");
+                                    print("EXPECTED RESULT 5: DelApAclDevice should return success")
+                                    if expectedresult in actualresult:
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("ACTUAL RESULT 5: %s"%details)
+                                        print("TEST EXECUTION RESULT: SUCCESS")
+                                        getMethod = "getApAclDeviceNum"
+                                        primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                                        #Calling "getApAclDeviceNum" to get the number of connected devices
+                                        time.sleep(2)
+                                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
+                                        print("TEST STEP 6: Get ApAclDevice Number")
+                                        print("EXPECTED RESULT 6: getApAclDeviceNum should be successfully invoked")
+                                        if expectedresult in actualresult:
+                                            newdeviceNum = int(details.split(":")[1].strip());
+                                            print("Device count after invoking delApAclDevices :%d"%newdeviceNum)
+                                            tdkTestObj.setResultStatus("SUCCESS");
+                                            print("ACTUAL RESULT 6: %s"%details)
+                                            print("TEST EXECUTION RESULT: SUCCESS")
+                                            print("wifi_getApAclDeviceNum()is success after wifi_delApAclDevices() is invoked by passing valid Index")
+                                            if newdeviceNum == 0:
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("ApAclDevices are deleted")
+                                                #Revert to initial state
+                                                revert(macAddress, olddeviceNum, idx, obj);
+                                            else:
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                                print("DelApAclDevices did not delete all devices")
+                                        else:
+                                            tdkTestObj.setResultStatus("FAILURE");
+                                            print("ACTUAL RESULT 6: %s"%details)
+                                            print("[TEST EXECUTION RESULT] : FAILURE")
+                                            print("wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing valid Index")
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("ACTUAL RESULT 5: %s"%details)
+                                        print("[TEST EXECUTION RESULT] : FAILURE")
+                                        print("ApAclDevices are not deleted");
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("Number of ApAcl devices after deleting by passing Invalid Index is 0")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("ACTUAL RESULT 4: %s"%details)
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                print("wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing Invalid Index");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("ACTUAL RESULT 3: %s"%details)
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print("wifi_delApAclDevice() operation is success when Invalid Index is passed");
+                            getMethod = "getApAclDeviceNum"
+                            primitive = 'WIFIHAL_GetOrSetParamUIntValue'
+                            #Calling "getApAclDeviceNum" to get the number of connected devices
+                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, idx, 0, getMethod)
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                newdeviceNum = int(details.split(":")[1].strip());
+                                print("Device count after invoking delApAclDevices :%d"%newdeviceNum)
+                                if newdeviceNum == 0:
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("ApAclDevices are deleted")
+                                    #Revert to initial state
+                                    revert(macAddress, olddeviceNum, idx, obj);
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("DelApAclDevices did not delete all devices")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("wifi_getApAclDeviceNum()failed after wifi_delApAclDevices() is invoked by passing Invalid Index")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("Device number not changed properly");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT 2: %s"%details)
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    print("getApAclDeviceNum() operation failed");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the number of devices in the filter list"
-            print "EXPECTED RESULT 1: Should get the number of devices as a non empty value"
-            print "ACTUAL RESULT 1: Received the number of devices as an EMPTY value"
-            print "Device number : %s"%olddeviceNum
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1: Get the number of devices in the filter list")
+            print("EXPECTED RESULT 1: Should get the number of devices as a non empty value")
+            print("ACTUAL RESULT 1: Received the number of devices as an EMPTY value")
+            print("Device number : %s"%olddeviceNum)
+            print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-

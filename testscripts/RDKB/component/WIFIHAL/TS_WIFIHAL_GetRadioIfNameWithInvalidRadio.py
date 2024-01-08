@@ -97,14 +97,14 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_GetRadioIfNameWithInvalidRadio');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     ## Check if a invalid index is returned
     tdkTestObjTemp, idx = getIndex(obj, radio);
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Script to load the configuration file of the component
@@ -121,11 +121,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             noofEntries = noofEntries.split(":")[1];
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the Radio number of entries";
-            print "EXPECTED RESULT 1: Should get the radio number of entries";
-            print "ACTUAL RESULT 1: %s" %noofEntries;
+            print("TEST STEP 1: Get the Radio number of entries");
+            print("EXPECTED RESULT 1: Should get the radio number of entries");
+            print("ACTUAL RESULT 1: %s" %noofEntries);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             index = int(noofEntries) + 1;
             #Script to load the configuration file of the component
@@ -141,29 +141,29 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the Radio If Name for a invalid radio index %d" %index;
-                print "EXPECTED RESULT 2: Should not get the Radio If Name for a invalid radio index";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Get the Radio If Name for a invalid radio index %d" %index);
+                print("EXPECTED RESULT 2: Should not get the Radio If Name for a invalid radio index");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the Radio If Name for a invalid radio index %d" %index;
-                print "EXPECTED RESULT 2: Should not get Radio If Name for a invalid radio index ";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Get the Radio If Name for a invalid radio index %d" %index);
+                print("EXPECTED RESULT 2: Should not get Radio If Name for a invalid radio index ");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the Radio number of entries";
-            print "EXPECTED RESULT 1: Should get the radio number of entries";
-            print "ACTUAL RESULT 1: %s" %noofEntries;
+            print("TEST STEP 1: Get the Radio number of entries");
+            print("EXPECTED RESULT 1: Should get the radio number of entries");
+            print("ACTUAL RESULT 1: %s" %noofEntries);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

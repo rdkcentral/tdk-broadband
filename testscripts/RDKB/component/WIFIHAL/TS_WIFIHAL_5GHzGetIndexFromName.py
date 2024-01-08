@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetIndexFromName');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,29 +109,28 @@ if "SUCCESS" in loadmodulestatus.upper():
             if 1 == int(index):
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP: Get the index from ssid name";
-                print "EXPECTED RESULT: Get the index as 1";
-                print "ACTUAL RESULT: %s" %details;
+                print("TEST STEP: Get the index from ssid name");
+                print("EXPECTED RESULT: Get the index as 1");
+                print("ACTUAL RESULT: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP: Get the Radio number of entries";
-                print "EXPECTED RESULT: Get the index as 1";
-                print "ACTUAL RESULT: %s" %details;
+                print("TEST STEP: Get the Radio number of entries");
+                print("EXPECTED RESULT: Get the index as 1");
+                print("ACTUAL RESULT: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "wifi_getIndexFromName() call failed"
+            print("wifi_getIndexFromName() call failed")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "wifi_getApName() call failed"
+        print("wifi_getApName() call failed")
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

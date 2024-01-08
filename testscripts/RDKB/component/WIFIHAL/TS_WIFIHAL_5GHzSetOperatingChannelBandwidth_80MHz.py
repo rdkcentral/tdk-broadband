@@ -82,13 +82,13 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetOperatingChannelBandwidth_80MHz');
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         setBW = '80MHz';
@@ -101,14 +101,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult :
-            print "TEST STEP 1: Get current radio operating channel bandwidth"
-            print "EXPECTED RESULT: Should successfully get the radio operating channel bandwidth"
-            print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-            print "TEST EXECUTION RESULT :SUCCESS"
+            print("TEST STEP 1: Get current radio operating channel bandwidth")
+            print("EXPECTED RESULT: Should successfully get the radio operating channel bandwidth")
+            print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+            print("TEST EXECUTION RESULT :SUCCESS")
             tdkTestObjTemp.setResultStatus("SUCCESS");
             getBandWidth = details.split(":")[1].strip()
             CurrBW=getBandWidth.split("\\n")[0];
-            print "Current OperatingChannelBandwidth is  %s"%CurrBW
+            print("Current OperatingChannelBandwidth is  %s"%CurrBW)
             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
             #Giving the method name to invoke the api to set the operating channel bandwidth, wifi_setRadioOperatingChannelBandwidth()
             tdkTestObj.addParameter("methodName","setRadioOperatingChannelBandwidth");
@@ -119,10 +119,10 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult :
-                print "TEST STEP 2: Set radio operating channel bandwidth to new value: %s" %setBW;
-                print "EXPECTED RESULT: Should successfully set the radio operating channel bandwidth"
-                print "ACTUAL RESULT: setChannelBandwidth: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS"
+                print("TEST STEP 2: Set radio operating channel bandwidth to new value: %s" %setBW);
+                print("EXPECTED RESULT: Should successfully set the radio operating channel bandwidth")
+                print("ACTUAL RESULT: setChannelBandwidth: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS")
                 tdkTestObj.setResultStatus("SUCCESS");
                 #Check if the operating channel bandwidth is set properly
                 tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
@@ -134,19 +134,19 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult :
-                    print "TEST STEP 3: Get radio operating channel bandwidth after the set operation"
-                    print "EXPECTED RESULT: Should successfully get the radio operating channel bandwidth"
-                    print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-                    print "TEST EXECUTION RESULT :SUCCESS"
+                    print("TEST STEP 3: Get radio operating channel bandwidth after the set operation")
+                    print("EXPECTED RESULT: Should successfully get the radio operating channel bandwidth")
+                    print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+                    print("TEST EXECUTION RESULT :SUCCESS")
                     tdkTestObjTemp.setResultStatus("SUCCESS");
                     getBandWidth = details.split(":")[1].strip()
                     CheckBW=getBandWidth.split("\\n")[0];
-                    print " OperatingChannelBandwidth is  %s"%CheckBW
+                    print(" OperatingChannelBandwidth is  %s"%CheckBW)
                     if CheckBW == setBW :
-                        print "TEST STEP 4 : Get radio operating channel bandwidth after the set and compare"
-                        print "EXPECTED RESULT: The operating channel bandwidth after the set and get should be same"
-                        print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP 4 : Get radio operating channel bandwidth after the set and compare")
+                        print("EXPECTED RESULT: The operating channel bandwidth after the set and get should be same")
+                        print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         tdkTestObjTemp.setResultStatus("SUCCESS");
                         if CheckBW != CurrBW :
                             tdkTestObj = obj.createTestStep("WIFIHAL_GetOrSetParamStringValue");
@@ -158,48 +158,47 @@ if "SUCCESS" in loadmodulestatus.upper():
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
-                            print "setting channel bandwidth to %s" %CurrBW;
+                            print("setting channel bandwidth to %s" %CurrBW);
                             if expectedresult in actualresult :
-                                print "TEST STEP 5: Reverting to initial channel bandwidth"
-                                print "EXPECTED RESULT : Should successfully set the operating channel bandwidth"
-                                print "ACTUAL RESULT : setchannelbandwidth : %s"%details;
-                                print "TEST EXECUTION RESULT : SUCCESS"
+                                print("TEST STEP 5: Reverting to initial channel bandwidth")
+                                print("EXPECTED RESULT : Should successfully set the operating channel bandwidth")
+                                print("ACTUAL RESULT : setchannelbandwidth : %s"%details);
+                                print("TEST EXECUTION RESULT : SUCCESS")
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else :
-                                print "TEST STEP 5: Reverting to initial channel bandwidth"
-                                print "EXPECTED RESULT : Should successfully set the operating channel bandwidth"
-                                print "ACTUAL RESULT : setchannelbandwidth : %s"%details;
-                                print "TEST EXECUTION RESULT : FAILURE"
+                                print("TEST STEP 5: Reverting to initial channel bandwidth")
+                                print("EXPECTED RESULT : Should successfully set the operating channel bandwidth")
+                                print("ACTUAL RESULT : setchannelbandwidth : %s"%details);
+                                print("TEST EXECUTION RESULT : FAILURE")
                                 tdkTestObj.setResultStatus("FAILURE");
                         else :
-                            print "Revert Operation is not required"
+                            print("Revert Operation is not required")
                     else :
-                        print "TEST STEP 4: Get radio operating channel bandwidth after the set and compare"
-                        print "EXPECTED RESULT: The operating channel bandwidth after set and get should be same"
-                        print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP 4: Get radio operating channel bandwidth after the set and compare")
+                        print("EXPECTED RESULT: The operating channel bandwidth after set and get should be same")
+                        print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+                        print("TEST EXECUTION RESULT :FAILURE")
                         tdkTestObjTemp.setResultStatus("FAILURE");
                 else :
-                    print "TEST STEP 3: Get current radio operating channel bandwidth"
-                    print "EXPECTED RESULT: Should successfully get the radio operating channel bandwidth"
-                    print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-                    print "TEST EXECUTION RESULT :FAILURE"
+                    print("TEST STEP 3: Get current radio operating channel bandwidth")
+                    print("EXPECTED RESULT: Should successfully get the radio operating channel bandwidth")
+                    print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+                    print("TEST EXECUTION RESULT :FAILURE")
                     tdkTestObjTemp.setResultStatus("FAILURE");
             else :
-                print "TEST STEP 2: Set radio operating channel bandwidth to new value"
-                print "EXPECTED RESULT: Should successfully set the radio operating channel bandwidth"
-                print "ACTUAL RESULT: setChannelBandwidth: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE"
+                print("TEST STEP 2: Set radio operating channel bandwidth to new value")
+                print("EXPECTED RESULT: Should successfully set the radio operating channel bandwidth")
+                print("ACTUAL RESULT: setChannelBandwidth: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE")
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Failed to set the channel bandwidth as %s " %setBW;
+                print("Failed to set the channel bandwidth as %s " %setBW);
         else :
-            print "TEST STEP 1: Get current radio operating channel bandwidth"
-            print "EXPECTED RESULT: Should successfully get the radio operating channel bandwidth"
-            print "ACTUAL RESULT: getChannelBandwidth : %s"%details;
-            print "TEST EXECUTION RESULT :FAILURE"
+            print("TEST STEP 1: Get current radio operating channel bandwidth")
+            print("EXPECTED RESULT: Should successfully get the radio operating channel bandwidth")
+            print("ACTUAL RESULT: getChannelBandwidth : %s"%details);
+            print("TEST EXECUTION RESULT :FAILURE")
             tdkTestObjTemp.setResultStatus("FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

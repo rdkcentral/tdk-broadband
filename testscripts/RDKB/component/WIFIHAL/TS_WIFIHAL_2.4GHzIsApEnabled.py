@@ -50,8 +50,8 @@
     <api_or_interface_used>wifi_getApEnable()</api_or_interface_used>
     <input_parameters>methodName   :  getApEnable
 methodName   :  setApEnable
-apIndex   :	0</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+apIndex   :     0</input_parameters>
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIHAL_GetOrSetParamBoolValue  - func name - "If not exists already"
  WIFIHAL - module name
  Necessary I/P args as Mentioned in Input)
@@ -62,9 +62,9 @@ apIndex   :	0</input_parameters>
 6.Response(s)(printf) from TDK Component,Ccsp Library function and wifihalstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.wifihalstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result
 8.Test Manager will publish the result in GUI as SUCCESS/FAILURE based on the response from wifihalstub</automation_approch>
-    <except_output>"""CheckPoint 
-1:wifi_getApEnable result from DUT should be available in Agent Console LogCheckPoint 
-2:TDK agent Test Function will log the test case result as PASS based on API response CheckPoint 
+    <except_output>"""CheckPoint
+1:wifi_getApEnable result from DUT should be available in Agent Console LogCheckPoint
+2:TDK agent Test Function will log the test case result as PASS based on API response CheckPoint
 3:Test Manager GUI will publish the result as SUCCESS in Execution page"""</except_output>
     <priority>High</priority>
     <test_stub_interface>WiFiHAL</test_stub_interface>
@@ -77,8 +77,8 @@ apIndex   :	0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 radio = "2.4G"
@@ -93,7 +93,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzIsApEnabled');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,61 +101,61 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    apIndex = idx
-	    getMethod = "getApEnable"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    #Get current AP Enable status
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod) 
+        expectedresult="SUCCESS";
+        apIndex = idx
+        getMethod = "getApEnable"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        #Get current AP Enable status
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-	    if expectedresult in actualresult :
-		tdkTestObj.setResultStatus("SUCCESS");
-		enable = details.split(":")[1].strip()
-		if "Enabled" in enable:
-		    print "AP is Enabled"
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    oldEnable = 1
-		    newEnable = 0
-		else:
-		    print "AP is Disabled"
-		    oldEnable = 0
-		    newEnable = 1
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            enable = details.split(":")[1].strip()
+            if "Enabled" in enable:
+                print("AP is Enabled")
+                tdkTestObj.setResultStatus("SUCCESS");
+                oldEnable = 1
+                newEnable = 0
+            else:
+                print("AP is Disabled")
+                oldEnable = 0
+                newEnable = 1
 
-		setMethod = "setApEnable"
-		#Toggle the enable status using set
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod) 
+            setMethod = "setApEnable"
+            #Toggle the enable status using set
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, newEnable, setMethod)
 
-		if expectedresult in actualresult :
-		    print "AP Enable state toggled using set"
-		    # Get the New AP enable status
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod) 
+            if expectedresult in actualresult :
+                print("AP Enable state toggled using set")
+                # Get the New AP enable status
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, 0, getMethod)
 
-		    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
-			print "AP getEnable Success, verified with setEnable() api"
-			#Revert back to original Enable status
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
+                if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                    print("AP getEnable Success, verified with setEnable() api")
+                    #Revert back to original Enable status
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, oldEnable, setMethod)
 
-			if expectedresult in actualresult :
-			    print "Enable status reverted back";
-			else:
-			    print "Couldn't revert enable status"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print "getApEnable() failed"
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "setApEnable() failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "getApEnable() failed"
-		tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult :
+                        print("Enable status reverted back");
+                    else:
+                        print("Couldn't revert enable status")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("getApEnable() failed")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("setApEnable() failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getApEnable() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");

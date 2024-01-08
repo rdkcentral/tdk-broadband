@@ -92,7 +92,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_GetBSSColorEnabled_WithNullBuffer');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,21 +109,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Query the wifi_getBSSColorEnabled api with Null Buffer";
-        print "EXPECTED RESULT 1: API call should fail with Null Buffer";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Query the wifi_getBSSColorEnabled api with Null Buffer");
+        print("EXPECTED RESULT 1: API call should fail with Null Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:  Query the wifi_getBSSColorEnabled api with Null Buffer";
-        print "EXPECTED RESULT 1: API call should fail with Null Buffer";
-        print "ACTUAL RESULT 1: API returned Success status. %s" %details;
+        print("TEST STEP 1:  Query the wifi_getBSSColorEnabled api with Null Buffer");
+        print("EXPECTED RESULT 1: API call should fail with Null Buffer");
+        print("ACTUAL RESULT 1: API returned Success status. %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

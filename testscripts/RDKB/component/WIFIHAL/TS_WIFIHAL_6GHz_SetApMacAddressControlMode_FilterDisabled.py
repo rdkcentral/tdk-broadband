@@ -85,8 +85,8 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_6GHz_SetApMacAddressControlMode_Filter
 sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHz_SetApMacAddressControlMode_FilterDisabled');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     sysobj.setLoadModuleStatus("SUCCESS");
@@ -95,7 +95,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
@@ -109,7 +109,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             setMethod = "setApMacAddressControlMode"
             primitive = 'WIFIHAL_GetOrSetParamIntValue'
             #0 == filter disabled, 1 == filter as whitelist, 2 == filter as blacklist
-   	    setMode = 0
+            setMode = 0
             #Calling the method to execute wifi_setApMacAddressControlMode()
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
             if expectedresult in actualresult:
@@ -122,20 +122,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     finalMode = details.split(":")[1].strip()
                     if int(finalMode) == setMode:
-                        print "TEST STEP: Setting the MacAddress filter ControlMode as filter disabled for apIndex %s"%apIndex
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are the same"
-                        print "Set value: %s"%setMode
-                        print "Get value: %s"%finalMode
-                        print "TEST EXECUTION RESULT :SUCCESS"
+                        print("TEST STEP: Setting the MacAddress filter ControlMode as filter disabled for apIndex %s"%apIndex)
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are the same")
+                        print("Set value: %s"%setMode)
+                        print("Get value: %s"%finalMode)
+                        print("TEST EXECUTION RESULT :SUCCESS")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP: Setting the MacAddress filter ControlMode as filter disabled for apIndex %s"%apIndex
-                        print "EXPECTED RESULT: Set and get values should be the same"
-                        print "ACTUAL RESULT : Set and get values are NOT the same"
-                        print "Set value: %s"%setMode
-                        print "Get value: %s"%finalMode
-                        print "TEST EXECUTION RESULT :FAILURE"
+                        print("TEST STEP: Setting the MacAddress filter ControlMode as filter disabled for apIndex %s"%apIndex)
+                        print("EXPECTED RESULT: Set and get values should be the same")
+                        print("ACTUAL RESULT : Set and get values are NOT the same")
+                        print("Set value: %s"%setMode)
+                        print("Get value: %s"%finalMode)
+                        print("TEST EXECUTION RESULT :FAILURE")
                         tdkTestObj.setResultStatus("FAILURE");
                     #Revert back to initial value
                     setMethod = "setApMacAddressControlMode"
@@ -144,23 +144,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Successfully reverted back to inital value"
+                        print("Successfully reverted back to inital value")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to revert to initial value"
+                        print("Unable to revert to initial value")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "getApMacAddressControlMode() function call failed after set operation"
+                    print("getApMacAddressControlMode() function call failed after set operation")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "setApMacAddressControlMode() function call failed"
+                print("setApMacAddressControlMode() function call failed")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "getApMacAddressControlMode() function call failed"
+            print("getApMacAddressControlMode() function call failed")
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

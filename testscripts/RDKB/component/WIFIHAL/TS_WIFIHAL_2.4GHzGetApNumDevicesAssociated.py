@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetApNumDevicesAssociated');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,34 +111,34 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    radioIndex = idx
-	    getMethod = "getApNumDevicesAssociated"
-	    primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
-	    if expectedresult in actualresult:
-		ApNumDevices = details.split(":")[1].strip();
-		if  ApNumDevices != "":
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP : Get the number of Ap Associated Devices"
-		    print "EXPECTED RESULT : Should get the number of Ap Associated Devices as a non empty value"
-		    print "ACTUAL RESULT : Received the number of Ap Associated Devices as a NON EMPTY value"
-		    print "ApNumDevicesAssociated : %s"%ApNumDevices
-		    print "TEST EXECUTION RESULT: SUCCESS"
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP : Get the number of Ap Associated Devices"
-		    print "EXPECTED RESULT : Should get the number of Ap Associated Devices as a non empty value"
-		    print "ACTUAL RESULT : Received the number of Ap Associated Devices as an EMPTY value"
-		    print "ApNumDevicesAssociated : %s"%ApNumDevices
-		    print "TEST EXECUTION RESULT: FAILURE"
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "getApNumDevicesAssociated() call failed"
+        radioIndex = idx
+        getMethod = "getApNumDevicesAssociated"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        if expectedresult in actualresult:
+            ApNumDevices = details.split(":")[1].strip();
+            if  ApNumDevices != "":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT : Should get the number of Ap Associated Devices as a non empty value")
+                print("ACTUAL RESULT : Received the number of Ap Associated Devices as a NON EMPTY value")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT: SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT : Should get the number of Ap Associated Devices as a non empty value")
+                print("ACTUAL RESULT : Received the number of Ap Associated Devices as an EMPTY value")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT: FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("getApNumDevicesAssociated() call failed")
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

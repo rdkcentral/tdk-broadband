@@ -109,8 +109,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzPublicWiFi_FactoryResetAp');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,7 +119,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #Getting APINDEX_2G_PUBLIC_WIFI value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile APINDEX_2G_PUBLIC_WIFI" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -129,44 +129,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and details != "":
         apIndex = int(details);
-        print "TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex ;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("TEST STEP 1: Get APINDEX_5G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_5G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_5G_PUBLIC_WIFI from property file :", apIndex) ;
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
         getMethod = "getSSIDName"
         primitive = 'WIFIHAL_GetOrSetParamStringValue'
         #Calling the method from wifiUtility to execute test case and set result status for the test.
-        print "TEST STEP 2 : Get the initial SSID";
+        print("TEST STEP 2 : Get the initial SSID");
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
         if expectedresult in actualresult:
             SSIDName_initial = details.split(":")[1].strip()
-            print "SSIDName_initial:", SSIDName_initial
+            print("SSIDName_initial:", SSIDName_initial)
 
             setMethod = "setSSIDName"
             SSIDName_beforeFactoryReset = "wifi_ssid"
-            print "TEST STEP 3 : Setting SSIDName";
-            print "Trying to set a new SSIDName = ",SSIDName_beforeFactoryReset
+            print("TEST STEP 3 : Setting SSIDName");
+            print("Trying to set a new SSIDName = ",SSIDName_beforeFactoryReset)
             #Calling the method from wifiUtility to execute test case and set result status for the test.
             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, SSIDName_beforeFactoryReset, setMethod)
 
             if expectedresult in actualresult:
-                print "TEST STEP 4: Get the current SSID name and compare with the set valule"
+                print("TEST STEP 4: Get the current SSID name and compare with the set valule")
                 #Calling the method from wifiUtility to execute test case and set result status for the test.
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
                 if expectedresult in actualresult:
                     SSIDName_set = details.split(":")[1].strip()
-                    print "SSIDName_set = ",SSIDName_set
+                    print("SSIDName_set = ",SSIDName_set)
 
                     if SSIDName_set == SSIDName_beforeFactoryReset:
-                        print "Set and Get values are the same";
+                        print("Set and Get values are the same");
                         #Prmitive test case which associated to this Script
-                        print "Invoking wifi_factroryResetAP()"
-                        print "TEST STEP 5: Invoke wifi_factoryResetAP";
-                        print "EXPECTED RESULT 5: wifi_factoryResetAP should be invoked successfully";
+                        print("Invoking wifi_factroryResetAP()")
+                        print("TEST STEP 5: Invoke wifi_factoryResetAP");
+                        print("EXPECTED RESULT 5: wifi_factoryResetAP should be invoked successfully");
                         tdkTestObj = obj.createTestStep('WIFIHAL_ParamApIndex');
                         tdkTestObj.addParameter("apIndex", apIndex);
                         tdkTestObj.addParameter("methodName", 'factoryResetAP');
@@ -176,58 +176,57 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         sleep(5);
 
                         if expectedresult in actualresult:
-                            print "ACTUAL RESULT 5 : wifi_factoryResetAP invocation success"
-                            print "Get the SSID name after invocation of wifi_factoryResetAP"
+                            print("ACTUAL RESULT 5 : wifi_factoryResetAP invocation success")
+                            print("Get the SSID name after invocation of wifi_factoryResetAP")
                             #Calling the method from wifiUtility to execute test case and set result status for the test.
                             tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
                             if expectedresult in actualresult:
                                 SSIDName_afterFactoryReset = details.split(":")[1].strip()
-                                print "Get SSID name operation is success"
-                                print "TEST STEP 6: Compare values of SSID Name before and after wifi_factoryResetAP"
-                                print "EXPECTED RESULT 6: The values of SSID Name should be different"
-                                print "SSIDName_beforeFactoryReset = ",SSIDName_beforeFactoryReset
-                                print "SSIDName_afterFactoryReset = ",SSIDName_afterFactoryReset
+                                print("Get SSID name operation is success")
+                                print("TEST STEP 6: Compare values of SSID Name before and after wifi_factoryResetAP")
+                                print("EXPECTED RESULT 6: The values of SSID Name should be different")
+                                print("SSIDName_beforeFactoryReset = ",SSIDName_beforeFactoryReset)
+                                print("SSIDName_afterFactoryReset = ",SSIDName_afterFactoryReset)
 
                                 if SSIDName_afterFactoryReset !=  SSIDName_beforeFactoryReset:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAl RESULT 6: The values of SSID Name are different"
-                                    print "TEST EXECUTION RESULT :SUCCESS"
+                                    print("ACTUAl RESULT 6: The values of SSID Name are different")
+                                    print("TEST EXECUTION RESULT :SUCCESS")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAl RESULT 6: The values of SSID Names are the same"
-                                    print "TEST EXECUTION RESULT :FAILURE"
+                                    print("ACTUAl RESULT 6: The values of SSID Names are the same")
+                                    print("TEST EXECUTION RESULT :FAILURE")
                             else:
-                                print "wifi_getSSIDName() function failed"
+                                print("wifi_getSSIDName() function failed")
                                 tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "wifi_factoryResetAP() function failed"
-                            print "TEST EXECUTION RESULT 5:FAILURE"
+                            print("wifi_factoryResetAP() function failed")
+                            print("TEST EXECUTION RESULT 5:FAILURE")
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "The Get and Set values are not the same"
+                        print("The Get and Set values are not the same")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "wifi_getSSIDName() function failed"
+                    print("wifi_getSSIDName() function failed")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "wifi_setSSIDName() function failed"
+                print("wifi_setSSIDName() function failed")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "wifi_getSSIDName() function before factoryResetAP failed"
+            print("wifi_getSSIDName() function before factoryResetAP failed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file";
-        print "EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file"
-        print "ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details ;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Get APINDEX_2G_PUBLIC_WIFI  from property file");
+        print("EXPECTED RESULT 1: Should  get APINDEX_2G_PUBLIC_WIFI  from property file")
+        print("ACTUAL RESULT 1: APINDEX_2G_PUBLIC_WIFI from property file :", details) ;
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

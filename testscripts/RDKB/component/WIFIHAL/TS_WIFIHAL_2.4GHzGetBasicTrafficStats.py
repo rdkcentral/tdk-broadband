@@ -101,7 +101,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzGetBasicTrafficStats');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,35 +110,35 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	radioIndex = idx
-	getMethod = "getApNumDevicesAssociated"
-	primitive = 'WIFIHAL_GetOrSetParamULongValue'
-	tdkTestObj = obj.createTestStep(primitive);
-	tdkTestObj.addParameter("radioIndex",radioIndex);
+        radioIndex = idx
+        getMethod = "getApNumDevicesAssociated"
+        primitive = 'WIFIHAL_GetOrSetParamULongValue'
+        tdkTestObj = obj.createTestStep(primitive);
+        tdkTestObj.addParameter("radioIndex",radioIndex);
         tdkTestObj.addParameter("methodName",getMethod);
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    ApNumDevices = details.split(":")[1].strip();
-	    if  ApNumDevices != "" and int(ApNumDevices) > 0:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: SUCCESS"
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            ApNumDevices = details.split(":")[1].strip();
+            if  ApNumDevices != "" and int(ApNumDevices) > 0:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: SUCCESS")
 
-	        primitive = 'WIFIHAL_GetBasicTrafficStats'
-	        tdkTestObj = obj.createTestStep(primitive);
-	        tdkTestObj.addParameter("apIndex",radioIndex);
-	        tdkTestObj.executeTestCase(expectedresult);
-	        actualresult = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-	        if expectedresult in actualresult:
+                primitive = 'WIFIHAL_GetBasicTrafficStats'
+                tdkTestObj = obj.createTestStep(primitive);
+                tdkTestObj.addParameter("apIndex",radioIndex);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult:
                     trafficStats =  details.rstrip('\n').split('-')[1]
                     bytesSent = trafficStats.split(',')[0].split(' ')[2]
                     bytesReceived = trafficStats.split(',')[1].split(' ')[2]
@@ -146,39 +146,39 @@ if "SUCCESS" in loadmodulestatus.upper():
                     packetsReceived = trafficStats.split(',')[3].split(' ')[2]
                     associations = trafficStats.split(',')[4].split(' ')[2].replace("\\n", "")
 
-	            tdkTestObj.setResultStatus("SUCCESS");
-	            print "TEST STEP 2: Get the Basic Traffic statistics for 2.4GHz";
-	            print "EXPECTED RESULT 2: wifi_getBasicTrafficStats should return the basic traffic statistics for 2.4GHz";
-	            print "ACTUAL RESULT 2: wifi_getBasicTrafficStats operation returned SUCCESS";
-	            print "Actual result is :",details;
-	            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2: Get the Basic Traffic statistics for 2.4GHz");
+                    print("EXPECTED RESULT 2: wifi_getBasicTrafficStats should return the basic traffic statistics for 2.4GHz");
+                    print("ACTUAL RESULT 2: wifi_getBasicTrafficStats operation returned SUCCESS");
+                    print("Actual result is :",details);
+                    print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
-                    print "TEST STEP 3: Check if the Basic Traffic statistics values for 2.4GHz are greater than 0";
-                    print "EXPECTED RESULT 3: Basic Traffic statistics values for 2.4GHz should be greater than 0";
+                    print("TEST STEP 3: Check if the Basic Traffic statistics values for 2.4GHz are greater than 0");
+                    print("EXPECTED RESULT 3: Basic Traffic statistics values for 2.4GHz should be greater than 0");
                     if int(ApNumDevices) == int(associations) and int(bytesSent) >0 and int(bytesReceived) >0 and int(packetsSent) >0 and int(packetsReceived) >0 :
-                        print "ACTUAL RESULT 3: Basic Traffic statistics values for 2.4GHz are greater than 0";
-                        print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                        print("ACTUAL RESULT 3: Basic Traffic statistics values for 2.4GHz are greater than 0");
+                        print("[TEST EXECUTION RESULT] 3: SUCCESS");
                     else:
-                        print "ACTUAL RESULT 3: Basic Traffic statistics values for 2.4GHz are not greater than 0";
-                        print "[TEST EXECUTION RESULT] 3: FAILURE";
-	        else:
-		    tdkTestObj.setResultStatus("FAILURE");
-  		    print "TEST STEP 2: Get the Basic Traffic statistics for 2.4GHz";
-		    print "EXPECTED RESULT 2: wifi_getBasicTrafficStats should return the basic traffic statistics for 2.4GHz";
-		    print "ACTUAL RESULT 2: Failed to get the Basic Traffic statistics values for 2.4GHz";
-		    print "Actual result is :",details;
-		    print "[TEST EXECUTION RESULT] 2: FAILURE";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received number of Ap Associated Devices is not greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: FAILURE"
-	else:
+                        print("ACTUAL RESULT 3: Basic Traffic statistics values for 2.4GHz are not greater than 0");
+                        print("[TEST EXECUTION RESULT] 3: FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 2: Get the Basic Traffic statistics for 2.4GHz");
+                    print("EXPECTED RESULT 2: wifi_getBasicTrafficStats should return the basic traffic statistics for 2.4GHz");
+                    print("ACTUAL RESULT 2: Failed to get the Basic Traffic statistics values for 2.4GHz");
+                    print("Actual result is :",details);
+                    print("[TEST EXECUTION RESULT] 2: FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received number of Ap Associated Devices is not greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: FAILURE")
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-	    print "getApNumDevicesAssociated() call failed"
+            print("getApNumDevicesAssociated() call failed")
     obj.unloadModule("wifihal");
 else:
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

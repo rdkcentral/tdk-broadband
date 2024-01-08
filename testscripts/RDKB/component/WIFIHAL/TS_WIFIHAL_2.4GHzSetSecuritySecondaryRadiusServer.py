@@ -59,7 +59,7 @@ ApIndex : 0</input_parameters>
 4. If mode is not Enterprise mode, invoke wifi_setApSecurityModeEnabled using  WIFIHAL_GetOrSetParamStringValue and set any Enterprise mode
 5. Using  WIFIHAL_GetOrSetSecurityRadiusServer invoke wifi_getApSecuritySecondaryRadiusServer() and save the value
 6. Using  WIFIHAL_GetOrSetSecurityRadiusServer invoke wifi_setApSecuritySecondaryRadiusServer() and set any values for IPaddress, port and RadiusSecret
-7. Invoke wifi_getApSecuritySecondaryRadiusServer() to get the previously set value. 
+7. Invoke wifi_getApSecuritySecondaryRadiusServer() to get the previously set value.
 5. Compare the above two results. If the two values  are same return SUCCESS else return FAILURE
 6. Revert the SecondaryRadiusServer and ModeEnabled back to initial value
 7. Unload wifihal module</automation_approch>
@@ -74,8 +74,8 @@ ApIndex : 0</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 radio = "2.4G"
@@ -120,10 +120,10 @@ def checkApSecuritySecondaryRadiusServer(idx):
         initValues = [i.split("=",1)[1] for i in initDetails]
         #Checking if all the output values are non emtpy
         if all(initValues):
-            print "TEST STEP 1: Get the ApSecuritySecondaryRadiusServer details"
-            print "EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values"
-            print "ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as a NON EMPTY values"
-            print "ApSecuritySecondaryRadiusServer details : %s"%output
+            print("TEST STEP 1: Get the ApSecuritySecondaryRadiusServer details")
+            print("EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values")
+            print("ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as a NON EMPTY values")
+            print("ApSecuritySecondaryRadiusServer details : %s"%output)
             tdkTestObj.setResultStatus("SUCCESS");
 
             expectedresult = "SUCCESS";
@@ -139,10 +139,10 @@ def checkApSecuritySecondaryRadiusServer(idx):
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the ApSecuritySecondaryRadiusServer details"
-                print "EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret"
-                print "ACTUAL RESULT 2: Successfully set the IPAddress, port and RadiusSecret"
-                print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
+                print("TEST STEP 2: Set the ApSecuritySecondaryRadiusServer details")
+                print("EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret")
+                print("ACTUAL RESULT 2: Successfully set the IPAddress, port and RadiusSecret")
+                print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
 
                 expectedresult = "SUCCESS";
                 radioIndex = idx
@@ -158,21 +158,21 @@ def checkApSecuritySecondaryRadiusServer(idx):
                     outputValues = [i.split("=",1)[1] for i in outputDetails]
                     if outputValues == [IPAddress, str(port), RadiusSecret]:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 3: Comparing the set and get values of ApSecuritySecondaryRadiusServer deatils"
-                        print "EXPECTED RESULT 3: Set and get values should be the same"
-                        print "ACTUAL RESULT 3: Set and get values are the same"
-                        print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
-                        print "Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2]
+                        print("TEST STEP 3: Comparing the set and get values of ApSecuritySecondaryRadiusServer deatils")
+                        print("EXPECTED RESULT 3: Set and get values should be the same")
+                        print("ACTUAL RESULT 3: Set and get values are the same")
+                        print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
+                        print("Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2])
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3: Comparing the set and get values of ApSecuritySecondaryRadiusServer deatils"
-                        print "EXPECTED RESULT 3: Set and get values should be the same"
-                        print "ACTUAL RESULT 3: Set and get values are NOT the same"
-                        print "Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345"
-                        print "Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2]
+                        print("TEST STEP 3: Comparing the set and get values of ApSecuritySecondaryRadiusServer deatils")
+                        print("EXPECTED RESULT 3: Set and get values should be the same")
+                        print("ACTUAL RESULT 3: Set and get values are NOT the same")
+                        print("Set values: IPAddress = 1.1.2.2, port = 1234, RadiusSecret = 12345")
+                        print("Get values: IPAddress = ",outputValues[0],"port = ",outputValues[1],"RadiusSecret = ",outputValues[2])
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "wifi_getApSecuritySecondaryRadiusServer() call failed"
+                    print("wifi_getApSecuritySecondaryRadiusServer() call failed")
 
                 #Reverting the values to previous value
                 expectedresult = "SUCCESS";
@@ -187,39 +187,39 @@ def checkApSecuritySecondaryRadiusServer(idx):
                 tdkTestObj, actualresult, details = GetorSetApSecuritySecondaryRadiusServer(obj, primitive, radioIndex, IPAddress, port, RadiusSecret, setMethod)
 
                 if expectedresult in actualresult:
-                    print "Successfully reverted to initial values"
+                    print("Successfully reverted to initial values")
                     tdkTestObj.setResultStatus("SUCCESS");
                 else:
-                    print " Unable to revert to initial value"
+                    print(" Unable to revert to initial value")
                     tdkTestObj.setResultStatus("FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the ApSecuritySecondaryRadiusServer details"
-                print "EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret"
-                print "ACTUAL RESULT 2: Failed to set the IPAddress, port and RadiusSecret"
+                print("TEST STEP 2: Set the ApSecuritySecondaryRadiusServer details")
+                print("EXPECTED RESULT 2: Should set the IPAddress, port and RadiusSecret")
+                print("ACTUAL RESULT 2: Failed to set the IPAddress, port and RadiusSecret")
         else:
-            print "TEST STEP 1: Get the ApSecuritySecondaryRadiusServer details"
-            print "EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values"
-            print "ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as an EMPTY values"
-            print "ApSecuritySecondaryRadiusServer details : %s"%output
+            print("TEST STEP 1: Get the ApSecuritySecondaryRadiusServer details")
+            print("EXPECTED RESULT 1: Should get the IPAddress, port and RadiusSecret as non empty values")
+            print("ACTUAL RESULT 1: Obtained the IPAddress, port and RadiusSecret as an EMPTY values")
+            print("ApSecuritySecondaryRadiusServer details : %s"%output)
             tdkTestObj.setResultStatus("FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "wifi_getApSecuritySecondaryRadiusServer() call failed"
+        print("wifi_getApSecuritySecondaryRadiusServer() call failed")
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
         compatibleModes = ["WPA-Enterprise", "WPA2-Enterprise", "WPA-WPA2-Enterprise"]
 
         expectedresult="SUCCESS";
@@ -244,7 +244,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ModeEnabled is changed to an Enterprise type"
+                    print("ModeEnabled is changed to an Enterprise type")
 
                     #Calling the function to perform the settings and getting and verification of SecurityRadiusServer
                     checkApSecuritySecondaryRadiusServer(apIndex);
@@ -259,24 +259,23 @@ if "SUCCESS" in loadmodulestatus.upper():
                     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
 
                     if expectedresult in actualresult:
-                        print "Successfully reverted the SecurityMode to initial value"
+                        print("Successfully reverted the SecurityMode to initial value")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "Unable to revert the SecurityMode to initial value"
+                        print("Unable to revert the SecurityMode to initial value")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to change ModeEnabled to Enterprise type"
+                    print("Unable to change ModeEnabled to Enterprise type")
             else:
                 #Calling the function to perform the settings and getting and verification of SecurityRadiusServer
                 checkApSecuritySecondaryRadiusServer(apIndex);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "wifi_getApSecurityModeEnabled()call failed"
+            print("wifi_getApSecurityModeEnabled()call failed")
 
     obj.unloadModule("wifihal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

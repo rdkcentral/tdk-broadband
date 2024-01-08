@@ -105,30 +105,30 @@ wifiObj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzRemoveSteeringClient');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
 wifiloadmodulestatus =wifiObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus)
 
 #To get 5G steering client config
 def getSteeringClient(tdkTestObj):
     query="sh %s/tdk_platform_utility.sh getAp1SteeringClient" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj.addParameter("command", query);
     expectedresult="SUCCESS";
-    print "TEST STEP :Get the steering client MAC";
-    print "EXPECTED RESULT :Should successfully get the steering client MAC"
+    print("TEST STEP :Get the steering client MAC");
+    print("EXPECTED RESULT :Should successfully get the steering client MAC")
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print " SteeringClient:  ", details;
+    print(" SteeringClient:  ", details);
     return details,actualresult;
 
 def checkSteeringSSIDPassphrase(tdkTestObj, wifiObj):
     expectedresult="SUCCESS";
-    print "TEST STEP 1: Get the current KeyPassphrase, SSID"
-    print "EXPECTED RESULT 1: Should retrieve the current KeyPassphrase, SSID"
+    print("TEST STEP 1: Get the current KeyPassphrase, SSID")
+    print("EXPECTED RESULT 1: Should retrieve the current KeyPassphrase, SSID")
     getParams = "Device.WiFi.AccessPoint.1.Security.KeyPassphrase,Device.WiFi.AccessPoint.2.Security.KeyPassphrase,Device.WiFi.SSID.1.SSID,Device.WiFi.SSID.2.SSID"
     getList = getParams.split(',');
     actualresult_get = [];
@@ -141,25 +141,25 @@ def checkSteeringSSIDPassphrase(tdkTestObj, wifiObj):
         #execute the step
         tdkTestObj.executeTestCase(expectedresult);
         actualresult_get.append(tdkTestObj.getResult())
-	details = tdkTestObj.getResultDetails();
+        details = tdkTestObj.getResultDetails();
         orgValue.append( details.split("VALUE:")[1].split(' ')[0] );
 
     getFlag = 1;
     for index in range(len(getList)):
-	if expectedresult not in actualresult_get[index]:
-	    getFlag = 0;
-	    break;
+        if expectedresult not in actualresult_get[index]:
+            getFlag = 0;
+            break;
 
     if getFlag == 1:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Get operation SUCCESS"
-        print "Device.WiFi.AccessPoint.1.Security.KeyPassphrase : %s ,Device.WiFi.AccessPoint.2.Security.KeyPassphrase: %s, Device.WiFi.SSID.1.SSID: %s, Device.WiFi.SSID.2.SSID: %s" %(orgValue[0], orgValue[1], orgValue[2], orgValue[3])
+        print("ACTUAL RESULT 1: Get operation SUCCESS")
+        print("Device.WiFi.AccessPoint.1.Security.KeyPassphrase : %s ,Device.WiFi.AccessPoint.2.Security.KeyPassphrase: %s, Device.WiFi.SSID.1.SSID: %s, Device.WiFi.SSID.2.SSID: %s" %(orgValue[0], orgValue[1], orgValue[2], orgValue[3]))
 
         #Check if 2.4G SSID and passphrase are same as 5G SSID and passphrase
         if orgValue[0] != orgValue[1] or orgValue[2] != orgValue[3]:
             revertFlag = 1
-            print "TEST STEP 2: Set SSID and passphrase values of 2.4G and 5G as same for steering purpose"
-            print "EXPECTED RESULT 2: Should  Set SSID and passphrase values of 2.4G and 5G as same"
+            print("TEST STEP 2: Set SSID and passphrase values of 2.4G and 5G as same for steering purpose")
+            print("EXPECTED RESULT 2: Should  Set SSID and passphrase values of 2.4G and 5G as same")
 
             tdkTestObj = wifiObj.createTestStep("WIFIAgent_SetMultiple");
             passPhrase = "test_password"
@@ -172,20 +172,20 @@ def checkSteeringSSIDPassphrase(tdkTestObj, wifiObj):
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 details = tdkTestObj.getResultDetails();
-                print "ACTUAL RESULT 2: Set operation SUCCESS"
+                print("ACTUAL RESULT 2: Set operation SUCCESS")
                 return orgValue, actualresult, revertFlag
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "ACTUAL RESULT 2: Set operation FAILURE"
+                print("ACTUAL RESULT 2: Set operation FAILURE")
                 return orgValue, actualresult, revertFlag
         else:
-            print "2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test"
+            print("2.4G SSID and passphrase are same as 5G SSID and passphrase. Can proceed for steering test")
             actualresult="SUCCESS";
             return orgValue, actualresult, revertFlag
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Get operation Failed"
+        print("ACTUAL RESULT 1: Get operation Failed")
         return orgValue, actualresult, revertFlag
 
 
@@ -196,107 +196,107 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
         tdkTestObj = wifiObj.createTestStep("WIFIAgent_Get");
         orgValue, actualresult, revertFlag = checkSteeringSSIDPassphrase(tdkTestObj, wifiObj)
         if expectedresult in actualresult :
-	    apIndex = idx
+            apIndex = idx
             clientMAC = "AA:BB:CC:DD:EE:FF"
-	    primitive = 'WIFIHAL_SteeringClientSet'
-	    tdkTestObj = obj.createTestStep(primitive);
-	    tdkTestObj.addParameter("apIndex",apIndex);
-	    tdkTestObj.addParameter("steeringgroupIndex",0);
-	    tdkTestObj.addParameter("rssiProbeHWM",10);
-	    tdkTestObj.addParameter("rssiProbeLWM",11);
-	    tdkTestObj.addParameter("rssiAuthHWM",0);
-	    tdkTestObj.addParameter("rssiAuthLWM",0);
-	    tdkTestObj.addParameter("rssiInactXing",0);
-	    tdkTestObj.addParameter("rssiHighXing",0);
-	    tdkTestObj.addParameter("rssiLowXing",0);
-	    tdkTestObj.addParameter("authRejectReason",17);
-	    tdkTestObj.addParameter("clientMAC", clientMAC);
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-	    if expectedresult in actualresult :
-		print "TEST STEP 3:Add steering client config for MAC %s using wifi_steering_clientSet()" %clientMAC;
-		print "EXPECTED RESULT 3:wifi_steering_clientSet() should return SUCCESS"
-		print "ACTUAL RESULT 3: wifi_steering_clientSet() returns SUCCESS"
-		tdkTestObj.setResultStatus("SUCCESS");
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] 1: SUCCESS";
-		# Get the New enable status
-		tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+            primitive = 'WIFIHAL_SteeringClientSet'
+            tdkTestObj = obj.createTestStep(primitive);
+            tdkTestObj.addParameter("apIndex",apIndex);
+            tdkTestObj.addParameter("steeringgroupIndex",0);
+            tdkTestObj.addParameter("rssiProbeHWM",10);
+            tdkTestObj.addParameter("rssiProbeLWM",11);
+            tdkTestObj.addParameter("rssiAuthHWM",0);
+            tdkTestObj.addParameter("rssiAuthLWM",0);
+            tdkTestObj.addParameter("rssiInactXing",0);
+            tdkTestObj.addParameter("rssiHighXing",0);
+            tdkTestObj.addParameter("rssiLowXing",0);
+            tdkTestObj.addParameter("authRejectReason",17);
+            tdkTestObj.addParameter("clientMAC", clientMAC);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult :
+                print("TEST STEP 3:Add steering client config for MAC %s using wifi_steering_clientSet()" %clientMAC);
+                print("EXPECTED RESULT 3:wifi_steering_clientSet() should return SUCCESS")
+                print("ACTUAL RESULT 3: wifi_steering_clientSet() returns SUCCESS")
+                tdkTestObj.setResultStatus("SUCCESS");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 1: SUCCESS");
+                # Get the New enable status
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 expectedresult="SUCCESS";
                 details, actualresult = getSteeringClient(tdkTestObj);
 
-		if expectedresult in actualresult and details !="" and clientMAC in details :
-		    print "wifi_steering_clientSet() validation using get operation is success"
+                if expectedresult in actualresult and details !="" and clientMAC in details :
+                    print("wifi_steering_clientSet() validation using get operation is success")
                     tdkTestObj.setResultStatus("SUCCESS");
 
-		    #Remove the client config added using wifi_steering_clientRemove()
-		    print "TEST STEP 4:Remove the previously added steering client config using wifi_steering_clientRemove()";
-		    print "EXPECTED RESULT 4: wifi_steering_clientRemove() should return SUCCESS"
+                    #Remove the client config added using wifi_steering_clientRemove()
+                    print("TEST STEP 4:Remove the previously added steering client config using wifi_steering_clientRemove()");
+                    print("EXPECTED RESULT 4: wifi_steering_clientRemove() should return SUCCESS")
                     primitive = 'WIFIHAL_SteeringClientRemove'
-	            tdkTestObj = obj.createTestStep(primitive);
-	            tdkTestObj.addParameter("apIndex",apIndex);
-	            tdkTestObj.addParameter("steeringgroupIndex",0);
-         	    tdkTestObj.addParameter("clientMAC", clientMAC);
-	            tdkTestObj.executeTestCase(expectedresult);
-	            actualresult = tdkTestObj.getResult();
-	            details = tdkTestObj.getResultDetails()
-		    if expectedresult in actualresult :
-		        print "ACTUAL RESULT 4: wifi_steering_clientRemove() returns SUCCESS"
-		        tdkTestObj.setResultStatus("SUCCESS");
+                    tdkTestObj = obj.createTestStep(primitive);
+                    tdkTestObj.addParameter("apIndex",apIndex);
+                    tdkTestObj.addParameter("steeringgroupIndex",0);
+                    tdkTestObj.addParameter("clientMAC", clientMAC);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails()
+                    if expectedresult in actualresult :
+                        print("ACTUAL RESULT 4: wifi_steering_clientRemove() returns SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
 
-		        print "TEST STEP 5:Get steering client config and check if client is removed";
-		        print "EXPECTED RESULT 5:Client config should be removed"
-		        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                        print("TEST STEP 5:Get steering client config and check if client is removed");
+                        print("EXPECTED RESULT 5:Client config should be removed")
+                        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                         expectedresult="SUCCESS";
                         details, actualresult = getSteeringClient(tdkTestObj);
-		        if expectedresult in actualresult and (details =="" or clientMAC not in details) :
-                            print "ACTUAL RESULT 5: Client config successfully removed with wifi_steering_clientRemove()";
+                        if expectedresult in actualresult and (details =="" or clientMAC not in details) :
+                            print("ACTUAL RESULT 5: Client config successfully removed with wifi_steering_clientRemove()");
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                            print("[TEST EXECUTION RESULT] 5: SUCCESS");
                         else:
-                            print "ACTUAL RESULT 5: Failed to remove Client config with wifi_steering_clientRemove()";
-		            tdkTestObj.setResultStatus("FAILURE");
-           		    print "[TEST EXECUTION RESULT] 5: FAILURE";
-		    else:
-		        print "wifi_steering_clientRemove() validation using get operation failed"
-		        tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "wifi_steering_clientSet() validation using get operation failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "TEST STEP 3:Add steering client config for MAC %s using wifi_steering_clientSet()" %clientMAC;
-		print "EXPECTED RESULT 3:wifi_steering_clientSet() should return SUCCESS"
-		print "ACTUAL RESULT 3: wifi_steering_clientSet() returns FAILURE"
-		tdkTestObj.setResultStatus("FAILURE");
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT 5: Failed to remove Client config with wifi_steering_clientRemove()");
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] 5: FAILURE");
+                    else:
+                        print("wifi_steering_clientRemove() validation using get operation failed")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("wifi_steering_clientSet() validation using get operation failed")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 3:Add steering client config for MAC %s using wifi_steering_clientSet()" %clientMAC);
+                print("EXPECTED RESULT 3:wifi_steering_clientSet() should return SUCCESS")
+                print("ACTUAL RESULT 3: wifi_steering_clientSet() returns FAILURE")
+                tdkTestObj.setResultStatus("FAILURE");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
             if revertFlag == 1:
                 tdkTestObj = wifiObj.createTestStep("WIFIAgent_SetMultiple");
                 tdkTestObj.addParameter("paramList","Device.WiFi.AccessPoint.1.Security.KeyPassphrase|%s|string|Device.WiFi.AccessPoint.2.Security.KeyPassphrase|%s|string|Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]));
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 if expectedresult in actualresult:
-                    print "Successfully reverted SSIDs and passphrases to previous values"
+                    print("Successfully reverted SSIDs and passphrases to previous values")
                     tdkTestObj.setResultStatus("SUCCESS");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
-                    print "Failed to revert SSIDs and passphrases to previous values";
+                    print("Failed to revert SSIDs and passphrases to previous values");
                     tdkTestObj.setResultStatus("FAILURE");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     sysObj.unloadModule("sysutil");
     wifiObj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifihal/sysutil module";
+    print("Failed to load wifihal/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -81,8 +81,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHzPushSsidAdvertisementEnable');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, apIndex = getApIndexfor6G(sysobj, TDK_PATH);
 
     if apIndex == -1:
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which associated to this Script
@@ -106,24 +106,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the HAL API wifi_pushSsidAdvertisementEnable() for 6GHz"
-        print "EXPECTED RESULT 2: wifi_pushSsidAdvertisementEnable() for 6GHz should be invoked successfully"
+        print("\nTEST STEP 2: Invoke the HAL API wifi_pushSsidAdvertisementEnable() for 6GHz")
+        print("EXPECTED RESULT 2: wifi_pushSsidAdvertisementEnable() for 6GHz should be invoked successfully")
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: API Invocation is success; Details : %s " %details;
+            print("ACTUAL RESULT 2: API Invocation is success; Details : %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: API inocation failed; Details : %s " %details;
+            print("ACTUAL RESULT 2: API inocation failed; Details : %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

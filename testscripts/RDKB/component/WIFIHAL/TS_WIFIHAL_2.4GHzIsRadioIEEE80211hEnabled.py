@@ -48,21 +48,21 @@
     <input_parameters>methodName   :   getRadioIEEE80211hEnabled
 methodName   :   setRadioIEEE80211hEnabled
 radioIndex   :   0</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIHAL_GetOrSetParamBoolValue  - func name - "If not exists already"
  WIFIHAL - module name
  Necessary I/P args as Mentioned in Input)
 2.Python Script will be generated/overrided automatically by Test Manager with provided arguments in configure page (TS_WIFIHAL_2.4GHzIsRadioIEEE80211hEnabled.py)
 3.Execute the generated Script(TS_WIFIHAL_2.4GHzIsRadioIEEE80211hEnabled.py) using execution page of  Test Manager GUI
 4.wifihalstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named WIFIHAL_GetOrSetParamBoolValue through registered TDK wifihalstub function along with necessary arguments
-5.WIFIHAL_GetOrSetParamBoolValue function will call Ccsp Base Function named "ssp_WIFIHALGetOrSetParamBoolValue", that inturn will call WIFIHAL Library Functions 
+5.WIFIHAL_GetOrSetParamBoolValue function will call Ccsp Base Function named "ssp_WIFIHALGetOrSetParamBoolValue", that inturn will call WIFIHAL Library Functions
 wifi_getRadioIEEE80211hEnabled() and wifi_setRadioIEEE80211hEnabled()
 6.Response(s)(printf) from TDK Component,Ccsp Library function and wifihalstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.wifihalstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result
 8.Test Manager will publish the result in GUI as SUCCESS/FAILURE based on the response from wifihalstub</automation_approch>
-    <except_output>"""CheckPoint 
-1:wifi_getRadioIEEE80211hEnabled log from DUT should be available in Agent Console LogCheckPoint 
-2:TDK agent Test Function will log the test case result as PASS based on API response CheckPoint 
+    <except_output>"""CheckPoint
+1:wifi_getRadioIEEE80211hEnabled log from DUT should be available in Agent Console LogCheckPoint
+2:TDK agent Test Function will log the test case result as PASS based on API response CheckPoint
 3:Test Manager GUI will publish the result as SUCCESS in Execution page"""</except_output>
     <priority>High</priority>
     <test_stub_interface>WIFIHAL</test_stub_interface>
@@ -75,8 +75,8 @@ wifi_getRadioIEEE80211hEnabled() and wifi_setRadioIEEE80211hEnabled()
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *;
 
 radio = "2.4G"
@@ -91,7 +91,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzIsRadioIEEE80211hEnabled');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,61 +99,60 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
-    else: 
+    else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx
-	    getMethod = "getRadioIEEE80211hEnabled"
-	    primitive = 'WIFIHAL_GetOrSetParamBoolValue'
-	    #Getting the default enable mode
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+        expectedresult="SUCCESS";
+        radioIndex = idx
+        getMethod = "getRadioIEEE80211hEnabled"
+        primitive = 'WIFIHAL_GetOrSetParamBoolValue'
+        #Getting the default enable mode
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-	    if expectedresult in actualresult :
-		tdkTestObj.setResultStatus("SUCCESS");
-		enable = details.split(":")[1].strip()
-		if "Enabled" in enable:
-		    print "IEEE80211h is Enabled in Radio 2.4Ghz"
-		    oldEnable = 1
-		    newEnable = 0
-		else:
-		    print "IEEE80211h is Disabled in Radio 2.4Ghz"
-		    oldEnable = 0
-		    newEnable = 1
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            enable = details.split(":")[1].strip()
+            if "Enabled" in enable:
+                print("IEEE80211h is Enabled in Radio 2.4Ghz")
+                oldEnable = 1
+                newEnable = 0
+            else:
+                print("IEEE80211h is Disabled in Radio 2.4Ghz")
+                oldEnable = 0
+                newEnable = 1
 
-		setMethod = "setRadioIEEE80211hEnabled"
-		#Toggle the enable status using set
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
+            setMethod = "setRadioIEEE80211hEnabled"
+            #Toggle the enable status using set
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, newEnable, setMethod)
 
-		if expectedresult in actualresult :
-		    print "Enable state toggled using set"
-		    #Get the New enable status
-		    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
+            if expectedresult in actualresult :
+                print("Enable state toggled using set")
+                #Get the New enable status
+                tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
 
-		    if expectedresult in actualresult and enable not in details.split(":")[1].strip():
-			print "getRadioIEEE80211hEnabled Success, verified along with setRadioIEEE80211hEnabled() api"
-			#Revert back to original Enable status
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
+                if expectedresult in actualresult and enable not in details.split(":")[1].strip():
+                    print("getRadioIEEE80211hEnabled Success, verified along with setRadioIEEE80211hEnabled() api")
+                    #Revert back to original Enable status
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, oldEnable, setMethod)
 
-			if expectedresult in actualresult :
-			    print "Enable status reverted back";
-			else:
-			    print "Couldn't revert enable status"
-			    tdkTestObj.setResultStatus("FAILURE");
-		    else:
-			print "getRadioIEEE80211hEnabled() failed after set function"
-			tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    print "setRadioIEEE80211hEnabled() failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "getRadioIEEE80211hEnabled() failed"
-		tdkTestObj.setResultStatus("FAILURE");
+                    if expectedresult in actualresult :
+                        print("Enable status reverted back");
+                    else:
+                        print("Couldn't revert enable status")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("getRadioIEEE80211hEnabled() failed after set function")
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("setRadioIEEE80211hEnabled() failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getRadioIEEE80211hEnabled() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

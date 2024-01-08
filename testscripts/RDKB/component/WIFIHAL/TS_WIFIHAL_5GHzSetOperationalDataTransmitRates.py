@@ -54,8 +54,8 @@ methodName : setOperationalDataTransmitRates
 radioIndex : 1</input_parameters>
     <automation_approch>1. Load wifihal module
 2. Invoke wifi_getRadioOperationalDataTransmitRates()  to get the current data transmit rate
-3.Get the supported transmit rate using wifi_getRadioSupportedDataTransmitRates()  
-4.Invoke wifi_setRadioOperationalDataTransmitRates() to set a value present in SupportedDataTransmitRates 
+3.Get the supported transmit rate using wifi_getRadioSupportedDataTransmitRates()
+4.Invoke wifi_setRadioOperationalDataTransmitRates() to set a value present in SupportedDataTransmitRates
 5. Get the previously set OperationalDataTransmitRate and verify
 5. Unload wifihal module</automation_approch>
     <except_output>OperationalDataTransmitRates set using wifi_setRadioOperationalDataTransmitRates() should be obtained with get api wifi_getRadioOperationalDataTransmitRates()</except_output>
@@ -69,8 +69,8 @@ radioIndex : 1</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from wifiUtility import *
 
 radio = "5G"
@@ -85,7 +85,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetOperationalDataTransmitRates');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,69 +93,68 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
 
-	    expectedresult="SUCCESS";
-	    radioIndex = idx;
-	    getMethod = "getSupportedDataTransmitRates"
-	    primitive = "WIFIHAL_GetOrSetParamStringValue"
-	    #Invoke the api wifi_getRadioSupportedDataTransmitRates() using wifiUtility function
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+        expectedresult="SUCCESS";
+        radioIndex = idx;
+        getMethod = "getSupportedDataTransmitRates"
+        primitive = "WIFIHAL_GetOrSetParamStringValue"
+        #Invoke the api wifi_getRadioSupportedDataTransmitRates() using wifiUtility function
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
-	    if expectedresult in actualresult :
-		supportedRates = details.split(":")[1].strip().split(",")
+        if expectedresult in actualresult :
+            supportedRates = details.split(":")[1].strip().split(",")
 
-		getMethod = "getOperationalDataTransmitRates"
-		#Invoke the api wifi_getRadioOperationalDataTransmitRates() using wifiUtility function
-		tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-		if expectedresult in actualresult :
-		    operationalRates = details.split(":")[1].strip()
+            getMethod = "getOperationalDataTransmitRates"
+            #Invoke the api wifi_getRadioOperationalDataTransmitRates() using wifiUtility function
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+            if expectedresult in actualresult :
+                operationalRates = details.split(":")[1].strip()
 
-		    for setOperRate in supportedRates:
-			#Invoke the api wifi_setRadioOperationalDataTransmitRates() using wifiUtility function
-			setMethod = "setOperationalDataTransmitRates"
-			print "Set OperationalDataTransmitRate = %s"%setOperRate
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setOperRate, setMethod)
-			if expectedresult in actualresult :
-			    print "OperationalDataTransmitRates set successfully with value %s"%setOperRate
+                for setOperRate in supportedRates:
+                    #Invoke the api wifi_setRadioOperationalDataTransmitRates() using wifiUtility function
+                    setMethod = "setOperationalDataTransmitRates"
+                    print("Set OperationalDataTransmitRate = %s"%setOperRate)
+                    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, setOperRate, setMethod)
+                    if expectedresult in actualresult :
+                        print("OperationalDataTransmitRates set successfully with value %s"%setOperRate)
 
-			    getMethod = "getOperationalDataTransmitRates"
-			    #Invoke the api wifi_getRadioOperationalDataTransmitRates() using wifiUtility function
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
-			    getOperRate = details.split(":")[1].strip()
-			    #Compare the results of set and get
-			    if expectedresult in actualresult and setOperRate == getOperRate:
-				print "SUCCESS: Set and get OperationalDataTransmitRates are the same"
-				tdkTestObj.setResultStatus("SUCCESS");
-			    else:
-				print "FAILURE: Set and get OperationalDataTransmitRates are not the same"
-				tdkTestObj.setResultStatus("FAILURE");
+                        getMethod = "getOperationalDataTransmitRates"
+                        #Invoke the api wifi_getRadioOperationalDataTransmitRates() using wifiUtility function
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
+                        getOperRate = details.split(":")[1].strip()
+                        #Compare the results of set and get
+                        if expectedresult in actualresult and setOperRate == getOperRate:
+                            print("SUCCESS: Set and get OperationalDataTransmitRates are the same")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("FAILURE: Set and get OperationalDataTransmitRates are not the same")
+                            tdkTestObj.setResultStatus("FAILURE");
 
-			    #Reverting the OperationalDataTransmitRate to initial value
-			    setMethod = "setOperationalDataTransmitRates"
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, operationalRates, setMethod)
-			    if expectedresult in actualresult :
-				print "Successfully reverted to initial value"
-				tdkTestObj.setResultStatus("SUCCESS");
-			    else:
-				print "Unable to revert to initial value"
-				tdkTestObj.setResultStatus("FAILURE");
-			else:
-			    print "Unable to set OperationalDataTransmitRates with value %s"%setOperRate
-			    tdkTestObj.setResultStatus("FAILURE");
-			break;
-		else:
-		    print "getOperationalDataTransmitRates() call failed"
-		    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		print "getSupportedDataTransmitRates() call failed"
-		tdkTestObj.setResultStatus("FAILURE");
+                        #Reverting the OperationalDataTransmitRate to initial value
+                        setMethod = "setOperationalDataTransmitRates"
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, operationalRates, setMethod)
+                        if expectedresult in actualresult :
+                            print("Successfully reverted to initial value")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                        else:
+                            print("Unable to revert to initial value")
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("Unable to set OperationalDataTransmitRates with value %s"%setOperRate)
+                        tdkTestObj.setResultStatus("FAILURE");
+                    break;
+            else:
+                print("getOperationalDataTransmitRates() call failed")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("getSupportedDataTransmitRates() call failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

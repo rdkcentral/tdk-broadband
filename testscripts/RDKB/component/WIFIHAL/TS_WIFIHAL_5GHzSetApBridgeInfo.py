@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzSetApBridgeInfo');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -114,7 +114,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which associated to this Script
@@ -129,11 +129,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the ApBridgeInfo for 5GHz";
-            print "EXPECTED RESULT 1: Should get the ApBridgeInfo for 5GHz";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Get the ApBridgeInfo for 5GHz");
+            print("EXPECTED RESULT 1: Should get the ApBridgeInfo for 5GHz");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             bridgeName = details.split(":")[1].split(",")[0].split("=")[1];
             IP = details.split(":")[1].split(",")[1].split("=")[1];
             subnet = details.split(":")[1].split(",")[2].split("=")[1];
@@ -153,11 +153,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the ApBridgeInfo for 5GHz";
-                print "EXPECTED RESULT 2: Should set the ApBridgeInfo for 5GHz";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the ApBridgeInfo for 5GHz");
+                print("EXPECTED RESULT 2: Should set the ApBridgeInfo for 5GHz");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Prmitive test case which associated to this Script
                 tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetApBridgeInfo');
@@ -171,20 +171,20 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the previously set ApBridgeInfo for 5GHz";
-                    print "EXPECTED RESULT 3: Should get the previously set ApBridgeInfo for 5GHz";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Get the previously set ApBridgeInfo for 5GHz");
+                    print("EXPECTED RESULT 3: Should get the previously set ApBridgeInfo for 5GHz");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the previously set ApBridgeInfo for 5GHz";
-                    print "EXPECTED RESULT 3: Should get the previously set ApBridgeInfo for 5GHz";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Get the previously set ApBridgeInfo for 5GHz");
+                    print("EXPECTED RESULT 3: Should get the previously set ApBridgeInfo for 5GHz");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-	        #Revert the ApBridgeInfo to intiial values
+                #Revert the ApBridgeInfo to intiial values
                 #Prmitive test case which associated to this Script
                 tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetApBridgeInfo');
                 #Giving the method name to invoke the api wifi_setApBridgeInfo()
@@ -200,26 +200,26 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Successfully reverted to initial values"
+                    print("Successfully reverted to initial values")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to revert to initial value"
+                    print("Unable to revert to initial value")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the ApBridgeInfo for 5GHz";
-                print "EXPECTED RESULT 2: Should set the ApBridgeInfo for 5GHz";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the ApBridgeInfo for 5GHz");
+                print("EXPECTED RESULT 2: Should set the ApBridgeInfo for 5GHz");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the ApBridgeInfo for 5GHz";
-            print "EXPECTED RESULT 1: Should get the ApBridgeInfo for 5GHz";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Get the ApBridgeInfo for 5GHz");
+            print("EXPECTED RESULT 1: Should get the ApBridgeInfo for 5GHz");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

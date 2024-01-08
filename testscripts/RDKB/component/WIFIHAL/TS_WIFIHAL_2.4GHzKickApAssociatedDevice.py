@@ -89,8 +89,8 @@ wifiobj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzKickApAssociatedDevice');
 loadmodulestatus =obj.getLoadModuleResult();
 wifiloadmodulestatus = wifiobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,10 +100,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
-	radioIndex = idx
+        radioIndex = idx
         tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamULongValue');
         tdkTestObj.addParameter("radioIndex",radioIndex);
         tdkTestObj.addParameter("methodName","getApNumDevicesAssociated");
@@ -111,34 +111,34 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-	if expectedresult in actualresult:
-	    ApNumDevices = details.split(":")[1].strip();
-	    if  ApNumDevices != "" and int(ApNumDevices) > 0:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: SUCCESS"
+        if expectedresult in actualresult:
+            ApNumDevices = details.split(":")[1].strip();
+            if  ApNumDevices != "" and int(ApNumDevices) > 0:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: SUCCESS")
 
                 #Find an associated MAC to be kicked
-                print "TEST STEP 2: Get an AssociatedDevice MAC to be kicked "
-                print "EXPECTED RESULT 2: Should successfully get the  AssociatedDevice MAC"
-        	tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
-        	tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress");
-        	expectedresult="SUCCESS";
-        	tdkTestObj.executeTestCase(expectedresult);
-        	actualresult = tdkTestObj.getResult();
-        	details = tdkTestObj.getResultDetails();
-        	if expectedresult in actualresult :
-                    print "ACTUAL RESULT 2: Successfully gets the AssociatedDevice MAC ";
-                    print "[TEST EXECUTION RESULT] 2: SUCCESS";
-            	    tdkTestObj.setResultStatus("SUCCESS");
-            	    macAddress = details.split("VALUE:")[1].split(' ')[0];
-		    print "Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress :",macAddress;
+                print("TEST STEP 2: Get an AssociatedDevice MAC to be kicked ")
+                print("EXPECTED RESULT 2: Should successfully get the  AssociatedDevice MAC")
+                tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
+                tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress");
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult :
+                    print("ACTUAL RESULT 2: Successfully gets the AssociatedDevice MAC ");
+                    print("[TEST EXECUTION RESULT] 2: SUCCESS");
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    macAddress = details.split("VALUE:")[1].split(' ')[0];
+                    print("Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress :",macAddress);
 
-                    print "TEST STEP 3: Kick the MAC %s using wifi_kickApAssociatedDevice()"%macAddress
-                    print "EXPECTED RESULT 3: Should successfully Kick the MAC %s"%macAddress
+                    print("TEST STEP 3: Kick the MAC %s using wifi_kickApAssociatedDevice()"%macAddress)
+                    print("EXPECTED RESULT 3: Should successfully Kick the MAC %s"%macAddress)
                     tdkTestObj = obj.createTestStep('WIFIHAL_GetOrSetParamStringValue');
                     tdkTestObj.addParameter("radioIndex",radioIndex);
                     tdkTestObj.addParameter("methodName","kickApAssociatedDevice");
@@ -148,68 +148,68 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
                     details = tdkTestObj.getResultDetails();
 
                     if expectedresult in actualresult:
-                        print "ACTUAL RESULT 3: wifi_kickApAssociatedDevice() returns success";
-                        print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                        print("ACTUAL RESULT 3: wifi_kickApAssociatedDevice() returns success");
+                        print("[TEST EXECUTION RESULT] 3: SUCCESS");
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         getMethod = "getApNumDevicesAssociated"
                         primitive = 'WIFIHAL_GetOrSetParamULongValue'
                         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, 0, getMethod)
                         if expectedresult in actualresult:
-                             ApNumDevices = details.split(":")[1].strip();
-                             tdkTestObj.setResultStatus("SUCCESS");
-                             print "ApNumDevicesAssociated : %s"%ApNumDevices
-                             if int(ApNumDevices) > 0:
-                                 print "TEST STEP 4: Check if Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is no longer ",macAddress
-                                 print "EXPECTED RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress should not be equal to ",macAddress
-                                 tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
-                                 tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress");
-                                 expectedresult="SUCCESS";
-                                 tdkTestObj.executeTestCase(expectedresult);
-                                 actualresult = tdkTestObj.getResult();
-                                 details = tdkTestObj.getResultDetails();
-                                 if expectedresult in actualresult:
-                                     newMacAddress = details.split("VALUE:")[1].split(' ')[0];
-                                     print "Device.WiFi.AccessPoint.1.AssociatedDevice.x.MACAddress :",newMacAddress;
-                                     if newMacAddress != macAddress:
-                                         print "ACTUAL RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is not equal to kicked MAC ",macAddress
-                                         print "[TEST EXECUTION RESULT] 4: SUCCESS";
-                                         tdkTestObj.setResultStatus("SUCCESS");
-                                     else:
-                                         print "ACTUAL RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is equal to kicked MAC",macAddress
-                                         print "[TEST EXECUTION RESULT] 4: FAILURE";
-                                         tdkTestObj.setResultStatus("FAILURE");
-                                 else:
-                                     print "ACTUAL RESULT : Failed to get the AssociatedDevice MAC ";
-                                     print "[TEST EXECUTION RESULT] : FAILURE";
-                                     tdkTestObj.setResultStatus("FAILURE");
-                             else:
-                                 tdkTestObj.setResultStatus("SUCCESS");
-                                 print "Received the number of Ap Associated Devices as 0. Kick operation is SUCCESS"
+                            ApNumDevices = details.split(":")[1].strip();
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                            if int(ApNumDevices) > 0:
+                                print("TEST STEP 4: Check if Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is no longer ",macAddress)
+                                print("EXPECTED RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress should not be equal to ",macAddress)
+                                tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
+                                tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress");
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult:
+                                    newMacAddress = details.split("VALUE:")[1].split(' ')[0];
+                                    print("Device.WiFi.AccessPoint.1.AssociatedDevice.x.MACAddress :",newMacAddress);
+                                    if newMacAddress != macAddress:
+                                        print("ACTUAL RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is not equal to kicked MAC ",macAddress)
+                                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                    else:
+                                        print("ACTUAL RESULT 4: Device.WiFi.AccessPoint.1.AssociatedDevice.1.MACAddress is equal to kicked MAC",macAddress)
+                                        print("[TEST EXECUTION RESULT] 4: FAILURE");
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                else:
+                                    print("ACTUAL RESULT : Failed to get the AssociatedDevice MAC ");
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                                    tdkTestObj.setResultStatus("FAILURE");
+                            else:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("Received the number of Ap Associated Devices as 0. Kick operation is SUCCESS")
                         else:
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "wifi_getApNumDevicesAssociated() call failed"
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("wifi_getApNumDevicesAssociated() call failed")
                     else:
-                        print "ACTUAL RESULT 3: wifi_kickApAssociatedDevice() returned failure";
-                        print "[TEST EXECUTION RESULT] 3: FAILURE";
+                        print("ACTUAL RESULT 3: wifi_kickApAssociatedDevice() returned failure");
+                        print("[TEST EXECUTION RESULT] 3: FAILURE");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "ACTUAL RESULT 2: Failed to get the AssociatedDevice MAC ";
-                    print "[TEST EXECUTION RESULT] 2: FAILURE";
-            	    tdkTestObj.setResultStatus("FAILURE");
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 1: Get the number of Ap Associated Devices"
-		print "EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0"
-		print "ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0"
-		print "ApNumDevicesAssociated : %s"%ApNumDevices
-		print "TEST EXECUTION RESULT 1: FAILURE"
-	else:
+                    print("ACTUAL RESULT 2: Failed to get the AssociatedDevice MAC ");
+                    print("[TEST EXECUTION RESULT] 2: FAILURE");
+                    tdkTestObj.setResultStatus("FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the number of Ap Associated Devices")
+                print("EXPECTED RESULT 1: Should get the number of Ap Associated Devices as greater than 0")
+                print("ACTUAL RESULT 1: Received the number of Ap Associated Devices as greater than 0")
+                print("ApNumDevicesAssociated : %s"%ApNumDevices)
+                print("TEST EXECUTION RESULT 1: FAILURE")
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-	    print "getApNumDevicesAssociated() call failed"
+            print("getApNumDevicesAssociated() call failed")
     obj.unloadModule("wifihal");
     wifiobj.unloadModule("wifiagent");
 else:
     obj.setLoadModuleStatus("FAILURE");
     wifiobj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

@@ -107,87 +107,87 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIHAL_2.4GHzSetApSecurityModeEnabled_Enterprise');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         expectedresult="SUCCESS";
-	apIndex = idx;
-	getMethod = "getApSecurityModesSupported"
-	primitive = 'WIFIHAL_GetOrSetParamStringValue'
+        apIndex = idx;
+        getMethod = "getApSecurityModesSupported"
+        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	#Calling the method to execute wifi_getApSecurityModeSupported()
-	tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+        #Calling the method to execute wifi_getApSecurityModeSupported()
+        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
         if expectedresult in actualresult:
             supportedModes = details.split(":")[1].strip()
-	    supportedModes = supportedModes.split(',')
+            supportedModes = supportedModes.split(',')
             supportedModes = [x.strip(' ') for x in supportedModes]
             expectedresult="SUCCESS";
-	    apIndex = idx;
+            apIndex = idx;
             getMethod = "getApSecurityModeEnabled"
-	    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+            primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-	    #Calling the method to execute wifi_getApSecurityModeEnabled()
-	    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+            #Calling the method to execute wifi_getApSecurityModeEnabled()
+            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
             if expectedresult in actualresult:
-		initMode = details.split(":")[1].strip()
+                initMode = details.split(":")[1].strip()
                 if initMode in supportedModes:
                     tdkTestObj.setResultStatus("SUCCESS");
-		    print "Initial ApSecurityMode is from the supported modes"
-                    EnterpriseModes = list(filter(lambda x: 'Enterprise' in x, supportedModes))
-                    print "Setting and checking the Enterprise security modes : ",EnterpriseModes
+                    print("Initial ApSecurityMode is from the supported modes")
+                    EnterpriseModes = list([x for x in supportedModes if 'Enterprise' in x])
+                    print("Setting and checking the Enterprise security modes : ",EnterpriseModes)
                     for setMode in EnterpriseModes :
-                        print "Setting the ApSecurityMode to ",setMode
+                        print("Setting the ApSecurityMode to ",setMode)
                         expectedresult="SUCCESS";
-			apIndex = idx;
-			setMethod = "setApSecurityModeEnabled"
-			primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                        apIndex = idx;
+                        setMethod = "setApSecurityModeEnabled"
+                        primitive = 'WIFIHAL_GetOrSetParamStringValue'
 
-			#Calling the method to execute wifi_setApSecurityModeEnabled()
-			tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
+                        #Calling the method to execute wifi_setApSecurityModeEnabled()
+                        tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, setMode, setMethod)
 
                         if expectedresult in actualresult:
-			    expectedresult="SUCCESS";
-			    apIndex = idx;
-		            getMethod = "getApSecurityModeEnabled"
-			    primitive = 'WIFIHAL_GetOrSetParamStringValue'
+                            expectedresult="SUCCESS";
+                            apIndex = idx;
+                            getMethod = "getApSecurityModeEnabled"
+                            primitive = 'WIFIHAL_GetOrSetParamStringValue'
                             #Calling the method to execute wifi_getApSecurityModeEnabled()
-			    tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
+                            tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, "0", getMethod)
 
                             if expectedresult in actualresult:
-				finalMode = details.split(":")[1].strip()
+                                finalMode = details.split(":")[1].strip()
                                 if finalMode == setMode:
-				    tdkTestObj.setResultStatus("SUCCESS");
-				    print "TEST STEP: Compare the set and get values of ApSecurityModeEnabled"
-			            print "EXPECTED RESULT: Set and get values of ApSecurityModeEnabled should be same"
-				    print "ACTUAL RESULT: Set and get values of ApSecurityModeEnabled are the same"
-			            print "setMode = ",setMode
-				    print "getMode = ",finalMode
-				    print "TEST EXECUTION RESULT : SUCCESS"
-			        else:
-				    tdkTestObj.setResultStatus("FAILURE");
-			            print "TEST STEP: Compare the set and get values of ApSecurityModeEnabled"
-			            print "EXPECTED RESULT: Set and get values of ApSecurityModeEnabled should be same"
-				    print "ACTUAL RESULT: Set and get values of ApSecurityModeEnabled are NOT the same"
-				    print "setMode = ",setMode
-				    print "getMode = ",finalMode
-				    print "TEST EXECUTION RESULT : FAILURE"
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP: Compare the set and get values of ApSecurityModeEnabled")
+                                    print("EXPECTED RESULT: Set and get values of ApSecurityModeEnabled should be same")
+                                    print("ACTUAL RESULT: Set and get values of ApSecurityModeEnabled are the same")
+                                    print("setMode = ",setMode)
+                                    print("getMode = ",finalMode)
+                                    print("TEST EXECUTION RESULT : SUCCESS")
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP: Compare the set and get values of ApSecurityModeEnabled")
+                                    print("EXPECTED RESULT: Set and get values of ApSecurityModeEnabled should be same")
+                                    print("ACTUAL RESULT: Set and get values of ApSecurityModeEnabled are NOT the same")
+                                    print("setMode = ",setMode)
+                                    print("getMode = ",finalMode)
+                                    print("TEST EXECUTION RESULT : FAILURE")
 
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "wifi_getApSecurityModeEnabled() call failed after set operation"
+                                print("wifi_getApSecurityModeEnabled() call failed after set operation")
 
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "wifi_setApSecurityModeEnabled() call failed"
+                            print("wifi_setApSecurityModeEnabled() call failed")
 
                     expectedresult="SUCCESS";
                     apIndex = idx;
@@ -196,25 +196,24 @@ if "SUCCESS" in loadmodulestatus.upper():
                     #Revert the ApSecurityModeEnabled back to initial value
                     tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, apIndex, initMode, setMethod)
                     if expectedresult in actualresult:
-                        print "Successfully reverted the ApSecurityModeEnabled to initial value"
+                        print("Successfully reverted the ApSecurityModeEnabled to initial value")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else :
-                        print "Unable to revert the ApSecurityModeEnabled"
+                        print("Unable to revert the ApSecurityModeEnabled")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "Initial ApSecurityMode is not in supported modes"
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("Initial ApSecurityMode is not in supported modes")
 
             else:
-		    print "wifi_getApSecurityModeEnabled() failed"
-		    tdkTestObj.setResultStatus("FAILURE");
+                print("wifi_getApSecurityModeEnabled() failed")
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-		print "wifi_getApSecurityModeSupported() failed"
-		tdkTestObj.setResultStatus("FAILURE");
+            print("wifi_getApSecurityModeSupported() failed")
+            tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("wifihal");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

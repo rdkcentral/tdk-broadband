@@ -99,16 +99,16 @@ obj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetAssociatedDeviceDetail');
 wifiobj.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetAssociatedDeviceDetail');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 sysloadmodulestatus = wifiobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     wifiobj.setLoadModuleStatus("SUCCESS");
     tdkTestObjTemp, idx = getIndex(obj, radio);
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #check the number of associated devices to 5G
@@ -121,83 +121,83 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
             devCount = int(details.split("VALUE:")[1].split(' ')[0]);
-            print "TEST STEP 1 : Get the number of the connected client ";
-            print "ACTUAL RESULT 1: Should get the number of connected client ";
-            print "EXPECTED RESULT 1 :",devCount;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    if  devCount :
-	        for devIndex in range(1,devCount+1):
-	     	    #Prmitive test case which associated to this Script
+            print("TEST STEP 1 : Get the number of the connected client ");
+            print("ACTUAL RESULT 1: Should get the number of connected client ");
+            print("EXPECTED RESULT 1 :",devCount);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            if  devCount :
+                for devIndex in range(1,devCount+1):
+                    #Prmitive test case which associated to this Script
                     tdkTestObj = obj.createTestStep('WIFIHAL_GetAssociatedDeviceDetail');
-               	    tdkTestObj.addParameter("apIndex", idx);
-               	    tdkTestObj.addParameter("devIndex", devIndex);
-               	    expectedresult="SUCCESS";
-               	    tdkTestObj.executeTestCase(expectedresult);
-               	    actualresult = tdkTestObj.getResult();
-               	    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-		    mac = details.split(": ")[1].split(" ")[0].strip()
-               	    if expectedresult in actualresult :
-		        tdkTestObj.setResultStatus("SUCCESS");
-                	print "TEST STEP 2 : Get the AssociatedDevice Detail using getAssociatedDeviceDetail() api"
-               		print "EXPECTED RESULT 2 : Should successfully get the  AssociatedDevice Details"
-               		print "ACTUAL RESULT 2: Successfully gets the AssociatedDevice Details of Device Index ",devIndex;
-               		print "Details: ",details;
-			#Get the result of execution
-               		print "[TEST EXECUTION RESULT] : SUCCESS";
-			#check the MAC address of associated devices to 5G
-        		tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
-        		tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex);
-        		expectedresult="SUCCESS";
-       			tdkTestObj.executeTestCase(expectedresult);
-       			actualresult = tdkTestObj.getResult();
-       			details = tdkTestObj.getResultDetails();
-       			if expectedresult in actualresult :
-        		    tdkTestObj.setResultStatus("SUCCESS");
-            		    macAddress = details.split("VALUE:")[1].split(' ')[0];
-	  		    print "Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress :" %devIndex,macAddress;
-			    print "Mac address from api : ",mac;
-			    if mac == macAddress.lower() :
-			        tdkTestObj.setResultStatus("SUCCESS");
-				print "TEST STEP 3 :  check the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress"%devIndex
-				print "EXPECTED RESULT 3 : Should successfully matches the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress " %devIndex
-			        print "ACTUAL RESULT 3 : Successfully matches MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex;
-		                #Get the result of execution
-                		print "[TEST EXECUTION RESULT] : SUCCESS";
-			    else :
-			        tdkTestObj.setResultStatus("FAILURE");
-				print "TEST STEP 3 :  check the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex
-			        print "EXPECTED RESULT 3 : Should successfully matches the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress " %devIndex
-			        print "ACTUAL RESULT 3 : Failed to match MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex;
-				#Get the result of execution
-                		print "[TEST EXECUTION RESULT] : FAILURE";
-		    	else:
-		            tdkTestObj.setResultStatus("FAILURE");
-             		    print "Not able to  retrieve Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex
+                    tdkTestObj.addParameter("apIndex", idx);
+                    tdkTestObj.addParameter("devIndex", devIndex);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                    mac = details.split(": ")[1].split(" ")[0].strip()
+                    if expectedresult in actualresult :
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 2 : Get the AssociatedDevice Detail using getAssociatedDeviceDetail() api")
+                        print("EXPECTED RESULT 2 : Should successfully get the  AssociatedDevice Details")
+                        print("ACTUAL RESULT 2: Successfully gets the AssociatedDevice Details of Device Index ",devIndex);
+                        print("Details: ",details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        #check the MAC address of associated devices to 5G
+                        tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
+                        tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex);
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult :
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            macAddress = details.split("VALUE:")[1].split(' ')[0];
+                            print("Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress :" %devIndex,macAddress);
+                            print("Mac address from api : ",mac);
+                            if mac == macAddress.lower() :
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 3 :  check the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress"%devIndex)
+                                print("EXPECTED RESULT 3 : Should successfully matches the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress " %devIndex)
+                                print("ACTUAL RESULT 3 : Successfully matches MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else :
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 3 :  check the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex)
+                                print("EXPECTED RESULT 3 : Should successfully matches the MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress " %devIndex)
+                                print("ACTUAL RESULT 3 : Failed to match MAC from wifi_getAssociatedDeviceDetail api result with Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Not able to  retrieve Device.WiFi.AccessPoint.2.AssociatedDevice.%d.MACAddress" %devIndex)
                             #Get the result of execution
-                	    print "[TEST EXECUTION RESULT] : FAILURE";
-		    else:
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                	print "TEST STEP 2: Get the AssociatedDevice Detail using getAssociatedDeviceDetail() api"
-               		print "EXPECTED RESULT 2 : Should successfully get the  AssociatedDevice Details"
-               		print "ACTUAL RESULT 2: Failed to get the  AssociatedDevice Details of Device Index ",devIndex;
-               		print "Details: %s"%details
-               		#Get the result of execution
-               		print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-                print "Not able to  get the number of connected client  as no device is connected or AssociatedDeviceNumberOfEntries received from TR181 param is zero "
-	        #Get the result of execution
-               	print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                        print("TEST STEP 2: Get the AssociatedDevice Detail using getAssociatedDeviceDetail() api")
+                        print("EXPECTED RESULT 2 : Should successfully get the  AssociatedDevice Details")
+                        print("ACTUAL RESULT 2: Failed to get the  AssociatedDevice Details of Device Index ",devIndex);
+                        print("Details: %s"%details)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("Not able to  get the number of connected client  as no device is connected or AssociatedDeviceNumberOfEntries received from TR181 param is zero ")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1 : Get number of associated devices using TR181 param"
-            print "EXPECTED RESULT 1: should get number of associated devices"
-            print "ACTUAL RESULT 1: Failed to get the number of associated devices"
-	    #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1 : Get number of associated devices using TR181 param")
+            print("EXPECTED RESULT 1: should get number of associated devices")
+            print("ACTUAL RESULT 1: Failed to get the number of associated devices")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifihal");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

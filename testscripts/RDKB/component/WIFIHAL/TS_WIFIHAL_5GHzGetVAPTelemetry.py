@@ -85,8 +85,8 @@ obj1.configureTestCase(ip,port,'TS_WIFIHAL_5GHzGetVAPTelemetry');
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,12 +96,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     ## Check if a invalid index is returned
     if idx == -1:
-        print "Failed to get radio index for radio %s\n" %radio;
+        print("Failed to get radio index for radio %s\n" %radio);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Get the VAPTelemetry details
-        print "TEST STEP 1: Invoke the HAL API wifi_getVAPTelemetry() successfully";
-        print "EXPECTED RESULT 1: Should invoke wifi_getVAPTelemetry() successfully";
+        print("TEST STEP 1: Invoke the HAL API wifi_getVAPTelemetry() successfully");
+        print("EXPECTED RESULT 1: Should invoke wifi_getVAPTelemetry() successfully");
         tdkTestObj = obj.createTestStep("WIFIHAL_GetVAPTelemetry");
         tdkTestObj.addParameter("apIndex", idx);
         tdkTestObj.executeTestCase(expectedresult);
@@ -110,24 +110,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 1: wifi_getVAPTelemetry() invoked successfully";
+            print("ACTUAL RESULT 1: wifi_getVAPTelemetry() invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "TEST STEP 2: Get the value of VAP Tx Overflow";
-            print "EXPECTED RESULT 2: Should get the value of VAP Tx Overflow";
+            print("TEST STEP 2: Get the value of VAP Tx Overflow");
+            print("EXPECTED RESULT 2: Should get the value of VAP Tx Overflow");
 
             if details != "":
-                print "Details : %s" %details;
+                print("Details : %s" %details);
                 tx_overflow = int(details.split("= ")[1]);
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Value of Tx Overflow is : %d" %tx_overflow;
+                print("ACTUAL RESULT 2: Value of Tx Overflow is : %d" %tx_overflow);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Get the value with TR-181 parameter
-                print "TEST STEP 3: Get the TR181 value of Device.WiFi.AccessPoint.2.X_COMCAST-COM_TXOverflow";
-                print "EXPECTED RESULT 3: Should get the TR181 value of Device.WiFi.AccessPoint.2.X_COMCAST-COM_TXOverflow";
+                print("TEST STEP 3: Get the TR181 value of Device.WiFi.AccessPoint.2.X_COMCAST-COM_TXOverflow");
+                print("EXPECTED RESULT 3: Should get the TR181 value of Device.WiFi.AccessPoint.2.X_COMCAST-COM_TXOverflow");
                 tdkTestObj = obj1.createTestStep('WIFIAgent_Get');
                 tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.2.X_COMCAST-COM_TXOverflow");
                 tdkTestObj.executeTestCase(expectedresult);
@@ -138,39 +138,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     value = int(details.split("VALUE:")[1].split(' ')[0]);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: The TR181 value is fetched successfully : %d" %value;
+                    print("ACTUAL RESULT 3: The TR181 value is fetched successfully : %d" %value);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Compare the values retrieved via HAL API and TR-181
                     if value == tx_overflow :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "The TR181 value is the same as the value retrieved from HAL API";
+                        print("The TR181 value is the same as the value retrieved from HAL API");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "The TR181 value is not the same as the value retrieved from HAL API";
+                        print("The TR181 value is not the same as the value retrieved from HAL API");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: The TR181 value is not fetched successfully";
+                    print("ACTUAL RESULT 3: The TR181 value is not fetched successfully");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: Value of Tx Overflow is : %d" %details;
+                print("ACTUAL RESULT 2: Value of Tx Overflow is : %d" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 1: wifi_getVAPTelemetry() was not invoked successfully";
+            print("ACTUAL RESULT 1: wifi_getVAPTelemetry() was not invoked successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

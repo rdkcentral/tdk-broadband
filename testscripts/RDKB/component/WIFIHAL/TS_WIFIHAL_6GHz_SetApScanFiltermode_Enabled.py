@@ -82,8 +82,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIHAL_6GHz_SetApScanFiltermode_Enabled');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 radio ="6G"
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     sysobj.setLoadModuleStatus("SUCCESS");
@@ -94,43 +94,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObjTemp, radioidx = getIndex(obj, radio);
 
     if (idx == -1) and (radioidx ==-1):
-        print "Failed to get the Access Point index";
+        print("Failed to get the Access Point index");
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #Prmitive test case which associated to this Script
-	tdkTestObj = obj.createTestStep('WIFIHAL_GetNeighboringWiFiDiagnosticResult2');
-	tdkTestObj.addParameter("radioIndex", radioidx);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult :
-	    details = details.split(":ap_")[1].strip();
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 1 : Get the NeighboringWiFiDiagnosticResult"
-	    print "EXPECTED RESULT 1 : Should successfully get the NeighboringWiFiDiagnosticResult"
-	    print "ACTUAL RESULT 1 : Successfully gets the NeighboringWiFiDiagnosticResult"
-	    print "Details: "
-	    detailList = details.split(",")
-	    org_ssidname = details.split(",")[0].split("=")[1].strip()
-	    detailApList = details.split(",ap_")
-	    for i in range(0,17):
-	        print detailApList[i]
-	    org_output_array_size = detailList[-1].split('=')[1];
-	    print "Identified %s neighboring access points"%org_output_array_size
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        tdkTestObj = obj.createTestStep('WIFIHAL_GetNeighboringWiFiDiagnosticResult2');
+        tdkTestObj.addParameter("radioIndex", radioidx);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult :
+            details = details.split(":ap_")[1].strip();
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1 : Get the NeighboringWiFiDiagnosticResult")
+            print("EXPECTED RESULT 1 : Should successfully get the NeighboringWiFiDiagnosticResult")
+            print("ACTUAL RESULT 1 : Successfully gets the NeighboringWiFiDiagnosticResult")
+            print("Details: ")
+            detailList = details.split(",")
+            org_ssidname = details.split(",")[0].split("=")[1].strip()
+            detailApList = details.split(",ap_")
+            for i in range(0,17):
+                print(detailApList[i])
+            org_output_array_size = detailList[-1].split('=')[1];
+            print("Identified %s neighboring access points"%org_output_array_size)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
             if org_ssidname != "" and org_ssidname != "OutOfService" and len(org_ssidname) <= 32:
-	        tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP 2 : Get a valid neighboring AP"
-		print "EXPECTED RESULT 2 : Should get a valid neighboring AP"
-		print "ACTUAL RESULT 2 : Successfully got a valid neighboring AP"
-	        print "ssid Name: ",org_ssidname;
-	        #Get the result of execution
-		print "[TEST EXECUTION RESULT] 2: SUCCESS";
-	        #Prmitive test case which is associated to this Script
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2 : Get a valid neighboring AP")
+                print("EXPECTED RESULT 2 : Should get a valid neighboring AP")
+                print("ACTUAL RESULT 2 : Successfully got a valid neighboring AP")
+                print("ssid Name: ",org_ssidname);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
+                #Prmitive test case which is associated to this Script
                 tdkTestObj = obj.createTestStep('WIFIHAL_SetApScanFilter');
-	        tdkTestObj.addParameter("apIndex", idx);
+                tdkTestObj.addParameter("apIndex", idx);
                 tdkTestObj.addParameter("methodName", "setApScanFilter");
                 tdkTestObj.addParameter("mode", 1);
                 tdkTestObj.addParameter("essid", org_ssidname);
@@ -138,85 +138,85 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-	        if expectedresult in actualresult :
-	            tdkTestObj.setResultStatus("SUCCESS");
-	            print "TEST STEP 3: Set AccessPoint scan filter mode as WIFI_SCANFILTER_MODE_ENABLED"
-                    print "EXPECTED RESULT 3: wifi_setapscanfilter api call should be SUCCESS"
-                    print "ACTUAL RESULT 3: Successfully called wifi_setapscanfilter "
+                if expectedresult in actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Set AccessPoint scan filter mode as WIFI_SCANFILTER_MODE_ENABLED")
+                    print("EXPECTED RESULT 3: wifi_setapscanfilter api call should be SUCCESS")
+                    print("ACTUAL RESULT 3: Successfully called wifi_setapscanfilter ")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] 3 : SUCCESS";
-		    tdkTestObj = obj.createTestStep('WIFIHAL_GetNeighboringWiFiDiagnosticResult2');
-	            tdkTestObj.addParameter("radioIndex", radioidx);
-	            expectedresult="SUCCESS";
-	            tdkTestObj.executeTestCase(expectedresult);
-	            actualresult = tdkTestObj.getResult();
-	            details = tdkTestObj.getResultDetails();
-	            if expectedresult in actualresult and details !="No neighbouring Accesspoints found by wifi_getNeighboringWiFiDiagnosticResult2"  :
-	                tdkTestObj.setResultStatus("SUCCESS");
-	                print "TEST STEP 4: Get the details of neighboring AP after calling wifi_setapscanfilter"
-	                print "EXPECTED RESULT 4: Should successfully get the details of neighboring AP"
-	                print "ACTUAL RESULT 4: neighboring AP found"
-			print "Details: "
-			details = details.split(":ap_")[1].strip();
-	                detailList = details.split(",")
-	                ssidname = details.split(",")[0].split("=")[1].strip()
-	                detailApList = details.split(",ap_")
-	                for i in range(0,17):
-	                    print detailApList[i]
-	                output_array_size = int(detailList[-1].split('=')[1]);
-	                print "ssid Name: ",ssidname;
-		        print "output_array_size : ",output_array_size;
-		        #Get the result of execution
-	                print "[TEST EXECUTION RESULT] 4: SUCCESS";
-		        if ssidname == org_ssidname and output_array_size == 1:
-		            tdkTestObj.setResultStatus("SUCCESS");
-	                    print "TEST STEP 5: Check whether WIFI_SCANFILTER_MODE_ENABLED filter mode  is working"
-		            print "EXPECTED RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode should SUCCESS"
-		            print" ACTUAL RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode applied Successfully "
-		            #Get the result of execution
-	                    print "[TEST EXECUTION RESULT] 5: SUCCESS";
-		        else:
-		            tdkTestObj.setResultStatus("FAILURE");
-	                    print "TEST STEP 5: Check whether WIFI_SCANFILTER_MODE_ENABLED filter mode  is working "
-		            print "EXPECTED RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode should SUCCESS"
-		            print" ACTUAL RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode FAILED "
-		            #Get the result of execution
-	                    print "[TEST EXECUTION RESULT] 5: FAILURE";
-		    else:
-		        tdkTestObj.setResultStatus("FAILURE");
-	                print "TEST STEP 4: Get the NeighboringWiFiDiagnosticResult after calling wifi_setapscanfilter"
-	                print "EXPECTED RESULT 4: Should successfully get the NeighboringWiFiDiagnosticResult"
-	                print "ACTUAL RESULT 4: No neighboring AP found"
-	                print "Details: %s"%details
-	                #Get the result of execution
-	                print "[TEST EXECUTION RESULT] 4: FAILURE";
-	        else:
-	            tdkTestObj.setResultStatus("FAILURE");
-	            print "TEST STEP 3: Set AccessPoint scan filter mode as WIFI_SCANFILTER_MODE_ENABLED"
-                    print "EXPECTED RESULT 3: wifi_setapscanfilter api call should be SUCCESS"
-                    print "ACTUAL RESULT 3: Failed to call wifi_setapscanfilter with WIFI_SCANFILTER_MODE_ENABLED mode"
+                    print("[TEST EXECUTION RESULT] 3 : SUCCESS");
+                    tdkTestObj = obj.createTestStep('WIFIHAL_GetNeighboringWiFiDiagnosticResult2');
+                    tdkTestObj.addParameter("radioIndex", radioidx);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult and details !="No neighbouring Accesspoints found by wifi_getNeighboringWiFiDiagnosticResult2"  :
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Get the details of neighboring AP after calling wifi_setapscanfilter")
+                        print("EXPECTED RESULT 4: Should successfully get the details of neighboring AP")
+                        print("ACTUAL RESULT 4: neighboring AP found")
+                        print("Details: ")
+                        details = details.split(":ap_")[1].strip();
+                        detailList = details.split(",")
+                        ssidname = details.split(",")[0].split("=")[1].strip()
+                        detailApList = details.split(",ap_")
+                        for i in range(0,17):
+                            print(detailApList[i])
+                        output_array_size = int(detailList[-1].split('=')[1]);
+                        print("ssid Name: ",ssidname);
+                        print("output_array_size : ",output_array_size);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
+                        if ssidname == org_ssidname and output_array_size == 1:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Check whether WIFI_SCANFILTER_MODE_ENABLED filter mode  is working")
+                            print("EXPECTED RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode should SUCCESS")
+                            print(" ACTUAL RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode applied Successfully ")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 5: SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Check whether WIFI_SCANFILTER_MODE_ENABLED filter mode  is working ")
+                            print("EXPECTED RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode should SUCCESS")
+                            print(" ACTUAL RESULT 5: WIFI_SCANFILTER_MODE_ENABLED filter mode FAILED ")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 5: FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Get the NeighboringWiFiDiagnosticResult after calling wifi_setapscanfilter")
+                        print("EXPECTED RESULT 4: Should successfully get the NeighboringWiFiDiagnosticResult")
+                        print("ACTUAL RESULT 4: No neighboring AP found")
+                        print("Details: %s"%details)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] 4: FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Set AccessPoint scan filter mode as WIFI_SCANFILTER_MODE_ENABLED")
+                    print("EXPECTED RESULT 3: wifi_setapscanfilter api call should be SUCCESS")
+                    print("ACTUAL RESULT 3: Failed to call wifi_setapscanfilter with WIFI_SCANFILTER_MODE_ENABLED mode")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP 2 : Get a valid neighboring AP"
-		print "EXPECTED RESULT 2 : Should get a valid neighboring AP"
-		print "ACTUAL RESULT 2 : Failed to get a valid neighboring AP"
-	        print "ssid Name: ",org_ssidname;
-	        #Get the result of execution
-		print "[TEST EXECUTION RESULT] 2: FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1: Get the NeighboringWiFiDiagnosticResult"
-	    print "EXPECTED RESULT 1: Should successfully get the NeighboringWiFiDiagnosticResult"
-	    print "ACTUAL RESULT 1: Failed to get the NeighboringWiFiDiagnosticResult"
-	    print "Details: %s"%details
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] 1: FAILURE";
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2 : Get a valid neighboring AP")
+                print("EXPECTED RESULT 2 : Should get a valid neighboring AP")
+                print("ACTUAL RESULT 2 : Failed to get a valid neighboring AP")
+                print("ssid Name: ",org_ssidname);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the NeighboringWiFiDiagnosticResult")
+            print("EXPECTED RESULT 1: Should successfully get the NeighboringWiFiDiagnosticResult")
+            print("ACTUAL RESULT 1: Failed to get the NeighboringWiFiDiagnosticResult")
+            print("Details: %s"%details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
     obj.unloadModule("wifihal");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

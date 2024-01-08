@@ -99,8 +99,8 @@ pamobj.configureTestCase(ip,port,'TS_WIFIHAL_GetDefaultApSecurityMFPConfig');
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =pamobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 
 if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
@@ -110,9 +110,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     ## Check if a invalid index is returned
     if idx0 == -1 or idx1 == -1:
         if idx0 == -1 :
-            print "Failed to get radio index for radio %s\n" %radio0;
+            print("Failed to get radio index for radio %s\n" %radio0);
         if idx1 == -1:
-	    print "Failed to get radio index for radio %s\n" %radio1;
+            print("Failed to get radio index for radio %s\n" %radio1);
         tdkTestObjTemp.setResultStatus("FAILURE");
     else:
         #save device's current state before it goes for reboot
@@ -130,11 +130,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Initiate factory reset ";
-            print "EXPECTED RESULT 1: Should inititate factory reset";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Initiate factory reset ");
+            print("EXPECTED RESULT 1: Should inititate factory reset");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #Restore the device state saved before reboot
             pamobj.restorePreviousStateAfterReboot();
 
@@ -148,8 +148,8 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
 
             if expectedresult in actualresult and "Disabled" in ConfigValue1:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Should get default 2.4GHZ ApSecurityMFPConfig as disabled";
-                print "ACTUAL RESULT 2:Default 2.4GHZ ApSecurityMFPConfig: %s" %ConfigValue1;
+                print("TEST STEP 2:Should get default 2.4GHZ ApSecurityMFPConfig as disabled");
+                print("ACTUAL RESULT 2:Default 2.4GHZ ApSecurityMFPConfig: %s" %ConfigValue1);
 
                 apIndex = idx1
                 getMethod = "getApSecurityMFPConfig"
@@ -162,25 +162,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
 
                 if expectedresult in actualresult and "Disabled" in ConfigValue2:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3:Should get default 5GHZ ApSecurityMFPConfig as disabled";
-                    print "ACTUAL RESULT 3:Default 5GHZ ApSecurityMFPConfig: %s" %ConfigValue2;
+                    print("TEST STEP 3:Should get default 5GHZ ApSecurityMFPConfig as disabled");
+                    print("ACTUAL RESULT 3:Default 5GHZ ApSecurityMFPConfig: %s" %ConfigValue2);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3:Failed to get 5GHZ ApSecurityMFPConfig as disabled";
+                    print("TEST STEP 3:Failed to get 5GHZ ApSecurityMFPConfig as disabled");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Failed to get 2.4GHZ ApSecurityMFPConfig as disabled";
+                print("TEST STEP 2:Failed to get 2.4GHZ ApSecurityMFPConfig as disabled");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Initiate factory reset ";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Initiate factory reset ");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifihal");
     pamobj.unloadModule("pam");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
