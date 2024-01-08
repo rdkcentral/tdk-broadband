@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetUSChannel</api_or_interface_used>
     <input_parameters>paramName: "US_Frequency"</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. Get all the upstream frequencies and validate it
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSFrequency');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,7 +90,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails();
     US_freq = Details.split(",");
-    print US_freq;
+    print(US_freq);
     maxFreq = 85.00;
     minFreq = 5.00;
     for item in US_freq:
@@ -106,20 +106,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the UpStream Frequency";
-        print "EXPECTED RESULT 1: UpStream Frequencies should be within the range of 5MHz to 85MHz";
-        print "ACTUAL RESULT 1: Successfully validated the UpStream Frequency";
+        print("TEST STEP 1: Get and validate the UpStream Frequency");
+        print("EXPECTED RESULT 1: UpStream Frequencies should be within the range of 5MHz to 85MHz");
+        print("ACTUAL RESULT 1: Successfully validated the UpStream Frequency");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the UpStream Frequency";
-        print "EXPECTED RESULT 1: Upstream Frequencies should be within the range of 5MHz to 85MHz";
-        print "ACTUAL RESULT 1: Validation of UpStream Frequency is failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the UpStream Frequency");
+        print("EXPECTED RESULT 1: Upstream Frequencies should be within the range of 5MHz to 85MHz");
+        print("ACTUAL RESULT 1: Validation of UpStream Frequency is failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

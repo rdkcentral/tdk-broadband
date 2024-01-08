@@ -82,8 +82,8 @@ sysObj.configureTestCase(ip,port,'TS_platform_stub_hal_SetFanMaxOverride');
 loadmodulestatus  = obj.getLoadModuleResult();
 sysyutilmodulestatus = sysObj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %sysyutilmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %sysyutilmodulestatus)
 
 revertValue = 2
 SetValue = 2
@@ -93,7 +93,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysyutilmodulestatus.upper()):
     sysObj.setLoadModuleStatus("SUCCESS");
 
     query = "systemctl status systemd-fan.service | grep -i \"Active\" "
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -102,203 +102,202 @@ if "SUCCESS" in (loadmodulestatus.upper() and  sysyutilmodulestatus.upper()):
     details= tdkTestObj.getResultDetails().strip().replace("\\n","");
 
     if expectedresult in actualresult:
-       splitvalue = details.split("Active:")[1];
-       lowspeed  = splitvalue.split(' ')[1].strip().replace("\\n","");
-       print "TEST STEP 1: Get the status of systemd-fan.service";
-       print "EXPECTED RESULT 1: Should Get the status of systemd-fan.service";
-       print "ACTUAL RESULT1: systemd-fan.service is %s" %lowspeed;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS"
-       tdkTestObj.setResultStatus("SUCCESS");
-
-       query = "systemctl status systemd-fan-highspeed.service | grep -i \"Active\" "
-       print "query:%s" %query
-       tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-       tdkTestObj.addParameter("command", query)
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-
-       if expectedresult in actualresult:
-          splitvalue = details.split("Active:")[1];
-          highspeed = splitvalue.split(' ')[1].strip().replace("\\n","");
-          print "TEST STEP 2: Get the status of systemd-fan-highspeed.service";
-          print "EXPECTED RESULT 2: Should Get the status of systemd-fan-highspeed.service";
-          print "ACTUAL RESULT1 2: systemd-fan-highspeed.service is %s" %highspeed;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS"
-          tdkTestObj.setResultStatus("SUCCESS");
-
-          #getting the value to be set for FanMaxOverride api
-          if highspeed == "active":
-             setValue = 0;
-          else:
-              setValue = 1;
-
-          print "The value to be set : ",setValue
-
-          #toggling the value
-          tdkTestObj = obj.createTestStep("platform_stub_hal_setFanMaxOverride");
-          tdkTestObj.addParameter("flag",setValue);
-          tdkTestObj.addParameter("fanIndex", 0);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
-
-          if expectedresult in  actualresult :
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Set the Fan Max Override speed";
-             print "EXPECTED RESULT 3: Should set the Fan Max Override speed successfully";
-             print "ACTUAL RESULT 3: %s" %details;
-             print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-
-             query = "systemctl status systemd-fan-highspeed.service | grep -i \"Active\" "
-             print "query:%s" %query
-             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-             tdkTestObj.addParameter("command", query)
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-
-             if expectedresult in actualresult:
-                splitvalue = details.split("Active:")[1];
-                highspeed = splitvalue.split(' ')[1].strip().replace("\\n","");
-                print "TEST STEP 4: Get the status of systemd-fan-highspeed.service after set Fan Max Override";
-                print "EXPECTED RESULT 4: Should Get the status of systemd-fan-highspeed.service after set Fan Max Override";
-                print "ACTUAL RESULT 4: systemd-fan-highspeed.service after set Fan Max Override set is %s" %highspeed;
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                tdkTestObj.setResultStatus("SUCCESS");
-
-                if highspeed == "active":
-                   checkvalue = 1;
-                else:
-                    checkvalue = 0;
-
-                print "Value set by Fan Max Override:",setValue
-                print "Value of systemd fan service after set",checkvalue
-
-                if setValue == checkvalue:
-                   print "TEST STEP 5: Check if Fan Max Override speed after set equals the get value systemd-fan-highspeed.service"
-                   print "EXPECTED RESULT 5: Fan Max Override speed after set should equal the get value systemd-fan-highspeed.service"
-                   print "ACTUAL RESULT 5: Fan Max Override speed after set equals the get value systemd-fan-highspeed.service"
-                   print "[TEST EXECUTION RESULT] : SUCCESS"
-                   tdkTestObj.setResultStatus("SUCCESS");
-
-                   query = "systemctl status systemd-fan.service | grep -i \"Active\" "
-                   print "query:%s" %query
-                   tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                   tdkTestObj.addParameter("command", query)
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details= tdkTestObj.getResultDetails().strip().replace("\\n","");
-
-                   if expectedresult in actualresult:
-                      splitvalue = details.split("Active:")[1];
-                      lowspeed  = splitvalue.split(' ')[1].strip().replace("\\n","");
-                      print "TEST STEP 6: Get the status of systemd-fan.service";
-                      print "EXPECTED RESULT 6: Should Get the status of systemd-fan.service";
-                      print "ACTUAL RESULT 6: systemd-fan.service is %s" %lowspeed;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS"
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      if lowspeed == "active":
-                         checkvalue = 0;
-                      else:
-                          checkvalue = 1;
-
-                      if setValue == checkvalue:
-                         print "TEST STEP 7: Check if Fan Max Override speed after set equals the get value systemd-fan.service"
-                         print "EXPECTED RESULT 7: Fan Max Override speed after set should equal the get value systemd-fan.service"
-                         print "ACTUAL RESULT 7: Fan Max Override speed after set equals the get value systemd-fan.service"
-                         print "[TEST EXECUTION RESULT] : SUCCESS"
-                         tdkTestObj.setResultStatus("SUCCESS");
-                      else:
-                         print "TEST STEP 7: Check if Fan Max Override speed after set equals the get value systemd-fan.service"
-                         print "EXPECTED RESULT 7: Fan Max Override speed after set should equal the get value systemd-fan.service"
-                         print "ACTUAL RESULT 7: Fan Max Override speed after set does not equals the get value systemd-fan.service"
-                         print "[TEST EXECUTION RESULT] : FAILURE"
-                         tdkTestObj.setResultStatus("FAILURE");
-                   else:
-                       print "TEST STEP 6: Get the status of systemd-fan.service after set Fan Max Override";
-                       print "EXPECTED RESULT 6: Should Get the status of systemd-fan.service after set Fan Max Override";
-                       print "ACTUAL RESULT 6: systemd-fan.service after set Fan Max Override is %s" %lowspeed;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] :FAILURE"
-                       tdkTestObj.setResultStatus("FAILURE");
-
-                else:
-                   print "TEST STEP 5: Check if Fan Max Override speed after set equals the get value systemd-fan-highspeed.service"
-                   print "EXPECTED RESULT 5: Fan Max Override speed after set should equal the get value systemd-fan-highspeed.service"
-                   print "ACTUAL RESULT 5: Fan Max Override speed after set does not equals the get value systemd-fan-highspeed.service"
-                   print "[TEST EXECUTION RESULT] : FAILURE"
-                   tdkTestObj.setResultStatus("FAILURE");
-             else:
-                 print "TEST STEP 4: Get the status of systemd-fan-highspeed.service after set Fan Max Override";
-                 print "EXPECTED RESULT 4: Should Get the status of systemd-fan-highspeed.service after set Fan Max Override";
-                 print "ACTUAL RESULT 4: systemd-fan-highspeed.service after set Fan Max Override set is %s" %highspeed;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE"
-                 tdkTestObj.setResultStatus("FAILURE");
-
-             #value to be reverted
-             if  setValue == 0 :
-                 revertValue  = 1;
-             else:
-                 revertValue = 0;
-
-             #Reverting the value
-             tdkTestObj = obj.createTestStep("platform_stub_hal_setFanMaxOverride");
-             tdkTestObj.addParameter("flag",revertValue);
-             tdkTestObj.addParameter("fanIndex", 0);
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails();
-
-             if expectedresult in  actualresult :
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Revertining the Fan Max Override speed to intial";
-                print "EXPECTED RESULT 5: Should set the Fan Max Override speed to initial successfully";
-                print "ACTUAL RESULT 5: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 5: Revertining the Fan Max Override speed to intial";
-                 print "EXPECTED RESULT 5: Should set the Fan Max Override speed to initial successfully";
-                 print "ACTUAL RESULT 5:  %s" %details;
-                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Set the Fan Max Override speed";
-              print "EXPECTED RESULT 3: Should set the Fan Max Override speed successfully";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-       else:
-           print "TEST STEP 2: Get the status of systemd-fan-highspeed.service";
-           print "EXPECTED RESULT 2: Should Get the status of systemd-fan-highspeed.service";
-           print "ACTUAL RESULT1 2: systemd-fan-highspeed.service is %s" %highspeed;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
-           tdkTestObj.setResultStatus("FAILURE");
-    else:
-        print "TEST STEP 1: Get the status of systemd-fan.service";
-        print "EXPECTED RESULT 1: Should Get the status of systemd-fan.service";
-        print "ACTUAL RESULT1: systemd-fan.service is %s" %lowspeed;
+        splitvalue = details.split("Active:")[1];
+        lowspeed  = splitvalue.split(' ')[1].strip().replace("\\n","");
+        print("TEST STEP 1: Get the status of systemd-fan.service");
+        print("EXPECTED RESULT 1: Should Get the status of systemd-fan.service");
+        print("ACTUAL RESULT1: systemd-fan.service is %s" %lowspeed);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        tdkTestObj.setResultStatus("SUCCESS");
+
+        query = "systemctl status systemd-fan-highspeed.service | grep -i \"Active\" "
+        print("query:%s" %query)
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        tdkTestObj.addParameter("command", query)
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+        if expectedresult in actualresult:
+            splitvalue = details.split("Active:")[1];
+            highspeed = splitvalue.split(' ')[1].strip().replace("\\n","");
+            print("TEST STEP 2: Get the status of systemd-fan-highspeed.service");
+            print("EXPECTED RESULT 2: Should Get the status of systemd-fan-highspeed.service");
+            print("ACTUAL RESULT1 2: systemd-fan-highspeed.service is %s" %highspeed);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            tdkTestObj.setResultStatus("SUCCESS");
+
+            #getting the value to be set for FanMaxOverride api
+            if highspeed == "active":
+                setValue = 0;
+            else:
+                setValue = 1;
+
+            print("The value to be set : ",setValue)
+
+            #toggling the value
+            tdkTestObj = obj.createTestStep("platform_stub_hal_setFanMaxOverride");
+            tdkTestObj.addParameter("flag",setValue);
+            tdkTestObj.addParameter("fanIndex", 0);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            if expectedresult in  actualresult :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Set the Fan Max Override speed");
+                print("EXPECTED RESULT 3: Should set the Fan Max Override speed successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+                query = "systemctl status systemd-fan-highspeed.service | grep -i \"Active\" "
+                print("query:%s" %query)
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                tdkTestObj.addParameter("command", query)
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+                if expectedresult in actualresult:
+                    splitvalue = details.split("Active:")[1];
+                    highspeed = splitvalue.split(' ')[1].strip().replace("\\n","");
+                    print("TEST STEP 4: Get the status of systemd-fan-highspeed.service after set Fan Max Override");
+                    print("EXPECTED RESULT 4: Should Get the status of systemd-fan-highspeed.service after set Fan Max Override");
+                    print("ACTUAL RESULT 4: systemd-fan-highspeed.service after set Fan Max Override set is %s" %highspeed);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    tdkTestObj.setResultStatus("SUCCESS");
+
+                    if highspeed == "active":
+                        checkvalue = 1;
+                    else:
+                        checkvalue = 0;
+
+                    print("Value set by Fan Max Override:",setValue)
+                    print("Value of systemd fan service after set",checkvalue)
+
+                    if setValue == checkvalue:
+                        print("TEST STEP 5: Check if Fan Max Override speed after set equals the get value systemd-fan-highspeed.service")
+                        print("EXPECTED RESULT 5: Fan Max Override speed after set should equal the get value systemd-fan-highspeed.service")
+                        print("ACTUAL RESULT 5: Fan Max Override speed after set equals the get value systemd-fan-highspeed.service")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                        tdkTestObj.setResultStatus("SUCCESS");
+
+                        query = "systemctl status systemd-fan.service | grep -i \"Active\" "
+                        print("query:%s" %query)
+                        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", query)
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details= tdkTestObj.getResultDetails().strip().replace("\\n","");
+
+                        if expectedresult in actualresult:
+                            splitvalue = details.split("Active:")[1];
+                            lowspeed  = splitvalue.split(' ')[1].strip().replace("\\n","");
+                            print("TEST STEP 6: Get the status of systemd-fan.service");
+                            print("EXPECTED RESULT 6: Should Get the status of systemd-fan.service");
+                            print("ACTUAL RESULT 6: systemd-fan.service is %s" %lowspeed);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            if lowspeed == "active":
+                                checkvalue = 0;
+                            else:
+                                checkvalue = 1;
+
+                            if setValue == checkvalue:
+                                print("TEST STEP 7: Check if Fan Max Override speed after set equals the get value systemd-fan.service")
+                                print("EXPECTED RESULT 7: Fan Max Override speed after set should equal the get value systemd-fan.service")
+                                print("ACTUAL RESULT 7: Fan Max Override speed after set equals the get value systemd-fan.service")
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                                tdkTestObj.setResultStatus("SUCCESS");
+                            else:
+                                print("TEST STEP 7: Check if Fan Max Override speed after set equals the get value systemd-fan.service")
+                                print("EXPECTED RESULT 7: Fan Max Override speed after set should equal the get value systemd-fan.service")
+                                print("ACTUAL RESULT 7: Fan Max Override speed after set does not equals the get value systemd-fan.service")
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                tdkTestObj.setResultStatus("FAILURE");
+                        else:
+                            print("TEST STEP 6: Get the status of systemd-fan.service after set Fan Max Override");
+                            print("EXPECTED RESULT 6: Should Get the status of systemd-fan.service after set Fan Max Override");
+                            print("ACTUAL RESULT 6: systemd-fan.service after set Fan Max Override is %s" %lowspeed);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :FAILURE")
+                            tdkTestObj.setResultStatus("FAILURE");
+
+                    else:
+                        print("TEST STEP 5: Check if Fan Max Override speed after set equals the get value systemd-fan-highspeed.service")
+                        print("EXPECTED RESULT 5: Fan Max Override speed after set should equal the get value systemd-fan-highspeed.service")
+                        print("ACTUAL RESULT 5: Fan Max Override speed after set does not equals the get value systemd-fan-highspeed.service")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        tdkTestObj.setResultStatus("FAILURE");
+                else:
+                    print("TEST STEP 4: Get the status of systemd-fan-highspeed.service after set Fan Max Override");
+                    print("EXPECTED RESULT 4: Should Get the status of systemd-fan-highspeed.service after set Fan Max Override");
+                    print("ACTUAL RESULT 4: systemd-fan-highspeed.service after set Fan Max Override set is %s" %highspeed);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    tdkTestObj.setResultStatus("FAILURE");
+
+                #value to be reverted
+                if  setValue == 0 :
+                    revertValue  = 1;
+                else:
+                    revertValue = 0;
+
+                #Reverting the value
+                tdkTestObj = obj.createTestStep("platform_stub_hal_setFanMaxOverride");
+                tdkTestObj.addParameter("flag",revertValue);
+                tdkTestObj.addParameter("fanIndex", 0);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+
+                if expectedresult in  actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 5: Revertining the Fan Max Override speed to intial");
+                    print("EXPECTED RESULT 5: Should set the Fan Max Override speed to initial successfully");
+                    print("ACTUAL RESULT 5: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 5: Revertining the Fan Max Override speed to intial");
+                    print("EXPECTED RESULT 5: Should set the Fan Max Override speed to initial successfully");
+                    print("ACTUAL RESULT 5:  %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Set the Fan Max Override speed");
+                print("EXPECTED RESULT 3: Should set the Fan Max Override speed successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        else:
+            print("TEST STEP 2: Get the status of systemd-fan-highspeed.service");
+            print("EXPECTED RESULT 2: Should Get the status of systemd-fan-highspeed.service");
+            print("ACTUAL RESULT1 2: systemd-fan-highspeed.service is %s" %highspeed);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
+    else:
+        print("TEST STEP 1: Get the status of systemd-fan.service");
+        print("EXPECTED RESULT 1: Should Get the status of systemd-fan.service");
+        print("ACTUAL RESULT1: systemd-fan.service is %s" %lowspeed);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE")
         tdkTestObj.setResultStatus("FAILURE");
 
 
     obj.unloadModule("halplatform");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysyutil/hal_platform  module";
+    print("Failed to load sysyutil/hal_platform  module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

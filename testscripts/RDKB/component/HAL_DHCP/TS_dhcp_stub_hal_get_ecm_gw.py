@@ -62,7 +62,7 @@
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
 #IP and Port of box, No need to change,
@@ -76,34 +76,34 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ecm_gw');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_gw");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_gw");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();        
-        if expectedresult in actualresult and (int(details.split(".")[0]) > 0):
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_gw";
-            print "EXPECTED RESULT 1: Should retrieve the  dhcp_stub_hal_get_ecm_gw successfully";
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
-            print "ecm gateway address is %s" %details;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_gw";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_gw successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : Failure";
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and (int(details.split(".")[0]) > 0):
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_gw");
+        print("EXPECTED RESULT 1: Should retrieve the  dhcp_stub_hal_get_ecm_gw successfully");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("ecm gateway address is %s" %details);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_gw");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_gw successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : Failure");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

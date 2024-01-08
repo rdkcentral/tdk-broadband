@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #check whether the process is running or not
     query="sh %s/tdk_platform_utility.sh checkProcess CcspEthAgent" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -115,11 +115,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
     if expectedresult in actualresult and pid:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Check CcspEthAgent process";
-        print "EXPECTED RESULT 1: CcspEthAgent process should be running";
-        print "ACTUAL RESULT 1: PID of CcspEthAgent %s" %pid;
+        print("TEST STEP 1:Check CcspEthAgent process");
+        print("EXPECTED RESULT 1: CcspEthAgent process should be running");
+        print("ACTUAL RESULT 1: PID of CcspEthAgent %s" %pid);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         cmd = "[ -f /rdklogs/logs/ETHAGENTLog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
         tdkTestObj.addParameter("command",cmd);
@@ -128,28 +128,27 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if details == "File exist":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Check ETHAGENTLog.txt.0 log file is created";
-            print "EXPECTED RESULT 2: ETHAGENTLog.txt.0 log file should be created";
-            print "ACTUAL RESULT 2: ETHAGENTLog.txt.0 log file is created";
+            print("TEST STEP 2:Check ETHAGENTLog.txt.0 log file is created");
+            print("EXPECTED RESULT 2: ETHAGENTLog.txt.0 log file should be created");
+            print("ACTUAL RESULT 2: ETHAGENTLog.txt.0 log file is created");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Check ETHAGENTLog.txt.0 log file is created";
-            print "EXPECTED RESULT 2: ETHAGENTLog.txt.0 log file should be created";
-            print "ACTUAL RESULT 2: ETHAGENTLog.txt.0 log file is not created";
+            print("TEST STEP 2:Check ETHAGENTLog.txt.0 log file is created");
+            print("EXPECTED RESULT 2: ETHAGENTLog.txt.0 log file should be created");
+            print("ACTUAL RESULT 2: ETHAGENTLog.txt.0 log file is not created");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Check CcspEthAgent process";
-        print "EXPECTED RESULT 1: CcspEthAgent process should be running";
-        print "ACTUAL RESULT 1: CcspEthAgent process is not running";
+        print("TEST STEP 1:Check CcspEthAgent process");
+        print("EXPECTED RESULT 1: CcspEthAgent process should be running");
+        print("ACTUAL RESULT 1: CcspEthAgent process is not running");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

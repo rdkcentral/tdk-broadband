@@ -94,39 +94,39 @@ obj.configureTestCase(ip,port,'TS_COSAMTA_GetBatteryInstalled');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("CosaMTA_GetParamUlongValue");
-        tdkTestObj.addParameter("handleType",0);
-        tdkTestObj.addParameter("paramName","BatteryInstalled");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        resultDetails = " ";
-        resultDetails = tdkTestObj.getResultDetails();
-        status = [ "FALSE", "TRUE" ];
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("CosaMTA_GetParamUlongValue");
+    tdkTestObj.addParameter("handleType",0);
+    tdkTestObj.addParameter("paramName","BatteryInstalled");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    resultDetails = " ";
+    resultDetails = tdkTestObj.getResultDetails();
+    status = [ "FALSE", "TRUE" ];
 
-        if expectedresult in actualresult and (resultDetails == '0' or resultDetails == '1'):
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the BatteryInstalled";
-            print "EXPECTED RESULT 1: Should get the BatteryInstalled successfully";
-            print "ACTUAL RESULT 1: The BatteryInstalled is %s" %status[int(resultDetails)];
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the BatteryInstalled";
-            print "EXPECTED RESULT 1: Should get the BatteryInstalled successfully";
-            print "ACTUAL RESULT 1: Failed to get the BatteryInstalled, Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+    if expectedresult in actualresult and (resultDetails == '0' or resultDetails == '1'):
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the BatteryInstalled");
+        print("EXPECTED RESULT 1: Should get the BatteryInstalled successfully");
+        print("ACTUAL RESULT 1: The BatteryInstalled is %s" %status[int(resultDetails)]);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the BatteryInstalled");
+        print("EXPECTED RESULT 1: Should get the BatteryInstalled successfully");
+        print("ACTUAL RESULT 1: Failed to get the BatteryInstalled, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("cosamta");
+    obj.unloadModule("cosamta");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

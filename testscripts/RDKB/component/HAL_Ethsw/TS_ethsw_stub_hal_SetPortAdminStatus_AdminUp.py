@@ -101,8 +101,8 @@ obj1.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetPortAdminStatus_AdminUp');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,33 +118,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "\nTEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("\nTEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Number of interface entries minus 2 will be the number of ports
         NumOfPorts = int(value)-2;
-        print "Number of ports is ", NumOfPorts
+        print("Number of ports is ", NumOfPorts)
 
         #Get the Port to which the client is connected
-        print "\nTEST STEP 2 : Fetch the the Port Number to which LAN client is connected";
-        print "EXPECTED RESULT 2 : Should fetch the Port Number to which LAN client is connected successfully";
+        print("\nTEST STEP 2 : Fetch the the Port Number to which LAN client is connected");
+        print("EXPECTED RESULT 2 : Should fetch the Port Number to which LAN client is connected successfully");
 
         #Check if the LAN_PORT_Number is retrieved from the config file
         if LAN_PORT_Number != "" :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : Port number is fetched successfully";
-            print "Port : %s" %LAN_PORT_Number;
+            print("ACTUAL RESULT 2 : Port number is fetched successfully");
+            print("Port : %s" %LAN_PORT_Number);
             port = int(LAN_PORT_Number);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the Port Number is valid
             if port <= NumOfPorts :
-                print "The Port Number is valid";
+                print("The Port Number is valid");
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Script to load the configuration file of the component
@@ -160,11 +160,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     currPortStatus = details;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port);
-                    print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
-                    print "ACTUAL RESULT %d: Current port status is  %s" %(testStep, currPortStatus);
+                    print("\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port));
+                    print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
+                    print("ACTUAL RESULT %d: Current port status is  %s" %(testStep, currPortStatus));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                     testStep = testStep + 1;
 
                     #Setting the values
@@ -174,17 +174,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     tdkTestObj.addParameter("PortID",port);
                     tdkTestObj.addParameter("adminstatus", testPortStatus);
                     expectedresult = "SUCCESS";
-                    print "Setting port status to %s for port %d" %(testPortStatus, port)
+                    print("Setting port status to %s for port %d" %(testPortStatus, port))
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
                     if expectedresult in actualresult and details:
-                        print "\nTEST STEP %d: Set the Port status using EthSw_SetPortAdminStatus for port %d" %(testStep, port);
-                        print "EXPECTED RESULT %d: Should set the EthSw_SetPortAdminStatus successfully" %testStep;
-                        print "ACTUAL RESULT %d: %s" %(testStep, details);
+                        print("\nTEST STEP %d: Set the Port status using EthSw_SetPortAdminStatus for port %d" %(testStep, port));
+                        print("EXPECTED RESULT %d: Should set the EthSw_SetPortAdminStatus successfully" %testStep);
+                        print("ACTUAL RESULT %d: %s" %(testStep, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                         testStep = testStep + 1;
 
                         #Cross verify values
@@ -200,17 +200,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             portStatusAfterSet = details;
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port);
-                            print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
-                            print "ACTUAL RESULT %d: Now port status is  %s" %(testStep, portStatusAfterSet);
+                            print("\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port));
+                            print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
+                            print("ACTUAL RESULT %d: Now port status is  %s" %(testStep, portStatusAfterSet));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
                             testStep = testStep + 1;
 
                             if testPortStatus in portStatusAfterSet:
-                                print "\nTEST STEP %d: Cross verify value if those get set" %testStep;
-                                print "EXPECTED RESULT %d: Values should be matched" %testStep;
-                                print "ACTUAL RESULT %d: Values are matched" %testStep;
+                                print("\nTEST STEP %d: Cross verify value if those get set" %testStep);
+                                print("EXPECTED RESULT %d: Values should be matched" %testStep);
+                                print("ACTUAL RESULT %d: Values are matched" %testStep);
                                 testStep = testStep + 1;
 
                                 #Resetting the values back
@@ -219,78 +219,77 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 tdkTestObj.addParameter("PortID",port);
                                 tdkTestObj.addParameter("adminstatus", currPortStatus);
                                 expectedresult = "SUCCESS";
-                                print "Re-setting port status = %s" %currPortStatus;
+                                print("Re-setting port status = %s" %currPortStatus);
                                 tdkTestObj.executeTestCase(expectedresult);
                                 actualresult = tdkTestObj.getResult();
                                 details = tdkTestObj.getResultDetails();
 
                                 if expectedresult in actualresult and details:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "\nTEST STEP %d: Revert the PortAdminStatus for port %d" %(testStep, port);
-                                    print "EXPECTED RESULT %d: Should revert the PortAdminStatus successfully" %testStep;
-                                    print "ACTUAL RESULT %d: Value reverted successfully" %testStep;
+                                    print("\nTEST STEP %d: Revert the PortAdminStatus for port %d" %(testStep, port));
+                                    print("EXPECTED RESULT %d: Should revert the PortAdminStatus successfully" %testStep);
+                                    print("ACTUAL RESULT %d: Value reverted successfully" %testStep);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "\nTEST STEP %d: Revert the PortAdminStatus for port %d" %(testStep, port);
-                                    print "EXPECTED RESULT %d: Should revert the PortAdminStatus successfully" %testStep;
-                                    print "ACTUAL RESULT %d: Value not reverted successfully" %testStep;
+                                    print("\nTEST STEP %d: Revert the PortAdminStatus for port %d" %(testStep, port));
+                                    print("EXPECTED RESULT %d: Should revert the PortAdminStatus successfully" %testStep);
+                                    print("ACTUAL RESULT %d: Value not reverted successfully" %testStep);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : Failure";
+                                    print("[TEST EXECUTION RESULT] : Failure");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "\nTEST STEP %d: Cross verify value if those get set" %testStep;
-                                print "EXPECTED RESULT %d: Values should be matched" %testStep;
-                                print "ACTUAL RESULT %d: Values are not matched" %testStep;
-                                print "[TEST EXECUTION RESULT] : Failure";
+                                print("\nTEST STEP %d: Cross verify value if those get set" %testStep);
+                                print("EXPECTED RESULT %d: Values should be matched" %testStep);
+                                print("ACTUAL RESULT %d: Values are not matched" %testStep);
+                                print("[TEST EXECUTION RESULT] : Failure");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port);
-                            print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
-                            print "ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
+                            print("\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port));
+                            print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
+                            print("ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : Failure";
+                            print("[TEST EXECUTION RESULT] : Failure");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "\nTEST STEP %d: Retrieve the EthSw_SetPortAdminStatus for port %d" %(testStep, port);
-                        print "EXPECTED RESULT %d: Should retrieve the EthSw_SetPortAdminStatus successfully" %testStep;
-                        print "ACTUAL RESULT %d: Failed to retrieve the EthSw_SetPortAdminStatus successfully" %testStep;
+                        print("\nTEST STEP %d: Retrieve the EthSw_SetPortAdminStatus for port %d" %(testStep, port));
+                        print("EXPECTED RESULT %d: Should retrieve the EthSw_SetPortAdminStatus successfully" %testStep);
+                        print("ACTUAL RESULT %d: Failed to retrieve the EthSw_SetPortAdminStatus successfully" %testStep);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port);
-                    print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
-                    print "ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep;
+                    print("\nTEST STEP %d: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %(testStep, port));
+                    print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
+                    print("ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Admin_Status successfully" %testStep);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
             else :
-                print "The Port Number is not valid";
+                print("The Port Number is not valid");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2 : Port number is not fetched successfully";
-            print "Port : %s" %LAN_PORT_Number;
+            print("ACTUAL RESULT 2 : Port number is not fetched successfully");
+            print("Port : %s" %LAN_PORT_Number);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "\nTEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("\nTEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halethsw");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

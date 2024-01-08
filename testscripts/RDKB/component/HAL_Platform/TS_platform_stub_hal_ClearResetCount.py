@@ -78,79 +78,79 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_ClearResetCount');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-	obj.setLoadModuleStatus("SUCCESS");
-	#Get the reset count
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetFactoryResetCount");
-	expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        resetCount = tdkTestObj.getResultDetails();
+    obj.setLoadModuleStatus("SUCCESS");
+    #Get the reset count
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetFactoryResetCount");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    resetCount = tdkTestObj.getResultDetails();
 
-        if expectedresult in actualresult and int (resetCount) >= 0:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Platform_GetFactoryResetCount";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetFactoryResetCount ";
-            print "ACTUAL RESULT 1: %s" %actualresult;
-            print "Factory reset count: %s" %resetCount;
+    if expectedresult in actualresult and int (resetCount) >= 0:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetFactoryResetCount");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetFactoryResetCount ");
+        print("ACTUAL RESULT 1: %s" %actualresult);
+        print("Factory reset count: %s" %resetCount);
 
-	    if int (resetCount) > 0:
-        	tdkTestObj = obj.createTestStep("platform_stub_hal_ClearResetCount");
-		tdkTestObj.addParameter("index",1);
-        	expectedresult = "SUCCESS";
-        	tdkTestObj.executeTestCase(expectedresult);
-        	actualresult = tdkTestObj.getResult();
+        if int (resetCount) > 0:
+            tdkTestObj = obj.createTestStep("platform_stub_hal_ClearResetCount");
+            tdkTestObj.addParameter("index",1);
+            expectedresult = "SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
 
-        	if expectedresult in actualresult:
-        	    #Set the result status of execution
-        	    tdkTestObj.setResultStatus("SUCCESS");
-        	    details = tdkTestObj.getResultDetails();
-        	    print "TEST STEP 2: Clear the reset count";
-        	    print "EXPECTED RESULT 2: Should clear the reset count";
-        	    print "ACTUAL RESULT 2: %s" %details;
-        	    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                details = tdkTestObj.getResultDetails();
+                print("TEST STEP 2: Clear the reset count");
+                print("EXPECTED RESULT 2: Should clear the reset count");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-	    	    #Get the reset count
-	    	    tdkTestObj = obj.createTestStep("platform_stub_hal_GetFactoryResetCount");
-            	    tdkTestObj.executeTestCase(expectedresult);
-            	    actualresult = tdkTestObj.getResult();
-            	    details = tdkTestObj.getResultDetails();
+                #Get the reset count
+                tdkTestObj = obj.createTestStep("platform_stub_hal_GetFactoryResetCount");
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
 
-            	    if expectedresult in actualresult and int (details) == 0:
-            	        #Set the result status of execution
-            	        tdkTestObj.setResultStatus("SUCCESS");
-            	        print "TEST STEP 2: Retrieve the Platform_GetFactoryResetCount";
-            	        print "EXPECTED RESULT 2: Should retrieve the Platform_GetFactoryResetCount as zero ";
-            	        print "ACTUAL RESULT 2: %s" %actualresult;
-            	        print "Factory reset count: %s" %details;
-            	    else:
-            	        tdkTestObj.setResultStatus("FAILURE");
-            	        print "TEST STEP 2: Retrieve the Platform_GetFactoryResetCount";
-            	        print "EXPECTED RESULT 2: Should retrieve the Platform_GetFactoryResetCount as zero";
-            	        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            	        print "%s" %details;
-		else:
-		    #Set the result status of execution
-        	    tdkTestObj.setResultStatus("FAILURE");
-        	    details = tdkTestObj.getResultDetails();
-        	    print "TEST STEP 1: Clear the reset count";
-        	    print "EXPECTED RESULT 1: Should clear the reset count";
-        	    print "ACTUAL RESULT 1: %s" %details;
-        	    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-	    else:
-		print "Reset Count is already cleared"
-	else:
-	    #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Platform_GetFactoryResetCount";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetFactoryResetCount ";
-            print "ACTUAL RESULT 1: %s" %actualresult;
-            print "Factory reset count: %s" %resetCount;
-        obj.unloadModule("halplatform");
+                if expectedresult in actualresult and int (details) == 0:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2: Retrieve the Platform_GetFactoryResetCount");
+                    print("EXPECTED RESULT 2: Should retrieve the Platform_GetFactoryResetCount as zero ");
+                    print("ACTUAL RESULT 2: %s" %actualresult);
+                    print("Factory reset count: %s" %details);
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 2: Retrieve the Platform_GetFactoryResetCount");
+                    print("EXPECTED RESULT 2: Should retrieve the Platform_GetFactoryResetCount as zero");
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("%s" %details);
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                details = tdkTestObj.getResultDetails();
+                print("TEST STEP 1: Clear the reset count");
+                print("EXPECTED RESULT 1: Should clear the reset count");
+                print("ACTUAL RESULT 1: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        else:
+            print("Reset Count is already cleared")
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetFactoryResetCount");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetFactoryResetCount ");
+        print("ACTUAL RESULT 1: %s" %actualresult);
+        print("Factory reset count: %s" %resetCount);
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

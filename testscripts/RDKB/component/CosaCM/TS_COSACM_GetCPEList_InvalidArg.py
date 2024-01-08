@@ -39,7 +39,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_COSACM_48</test_case_id>
-    <test_objective>To Validate Cable Modem 
+    <test_objective>To Validate Cable Modem
 "CosaDmlCmGetCPEList" API under Negative scenario</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Emulator,
@@ -59,7 +59,7 @@ N/A
 
 
 </input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (COSACM_GetCPEList_InvalidArg - func name - "If not exists already" ( This is considered as default Primitive test case)
  cosacm - module name
  Necessary I/P args if needed as Mentioned in Input)
@@ -68,7 +68,7 @@ N/A
 3.Execute the generated Script(TS_COSACM_GetCPEList_InvalidArg.py) using execution page of  Test Manager GUI
 4.cosacmstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named COSACM_GetCPEList_InvalidArg through registered TDK cosacmstub function along with necessary Entry Values as arguments
 5.COSACM_GetCPEList_InvalidArg function will call ssp_cosacm_getcpelist_invalid_arg with improper input argument say unallocated memory pointer,that inturn will call relevant cm hal Function to get/fetch CM status data model value
-6.Responses(printf) from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cosacmstub function COSACM_GetCPEList_InvalidArg will validate the available result (return value from ssp_cosacm_getcpelist_invalid_arg as failure) with expected result (failure) and the output argument value is updated in agent console log and json output variable along with return value
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from COSACM_GetCPEList_InvalidArg function</automation_approch>
     <except_output>CheckPoint 1:
@@ -88,7 +88,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-#use tdklib library,which provides a wrapper for tdk testcase script 
+#use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -103,34 +103,34 @@ obj.configureTestCase(ip,port,'TS_COSACM_GetCPEList_InvalidArg');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("COSACM_GetCPEList_InvalidArg");
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("COSACM_GetCPEList_InvalidArg");
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "EXPECTED RESULT 1: Should return Error Status with respective Error code";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "EXPECTED RESULT 1: Should return Error Status with respective Error code";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE" ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("EXPECTED RESULT 1: Should return Error Status with respective Error code");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("EXPECTED RESULT 1: Should return Error Status with respective Error code");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult and devicetype != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if devicetype == "RPI":
             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled");
@@ -137,18 +137,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult not in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false";
-                print "EXPECTED RESULT 2 : Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false"
-                print "ACTUAL RESULT 2 :%s" %details;
+                print("TEST STEP 2: Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false");
+                print("EXPECTED RESULT 2 : Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false")
+                print("ACTUAL RESULT 2 :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false";
-                print "EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false";
-                print "ACTUAL RESULT 2: Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled is set to false";
+                print("TEST STEP 2:Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false");
+                print("EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to false");
+                print("ACTUAL RESULT 2: Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled is set to false");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled");
@@ -162,31 +162,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult not in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true";
-                print "EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true"
-                print "ACTUAL RESULT 2 :%s" %details;
+                print("TEST STEP 2: Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true");
+                print("EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true")
+                print("ACTUAL RESULT 2 :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true";
-                print "EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true";
-                print "ACTUAL RESULT 2: Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true";
+                print("TEST STEP 2:Set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true");
+                print("EXPECTED RESULT 2: Should not set the Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true");
+                print("ACTUAL RESULT 2: Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled to true");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DEVICE TYPE";
-        print "EXPECTED RESULT 1: Should get the DEVICE TYPE";
-        print "ACTUAL RESULT 1:Failed to get DEVICE TYPE";
+        print("TEST STEP 1: Get the DEVICE TYPE");
+        print("EXPECTED RESULT 1: Should get the DEVICE TYPE");
+        print("ACTUAL RESULT 1:Failed to get DEVICE TYPE");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

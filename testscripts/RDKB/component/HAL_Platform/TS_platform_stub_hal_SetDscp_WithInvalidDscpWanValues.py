@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_SetDscp_WithInvalidDscpWanVa
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,23 +93,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     invalid_vals = ["70", "0,64", "8,-10", "0,8,28,100"];
     flag = 0;
 
-    print "\nTEST STEP 1: Invoke the HAL API platform_hal_SetDscp() with invalid DSCP WAN values";
-    print "EXPECTED RESULT 1: platform_hal_SetDscp() should NOT be invoked successfully";
+    print("\nTEST STEP 1: Invoke the HAL API platform_hal_SetDscp() with invalid DSCP WAN values");
+    print("EXPECTED RESULT 1: platform_hal_SetDscp() should NOT be invoked successfully");
 
     for dscpVal in invalid_vals:
-        print "\nDSCP WAN Values : %s" %dscpVal;
+        print("\nDSCP WAN Values : %s" %dscpVal);
         tdkTestObj.addParameter("dscpVal", dscpVal);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult and "platform_hal_setDscp() function invocation was NOT successful" in details:
-            print "Details : ", details;
+            print("Details : ", details);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
         else:
             flag = 1;
-            print "Details : ", details;
+            print("Details : ", details);
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
             break;
@@ -117,16 +117,16 @@ if "SUCCESS" in loadmodulestatus.upper():
     if flag == 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Failed to invoke the API platform_hal_SetDscp() with invalid DSCP WAN values";
+        print("ACTUAL RESULT 1: Failed to invoke the API platform_hal_SetDscp() with invalid DSCP WAN values");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Invocation of the API platform_hal_SetDscp() with invalid DSCP WAN values succeeded";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: Invocation of the API platform_hal_SetDscp() with invalid DSCP WAN values succeeded");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

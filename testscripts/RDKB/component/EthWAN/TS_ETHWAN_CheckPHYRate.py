@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -98,51 +98,51 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if "true" == ethwanEnable:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "The device is in ethwan mode."
+        if "true" == ethwanEnable:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    tdkTestObj = obj1.createTestStep('ExecuteCmd');
-    	    tdkTestObj.addParameter("command", "cat /rdklogs/logs/GWPROVGPONWANLog.txt.0 | grep 'WAN_MODE: Ethernet 100'  && echo \"SUCCESS\" || echo \"FAILURE\"");
-    	    expectedresult="SUCCESS";
+            tdkTestObj = obj1.createTestStep('ExecuteCmd');
+            tdkTestObj.addParameter("command", "cat /rdklogs/logs/GWPROVGPONWANLog.txt.0 | grep 'WAN_MODE: Ethernet 100'  && echo \"SUCCESS\" || echo \"FAILURE\"");
+            expectedresult="SUCCESS";
 
-    	    #Execute the test case in STB
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    details = tdkTestObj.getResultDetails().strip();
+            #Execute the test case in STB
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip();
 
-    	    if expectedresult in actualresult and "SUCCESS" in details:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 2: Check if physical rate is present in log file";
-    	        print "EXPECTED RESULT 2: Physical rate must be available in log file";
-    	        print "ACTUAL RESULT 2: %s" %details;
-	    else:
-		#Set the result status of execution
+            if expectedresult in actualresult and "SUCCESS" in details:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Check if physical rate is present in log file");
+                print("EXPECTED RESULT 2: Physical rate must be available in log file");
+                print("ACTUAL RESULT 2: %s" %details);
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Check if physical rate is present in log file";
-                print "EXPECTED RESULT 2: Physical rate must be available in log file";
-                print "ACTUAL RESULT 2: %s" %details;
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "The device is not in ethwan mode. Please check the device setup"
+                print("TEST STEP 2: Check if physical rate is present in log file");
+                print("EXPECTED RESULT 2: Physical rate must be available in log file");
+                print("ACTUAL RESULT 2: %s" %details);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

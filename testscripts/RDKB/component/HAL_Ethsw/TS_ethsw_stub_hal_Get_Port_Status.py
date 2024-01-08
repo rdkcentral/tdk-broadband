@@ -81,8 +81,8 @@ obj1.configureTestCase(ip,port,'TS_ethsw_stub_hal_Get_Port_Status');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,15 +99,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("TEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#Number of interface entries minus 2 will be the number of ports
+        #Number of interface entries minus 2 will be the number of ports
         NumOfPorts = int(value)-2;
-        print "Number of ports is ", NumOfPorts
+        print("Number of ports is ", NumOfPorts)
 
         port = 1;
         LinkStatus_List = ["CCSP_HAL_ETHSW_LINK_Up","CCSP_HAL_ETHSW_LINK_Down","CCSP_HAL_ETHSW_LINK_Disconnected"];
@@ -128,36 +128,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if bitRate in LinkRate_List and linkStatus in LinkStatus_List:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port);
-                    print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1);
-                    print "ACTUAL RESULT %d: Bitrate = %s and Link status = %s" %(port+1, bitRate, linkStatus);
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port));
+                    print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1));
+                    print("ACTUAL RESULT %d: Bitrate = %s and Link status = %s" %(port+1, bitRate, linkStatus));
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                     port = port + 1;
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port);
-                    print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1);
-                    print "ACTUAL RESULT %d: Bitrate = %s and Link status = %s" %(port+1, bitRate, linkStatus);
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port));
+                    print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1));
+                    print("ACTUAL RESULT %d: Bitrate = %s and Link status = %s" %(port+1, bitRate, linkStatus));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     break;
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port);
-                print "EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1);
-                print "ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Status" %(port+1);
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP %d: Retrieve the Ethsw_Get_Port_Status for port %d" %(port+1, port));
+                print("EXPECTED RESULT %d: Should retrieve the Ethsw_Get_Port_Status successfully" %(port+1));
+                print("ACTUAL RESULT %d: Failed to retrieve the Ethsw_Get_Port_Status" %(port+1));
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 break;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("TEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("halethsw");
     obj1.unloadModule("tdkbtr181");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

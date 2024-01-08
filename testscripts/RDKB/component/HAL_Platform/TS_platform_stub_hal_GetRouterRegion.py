@@ -107,7 +107,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile ROUTER_REGION" %TDK_PATH;
-    print command;
+    print(command);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
@@ -116,11 +116,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult and routerRegion != " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get value of ROUTER_REGION from property file"
-        print "EXPECTED RESULT 1: Should get the value of ROUTER_REGION from property file"
-        print "ACTUAL RESULT 1:ROUTER_REGION from property file  %s" %routerRegion ;
+        print("TEST STEP 1: Get value of ROUTER_REGION from property file")
+        print("EXPECTED RESULT 1: Should get the value of ROUTER_REGION from property file")
+        print("ACTUAL RESULT 1:ROUTER_REGION from property file  %s" %routerRegion) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         routerRegionList = routerRegion.split('-')
 
         tdkTestObj = obj.createTestStep('platform_stub_hal_GetRouterRegion');
@@ -130,11 +130,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         if expectedresult in actualresult and routerRegion != " ":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Retrieve the Platform_getRouterRegion";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_getRouterRegion successfully";
-            print "ACTUAL RESULT 2: Platform_getRouterRegion value retrieved: %s" %routerRegion
+            print("TEST STEP 2: Retrieve the Platform_getRouterRegion");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_getRouterRegion successfully");
+            print("ACTUAL RESULT 2: Platform_getRouterRegion value retrieved: %s" %routerRegion)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep("platform_stub_hal_GetSerialNumber");
             expectedresult="SUCCESS";
@@ -145,11 +145,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             if expectedresult in actualresult and details != " ":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Retrieve the Platform_GetSerialNumber";
-                print "EXPECTED RESULT 3: Should retrieve the Platform_GetSerialNumber successfully";
+                print("TEST STEP 3: Retrieve the Platform_GetSerialNumber");
+                print("EXPECTED RESULT 3: Should retrieve the Platform_GetSerialNumber successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Serial Number: %s" %details;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Serial Number: %s" %details);
                 slNoFromHal = details[0:2]
 
                 regionCodes=[]
@@ -158,8 +158,8 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 for entry in routerRegionList:
                     regionCodes.append(entry.split(':')[0])
                     slList.append(entry.split(':')[1])
-                print "------regionCodes-------", regionCodes
-                print "-------------slList--------", slList
+                print("------regionCodes-------", regionCodes)
+                print("-------------slList--------", slList)
 
                 listIndex = 0
                 #find the index of serial no: list which matches device serial no:
@@ -172,47 +172,47 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if routerRegion == regionCodes[listIndex]:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Check if the region code from Platform_getRouterRegion is as per the device serial no:";
-                        print "EXPECTED RESULT 4: Should validate the Platform_getRouterRegion successfully";
-                        print "ACTUAL RESULT 4: Region code from Platform_getRouterRegion() corresponds with the device serial no:";
+                        print("TEST STEP 4: Check if the region code from Platform_getRouterRegion is as per the device serial no:");
+                        print("EXPECTED RESULT 4: Should validate the Platform_getRouterRegion successfully");
+                        print("ACTUAL RESULT 4: Region code from Platform_getRouterRegion() corresponds with the device serial no:");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Check if the region code from Platform_getRouterRegion is as per the device serial no:";
-                        print "EXPECTED RESULT 4: Should validate the Platform_getRouterRegion successfully";
-                        print "ACTUAL RESULT 4: Region code from Platform_getRouterRegion() is not as per the device serial no:";
+                        print("TEST STEP 4: Check if the region code from Platform_getRouterRegion is as per the device serial no:");
+                        print("EXPECTED RESULT 4: Should validate the Platform_getRouterRegion successfully");
+                        print("ACTUAL RESULT 4: Region code from Platform_getRouterRegion() is not as per the device serial no:");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "FAILURE: Device serail no: from hal api not matching with property file data"
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("FAILURE: Device serail no: from hal api not matching with property file data")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Retrieve the Platform_GetSerialNumber";
-                print "EXPECTED RESULT 3: Should retrieve the Platform_GetSerialNumber successfully";
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "%s" %details;
+                print("TEST STEP 3: Retrieve the Platform_GetSerialNumber");
+                print("EXPECTED RESULT 3: Should retrieve the Platform_GetSerialNumber successfully");
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("%s" %details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Retrieve the Platform_getRouterRegion";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_getRouterRegion successfully";
-            print "ACTUAL RESULT 2: Failed to retrieve Platform_getRouterRegion"
+            print("TEST STEP 2: Retrieve the Platform_getRouterRegion");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_getRouterRegion successfully");
+            print("ACTUAL RESULT 2: Failed to retrieve Platform_getRouterRegion")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get value of ROUTER_REGION from property file"
-        print "EXPECTED RESULT 1: Should get the value of ROUTER_REGION from property file"
-        print "ACTUAL RESULT 1: Failed to get ROUTER_REGION  from configuration file" ;
+        print("TEST STEP 1: Get value of ROUTER_REGION from property file")
+        print("EXPECTED RESULT 1: Should get the value of ROUTER_REGION from property file")
+        print("ACTUAL RESULT 1: Failed to get ROUTER_REGION  from configuration file") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

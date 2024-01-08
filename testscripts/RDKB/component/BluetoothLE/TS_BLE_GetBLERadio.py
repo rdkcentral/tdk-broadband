@@ -110,49 +110,51 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of BLERadio";
-        print "EXPECTED RESULT 1: Should get the enable status of BLERadio";
-        print "ACTUAL RESULT 1: BLERadio Enable status is %s" %BLERadioOrg;
+        print("TEST STEP 1: Get the enable status of BLERadio");
+        print("EXPECTED RESULT 1: Should get the enable status of BLERadio");
+        print("ACTUAL RESULT 1: BLERadio Enable status is %s" %BLERadioOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj2.createTestStep('ExecuteCmd');
         query="cat /tmp/rfc_configdata.txt | grep -i \"tr181.Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BLERadio\"";
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj.addParameter("command", query)
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        details=details.split("#~")[1];
-        if expectedresult in actualresult and details != "" and details == BLERadioOrg:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Enable status of BLERadio from rfc_configdata.txt and tr181 query should be equal";
-           print "EXPECTED RESULT 2: Should get status of BLERadio from rfc_configdata.txt and tr181 query  equal";
-           print "ACTUAL RESULT 2: BLERadio status from tr181 is %s and from rfc_configdata.txt is %s" %(BLERadioOrg,details);
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Enable status of BLERadio from rfc_configdata.txt and tr181 query should be equal";
-           print "EXPECTED RESULT 2: Should get status of BLERadio from rfc_configdata.txt and tr181 query  equal";
-           print "ACTUAL RESULT 2: BLERadio status from tr181 is %s and from rfc_configdata.txt is %s" %(BLERadioOrg,details);
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in actualresult and details != "":
+            details_config=details.split("#~")[1].split(' ')[0].rstrip(" ");
+
+            if BLERadioOrg == details_config:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Enable status of BLERadio from rfc_configdata.txt and tr181 query should be equal");
+                print("EXPECTED RESULT 2: Should get status of BLERadio from rfc_configdata.txt and tr181 query  equal");
+                print("ACTUAL RESULT 2: BLERadio status from tr181 is %s and from rfc_configdata.txt is %s" %(BLERadioOrg,details_config));
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Enable status of BLERadio from rfc_configdata.txt and tr181 query should be equal");
+                print("EXPECTED RESULT 2: Should get status of BLERadio from rfc_configdata.txt and tr181 query  equal");
+                print("ACTUAL RESULT 2: BLERadio status from tr181 is %s and from rfc_configdata.txt is %s" %(BLERadioOrg,details));
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of BLERadio";
-        print "EXPECTED RESULT 1: Should get the enable status of BLERadio";
-        print "ACTUAL RESULT 1: BLERadio Enable status is %s" %BLERadioOrg;
+        print("TEST STEP 1: Get the enable status of BLERadio");
+        print("EXPECTED RESULT 1: Should get the enable status of BLERadio");
+        print("ACTUAL RESULT 1: BLERadio Enable status is %s" %BLERadioOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

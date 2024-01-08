@@ -39,7 +39,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_COSACM_49</test_case_id>
-    <test_objective>To Validate Cable Modem 
+    <test_objective>To Validate Cable Modem
 "CosaDmlCMGetDHCPInfo" API</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Emulator,
@@ -66,7 +66,7 @@ NA
 3.Execute the generated Script using execution page of  Test Manager GUI
 4.cosacmstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named COSACM_GetDHCPInfo through registered TDK cosacmstub function along with necessary Entry Values as arguments
 5.COSACM_GetDHCPInfo function will call ssp_cosacm_GetDHCPInfo, that inturn will call relevant cm hal Function to get/set data model value
-6.Responses from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cosacmstub function COSACM_GetDHCPInfo will validate the available result (return value from ssp_cosacm_GetDHCPInfo as success(0)) with expected result (success(0)) and the output argument value is updated in agent console log and json output variable along with return value
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from COSACM_GetDHCPInfo function</automation_approch>
     <except_output>CheckPoint 1:
@@ -86,7 +86,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-#use tdklib library,which provides a wrapper for tdk testcase script 
+#use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -101,38 +101,38 @@ obj.configureTestCase(ip,port,'TS_COSACM_GetDHCPInfo');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("COSACM_GetDHCPInfo");
-        tdkTestObj.addParameter("handleType",0);
-        tdkTestObj.addParameter("bufferType",0);
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("COSACM_GetDHCPInfo");
+    tdkTestObj.addParameter("handleType",0);
+    tdkTestObj.addParameter("bufferType",0);
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Should get the DHCP info";
-            print "EXPECTED RESULT 1: Should get the DHCP info successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Should get the DHCP info ";
-            print "EXPECTED RESULT 1: Should get the DHCP info successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Should get the DHCP info");
+        print("EXPECTED RESULT 1: Should get the DHCP info successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Should get the DHCP info ");
+        print("EXPECTED RESULT 1: Should get the DHCP info successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

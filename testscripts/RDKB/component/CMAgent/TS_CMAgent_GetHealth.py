@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_CMAGENT_7</test_case_id>
-    <test_objective>To Validate 
-"Get Component Helath" 
+    <test_objective>To Validate
+"Get Component Helath"
 Function for CM Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -53,14 +53,14 @@ CMAgent_GetHealth
 Input
 1.PathName ("paramName")
 ( eg: "Device.X_CISCO_COM_CableModem." )</input_parameters>
-    <automation_approch>"1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>"1.Configure the Function info in Test Manager GUI  which needs to be tested
 (CMAgent_GetHealth  - func name - ""If not exists already""
  cmagent - module name
  Necessary I/P args as Mentioned in Input)
 2.Python Script will be generated/overrided automically by Test Manager with provided arguments in configure page (TS_CMAGENT_GetHealth.py)
 3.Execute the generated Script(TS_CMAGENT_GetHealth.py) using excution page of  Test Manager GUI
 4.cmagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named CMAgent_GetHealth through registered TDK cmagentstub function along with necessary Path Name as arguments
-5.CMAgent_GetHealth function will call Ccsp Base Function named ""CcspBaseIf_healthCheck"" , that inturn will call CM Agent Library Function ""ssp_PnmMbi_GetHealth"" 
+5.CMAgent_GetHealth function will call Ccsp Base Function named ""CcspBaseIf_healthCheck"" , that inturn will call CM Agent Library Function ""ssp_PnmMbi_GetHealth""
 6.Response(s)(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console.
 7.cmagentstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result (Eg:""Health of CMAGENT "" along with info) and  the same is updated to agent console log.
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from cmagentstub.</automation_approch>
@@ -82,8 +82,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-#use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+#use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -96,14 +96,14 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_GetHealth');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_GetHealth');
@@ -118,19 +118,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Successfully retrieved the component health"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("Successfully retrieved the component health")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Falied to retrieve the component health"	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("Falied to retrieve the component health")
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("cmagent");

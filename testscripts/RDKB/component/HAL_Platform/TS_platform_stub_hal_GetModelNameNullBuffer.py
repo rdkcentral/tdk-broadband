@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetModelNameNullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,22 +111,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details != " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the Platform_GetModelName by passing Null buffer";
-        print "EXPECTED RESULT 1: Should  not retrieve the Platform_GetModelName by passing null buffer";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Retrieve the Platform_GetModelName by passing Null buffer");
+        print("EXPECTED RESULT 1: Should  not retrieve the Platform_GetModelName by passing null buffer");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         #Set the result status of execution
-        print "TEST STEP 1: Retrieve the Platform_GetModelName by passing Null buffer";
-        print "EXPECTED RESULT 1: Should  not retrieve the Platform_GetModelName by passing null buffer";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Retrieve the Platform_GetModelName by passing Null buffer");
+        print("EXPECTED RESULT 1: Should  not retrieve the Platform_GetModelName by passing null buffer");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

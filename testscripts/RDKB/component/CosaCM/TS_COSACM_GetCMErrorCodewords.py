@@ -39,7 +39,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_COSACM_37</test_case_id>
-    <test_objective>To Validate Cable Modem 
+    <test_objective>To Validate Cable Modem
 "CosaDmlCmGetCMErrorCodewords" API</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Emulator,
@@ -59,7 +59,7 @@ N/A
 
 
 </input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (COSACM_GetCMErrorCodewords - func name - "If not exists already" ( This is considered as default Primitive test case)
  cosacm - module name
  Necessary I/P args if needed as Mentioned in Input)
@@ -68,7 +68,7 @@ N/A
 3.Execute the generated Script(TS_COSACM_GetCMErrorCodewords.py) using execution page of  Test Manager GUI
 4.cosacmstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named COSACM_GetCMErrorCodewords through registered TDK cosacmstub function along with necessary Entry Values as arguments
 5.COSACM_GetCMErrorCodewords function will call ssp_cosacm_get_errorcodewords,that inturn will call relevant cm hal Function to get/fetch CM data model value. In prior ssp_cosacm_create and ssp_coscm_initialize functions are called in sequence to allocate memory for CM datamodel and initialize with default values
-6.Responses(printf) from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cosacmstub function COSACM_GetErrorCodewords will validate the available result (return value from ssp_cosacm_get_errorcodewords as success(0)) with expected result (success(0)) and the output argument value ( Override mode value as string ) is updated in agent console log and json output variable along with return value
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from COSACM_GetErrorCodewords function</automation_approch>
     <except_output>CheckPoint 1:
@@ -102,36 +102,36 @@ obj.configureTestCase(ip,port,'TS_COSACM_GetCMErrorCodewords');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("COSACM_GetCMErrorCodewords");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("COSACM_GetCMErrorCodewords");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the error code words of CM";
-            print "EXPECTED RESULT 1: Should retrieve the CM error code words successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the error code words of CM";
-            print "EXPECTED RESULT 1: Should retrieve the CM error code words successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Retrieve the error code words of CM");
+        print("EXPECTED RESULT 1: Should retrieve the CM error code words successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Retrieve the error code words of CM");
+        print("EXPECTED RESULT 1: Should retrieve the CM error code words successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

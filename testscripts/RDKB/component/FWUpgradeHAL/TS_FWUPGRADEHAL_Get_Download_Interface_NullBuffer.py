@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_FWUPGRADEHAL_Get_Download_Interface_NullBuffer
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,22 +110,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_get_download_interface() with Null Buffer as input";
-        print "EXPECTED RESULT 1: Should not get the Download Interface when Null Buffer is passed to the API";
-        print "ACTUAL RESULT 1: fwupgrade_hal_get_download_interface() returns failure as expected";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_get_download_interface() with Null Buffer as input");
+        print("EXPECTED RESULT 1: Should not get the Download Interface when Null Buffer is passed to the API");
+        print("ACTUAL RESULT 1: fwupgrade_hal_get_download_interface() returns failure as expected");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_get_download_interface() with Null Buffer as input";
-        print "EXPECTED RESULT 1: Should not get the Download Interface when Null Buffer is passed to the API"
-        print "ACTUAL RESULT 1 : fwupgrade_hal_get_download_interface() returns success";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_get_download_interface() with Null Buffer as input");
+        print("EXPECTED RESULT 1: Should not get the Download Interface when Null Buffer is passed to the API")
+        print("ACTUAL RESULT 1 : fwupgrade_hal_get_download_interface() returns success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

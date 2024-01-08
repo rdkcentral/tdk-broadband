@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetOnuId');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,20 +94,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", resultDetails.lower()) :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ONU Id";
-        print "EXPECTED RESULT 1: Should get the onu id as a valid MAC";
-        print "ACTUAL RESULT 1: The ONU Id is %s" %resultDetails;
+        print("TEST STEP 1: Get the ONU Id");
+        print("EXPECTED RESULT 1: Should get the onu id as a valid MAC");
+        print("ACTUAL RESULT 1: The ONU Id is %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ONU Id";
-        print "EXPECTED RESULT 1: Should get the onu id as a valid MAC";
-        print "ACTUAL RESULT 1: Failed to get the ONU Id, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the ONU Id");
+        print("EXPECTED RESULT 1: Should get the onu id as a valid MAC");
+        print("ACTUAL RESULT 1: Failed to get the ONU Id, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

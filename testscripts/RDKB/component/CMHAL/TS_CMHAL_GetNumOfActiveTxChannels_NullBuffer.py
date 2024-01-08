@@ -65,7 +65,7 @@
     <api_or_interface_used>docsis_GetNumOfActiveTxChannels</api_or_interface_used>
     <input_parameters>paramName: NumberofActiveTxChannels</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke docsis_GetNumOfActiveTxChannels to get the Number of Active Tx channels 
+2. From script invoke docsis_GetNumOfActiveTxChannels to get the Number of Active Tx channels
 3. Pass NULL buffer and check if Number of Active Tx channels is obtained with NULL buffer
 4. The test should return FAILURE on passing NULL buffer.
 5. Unload cmhal module</automation_approch>
@@ -80,8 +80,8 @@
 </xml>
 
 '''
-#use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+#use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetNumOfActiveTxChannels_NullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,20 +112,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get Number of TxChannels on passing  NULL buffer";
-        print "EXPECTED RESULT 1: Should not get the value with NULL buffer";
-        print "ACTUAL RESULT 1: %s" %Details;
+        print("TEST STEP 1: Get Number of TxChannels on passing  NULL buffer");
+        print("EXPECTED RESULT 1: Should not get the value with NULL buffer");
+        print("ACTUAL RESULT 1: %s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get Number of TxChannels on passing NULL buffer";
-        print "EXPECTED RESULT 1: Should not get the value with NULL buffer";
-        print "ACTUAL RESULT 1: %s" %Details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get Number of TxChannels on passing NULL buffer");
+        print("EXPECTED RESULT 1: Should not get the value with NULL buffer");
+        print("ACTUAL RESULT 1: %s" %Details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

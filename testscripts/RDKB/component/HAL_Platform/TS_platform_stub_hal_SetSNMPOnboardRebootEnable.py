@@ -84,66 +84,65 @@ obj1.configureTestCase(ip,port,'TS_platform_stub_hal_SetSNMPOnboardRebootEnable'
 result =obj.getLoadModuleResult();
 result1 = obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %result;
-print "[LIB LOAD STATUS]  :  %s" %result1;
+print("[LIB LOAD STATUS]  :  %s" %result);
+print("[LIB LOAD STATUS]  :  %s" %result1);
 
 if "SUCCESS" in (result.upper() and result1.upper()) :
 
-   obj.setLoadModuleStatus("SUCCESS");
-   #Prmitive test case which associated to this Script
-   tdkTestObj = obj.createTestStep('platform_stub_hal_SetSNMPOnboardRebootEnable');
-   expectedresult ="SUCCESS"
-   setValue ="enable"
-   tdkTestObj.addParameter("SNMPonboard",setValue)
-   #Execute the test case in DUT
-   tdkTestObj.executeTestCase("expectedresult");
-   #Get the result of execution
-   actualresult = tdkTestObj.getResult();
-   details = tdkTestObj.getResultDetails();
-   if expectedresult in actualresult:
-      print" TEST STEP 1: Set the SetSNMPOnboardRebootEnable to true";
-      print" EXPECTED  RESULT 1: Should succesfully set the SetSNMPOnboardRebootEnable";
-      print" ACTUAL RESULT 1: %s" %details
-      print "[TEST EXECUTION RESULT] : %s" %actualresult;
-      tdkTestObj.setResultStatus("SUCCESS");
-      #saving the current state before going for reboot
-      obj.saveCurrentState();
-      print "TEST STEP : Initiate reboot via SNMP";
-      print "EXPECTED RESULT : Should initiate reboot through SNMP";
+    obj.setLoadModuleStatus("SUCCESS");
+    #Prmitive test case which associated to this Script
+    tdkTestObj = obj.createTestStep('platform_stub_hal_SetSNMPOnboardRebootEnable');
+    expectedresult ="SUCCESS"
+    setValue ="enable"
+    tdkTestObj.addParameter("SNMPonboard",setValue)
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase("expectedresult");
+    #Get the result of execution
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        print(" TEST STEP 1: Set the SetSNMPOnboardRebootEnable to true");
+        print(" EXPECTED  RESULT 1: Should succesfully set the SetSNMPOnboardRebootEnable");
+        print(" ACTUAL RESULT 1: %s" %details)
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        tdkTestObj.setResultStatus("SUCCESS");
+        #saving the current state before going for reboot
+        obj.saveCurrentState();
+        print("TEST STEP : Initiate reboot via SNMP");
+        print("EXPECTED RESULT : Should initiate reboot through SNMP");
 
-      # Resetting device using snmp command
-      #Get the Community String
-      communityString = snmplib.getCommunityString(obj1,"snmpset");
-      #Get the IP Address
-      ipaddress = snmplib.getIPAddress(obj1);
-      ########## Script to Execute the snmp command ###########
-      actResponse =snmplib.SnmpExecuteCmd("snmpset", communityString, "-v 2c", "1.3.6.1.2.1.69.1.1.3.0 i 1", ipaddress);
-      if "INTEGER" in actResponse:
-         print "TEST STEP2 : Check if DUT goes for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-         print "EXPECTED RESULT2: DUT should go for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-         print "ACTUAL RESULT 2: DUT went for  a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-         print "[TEST EXECUTION RESULT]: SUCCESS";
-         tdkTestObj.setResultStatus("SUCCESS");
-         #Restore the device state saved before reboot
-         obj1.restorePreviousStateAfterReboot();
-      else:
-          #Set the result status of execution
-          print "TEST STEP2 : Check if DUT goes for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-          print "EXPECTED RESULT2: DUT should go for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-          print "ACTUAL RESULT 2: DUT did not go for  a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled"
-          print "[TEST EXECUTION RESULT]: FAILURE";
-          tdkTestObj.setResultStatus("FAILURE");
-   else:
-       print" TEST STEP 1: Set the SetSNMPOnboardRebootEnable to true";
-       print" EXPECTED  RESULT 1: Should succesfully set the SetSNMPOnboardRebootEnable";
-       print" ACTUAL RESULT 1: %s" %details
-       print "[TEST EXECUTION RESULT] : %s" %actualresult;
-       tdkTestObj.setResultStatus("FAILURE");
+        # Resetting device using snmp command
+        #Get the Community String
+        communityString = snmplib.getCommunityString(obj1,"snmpset");
+        #Get the IP Address
+        ipaddress = snmplib.getIPAddress(obj1);
+        ########## Script to Execute the snmp command ###########
+        actResponse =snmplib.SnmpExecuteCmd("snmpset", communityString, "-v 2c", "1.3.6.1.2.1.69.1.1.3.0 i 1", ipaddress);
+        if "INTEGER" in actResponse:
+            print("TEST STEP2 : Check if DUT goes for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("EXPECTED RESULT2: DUT should go for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("ACTUAL RESULT 2: DUT went for  a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("[TEST EXECUTION RESULT]: SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+            #Restore the device state saved before reboot
+            obj1.restorePreviousStateAfterReboot();
+        else:
+            #Set the result status of execution
+            print("TEST STEP2 : Check if DUT goes for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("EXPECTED RESULT2: DUT should go for a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("ACTUAL RESULT 2: DUT did not go for  a reboot through SNMP after  SetSNMPOnboardRebootEnable is enabled")
+            print("[TEST EXECUTION RESULT]: FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
+    else:
+        print(" TEST STEP 1: Set the SetSNMPOnboardRebootEnable to true");
+        print(" EXPECTED  RESULT 1: Should succesfully set the SetSNMPOnboardRebootEnable");
+        print(" ACTUAL RESULT 1: %s" %details)
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        tdkTestObj.setResultStatus("FAILURE");
 
-   obj.unloadModule("halplatform");
-   obj1.unloadModule("sysutil");
+    obj.unloadModule("halplatform");
+    obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

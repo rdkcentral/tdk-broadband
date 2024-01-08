@@ -52,7 +52,7 @@ Input
 1.PathName ("paramName")
 ( eg: "Device.X_CISCO_COM_CableModem.DOCSISVersion")</input_parameters>
     <automation_approch>1.Load the cmagent module
-2.From script invoke CMAgent_Get to get the DOCSISVersion 
+2.From script invoke CMAgent_Get to get the DOCSISVersion
 3.Check if the value returned is 3.0 or 3.1
 6.Response(s)(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console.
 7.cmagentstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result ("Values for Requested Param" ) and the same is updated to agent console log.
@@ -73,8 +73,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -87,15 +87,15 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_DOCSISVersion');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-    print "[Failed To Load CM Agent Stub from env TDK Path]"
-    print "[Exiting the Script]"
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
     exit();
-		
+
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_Get');
 
@@ -109,45 +109,45 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails_Version = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
     #Set the result status of execution as success
     tdkTestObj.setResultStatus("SUCCESS");
-    print "TEST STEP 1: Get the DOCSISVersion";
-    print "EXPECTED RESULT 1: Should get the DOCSISVersion";
-    print "ACTUAL RESULT 1: %s" %resultDetails_Version;
+    print("TEST STEP 1: Get the DOCSISVersion");
+    print("EXPECTED RESULT 1: Should get the DOCSISVersion");
+    print("ACTUAL RESULT 1: %s" %resultDetails_Version);
     #Get the result of execution
-    print "[TEST EXECUTION RESULT] : SUCCESS";
+    print("[TEST EXECUTION RESULT] : SUCCESS");
 
     if  "3.0" in resultDetails_Version or "3.1" in resultDetails_Version:
         #Set the result status of execution as failure
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: Get the DOCSIS Version as 3.0 or 3.1";
-    	print "EXPECTED RESULT 2: Should get the DOCSIS Version as 3.0 or 3.1";
-    	print "ACTUAL RESULT 2: %s" %resultDetails_Version;
-    	#Get the result of execution
-    	print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 2: Get the DOCSIS Version as 3.0 or 3.1");
+        print("EXPECTED RESULT 2: Should get the DOCSIS Version as 3.0 or 3.1");
+        print("ACTUAL RESULT 2: %s" %resultDetails_Version);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
     else:
         #Set the result status of execution as failure
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 2: Get the DOCSIS Version as 3.0 or 3.1";
-        print "EXPECTED RESULT 2: Should get the DOCSIS Version as 3.0 or 3.1";
-        print "ACTUAL RESULT 2: %s" %resultDetails_Version;
+        print("TEST STEP 2: Get the DOCSIS Version as 3.0 or 3.1");
+        print("EXPECTED RESULT 2: Should get the DOCSIS Version as 3.0 or 3.1");
+        print("ACTUAL RESULT 2: %s" %resultDetails_Version);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 else:
     #Set the result status of execution as failure
     tdkTestObj.setResultStatus("FAILURE");
-    print "TEST STEP 1: Get the DOCSISVersion";
-    print "EXPECTED RESULT 1: Should get the DOCSISVersion";
-    print "ACTUAL RESULT 1: %s" %resultDetails_Version;
+    print("TEST STEP 1: Get the DOCSISVersion");
+    print("EXPECTED RESULT 1: Should get the DOCSISVersion");
+    print("ACTUAL RESULT 1: %s" %resultDetails_Version);
     #Get the result of execution
-    print "[TEST EXECUTION RESULT] : FAILURE";
+    print("[TEST EXECUTION RESULT] : FAILURE");
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails_Version;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails_Version);
 
 obj.unloadModule("cmagent");

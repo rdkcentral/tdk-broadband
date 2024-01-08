@@ -100,81 +100,81 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-	if ethwanEnable == "true":
-	    tdkTestObj.setResultStatus("SUCCESS");
-            print "The device is in ethwan mode."
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        if ethwanEnable == "true":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    #Get UTC time from date command
-	    cmd = "date"
-	    tdkTestObj = obj1.createTestStep('ExecuteCmd');
+            #Get UTC time from date command
+            cmd = "date"
+            tdkTestObj = obj1.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", cmd)
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             output = tdkTestObj.getResultDetails().strip().replace("\\n","");
-	    output = " ".join(output.split())
-	    day = output.split(" ")[0]
-	    Month = output.split(" ")[1]
-	    date = output.split(" ")[2]
-	    year = output.split(" ")[-1]
-	    time = output.split(" ")[3].split(":")[0]
-	    utcTime_date = day+ " "+Month+ " "+date+ " "+year+ " "+time
-	    print utcTime_date
+            output = " ".join(output.split())
+            day = output.split(" ")[0]
+            Month = output.split(" ")[1]
+            date = output.split(" ")[2]
+            year = output.split(" ")[-1]
+            time = output.split(" ")[3].split(":")[0]
+            utcTime_date = day+ " "+Month+ " "+date+ " "+year+ " "+time
+            print(utcTime_date)
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the utc time from 'date' command";
-                print "EXPECTED RESULT 2: Should get the utc time from 'date' command";
-		print "ACTUAL RESULT 2: UTC time from 'date' command is %s" %utcTime_date
+                print("TEST STEP 2: Get the utc time from 'date' command");
+                print("EXPECTED RESULT 2: Should get the utc time from 'date' command");
+                print("ACTUAL RESULT 2: UTC time from 'date' command is %s" %utcTime_date)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		#Get UTC time from python library
-		currentdate = datetime.datetime.now()
-		DAY = currentdate.strftime("%a")
-		MONTH = currentdate.strftime("%b")
-		DATE = currentdate.strftime("%-d")
-		YEAR = currentdate.strftime("%Y")
-		TIME = currentdate.strftime("%H")
-		utcTime_python = DAY + " " + MONTH + " " + DATE + " " + YEAR+ " " + TIME
-		print utcTime_python
+                #Get UTC time from python library
+                currentdate = datetime.datetime.now()
+                DAY = currentdate.strftime("%a")
+                MONTH = currentdate.strftime("%b")
+                DATE = currentdate.strftime("%-d")
+                YEAR = currentdate.strftime("%Y")
+                TIME = currentdate.strftime("%H")
+                utcTime_python = DAY + " " + MONTH + " " + DATE + " " + YEAR+ " " + TIME
+                print(utcTime_python)
 
-		if utcTime_python == utcTime_date:
-		    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Validate UTC time"
-		    print "TEST STEP 3: UTC time from 'date' command and python lib should be same"
-		    print "ACTUAL RESULT 3: UTC time from python lib is %s" %utcTime_python
-		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Validate UTC time"
-                    print "TEST STEP 3: UTC time from 'date' command and python lib should be same"
-		    print "ACTUAL RESULT 3: UTC time from python lib is %s" %utcTime_python
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                if utcTime_python == utcTime_date:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Validate UTC time")
+                    print("TEST STEP 3: UTC time from 'date' command and python lib should be same")
+                    print("ACTUAL RESULT 3: UTC time from python lib is %s" %utcTime_python)
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Validate UTC time")
+                    print("TEST STEP 3: UTC time from 'date' command and python lib should be same")
+                    print("ACTUAL RESULT 3: UTC time from python lib is %s" %utcTime_python)
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the utc time from 'date' command";
-                print "EXPECTED RESULT 2: Should get the utc time from 'date' command";
-		print "ACTUAL RESULT 2: UTC time from 'date' command is %s" %utcTime_date
+                print("TEST STEP 2: Get the utc time from 'date' command");
+                print("EXPECTED RESULT 2: Should get the utc time from 'date' command");
+                print("ACTUAL RESULT 2: UTC time from 'date' command is %s" %utcTime_date)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "The device is not in ethwan mode. Please check the device setup"
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

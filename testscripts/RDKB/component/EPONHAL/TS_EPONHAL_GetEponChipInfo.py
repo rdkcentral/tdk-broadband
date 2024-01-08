@@ -48,7 +48,7 @@
     <api_or_interface_used>dpoe_getEponChipInfo() </api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load eponhal module
-2. Invoke  dpoe_getEponChipInfo() 
+2. Invoke  dpoe_getEponChipInfo()
 3. Check if the details are non empty
 3. Unload eponhal module</automation_approch>
     <expected_output>The output of  dpoe_getEponChipInfo()   should be non empty holding the information</expected_output>
@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetEponChipInfo');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,31 +94,29 @@ if "SUCCESS" in loadmodulestatus.upper():
         info_ChipModel=resultDetails.split(':')[2].split(',')[0].strip()
         info_ChipVersion=resultDetails.split(':')[3].strip()
         if info_JedecId and info_ChipModel and info_ChipVersion:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Get the info_JedecId, info_ChipModel,info_ChipVersion as non empty ";
-           print "EXPECTED RESULT 1: Should get the info_JedecId, info_ChipModel,info_ChipVersion as non empty";
-           print "ACTUAL RESULT 1:  %s" %resultDetails;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the info_JedecId, info_ChipModel,info_ChipVersion as non empty ");
+            print("EXPECTED RESULT 1: Should get the info_JedecId, info_ChipModel,info_ChipVersion as non empty");
+            print("ACTUAL RESULT 1:  %s" %resultDetails);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the info_JedecId, info_ChipModel,info_ChipVersion as non empty ";
-            print "EXPECTED RESULT 1: Should get the info_JedecId, info_ChipModel,info_ChipVersion as non empty";
-            print "ACTUAL RESULT 1: Failed to get the , EponChipInfo Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the info_JedecId, info_ChipModel,info_ChipVersion as non empty ");
+            print("EXPECTED RESULT 1: Should get the info_JedecId, info_ChipModel,info_ChipVersion as non empty");
+            print("ACTUAL RESULT 1: Failed to get the , EponChipInfo Details : %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the EponChipInfo";
-        print "EXPECTED RESULT : Should get the EponChipInfo  successfully";
-        print "ACTUAL RESULT : Failed to get the EponChipInfo, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP : Get the EponChipInfo");
+        print("EXPECTED RESULT : Should get the EponChipInfo  successfully");
+        print("ACTUAL RESULT : Failed to get the EponChipInfo, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

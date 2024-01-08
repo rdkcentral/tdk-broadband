@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_DSLHAL_GetLinkStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -114,11 +114,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate the DSLHAL_init operation";
-        print "EXPECTED RESULT 1: DSLHAL_init Should be success";
-        print "ACTUAL RESULT 1: DSLHAL_init was success";
+        print("TEST STEP 1: Initiate the DSLHAL_init operation");
+        print("EXPECTED RESULT 1: DSLHAL_init Should be success");
+        print("ACTUAL RESULT 1: DSLHAL_init was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('DSLHAL_GetParamValue');
         tdkTestObj.addParameter("paramName","Device.DSL.Line.1.LinkStatus");
@@ -130,31 +130,31 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the DSL Line Status";
-            print "EXPECTED RESULT 2: Get Line Status operation should be success ";
-            print "ACTUAL RESULT 2: Get Line Status operation was success , Line Status is: ",line_status
+            print("TEST STEP 2: Get the DSL Line Status");
+            print("EXPECTED RESULT 2: Get Line Status operation should be success ");
+            print("ACTUAL RESULT 2: Get Line Status operation was success , Line Status is: ",line_status)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the DSL Line Status";
-            print "EXPECTED RESULT 2: Get Line Status operation should be success ";
-            print "ACTUAL RESULT 2: Get Line Status operation was Failed ";
+            print("TEST STEP 2: Get the DSL Line Status");
+            print("EXPECTED RESULT 2: Get Line Status operation should be success ");
+            print("ACTUAL RESULT 2: Get Line Status operation was Failed ");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate the DSLHAL_init operation";
-        print "EXPECTED RESULT 1: DSLHAL_init Should be Success";
-        print "ACTUAL RESULT 1: DSLHAL_init was Failed";
+        print("TEST STEP 1: Initiate the DSLHAL_init operation");
+        print("EXPECTED RESULT 1: DSLHAL_init Should be Success");
+        print("ACTUAL RESULT 1: DSLHAL_init was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("dslhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -104,8 +104,8 @@ obj1.configureTestCase(ip,port,'TS_COSACM_SetMddIpModeOverride');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -120,201 +120,201 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     Details1 = tdkTestObj1.getResultDetails().replace("\\n", "");
 
     if expectedresult1 in actualresult1 and Details1.strip():
-       tdkTestObj1.setResultStatus("SUCCESS");
-       print "TEST STEP 0: Execute the command";
-       print "EXPECTED RESULT 0: Should execute the command successfully";
-       print "ACTUAL RESULT 0: Details: %s" %Details1;
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj1.setResultStatus("SUCCESS");
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Details: %s" %Details1);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       List = Details1.split(",");
-       print "MDD IP MODE List : %s" %List;
+        List = Details1.split(",");
+        print("MDD IP MODE List : %s" %List);
 
-       tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       Default = tdkTestObj.getResultDetails().replace("\\n", "");
+        tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        Default = tdkTestObj.getResultDetails().replace("\\n", "");
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 1:  Get the MDDIP Override value";
-          print "EXPECTED RESULT 1: Should get  the MDDIP Override value  successfully";
-          print "ACTUAL RESULT 1: Details: %s" %Default;
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1:  Get the MDDIP Override value");
+            print("EXPECTED RESULT 1: Should get  the MDDIP Override value  successfully");
+            print("ACTUAL RESULT 1: Details: %s" %Default);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          #Script to load the configuration file of the component
-          tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-          tdkTestObj.addParameter("value",List[0]);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+            tdkTestObj.addParameter("value",List[0]);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
 
-          if expectedresult in actualresult:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             details = tdkTestObj.getResultDetails();
-             print "TEST STEP 2: Set the MDDIP Override value to:",List[0];
-             print "EXPECTED RESULT 2: Should successfully set the value to ",List[0];
-             print "ACTUAL RESULT 2: %s" %details;
-             #Script to load the configuration file of the component
-             tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails().replace("\\n", "");
-             details=details.split(":")[1];
-             if expectedresult in actualresult and details in List[0]:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 3: Retrieve the MDD IP Override Status";
-                 print "EXPECTED RESULT 3: Should get the value equal to the one set ";
-                 print "ACTUAL RESULT 3: %s" %details;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                 tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-                 tdkTestObj.addParameter("value",List[1]);
-                 expectedresult="SUCCESS";
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                details = tdkTestObj.getResultDetails();
+                print("TEST STEP 2: Set the MDDIP Override value to:",List[0]);
+                print("EXPECTED RESULT 2: Should successfully set the value to ",List[0]);
+                print("ACTUAL RESULT 2: %s" %details);
+                #Script to load the configuration file of the component
+                tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().replace("\\n", "");
+                details=details.split(":")[1];
+                if expectedresult in actualresult and details in List[0]:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Retrieve the MDD IP Override Status");
+                    print("EXPECTED RESULT 3: Should get the value equal to the one set ");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                    tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+                    tdkTestObj.addParameter("value",List[1]);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
 
-                 if expectedresult in actualresult:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     details = tdkTestObj.getResultDetails();
-                     print "TEST STEP 4: Set the MDDIP Override value to :",List[1];
-                     print "EXPECTED RESULT 4: Should successfully set the value to ",List[1];
-                     print "ACTUAL RESULT 4: %s" %details;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                     tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
-                     expectedresult="SUCCESS";
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails().replace("\\n", "");
-                     details=details.split(":")[1];
-                     if expectedresult in actualresult and details in  List[1]:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 5: Retrieve the MDD IP Override Status";
-                         print "EXPECTED RESULT 5: Should get the value equal to the one set";
-                         print "ACTUAL RESULT 5: %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                         tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-                         tdkTestObj.addParameter("value",List[2]);
-                         expectedresult="SUCCESS";
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        details = tdkTestObj.getResultDetails();
+                        print("TEST STEP 4: Set the MDDIP Override value to :",List[1]);
+                        print("EXPECTED RESULT 4: Should successfully set the value to ",List[1]);
+                        print("ACTUAL RESULT 4: %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                        tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().replace("\\n", "");
+                        details=details.split(":")[1];
+                        if expectedresult in actualresult and details in  List[1]:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Retrieve the MDD IP Override Status");
+                            print("EXPECTED RESULT 5: Should get the value equal to the one set");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                            tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+                            tdkTestObj.addParameter("value",List[2]);
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
 
-                         if expectedresult in actualresult:
-                             #Set the result status of execution
-                             tdkTestObj.setResultStatus("SUCCESS");
-                             details = tdkTestObj.getResultDetails();
-                             print "TEST STEP 6: Set the MDDIP Override value to :",List[2];
-                             print "EXPECTED RESULT 6: Should successfully set the value to ",List[2];
-                             print "ACTUAL RESULT 6: %s" %details;
-                             #Get the result of execution
-                             print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                             tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
-                             expectedresult="SUCCESS";
-                             tdkTestObj.executeTestCase(expectedresult);
-                             actualresult = tdkTestObj.getResult();
-                             details = tdkTestObj.getResultDetails().replace("\\n", "");
-                             details=details.split(":")[1];
-                             if expectedresult in actualresult and details in List[2]:
-                                 #Set the result status of execution
-                                 tdkTestObj.setResultStatus("SUCCESS");
-                                 print "TEST STEP 7: Retrieve the MDD IP Override Status";
-                                 print "EXPECTED RESULT 7: Should get the value equal to the one set";
-                                 print "ACTUAL RESULT 7: %s" %details;
-                                 #Get the result of execution
-                                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                             else:
-                                 tdkTestObj.setResultStatus("FAILURE");
-                                 print "TEST STEP 7: Retrieve the MDD IP Override Status";
-                                 print "EXPECTED RESULT 7: Should get the value equal to the one set";
-                                 print "ACTUAL RESULT 7: %s" %details;
-                                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                         else:
-                             details = tdkTestObj.getResultDetails();
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "TEST STEP 6: Set the MDDIP Override value to :",List[2];
-                             print "EXPECTED RESULT 6: Should successfully set the value to ",List[2];
-                             print "ACTUAL RESULT 6: %s" %details;
-                             print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                     else:
-                         tdkTestObj.setResultStatus("FAILURE");
-                         details = tdkTestObj.getResultDetails();
-                         print "TEST STEP 5: Retrieve the MDD IP Override Status";
-                         print "EXPECTED RESULT 5: Should get the value equal to the one set";
-                         print "ACTUAL RESULT 5: %s" %details;
-                         print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     details = tdkTestObj.getResultDetails();
-                     print "TEST STEP 4: Set the MDDIP Override value to :",List[1];
-                     print "EXPECTED RESULT 4: Should successfully set the value to ",List[1];
-                     print "ACTUAL RESULT 4: %s" %details;
-                     print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                     tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-                     tdkTestObj.addParameter("value",List[2]);
-                     expectedresult="SUCCESS";
-                     tdkTestObj.executeTestCase(expectedresult);
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 details = tdkTestObj.getResultDetails();
-                 print "TEST STEP 3: Retrieve the MDD IP Override Status";
-                 print "EXPECTED RESULT 3: Should get the value equal to the one set";
-                 print "ACTUAL RESULT 3: %s" %details;
-                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              details = tdkTestObj.getResultDetails();
-              print "TEST STEP 2: Set the MDDIP Override value to:",List[0];
-              print "EXPECTED RESULT 2: Should successfully set the value to ",List[0];
-              print "ACTUAL RESULT 2: %s" %details;
-              print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-              tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-              tdkTestObj.addParameter("value",List[2]);
-              expectedresult="SUCCESS";
-              tdkTestObj.executeTestCase(expectedresult);
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 1:Get the MDD Ip Override Value"
-           print "TEST STEP 1: Should get the MDD IP Override  value"
-           print "ACTUAL RESULT 1:%s" %Default;
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                            if expectedresult in actualresult:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                details = tdkTestObj.getResultDetails();
+                                print("TEST STEP 6: Set the MDDIP Override value to :",List[2]);
+                                print("EXPECTED RESULT 6: Should successfully set the value to ",List[2]);
+                                print("ACTUAL RESULT 6: %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                                tdkTestObj = obj.createTestStep("COSACM_GetMDDIPOverride");
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails().replace("\\n", "");
+                                details=details.split(":")[1];
+                                if expectedresult in actualresult and details in List[2]:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 7: Retrieve the MDD IP Override Status");
+                                    print("EXPECTED RESULT 7: Should get the value equal to the one set");
+                                    print("ACTUAL RESULT 7: %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 7: Retrieve the MDD IP Override Status");
+                                    print("EXPECTED RESULT 7: Should get the value equal to the one set");
+                                    print("ACTUAL RESULT 7: %s" %details);
+                                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                            else:
+                                details = tdkTestObj.getResultDetails();
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 6: Set the MDDIP Override value to :",List[2]);
+                                print("EXPECTED RESULT 6: Should successfully set the value to ",List[2]);
+                                print("ACTUAL RESULT 6: %s" %details);
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            details = tdkTestObj.getResultDetails();
+                            print("TEST STEP 5: Retrieve the MDD IP Override Status");
+                            print("EXPECTED RESULT 5: Should get the value equal to the one set");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        details = tdkTestObj.getResultDetails();
+                        print("TEST STEP 4: Set the MDDIP Override value to :",List[1]);
+                        print("EXPECTED RESULT 4: Should successfully set the value to ",List[1]);
+                        print("ACTUAL RESULT 4: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                        tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+                        tdkTestObj.addParameter("value",List[2]);
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    details = tdkTestObj.getResultDetails();
+                    print("TEST STEP 3: Retrieve the MDD IP Override Status");
+                    print("EXPECTED RESULT 3: Should get the value equal to the one set");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                details = tdkTestObj.getResultDetails();
+                print("TEST STEP 2: Set the MDDIP Override value to:",List[0]);
+                print("EXPECTED RESULT 2: Should successfully set the value to ",List[0]);
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+                tdkTestObj.addParameter("value",List[2]);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1:Get the MDD Ip Override Value")
+            print("TEST STEP 1: Should get the MDD IP Override  value")
+            print("ACTUAL RESULT 1:%s" %Default);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-       #reverting the value
-       Default=Default.split(":")[1];
-       tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
-       tdkTestObj.addParameter("value",Default);
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       details = tdkTestObj.getResultDetails();
-       actualresult = tdkTestObj.getResult();
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 8:Revert the MDD IP Override to :",Default
-          print "TEST STEP 8: Should revert the MDD IP Override  value"
-          print "ACTUAL RESULT 8:%s" %details
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 8:Revert the MDD Ip Override to:",Default
-          print "TEST STEP 8: Should revert the MDD IP Override  value"
-          print "ACTUAL RESULT 8:%s" %details
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        #reverting the value
+        Default=Default.split(":")[1];
+        tdkTestObj = obj.createTestStep("CosaCM_SetMDDIPOverride");
+        tdkTestObj.addParameter("value",Default);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        details = tdkTestObj.getResultDetails();
+        actualresult = tdkTestObj.getResult();
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 8:Revert the MDD IP Override to :",Default)
+            print("TEST STEP 8: Should revert the MDD IP Override  value")
+            print("ACTUAL RESULT 8:%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 8:Revert the MDD Ip Override to:",Default)
+            print("TEST STEP 8: Should revert the MDD IP Override  value")
+            print("ACTUAL RESULT 8:%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 0: Execute the command";
-        print "EXPECTED RESULT 0: Should execute the command successfully";
-        print "ACTUAL RESULT 0: Details: %s" %Details1;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Details: %s" %Details1);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cosacm");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -81,8 +81,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -95,12 +95,12 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetChannelIDWithDSFrequency');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
-    #This method invokes the HAL API docsis_GetDSChannel and retrieves the downstream channel id and corresponding frequencies. 
+    #This method invokes the HAL API docsis_GetDSChannel and retrieves the downstream channel id and corresponding frequencies.
     tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
     tdkTestObj.addParameter("paramName","DSChannelIDAndFrequency");
     expectedresult="SUCCESS";
@@ -110,53 +110,52 @@ if "SUCCESS" in loadmodulestatus.upper():
     minFreq = 108.00;
     maxFreq = 1002.00;
     List = Freq.split(",");
-    print "%s" %List;
+    print("%s" %List);
     for item in List:
-	#Data[0] is Channel ID and Data[1] is Frequency
+        #Data[0] is Channel ID and Data[1] is Frequency
         Data = item.split(":");
-        print "%s" %Data;
+        print("%s" %Data);
         #KHz to MHz
         if  int(Data[0]) != 0 and "MHz" in Data[1]:
-        
-           if  minFreq<=float(Data[1].split(" ")[0])<=maxFreq:
-            status = "Success";
-           else:
-            status = "Failure";
-            break;
-        elif int(Data[0]) != 0 and "MHz" not in Data[1] :
-             Data[1]=float(Data[1])/1000000;
-        
-             if  minFreq<=Data[1]<=maxFreq:
-               status = "Success";
-             else:
-               status = "Failure";
-               break;
 
-             
+            if  minFreq<=float(Data[1].split(" ")[0])<=maxFreq:
+                status = "Success";
+            else:
+                status = "Failure";
+                break;
+        elif int(Data[0]) != 0 and "MHz" not in Data[1] :
+            Data[1]=float(Data[1])/1000000;
+
+            if  minFreq<=Data[1]<=maxFreq:
+                status = "Success";
+            else:
+                status = "Failure";
+                break;
+
+
         elif int(Data[0])==0 and "" in Data[1]:
             status = "Success";
         else:
             status = "Failure";
             break;
-        
+
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the DownStream Frequency and ChannelID";
-        print "EXPECTED RESULT 1: Should get frequency if channelID not zero";
-        print "ACTUAL RESULT 1: Successfully validated the ChannelID with Frequency" ;
+        print("TEST STEP 1: Get and validate the DownStream Frequency and ChannelID");
+        print("EXPECTED RESULT 1: Should get frequency if channelID not zero");
+        print("ACTUAL RESULT 1: Successfully validated the ChannelID with Frequency") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the DownStream Frequency and ChannelID";
-        print "EXPECTED RESULT 1: Should get frequency if channelID not zero";
-        print "ACTUAL RESULT 1: Validation of ChannelID and frequency failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the DownStream Frequency and ChannelID");
+        print("EXPECTED RESULT 1: Should get frequency if channelID not zero");
+        print("ACTUAL RESULT 1: Validation of ChannelID and frequency failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -78,64 +78,59 @@ maxonu = [];
 flag = 1;
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep('EPONHAL_GetOnuLinkStatistics');
-        expectedresult="SUCCESS";
-        #passing a dummy value as the numEntries is derived from dpoe_getMaxLogicalLinks
-        tdkTestObj.addParameter("numEntries",500);
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        resultDetails = " ";
-        resultDetails = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: check for successful  invocation of dpoe_getMaxLogicalLinks";
-           print "EXPECTED RESULT 1: Should successfully invoke dpoe_getMaxLogicalLinks";
-           print "ACTUAL RESULT 1: Succesfully invoke dpoe_getMaxLogicalLinks";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-           #no of entries in the structure
-           n =23;
-           for i in range(n):
-               maxonu.append(resultDetails.split(':')[i+2].split(',')[0].strip())
-           print "maxonu :",maxonu;
-           #checking if the value received is greater than 0
-           for j in range(n):
-               if int(maxonu[j]) >=0:
-                  pass
-               else:
-                   flag = 0;
-           if flag == 1:
-              print "TEST STEP 2: check if the value received is greater than or equal to 0";
-              print "EXPECTED RESULT 2: The value received must be greater than or equal to 0";
-              print "ACTUAL RESULT 2: The values received are:",resultDetails;
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep('EPONHAL_GetOnuLinkStatistics');
+    expectedresult="SUCCESS";
+    #passing a dummy value as the numEntries is derived from dpoe_getMaxLogicalLinks
+    tdkTestObj.addParameter("numEntries",500);
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    resultDetails = " ";
+    resultDetails = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: check for successful  invocation of dpoe_getMaxLogicalLinks");
+        print("EXPECTED RESULT 1: Should successfully invoke dpoe_getMaxLogicalLinks");
+        print("ACTUAL RESULT 1: Succesfully invoke dpoe_getMaxLogicalLinks");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        #no of entries in the structure
+        n =23;
+        for i in range(n):
+            maxonu.append(resultDetails.split(':')[i+2].split(',')[0].strip())
+        print("maxonu :",maxonu);
+        #checking if the value received is greater than 0
+        for j in range(n):
+            if int(maxonu[j]) >=0:
+                pass
+            else:
+                flag = 0;
+        if flag == 1:
+            print("TEST STEP 2: check if the value received is greater than or equal to 0");
+            print("EXPECTED RESULT 2: The value received must be greater than or equal to 0");
+            print("ACTUAL RESULT 2: The values received are:",resultDetails);
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           else:
-               print "TEST STEP 2: check if the value received is greater than or equal to 0";
-               print "EXPECTED RESULT 2: The value received must be greater than or equal to 0";
-               print "ACTUAL RESULT 2: The values received are:",resultDetails;
-               tdkTestObj.setResultStatus("FAILURE");
-               print "[TEST EXECUTION RESULT] : FAILURE";
         else:
-            print "TEST STEP 1: check for successful  invocation of dpoe_getOnuLinkStatistics";
-            print "EXPECTED RESULT 1: Should successfully invoke dpoe_getOnuLinkStatistics";
-            print "ACTUAL RESULT 1: Failed to  invoke dpoe_getOnuLinkStatistics";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: check if the value received is greater than or equal to 0");
+            print("EXPECTED RESULT 2: The value received must be greater than or equal to 0");
+            print("ACTUAL RESULT 2: The values received are:",resultDetails);
             tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        print("TEST STEP 1: check for successful  invocation of dpoe_getOnuLinkStatistics");
+        print("EXPECTED RESULT 1: Should successfully invoke dpoe_getOnuLinkStatistics");
+        print("ACTUAL RESULT 1: Failed to  invoke dpoe_getOnuLinkStatistics");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
 
-        obj.unloadModule("eponhal");
+    obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
-
+    print("Module loading failed");

@@ -100,9 +100,9 @@ tr181obj.configureTestCase(ip,port,'TS_CMHAL_GetDSPower');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =tr181obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2);
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
     obj1.setLoadModuleStatus("SUCCESS");
@@ -118,12 +118,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult1 in actualresult1 and Details1.strip():
         tdkTestObj1.setResultStatus("SUCCESS");
-        print "TEST STEP 0: Execute the command";
-        print "EXPECTED RESULT 0: Should execute the command successfully";
-        print "ACTUAL RESULT 0: Details: %s" %Details1;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Details: %s" %Details1);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         powerlevels = Details1.split(",");
-        print "CM DS Power Levels : %s" %powerlevels;
+        print("CM DS Power Levels : %s" %powerlevels);
 
         #This method invokes the HAL API docsis_GetDSChannel and retrieves the  powerlevels of downstream channels.
         tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
@@ -133,64 +133,64 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         Details = tdkTestObj.getResultDetails();
         power = Details.split(",");
-        print power;
+        print(power);
         Min_power = float(powerlevels[0]);
         Max_power = float(powerlevels[1]);
         i=1;
         for item in power:
             if item == "" :
-               tdkTestObj= tr181obj.createTestStep('TDKB_TR181Stub_Get');
-               tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.DownstreamChannel.%d.Modulation" %i);
-               expectedresult="SUCCESS";
-               #Execute the test case in DUT
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               value = tdkTestObj.getResultDetails();
-               if expectedresult in actualresult and ( "UNSUPPORTED" in value or  "NotLocked" in value):
-                  status = "Success";
-               else:
-                   status = "Failure";
+                tdkTestObj= tr181obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.DownstreamChannel.%d.Modulation" %i);
+                expectedresult="SUCCESS";
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                value = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult and ( "UNSUPPORTED" in value or  "NotLocked" in value):
+                    status = "Success";
+                else:
+                    status = "Failure";
             else:
                 if "dBmV" in item :
-                   if Min_power <= float(item.split(" ")[0]) <= Max_power:
-                      status = "Success";
-                   else:
-                       status = "Failure";
-                       break;
-                else :
-                     if Min_power <= float(item) <= Max_power:
+                    if Min_power <= float(item.split(" ")[0]) <= Max_power:
                         status = "Success";
-                     else:
-                         status = "Failure";
-                         break;
+                    else:
+                        status = "Failure";
+                        break;
+                else :
+                    if Min_power <= float(item) <= Max_power:
+                        status = "Success";
+                    else:
+                        status = "Failure";
+                        break;
             i=i+1;
         if expectedresult in actualresult and "Success" in status:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the Downstream power";
-            print "EXPECTED RESULT 1: Should get the Downstream power successfully";
-            print "ACTUAL RESULT 1: Downstream power is within range";
+            print("TEST STEP 1: Get the Downstream power");
+            print("EXPECTED RESULT 1: Should get the Downstream power successfully");
+            print("ACTUAL RESULT 1: Downstream power is within range");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the Downstream power";
-            print "EXPECTED RESULT 1: Should get the Downstream power successfully";
-            print "ACTUAL RESULT 1: Failed to get the downstream power";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the Downstream power");
+            print("EXPECTED RESULT 1: Should get the Downstream power successfully");
+            print("ACTUAL RESULT 1: Failed to get the downstream power");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 0: Execute the command";
-        print "EXPECTED RESULT 0: Should execute the command successfully";
-        print "ACTUAL RESULT 0: Failed to execute the command, Details :%s" %Details1;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Failed to execute the command, Details :%s" %Details1);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
     tr181obj.unloadModule("tdkbtr181");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        obj1.setLoadModuleStatus("FAILURE");
-        tr181obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");
+    tr181obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

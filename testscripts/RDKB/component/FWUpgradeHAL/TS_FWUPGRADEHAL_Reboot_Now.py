@@ -101,8 +101,8 @@ obj1.configureTestCase(ip,port,'TS_FWUPGRADEHAL_Reboot_Now');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,11 +118,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Get the uptime with Device.DeviceInfo.UpTime";
-        print "EXPECTED RESULT 1: Should return the uptime successfully";
-        print "ACTUAL RESULT 1:UpTime before reboot is %s" %beforedetails;
+        print("TEST STEP 1 :Get the uptime with Device.DeviceInfo.UpTime");
+        print("EXPECTED RESULT 1: Should return the uptime successfully");
+        print("ACTUAL RESULT 1:UpTime before reboot is %s" %beforedetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #save device's current state before it goes for reboot
         obj1.saveCurrentState();
@@ -135,11 +135,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Start the reboot by invoking the HAL API fwupgrade_hal_download_reboot_now()";
-            print "EXPECTED RESULT 2: Should start the reboot successfully";
-            print "ACTUAL RESULT 2: %s" %rebootdetails;
+            print("TEST STEP 2: Start the reboot by invoking the HAL API fwupgrade_hal_download_reboot_now()");
+            print("EXPECTED RESULT 2: Should start the reboot successfully");
+            print("ACTUAL RESULT 2: %s" %rebootdetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #Restore the device state saved before reboot
             obj1.restorePreviousStateAfterReboot();
 
@@ -154,52 +154,51 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 :Get the uptime with Device.DeviceInfo.UpTime";
-                print "EXPECTED RESULT 3: Should return the uptime successfully";
-                print "ACTUAL RESULT 3:UpTime before reboot is %s" %afterdetails;
+                print("TEST STEP 3 :Get the uptime with Device.DeviceInfo.UpTime");
+                print("EXPECTED RESULT 3: Should return the uptime successfully");
+                print("ACTUAL RESULT 3:UpTime before reboot is %s" %afterdetails);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if int(beforedetails) >= int(afterdetails):
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Compare the uptime before and after reboot";
-                    print "EXPECTED RESULT 4: Uptime before reboot should be greater than uptime after reboot";
-                    print "ACTUAL RESULT 4: Uptime after reboot is %s" %afterdetails;
-                    print "Successfully updated the uptime after reboot";
+                    print("TEST STEP 4: Compare the uptime before and after reboot");
+                    print("EXPECTED RESULT 4: Uptime before reboot should be greater than uptime after reboot");
+                    print("ACTUAL RESULT 4: Uptime after reboot is %s" %afterdetails);
+                    print("Successfully updated the uptime after reboot");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Compare the uptime before and after reboot";
-                    print "EXPECTED RESULT 4: Uptime before reboot should be greater than uptime after reboot";
-                    print "ACTUAL RESULT 4: UpTime after reboot is %s" %afterdetails;
-                    print "Failed to update the uptime after reboot"
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: Compare the uptime before and after reboot");
+                    print("EXPECTED RESULT 4: Uptime before reboot should be greater than uptime after reboot");
+                    print("ACTUAL RESULT 4: UpTime after reboot is %s" %afterdetails);
+                    print("Failed to update the uptime after reboot")
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Get the uptime with Device.DeviceInfo.UpTime";
-                print "EXPECTED RESULT 3: Should return the uptime successfully";
-                print "ACTUAL RESULT 3:UpTime before reboot is %s" %afterdetails;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3 :Get the uptime with Device.DeviceInfo.UpTime");
+                print("EXPECTED RESULT 3: Should return the uptime successfully");
+                print("ACTUAL RESULT 3:UpTime before reboot is %s" %afterdetails);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Start the reboot by invoking the HAL API fwupgrade_hal_download_reboot_now()";
-            print "EXPECTED RESULT 2: Should start the reboot successfully";
-            print "ACTUAL RESULT 2: %s" %rebootdetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Start the reboot by invoking the HAL API fwupgrade_hal_download_reboot_now()");
+            print("EXPECTED RESULT 2: Should start the reboot successfully");
+            print("ACTUAL RESULT 2: %s" %rebootdetails);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the UpTime with Device.DeviceInfo.UpTime";
-        print "EXPECTED RESULT 1: Should return the uptime successfully";
-        print "ACTUAL RESULT 1: Failed to get the uptime before reboot %s" %beforedetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the UpTime with Device.DeviceInfo.UpTime");
+        print("EXPECTED RESULT 1: Should return the uptime successfully");
+        print("ACTUAL RESULT 1: Failed to get the uptime before reboot %s" %beforedetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
     obj1.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading Failed";
-
+    print("Module loading Failed");

@@ -105,249 +105,249 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     ActiveHost = 0;
     num  = 0;
     if expectedresult in actualresult and int(NoOfHosts)>0:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the number of hosts";
-       print "EXPECTED RESULT 1: Should get the number of hosts";
-       print "ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the number of hosts");
+        print("EXPECTED RESULT 1: Should get the number of hosts");
+        print("ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       for inst in range(1,int(NoOfHosts)+1):
-           #Get the Active Clients from the Host table
-           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-           tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%d.Active" %inst);
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           Status = tdkTestObj.getResultDetails();
+        for inst in range(1,int(NoOfHosts)+1):
+            #Get the Active Clients from the Host table
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%d.Active" %inst);
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            Status = tdkTestObj.getResultDetails();
 
-           if expectedresult in actualresult and "true" in Status:
-              print " Active Host found at the instance number: ",inst;
-              ActiveHost = 1;
-              num = int(inst);
-              break;
-           else:
-              ActiveHost = 0;
+            if expectedresult in actualresult and "true" in Status:
+                print(" Active Host found at the instance number: ",inst);
+                ActiveHost = 1;
+                num = int(inst);
+                break;
+            else:
+                ActiveHost = 0;
 
-       if ActiveHost ==1 :
-          tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%d.PhysAddress" %num);
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          hostMacAddress = tdkTestObj.getResultDetails();
+        if ActiveHost ==1 :
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%d.PhysAddress" %num);
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            hostMacAddress = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Get the MAC address of the LAN Client   ";
-             print "EXPECTED RESULT 2: Get the MAC address of the device";
-             print "ACTUAL RESULT 2: Get MAC address :",hostMacAddress;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
-             #Execute the test case in DUT
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             default  = tdkTestObj.getResultDetails();
-
-             if expectedresult in actualresult:
+            if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the status of Presence Detect";
-                print "EXPECTED RESULT 3: should get the status of Presence Detect";
-                print "ACTUAL RESULT 3: status is:",default;
+                print("TEST STEP 2: Get the MAC address of the LAN Client   ");
+                print("EXPECTED RESULT 2: Get the MAC address of the device");
+                print("ACTUAL RESULT 2: Get MAC address :",hostMacAddress);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                if default == "false":
-                   tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                   tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
-                   tdkTestObj.addParameter("ParamValue","true");
-                   tdkTestObj.addParameter("Type","bool");
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
+                tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                default  = tdkTestObj.getResultDetails();
 
-                   if expectedresult in actualresult:
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 4: Set the status of Presence Detect to true";
-                      print "EXPECTED RESULT 4: should set the status of Presence Detect to true";
-                      print "ACTUAL RESULT 4: ",details;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-                      flag = 1;
-                      revertflag =1;
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 4: Set the status of Presence Detect to true";
-                       print "EXPECTED RESULT 4: should set the status of Presence Detect to true";
-                       print "ACTUAL RESULT 4: ",details;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] :FAILURE";
-                       flag = 0;
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the status of Presence Detect");
+                    print("EXPECTED RESULT 3: should get the status of Presence Detect");
+                    print("ACTUAL RESULT 3: status is:",default);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                if flag == 1:
-                   tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
-                   tdkTestObj.addParameter("ParamName","Device.Hosts.X_RDKCENTRAL-COM_AddPresenceNotificationMac");
-                   tdkTestObj.addParameter("ParamValue",hostMacAddress);
-                   tdkTestObj.addParameter("Type","string");
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
+                    if default == "false":
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
+                        tdkTestObj.addParameter("ParamValue","true");
+                        tdkTestObj.addParameter("Type","bool");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
 
-                   if expectedresult in actualresult:
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 5: Add the MAC present in host table to Presence Notification Mac when presence detect is enabled";
-                      print "EXPECTED RESULT 5: Should add the MAC present in host table to Presence Notification Mac when presence detect is enabled";
-                      print "ACTUAL RESULT 5: MAC added successfully";
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                      query="cat /rdklogs/logs/LM.txt.0 | grep -i \"Added into detection list\""
-                      print "query:%s" %query
-                      tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                      tdkTestObj.addParameter("command", query)
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                      print "Detail Found fromLog file is: %s "%details;
-                      addmac = details.split("Mac")[1].split("Added")[0].strip();
-
-                      if expectedresult in actualresult and details != "" and addmac == hostMacAddress:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 6: Check from LM.txt.0 if Mac is added in the list";
-                         print "EXPECTED RESULT 6: Should add MAC into its detection list";
-                         print "ACTUAL RESULT 6: Log Msg is :",details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
-                         tdkTestObj.addParameter("ParamName","Device.Hosts.X_RDKCENTRAL-COM_DeletePresenceNotificationMac");
-                         tdkTestObj.addParameter("ParamValue",hostMacAddress);
-                         tdkTestObj.addParameter("Type","string");
-                         expectedresult="SUCCESS";
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         details = tdkTestObj.getResultDetails();
-                         if expectedresult in actualresult:
+                        if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 7: Delete the MAC present in Presence Notification Mac when presence detect is enabled";
-                            print "EXPECTED RESULT 7: Should delete  the MAC present in Presence Notification Mac when presence detect is enabled";
-                            print "ACTUAL RESULT 7: MAC deleted  successfully";
+                            print("TEST STEP 4: Set the status of Presence Detect to true");
+                            print("EXPECTED RESULT 4: should set the status of Presence Detect to true");
+                            print("ACTUAL RESULT 4: ",details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            flag = 1;
+                            revertflag =1;
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Set the status of Presence Detect to true");
+                            print("EXPECTED RESULT 4: should set the status of Presence Detect to true");
+                            print("ACTUAL RESULT 4: ",details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :FAILURE");
+                            flag = 0;
 
-                            query="cat /rdklogs/logs/LM.txt.0 | grep -i \"Removed from monitor\""
-                            print "query:%s" %query
+                    if flag == 1:
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
+                        tdkTestObj.addParameter("ParamName","Device.Hosts.X_RDKCENTRAL-COM_AddPresenceNotificationMac");
+                        tdkTestObj.addParameter("ParamValue",hostMacAddress);
+                        tdkTestObj.addParameter("Type","string");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Add the MAC present in host table to Presence Notification Mac when presence detect is enabled");
+                            print("EXPECTED RESULT 5: Should add the MAC present in host table to Presence Notification Mac when presence detect is enabled");
+                            print("ACTUAL RESULT 5: MAC added successfully");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            query="cat /rdklogs/logs/LM.txt.0 | grep -i \"Added into detection list\""
+                            print("query:%s" %query)
                             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                             tdkTestObj.addParameter("command", query)
                             expectedresult="SUCCESS";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                            print "Detail Found fromLog file is: %s "%details;
-                            delmac = details.split("Mac")[1].split("Removed")[0].strip();
+                            print("Detail Found fromLog file is: %s "%details);
+                            addmac = details.split("Mac")[1].split("Added")[0].strip();
 
-                            if expectedresult in actualresult and details != "" and delmac == hostMacAddress:
-                               tdkTestObj.setResultStatus("SUCCESS");
-                               print "TEST STEP 8: Check from LM.txt.0 if Mac is deleted from the list";
-                               print "EXPECTED RESULT 8: Should delete MAC from detection list";
-                               print "ACTUAL RESULT 8: Log Msg is :",details;
-                               #Get the result of execution
-                               print "[TEST EXECUTION RESULT] : SUCCESS";
+                            if expectedresult in actualresult and details != "" and addmac == hostMacAddress:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 6: Check from LM.txt.0 if Mac is added in the list");
+                                print("EXPECTED RESULT 6: Should add MAC into its detection list");
+                                print("ACTUAL RESULT 6: Log Msg is :",details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
+                                tdkTestObj.addParameter("ParamName","Device.Hosts.X_RDKCENTRAL-COM_DeletePresenceNotificationMac");
+                                tdkTestObj.addParameter("ParamValue",hostMacAddress);
+                                tdkTestObj.addParameter("Type","string");
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult:
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 7: Delete the MAC present in Presence Notification Mac when presence detect is enabled");
+                                    print("EXPECTED RESULT 7: Should delete  the MAC present in Presence Notification Mac when presence detect is enabled");
+                                    print("ACTUAL RESULT 7: MAC deleted  successfully");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                    query="cat /rdklogs/logs/LM.txt.0 | grep -i \"Removed from monitor\""
+                                    print("query:%s" %query)
+                                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                                    tdkTestObj.addParameter("command", query)
+                                    expectedresult="SUCCESS";
+                                    tdkTestObj.executeTestCase(expectedresult);
+                                    actualresult = tdkTestObj.getResult();
+                                    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                                    print("Detail Found fromLog file is: %s "%details);
+                                    delmac = details.split("Mac")[1].split("Removed")[0].strip();
+
+                                    if expectedresult in actualresult and details != "" and delmac == hostMacAddress:
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("TEST STEP 8: Check from LM.txt.0 if Mac is deleted from the list");
+                                        print("EXPECTED RESULT 8: Should delete MAC from detection list");
+                                        print("ACTUAL RESULT 8: Log Msg is :",details);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("TEST STEP 8: Check from LM.txt.0 if Mac is deleted from the list");
+                                        print("EXPECTED RESULT 8: Should delete MAC from detection list");
+                                        print("ACTUAL RESULT 8: Log Msg is :",details);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] :FAILURE");
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 7: Delete the MAC present in Presence Notification Mac when presence detect is enabled");
+                                    print("EXPECTED RESULT 7: Should delete  the MAC present in Presence Notification Mac when presence detect is enabled");
+                                    print("ACTUAL RESULT 7: MAC deletion Failed");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 8: Check from LM.txt.0 if Mac is deleted from the list";
-                                print "EXPECTED RESULT 8: Should delete MAC from detection list";
-                                print "ACTUAL RESULT 8: Log Msg is :",details;
+                                print("TEST STEP 6: Check from LM.txt.0 if Mac is added in the list");
+                                print("EXPECTED RESULT 6: Should add MAC into its detection list");
+                                print("ACTUAL RESULT 6: Log Msg is :",details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] :FAILURE";
-                         else:
-                              tdkTestObj.setResultStatus("FAILURE");
-                              print "TEST STEP 7: Delete the MAC present in Presence Notification Mac when presence detect is enabled";
-                              print "EXPECTED RESULT 7: Should delete  the MAC present in Presence Notification Mac when presence detect is enabled";
-                              print "ACTUAL RESULT 7: MAC deletion Failed";
-                              #Get the result of execution
-                              print "[TEST EXECUTION RESULT] : FAILURE";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 6: Check from LM.txt.0 if Mac is added in the list";
-                          print "EXPECTED RESULT 6: Should add MAC into its detection list";
-                          print "ACTUAL RESULT 6: Log Msg is :",details;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 5: Add the MAC present in host table to Presence Notification Mac when presence detect is enabled";
-                       print "EXPECTED RESULT 5: Should add the MAC present in host table to Presence Notification Mac when presence detect is enabled";
-                       print "ACTUAL RESULT 5: Failed to add MAc";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-                   if revertflag == 1:
-                      #revert the value
-                      tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                      tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
-                      tdkTestObj.addParameter("ParamValue",default);
-                      tdkTestObj.addParameter("Type","bool");
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails();
-                      if expectedresult in actualresult:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 7: Revert the status to default";
-                         print "EXPECTED RESULT 7: Should revert the status to default";
-                         print "ACTUAL RESULT 7: Revert successfull";
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 7: Revert the status to default";
-                          print "EXPECTED RESULT 7: Should revert the status to default";
-                          print "ACTUAL RESULT 7: Revertion failed";
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Add the MAC present in host table to Presence Notification Mac when presence detect is enabled");
+                            print("EXPECTED RESULT 5: Should add the MAC present in host table to Presence Notification Mac when presence detect is enabled");
+                            print("ACTUAL RESULT 5: Failed to add MAc");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                        if revertflag == 1:
+                            #revert the value
+                            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.PresenceDetect.Enable");
+                            tdkTestObj.addParameter("ParamValue",default);
+                            tdkTestObj.addParameter("Type","bool");
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Revert the status to default");
+                                print("EXPECTED RESULT 7: Should revert the status to default");
+                                print("ACTUAL RESULT 7: Revert successfull");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Revert the status to default");
+                                print("EXPECTED RESULT 7: Should revert the status to default");
+                                print("ACTUAL RESULT 7: Revertion failed");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        print("Presence detect was disabled and failed to enable");
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Presence detect was disabled and failed to enable";
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 3: Get the status of Presence Detect";
-                 print "EXPECTED RESULT 3: should get the status of Presence Detect";
-                 print "ACTUAL RESULT 3: status is:",default;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 2: Get the MAC address of the LAN Client   ";
-              print "EXPECTED RESULT 2: Get the MAC address of the device";
-              print "ACTUAL RESULT 2: Get MAC address failed";
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           print "No active hosts found"
-           tdkTestObj.setResultStatus("FAILURE");
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 3: Get the status of Presence Detect");
+                    print("EXPECTED RESULT 3: should get the status of Presence Detect");
+                    print("ACTUAL RESULT 3: status is:",default);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Get the MAC address of the LAN Client   ");
+                print("EXPECTED RESULT 2: Get the MAC address of the device");
+                print("ACTUAL RESULT 2: Get MAC address failed");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("No active hosts found")
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of hosts";
-        print "EXPECTED RESULT 1: Should get the number of hosts";
-        print "ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts;
+        print("TEST STEP 1: Get the number of hosts");
+        print("EXPECTED RESULT 1: Should get the number of hosts");
+        print("ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

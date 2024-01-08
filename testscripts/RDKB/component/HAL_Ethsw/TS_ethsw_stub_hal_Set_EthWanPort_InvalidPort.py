@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_Set_EthWanPort_InvalidPort');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,19 +95,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Invoke Ethsw_Set_EthWanPort with an invalid port ",invalid_port;
-        print "EXPECTED RESULT 1: Ethsw_Set_EthWanPort() call with an invalid port value should fail";
-        print "ACTUAL RESULT 1: %s" %details;
-	print "[TEST EXECUTION RESULT] :SUCCESS"
+        print("TEST STEP 1: Invoke Ethsw_Set_EthWanPort with an invalid port ",invalid_port);
+        print("EXPECTED RESULT 1: Ethsw_Set_EthWanPort() call with an invalid port value should fail");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] :SUCCESS")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Invoke Ethsw_Set_EthWanPort with an invalid port ",invalid_port;
-        print "EXPECTED RESULT 1: Ethsw_Set_EthWanPort() call with an invalid port value should fail";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] :FAILURE"
+        print("TEST STEP 1: Invoke Ethsw_Set_EthWanPort with an invalid port ",invalid_port);
+        print("EXPECTED RESULT 1: Ethsw_Set_EthWanPort() call with an invalid port value should fail");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] :FAILURE")
     obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

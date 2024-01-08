@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_ReinitMac');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,20 +94,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Reinitializing the CM";
-        print "EXPECTED RESULT 1: Should initialize the CM successfully";
-        print "ACTUAL RESULT 1:  %s" %details;
+        print("TEST STEP 1: Reinitializing the CM");
+        print("EXPECTED RESULT 1: Should initialize the CM successfully");
+        print("ACTUAL RESULT 1:  %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Reinitializing the CM";
-        print "EXPECTED RESULT 1: Should initialize the CM successfully";
-        print "ACTUAL RESULT 1:Failed to initialise the CM , Details: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Reinitializing the CM");
+        print("EXPECTED RESULT 1: Should initialize the CM successfully");
+        print("ACTUAL RESULT 1:Failed to initialise the CM , Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

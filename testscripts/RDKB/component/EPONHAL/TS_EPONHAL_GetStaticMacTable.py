@@ -82,8 +82,8 @@ mac =[];
 flag =1;
 loadmodulestatus =obj.getLoadModuleResult();
 tr181loadmodulestatus =tr181obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tr181obj.setLoadModuleStatus("SUCCESS")
@@ -97,75 +97,74 @@ if "SUCCESS" in loadmodulestatus.upper():
     numEntries = tdkTestObj.getResultDetails();
     numEntries = int(numEntries)
     if expectedresult in actualresult and numEntries != " " and  numEntries >0:
-       print "TEST STEP 1: Get the Number of entries for StaticMacTable";
-       print "EXPECTED RESULT 1: Should get the StaticMacTable  value as greater than 0";
-       print "ACTUAL RESULT 1: The StaticMacTable value  is :",numEntries;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
-
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep('EPONHAL_GetStaticMacTable');
-       expectedresult="SUCCESS";
-       tdkTestObj.addParameter("numEntries",numEntries);
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       resultDetails = " ";
-       resultDetails = tdkTestObj.getResultDetails();
-
-       if expectedresult in actualresult and resultDetails != " ":
-          print "TEST STEP 2: Check for successful invocation of dpoe_getStaticMacTable";
-          print "EXPECTED RESULT 2: Should succesfully invoke dpoe_getStaticMacTable";
-          print "ACTUAL RESULT 2:Sucessfully invoked  dpoe_getStaticMacTable";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS");
-
-          #looping to get the MAC  from the details
-          for i in range(numEntries):
-              mac.append(resultDetails.split(':')[i+1].split(',')[0].strip());
-          #checking if the value received is a valid mac
-          for j in range(numEntries):
-              if re.match("[0-9a-f]{2}([-: ])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$",mac[j].lower()) :
-                 pass
-              else:
-                   flag = 0;
-
-          if expectedresult in actualresult  and flag == 1:
-             print "TEST STEP 3: Check if the received MAC is valid";
-             print "EXPECTED RESULT 3: Should receive a valid MAC";
-             print "ACTUAL RESULT 3: value returned is :",mac;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS"
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-          else:
-              print "TEST STEP 3: Check if the received MAC is valid";
-              print "EXPECTED RESULT 3: Should receive a valid MAC";
-              print "ACTUAL RESULT 3: value returned is :",mac;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE"
-              tdkTestObj.setResultStatus("FAILURE");
-       else:
-          print "TEST STEP 2: Check for successful invocation of dpoe_getStaticMacTable";
-          print "EXPECTED RESULT 2: Should succesfully invoke dpoe_getStaticMacTable";
-          print "ACTUAL RESULT 2: Failed to invoke dpoe_getStaticMacTable";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] :FAILURE";
-          tdkTestObj.setResultStatus("FAILURE");
-    else:
-        print "TEST STEP 1: Get the Number of entries for StaticMacTable";
-        print "EXPECTED RESULT 1: Should get the StaticMacTable  value as greater than 0";
-        print "ACTUAL RESULT 1: The StaicMacTable value  is :",numEntries;
+        print("TEST STEP 1: Get the Number of entries for StaticMacTable");
+        print("EXPECTED RESULT 1: Should get the StaticMacTable  value as greater than 0");
+        print("ACTUAL RESULT 1: The StaticMacTable value  is :",numEntries);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
+
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep('EPONHAL_GetStaticMacTable');
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("numEntries",numEntries);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        resultDetails = " ";
+        resultDetails = tdkTestObj.getResultDetails();
+
+        if expectedresult in actualresult and resultDetails != " ":
+            print("TEST STEP 2: Check for successful invocation of dpoe_getStaticMacTable");
+            print("EXPECTED RESULT 2: Should succesfully invoke dpoe_getStaticMacTable");
+            print("ACTUAL RESULT 2:Sucessfully invoked  dpoe_getStaticMacTable");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+
+            #looping to get the MAC  from the details
+            for i in range(numEntries):
+                mac.append(resultDetails.split(':')[i+1].split(',')[0].strip());
+            #checking if the value received is a valid mac
+            for j in range(numEntries):
+                if re.match("[0-9a-f]{2}([-: ])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$",mac[j].lower()) :
+                    pass
+                else:
+                    flag = 0;
+
+            if expectedresult in actualresult  and flag == 1:
+                print("TEST STEP 3: Check if the received MAC is valid");
+                print("EXPECTED RESULT 3: Should receive a valid MAC");
+                print("ACTUAL RESULT 3: value returned is :",mac);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("TEST STEP 3: Check if the received MAC is valid");
+                print("EXPECTED RESULT 3: Should receive a valid MAC");
+                print("ACTUAL RESULT 3: value returned is :",mac);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 2: Check for successful invocation of dpoe_getStaticMacTable");
+            print("EXPECTED RESULT 2: Should succesfully invoke dpoe_getStaticMacTable");
+            print("ACTUAL RESULT 2: Failed to invoke dpoe_getStaticMacTable");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
+    else:
+        print("TEST STEP 1: Get the Number of entries for StaticMacTable");
+        print("EXPECTED RESULT 1: Should get the StaticMacTable  value as greater than 0");
+        print("ACTUAL RESULT 1: The StaicMacTable value  is :",numEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] :FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
 
     obj.unloadModule("eponhal");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

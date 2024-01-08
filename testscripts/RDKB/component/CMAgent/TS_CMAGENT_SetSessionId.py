@@ -53,7 +53,7 @@ Input
 2.pathname (Device.X_CISCO_COM_CableModem.)
 3.override as 0 (This parameter will enable the reading of current session id and check set session id api with value read)
 4. priority as 0</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (CMAgent_SetSessionId - func name - "If not exists already"
  cmagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -61,13 +61,13 @@ Input
 3.Execute the generated Script(TS_CMAGENT_SetSessionId.py) using excution page of  Test Manager GUI
 4.cmagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named CMAgent_SetSessionId through registered TDK cmagentstub function along with necessary Entry Values as arguments
 5.CMAgent_SetSessionId function will call CCSP Base Interface Function named CcspBaseIf_SendcurrentSessionIDSignal, that inturn will call "CcspCcMbi_CurrentSessionIdSignal" along with  provided input arguments to assign session id to global value of CM Agent
-6.Responses(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cmagentstub will validate the available result (from agent console log and Pointer to instance as non null ) with expected result (Eg:"Session ID assigned Succesfully") and the same is updated in agent console log
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from cmagentstub</automation_approch>
     <except_output>CheckPoint 1:
 Session ID assigned log from DUT should be available in Agent Console Log
 CheckPoint 2:
-TDK agent Test Function will log the test case result as PASS based on API response 
+TDK agent Test Function will log the test case result as PASS based on API response
 CheckPoint 3:
 TestManager GUI will publish the result as PASS in Execution page</except_output>
     <priority>High</priority>
@@ -82,8 +82,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -96,14 +96,14 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_SetSessionId');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_SetSessionId');
@@ -121,27 +121,27 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 1: Get the component session Id";
-    	print "EXPECTED RESULT 1: Should get the component session Id";
-    	print "ACTUAL RESULT 1: %s" %resultDetails;
-    	#Get the result of execution
-    	print "[TEST EXECUTION RESULT] : SUCCESS";
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("TEST STEP 1: Get the component session Id");
+    print("EXPECTED RESULT 1: Should get the component session Id");
+    print("ACTUAL RESULT 1: %s" %resultDetails);
+    #Get the result of execution
+    print("[TEST EXECUTION RESULT] : SUCCESS");
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the component session Id";
-        print "EXPECTED RESULT 1: Should get the component session Id";
-        print "ACTUAL RESULT 1: %s" %resultDetails;
-        #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("TEST STEP 1: Get the component session Id");
+    print("EXPECTED RESULT 1: Should get the component session Id");
+    print("ACTUAL RESULT 1: %s" %resultDetails);
+    #Get the result of execution
+    print("[TEST EXECUTION RESULT] : FAILURE");
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("cmagent");

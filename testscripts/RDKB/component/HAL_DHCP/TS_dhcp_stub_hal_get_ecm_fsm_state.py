@@ -77,50 +77,50 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ecm_fsm_state');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_fsm_state");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_fsm_state");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details:
-            #Set the result status of execution
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_fsm_state successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+
+        state = int(details);
+        if state >= 0 and state <= 6:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_fsm_state successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-            state = int(details);
-            if state >= 0 and state <= 6:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Verify the value";
-                print "EXPECTED RESULT 2: Value should be valid";
-                print "ACTUAL RESULT 2: Value is valid";
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                fsm_state = ["INIT_REBOOT/RELEASED","INIT_SELECTING","REQUESTING","REBINDING","BOUND","RENEWING/RENEW_REQUESTED"];
-                print("fsm_value: %d and fsm_state: %s" % (state, fsm_state[state]));
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Verify the value";
-                print "EXPECTED RESULT 2: Value should be valid";
-                print "ACTUAL RESULT 2: Value is not valid";
-                print "[TEST EXECUTION RESULT] : Failure";
+            print("TEST STEP 2: Verify the value");
+            print("EXPECTED RESULT 2: Value should be valid");
+            print("ACTUAL RESULT 2: Value is valid");
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            fsm_state = ["INIT_REBOOT/RELEASED","INIT_SELECTING","REQUESTING","REBINDING","BOUND","RENEWING/RENEW_REQUESTED"];
+            print(("fsm_value: %d and fsm_state: %s" % (state, fsm_state[state])));
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_fsm_state successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : Failure";
+            print("TEST STEP 2: Verify the value");
+            print("EXPECTED RESULT 2: Value should be valid");
+            print("ACTUAL RESULT 2: Value is not valid");
+            print("[TEST EXECUTION RESULT] : Failure");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_fsm_state successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : Failure");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetLlidForwardingState');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 llid = [];
 flag = 1;
 if "SUCCESS" in loadmodulestatus.upper():
@@ -93,75 +93,71 @@ if "SUCCESS" in loadmodulestatus.upper():
     numEntries = tdkTestObj.getResultDetails();
     numEntries = int(numEntries)
     if expectedresult in actualresult and numEntries != " " and  numEntries >0:
-       print "EXPECTED RESULT 1: Should get the Llid Forwarding state  count  value as greater than 0";
-       print "ACTUAL RESULT 1: The  Llid Forwarding state  count  is :",numEntries;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
-
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep('EPONHAL_GetLlidForwardingState');
-       expectedresult="SUCCESS";
-       tdkTestObj.addParameter("numEntries",numEntries);
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       resultDetails = " ";
-       resultDetails = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult and resultDetails != " " :
-
-          print "TEST STEP 2: Check for successful invocation of dpoe_getLlidForwardingState";
-          print "EXPECTED RESULT 2: Should succesfully invoke dpoe_getLlidForwardingState ";
-          print "ACTUAL RESULT 2: successfully invoked dpoe_getLlidForwardingState";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS");
-
-
-          #looping to get the Forwarding state's for the links id's from the details
-          for i in range(numEntries):
-              llid.append(resultDetails.split(':')[i+1].split(',')[0].strip());
-
-          #checking if the value received is 0 or 1
-          for j in range(numEntries):
-              if (int(llid[j]) == 1) or (int(llid[j]) == 0):
-                  pass
-              else:
-                   flag = 0;
-
-          if flag == 1:
-             print "TEST STEP 3: Get the Forwarding state for the corresponding link id's and check if the value corresponds to true or false";
-             print "EXPECTED RESULT 3: Should get the Forwarding state for the corresponding link id's and the value must be a true or false";
-             print "ACTUAL RESULT 3: The value returned is :" ,resultDetails;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             tdkTestObj.setResultStatus("SUCCESS");
-          else:
-              print "TEST STEP 3: Get the Forwarding state for the corresponding link id's and check if the value corresponds to true or false";
-              print "EXPECTED RESULT 3: Should get the Forwarding state for the corresponding link id's and the value must be a true or false";
-              print "ACTUAL RESULT 3: The value returned is :",resultDetails;
-              print "[TEST EXECUTION RESULT] : FAILURE";
-              tdkTestObj.setResultStatus("FAILURE");
-       else:
-           print "TEST STEP 2: Check for successful invocation of dpoe_getLlidForwardingState";
-           print "EXPECTED RESULT 2: Should succesfully invoke dpoe_getLlidForwardingState ";
-           print "ACTUAL RESULT 2: Failed to  invoke dpoe_getLlidForwardingState";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
-           tdkTestObj.setResultStatus("FAILURE");
-    else:
-        print "EXPECTED RESULT 1: Should get the Llid Forwarding state  count  value as greater than 0";
-        print "ACTUAL RESULT 1: The  Llid Forwarding state  count  is :",numEntries;
+        print("EXPECTED RESULT 1: Should get the Llid Forwarding state  count  value as greater than 0");
+        print("ACTUAL RESULT 1: The  Llid Forwarding state  count  is :",numEntries);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
+
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep('EPONHAL_GetLlidForwardingState');
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("numEntries",numEntries);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        resultDetails = " ";
+        resultDetails = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult and resultDetails != " " :
+
+            print("TEST STEP 2: Check for successful invocation of dpoe_getLlidForwardingState");
+            print("EXPECTED RESULT 2: Should succesfully invoke dpoe_getLlidForwardingState ");
+            print("ACTUAL RESULT 2: successfully invoked dpoe_getLlidForwardingState");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+
+
+            #looping to get the Forwarding state's for the links id's from the details
+            for i in range(numEntries):
+                llid.append(resultDetails.split(':')[i+1].split(',')[0].strip());
+
+            #checking if the value received is 0 or 1
+            for j in range(numEntries):
+                if (int(llid[j]) == 1) or (int(llid[j]) == 0):
+                    pass
+                else:
+                    flag = 0;
+
+            if flag == 1:
+                print("TEST STEP 3: Get the Forwarding state for the corresponding link id's and check if the value corresponds to true or false");
+                print("EXPECTED RESULT 3: Should get the Forwarding state for the corresponding link id's and the value must be a true or false");
+                print("ACTUAL RESULT 3: The value returned is :" ,resultDetails);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("TEST STEP 3: Get the Forwarding state for the corresponding link id's and check if the value corresponds to true or false");
+                print("EXPECTED RESULT 3: Should get the Forwarding state for the corresponding link id's and the value must be a true or false");
+                print("ACTUAL RESULT 3: The value returned is :",resultDetails);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 2: Check for successful invocation of dpoe_getLlidForwardingState");
+            print("EXPECTED RESULT 2: Should succesfully invoke dpoe_getLlidForwardingState ");
+            print("ACTUAL RESULT 2: Failed to  invoke dpoe_getLlidForwardingState");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
+    else:
+        print("EXPECTED RESULT 1: Should get the Llid Forwarding state  count  value as greater than 0");
+        print("ACTUAL RESULT 1: The  Llid Forwarding state  count  is :",numEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] :FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
+    print("Module loading failed");

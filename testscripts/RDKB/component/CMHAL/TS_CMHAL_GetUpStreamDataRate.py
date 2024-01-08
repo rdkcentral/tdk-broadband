@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetDOCSISInfo</api_or_interface_used>
     <input_parameters>paramName : "US_DataRate"</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. Get the Upstream data rate
 4. Validation of  the result is done within the python script and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 
 #Test component to be tested
@@ -79,10 +79,10 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetUpStreamDataRate');
 obj1.configureTestCase(ip,port,'TS_CMHAL_GetUpStreamDataRate');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,7 +90,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
 
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     UpStreamDataRateRange = "sh %s/tdk_utility.sh parseConfigFile US_DATARATE_RANGE" %TDK_PATH;
-    
+
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", UpStreamDataRateRange);
     tdkTestObj.executeTestCase(expectedresult);
@@ -102,11 +102,11 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
         UpStreamDataRateRange_lower = UpStreamDataRateRange_list[0];
         UpStreamDataRateRange_upper = UpStreamDataRateRange_list[1];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 : Get the range of Upstream DateRate";
-        print "EXPECTED RESULT 1 : Should get the range of Upstream DateRate";
-        print "ACTUAL RESULT 1 : Got the range of Upstream DateRate as %s" %UpStreamDataRateRange;
+        print("TEST STEP 1 : Get the range of Upstream DateRate");
+        print("EXPECTED RESULT 1 : Should get the range of Upstream DateRate");
+        print("ACTUAL RESULT 1 : Got the range of Upstream DateRate as %s" %UpStreamDataRateRange);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Script to load the configuration file of the component
         tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
@@ -123,28 +123,28 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
         if expectedresult in actualresult and float(UpStreamDataRateRange_lower) <= dataRate <= float(UpStreamDataRateRange_upper):
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the Upstream data rate in the allowable range";
-            print "EXPECTED RESULT 2: Should get the Upstream datarate in the allowable range successfully";
-            print "ACTUAL RESULT 2: Upstream data rate is ",dataRate,"Mbps is in the allowable range";
+            print("TEST STEP 2: Get the Upstream data rate in the allowable range");
+            print("EXPECTED RESULT 2: Should get the Upstream datarate in the allowable range successfully");
+            print("ACTUAL RESULT 2: Upstream data rate is ",dataRate,"Mbps is in the allowable range");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the Upstream data rate in the allowable range";
-            print "EXPECTED RESULT 2: Should get the Upstream data rate in the allowable range successfully";
-            print "ACTUAL RESULT 2: Upstream data rate is ",dataRate,"Mbps not in the allowable range";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the Upstream data rate in the allowable range");
+            print("EXPECTED RESULT 2: Should get the Upstream data rate in the allowable range successfully");
+            print("ACTUAL RESULT 2: Upstream data rate is ",dataRate,"Mbps not in the allowable range");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 : Get the range of allowable Upstream DateRate";
-        print "EXPECTED RESULT 1 : Should get the range of allowable Upstream DateRate";
-        print "ACTUAL RESULT 1 : Failed to get the allowable range of Upstream DateRate";
+        print("TEST STEP 1 : Get the range of allowable Upstream DateRate");
+        print("EXPECTED RESULT 1 : Should get the range of allowable Upstream DateRate");
+        print("ACTUAL RESULT 1 : Failed to get the allowable range of Upstream DateRate");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        
+        print("[TEST EXECUTION RESULT] : FAILURE");
+
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

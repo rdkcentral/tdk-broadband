@@ -25,7 +25,7 @@
   <primitive_test_name>LMLiteStub_Get</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Device.Hosts.Host.1.LeaseTimeRemaining should be greater than zero if 	Device.Hosts.Host.1.AddressSource is DHCP	. Otherwise it should be zero.</synopsis>
+  <synopsis>Device.Hosts.Host.1.LeaseTimeRemaining should be greater than zero if       Device.Hosts.Host.1.AddressSource is DHCP       . Otherwise it should be zero.</synopsis>
   <groups_id/>
   <execution_time>10</execution_time>
   <long_duration>false</long_duration>
@@ -42,7 +42,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_LMLite_16</test_case_id>
-    <test_objective>Device.Hosts.Host.1.LeaseTimeRemaining should be greater than zero if 	Device.Hosts.Host.1.AddressSource is DHCP	. Otherwise it should be zero.</test_objective>
+    <test_objective>Device.Hosts.Host.1.LeaseTimeRemaining should be greater than zero if       Device.Hosts.Host.1.AddressSource is DHCP       . Otherwise it should be zero.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3,Emulator,RPI</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components.
@@ -120,11 +120,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
     if expectedresult in (actualresult1 and actualresult2):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT : Should disable WiFi";
-        print "ACTUAL RESULT :%s" %Details;
+        print("TEST STEP : Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT : Should disable WiFi");
+        print("ACTUAL RESULT :%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the number of clients connected. Should be greater than zero
         tdkTestObj = obj.createTestStep('LMLiteStub_Get');
@@ -138,11 +138,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in actualresult and int(NoOfClients)>0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the number of active LAN clients connected";
-            print "EXPECTED RESULT 1: Should get the number of active LAN clients connected as greater than zero";
-            print "ACTUAL RESULT 1: Number of active LAN clients connected :%s" %NoOfClients;
+            print("TEST STEP 1: Get the number of active LAN clients connected");
+            print("EXPECTED RESULT 1: Should get the number of active LAN clients connected as greater than zero");
+            print("ACTUAL RESULT 1: Number of active LAN clients connected :%s" %NoOfClients);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('LMLiteStub_Get');
             tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries");
             expectedresult="SUCCESS";
@@ -155,11 +155,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
             if expectedresult in actualresult and int(NoOfHosts)>0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the number of hosts";
-                print "EXPECTED RESULT 2: Should get the number of hosts";
-                print "ACTUAL RESULT 2: Number of hosts:%s" %NoOfHosts;
+                print("TEST STEP 2: Get the number of hosts");
+                print("EXPECTED RESULT 2: Should get the number of hosts");
+                print("ACTUAL RESULT 2: Number of hosts:%s" %NoOfHosts);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Find the active hosts amoung the listed Hosts. List will contains the ids of active hosts
                 List=[];
                 for i in range(1,int(NoOfHosts)+1):
@@ -173,11 +173,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the active LAN clients";
-                    print "EXPECTED RESULT 3: Should get the active LAN clients";
-                    print "ACTUAL RESULT 3: Active LAN clients are :",List;
+                    print("TEST STEP 3: Get the active LAN clients");
+                    print("EXPECTED RESULT 3: Should get the active LAN clients");
+                    print("ACTUAL RESULT 3: Active LAN clients are :",List);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     ret =0;
                     for i in range(0,len(List)):
                         n = int(List[i]);
@@ -188,67 +188,67 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                         Addr_src = tdkTestObj.getResultDetails();
 
                         if expectedresult in actualresult:
-			    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.LeaseTimeRemaining" %n);
+                            tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.LeaseTimeRemaining" %n);
                             #Execute the test case in DUT
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             LeaseTime = tdkTestObj.getResultDetails();
-			    if expectedresult in actualresult:
-			        if "DHCP" in Addr_src and int(LeaseTime)>0:
-			            print "Address source and lease time of host number ",n, " are %s and %s" %(Addr_src,LeaseTime);
-			            print "Address source is DHCP and lease time remaining is greater than zero"
-			        elif "DHCP" not in Addr_src and int(LeaseTime)==0:
-			            print "Address source and lease time of host number ",n, " are %s and %s" %(Addr_src,LeaseTime);
-			            print "Address source is not DHCP and lease time remaining is equal to zero"
-			        else:
-			            print "Failure in updating remaining lease time";
+                            if expectedresult in actualresult:
+                                if "DHCP" in Addr_src and int(LeaseTime)>0:
+                                    print("Address source and lease time of host number ",n, " are %s and %s" %(Addr_src,LeaseTime));
+                                    print("Address source is DHCP and lease time remaining is greater than zero")
+                                elif "DHCP" not in Addr_src and int(LeaseTime)==0:
+                                    print("Address source and lease time of host number ",n, " are %s and %s" %(Addr_src,LeaseTime));
+                                    print("Address source is not DHCP and lease time remaining is equal to zero")
+                                else:
+                                    print("Failure in updating remaining lease time");
                                     ret = 1;
-			    else:
-				print "Failure in getting Lease time";
-				ret =1;
-			else:
-			    print "Failure in getting address source";
-			    ret = 1;
+                            else:
+                                print("Failure in getting Lease time");
+                                ret =1;
+                        else:
+                            print("Failure in getting address source");
+                            ret = 1;
                     if expectedresult in actualresult and ret == 0:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Get lease time and address source";
-                        print "EXPECTED RESULT 4: If address source is DHCP, lease time should be greater than zero.Otherwise equal to zero";
-                        print "ACTUAL RESULT 4: Successfully updated the lease time";
+                        print("TEST STEP 4: Get lease time and address source");
+                        print("EXPECTED RESULT 4: If address source is DHCP, lease time should be greater than zero.Otherwise equal to zero");
+                        print("ACTUAL RESULT 4: Successfully updated the lease time");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-		    else:
-			#Set the result status of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Get lease time and address source";
-                        print "EXPECTED RESULT 4: If address source is DHCP, lease time should be greater than zero.Otherwise equal to zero";
-                        print "ACTUAL RESULT 4: Failed to update the lease time";
+                        print("TEST STEP 4: Get lease time and address source");
+                        print("EXPECTED RESULT 4: If address source is DHCP, lease time should be greater than zero.Otherwise equal to zero");
+                        print("ACTUAL RESULT 4: Failed to update the lease time");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the active LAN clients";
-                    print "EXPECTED RESULT 3: Should get the active LAN clients";
-                    print "ACTUAL RESULT 3: Active LAN clients are :",List;
+                    print("TEST STEP 3: Get the active LAN clients");
+                    print("EXPECTED RESULT 3: Should get the active LAN clients");
+                    print("ACTUAL RESULT 3: Active LAN clients are :",List);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the number of hosts";
-                print "EXPECTED RESULT 2: Should get the number of hosts";
-                print "ACTUAL RESULT 2: Number of hosts:%s" %NoOfHosts;
+                print("TEST STEP 2: Get the number of hosts");
+                print("EXPECTED RESULT 2: Should get the number of hosts");
+                print("ACTUAL RESULT 2: Number of hosts:%s" %NoOfHosts);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the number of active LAN clients connected";
-            print "EXPECTED RESULT 1: Should get the number of active LAN clients connected as greater than zero";
-            print "ACTUAL RESULT 1: Number of clients:%s" %NoOfClients;
+            print("TEST STEP 1: Get the number of active LAN clients connected");
+            print("EXPECTED RESULT 1: Should get the number of active LAN clients connected as greater than zero");
+            print("ACTUAL RESULT 1: Number of clients:%s" %NoOfClients);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Enabling WiFi before exiting the test
         tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
@@ -273,31 +273,31 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in (actualresult1 and actualresult2):
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT : Should disable WiFi";
-        print "ACTUAL RESULT :%s" %Details;
+        print("TEST STEP : Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT : Should disable WiFi");
+        print("ACTUAL RESULT :%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("lmlite");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

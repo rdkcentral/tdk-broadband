@@ -83,8 +83,8 @@ tr181obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetRotorLock');
 loadmodulestatus =obj.getLoadModuleResult();
 tr181loadmodulestatus =tr181obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,68 +98,67 @@ if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     Tr181RotorLock = " ";
     Tr181RotorLock = tdkTestObj.getResultDetails();
     if expectedresult in actualresult :
-       print "TEST STEP 1: Get the Fan Rotor Lock value using tr181 parameter";
-       print "EXPECTED RESULT 1: Should get the Fan Rotor Lock value";
-       print "ACTUAL RESULT 1: Fan Rotor Lock value is :",Tr181RotorLock;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
-
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep("platform_stub_hal_getRotorLock");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
-
-       if expectedresult in actualresult:
-          print " TEST STEP 2: Get the platform_stub_hal_getRotorLock"
-          print " EXPECTED RESULT 2: platform_stub_hal_getRotorLock call  should be successful"
-          print " ACTUAL RESULT 2:  platform_stub_hal_getRotorLock call successful"
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS")
-
-          HalRotorLock = details.split(":")[1].strip()
-          #-1 - Value not applicable
-
-          if int(HalRotorLock) ==  -1:
-             HalRotorLock  = "Not_Applicable"
-
-
-          print "RotorLock from api call is :",HalRotorLock
-          print "RotorLock from tr181 query is :" ,Tr181RotorLock
-
-          if HalRotorLock == Tr181RotorLock :
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the Fan Rotor Lock value using HAL call api";
-             print "EXPECTED RESULT 3: Should get the value from HAL Fan Rotor Lock and from tr181 equal";
-             print "ACTUAL RESULT 3: %s" %details;
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the Fan Rotor Lock value using HAL call api";
-              print "EXPECTED RESULT 3: Should get the value from HAl Fan Rotor Lock and from tr181 equal";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           print " TEST STEP 2: Get the platform_stub_hal_getRotorLock"
-           print " EXPECTED RESULT 2: platform_stub_hal_getRotorLock call  should be successful"
-           print " ACTUAL RESULT 2:  platform_stub_hal_getRotorLock call failed"
-           print "[TEST EXECUTION RESULT] : FAILURE";
-           tdkTestObj.setResultStatus("FAILURE");
-    else:
-        print "TEST STEP 1: Get the Fan Rotor Lock value using tr181 parameter";
-        print "EXPECTED RESULT 1: Should get the Fan Rotor Lock value";
-        print "ACTUAL RESULT 1: Failed to get the Fan Rotor Lock value is :",Tr181RotorLock;
+        print("TEST STEP 1: Get the Fan Rotor Lock value using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the Fan Rotor Lock value");
+        print("ACTUAL RESULT 1: Fan Rotor Lock value is :",Tr181RotorLock);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
+
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("platform_stub_hal_getRotorLock");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+
+        if expectedresult in actualresult:
+            print(" TEST STEP 2: Get the platform_stub_hal_getRotorLock")
+            print(" EXPECTED RESULT 2: platform_stub_hal_getRotorLock call  should be successful")
+            print(" ACTUAL RESULT 2:  platform_stub_hal_getRotorLock call successful")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS")
+
+            HalRotorLock = details.split(":")[1].strip()
+            #-1 - Value not applicable
+
+            if int(HalRotorLock) ==  -1:
+                HalRotorLock  = "Not_Applicable"
+
+
+            print("RotorLock from api call is :",HalRotorLock)
+            print("RotorLock from tr181 query is :" ,Tr181RotorLock)
+
+            if HalRotorLock == Tr181RotorLock :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Fan Rotor Lock value using HAL call api");
+                print("EXPECTED RESULT 3: Should get the value from HAL Fan Rotor Lock and from tr181 equal");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Fan Rotor Lock value using HAL call api");
+                print("EXPECTED RESULT 3: Should get the value from HAl Fan Rotor Lock and from tr181 equal");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print(" TEST STEP 2: Get the platform_stub_hal_getRotorLock")
+            print(" EXPECTED RESULT 2: platform_stub_hal_getRotorLock call  should be successful")
+            print(" ACTUAL RESULT 2:  platform_stub_hal_getRotorLock call failed")
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
+    else:
+        print("TEST STEP 1: Get the Fan Rotor Lock value using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the Fan Rotor Lock value");
+        print("ACTUAL RESULT 1: Failed to get the Fan Rotor Lock value is :",Tr181RotorLock);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("halplatform");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

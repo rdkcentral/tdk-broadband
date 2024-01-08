@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetLlidForwardingStateEntryCount');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,20 +93,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and resultDetails != " " and int(resultDetails) > 0 :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the LlidForwardingStateEntryCount";
-        print "EXPECTED RESULT 1: Should get the LlidForwardingStateEntryCount value as greater than 0";
-        print "ACTUAL RESULT 1: The LlidForwardingStateEntryCount is %s" %resultDetails;
+        print("TEST STEP 1: Get the LlidForwardingStateEntryCount");
+        print("EXPECTED RESULT 1: Should get the LlidForwardingStateEntryCount value as greater than 0");
+        print("ACTUAL RESULT 1: The LlidForwardingStateEntryCount is %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the LlidForwardingStateEntryCount";
-        print "EXPECTED RESULT 1: Should get the LlidForwardingStateEntryCount value as greater than 0";
-        print "ACTUAL RESULT 1: Failed to get the LlidForwardingStateEntryCount, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the LlidForwardingStateEntryCount");
+        print("EXPECTED RESULT 1: Should get the LlidForwardingStateEntryCount value as greater than 0");
+        print("ACTUAL RESULT 1: Failed to get the LlidForwardingStateEntryCount, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

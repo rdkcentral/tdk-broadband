@@ -96,39 +96,38 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ert_dhcp_svr_NullBuffer');
 
 #Get the result of connection with test component and STB
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus1.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_dhcp_svr");
-        tdkTestObj.addParameter("flag",1)
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_dhcp_svr");
+    tdkTestObj.addParameter("flag",1)
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ert_dhcp_svr with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
 
-        print "Module loading Failed";
-
+    print("Module loading Failed");

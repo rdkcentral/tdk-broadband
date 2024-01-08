@@ -96,8 +96,8 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_FWUpdateAndFactoryReset');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 def GetDownloadInterface():
 
@@ -154,7 +154,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     ###get details of the current firmware in the device
     Old_FirmwareVersion, Old_FirmwareFilename = xconfUtilityLib.getCurrentFirmware(obj1);
     FirmwareVersion, FirmwareFilename = xconfUtilityLib.getFirmwareDetails(obj1)
-    print FirmwareFilename;
+    print(FirmwareFilename);
 
     #####create a list of FW names and versions to be flashed, including current image name for reverting back
     FwNames = [FirmwareFilename,Old_FirmwareFilename]
@@ -165,229 +165,229 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         for i in range (0,2):
             tdkTestObj,actualresult,downInterface = GetDownloadInterface();
             if expectedresult in actualresult:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 2: Get the Download interface";
-               print "EXPECTED RESULT 2: Should get the Download interface sucessfully";
-               print "ACTUAL RESULT 2: Download interface is %s" %downInterface;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the Download interface");
+                print("EXPECTED RESULT 2: Should get the Download interface sucessfully");
+                print("ACTUAL RESULT 2: Download interface is %s" %downInterface);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               tdkTestObj,actualresult,downURL =GetHTTP_Download_Url();
-               if expectedresult in actualresult :
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 3: Get the download url and filename";
-                  print "EXPECTED RESULT 3: Should get the download url and filename";
-                  print "ACTUAL RESULT 3: %s" %downURL;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj,actualresult,downURL =GetHTTP_Download_Url();
+                if expectedresult in actualresult :
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the download url and filename");
+                    print("EXPECTED RESULT 3: Should get the download url and filename");
+                    print("ACTUAL RESULT 3: %s" %downURL);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                  interface = 1;
-                  tdkTestObj,actualresult,details = SetHTTP_Download_Interface(interface);
-                  if expectedresult in actualresult :
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 4: Set the download interface";
-                     print "EXPECTED RESULT 4: Should set the download interface";
-                     print "ACTUAL RESULT 4:  ",details;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                     tdkTestObj,actualresult,details =  GetDownloadInterface();
-                     if expectedresult in actualresult and int(details) == 1:
+                    interface = 1;
+                    tdkTestObj,actualresult,details = SetHTTP_Download_Interface(interface);
+                    if expectedresult in actualresult :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Get the Download interface";
-                        print "EXPECTED RESULT 5: Should get the Download interface sucessfully";
-                        print "ACTUAL RESULT 5: Download interface is %s" %details;
+                        print("TEST STEP 4: Set the download interface");
+                        print("EXPECTED RESULT 4: Should set the download interface");
+                        print("ACTUAL RESULT 4:  ",details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                        tdkTestObj,actualresult,SetURL = SetHTTP_Download_Url(FIRMWARELOCATION,FwNames[i]);
-                        if expectedresult in actualresult :
+                        tdkTestObj,actualresult,details =  GetDownloadInterface();
+                        if expectedresult in actualresult and int(details) == 1:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Set the Download url and filename";
-                            print "EXPECTED RESULT 6: Should set the Download url and filename";
-                            print "ACTUAL RESULT 6: %s" %SetURL;
+                            print("TEST STEP 5: Get the Download interface");
+                            print("EXPECTED RESULT 5: Should get the Download interface sucessfully");
+                            print("ACTUAL RESULT 5: Download interface is %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            tdkTestObj,actualresult,details = GetHTTP_Download_Url();
-                            URL = details.split(",")[0].split("is")[1].strip();
-                            firmwarename = details.split(",")[1].split("is")[1].strip();
-
-                            if expectedresult in actualresult  and FIRMWARELOCATION == URL and FwNames[i] == firmwarename:
+                            tdkTestObj,actualresult,SetURL = SetHTTP_Download_Url(FIRMWARELOCATION,FwNames[i]);
+                            if expectedresult in actualresult :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 7: Get the download url and filename";
-                                print "EXPECTED RESULT 7: Should get the download url and filename";
-                                print "ACTUAL RESULT 7: %s" %details;
+                                print("TEST STEP 6: Set the Download url and filename");
+                                print("EXPECTED RESULT 6: Should set the Download url and filename");
+                                print("ACTUAL RESULT 6: %s" %SetURL);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                tdkTestObj = obj.createTestStep("CMHAL_HTTP_Download");
-                                expectedresult="SUCCESS";
-                                tdkTestObj.executeTestCase(expectedresult);
-                                actualresult = tdkTestObj.getResult();
-                                details = tdkTestObj.getResultDetails();
-                                if expectedresult in actualresult :
+                                tdkTestObj,actualresult,details = GetHTTP_Download_Url();
+                                URL = details.split(",")[0].split("is")[1].strip();
+                                firmwarename = details.split(",")[1].split("is")[1].strip();
+
+                                if expectedresult in actualresult  and FIRMWARELOCATION == URL and FwNames[i] == firmwarename:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP 8: Start the download";
-                                    print "EXPECTED RESULT 8: Should start the download successfully";
-                                    print "ACTUAL RESULT 8: %s" %details;
+                                    print("TEST STEP 7: Get the download url and filename");
+                                    print("EXPECTED RESULT 7: Should get the download url and filename");
+                                    print("ACTUAL RESULT 7: %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                                    #wait till download is complete
-                                    time.sleep(300);
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                    while 1:
-                                       tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
-                                       tdkTestObj.addParameter("paramName","HTTP_Download_Status");
-                                       expectedresult="SUCCESS";
-                                       tdkTestObj.executeTestCase(expectedresult);
-                                       actualresult = tdkTestObj.getResult();
-                                       details = int(tdkTestObj.getResultDetails());
-                                       success_status = "";
-                                       fail_status = "";
-                                       print details;
-
-                                       if 0<details<=100:
-                                          sleep(2);
-                                          success_status = str(details),"% download completed";
-                                       elif details == 200:
-                                            success_status = "Download is completed and waiting for reboot";
-                                            break;
-                                       elif details ==0 or details >100:
-                                            status_list = {0:"Download is not started",400:"Invalided Http server Url",401:"Cannot connect to Http server",402:"File is not found on Http server",403:"HW_Type_DL_Protection Failure",404:"HW Mask DL Protection Failure",405:"DL Rev Protection Failure",406:"DL Header Protection Failure",407:"DL CVC Failure",500:"General Download Failure"};
-                                            fail_status = status_list[details];
-                                            break;
-                                       else:
-                                           status = "Invalid status", details
-                                           break;
-
-                                    if expectedresult in actualresult and success_status :
+                                    tdkTestObj = obj.createTestStep("CMHAL_HTTP_Download");
+                                    expectedresult="SUCCESS";
+                                    tdkTestObj.executeTestCase(expectedresult);
+                                    actualresult = tdkTestObj.getResult();
+                                    details = tdkTestObj.getResultDetails();
+                                    if expectedresult in actualresult :
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "TEST STEP 9: Get the Download status";
-                                        print "EXPECTED RESULT 9: Should get the Download status successfully";
-                                        print "ACTUAL RESULT 9: %s" %success_status;
+                                        print("TEST STEP 8: Start the download");
+                                        print("EXPECTED RESULT 8: Should start the download successfully");
+                                        print("ACTUAL RESULT 8: %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                        #wait till download is complete
+                                        time.sleep(300);
 
-                                        obj.saveCurrentState();
+                                        while 1:
+                                            tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
+                                            tdkTestObj.addParameter("paramName","HTTP_Download_Status");
+                                            expectedresult="SUCCESS";
+                                            tdkTestObj.executeTestCase(expectedresult);
+                                            actualresult = tdkTestObj.getResult();
+                                            details = int(tdkTestObj.getResultDetails());
+                                            success_status = "";
+                                            fail_status = "";
+                                            print(details);
 
-                                        tdkTestObj = obj.createTestStep("CMHAL_FWupdateAndFactoryReset");
-                                        expectedresult="SUCCESS";
-                                        tdkTestObj.executeTestCase(expectedresult);
-                                        actualresult = tdkTestObj.getResult();
-                                        details= tdkTestObj.getResultDetails();
-                                        if expectedresult in actualresult :
-                                           #Set the result status of execution
-                                           tdkTestObj.setResultStatus("SUCCESS");
-                                           print "TEST STEP 10: Invoke cm_hal_FWupdateAndFactoryReset";
-                                           print "EXPECTED RESULT 10: Should Invoke cm_hal_FWupdateAndFactoryReset";
-                                           print "ACTUAL RESULT 10: %s" %details;
-                                           #Get the result of execution
-                                           print "[TEST EXECUTION RESULT] : SUCCESS";
-                                           obj.restorePreviousStateAfterReboot();
+                                            if 0<details<=100:
+                                                sleep(2);
+                                                success_status = str(details),"% download completed";
+                                            elif details == 200:
+                                                success_status = "Download is completed and waiting for reboot";
+                                                break;
+                                            elif details ==0 or details >100:
+                                                status_list = {0:"Download is not started",400:"Invalided Http server Url",401:"Cannot connect to Http server",402:"File is not found on Http server",403:"HW_Type_DL_Protection Failure",404:"HW Mask DL Protection Failure",405:"DL Rev Protection Failure",406:"DL Header Protection Failure",407:"DL CVC Failure",500:"General Download Failure"};
+                                                fail_status = status_list[details];
+                                                break;
+                                            else:
+                                                status = "Invalid status", details
+                                                break;
 
-                                           New_FirmwareVersion, New_FirmwareFilename = xconfUtilityLib.getCurrentFirmware(obj1);
-                                           if New_FirmwareFilename != oldFw[i]:
-                                              tdkTestObj.setResultStatus("SUCCESS");
-                                              print "EXPECTED RESULT : The new FirmwareFilename should not be same as the old FirmwareFilename"
-                                              print "ACTUAL RESULT : The new FirmwareFilename is not the same as the old FirmwareFilename"
-                                              print "[TEST EXECUTION RESULT] : SUCCESS"
-                                           else:
-                                               tdkTestObj.setResultStatus("FAILURE");
-                                               print "EXPECTED RESULT : The new FirmwareFilename should not be same as the old FirmwareFilename"
-                                               print "ACTUAL RESULT :The new FirmwareFilename is not the same as the old FirmwareFilename"
-                                               print "[TEST EXECUTION RESULT] : FAILURE"
+                                        if expectedresult in actualresult and success_status :
+                                            #Set the result status of execution
+                                            tdkTestObj.setResultStatus("SUCCESS");
+                                            print("TEST STEP 9: Get the Download status");
+                                            print("EXPECTED RESULT 9: Should get the Download status successfully");
+                                            print("ACTUAL RESULT 9: %s" %success_status);
+                                            #Get the result of execution
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
+                                            obj.saveCurrentState();
+
+                                            tdkTestObj = obj.createTestStep("CMHAL_FWupdateAndFactoryReset");
+                                            expectedresult="SUCCESS";
+                                            tdkTestObj.executeTestCase(expectedresult);
+                                            actualresult = tdkTestObj.getResult();
+                                            details= tdkTestObj.getResultDetails();
+                                            if expectedresult in actualresult :
+                                                #Set the result status of execution
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("TEST STEP 10: Invoke cm_hal_FWupdateAndFactoryReset");
+                                                print("EXPECTED RESULT 10: Should Invoke cm_hal_FWupdateAndFactoryReset");
+                                                print("ACTUAL RESULT 10: %s" %details);
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                                obj.restorePreviousStateAfterReboot();
+
+                                                New_FirmwareVersion, New_FirmwareFilename = xconfUtilityLib.getCurrentFirmware(obj1);
+                                                if New_FirmwareFilename != oldFw[i]:
+                                                    tdkTestObj.setResultStatus("SUCCESS");
+                                                    print("EXPECTED RESULT : The new FirmwareFilename should not be same as the old FirmwareFilename")
+                                                    print("ACTUAL RESULT : The new FirmwareFilename is not the same as the old FirmwareFilename")
+                                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                                else:
+                                                    tdkTestObj.setResultStatus("FAILURE");
+                                                    print("EXPECTED RESULT : The new FirmwareFilename should not be same as the old FirmwareFilename")
+                                                    print("ACTUAL RESULT :The new FirmwareFilename is not the same as the old FirmwareFilename")
+                                                    print("[TEST EXECUTION RESULT] : FAILURE")
+
+                                            else:
+                                                #Set the result status of execution
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                                print("TEST STEP 10: Invoke cm_hal_FWupdateAndFactoryReset");
+                                                print("EXPECTED RESULT 10: Should Invoke cm_hal_FWupdateAndFactoryReset");
+                                                print("ACTUAL RESULT 10: %s" %details);
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] :FAILURE");
                                         else:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "TEST STEP 10: Invoke cm_hal_FWupdateAndFactoryReset";
-                                            print "EXPECTED RESULT 10: Should Invoke cm_hal_FWupdateAndFactoryReset";
-                                            print "ACTUAL RESULT 10: %s" %details;
+                                            print("TEST STEP 9: Get the Download status");
+                                            print("EXPECTED RESULT 9: Should get the Download status successfully");
+                                            print("ACTUAL RESULT 9: %s" %fail_status);
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] :FAILURE";
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                                            # The loop should continue if the image was downloaded  successful
+                                            print("******************************************************************************")
+                                            print("The image download was not successful hence exiting out of the loop as no revertion required")
+                                            print("********************************************************************************")
+                                            break;
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "TEST STEP 9: Get the Download status";
-                                        print "EXPECTED RESULT 9: Should get the Download status successfully";
-                                        print "ACTUAL RESULT 9: %s" %fail_status;
+                                        print("TEST STEP 8: Start the download");
+                                        print("EXPECTED RESULT 8: Should start the download successfully");
+                                        print("ACTUAL RESULT 8: %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
-
-                                        # The loop should continue if the image was downloaded  successful
-                                        print "******************************************************************************"
-                                        print "The image download was not successful hence exiting out of the loop as no revertion required"
-                                        print "********************************************************************************"
-                                        break;
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
-                                    #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP 8: Start the download";
-                                    print "EXPECTED RESULT 8: Should start the download successfully";
-                                    print "ACTUAL RESULT 8: %s" %details;
+                                    print("TEST STEP 7: Get the download url and filename");
+                                    print("EXPECTED RESULT 7: Should get the download url and filename");
+                                    print("ACTUAL RESULT 7: %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 7: Get the download url and filename";
-                                print "EXPECTED RESULT 7: Should get the download url and filename";
-                                print "ACTUAL RESULT 7: %s" %details;
+                                print("TEST STEP 6: Set the Download url and filename");
+                                print("EXPECTED RESULT 6: Should set the Download url and filename");
+                                print("ACTUAL RESULT 6: %s" %SetURL);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Set the Download url and filename";
-                            print "EXPECTED RESULT 6: Should set the Download url and filename";
-                            print "ACTUAL RESULT 6: %s" %SetURL;
+                            print("TEST STEP 5: Get the Download interface");
+                            print("EXPECTED RESULT 5: Should get the Download interface sucessfully");
+                            print("ACTUAL RESULT 5: Download interface is %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                     else:
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "TEST STEP 5: Get the Download interface";
-                         print "EXPECTED RESULT 5: Should get the Download interface sucessfully";
-                         print "ACTUAL RESULT 5: Download interface is %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                  else:
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "TEST STEP 4: Set the download interface";
-                      print "EXPECTED RESULT 4: Should set the download interface";
-                      print "ACTUAL RESULT 4:  ",details;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 3: Get the download url and filename";
-                   print "EXPECTED RESULT 3: Should get the download url and filename";
-                   print "ACTUAL RESULT 3: %s" %downURL;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Set the download interface");
+                        print("EXPECTED RESULT 4: Should set the download interface");
+                        print("ACTUAL RESULT 4:  ",details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the download url and filename");
+                    print("EXPECTED RESULT 3: Should get the download url and filename");
+                    print("ACTUAL RESULT 3: %s" %downURL);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the Download interface";
-                print "EXPECTED RESULT 2: Should get the Download interface sucessfully";
-                print "ACTUAL RESULT 2: Download interface is %s" %downInterface;
+                print("TEST STEP 2: Get the Download interface");
+                print("EXPECTED RESULT 2: Should get the Download interface sucessfully");
+                print("ACTUAL RESULT 2: Download interface is %s" %downInterface);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "Failed to get the firmware details"
+        print("Failed to get the firmware details")
 
     xconfUtilityLib.restoreOverrideFile(obj1, xconfFile);
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

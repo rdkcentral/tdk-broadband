@@ -96,123 +96,123 @@ obj.configureTestCase(ip,port,'TS_BLEHAL_Enable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        tdkTestObj = obj.createTestStep('BLEHAL_GetStatus');
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep('BLEHAL_GetStatus');
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details and (details == "1" or details == "2" or  details == "3"):
+        if details == "1":
+            Enable_ble = 2;
+            #storing states as string for logging purpose
+            toBeSet = "DISABLE"
+            present_ble_str = "ENABLE"
+        else:
+            Enable_ble = 1;
+            #storing states as string for logging purpose
+            toBeSet = "ENABLE"
+            present_ble_str = "DISABLE"
+
+        present_ble = int(details)
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the value of BLEHAL_GetStatus");
+        print("EXPECTED RESULT 1: Should retrieve the BLEHAL_GetStatus successfully");
+        print("ACTUAL RESULT 1: BLE_Enable state is %s" %present_ble_str)
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        #Set the result status of execution
+
+        #------------- Set BLE Enable ----------------
+        tdkTestObj = obj.createTestStep("BLEHAL_Enable");
+        tdkTestObj.addParameter("enable", Enable_ble);
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details and (details == "1" or details == "2" or  details == "3"):
-            if details == "1":
-                Enable_ble = 2;
-                #storing states as string for logging purpose
-                toBeSet = "DISABLE"
-                present_ble_str = "ENABLE"
-            else:
-                Enable_ble = 1;
-                #storing states as string for logging purpose
-                toBeSet = "ENABLE"
-                present_ble_str = "DISABLE"
-
-	    present_ble = int(details)
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the value of BLEHAL_GetStatus";
-            print "EXPECTED RESULT 1: Should retrieve the BLEHAL_GetStatus successfully";
-            print "ACTUAL RESULT 1: BLE_Enable state is %s" %present_ble_str
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        if expectedresult in actualresult:
             #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set ble_enable to ", toBeSet);
+            print("EXPECTED RESULT 2: Should set ble_enable using BLEHAL_Enable()");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-            #------------- Set BLE Enable ----------------
-            tdkTestObj = obj.createTestStep("BLEHAL_Enable");
-            tdkTestObj.addParameter("enable", Enable_ble);
+            #----------- Cross verify ble enable --------------------
+            tdkTestObj = obj.createTestStep('BLEHAL_GetStatus');
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-                #Set the result status of execution
+            if expectedresult in actualresult and details and (details == "1" or details == "2" or  details == "3"):
+                if details == "1":
+                    #storing states as string for logging purpose
+                    new_ble_str = "ENABLE"
+                else:
+                    #storing states as string for logging purpose
+                    new_ble_str = "DISABLE"
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set ble_enable to ", toBeSet;
-                print "EXPECTED RESULT 2: Should set ble_enable using BLEHAL_Enable()";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP 3: Retrieve the value of BLEHAL_GetStatus");
+                print("EXPECTED RESULT 3: Should retrieve the value of BLEHAL_GetStatus successfully");
+                print("ACTUAL RESULT 3: BLEHAL_GetStatus value is %s" %new_ble_str);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-	        #----------- Cross verify ble enable --------------------
-	        tdkTestObj = obj.createTestStep('BLEHAL_GetStatus');
-	        expectedresult="SUCCESS";
-	        tdkTestObj.executeTestCase(expectedresult);
-	        actualresult = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-	        if expectedresult in actualresult and details and (details == "1" or details == "2" or  details == "3"):
-                    if details == "1":
-                        #storing states as string for logging purpose
-                        new_ble_str = "ENABLE"
-                    else:
-                        #storing states as string for logging purpose
-                        new_ble_str = "DISABLE"
-                    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Retrieve the value of BLEHAL_GetStatus";
-		    print "EXPECTED RESULT 3: Should retrieve the value of BLEHAL_GetStatus successfully";
-		    print "ACTUAL RESULT 3: BLEHAL_GetStatus value is %s" %new_ble_str;
-		    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                if int(details) == Enable_ble:
+                    print("TEST STEP 4: Cross verifying values of GET and SET");
+                    print("EXPECTED RESULT 4: GET and SET values should be same");
+                    print("ACTUAL RESULT 3: GET and SET value is %s" %new_ble_str)
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-                    if int(details) == Enable_ble:
-		        print "TEST STEP 4: Cross verifying values of GET and SET";
-		        print "EXPECTED RESULT 4: GET and SET values should be same";
-		        print "ACTUAL RESULT 3: GET and SET value is %s" %new_ble_str
-		        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-                        #--------- Re-setting the value -----------
-                        tdkTestObj = obj.createTestStep("BLEHAL_Enable");
-                        tdkTestObj.addParameter("enable", present_ble);
-                        expectedresult="SUCCESS";
-                        tdkTestObj.executeTestCase(expectedresult);
-                        actualresult = tdkTestObj.getResult();
-                        details = tdkTestObj.getResultDetails();
-                        if expectedresult in actualresult and details:
-                            #Set the result status of execution
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5: Revert the ble_enable state to ", present_ble_str;
-                            print "EXPECTED RESULT 5: Should Revert the ble_enable successfully";
-                            print "ACTUAL RESULT 5: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5: Revert the ble_enable state";
-                            print "EXPECTED RESULT 5: Should Revert the ble_enable successfully";
-                            print "ACTUAL RESULT 5: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    #--------- Re-setting the value -----------
+                    tdkTestObj = obj.createTestStep("BLEHAL_Enable");
+                    tdkTestObj.addParameter("enable", present_ble);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult and details:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Revert the ble_enable state to ", present_ble_str);
+                        print("EXPECTED RESULT 5: Should Revert the ble_enable successfully");
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-		        print "TEST STEP 4: Cross verifying values of GET and SET";
-		        print "EXPECTED RESULT 4: GET and SET values should be same";
-		        print "ACTUAL RESULT 4: %s" %details;
-		        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-		        print "GET and SET values are not same";
+                        print("TEST STEP 5: Revert the ble_enable state");
+                        print("EXPECTED RESULT 5: Should Revert the ble_enable successfully");
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 3: Retrieve the value of BLEHAL_GetStatus";
-		    print "EXPECTED RESULT 3: Should retrieve the value of BLEHAL_GetStatus successfully";
-		    print "ACTUAL RESULT 3: %s" %details;
-		    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("TEST STEP 4: Cross verifying values of GET and SET");
+                    print("EXPECTED RESULT 4: GET and SET values should be same");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("GET and SET values are not same");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set ble_enable using BLEHAL_Enable() to ", toBeSet;
-                print "EXPECTED RESULT 2: Should Set ble_enable using BLEHAL_Enable successfully";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("TEST STEP 3: Retrieve the value of BLEHAL_GetStatus");
+                print("EXPECTED RESULT 3: Should retrieve the value of BLEHAL_GetStatus successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Retrieve the value of BLEHAL_GetStatus";
-                print "EXPECTED RESULT 1: Should Retrieve the value of BLEHAL_GetStatus successfully";
-                print "ACTUAL RESULT 1: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE"
-        obj.unloadModule("blehal");
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set ble_enable using BLEHAL_Enable() to ", toBeSet);
+            print("EXPECTED RESULT 2: Should Set ble_enable using BLEHAL_Enable successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the value of BLEHAL_GetStatus");
+        print("EXPECTED RESULT 1: Should Retrieve the value of BLEHAL_GetStatus successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE")
+    obj.unloadModule("blehal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

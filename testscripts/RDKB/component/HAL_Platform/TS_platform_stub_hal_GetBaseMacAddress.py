@@ -48,7 +48,7 @@
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load  platform module.
 2. From script invoke platform_stub_hal_GetBaseMacAddress().
-3. Get the value 
+3. Get the value
 4. Validation of  the result is done within the python script and send the result status to Test Manager.
 5. Test Manager will publish the result in GUI as PASS/FAILURE based on the response from HAL_Platform stub.</automation_approch>
     <except_output>Value should be valid mac address</except_output>
@@ -62,7 +62,7 @@
   <script_tags />
 </xml>
 '''
-#Library functions 
+#Library functions
 import tdklib;
 import snmplib;
 
@@ -81,50 +81,50 @@ sysObj.configureTestCase(ip,port, 'TS_platform_stub_hal_GetBaseMacAddress');
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =sysObj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2);
 
 if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetBaseMacAddress");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetBaseMacAddress");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details:
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetBaseMacAddress");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetBaseMacAddress successfully");
+        print("MAC Address: %s" %details);
+
+        baseMacAddress = snmplib.getMACAddress(sysObj);
+        print("network device macaddress: %s" %baseMacAddress);
+        details1 = details.upper();
+        baseMacAddress = baseMacAddress.upper();
+        if details1 in baseMacAddress:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Platform_GetBaseMacAddress";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetBaseMacAddress successfully";
-            print "MAC Address: %s" %details;
-
-            baseMacAddress = snmplib.getMACAddress(sysObj);
-            print "network device macaddress: %s" %baseMacAddress;
-            details1 = details.upper(); 
-            baseMacAddress = baseMacAddress.upper();
-            if details1 in baseMacAddress:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "Mac address is matching";
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            else:
-                print "Mac address is not matching";
-                tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
+            print("Mac address is matching");
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
+            print("Mac address is not matching");
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the Platform_GetBaseMacAddress";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetBaseMacAddress successfully";
-            print "%s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Platform_GetBaseMacAddress");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetBaseMacAddress successfully");
+        print("%s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-        obj.unloadModule("halplatform");
-        sysObj.unloadModule("sysutil");
+    obj.unloadModule("halplatform");
+    sysObj.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        sysObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    sysObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

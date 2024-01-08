@@ -78,38 +78,38 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ecm_dns_svrs');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_dns_svrs");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        
-        details = tdkTestObj.getResultDetails();
-        details1 = details.split("/")[1];
-        if expectedresult in actualresult and (int (details1.split(".")[0]) > 0):
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_dns_svrs";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_dns_svrssuccessfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "pList->number: %s" %details.split("/")[2];
-            print "pList->addrs: %s" %details.split("/")[1];
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_dns_svrs";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_dns_svrs successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : Failure";
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_dns_svrs");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        obj.unloadModule("dhcp");
+    details = tdkTestObj.getResultDetails();
+    details1 = details.split("/")[1];
+    if expectedresult in actualresult and (int (details1.split(".")[0]) > 0):
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_dns_svrs");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_dns_svrssuccessfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("pList->number: %s" %details.split("/")[2]);
+        print("pList->addrs: %s" %details.split("/")[1]);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_dns_svrs");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ecm_dns_svrs successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : Failure");
+
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

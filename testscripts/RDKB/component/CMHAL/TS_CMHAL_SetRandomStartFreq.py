@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_SetRandomStartFreq');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,11 +108,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the start frequency";
-        print "EXPECTED RESULT 1: Should get the start frequency";
-        print "ACTUAL RESULT 1: Start frequency is %s" %startFreq;
+        print("TEST STEP 1: Get the start frequency");
+        print("EXPECTED RESULT 1: Should get the start frequency");
+        print("ACTUAL RESULT 1: Start frequency is %s" %startFreq);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         setValue = int(startFreq) + 1000;
         #Script to load the configuration file of the component
@@ -125,37 +125,37 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the Start frequency to a random value";
-            print "EXPECTED RESULT 2: Setting a random value as the start frequency must fail";
-            print "ACTUAL RESULT 2:  ",details;
+            print("TEST STEP 2: Set the Start frequency to a random value");
+            print("EXPECTED RESULT 2: Setting a random value as the start frequency must fail");
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #validate the set function using get
+            #validate the set function using get
             tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
             tdkTestObj.addParameter("paramName","DownFreq");
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             newStartFreq = tdkTestObj.getResultDetails();
-    	    if expectedresult in actualresult and int(newStartFreq) != setValue:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 3: Get the start frequency and check if it became the random value set";
-    	        print "EXPECTED RESULT 3: Start frequency should not change to the random value: ",setValue;
-    	        print "ACTUAL RESULT 3: New Start frequency is %s" %newStartFreq;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-	        #Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-    	        print "TEST STEP 3: Get the start frequency and check if it became the random value set";
-    	        print "EXPECTED RESULT 3: Start frequency should not change to the random value: ",setValue;
-                print "ACTUAL RESULT 3: Start frequency is %s" %newStartFreq;
+            if expectedresult in actualresult and int(newStartFreq) != setValue:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the start frequency and check if it became the random value set");
+                print("EXPECTED RESULT 3: Start frequency should not change to the random value: ",setValue);
+                print("ACTUAL RESULT 3: New Start frequency is %s" %newStartFreq);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the start frequency and check if it became the random value set");
+                print("EXPECTED RESULT 3: Start frequency should not change to the random value: ",setValue);
+                print("ACTUAL RESULT 3: Start frequency is %s" %newStartFreq);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	        #Revert the start freq
-	        tdkTestObj = obj.createTestStep("CMHAL_SetStartFreq");
+                #Revert the start freq
+                tdkTestObj = obj.createTestStep("CMHAL_SetStartFreq");
                 tdkTestObj.addParameter("Value",int(startFreq));
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
@@ -164,36 +164,36 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Revert the value of Start frequency";
-                    print "EXPECTED RESULT 4: Should revert the start frequency";
-                    print "ACTUAL RESULT 4:  ",details;
+                    print("TEST STEP 4: Revert the value of Start frequency");
+                    print("EXPECTED RESULT 4: Should revert the start frequency");
+                    print("ACTUAL RESULT 4:  ",details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-	        else:
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Revert the value of Start frequency";
-                    print "EXPECTED RESULT 4: Should revert the start frequency";
-                    print "ACTUAL RESULT 4:  ",details;
+                    print("TEST STEP 4: Revert the value of Start frequency");
+                    print("EXPECTED RESULT 4: Should revert the start frequency");
+                    print("ACTUAL RESULT 4:  ",details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the Start frequency";
-            print "EXPECTED RESULT 2: Should set the start frequency";
-            print "ACTUAL RESULT 2:  ",details;
+            print("TEST STEP 2: Set the Start frequency");
+            print("EXPECTED RESULT 2: Should set the start frequency");
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the start frequency";
-        print "EXPECTED RESULT 1: Should get the start frequency";
-        print "ACTUAL RESULT 1: Start frequency is %s" %StartFreq;
+        print("TEST STEP 1: Get the start frequency");
+        print("EXPECTED RESULT 1: Should get the start frequency");
+        print("ACTUAL RESULT 1: Start frequency is %s" %StartFreq);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
 
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

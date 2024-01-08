@@ -55,7 +55,7 @@ Input:
 1.PathName ("paramName")
 ( eg: "Device.NAT.X_CISCO_COM_PortTriggers.Enable" )
 2.Type: bool, Value: true</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (AdvancedConfig_Set  - func name - "If not exists already"
  advancedconfig - module name
  Necessary I/P args as Mentioned in Input)
@@ -63,7 +63,7 @@ Input:
 3.Execute the generated Script(TS_ADVANCEDCONFIG_TelnetEnable.py) using execution page of  Test Manager GUI
 4.advancedconfigstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named AdvancedConfig_Set through registered TDK advancedconfigstub function along with necessary Entry Values as arguments
 5.AdvancedConfig_Set function will call ssp_setParameterValue,that inturn will call CCSP Base Interface Function named CcspBaseIf_setParameterValues.
-6.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.advancedconfigstub will validate the available result (from ssp_setParameterValue as zero) with expected result (zero) and the result is updated in agent console log and json output variable
 8.TestManager will publish the result in GUI as SUCCESS/FAILURE based on the response from AdvancedConfig_Set  functions.</automation_approch>
     <except_output>Checkpoint 1:
@@ -71,7 +71,7 @@ Check if "Advanced -&gt; Remote Management -&gt; Global Management -&gt; Telnet 
 CheckPoint 2:
 Success log should be available in Agent Console Log
 CheckPoint 3:
-TDK agent Test Function will log the test case result as SUCCESS based on API response 
+TDK agent Test Function will log the test case result as SUCCESS based on API response
 CheckPoint 4:
 TestManager GUI will publish the result as SUCCESS in Execution page</except_output>
     <priority>High</priority>
@@ -85,8 +85,8 @@ TestManager GUI will publish the result as SUCCESS in Execution page</except_out
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("advancedconfig","1");
@@ -99,14 +99,14 @@ obj.configureTestCase(ip,port,'TS_ADVANCEDCONFIG_TelnetEnable');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load Advanced config Stub from /opt/TDK/libs/]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load Advanced config Stub from /opt/TDK/libs/]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
@@ -120,25 +120,25 @@ expectedresult = "SUCCESS";
 tdkTestObj.executeTestCase(expectedresult);
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "[STEP 1]: Set the boolean value to true ";
-        print "[EXPECTED RESLUT 1]: Should set the boolean value to true ";
-        print "[ACTUAL RESULT 1]: Successfully set the boolean value, %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] :%s" %actualresult;
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("[STEP 1]: Set the boolean value to true ");
+    print("[EXPECTED RESLUT 1]: Should set the boolean value to true ");
+    print("[ACTUAL RESULT 1]: Successfully set the boolean value, %s" %resultDetails);
+    print("[TEST EXECUTION RESULT] :%s" %actualresult);
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "[STEP 1]: Set the boolean value to true";
-        print "[EXPECTED RESLUT 1]: Should set the boolean value to true ";
-        print "[ACTUAL RESULT 1]: Failed to set the boolean value, %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] :%s" %actualresult;
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("[STEP 1]: Set the boolean value to true");
+    print("[EXPECTED RESLUT 1]: Should set the boolean value to true ");
+    print("[ACTUAL RESULT 1]: Failed to set the boolean value, %s" %resultDetails);
+    print("[TEST EXECUTION RESULT] :%s" %actualresult);
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("advancedconfig");

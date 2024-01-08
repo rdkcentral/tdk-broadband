@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cosamta","1");
@@ -76,9 +76,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_COSAMTA_GetCalls');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -93,65 +93,65 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries as greater than 0"
-        print "ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %details
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries as greater than 0")
+        print("ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         numOfEntries = details.split(':')[1].strip()
         if int(numOfEntries) > 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS")
-            print "TEST STEP 2: Get the LineTableNumberOfEntries"
-            print "EXPECTED RESULT 2: Should get the LineTableNumberOfEntries as greater than 0"
-            print "ACTUAL RESULT 2: The LineTableNumberOfEntries is %s" %numOfEntries
+            print("TEST STEP 2: Get the LineTableNumberOfEntries")
+            print("EXPECTED RESULT 2: Should get the LineTableNumberOfEntries as greater than 0")
+            print("ACTUAL RESULT 2: The LineTableNumberOfEntries is %s" %numOfEntries)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             for y in range(int(numOfEntries)):
                 #Script to load the configuration file of the component
-                tdkTestObj = obj.createTestStep("CosaMTA_GetCalls")    
+                tdkTestObj = obj.createTestStep("CosaMTA_GetCalls")
                 tdkTestObj.addParameter("value",y)
                 expectedresult="SUCCESS"
                 tdkTestObj.executeTestCase(expectedresult)
-                actualresult = tdkTestObj.getResult()    
+                actualresult = tdkTestObj.getResult()
                 resultDetails = " "
                 resultDetails = tdkTestObj.getResultDetails()
 
                 if expectedresult in actualresult and resultDetails != " ":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print "TEST STEP %s: Get call info for line %s" %(y+2, y+1)
-                    print "EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1)
-                    print "ACTUAL RESULT %s: call info for line %s:" %(y+2, y+1)
-                    print ""
+                    print("TEST STEP %s: Get call info for line %s" %(y+2, y+1))
+                    print("EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1))
+                    print("ACTUAL RESULT %s: call info for line %s:" %(y+2, y+1))
+                    print("")
                     for x in resultDetails.split(";"):
-                        print x
-                    print ""
+                        print(x)
+                    print("")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print "TEST STEP %s: Get call info for line %s" %(y+2, y+1)
-                    print "EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1)
-                    print "ACTUAL RESULT %s: Failed to get the call info for line %s:" %(y+2, y+1)
-                    print "%s" %resultDetails
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("TEST STEP %s: Get call info for line %s" %(y+2, y+1))
+                    print("EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1))
+                    print("ACTUAL RESULT %s: Failed to get the call info for line %s:" %(y+2, y+1))
+                    print("%s" %resultDetails)
+                    print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print "TEST STEP 2: Get the LineTableNumberOfEntries"
-            print "EXPECTED RESULT 2: LineTableNumberOfEntries should be greater than 0"
-            print "ACTUAL RESULT 2: LineTableNumberOfEntries is not greater than 0, details :%s" %numOfEntries
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 2: Get the LineTableNumberOfEntries")
+            print("EXPECTED RESULT 2: LineTableNumberOfEntries should be greater than 0")
+            print("ACTUAL RESULT 2: LineTableNumberOfEntries is not greater than 0, details :%s" %numOfEntries)
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %details
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %details)
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("cosamta")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

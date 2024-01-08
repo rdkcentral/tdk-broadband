@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_US_OFDM_RollOffPeriodAndCyclicPrefix');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,59 +88,59 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
 
     if expectedresult in actualresult:
-	NoOfEntries = details.split(";")[0].split(":")[1];
+        NoOfEntries = details.split(";")[0].split(":")[1];
         if int(NoOfEntries) > 0:
-	    CyclicPrefix = details.split(";")[1].split(":")[1];
+            CyclicPrefix = details.split(";")[1].split(":")[1];
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the CyclicPrefix";
-            print "EXPECTED RESULT 1: Should get the CyclicPrefix";
-            print "ACTUAL RESULT 1: CyclicPrefix is %s" %CyclicPrefix;
+            print("TEST STEP 1: Get the CyclicPrefix");
+            print("EXPECTED RESULT 1: Should get the CyclicPrefix");
+            print("ACTUAL RESULT 1: CyclicPrefix is %s" %CyclicPrefix);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    tdkTestObj.addParameter("paramName","US_OFDM_RollOffPeriod");
+            tdkTestObj.addParameter("paramName","US_OFDM_RollOffPeriod");
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             Details = tdkTestObj.getResultDetails();
 
             if expectedresult in actualresult:
-		RollOffPeriod = Details.split(";")[1].split(":")[1];
+                RollOffPeriod = Details.split(";")[1].split(":")[1];
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the RollOffPeriod";
-                print "EXPECTED RESULT 2: Should get the RollOffPeriod";
-                print "ACTUAL RESULT 2: RollOffPeriod is %s" %RollOffPeriod;
+                print("TEST STEP 2: Get the RollOffPeriod");
+                print("EXPECTED RESULT 2: Should get the RollOffPeriod");
+                print("ACTUAL RESULT 2: RollOffPeriod is %s" %RollOffPeriod);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	        if CyclicPrefix > RollOffPeriod:
-	    	    tdkTestObj.setResultStatus("SUCCESS");
-	    	    print "CyclicPrefix is greater than RollOffPeriod"
-	        else:
-	    	    tdkTestObj.setResultStatus("FAILURE");
-	    	    print "CyclicPrefix is not greater than RollOffPeriod"
+                if CyclicPrefix > RollOffPeriod:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("CyclicPrefix is greater than RollOffPeriod")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("CyclicPrefix is not greater than RollOffPeriod")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the RollOffPeriod";
-                print "EXPECTED RESULT 2: Should get the RollOffPeriod";
-                print "ACTUAL RESULT 2: RollOffPeriod is %s" %RollOffPeriod;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2: Get the RollOffPeriod");
+                print("EXPECTED RESULT 2: Should get the RollOffPeriod");
+                print("ACTUAL RESULT 2: RollOffPeriod is %s" %RollOffPeriod);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
-            print "There are no entries in US OFDM channel table"
+            print("There are no entries in US OFDM channel table")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the CyclicPrefix";
-        print "EXPECTED RESULT 1: Should get the CyclicPrefix";
-        print "ACTUAL RESULT 1: CyclicPrefix is %s" %CyclicPrefix;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the CyclicPrefix");
+        print("EXPECTED RESULT 1: Should get the CyclicPrefix");
+        print("ACTUAL RESULT 1: CyclicPrefix is %s" %CyclicPrefix);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

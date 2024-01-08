@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetPortCfg_InvalidMode');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,71 +98,71 @@ if "SUCCESS" in loadmodulestatus.upper():
         curDuplexMode = details.split("/")[2];
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Cfg for port %d" %port_id;
-        print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Cfg successfully" ;
-        print "ACTUAL RESULT 1: DuplexMode = %s: Bitrate = %s" %(curDuplexMode, curLinkRate);
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Cfg for port %d" %port_id);
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Cfg successfully") ;
+        print("ACTUAL RESULT 1: DuplexMode = %s: Bitrate = %s" %(curDuplexMode, curLinkRate));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
         #Setting invalid value
         #Script to load the configuration file of the component
         tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortCfg");
         tdkTestObj.addParameter("PortID",port_id);
-	tdkTestObj.addParameter("linkrate", testLinkRate);
+        tdkTestObj.addParameter("linkrate", testLinkRate);
         tdkTestObj.addParameter("mode", testDuplexMode);
         expectedresult = "FAILURE";
-        print "Setting link rate = %d and Duplex mode = %s" %(testLinkRate, testDuplexMode);
+        print("Setting link rate = %d and Duplex mode = %s" %(testLinkRate, testDuplexMode));
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult and details:
-	    tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set invalid duplex mode for port %d" %port_id;
-            print "EXPECTED RESULT 2: The invalid duplex mode should not set";
-            print "ACTUAL RESULT 2: %s" %(details);
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set invalid duplex mode for port %d" %port_id);
+            print("EXPECTED RESULT 2: The invalid duplex mode should not set");
+            print("ACTUAL RESULT 2: %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Set invalid duplex mode for port %d" %port_id;
-            print "EXPECTED RESULT 2: The invalid duplex mode should not set";
-            print "ACTUAL RESULT 2: %s" %(details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set invalid duplex mode for port %d" %port_id);
+            print("EXPECTED RESULT 2: The invalid duplex mode should not set");
+            print("ACTUAL RESULT 2: %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #Reset the original status
-	    tdkTestObj.addParameter("PortID",port_id);
-	    tdkTestObj.addParameter("linkrate", int(curLinkRate));
+            #Reset the original status
+            tdkTestObj.addParameter("PortID",port_id);
+            tdkTestObj.addParameter("linkrate", int(curLinkRate));
             tdkTestObj.addParameter("mode", curDuplexMode);
             expectedresult = "SUCCESS";
-            print "Setting link rate = %d and Duplex mode = %s" %(int(curLinkRate),curDuplexMode)
+            print("Setting link rate = %d and Duplex mode = %s" %(int(curLinkRate),curDuplexMode))
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult and details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Set old port config for port %d" %port_id;
-                print "EXPECTED RESULT : The port config should set successfully";
-                print "ACTUAL RESULT : %s" %(details);
+                print("TEST STEP : Set old port config for port %d" %port_id);
+                print("EXPECTED RESULT : The port config should set successfully");
+                print("ACTUAL RESULT : %s" %(details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Set old port config for port %d" %port_id;
-                print "EXPECTED RESULT : The port config should set successfully";
-                print "ACTUAL RESULT : %s" %(details);
+                print("TEST STEP : Set old port config for port %d" %port_id);
+                print("EXPECTED RESULT : The port config should set successfully");
+                print("ACTUAL RESULT : %s" %(details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Cfg for port %d" %port_id;
-        print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Cfg successfully";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Cfg for port %d" %port_id);
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Cfg successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
     obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

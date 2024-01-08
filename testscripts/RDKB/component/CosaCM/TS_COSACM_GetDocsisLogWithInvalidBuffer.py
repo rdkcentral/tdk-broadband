@@ -39,7 +39,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_COSACM_54</test_case_id>
-    <test_objective>To Validate Cable Modem 
+    <test_objective>To Validate Cable Modem
 "CosaDmlCmGetDocsisLog" API under Negative scenario</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Emulator,
@@ -67,7 +67,7 @@ N/A
 3.Execute the generated Script using execution page of  Test Manager GUI
 4.cosacmstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named COSACM_GetDocsisLog through registered TDK cosacmstub function along with necessary Entry Values as arguments
 5.COSACM_GetDocsisLog function will call ssp_cosacm_GetDocsisLog, that inturn will call relevant cm hal Function to get/set data model value
-6.Responses from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses from TDK Component,Ccsp Library function and cosacmstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cosacmstub function COSACM_GetDocsisLog will validate the available result (return value from ssp_cosacm_GetDocsisLog as success(0)) with expected result (success(0)) and the output argument value is updated in agent console log and json output variable along with return value
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from COSACM_GetDocsisLog function</automation_approch>
     <except_output>CheckPoint 1:
@@ -87,7 +87,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-#use tdklib library,which provides a wrapper for tdk testcase script 
+#use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -102,38 +102,38 @@ obj.configureTestCase(ip,port,'TS_COSACM_GetDocsisLogWithInvalidBuffer');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("COSACM_GetDocsisLog");
-        tdkTestObj.addParameter("handleType",1);
-        tdkTestObj.addParameter("bufferType",1);
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("COSACM_GetDocsisLog");
+    tdkTestObj.addParameter("handleType",1);
+    tdkTestObj.addParameter("bufferType",1);
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Should not get the DOCSIS log info";
-            print "EXPECTED RESULT 1: Should not get the DOCSIS Log successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Should not get the DOCSIS log info";
-            print "EXPECTED RESULT 1: Should not get the DOCSIS Log successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILED" ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Should not get the DOCSIS log info");
+        print("EXPECTED RESULT 1: Should not get the DOCSIS Log successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Should not get the DOCSIS log info");
+        print("EXPECTED RESULT 1: Should not get the DOCSIS Log successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILED") ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

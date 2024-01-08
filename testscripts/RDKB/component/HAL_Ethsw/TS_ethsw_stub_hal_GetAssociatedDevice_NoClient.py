@@ -78,35 +78,35 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_GetAssociatedDevice_NoClient');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-	#Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and "No Associated device" in details:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Invoke CcspHalExtSw_getAssociatedDevice() when no client is connected";
-                print "EXPECTED RESULT 1: CcspHalExtSw_getAssociatedDevice() should return success status and associated device count as zero";
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                print "ACTUAL Result : %s" %details;
-        else:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Invoke CcspHalExtSw_getAssociatedDevice() when no client is connected";
-                print "EXPECTED RESULT 1: CcspHalExtSw_getAssociatedDevice() should return success status and associated device count as zero";
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
-                print "ACTUAL Result : %s" %details;
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and "No Associated device" in details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Invoke CcspHalExtSw_getAssociatedDevice() when no client is connected");
+        print("EXPECTED RESULT 1: CcspHalExtSw_getAssociatedDevice() should return success status and associated device count as zero");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("ACTUAL Result : %s" %details);
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Invoke CcspHalExtSw_getAssociatedDevice() when no client is connected");
+        print("EXPECTED RESULT 1: CcspHalExtSw_getAssociatedDevice() should return success status and associated device count as zero");
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+        print("ACTUAL Result : %s" %details);
 
-        obj.unloadModule("halethsw");
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

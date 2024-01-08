@@ -74,8 +74,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -88,14 +88,14 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_BPIState');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_Get');
 
@@ -108,19 +108,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 Details_cmstatus = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult and "OPERATIONAL" in Details_cmstatus:
     #Set the result status of execution as success
     tdkTestObj.setResultStatus("SUCCESS");
-    print "TEST STEP 1: Get the CMStatus";
-    print "EXPECTED RESULT 1: Should get the CMStatus as OPERATIONAL";
-    print "ACTUAL RESULT 1: %s" %Details_cmstatus;
+    print("TEST STEP 1: Get the CMStatus");
+    print("EXPECTED RESULT 1: Should get the CMStatus as OPERATIONAL");
+    print("ACTUAL RESULT 1: %s" %Details_cmstatus);
     #Get the result of execution
-    print "[TEST EXECUTION RESULT] : SUCCESS";
-    
+    print("[TEST EXECUTION RESULT] : SUCCESS");
+
 
     #Primitive test case which associated to this Script
     tdkTestObj = obj.createTestStep('CMAgent_Get');
@@ -134,39 +134,38 @@ if expectedresult in actualresult and "OPERATIONAL" in Details_cmstatus:
 
     #Get the result of execution
     actualresult = tdkTestObj.getResult();
-    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     resultDetails = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and "true" in resultDetails:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 2: Get the BPIState";
-        print "EXPECTED RESULT 2: Should get the BPIState as true";
-        print "ACTUAL RESULT 2: %s" %resultDetails;
+    #Set the result status of execution as success
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 2: Get the BPIState");
+        print("EXPECTED RESULT 2: Should get the BPIState as true");
+        print("ACTUAL RESULT 2: %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution as failure
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 2: Get the BPIState";
-        print "EXPECTED RESULT 2: Should get the BPIState as true";
-        print "ACTUAL RESULT 2: %s" %resultDetails;
+        print("TEST STEP 2: Get the BPIState");
+        print("EXPECTED RESULT 2: Should get the BPIState as true");
+        print("ACTUAL RESULT 2: %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 else:
     #Set the result status of execution as success
     tdkTestObj.setResultStatus("FAILURE");
-    print "TEST STEP 1: Get the CMStatus";
-    print "EXPECTED RESULT 1: Should get the CMStatus as OPERATIONAL";
-    print "ACTUAL RESULT 1: %s" %Details_cmstatus;
+    print("TEST STEP 1: Get the CMStatus");
+    print("EXPECTED RESULT 1: Should get the CMStatus as OPERATIONAL");
+    print("ACTUAL RESULT 1: %s" %Details_cmstatus);
     #Get the result of execution
-    print "[TEST EXECUTION RESULT] : FAILURE";
+    print("[TEST EXECUTION RESULT] : FAILURE");
 
 
 
-print "[TEST EXECUTION RESULT] : %s" %Details_cmstatus ;
+print("[TEST EXECUTION RESULT] : %s" %Details_cmstatus) ;
 
 obj.unloadModule("cmagent");
-	

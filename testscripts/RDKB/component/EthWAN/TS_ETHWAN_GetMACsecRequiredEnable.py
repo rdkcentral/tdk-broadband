@@ -102,8 +102,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_GetMACsecRequiredEnable');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper()  and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -114,52 +114,52 @@ if "SUCCESS" in loadmodulestatus.upper()  and "SUCCESS" in loadmodulestatus1.upp
     tdkTestObj,status,Value = getMultipleParameterValues(obj1,paramList)
 
     if expectedresult in status and Value[0] == "true":
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the WAN Enabled Mode as true";
-       print "EXPECTED RESULT 1: Should get the WAN Enabled Mode as true ";
-       print "ACTUAL RESULT 1: WAN Enabled  Mode is ",Value[0];
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the WAN Enabled Mode as true");
+        print("EXPECTED RESULT 1: Should get the WAN Enabled Mode as true ");
+        print("ACTUAL RESULT 1: WAN Enabled  Mode is ",Value[0]);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       print "********************************"
-       print "The Device is in ETHWAN mode" ;
-       print "*******************************"
+        print("********************************")
+        print("The Device is in ETHWAN mode") ;
+        print("*******************************")
 
-       if Value[1]== "Ethernet":
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Current Operational Mode as Ethernet";
-          print "EXPECTED RESULT 2: Should get the Current Operational Mode as Ethernet ";
-          print "ACTUAL RESULT 2: Operational Mode is ",Value[1];
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if Value[1]== "Ethernet":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Current Operational Mode as Ethernet");
+            print("EXPECTED RESULT 2: Should get the Current Operational Mode as Ethernet ");
+            print("ACTUAL RESULT 2: Operational Mode is ",Value[1]);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          if Value[2] == "true":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the MAC sec Required state ";
-             print "EXPECTED RESULT 3: Should get the  MAC sec Required state as true";
-             print "ACTUAL RESULT 3: MAC sec Required state is ",Value[2];
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the MAC sec Required state ";
-              print "EXPECTED RESULT 3: Should get the  MAC sec Required state as true";
-              print "ACTUAL RESULT 3: MAC sec Required state is ",Value[2];
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the Current Operational Mode as Ethernet";
-           print "EXPECTED RESULT 2: Should get the Current Operational Mode as Ethernet ";
-           print "ACTUAL RESULT 2: Operational  Mode is ",Value[1];
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            if Value[2] == "true":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the MAC sec Required state ");
+                print("EXPECTED RESULT 3: Should get the  MAC sec Required state as true");
+                print("ACTUAL RESULT 3: MAC sec Required state is ",Value[2]);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the MAC sec Required state ");
+                print("EXPECTED RESULT 3: Should get the  MAC sec Required state as true");
+                print("ACTUAL RESULT 3: MAC sec Required state is ",Value[2]);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Current Operational Mode as Ethernet");
+            print("EXPECTED RESULT 2: Should get the Current Operational Mode as Ethernet ");
+            print("ACTUAL RESULT 2: Operational  Mode is ",Value[1]);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "The device is not in ethwan mode. Please check the device setup"
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("The device is not in ethwan mode. Please check the device setup")
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
     obj1.unloadModule("tad");
 else:
-    print "Failed to load pam  module";
+    print("Failed to load pam  module");
     obj.setLoadModuleStatus("FAILURE");

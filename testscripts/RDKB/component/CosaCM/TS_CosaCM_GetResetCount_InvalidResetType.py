@@ -57,7 +57,7 @@
 </xml>
 '''
 
-#use tdklib library,which provides a wrapper for tdk testcase script 
+#use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -72,39 +72,39 @@ obj.configureTestCase(ip,port,'TS_CosaCM_GetResetCount_InvalidResetType');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("CosaCM_GetResetCount");
-        tdkTestObj.addParameter("handleType",0);
-        tdkTestObj.addParameter("bufferType",0);
-        tdkTestObj.addParameter("resetType","InvalidResetType");
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("CosaCM_GetResetCount");
+    tdkTestObj.addParameter("handleType",0);
+    tdkTestObj.addParameter("bufferType",0);
+    tdkTestObj.addParameter("resetType","InvalidResetType");
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Apply Invalid argument to Retrieve the reset count for invalid reset type";
-            print "EXPECTED RESULT 1: Should fail to retrieve the reset count for invalid reset type";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Apply Invalid argument to Retrieve the reset count for invalid reset type";
-            print "EXPECTED RESULT 1: Should fail to retrieve the reset count for invalid reset type";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE" ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Apply Invalid argument to Retrieve the reset count for invalid reset type");
+        print("EXPECTED RESULT 1: Should fail to retrieve the reset count for invalid reset type");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Apply Invalid argument to Retrieve the reset count for invalid reset type");
+        print("EXPECTED RESULT 1: Should fail to retrieve the reset count for invalid reset type");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

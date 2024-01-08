@@ -76,35 +76,35 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetTimeOffSet_NullBuffer');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetTimeOffSet");
-        expectedresult="FAILURE";
-        tdkTestObj.addParameter("flag",1);
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Retrieve the Platform_GetTimeOffSet with NULL buffer";
-           print "EXPECTED RESULT 1: Should not retrieve the Platform_GetTimeOffSet with NULL buffer";
-           print "ACTUAL RESULT 1: Platform_GetTimeOffSet api call failed";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the Platform_GetTimeOffSet with NULL buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the Platform_GetTimeOffSet with NULL buffer";
-            print "ACTUAL RESULT 1: Platform_GetTimeOffSet api call success";
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetTimeOffSet");
+    expectedresult="FAILURE";
+    tdkTestObj.addParameter("flag",1);
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetTimeOffSet with NULL buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the Platform_GetTimeOffSet with NULL buffer");
+        print("ACTUAL RESULT 1: Platform_GetTimeOffSet api call failed");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Platform_GetTimeOffSet with NULL buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the Platform_GetTimeOffSet with NULL buffer");
+        print("ACTUAL RESULT 1: Platform_GetTimeOffSet api call success");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("halplatform");
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

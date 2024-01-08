@@ -97,8 +97,8 @@ cmobj.configureTestCase(ip,port,'TS_CMHAL_IsEnergyDetected');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 cmloadmodulestatus =cmobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %cmloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %cmloadmodulestatus) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and cmloadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,11 +113,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and cmloadmodulestatus.upper()):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Energy Detected status";
-        print "EXPECTED RESULT 1: Should get the Energy Detected status successfully";
-        print "ACTUAL RESULT 1: Details : ",Status;
+        print("TEST STEP 1: Get the Energy Detected status");
+        print("EXPECTED RESULT 1: Should get the Energy Detected status successfully");
+        print("ACTUAL RESULT 1: Details : ",Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         value_from_hal = Status.split(':')[1].strip().replace("\\n", "");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
@@ -129,53 +129,53 @@ if "SUCCESS" in (loadmodulestatus.upper() and cmloadmodulestatus.upper()):
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the CurrentOperationalMode Value";
-            print "EXPECTED RESULT 1: Should get the CurrentOperationalMode value successfully";
-            print "ACTUAL RESULT 1: CurrentOperationalMode Value retrieved successfully %s"%CurrentOperationalMode ;
+            print("TEST STEP 1: Get the CurrentOperationalMode Value");
+            print("EXPECTED RESULT 1: Should get the CurrentOperationalMode value successfully");
+            print("ACTUAL RESULT 1: CurrentOperationalMode Value retrieved successfully %s"%CurrentOperationalMode) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if CurrentOperationalMode.upper() == "DOCSIS":
                 docsis_enabled = 1;
             else:
                 docsis_enabled = 0;
 
-            print "docsis_enabled is %s"%docsis_enabled
-            print "Value returned from HAL is %s"%value_from_hal
+            print("docsis_enabled is %s"%docsis_enabled)
+            print("Value returned from HAL is %s"%value_from_hal)
 
             #Is_EnergyDetected will return 1 if docsis signal found else 0
             if int(docsis_enabled) == int(value_from_hal):
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Validate the Value Returned from CM HAL is proper";
-                print "EXPECTED RESULT 1: Docsis enable value and value from HAL should be same";
-                print "ACTUAL RESULT 1: Docsis enable value retrieved from current operational mode and value from HAL is same";
+                print("TEST STEP 1: Validate the Value Returned from CM HAL is proper");
+                print("EXPECTED RESULT 1: Docsis enable value and value from HAL should be same");
+                print("ACTUAL RESULT 1: Docsis enable value retrieved from current operational mode and value from HAL is same");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Validate the Value Returned from CM HAL is proper";
-                print "EXPECTED RESULT 1: Docsis enable value and value from HAL should be same";
-                print "ACTUAL RESULT 1: Docsis enable value retrieved from current operational mode and value from HAL is NOT same";
+                print("TEST STEP 1: Validate the Value Returned from CM HAL is proper");
+                print("EXPECTED RESULT 1: Docsis enable value and value from HAL should be same");
+                print("ACTUAL RESULT 1: Docsis enable value retrieved from current operational mode and value from HAL is NOT same");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the CurrentOperationalMode Value";
-            print "EXPECTED RESULT 1: Should get the CurrentOperationalMode value successfully";
-            print "ACTUAL RESULT 1: CurrentOperationalMode Value NOT retrieved successfully ";
+            print("TEST STEP 1: Get the CurrentOperationalMode Value");
+            print("EXPECTED RESULT 1: Should get the CurrentOperationalMode value successfully");
+            print("ACTUAL RESULT 1: CurrentOperationalMode Value NOT retrieved successfully ");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Energy Detected status";
-        print "EXPECTED RESULT 1: Should get the Energy Detected status successfully";
-        print "ACTUAL RESULT 1: Failed to get the Energy Detected Status";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Energy Detected status");
+        print("EXPECTED RESULT 1: Should get the Energy Detected status successfully");
+        print("ACTUAL RESULT 1: Failed to get the Energy Detected Status");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     cmobj.unloadModule("cmhal");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     cmobj.setLoadModuleStatus("FAILURE");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

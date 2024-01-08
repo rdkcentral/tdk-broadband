@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetOnuPacketBufferCapabilities');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,58 +91,54 @@ if "SUCCESS" in loadmodulestatus.upper():
     resultDetails = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and resultDetails != " " :
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Invoke dpoe_getOnuPacketBufferCapabilities";
-       print "EXPECTED RESULT 1: Should invoke dpoe_getOnuPacketBufferCapabilities";
-       print "ACTUAL RESULT 1: Succesfully invoked dpoe_getOnuPacketBufferCapabilities";
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Invoke dpoe_getOnuPacketBufferCapabilities");
+        print("EXPECTED RESULT 1: Should invoke dpoe_getOnuPacketBufferCapabilities");
+        print("ACTUAL RESULT 1: Succesfully invoked dpoe_getOnuPacketBufferCapabilities");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       UpstreamQueues = resultDetails.split(':')[2].split(',')[0].strip()
-       print"UpstreamQueues:",UpstreamQueues
-       UpQueuesMaxPerLink = resultDetails.split(':')[3].split(',')[0].strip()
-       print"UpQueuesMaxPerLink:",UpQueuesMaxPerLink
-       UpQueueIncrement = resultDetails.split(':')[4].split(',')[0].strip()
-       print"UpQueueIncrement:",UpQueueIncrement
-       DownstreamQueues = resultDetails.split(':')[5].split(',')[0].strip()
-       print"DownstreamQueues: ",DownstreamQueues
-       DnQueuesMaxPerPort = resultDetails.split(':')[6].split(',')[0].strip()
-       print"DnQueuesMaxPerPort:",DnQueuesMaxPerPort
-       DnQueueIncrement =  resultDetails.split(':')[7].split(',')[0].strip()
-       print"DnQueueIncrement:",DnQueueIncrement
-       TotalPacketBuffer = resultDetails.split(':')[8].split(',')[0].strip()
-       print "TotalPacketBuffer:",TotalPacketBuffer
-       UpPacketBuffer = resultDetails.split(':')[9].split(',')[0].strip()
-       print"UpPacketBuffer:",UpPacketBuffer
-       if int(UpQueuesMaxPerLink)  > 0 and int(UpQueueIncrement) > 0 and int(DownstreamQueues) > 0 and int(DnQueuesMaxPerPort) > 0 and int(DnQueueIncrement) > 0 and int(TotalPacketBuffer) > 0 and int(UpPacketBuffer)  > 0 :
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 1: The values returned by dpoe_getOnuPacketBufferCapabilities should be greater than zer0";
-          print "EXPECTED RESULT 1: Should get the  values returned by dpoe_getOnuPacketBufferCapabilities greater tha zer0";
-          print "ACTUAL RESULT 1:The received values are : %s "%resultDetails;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 1: The values returned by dpoe_getOnuPacketBufferCapabilities should be greater than zer0";
-           print "EXPECTED RESULT 1: Should get the  values returned by dpoe_getOnuPacketBufferCapabilities greater tha zer0";
-           print "ACTUAL RESULT 1:The received values are : %s "%resultDetails;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        UpstreamQueues = resultDetails.split(':')[2].split(',')[0].strip()
+        print("UpstreamQueues:",UpstreamQueues)
+        UpQueuesMaxPerLink = resultDetails.split(':')[3].split(',')[0].strip()
+        print("UpQueuesMaxPerLink:",UpQueuesMaxPerLink)
+        UpQueueIncrement = resultDetails.split(':')[4].split(',')[0].strip()
+        print("UpQueueIncrement:",UpQueueIncrement)
+        DownstreamQueues = resultDetails.split(':')[5].split(',')[0].strip()
+        print("DownstreamQueues: ",DownstreamQueues)
+        DnQueuesMaxPerPort = resultDetails.split(':')[6].split(',')[0].strip()
+        print("DnQueuesMaxPerPort:",DnQueuesMaxPerPort)
+        DnQueueIncrement =  resultDetails.split(':')[7].split(',')[0].strip()
+        print("DnQueueIncrement:",DnQueueIncrement)
+        TotalPacketBuffer = resultDetails.split(':')[8].split(',')[0].strip()
+        print("TotalPacketBuffer:",TotalPacketBuffer)
+        UpPacketBuffer = resultDetails.split(':')[9].split(',')[0].strip()
+        print("UpPacketBuffer:",UpPacketBuffer)
+        if int(UpQueuesMaxPerLink)  > 0 and int(UpQueueIncrement) > 0 and int(DownstreamQueues) > 0 and int(DnQueuesMaxPerPort) > 0 and int(DnQueueIncrement) > 0 and int(TotalPacketBuffer) > 0 and int(UpPacketBuffer)  > 0 :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: The values returned by dpoe_getOnuPacketBufferCapabilities should be greater than zer0");
+            print("EXPECTED RESULT 1: Should get the  values returned by dpoe_getOnuPacketBufferCapabilities greater tha zer0");
+            print("ACTUAL RESULT 1:The received values are : %s "%resultDetails);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: The values returned by dpoe_getOnuPacketBufferCapabilities should be greater than zer0");
+            print("EXPECTED RESULT 1: Should get the  values returned by dpoe_getOnuPacketBufferCapabilities greater tha zer0");
+            print("ACTUAL RESULT 1:The received values are : %s "%resultDetails);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-        print "TEST STEP 1: Invoke dpoe_getOnuPacketBufferCapabilities";
-        print "EXPECTED RESULT 1: Should invoke dpoe_getOnuPacketBufferCapabilities";
-        print "ACTUAL RESULT 1: Succesfully invoked dpoe_getOnuPacketBufferCapabilities";
+        print("TEST STEP 1: Invoke dpoe_getOnuPacketBufferCapabilities");
+        print("EXPECTED RESULT 1: Should invoke dpoe_getOnuPacketBufferCapabilities");
+        print("ACTUAL RESULT 1: Succesfully invoked dpoe_getOnuPacketBufferCapabilities");
         tdkTestObj.setResultStatus("FAILURE");
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
+    print("Module loading failed");

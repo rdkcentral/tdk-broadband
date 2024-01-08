@@ -66,8 +66,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -101,36 +101,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if "true" == ethwanEnable:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "The device is in ethwan mode."
+        if "true" == ethwanEnable:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    tdkTestObj = obj1.createTestStep('ExecuteCmd');
-	    tdkTestObj.addParameter("command", "ifconfig -a erouter0 | grep \"inet6 addr\" | tr -s \" \" |  grep -v Link | cut -d \" \" -f4 | cut -d \"/\" -f1");
+            tdkTestObj = obj1.createTestStep('ExecuteCmd');
+            tdkTestObj.addParameter("command", "ifconfig -a erouter0 | grep \"inet6 addr\" | tr -s \" \" |  grep -v Link | cut -d \" \" -f4 | cut -d \"/\" -f1");
 #ifconfig erouter0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1
-	    #Execute the test case in STB
-     	    tdkTestObj.executeTestCase(expectedresult);
-     	    actualresult = tdkTestObj.getResult();
-     	    ipv6Address = tdkTestObj.getResultDetails().strip();
-	    ipv6Address = ipv6Address.replace("\\n","");
+            #Execute the test case in STB
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            ipv6Address = tdkTestObj.getResultDetails().strip();
+            ipv6Address = ipv6Address.replace("\\n","");
 
-     	    if expectedresult in actualresult and ipv6Address:
-		tdkTestObj.setResultStatus("SUCCESS");
-        	print "TEST STEP 2: Get the ipv6 address of device";
-        	print "EXPECTED RESULT 2: Should get the ipv6 address of device";
-        	print "ACTUAL RESULT 2: ipv6 address of device is %s" %ipv6Address;
-        	#Get the result of execution
-        	print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult in actualresult and ipv6Address:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the ipv6 address of device");
+                print("EXPECTED RESULT 2: Should get the ipv6 address of device");
+                print("ACTUAL RESULT 2: ipv6 address of device is %s" %ipv6Address);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		tdkTestObj.addParameter("command", "ifconfig erouter0 | grep \"inet addr\" | cut -d ':' -f 2 | cut -d ' ' -f 1");
+                tdkTestObj.addParameter("command", "ifconfig erouter0 | grep \"inet addr\" | cut -d ':' -f 2 | cut -d ' ' -f 1");
 
-		#Execute the test case in STB
+                #Execute the test case in STB
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 ipv4Address = tdkTestObj.getResultDetails().strip();
@@ -138,39 +138,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                 if expectedresult in actualresult and ipv4Address:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the ipv4 address of device";
-                    print "EXPECTED RESULT 3: Should get the ipv4 address of device";
-                    print "ACTUAL RESULT 3: ipv4 address of device is %s" %ipv4Address;
+                    print("TEST STEP 3: Get the ipv4 address of device");
+                    print("EXPECTED RESULT 3: Should get the ipv4 address of device");
+                    print("ACTUAL RESULT 3: ipv4 address of device is %s" %ipv4Address);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the ipv4 address of device";
-                    print "EXPECTED RESULT 3: Should get the ipv4 address of device";
-                    print "ACTUAL RESULT 3: ipv4 address of device is %s" %ipv4Address;
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the ipv4 address of device");
+                    print("EXPECTED RESULT 3: Should get the ipv4 address of device");
+                    print("ACTUAL RESULT 3: ipv4 address of device is %s" %ipv4Address);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the ipv6 address of device";
-                print "EXPECTED RESULT 2: Should get the ipv6 address of device";
-                print "ACTUAL RESULT 2: ipv6 address of device is %s" %ipv6Address;
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Get the ipv6 address of device");
+                print("EXPECTED RESULT 2: Should get the ipv6 address of device");
+                print("ACTUAL RESULT 2: ipv6 address of device is %s" %ipv6Address);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "The device is not in ethwan mode. Please check the device setup"
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

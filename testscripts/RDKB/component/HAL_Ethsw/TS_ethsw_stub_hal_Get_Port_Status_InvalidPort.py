@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_Get_Port_Status_InvalidPort');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,18 +93,18 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Status for port";
-        print "EXPECTED RESULT 1: Ethsw_Get_Port_Status should not give status with invalid port";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Status for port");
+        print("EXPECTED RESULT 1: Ethsw_Get_Port_Status should not give status with invalid port");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Status for port";
-        print "EXPECTED RESULT 1: Ethsw_Get_Port_Status should not give status with invalid port";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Status for port");
+        print("EXPECTED RESULT 1: Ethsw_Get_Port_Status should not give status with invalid port");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

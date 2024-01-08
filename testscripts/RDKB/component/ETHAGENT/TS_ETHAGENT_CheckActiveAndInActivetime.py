@@ -100,100 +100,100 @@ if "SUCCESS" in loadmodulestatus.upper():
     NoofHost=tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and int(NoofHost) >0:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the number of clients connected";
-       print "EXPECTED RESULT 1: Should get the no of clients connected"
-       print "ACTUAL RESULT 1:%s" %NoofHost
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       Ethclientfound = 0;
-       for i in range (1,int(NoofHost)+1):
-           expectedresult="SUCCESS";
-           tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-           tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           print "Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details);
-           if expectedresult in actualresult and details == "Ethernet":
-              tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-              tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              print "Device.Hosts.Host.%s.Active value is %s" %(i,details);
-              if  expectedresult in actualresult and details == "true":
-                  Ethclientfound = 1;
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP : Check if the connected LAN client is active";
-                  print "EXPECTED RESULT : Should get the connected client as active";
-                  print "ACTUAL RESULT :%s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
-                  break;
-       if Ethclientfound == 1:
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.X_CISCO_COM_ActiveTime"%(i));
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-          if expectedresult in actualresult  and int(details)>=0:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Check if the Active time is greater than zero";
-             print "EXPECTED RESULT 2: Should get the Active time greater than zero";
-             print "ACTUAL RESULT 2:%s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-             tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.X_CISCO_COM_InactiveTime"%(i));
-             #Execute the test case in DUT
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-             if expectedresult in actualresult  and int(details)>=0:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the number of clients connected");
+        print("EXPECTED RESULT 1: Should get the no of clients connected")
+        print("ACTUAL RESULT 1:%s" %NoofHost)
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        Ethclientfound = 0;
+        for i in range (1,int(NoofHost)+1):
+            expectedresult="SUCCESS";
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            print("Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details));
+            if expectedresult in actualresult and details == "Ethernet":
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                print("Device.Hosts.Host.%s.Active value is %s" %(i,details));
+                if  expectedresult in actualresult and details == "true":
+                    Ethclientfound = 1;
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP : Check if the connected LAN client is active");
+                    print("EXPECTED RESULT : Should get the connected client as active");
+                    print("ACTUAL RESULT :%s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    break;
+        if Ethclientfound == 1:
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.X_CISCO_COM_ActiveTime"%(i));
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if expectedresult in actualresult  and int(details)>=0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if the Inactive time is greater than zero";
-                print "EXPECTED RESULT 3: Should get the Inactive time greater than zero";
-                print "ACTUAL RESULT 3:%s" %details;
+                print("TEST STEP 2: Check if the Active time is greater than zero");
+                print("EXPECTED RESULT 2: Should get the Active time greater than zero");
+                print("ACTUAL RESULT 2:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 3: Check if the Inactive time is greater than zero";
-                 print "EXPECTED RESULT 3: Should get the Inactive time greater than zero";
-                 print "ACTUAL RESULT 3:%s" %details;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 2: Check if the Active time is greater than zero";
-              print "EXPECTED RESULT 2: Should get the Active time greater than zero";
-              print "ACTUAL RESULT 2:%s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.X_CISCO_COM_InactiveTime"%(i));
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult  and int(details)>=0:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Check if the Inactive time is greater than zero");
+                    print("EXPECTED RESULT 3: Should get the Inactive time greater than zero");
+                    print("ACTUAL RESULT 3:%s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Check if the Inactive time is greater than zero");
+                    print("EXPECTED RESULT 3: Should get the Inactive time greater than zero");
+                    print("ACTUAL RESULT 3:%s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Check if the Active time is greater than zero");
+                print("EXPECTED RESULT 2: Should get the Active time greater than zero");
+                print("ACTUAL RESULT 2:%s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the Active LAN Client is present";
-            print "EXPECTED RESULT 2: Should Check if Active LAN Client is Associated with DUT";
-            print "ACTUAL RESULT 2:No LAN Client is Associated with DUT";
+            print("TEST STEP 2: Check if the Active LAN Client is present");
+            print("EXPECTED RESULT 2: Should Check if Active LAN Client is Associated with DUT");
+            print("ACTUAL RESULT 2:No LAN Client is Associated with DUT");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of LAN clients connected";
-        print "EXPECTED RESULT 1: Should get the number of LAN clients connected";
-        print "ACTUAL RESULT 1:No clients associated with DUT %s" %NoofHost
+        print("TEST STEP 1: Get the number of LAN clients connected");
+        print("EXPECTED RESULT 1: Should get the number of LAN clients connected");
+        print("ACTUAL RESULT 1:No clients associated with DUT %s" %NoofHost)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

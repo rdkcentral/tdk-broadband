@@ -81,8 +81,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -95,12 +95,12 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSChannelIDWithType');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
-    #This method invokes the HAL API docsis_GetUSChannel to get the value of channle id and type of upstream channel 
+    #This method invokes the HAL API docsis_GetUSChannel to get the value of channle id and type of upstream channel
     tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
     tdkTestObj.addParameter("paramName","USChannelIDAndType");
     expectedresult="SUCCESS";
@@ -108,41 +108,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails();
     List = Details.split(",");
-    print "%s" %List;
+    print("%s" %List);
     for item in List:
-	
+
         #Data[0] is Channel ID and Data[1] is Type
         Data = item.split(":");
-        print "%s" %Data;
-        
+        print("%s" %Data);
+
         if  int(Data[0]) > 0 and Data[1]!="":
-                
+
             status = "Success";
         elif int(Data[0]) == 0 and Data[1]=="":
             status = "Success";
         else:
             status = "Failure";
             break;
-            
+
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the UpStream channel type and ChannelID";
-        print "EXPECTED RESULT 1: Should get channel type if channelID not zero";
-        print "ACTUAL RESULT 1: Successfully validated the ChannelID with type" ;
+        print("TEST STEP 1: Get and validate the UpStream channel type and ChannelID");
+        print("EXPECTED RESULT 1: Should get channel type if channelID not zero");
+        print("ACTUAL RESULT 1: Successfully validated the ChannelID with type") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the UpStream channel type and ChannelID";
-        print "EXPECTED RESULT 1: Should get channel type if channelID not zero";
-        print "ACTUAL RESULT 1: Validation of ChannelID and type failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the UpStream channel type and ChannelID");
+        print("EXPECTED RESULT 1: Should get channel type if channelID not zero");
+        print("ACTUAL RESULT 1: Validation of ChannelID and type failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-				
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

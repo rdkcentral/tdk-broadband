@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_COSAMTA_DectSetRegistrationMode_NullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     #Script to load the configuration file of the component
@@ -91,19 +91,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Invoke Dect Set Registration Mode by passing a Null Buffer"
-        print "EXPECTED RESULT 1: Should not invoke Dect Set Registration Mode by passing a Null Buffer"
-        print "ACTUAL RESULT 1: Dect Set Registration Mode  api  call failed"
+        print("TEST STEP 1: Invoke Dect Set Registration Mode by passing a Null Buffer")
+        print("EXPECTED RESULT 1: Should not invoke Dect Set Registration Mode by passing a Null Buffer")
+        print("ACTUAL RESULT 1: Dect Set Registration Mode  api  call failed")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Invoke Dect Set Registration Mode by passing a Null Buffer"
-        print "EXPECTED RESULT 1: Should not invoke Dect Set Registration Mode by passing a Null Buffer"
-        print "ACTUAL RESULT 1: Dect Set Registration Mode api call was sucess:"
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Invoke Dect Set Registration Mode by passing a Null Buffer")
+        print("EXPECTED RESULT 1: Should not invoke Dect Set Registration Mode by passing a Null Buffer")
+        print("ACTUAL RESULT 1: Dect Set Registration Mode api call was sucess:")
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("cosamta")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

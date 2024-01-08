@@ -63,7 +63,7 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
 #Test component to be tested
@@ -83,68 +83,68 @@ sysObj.configureTestCase(ip,port, 'TS_dhcp_stub_hal_get_ert_dns_svrs');
 #Get the result of connection with test component and STB
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS] : %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS] : %s" %loadmodulestatus2 ;
+print("[LIB LOAD STATUS] : %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS] : %s" %loadmodulestatus2) ;
 
 if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        sysObj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
+    sysObj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_dns_svrs");
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_dns_svrs");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details1 = details.split("/")[1];
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dns_svrs";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_dns_svrs successfully";
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            details1 = details1.upper();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details1 = details.split("/")[1];
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dns_svrs");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_dns_svrs successfully");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        details1 = details1.upper();
 
-            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-            retryCount = 1;
-            while retryCount < MAX_RETRY:
-                tdkTestObj.addParameter("command", "cat /etc/resolv.conf | grep nameserver | awk 'NR==%s{print $2}'" %retryCount);
-                tdkTestObj.executeTestCase(expectedresult);
-                details3 = tdkTestObj.getResultDetails();
-                if details1 in details3:
-                    break;
-                else:
-                    retryCount = retryCount + 1;
-
-            actualresult = tdkTestObj.getResult();
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "details1 = %s, details3 = %s" %(details1, details3);
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        retryCount = 1;
+        while retryCount < MAX_RETRY:
+            tdkTestObj.addParameter("command", "cat /etc/resolv.conf | grep nameserver | awk 'NR==%s{print $2}'" %retryCount);
+            tdkTestObj.executeTestCase(expectedresult);
+            details3 = tdkTestObj.getResultDetails();
             if details1 in details3:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Verify the value";
-                print "EXPECTED RESULT 2: Value should be valid";
-                print "ACTUAL RESULT 2: Value is valid";
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                break;
             else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Verify the value";
-                print "EXPECTED RESULT 2: Value should be valid";
-                print "ACTUAL RESULT 2: Value is not valid";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                retryCount = retryCount + 1;
+
+        actualresult = tdkTestObj.getResult();
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("details1 = %s, details3 = %s" %(details1, details3));
+        if details1 in details3:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Verify the value");
+            print("EXPECTED RESULT 2: Value should be valid");
+            print("ACTUAL RESULT 2: Value is valid");
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dns_svrs";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_dns_svrs successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : Failure"; 
+            print("TEST STEP 2: Verify the value");
+            print("EXPECTED RESULT 2: Value should be valid");
+            print("ACTUAL RESULT 2: Value is not valid");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_dns_svrs");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_dns_svrs successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : Failure");
 
-        obj.unloadModule("dhcp");
-        sysObj.unloadModule("sysutil");
+    obj.unloadModule("dhcp");
+    sysObj.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        sysObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    sysObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

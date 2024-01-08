@@ -81,99 +81,98 @@ obj1.configureTestCase(ip,port,'TS_platform_stub_hal_SetFactoryCmVariant');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
 
-   obj.setLoadModuleStatus("SUCCESS");
-   obj1.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
+    obj1.setLoadModuleStatus("SUCCESS");
 
-   #Get the initial value
-   tdkTestObj = obj.createTestStep("platform_stub_hal_getFactoryCmVariant");
-   expectedresult="SUCCESS";
-   tdkTestObj.executeTestCase(expectedresult);
-   actualresult = tdkTestObj.getResult();
-   InitialCmVariant  = tdkTestObj.getResultDetails();
-   if expectedresult in actualresult and InitialCmVariant != "":
-      tdkTestObj.setResultStatus("SUCCESS");
-      print "TEST STEP 1: Retrieve the platform_hal_getFactoryCmVariant";
-      print "EXPECTED RESULT 1: Should retrieve the platform_hal_getFactoryCmVariant successfully";
-      print "ACTUAL RESULT 1: %s" %InitialCmVariant;
-      print "[TEST EXECUTION RESULT] : %s" %actualresult;
+    #Get the initial value
+    tdkTestObj = obj.createTestStep("platform_stub_hal_getFactoryCmVariant");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    InitialCmVariant  = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and InitialCmVariant != "":
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the platform_hal_getFactoryCmVariant");
+        print("EXPECTED RESULT 1: Should retrieve the platform_hal_getFactoryCmVariant successfully");
+        print("ACTUAL RESULT 1: %s" %InitialCmVariant);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-      tdkTestObj = obj.createTestStep("platform_stub_hal_setFactoryCmVariant");
-      CmVariant="pc20"
-      tdkTestObj.addParameter("CmVarient",CmVariant);
-      expectedresult = "SUCCESS";
-      tdkTestObj.executeTestCase(expectedresult);
-      actualresult = tdkTestObj.getResult();
-      SetCmVariant = tdkTestObj.getResultDetails();
+        tdkTestObj = obj.createTestStep("platform_stub_hal_setFactoryCmVariant");
+        CmVariant="pc20"
+        tdkTestObj.addParameter("CmVarient",CmVariant);
+        expectedresult = "SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        SetCmVariant = tdkTestObj.getResultDetails();
 
-      if expectedresult in  actualresult :
-         tdkTestObj.setResultStatus("SUCCESS");
-         print "TEST STEP 2: Set the CmVariant using  platform_hal_SetFactoryCmVariant";
-         print "EXPECTED RESULT 2: Should set the CmVariant using  platform_hal_SetFactoryCmVariant successfully";
-         print "ACTUAL RESULT 2: %s" %SetCmVariant;
-         print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-         tdkTestObj = obj.createTestStep("platform_stub_hal_getFactoryCmVariant");
-         expectedresult="SUCCESS";
-         tdkTestObj.executeTestCase(expectedresult);
-         actualresult = tdkTestObj.getResult();
-         GetCmVariant  = tdkTestObj.getResultDetails();
-         if expectedresult in actualresult and GetCmVariant == CmVariant:
+        if expectedresult in  actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Check wether Set and get value for FactoryCmVariant are equal";
-            print "EXPECTED RESULT 3: Set and get value for FactoryCmVariant should be equal";
-            print "ACTUAL RESULT 3: Set and get value for FactoryCmVariant are equal"
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Set the CmVariant using  platform_hal_SetFactoryCmVariant");
+            print("EXPECTED RESULT 2: Should set the CmVariant using  platform_hal_SetFactoryCmVariant successfully");
+            print("ACTUAL RESULT 2: %s" %SetCmVariant);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-            #Revert the value to intial
-            tdkTestObj = obj.createTestStep("platform_stub_hal_setFactoryCmVariant");
-            tdkTestObj.addParameter("CmVarient",InitialCmVariant);
-            expectedresult = "SUCCESS";
+            tdkTestObj = obj.createTestStep("platform_stub_hal_getFactoryCmVariant");
+            expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
+            GetCmVariant  = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and GetCmVariant == CmVariant:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check wether Set and get value for FactoryCmVariant are equal");
+                print("EXPECTED RESULT 3: Set and get value for FactoryCmVariant should be equal");
+                print("ACTUAL RESULT 3: Set and get value for FactoryCmVariant are equal")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            if expectedresult in  actualresult :
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 4: Revert  the CmVariant to  Initial  using  platform_hal_SetFactoryCmVariant";
-               print "EXPECTED RESULT 4: Should revert the CmVariant to initial using  platform_hal_SetFactoryCmVariant successfully";
-               print "ACTUAL RESULT 4: %s" %details;
-               print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                #Revert the value to intial
+                tdkTestObj = obj.createTestStep("platform_stub_hal_setFactoryCmVariant");
+                tdkTestObj.addParameter("CmVarient",InitialCmVariant);
+                expectedresult = "SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
 
+                if expectedresult in  actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Revert  the CmVariant to  Initial  using  platform_hal_SetFactoryCmVariant");
+                    print("EXPECTED RESULT 4: Should revert the CmVariant to initial using  platform_hal_SetFactoryCmVariant successfully");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Revert  the CmVariant to  Initial  using  platform_hal_SetFactoryCmVariant");
+                    print("EXPECTED RESULT 4: Should revert the CmVariant to initial using  platform_hal_SetFactoryCmVariant successfully");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert  the CmVariant to  Initial  using  platform_hal_SetFactoryCmVariant";
-                print "EXPECTED RESULT 4: Should revert the CmVariant to initial using  platform_hal_SetFactoryCmVariant successfully";
-                print "ACTUAL RESULT 4: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-         else:
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 3: Check wether Set and get value for FactoryCmVariant are equal";
-             print "EXPECTED RESULT 3: Set and get value for FactoryCmVariant should be equal";
-             print "ACTUAL RESULT 3: Set and get value for FactoryCmVariant are not equal"
-             print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check wether Set and get value for FactoryCmVariant are equal");
+                print("EXPECTED RESULT 3: Set and get value for FactoryCmVariant should be equal");
+                print("ACTUAL RESULT 3: Set and get value for FactoryCmVariant are not equal")
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-      else:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 2: Set the CmVariant using  platform_hal_SetFactoryCmVariant";
-          print "EXPECTED RESULT 2: Should set the CmVariant using  platform_hal_SetFactoryCmVariant successfully";
-          print "ACTUAL RESULT 2: %s" %SetCmVariant;
-          print "[TEST EXECUTION RESULT] : %s" %actualresult;
-   else:
-       print "TEST STEP 1: Retrieve the platform_hal_getFactoryCmVariant";
-       print "EXPECTED RESULT 1: Should retrieve the platform_hal_getFactoryCmVariant successfully";
-       print "ACTUAL RESULT 1: %s" %InitialCmVariant;
-       print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the CmVariant using  platform_hal_SetFactoryCmVariant");
+            print("EXPECTED RESULT 2: Should set the CmVariant using  platform_hal_SetFactoryCmVariant successfully");
+            print("ACTUAL RESULT 2: %s" %SetCmVariant);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        print("TEST STEP 1: Retrieve the platform_hal_getFactoryCmVariant");
+        print("EXPECTED RESULT 1: Should retrieve the platform_hal_getFactoryCmVariant successfully");
+        print("ACTUAL RESULT 1: %s" %InitialCmVariant);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
 
-   obj.unloadModule("halplatform");
-   obj1.unloadModule("sysutil");
+    obj.unloadModule("halplatform");
+    obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module sysutil/halplatform";
+    print("Failed to load the module sysutil/halplatform");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

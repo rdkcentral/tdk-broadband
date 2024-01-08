@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetDeviceSysDescrInfo');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,28 +99,28 @@ if "SUCCESS" in loadmodulestatus.upper():
         if vendorName and modelNumber and hardwareVersion:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 : Get the VendorName, ModelNumber, HardwareVersion and check if they are non-empty";
-            print "EXPECTED RESULT 1 : Should get the VendorName, ModelNumber, HardwareVersion value as non-empty";
-            print "ACTUAL RESULT 1:  %s" %resultDetails;
+            print("TEST STEP 1 : Get the VendorName, ModelNumber, HardwareVersion and check if they are non-empty");
+            print("EXPECTED RESULT 1 : Should get the VendorName, ModelNumber, HardwareVersion value as non-empty");
+            print("ACTUAL RESULT 1:  %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the VendorName, ModelNumber, HardwareVersion and check if they are non-empty";
-            print "EXPECTED RESULT 1: Should get the VendorName, ModelNumber, HardwareVersion value are non-empty";
-            print "ACTUAL RESULT 1:  %s" %resultDetails;
+            print("TEST STEP 1: Get the VendorName, ModelNumber, HardwareVersion and check if they are non-empty");
+            print("EXPECTED RESULT 1: Should get the VendorName, ModelNumber, HardwareVersion value are non-empty");
+            print("ACTUAL RESULT 1:  %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the DeviceSysDescrInfo";
-        print "EXPECTED RESULT : Should get the DeviceSysDescrInfo successfully";
-        print "ACTUAL RESULT : Failed to get the DeviceSysDescrInfo, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP : Get the DeviceSysDescrInfo");
+        print("EXPECTED RESULT : Should get the DeviceSysDescrInfo successfully");
+        print("ACTUAL RESULT : Failed to get the DeviceSysDescrInfo, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

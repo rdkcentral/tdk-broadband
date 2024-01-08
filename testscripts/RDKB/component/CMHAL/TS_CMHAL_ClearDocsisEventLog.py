@@ -83,8 +83,8 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_ClearDocsisEventLog');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,77 +101,77 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of docsis logs";
-        print "EXPECTED RESULT 1: Should get the number of docsis logs";
-        print "ACTUAL RESULT 1: number of docsis logs is %s" %numofDocsisLog;
+        print("TEST STEP 1: Get the number of docsis logs");
+        print("EXPECTED RESULT 1: Should get the number of docsis logs");
+        print("ACTUAL RESULT 1: number of docsis logs is %s" %numofDocsisLog);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if int(numofDocsisLog) > 0:
+        if int(numofDocsisLog) > 0:
 
-    	    #Script to load the configuration file of the component
-    	    tdkTestObj = obj.createTestStep("CMHAL_ClearDocsisEventLog");
-    	    expectedresult="SUCCESS";
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    details = tdkTestObj.getResultDetails();
+            #Script to load the configuration file of the component
+            tdkTestObj = obj.createTestStep("CMHAL_ClearDocsisEventLog");
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
 
-    	    if expectedresult in actualresult:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 2: Clear the Docsis logs";
-    	        print "EXPECTED RESULT 2: Should clear the Docsis successfully";
-    	        print "ACTUAL RESULT 2:  %s" %details;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-
-		time.sleep(30);
-		#Validate the clear function using get
-		tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-    		tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.DocsisLogNumberOfEntries");
-    		expectedresult="SUCCESS";
-
-    		#Execute the test case in DUT
-    		tdkTestObj.executeTestCase(expectedresult);
-    		actualresult = tdkTestObj.getResult();
-    		numofDocsisLog1 = tdkTestObj.getResultDetails();
-
-    		if expectedresult in actualresult and int(numofDocsisLog1)== 0:
-    		    #Set the result status of execution
-    		    tdkTestObj.setResultStatus("SUCCESS");
-    		    print "TEST STEP 3: Get the number of docsis logs";
-    		    print "EXPECTED RESULT 3: Should get the number of docsis logs";
-    		    print "ACTUAL RESULT 3: number of docsis logs is %s" %numofDocsisLog1;
-    		    #Get the result of execution
-    		    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    #Set the result status of execution
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the number of docsis logs";
-                    print "EXPECTED RESULT 3: Should get the number of docsis logs";
-                    print "ACTUAL RESULT 3: number of docsis logs is %s" %numofDocsisLog1;
-                    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-    	    else:
-    	        tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 2: Clear teh Docsis logs";
-                print "EXPECTED RESULT 2: Should clear the Docsis successfully";
-                print "ACTUAL RESULT 2:  %s" %details;
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Clear the Docsis logs");
+                print("EXPECTED RESULT 2: Should clear the Docsis successfully");
+                print("ACTUAL RESULT 2:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    print "Number of Docsis Log entries is already zero";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                time.sleep(30);
+                #Validate the clear function using get
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.DocsisLogNumberOfEntries");
+                expectedresult="SUCCESS";
+
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                numofDocsisLog1 = tdkTestObj.getResultDetails();
+
+                if expectedresult in actualresult and int(numofDocsisLog1)== 0:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the number of docsis logs");
+                    print("EXPECTED RESULT 3: Should get the number of docsis logs");
+                    print("ACTUAL RESULT 3: number of docsis logs is %s" %numofDocsisLog1);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the number of docsis logs");
+                    print("EXPECTED RESULT 3: Should get the number of docsis logs");
+                    print("ACTUAL RESULT 3: number of docsis logs is %s" %numofDocsisLog1);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Clear teh Docsis logs");
+                print("EXPECTED RESULT 2: Should clear the Docsis successfully");
+                print("ACTUAL RESULT 2:  %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("Number of Docsis Log entries is already zero");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of docsis logs";
-        print "EXPECTED RESULT 1: Should get the number of docsis logs";
-        print "ACTUAL RESULT 1: number of docsis logs is %s" %numofDocsisLog;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the number of docsis logs");
+        print("EXPECTED RESULT 1: Should get the number of docsis logs");
+        print("ACTUAL RESULT 1: number of docsis logs is %s" %numofDocsisLog);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
     obj1.unloadModule("tdkbtr181");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -95,34 +95,34 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if "true" == ethwanEnable:
-	    tdkTestObj.setResultStatus("SUCCESS");
-            print "The device is in ethwan mode."
+        if "true" == ethwanEnable:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.IPv6Address");
-    	    expectedresult="SUCCESS";
+            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.IPv6Address");
+            expectedresult="SUCCESS";
 
-    	    #Execute the test case in DUT
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    details = tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult and details == "":
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 2: Get the CM IP from the CM module";
-    	        print "EXPECTED RESULT 2: CM IP must be blank in ethwan mode";
-    	        print "ACTUAL RESULT 2: %s" %details;
+            if expectedresult in actualresult and details == "":
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the CM IP from the CM module");
+                print("EXPECTED RESULT 2: CM IP must be blank in ethwan mode");
+                print("ACTUAL RESULT 2: %s" %details);
 
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-		tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST-COM_CM_IP");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST-COM_CM_IP");
                 expectedresult="SUCCESS";
 
                 #Execute the test case in DUT
@@ -131,49 +131,46 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
 
                 if expectedresult in actualresult and details != "":
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 3: Get the CM IP from the PAM module";
-                   print "EXPECTED RESULT 3: CM IP must be available in ethwan mode";
-                   print "ACTUAL RESULT 3: %s" %details;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the CM IP from the PAM module");
+                    print("EXPECTED RESULT 3: CM IP must be available in ethwan mode");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the CM IP from the PAM module";
-                    print "EXPECTED RESULT 3: CM IP must be available in ethwan mode";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Get the CM IP from the PAM module");
+                    print("EXPECTED RESULT 3: CM IP must be available in ethwan mode");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    else:
-	 	#Set the result status of execution
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the CM IP from the CM module";
-                print "EXPECTED RESULT 2: CM IP must be blank in ethwan mode";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Get the CM IP from the CM module");
+                print("EXPECTED RESULT 2: CM IP must be blank in ethwan mode");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
 
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "The device is not in ethwan mode. Please check the device setup"
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
+    print("Module loading failed");

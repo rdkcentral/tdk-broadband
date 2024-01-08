@@ -91,8 +91,8 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_SetStartFreq');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
 
@@ -107,11 +107,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the start frequency";
-        print "EXPECTED RESULT 1: Should get the start frequency";
-        print "ACTUAL RESULT 1: Start frequency is %s" %startFreq;
+        print("TEST STEP 1: Get the start frequency");
+        print("EXPECTED RESULT 1: Should get the start frequency");
+        print("ACTUAL RESULT 1: Start frequency is %s" %startFreq);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.DownstreamChannelNumberOfEntries");
@@ -121,17 +121,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         DSChannelCount = tdkTestObj.getResultDetails();
 
-        print "TEST STEP 2: Get the DownstreamChannelNumberOfEntries";
-        print "EXPECTED RESULT 2: Should get the DownstreamChannelNumberOfEntries";
+        print("TEST STEP 2: Get the DownstreamChannelNumberOfEntries");
+        print("EXPECTED RESULT 2: Should get the DownstreamChannelNumberOfEntries");
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: DownstreamChannelNumberOfEntries is %s" %DSChannelCount
+            print("ACTUAL RESULT 2: DownstreamChannelNumberOfEntries is %s" %DSChannelCount)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if int(DSChannelCount) > 1:
                 flag = 0
-                print "Find a new start frequency value from DSChannel details"
+                print("Find a new start frequency value from DSChannel details")
                 for i in range (1,3):
                     tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
                     param = "Device.X_CISCO_COM_CableModem.DownstreamChannel."+str(i)+".Frequency"
@@ -140,17 +140,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "TEST STEP 3: Get the DownstreamChannel.%d.Frequency" %i;
-                    print "EXPECTED RESULT 3: Should get the DownstreamChannel.%d.Frequency" %i;
+                    print("TEST STEP 3: Get the DownstreamChannel.%d.Frequency" %i);
+                    print("EXPECTED RESULT 3: Should get the DownstreamChannel.%d.Frequency" %i);
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 3: DownstreamChannel.%d.Frequency is %s" %(i,details)
+                        print("ACTUAL RESULT 3: DownstreamChannel.%d.Frequency is %s" %(i,details))
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         if "MHz" in details:
                             details=details.split(" ")[0]
                             if '.' in details:
-			        details=float(details)
+                                details=float(details)
                             newFreq=(int(details))*1000000
                         else:
                             newFreq = int(details)
@@ -159,8 +159,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             break;
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 3:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("ACTUAL RESULT 3:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 if flag == 1:
                     tdkTestObj = obj.createTestStep("CMHAL_SetStartFreq");
                     tdkTestObj.addParameter("Value",newFreq);
@@ -171,38 +171,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     if expectedresult in actualresult :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Set the Start frequency to a new value ", newFreq;
-                        print "EXPECTED RESULT 4: Should successfully set the Start frequency to a new value";
-                        print "ACTUAL RESULT 4:  ",details;
+                        print("TEST STEP 4: Set the Start frequency to a new value ", newFreq);
+                        print("EXPECTED RESULT 4: Should successfully set the Start frequency to a new value");
+                        print("ACTUAL RESULT 4:  ",details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Wait for the set operation to reflect
                         sleep(60)
-	                #validate the set function using get
+                        #validate the set function using get
                         tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
                         tdkTestObj.addParameter("paramName","DownFreq");
                         tdkTestObj.executeTestCase(expectedresult);
                         actualresult = tdkTestObj.getResult();
                         newStartFreq = tdkTestObj.getResultDetails();
-    	                if expectedresult in actualresult and int(newStartFreq) == newFreq:
-    	                    #Set the result status of execution
-    	                    tdkTestObj.setResultStatus("SUCCESS");
-    	                    print "TEST STEP 5: Get the start frequency and check if it became the new value set";
-    	                    print "EXPECTED RESULT 5: Start frequency should change to the new value: ",newFreq;
-    	                    print "ACTUAL RESULT 5: New Start frequency is %s" %newStartFreq;
-    	                    #Get the result of execution
-    	                    print "[TEST EXECUTION RESULT] : SUCCESS";
-	                else:
-	                    #Set the result status of execution
-                            tdkTestObj.setResultStatus("FAILURE");
-    	                    print "TEST STEP 5: Get the start frequency and check if it became the new value set";
-    	                    print "EXPECTED RESULT 5: Start frequency should change to the new value: ",newFreq;
-                            print "ACTUAL RESULT 5: New Start frequency is %s" %newStartFreq;
+                        if expectedresult in actualresult and int(newStartFreq) == newFreq:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Get the start frequency and check if it became the new value set");
+                            print("EXPECTED RESULT 5: Start frequency should change to the new value: ",newFreq);
+                            print("ACTUAL RESULT 5: New Start frequency is %s" %newStartFreq);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE"
-	                #Revert the start freq
-	                tdkTestObj = obj.createTestStep("CMHAL_SetStartFreq");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Get the start frequency and check if it became the new value set");
+                            print("EXPECTED RESULT 5: Start frequency should change to the new value: ",newFreq);
+                            print("ACTUAL RESULT 5: New Start frequency is %s" %newStartFreq);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                        #Revert the start freq
+                        tdkTestObj = obj.createTestStep("CMHAL_SetStartFreq");
                         tdkTestObj.addParameter("Value",int(startFreq));
                         expectedresult="SUCCESS";
                         tdkTestObj.executeTestCase(expectedresult);
@@ -213,49 +213,49 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             sleep(60)
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP : Revert the value of Start frequency";
-                            print "EXPECTED RESULT : Should revert the start frequency";
-                            print "ACTUAL RESULT :  ",details;
+                            print("TEST STEP : Revert the value of Start frequency");
+                            print("EXPECTED RESULT : Should revert the start frequency");
+                            print("ACTUAL RESULT :  ",details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-	                else:
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP : Revert the value of Start frequency";
-                            print "EXPECTED RESULT : Should revert the start frequency";
-                            print "ACTUAL RESULT :  ",details;
+                            print("TEST STEP : Revert the value of Start frequency");
+                            print("EXPECTED RESULT : Should revert the start frequency");
+                            print("ACTUAL RESULT :  ",details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-	            else:
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Set the Start frequency to a new value", newFreq;
-                        print "EXPECTED RESULT 4: Should successfully set the Start frequency to a new value";
-                        print "ACTUAL RESULT 4:  ",details;
+                        print("TEST STEP 4: Set the Start frequency to a new value", newFreq);
+                        print("EXPECTED RESULT 4: Should successfully set the Start frequency to a new value");
+                        print("ACTUAL RESULT 4:  ",details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "ERROR: Failed to get new start frequency to validate set api"
+                    print("ERROR: Failed to get new start frequency to validate set api")
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                    print "ERROR: Not enough DSChannelCount. Count retreived is ", DSChannelCount
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                print("ERROR: Not enough DSChannelCount. Count retreived is ", DSChannelCount)
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2:  %s" %DSChannelCount
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2:  %s" %DSChannelCount)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the start frequency";
-        print "EXPECTED RESULT 1: Should get the start frequency";
-        print "ACTUAL RESULT 1: Start frequency is %s" %StartFreq;
+        print("TEST STEP 1: Get the start frequency");
+        print("EXPECTED RESULT 1: Should get the start frequency");
+        print("ACTUAL RESULT 1: Start frequency is %s" %StartFreq);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
     obj1.unloadModule("tdkbtr181");
 
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

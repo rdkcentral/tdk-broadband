@@ -80,8 +80,8 @@ tr181obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetFanStatus');
 loadmodulestatus =obj.getLoadModuleResult();
 tr181loadmodulestatus =tr181obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,70 +96,69 @@ if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     Tr181FanStatus = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and Tr181FanStatus != "":
-       print "TEST STEP 1: Get the Fan status using tr181 parameter";
-       print "EXPECTED RESULT 1: Should get the Fan status ";
-       print "ACTUAL RESULT 1: Fan status is :",Tr181FanStatus;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Fan status using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the Fan status ");
+        print("ACTUAL RESULT 1: Fan status is :",Tr181FanStatus);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
 
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep("platform_stub_hal_getFanStatus");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("platform_stub_hal_getFanStatus");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult :
-          print"TEST STEP 2:  Call  the platform_stub_hal_getFanStatus"
-          print"EXPECTED RESULT 2: The  platform_stub_hal_getFanStatus should be successfull"
-          print"ACTUAL RESULT 2: platform_stub_hal_getFanStatus call successfull"
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult :
+            print("TEST STEP 2:  Call  the platform_stub_hal_getFanStatus")
+            print("EXPECTED RESULT 2: The  platform_stub_hal_getFanStatus should be successfull")
+            print("ACTUAL RESULT 2: platform_stub_hal_getFanStatus call successfull")
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          HalFanStatus = details.split(":")[1].strip();
+            HalFanStatus = details.split(":")[1].strip();
 
-          if int(HalFanStatus) == 0:
-             Checkvalue  = "false";
+            if int(HalFanStatus) == 0:
+                Checkvalue  = "false";
 
-          else:
-              Checkvalue = "true";
+            else:
+                Checkvalue = "true";
 
-          print "FanStatus from Tr181 query:",Tr181FanStatus;
-          print "FanStatus from hal call api:",Checkvalue;
+            print("FanStatus from Tr181 query:",Tr181FanStatus);
+            print("FanStatus from hal call api:",Checkvalue);
 
-          if Checkvalue == Tr181FanStatus:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the Fan Status using HAL call api";
-             print "EXPECTED RESULT 3: Should get the fan status  from HAL api call and  tr181 equal";
-             print "ACTUAL RESULT 3: %s"%details;
-             print "[TEST EXECUTION RESULT] : SUCCESS";
+            if Checkvalue == Tr181FanStatus:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Fan Status using HAL call api");
+                print("EXPECTED RESULT 3: Should get the fan status  from HAL api call and  tr181 equal");
+                print("ACTUAL RESULT 3: %s"%details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the Fan status using HAL call api";
-              print "EXPECTED RESULT 3: Should get the Fan status from HAL api call and from tr181 equal";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           print"TEST STEP 2:  Call  the platform_stub_hal_getFanStatus"
-           print"EXPECTED RESULT 2: The  platform_stub_hal_getFanStatus should be successfull"
-           print"ACTUAL RESULT 2: platform_stub_hal_getFanStatus call failed"
-           tdkTestObj.setResultStatus("FAILURE");
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Fan status using HAL call api");
+                print("EXPECTED RESULT 3: Should get the Fan status from HAL api call and from tr181 equal");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("TEST STEP 2:  Call  the platform_stub_hal_getFanStatus")
+            print("EXPECTED RESULT 2: The  platform_stub_hal_getFanStatus should be successfull")
+            print("ACTUAL RESULT 2: platform_stub_hal_getFanStatus call failed")
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-        print "TEST STEP 1: Get the Fan status using tr181 parameter";
-        print "EXPECTED RESULT 1: Should get the Fan status ";
-        print "ACTUAL RESULT 1: Failed to get the Fan Status :",Tr181FanStatus;
+        print("TEST STEP 1: Get the Fan status using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the Fan status ");
+        print("ACTUAL RESULT 1: Failed to get the Fan Status :",Tr181FanStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("halplatform");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

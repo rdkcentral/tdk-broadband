@@ -77,11 +77,11 @@ obj.configureTestCase(ip,port,'TS_BLEHAL_GetStatus');
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,21 +101,21 @@ if "SUCCESS" in loadmodulestatus.upper() :
             bleStatus = "BLE_LAST"
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the BLE status via HAL api";
-        print "EXPECTED RESULT 1: Should retrieve the BLE status via HAL api";
+        print("TEST STEP 1: Retrieve the BLE status via HAL api");
+        print("EXPECTED RESULT 1: Should retrieve the BLE status via HAL api");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "BLE status is %s" %bleStatus;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("BLE status is %s" %bleStatus);
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Retrieve the BLE status via HAL api";
-        print "EXPECTED RESULT 1: Should retrieve the BLE status via HAL api";
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
-        print "Failure details: %s" %details
+        print("TEST STEP 1: Retrieve the BLE status via HAL api");
+        print("EXPECTED RESULT 1: Should retrieve the BLE status via HAL api");
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+        print("Failure details: %s" %details)
 
     obj.unloadModule("blehal");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -95,18 +95,18 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "true" == ethwanEnable:
-	    expectedMode = "ETHERNET";
-            print "The device is in ethwan mode."
-	else:
-	    expectedMode = "DOCSIS"
-            print "The device is in docsis mode."
+            expectedMode = "ETHERNET";
+            print("The device is in ethwan mode.")
+        else:
+            expectedMode = "DOCSIS"
+            print("The device is in docsis mode.")
 
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_EthernetWAN.CurrentOperationalMode");
         #Execute the test case in STB
@@ -116,29 +116,29 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if expectedresult in actualresult and expectedMode == CurrentOperationalMode.upper():
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the CurrentOperationalMode";
-            print "EXPECTED RESULT 2: Should get the CurrentOperationalMode";
-            print "ACTUAL RESULT 2: CurrentOperationalMode is %s" %CurrentOperationalMode;
+            print("TEST STEP 2: Get the CurrentOperationalMode");
+            print("EXPECTED RESULT 2: Should get the CurrentOperationalMode");
+            print("ACTUAL RESULT 2: CurrentOperationalMode is %s" %CurrentOperationalMode);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the CurrentOperationalMode";
-            print "EXPECTED RESULT 2: Should get the CurrentOperationalMode";
-            print "ACTUAL RESULT 2: CurrentOperationalMode is %s" %CurrentOperationalMode
+            print("TEST STEP 2: Get the CurrentOperationalMode");
+            print("EXPECTED RESULT 2: Should get the CurrentOperationalMode");
+            print("ACTUAL RESULT 2: CurrentOperationalMode is %s" %CurrentOperationalMode)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

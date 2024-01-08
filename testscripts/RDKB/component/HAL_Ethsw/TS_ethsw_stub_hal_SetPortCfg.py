@@ -99,8 +99,8 @@ obj1.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetPortCfg');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,33 +116,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus.upper
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "\nTEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("\nTEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Number of interface entries minus 2 will be the number of ports
         NumOfPorts = int(value)-2;
-        print "Number of ports is ", NumOfPorts
+        print("Number of ports is ", NumOfPorts)
 
         #Get the Port to which the client is connected
-        print "\nTEST STEP 2 : Fetch the the Port Number to which LAN client is connected";
-        print "EXPECTED RESULT 2 : Should fetch the Port Number to which LAN client is connected successfully";
+        print("\nTEST STEP 2 : Fetch the the Port Number to which LAN client is connected");
+        print("EXPECTED RESULT 2 : Should fetch the Port Number to which LAN client is connected successfully");
 
         #Check if the LAN_PORT_Number is retrieved from the config file
         if LAN_PORT_Number != "" :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : Port number is fetched successfully";
-            print "Port : %s" %LAN_PORT_Number;
+            print("ACTUAL RESULT 2 : Port number is fetched successfully");
+            print("Port : %s" %LAN_PORT_Number);
             port = int(LAN_PORT_Number);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the Port Number is valid
             if port <= NumOfPorts :
-                print "The Port Number is valid";
+                print("The Port Number is valid");
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Script to load the configuration file of the component
@@ -158,33 +158,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus.upper
                     curDuplexMode = details.split("/")[2];
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "\nTEST STEP 3: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port);
-                    print "EXPECTED RESULT 3: Should retrieve the Ethsw_Get_Port_Cfg successfully";
-                    print "ACTUAL RESULT 3: DuplexMode = %s: Bitrate = %s" %(curDuplexMode, curLinkRate);
+                    print("\nTEST STEP 3: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port));
+                    print("EXPECTED RESULT 3: Should retrieve the Ethsw_Get_Port_Cfg successfully");
+                    print("ACTUAL RESULT 3: DuplexMode = %s: Bitrate = %s" %(curDuplexMode, curLinkRate));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                     #Setting the values
                     #Script to load the configuration file of the component
                     testDuplexMode = "CCSP_HAL_ETHSW_DUPLEX_Half";
                     testLinkRate = 10;
                     tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortCfg");
-                    print "PortID : %s" %port
+                    print("PortID : %s" %port)
                     tdkTestObj.addParameter("PortID",port);
                     tdkTestObj.addParameter("linkrate", testLinkRate);
                     tdkTestObj.addParameter("mode", testDuplexMode);
                     expectedresult = "SUCCESS";
-                    print "Setting link rate = %d and Duplex mode = %s" %(testLinkRate, testDuplexMode);
+                    print("Setting link rate = %d and Duplex mode = %s" %(testLinkRate, testDuplexMode));
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
                     if expectedresult in actualresult and details:
-                        print "\nTEST STEP 4: Set the Ethsw_Set_Port_Cfg for port %d" %(port);
-                        print "EXPECTED RESULT 4: Should set the Ethsw_Set_Port_Cfg successfully";
-                        print "ACTUAL RESULT 4: %s" %(details);
+                        print("\nTEST STEP 4: Set the Ethsw_Set_Port_Cfg for port %d" %(port));
+                        print("EXPECTED RESULT 4: Should set the Ethsw_Set_Port_Cfg successfully");
+                        print("ACTUAL RESULT 4: %s" %(details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                         #Cross verify values
                         #Script to load the configuration file of the component
@@ -201,18 +201,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus.upper
                             duplexModeAfterSet = details.split("/")[2];
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "\nTEST STEP 5: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port);
-                            print "EXPECTED RESULT 5: Should retrieve the Ethsw_Get_Port_Cfg successfully";
-                            print "ACTUAL RESULT 5: DuplexMode = %s: Bitrate = %s" %(duplexModeAfterSet, linkRateAfterSet);
+                            print("\nTEST STEP 5: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port));
+                            print("EXPECTED RESULT 5: Should retrieve the Ethsw_Get_Port_Cfg successfully");
+                            print("ACTUAL RESULT 5: DuplexMode = %s: Bitrate = %s" %(duplexModeAfterSet, linkRateAfterSet));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                             if int (linkRateAfterSet) == testLinkRate and duplexModeAfterSet in testDuplexMode:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "\nTEST STEP 6: Cross verify value if those get set";
-                                print "EXPECTED RESULT 6: Values should be matched";
-                                print "ACTUAL RESULT 6: Values are matched";
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("\nTEST STEP 6: Cross verify value if those get set");
+                                print("EXPECTED RESULT 6: Values should be matched");
+                                print("ACTUAL RESULT 6: Values are matched");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Resetting the values back
                                 #Script to load the configuration file of the component
@@ -221,78 +221,77 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus.upper
                                 tdkTestObj.addParameter("linkrate", int(curLinkRate));
                                 tdkTestObj.addParameter("mode", curDuplexMode);
                                 expectedresult = "SUCCESS";
-                                print "Re-setting link rate = %s and Duplex mode = %s" %(curLinkRate, curDuplexMode);
+                                print("Re-setting link rate = %s and Duplex mode = %s" %(curLinkRate, curDuplexMode));
                                 tdkTestObj.executeTestCase(expectedresult);
                                 actualresult = tdkTestObj.getResult();
                                 details = tdkTestObj.getResultDetails();
 
                                 if expectedresult in actualresult and details:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "\nTEST STEP 7: Resetting the Port_Cfg using Ethsw_Set_Port_Cfg for port %d" %port;
-                                    print "EXPECTED RESULT 7: Should reset the Port_Cfg successfully";
-                                    print "ACTUAL RESULT 7 : Port_Cfg reset successfully";
+                                    print("\nTEST STEP 7: Resetting the Port_Cfg using Ethsw_Set_Port_Cfg for port %d" %port);
+                                    print("EXPECTED RESULT 7: Should reset the Port_Cfg successfully");
+                                    print("ACTUAL RESULT 7 : Port_Cfg reset successfully");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "\nTEST STEP 7: Resetting the Port_Cfg using Ethsw_Set_Port_Cfg for port %d" %(port);
-                                    print "EXPECTED RESULT 7: Should reset the Port_Cfg successfully";
-                                    print "ACTUAL RESULT 7 : Port_Cfg not reset successfully";
+                                    print("\nTEST STEP 7: Resetting the Port_Cfg using Ethsw_Set_Port_Cfg for port %d" %(port));
+                                    print("EXPECTED RESULT 7: Should reset the Port_Cfg successfully");
+                                    print("ACTUAL RESULT 7 : Port_Cfg not reset successfully");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "\nTEST STEP 6: Cross verify value if those get set";
-                                print "EXPECTED RESULT 6: Values should be matched";
-                                print "ACTUAL RESULT 6: Values are not matched";
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("\nTEST STEP 6: Cross verify value if those get set");
+                                print("EXPECTED RESULT 6: Values should be matched");
+                                print("ACTUAL RESULT 6: Values are not matched");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port);
-                            print "EXPECTED RESULT 5: Should retrieve the Ethsw_Get_Port_Cfg successfully" ;
-                            print "ACTUAL RESULT 5: Failed to retrieve the Ethsw_Get_Port_Cfg successfully";
+                            print("TEST STEP 5: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port));
+                            print("EXPECTED RESULT 5: Should retrieve the Ethsw_Get_Port_Cfg successfully") ;
+                            print("ACTUAL RESULT 5: Failed to retrieve the Ethsw_Get_Port_Cfg successfully");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Retrieve the Ethsw_Set_Port_Cfg for port %d" %(port);
-                        print "EXPECTED RESULT 4: Should retrieve the Ethsw_Set_Port_Cfg successfully";
-                        print "ACTUAL RESULT 4: Failed to retrieve the Ethsw_Set_Port_Cfg successfully";
+                        print("TEST STEP 4: Retrieve the Ethsw_Set_Port_Cfg for port %d" %(port));
+                        print("EXPECTED RESULT 4: Should retrieve the Ethsw_Set_Port_Cfg successfully");
+                        print("ACTUAL RESULT 4: Failed to retrieve the Ethsw_Set_Port_Cfg successfully");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port);
-                    print "EXPECTED RESULT 3: Should retrieve the Ethsw_Get_Port_Cfg successfully";
-                    print "ACTUAL RESULT 3: Failed to retrieve the Ethsw_Get_Port_Cfg successfully";
+                    print("TEST STEP 3: Retrieve the Ethsw_Get_Port_Cfg for port %d" %(port));
+                    print("EXPECTED RESULT 3: Should retrieve the Ethsw_Get_Port_Cfg successfully");
+                    print("ACTUAL RESULT 3: Failed to retrieve the Ethsw_Get_Port_Cfg successfully");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
             else :
-                print "The Port Number is not valid";
+                print("The Port Number is not valid");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2 : Port number is not fetched successfully";
-            print "Port : %s" %LAN_PORT_Number;
+            print("ACTUAL RESULT 2 : Port number is not fetched successfully");
+            print("Port : %s" %LAN_PORT_Number);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "\nTEST STEP 1: Get the number of interface entries";
-        print "EXPECTED RESULT 1: Should get the number of interface entries";
-        print "ACTUAL RESULT 1: The number of interface entries : %s" %value;
+        print("\nTEST STEP 1: Get the number of interface entries");
+        print("EXPECTED RESULT 1: Should get the number of interface entries");
+        print("ACTUAL RESULT 1: The number of interface entries : %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halethsw");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -117,40 +117,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should Get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should Get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "true" == ethwanEnable:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The device is in ethwan mode."
+            print("The device is in ethwan mode.")
             #get and save the current ManagementServer Username
-            print "TEST STEP 2: get the current ManagementServer Username"
+            print("TEST STEP 2: get the current ManagementServer Username")
             parsedResponse = send_xml(SERVERUSERNAME_GET_XML, "get")
             if 200 in parsedResponse:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 orgValue = parsedResponse[1];
-                print "serverusername: ",orgUri
+                print("serverusername: ",orgUri)
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Failed to get current ManagementServer Username"
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 2: Failed to get current ManagementServer Username")
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "The device is not in ethwan mode. Please check the device setup"
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

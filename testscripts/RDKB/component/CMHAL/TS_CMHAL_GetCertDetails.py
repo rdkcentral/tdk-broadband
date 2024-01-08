@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -81,7 +81,7 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_GetCertDetails');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,46 +97,45 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Cert details";
-        print "EXPECTED RESULT 1: Should get the Cert details successfully";
-        print "ACTUAL RESULT 1: Cert is %s" %details;
+        print("TEST STEP 1: Get the Cert details");
+        print("EXPECTED RESULT 1: Should get the Cert details successfully");
+        print("ACTUAL RESULT 1: Cert is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	tdkTestObj = obj1.createTestStep('ExecuteCmd');
-	command= "ls %s" %details;
-	print command;
-	tdkTestObj.addParameter("command", command);
+        tdkTestObj = obj1.createTestStep('ExecuteCmd');
+        command= "ls %s" %details;
+        print(command);
+        tdkTestObj.addParameter("command", command);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
-	if expectedresult in actualresult and details:
-	    #Set the result status of execution
+        if expectedresult in actualresult and details:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Validate the cert location";
-            print "EXPECTED RESULT 2: Certlocation should be correct";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Validate the cert location");
+            print("EXPECTED RESULT 2: Certlocation should be correct");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    #Set the result status of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Validate the cert location";
-            print "EXPECTED RESULT 2: Certlocation should be correct";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Validate the cert location");
+            print("EXPECTED RESULT 2: Certlocation should be correct");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Cert details";
-        print "EXPECTED RESULT 1: Should get the Cert details successfully";
-        print "ACTUAL RESULT 1: Failed to get the Cert details, Details :%d" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Cert details");
+        print("EXPECTED RESULT 1: Should get the Cert details successfully");
+        print("ACTUAL RESULT 1: Failed to get the Cert details, Details :%d" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

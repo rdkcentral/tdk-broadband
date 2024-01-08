@@ -77,37 +77,37 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetHalRebootReady_NULLBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep('EPONHAL_GetParamUlongValue');
-        tdkTestObj.addParameter("paramName","hal_Reboot_Ready");
-        tdkTestObj.addParameter("paramType","NULL")
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep('EPONHAL_GetParamUlongValue');
+    tdkTestObj.addParameter("paramName","hal_Reboot_Ready");
+    tdkTestObj.addParameter("paramType","NULL")
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the hal_Reboot_Ready status with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the hal_Reboot_Ready status with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the hal_Reboot_Ready status with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the hal_Reboot_Ready status with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the hal_Reboot_Ready status with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the hal_Reboot_Ready status with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the hal_Reboot_Ready status with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the hal_Reboot_Ready status with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("eponhal");
+    obj.unloadModule("eponhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

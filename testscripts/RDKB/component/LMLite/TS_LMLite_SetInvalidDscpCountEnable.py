@@ -103,7 +103,7 @@ obj.configureTestCase(ip,port,'TS_LMLite_SetInvalidDscpCountEnable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -114,12 +114,12 @@ if "SUCCESS" in loadmodulestatus1.upper():
     pre_req_set, tdkTestObj, step, revert_flag, initial_lanmode = CheckWANTrafficCountsPre_requisite(obj, step);
 
     if pre_req_set == 1:
-        print "\n*************RFC Pre-requisite set for the DUT*****************";
+        print("\n*************RFC Pre-requisite set for the DUT*****************");
 
         #Get the initial DscpCountEnable value
         step = step + 1;
-        print "\nTEST STEP %d : Get the initial DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %(step);
-        print "EXPECTED RESULT %d : DSCP count enable should be retrieved successfully" %step;
+        print("\nTEST STEP %d : Get the initial DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %(step));
+        print("EXPECTED RESULT %d : DSCP count enable should be retrieved successfully" %step);
 
         tdkTestObj = obj.createTestStep("LMLiteStub_Get");
         tdkTestObj.addParameter("paramName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable");
@@ -131,19 +131,19 @@ if "SUCCESS" in loadmodulestatus1.upper():
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : DSCP count enable retrieved successfully" %step;
-            print "Initial DSCP Count Enable : %s" %initial_dscp;
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("ACTUAL RESULT %d : DSCP count enable retrieved successfully" %step);
+            print("Initial DSCP Count Enable : %s" %initial_dscp);
+            print("TEST EXECUTION RESULT : SUCCESS");
 
             #Set DscpCountEnable to invalid DSCP values
             flag = 0;
             invalid_vals = ["70", "0,64", "8,-10", "0,8,28,100", "150,200,250,300,350,400"];
             step = step + 1;
-            print "\nTEST STEP %d : Set the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable to invalid DSCP values" %(step);
-            print "EXPECTED RESULT %d : DSCP count enable set operation should fail for all invalid DSCP values" %step;
+            print("\nTEST STEP %d : Set the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable to invalid DSCP values" %(step));
+            print("EXPECTED RESULT %d : DSCP count enable set operation should fail for all invalid DSCP values" %step);
 
             for dscpCountEnable_str in invalid_vals:
-                print "\nFor the invalid DSCP Enable string : %s" %dscpCountEnable_str;
+                print("\nFor the invalid DSCP Enable string : %s" %dscpCountEnable_str);
                 tdkTestObj = obj.createTestStep("LMLiteStub_Set");
                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable");
                 tdkTestObj.addParameter("ParamValue",dscpCountEnable_str);
@@ -156,28 +156,28 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "DSCP Enable set operation failed";
+                    print("DSCP Enable set operation failed");
                 else:
                     flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "DSCP Enable set operation success";
+                    print("DSCP Enable set operation success");
 
             if flag == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : DSCP count enable set operation failed for all invalid values" %step;
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("ACTUAL RESULT %d : DSCP count enable set operation failed for all invalid values" %step);
+                print("TEST EXECUTION RESULT : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : DSCP count enable set operation did NOT fail for all invalid values" %step;
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d : DSCP count enable set operation did NOT fail for all invalid values" %step);
+                print("TEST EXECUTION RESULT : FAILURE");
 
                 #Revert DscpCountEnable to initial value
                 step = step + 1;
-                print "\nTEST STEP %d : Revert the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %step;
-                print "EXPECTED RESULT %d : DSCP count enable revert operation should be success" %step;
+                print("\nTEST STEP %d : Revert the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %step);
+                print("EXPECTED RESULT %d : DSCP count enable revert operation should be success" %step);
 
                 tdkTestObj = obj.createTestStep("LMLiteStub_Set_Get");
                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable");
@@ -190,18 +190,18 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 if expectedresult in actualresult :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : DSCP count enable revert operation success; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("ACTUAL RESULT %d : DSCP count enable revert operation success; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : SUCCESS");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : DSCP count enable revert operation failed; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d : DSCP count enable revert operation failed; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : FAILURE");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : DSCP count enable NOT retrieved successfully" %step;
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d : DSCP count enable NOT retrieved successfully" %step);
+            print("TEST EXECUTION RESULT : FAILURE");
 
         #Revert the Pre-requisites for WAN Traffic Counts
         step = step + 1;
@@ -210,18 +210,18 @@ if "SUCCESS" in loadmodulestatus1.upper():
         if status == 1:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Revert operations completed successfully";
+            print("Revert operations completed successfully");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Revert operations NOT completed successfully";
+            print("Revert operations NOT completed successfully");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisite is not set successfully";
+        print("Pre-Requisite is not set successfully");
 
     obj.unloadModule("lmlite");
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

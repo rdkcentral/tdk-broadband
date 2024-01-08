@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_CMAGENT_15</test_case_id>
-    <test_objective>To Validate 
-"MDDIPOverride" 
+    <test_objective>To Validate
+"MDDIPOverride"
 Function Parameters</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -53,7 +53,7 @@ CMAgent_Get
 Input
 1.PathName ("paramName")
 ( eg: "Device.X_CISCO_COM_CableModem.MDDIPOverride" )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (CMAgent_Get  - func name - "If not exists already"
  cmagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -80,8 +80,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -94,17 +94,17 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_MDDIPOverride');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 expectedresult = "SUCCESS";
-		
+
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_Get');
 
@@ -116,27 +116,27 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of MDD IP Override Function";
-    	print "EXPECTED RESULT 1: Should get the value of MDD IP Override Function";
-    	print "ACTUAL RESULT 1: %s" %resultDetails;
-    	#Get the result of execution
-    	print "[TEST EXECUTION RESULT] : SUCCESS";
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("TEST STEP 1: Get the value of MDD IP Override Function");
+    print("EXPECTED RESULT 1: Should get the value of MDD IP Override Function");
+    print("ACTUAL RESULT 1: %s" %resultDetails);
+    #Get the result of execution
+    print("[TEST EXECUTION RESULT] : SUCCESS");
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of MDD IP Override Function";
-        print "EXPECTED RESULT 1: Should get the value of MDD IP Override Function";
-        print "ACTUAL RESULT 1: %s" %resultDetails;
-        #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("TEST STEP 1: Get the value of MDD IP Override Function");
+    print("EXPECTED RESULT 1: Should get the value of MDD IP Override Function");
+    print("ACTUAL RESULT 1: %s" %resultDetails);
+    #Get the result of execution
+    print("[TEST EXECUTION RESULT] : FAILURE");
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("cmagent");

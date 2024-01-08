@@ -80,8 +80,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -92,9 +92,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetTimeServer');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,20 +111,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and TimeServer!= " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the TimeServer and check if it is empty or not ";
-        print "EXPECTED RESULT 1: Should get the TimeServer successfully";
-        print "ACTUAL RESULT 1: The time Server is %s" %TimeServer;
+        print("TEST STEP 1: Get the TimeServer and check if it is empty or not ");
+        print("EXPECTED RESULT 1: Should get the TimeServer successfully");
+        print("ACTUAL RESULT 1: The time Server is %s" %TimeServer);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the TimeServer and check if it is empty or not";
-        print "EXPECTED RESULT 1: Should get the TimeServer successfully";
-        print "ACTUAL RESULT 1: Failed to get get the TimeServer, Details %s" %TimeServer;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the TimeServer and check if it is empty or not");
+        print("EXPECTED RESULT 1: Should get the TimeServer successfully");
+        print("ACTUAL RESULT 1: Failed to get get the TimeServer, Details %s" %TimeServer);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

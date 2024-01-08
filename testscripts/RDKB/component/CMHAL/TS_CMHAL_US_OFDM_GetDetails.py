@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_US_OFDM_GetDetails');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,42 +88,42 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
 
     if expectedresult in actualresult:
         NoOfEntries = details.split(";")[0].split(":")[1];
         if int(NoOfEntries) > 0:
-	    paramList = ["US_OFDM_TxPower", "US_OFDM_PreEqEnabled"];
-	    for param in paramList:
-    		tdkTestObj.addParameter("paramName",param);
-    		OutValue = " ";
-    		tdkTestObj.executeTestCase(expectedresult);
-    		actualresult = tdkTestObj.getResult();
-    		outdetails = tdkTestObj.getResultDetails();
-		OutValue = outdetails.split(";")[1].split(":")[1];
-    		paramValue = param.replace("US_OFDM_","");
+            paramList = ["US_OFDM_TxPower", "US_OFDM_PreEqEnabled"];
+            for param in paramList:
+                tdkTestObj.addParameter("paramName",param);
+                OutValue = " ";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                outdetails = tdkTestObj.getResultDetails();
+                OutValue = outdetails.split(";")[1].split(":")[1];
+                paramValue = param.replace("US_OFDM_","");
 
-    		if expectedresult in actualresult and OutValue != " ":
-    		    #Set the result status of execution
-    		    tdkTestObj.setResultStatus("SUCCESS");
-    		    print "TEST STEP : Get the %s" %paramValue
-    		    print "EXPECTED RESULT : Should get the %s" %paramValue;
-    		    print "ACTUAL RESULT : %s is %s" %(paramValue,OutValue);
-    		    #Get the result of execution
-    		    print "[TEST EXECUTION RESULT] : SUCCESS";
-    		else:
-    		    tdkTestObj.setResultStatus("FAILURE");
-    		    print "TEST STEP : Get the %s" %paramValue
-    		    print "EXPECTED RESULT : Should get the %s" %paramValue;
-    		    print "ACTUAL RESULT : %s is %s" %(paramValue,OutValue);
-    		    print "[TEST EXECUTION RESULT] : FAILURE";
+                if expectedresult in actualresult and OutValue != " ":
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP : Get the %s" %paramValue)
+                    print("EXPECTED RESULT : Should get the %s" %paramValue);
+                    print("ACTUAL RESULT : %s is %s" %(paramValue,OutValue));
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP : Get the %s" %paramValue)
+                    print("EXPECTED RESULT : Should get the %s" %paramValue);
+                    print("ACTUAL RESULT : %s is %s" %(paramValue,OutValue));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "There are no entries in US OFDM channel table"
+            print("There are no entries in US OFDM channel table")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "Failed to get the values from api";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Failed to get the values from api");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_US_OFDM_GetNumberOfActiveSubcarriers');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,35 +88,35 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
 
     if expectedresult in actualresult:
-	NoOfEntries = details.split(";")[0].split(":")[1];
+        NoOfEntries = details.split(";")[0].split(":")[1];
         if int(NoOfEntries) > 0:
-	    minValue = 1;
-	    maxValue = 3800;
-	    ActiveSubcarrier = details.split(";")[1].split(":")[1]
-    	    if minValue <= int(ActiveSubcarrier) <= maxValue:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 1: Get the ActiveSubcarrier";
-    	        print "EXPECTED RESULT 1: Should get the ActiveSubcarrier in the expected range";
-    	        print "ACTUAL RESULT 1: ActiveSubcarrier is %s and is in the range of [%d,%d]" %(ActiveSubcarrier,minValue,maxValue);
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-    	    else:
-    	        tdkTestObj.setResultStatus("FAILURE");
-    	        print "TEST STEP 1: Get the ActiveSubcarrier";
-    	        print "EXPECTED RESULT 1: Should get the ActiveSubcarrier in the expected range";
-    	        print "ACTUAL RESULT 1: ActiveSubcarrier is %s and is in the range of [%d,%d]" %(ActiveSubcarrier,minValue,maxValue);
-    	        print "[TEST EXECUTION RESULT] : FAILURE";
+            minValue = 1;
+            maxValue = 3800;
+            ActiveSubcarrier = details.split(";")[1].split(":")[1]
+            if minValue <= int(ActiveSubcarrier) <= maxValue:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the ActiveSubcarrier");
+                print("EXPECTED RESULT 1: Should get the ActiveSubcarrier in the expected range");
+                print("ACTUAL RESULT 1: ActiveSubcarrier is %s and is in the range of [%d,%d]" %(ActiveSubcarrier,minValue,maxValue));
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the ActiveSubcarrier");
+                print("EXPECTED RESULT 1: Should get the ActiveSubcarrier in the expected range");
+                print("ACTUAL RESULT 1: ActiveSubcarrier is %s and is in the range of [%d,%d]" %(ActiveSubcarrier,minValue,maxValue));
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "There are no entries in US OFDM channel table"
+            print("There are no entries in US OFDM channel table")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to get the value of ActiveSubcarrier"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Failed to get the value of ActiveSubcarrier")
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

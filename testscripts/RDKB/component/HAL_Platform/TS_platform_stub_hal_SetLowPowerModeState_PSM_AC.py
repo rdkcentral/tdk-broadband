@@ -92,7 +92,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_platform_stub_hal_SetLowPowerModeState_PSM_AC');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep("platform_stub_hal_SetLowPowerModeState");
@@ -105,20 +105,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set Low Power Mode state by invoking the HAL API platform_hal_SetLowPowerModeState";
-        print "EXPECTED RESULT 1: platform_hal_SetLowPowerModeState invoked successfully";
-        print "ACTUAL RESULT 1: %s"%details
+        print("TEST STEP 1: Set Low Power Mode state by invoking the HAL API platform_hal_SetLowPowerModeState");
+        print("EXPECTED RESULT 1: platform_hal_SetLowPowerModeState invoked successfully");
+        print("ACTUAL RESULT 1: %s"%details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Set Low Power Mode state by invoking the HAL API platform_hal_SetLowPowerModeState";
-        print "EXPECTED RESULT 1: platform_hal_SetLowPowerModeState invoked successfully";
-        print "ACTUAL RESULT 1: %s"%details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Set Low Power Mode state by invoking the HAL API platform_hal_SetLowPowerModeState");
+        print("EXPECTED RESULT 1: platform_hal_SetLowPowerModeState invoked successfully");
+        print("ACTUAL RESULT 1: %s"%details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

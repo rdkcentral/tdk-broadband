@@ -79,7 +79,7 @@ oam =[];
 flag = 1;
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,80 +93,75 @@ if "SUCCESS" in loadmodulestatus.upper():
     numEntries = tdkTestObj.getResultDetails();
     numEntries = int(numEntries)
     if expectedresult in actualresult and numEntries != " " and  numEntries >0:
-       print "TEST STEP 1: Get the OamFrameRate count";
-       print "EXPECTED RESULT 1: Should get the OamFrameRate count  value as greater than 0";
-       print "ACTUAL RESULT 1: The OamFrameRate count  is :",numEntries;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the OamFrameRate count");
+        print("EXPECTED RESULT 1: Should get the OamFrameRate count  value as greater than 0");
+        print("ACTUAL RESULT 1: The OamFrameRate count  is :",numEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
 
 
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep('EPONHAL_GetOamFrameRate');
-       expectedresult="SUCCESS";
-       tdkTestObj.addParameter("numEntries",numEntries);
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       resultDetails = " ";
-       resultDetails = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult and resultDetails != " ":
-          print "TEST STEP 2: Check for successful invocation of dpoe_getOamFrameRate";
-          print "EXPECTED RESULT 2: Should successfully invoke dpoe_getOamFrameRate";
-          print "ACTUAL RESULT 2: successfully invoked dpoe_getOamFrameRate";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS");
-
-          #looping to get the max and min rate from the details
-
-          #multiplying numEntries by 2 as each link has two entries
-          for i in range(2*numEntries):
-              oam.append(resultDetails.split(':')[i+1].split(',')[0].strip());
-
-          #checking if the value received is greater than or equal to 0
-          for j in range(numEntries):
-             if (int(oam[j]) >= 0):
-                flag = 1;
-             else:
-                 flag = 0;
-
-          if flag == 1:
-            print "TEST STEP 3: Get the max and min rate for the corresponding link id's and check if the value is greater than or equal to zero";
-            print "EXPECTED RESULT 3: Should get the  max and min rate for the corresponding link id's and the value must be greater than or equal to zero";
-            print "ACTUAL RESULT 3: The value returned is :" ,oam;
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep('EPONHAL_GetOamFrameRate');
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("numEntries",numEntries);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        resultDetails = " ";
+        resultDetails = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult and resultDetails != " ":
+            print("TEST STEP 2: Check for successful invocation of dpoe_getOamFrameRate");
+            print("EXPECTED RESULT 2: Should successfully invoke dpoe_getOamFrameRate");
+            print("ACTUAL RESULT 2: successfully invoked dpoe_getOamFrameRate");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
-          else:
-              print "TEST STEP 3: Get the max and min rate for the corresponding link id's and check if the value is greater than or equal to zero";
-              print "EXPECTED RESULT 3: Should get the  max and min rate for the corresponding link id's and the value must be greater than or equal to zero";
-              print "ACTUAL RESULT 3: The value returned is :" ,oam;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-              tdkTestObj.setResultStatus("FAILURE");
-       else:
-           print "TEST STEP 2: Check for successful invocation of dpoe_getOamFrameRate";
-           print "EXPECTED RESULT 2: Should successfully invoke of dpoe_getOamFrameRate";
-           print "ACTUAL RESULT 2: Failed to  invoke dpoe_getOamFrameRate";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
-           tdkTestObj.setResultStatus("FAILURE");
+
+            #looping to get the max and min rate from the details
+
+            #multiplying numEntries by 2 as each link has two entries
+            for i in range(2*numEntries):
+                oam.append(resultDetails.split(':')[i+1].split(',')[0].strip());
+
+            #checking if the value received is greater than or equal to 0
+            for j in range(numEntries):
+                if (int(oam[j]) >= 0):
+                    flag = 1;
+                else:
+                    flag = 0;
+
+            if flag == 1:
+                print("TEST STEP 3: Get the max and min rate for the corresponding link id's and check if the value is greater than or equal to zero");
+                print("EXPECTED RESULT 3: Should get the  max and min rate for the corresponding link id's and the value must be greater than or equal to zero");
+                print("ACTUAL RESULT 3: The value returned is :" ,oam);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("TEST STEP 3: Get the max and min rate for the corresponding link id's and check if the value is greater than or equal to zero");
+                print("EXPECTED RESULT 3: Should get the  max and min rate for the corresponding link id's and the value must be greater than or equal to zero");
+                print("ACTUAL RESULT 3: The value returned is :" ,oam);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 2: Check for successful invocation of dpoe_getOamFrameRate");
+            print("EXPECTED RESULT 2: Should successfully invoke of dpoe_getOamFrameRate");
+            print("ACTUAL RESULT 2: Failed to  invoke dpoe_getOamFrameRate");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
     else:
-       print "TEST STEP 1: Get the OamFrameRate count";
-       print "EXPECTED RESULT 1: Should get the OamFrameRate count  value as greater than 0";
-       print "ACTUAL RESULT 1: The OamFrameRate count  is :",numEntries;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : FAILURE";
-       tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the OamFrameRate count");
+        print("EXPECTED RESULT 1: Should get the OamFrameRate count  value as greater than 0");
+        print("ACTUAL RESULT 1: The OamFrameRate count  is :",numEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
 
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
-
+    print("Module loading failed");

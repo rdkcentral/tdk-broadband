@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetDownloadInterface');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,29 +90,29 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if "0" in details:
-	interface = "wan0";
+        interface = "wan0";
     elif "1" in details:
-	interface = "erouter0";
+        interface = "erouter0";
     else:
-	interface = "Failed to get the download interface"
+        interface = "Failed to get the download interface"
 
     if expectedresult in actualresult and interface in "wan0" or interface in "erouter0":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Download interface";
-        print "EXPECTED RESULT 1: Should get the Download interface sucessfully";
-        print "ACTUAL RESULT 1: Download interface is %s" %interface;
+        print("TEST STEP 1: Get the Download interface");
+        print("EXPECTED RESULT 1: Should get the Download interface sucessfully");
+        print("ACTUAL RESULT 1: Download interface is %s" %interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Download interface";
-        print "EXPECTED RESULT 1: Should get the Download interface sucessfully";
-        print "ACTUAL RESULT 1: Failed to get the Download interface, Details :%s" %interface;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Download interface");
+        print("EXPECTED RESULT 1: Should get the Download interface sucessfully");
+        print("ACTUAL RESULT 1: Failed to get the Download interface, Details :%s" %interface);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

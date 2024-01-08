@@ -39,7 +39,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_CMAGENT_3</test_case_id>
-    <test_objective>To Validate 
+    <test_objective>To Validate
 "DeleteTbl Row" Function</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -51,7 +51,7 @@ API Name
 CMAgent_DelObject
 Input
 1.Parameter Path (paramName as Device.X_CISCO_COM_CableModem.UpstreamChannel.2.)</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (CMAgent_DelObject  - func name - "If not exists already"
  cmagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -59,13 +59,13 @@ Input
 3.Execute the generated Script(TS_CMAGENT_DelObject.py) using excution page of  Test Manager GUI
 4.cmagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named CMAgent_DelObject through registered TDK cmagentstub function named tdk_cmagent_deletetbl along with necessary Entry Values as arguments
 5.CMAgent_DelObject function will call CCSP Base Interface Function named CcspBaseIf_DeleteTblRow, that inturn will call "CcspCcMbi_DeleteTblRow" along with  provided input arguments(including Write ID) to Delete Table row info from Dynamic Table List/ Data Model of CM Agent
-6.Responses(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and cmagentstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.cmagentstub will validate the available result (from agent console log and Pointer to instance as non null ) with expected result (Eg:"Table deleted Succesfully") and the same is updated in agent console log
 9.TestManager will publish the result in GUI as PASS/FAILURE based on the response from cmagentstub</automation_approch>
     <except_output>CheckPoint 1:
 Table/Object deletion log from DUT should be available in Agent Console Log
 CheckPoint 2:
-TDK agent Test Function will log the test case result as PASS based on API response 
+TDK agent Test Function will log the test case result as PASS based on API response
 CheckPoint 3:
 TestManager GUI will publish the result as PASS in Execution page</except_output>
     <priority>High</priority>
@@ -80,8 +80,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -94,14 +94,14 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_DelObject');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_DelObject');
@@ -118,15 +118,15 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Cannot delete a row to a READONLY table object"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("Cannot delete a row to a READONLY table object")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Added a row to a READONLY table object"	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("Added a row to a READONLY table object")
 
 obj.unloadModule("cmagent");

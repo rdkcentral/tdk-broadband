@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetNumberOfDocsisEventLogItems');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,20 +93,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and int(count) >= 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of Docsis event log items";
-        print "EXPECTED RESULT 1: Should get the number of Docsis event log items successfully";
-        print "ACTUAL RESULT 1: %s" %count;
+        print("TEST STEP 1: Get the number of Docsis event log items");
+        print("EXPECTED RESULT 1: Should get the number of Docsis event log items successfully");
+        print("ACTUAL RESULT 1: %s" %count);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of Docsis event log items";
-        print "EXPECTED RESULT 1: Should get the number of Docsis event log items successfully";
-        print "ACTUAL RESULT 1: Failed to get the number of Docsis event log items, Details :%s" %count;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the number of Docsis event log items");
+        print("EXPECTED RESULT 1: Should get the number of Docsis event log items successfully");
+        print("ACTUAL RESULT 1: Failed to get the number of Docsis event log items, Details :%s" %count);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

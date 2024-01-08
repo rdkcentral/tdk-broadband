@@ -48,7 +48,7 @@
     <api_or_interface_used>dpoe_OamFrameRateGetEntryCount </api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load eponhal module
-2. Invoke dpoe_OamFrameRateGetEntryCount  
+2. Invoke dpoe_OamFrameRateGetEntryCount
 3. Check if the number of logical link is greater than  0
 3. Unload eponhal module</automation_approch>
     <expected_output>The number of logical links retrieved using  dpoe_OamFrameRateGetEntryCount  should be  greater than or equal to 0</expected_output>
@@ -75,7 +75,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_OamFrameRateGetEntryCount');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -92,24 +92,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and resultDetails != " " and int(resultDetails) >  0 :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of logical link";
-        print "EXPECTED RESULT 1: Should get the number of  logical link  value as greater than 0";
-        print "ACTUAL RESULT 1: The OamFrameRate logical link   is %s" %resultDetails;
+        print("TEST STEP 1: Get the number of logical link");
+        print("EXPECTED RESULT 1: Should get the number of  logical link  value as greater than 0");
+        print("ACTUAL RESULT 1: The OamFrameRate logical link   is %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of  logical link";
-        print "TEST STEP 1: Get the number of logical link";
-        print "EXPECTED RESULT 1: Should get the number of  logical link value as greater than  0";
-        print "ACTUAL RESULT 1: Failed to get the number of  logical link, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the number of  logical link");
+        print("TEST STEP 1: Get the number of logical link");
+        print("EXPECTED RESULT 1: Should get the number of  logical link value as greater than  0");
+        print("ACTUAL RESULT 1: Failed to get the number of  logical link, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-                                                       
-                                                 
-
+    print("Module loading failed");

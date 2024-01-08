@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_US_OFDM_GetSymbolsPerFrame');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,43 +88,43 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
 
     if expectedresult in actualresult:
-	NoOfEntries = details.split(";")[0].split(":")[1];
+        NoOfEntries = details.split(";")[0].split(":")[1];
         if int(NoOfEntries) > 0:
-	    #min and max number of symbols per frame for 2K FFT mode
- 	    minValue_2K = 18;
-	    maxValue_2K = 36;
-	    #min and max number of symbols per frame for 4K FFT mode
- 	    minValue_4K = 9;
-	    maxValue_4K = 18;
-	    NoOfSymbols = details.split(";")[1].split(":")[1];
-	    if minValue_2K <= NoOfSymbols <= maxValue_2K or minValue_4K <= NoOfSymbols <= maxValue_4K:
+            #min and max number of symbols per frame for 2K FFT mode
+            minValue_2K = 18;
+            maxValue_2K = 36;
+            #min and max number of symbols per frame for 4K FFT mode
+            minValue_4K = 9;
+            maxValue_4K = 18;
+            NoOfSymbols = details.split(";")[1].split(":")[1];
+            if minValue_2K <= NoOfSymbols <= maxValue_2K or minValue_4K <= NoOfSymbols <= maxValue_4K:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the number of symbols per frame";
-                print "EXPECTED RESULT 1: Should get the number of symbols per frame in the expected range";
-                print "ACTUAL RESULT 1: NoOfSymbols is %s" %NoOfSymbols;
+                print("TEST STEP 1: Get the number of symbols per frame");
+                print("EXPECTED RESULT 1: Should get the number of symbols per frame in the expected range");
+                print("ACTUAL RESULT 1: NoOfSymbols is %s" %NoOfSymbols);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-	        #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the number of symbols per frame";
-                print "EXPECTED RESULT 1: Should get the number of symbols per frame in the expected range";
-                print "ACTUAL RESULT 1: NoOfSymbols is %s" %NoOfSymbols;
+                print("TEST STEP 1: Get the number of symbols per frame");
+                print("EXPECTED RESULT 1: Should get the number of symbols per frame in the expected range");
+                print("ACTUAL RESULT 1: NoOfSymbols is %s" %NoOfSymbols);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "There are no entries in US OFDM channel table"
+            print("There are no entries in US OFDM channel table")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to get the values from api";
+        print("Failed to get the values from api");
     obj.unloadModule("cmhal");
 
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

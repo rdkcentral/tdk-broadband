@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_US_OFDM_GetChannelID');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,37 +88,37 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
     if expectedresult in actualresult:
         #If the upstream channel ID is unknown, this object returns a value of 0.
-	NoOfEntries = details.split(";")[0].split(":")[1];
-	print NoOfEntries;
+        NoOfEntries = details.split(";")[0].split(":")[1];
+        print(NoOfEntries);
         if int(NoOfEntries) != 0:
-	    ChannelId = details.split(";")[1].split(":")[1];
-	    if int(ChannelId) !=0 :
+            ChannelId = details.split(";")[1].split(":")[1];
+            if int(ChannelId) !=0 :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the ChannelId";
-                print "EXPECTED RESULT 1: Should get the ChannelId in the expected range";
-                print "ACTUAL RESULT 1: ChannelId is %s" %ChannelId;
+                print("TEST STEP 1: Get the ChannelId");
+                print("EXPECTED RESULT 1: Should get the ChannelId in the expected range");
+                print("ACTUAL RESULT 1: ChannelId is %s" %ChannelId);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the ChannelId";
-                print "EXPECTED RESULT 1: Should get the ChannelId in the expected range";
-                print "ACTUAL RESULT 1: ChannelId is %s" %ChannelId;
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "There are no entries in table"
+                print("TEST STEP 1: Get the ChannelId");
+                print("EXPECTED RESULT 1: Should get the ChannelId in the expected range");
+                print("ACTUAL RESULT 1: ChannelId is %s" %ChannelId);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("There are no entries in table")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Failed to get the value of Channel ID"
+        print("Failed to get the value of Channel ID")
 
     obj.unloadModule("cmhal");
 
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

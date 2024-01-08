@@ -57,10 +57,10 @@ Input
 Handle to the object - Valid object</input_parameters>
     <automation_approch>1.Create a function named Cosa_CM_Remove in Test Manager GUI.
 2.Configure the info of the  function under test in function and create a python script
-3.Execute the generated Script(TS_COSACM_CableModemRemove.py) using execution page of  Test Manager GUI 
-4.This script will in turn call cm_agent stub in TDK Agent 
+3.Execute the generated Script(TS_COSACM_CableModemRemove.py) using execution page of  Test Manager GUI
+4.This script will in turn call cm_agent stub in TDK Agent
 5.Cosa_CM_Remove function will call CCSP Base Interface Function named , that inturn will call CM Agent Library Function "CosaCableModemRemove" along with provided path name
-6.Responses(printf) from TDK Component and CM agentstub would be logged in Agent Console log 
+6.Responses(printf) from TDK Component and CM agentstub would be logged in Agent Console log
 7.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 object memory is freed successfully.
@@ -91,37 +91,37 @@ obj.configureTestCase(ip,port,'TS_COSACM_CableModemRemove');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("COSACM_CableModemRemove");
-        tdkTestObj.addParameter("handleType",1);
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("COSACM_CableModemRemove");
+    tdkTestObj.addParameter("handleType",1);
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1:Execute CM Remove";
-            print "EXPECTED RESULT 1: Should Successfully Execute CM Remove";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1:Execute CM Remove";
-            print "EXPECTED RESULT 1: Should Successfully Execute CM Remove";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;              
-            
-        obj.unloadModule("cosacm");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1:Execute CM Remove");
+        print("EXPECTED RESULT 1: Should Successfully Execute CM Remove");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1:Execute CM Remove");
+        print("EXPECTED RESULT 1: Should Successfully Execute CM Remove");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+    obj.unloadModule("cosacm");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

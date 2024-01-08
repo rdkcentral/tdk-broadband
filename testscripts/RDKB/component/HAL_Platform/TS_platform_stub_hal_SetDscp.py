@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_SetDscp');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,15 +97,15 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Invoke the HAL API platform_hal_SetDscp() to start the traffic counts for the DSCP WAN values 10,24";
-    print "EXPECTED RESULT 1: platform_hal_SetDscp() should be invoked successfully to start the traffic counts for the DSCP WAN values 10,24";
+    print("\nTEST STEP 1: Invoke the HAL API platform_hal_SetDscp() to start the traffic counts for the DSCP WAN values 10,24");
+    print("EXPECTED RESULT 1: platform_hal_SetDscp() should be invoked successfully to start the traffic counts for the DSCP WAN values 10,24");
 
     if expectedresult in actualresult and "platform_hal_setDscp() function invocation was successful" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: %s"%details
+        print("ACTUAL RESULT 1: %s"%details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Stop the DSCP WAN traffic count
         tdkTestObj = obj.createTestStep("platform_stub_hal_SetDscp");
@@ -119,30 +119,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Invoke the HAL API platform_hal_SetDscp() to stop the traffic counts for the DSCP WAN values 10,24";
-        print "EXPECTED RESULT 2: platform_hal_SetDscp() should be invoked successfully to stop the traffic counts for the DSCP WAN values 10,24";
+        print("\nTEST STEP 2: Invoke the HAL API platform_hal_SetDscp() to stop the traffic counts for the DSCP WAN values 10,24");
+        print("EXPECTED RESULT 2: platform_hal_SetDscp() should be invoked successfully to stop the traffic counts for the DSCP WAN values 10,24");
 
         if expectedresult in actualresult and "platform_hal_setDscp() function invocation was successful" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: %s"%details
+            print("ACTUAL RESULT 2: %s"%details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: %s"%details
+            print("ACTUAL RESULT 2: %s"%details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: %s"%details;
+        print("ACTUAL RESULT 1: %s"%details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -80,8 +80,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSSymbolRate');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,36 +106,35 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails();
-    print Details;
+    print(Details);
     symbolrate = Details.split(",");
     SymbolRate_List ="160,320,640,1280,2560,5120";
     SymbolRate_List= SymbolRate_List.split(',');
     flag=1;
-    
+
     for index in range(len(symbolrate)):
-      if "KSym/s" in symbolrate or "KSym/sec" in symbolrate: 
-        if symbolrate[index] not in SymbolRate_List:
-            flag = 0;
-      
-            
+        if "KSym/s" in symbolrate or "KSym/sec" in symbolrate:
+            if symbolrate[index] not in SymbolRate_List:
+                flag = 0;
+
+
     if expectedresult in actualresult and flag==1:
-        #Set the result status of execution
+            #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the symbol rate of upstream channels";
-        print "EXPECTED RESULT 1: Symbol rate should be within the list";
-        print "ACTUAL RESULT 1:Successfully validated the symbol rate ";
+        print("TEST STEP 1: Get the symbol rate of upstream channels");
+        print("EXPECTED RESULT 1: Symbol rate should be within the list");
+        print("ACTUAL RESULT 1:Successfully validated the symbol rate ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:  Get the symbol rate of upstream channels";
-        print "EXPECTED RESULT 1: Symbol rate should be within the list";
-        print "ACTUAL RESULT 1:Failed to validate the symbol rate ";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:  Get the symbol rate of upstream channels");
+        print("EXPECTED RESULT 1: Symbol rate should be within the list");
+        print("ACTUAL RESULT 1:Failed to validate the symbol rate ");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

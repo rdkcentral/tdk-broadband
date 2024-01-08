@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetRangingStatusOfdmaUsTable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,7 +88,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
 
     expectedList = {"1":"other","2":"aborted","3":"retriesExceeded","4":"success","5":"continue","6":"timeoutT4"}
 
@@ -102,28 +102,26 @@ if "SUCCESS" in loadmodulestatus.upper():
                 RangingStatusValue = expectedList[RangingStatus];
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the RangingStatus Status ";
-                print "EXPECTED RESULT 2:RangingStatus should be a subset of other,aborted,retriesExceeded,success,continue,timeoutT4";
-                print "ACTUAL RESULT 2: RangingStatus is %s" %RangingStatusValue;
+                print("TEST STEP 2: Get the RangingStatus Status ");
+                print("EXPECTED RESULT 2:RangingStatus should be a subset of other,aborted,retriesExceeded,success,continue,timeoutT4");
+                print("ACTUAL RESULT 2: RangingStatus is %s" %RangingStatusValue);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the RangingStatus ";
-                print "EXPECTED RESULT 2: RangingStatus should be a subset of other,aborted,retriesExceeded,success,continue,timeoutT4";
-                print "ACTUAL RESULT 2: RangingStatus is not subset of other,aborted,retriesExceeded,success,continue,timeoutT4 " ;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2: Get the RangingStatus ");
+                print("EXPECTED RESULT 2: RangingStatus should be a subset of other,aborted,retriesExceeded,success,continue,timeoutT4");
+                print("ACTUAL RESULT 2: RangingStatus is not subset of other,aborted,retriesExceeded,success,continue,timeoutT4 ") ;
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1:There are no entries in table"
+            print("TEST STEP 1:There are no entries in table")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Failed to get the value of RangingStatus"
+        print("Failed to get the value of RangingStatus")
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

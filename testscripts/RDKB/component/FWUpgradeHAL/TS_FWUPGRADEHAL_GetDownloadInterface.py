@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_FWUPGRADEHAL_GetDownloadInterface');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,11 +109,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Download interface by invoking the HAL API fwupgrade_hal_get_download_interface()";
-        print "EXPECTED RESULT 1: fwupgrade_hal_get_download_interface() API should be invoked successfully";
-        print "ACTUAL RESULT 1: The API invovation is success";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "Details : %s" %details;
+        print("TEST STEP 1: Get the Download interface by invoking the HAL API fwupgrade_hal_get_download_interface()");
+        print("EXPECTED RESULT 1: fwupgrade_hal_get_download_interface() API should be invoked successfully");
+        print("ACTUAL RESULT 1: The API invovation is success");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("Details : %s" %details);
 
         if "0" in details:
             interface = "wan0";
@@ -125,31 +125,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if interface in "wan0" or interface in "erouter0":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if the download interface should be in [wan0, erouter0]";
-            print "EXPECTED RESULT 2: The download interface should be valid";
-            print "ACTUAL RESULT 2: Download interface is %s" %interface;
+            print("TEST STEP 2: Check if the download interface should be in [wan0, erouter0]");
+            print("EXPECTED RESULT 2: The download interface should be valid");
+            print("ACTUAL RESULT 2: Download interface is %s" %interface);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the download interface should be in [wan0, erouter0]";
-            print "EXPECTED RESULT 2: The download interface should be valid";
-            print "ACTUAL RESULT 2: Download interface is %s" %interface;
+            print("TEST STEP 2: Check if the download interface should be in [wan0, erouter0]");
+            print("EXPECTED RESULT 2: The download interface should be valid");
+            print("ACTUAL RESULT 2: Download interface is %s" %interface);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Download interface by invoking the HAL API fwupgrade_hal_get_download_interface()";
-        print "EXPECTED RESULT 1: fwupgrade_hal_get_download_interface() API should be invoked successfully";
-        print "ACTUAL RESULT 1: The API invocation is failure";
+        print("TEST STEP 1: Get the Download interface by invoking the HAL API fwupgrade_hal_get_download_interface()");
+        print("EXPECTED RESULT 1: fwupgrade_hal_get_download_interface() API should be invoked successfully");
+        print("ACTUAL RESULT 1: The API invocation is failure");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

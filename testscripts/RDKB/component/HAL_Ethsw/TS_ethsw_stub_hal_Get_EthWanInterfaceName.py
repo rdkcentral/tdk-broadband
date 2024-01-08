@@ -82,7 +82,7 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkbVariables import *;
 
@@ -100,7 +100,7 @@ obj1.configureTestCase(ip,port,'TS_ethsw_stub_hal_Get_EthWanInterfaceName');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,7 +109,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     #Get the default value from properties file
     tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile ETHWAN_INTERFACE" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj1.addParameter("command", cmd);
     tdkTestObj1.executeTestCase(expectedresult);
@@ -118,14 +118,14 @@ if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     details = tdkTestObj1.getResultDetails().strip();
     interface = ""
     interface = details.replace("\\n", "");
-    print" ETHWAN INTERFACE NAME:",interface
+    print(" ETHWAN INTERFACE NAME:",interface)
     if interface != "" and ( expectedresult in  actualresult):
         tdkTestObj1.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ETHWAN interface name from  tdk_platform properties file";
-        print "EXPECTED RESULT 1: Should Get the ETHWAN interface name form tdk_platform properties file";
-        print "ACTUAL RESULT 1: The ETHWAN interface name from tdk_platform properties file : %s" % interface;
+        print("TEST STEP 1: Get the ETHWAN interface name from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the ETHWAN interface name form tdk_platform properties file");
+        print("ACTUAL RESULT 1: The ETHWAN interface name from tdk_platform properties file : %s" % interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         interface = interface.split(',')
 
         tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_EthWanInterfaceName");
@@ -137,31 +137,31 @@ if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
         if expectedresult in actualresult and details in interface:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Retrieve the ethwan interface name via HAL api ";
-            print "EXPECTED RESULT 2: Ethwan interface name via HAL api and tdk_platform properties should be the same";
+            print("TEST STEP 2: Retrieve the ethwan interface name via HAL api ");
+            print("EXPECTED RESULT 2: Ethwan interface name via HAL api and tdk_platform properties should be the same");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            print "Ethwan interface name from hal api is %s" %details;
-            print "Ethwan interface name via HAL api and tdk_platform properties are the same"
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("Ethwan interface name from hal api is %s" %details);
+            print("Ethwan interface name via HAL api and tdk_platform properties are the same")
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Retrieve the ethwan interface name via HAL api";
-            print "EXPECTED RESULT 2: Ethwan interface name via HAL api and tdk_platform properties should be the same";
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
-            print "Failure details: %s" %details
+            print("TEST STEP 2: Retrieve the ethwan interface name via HAL api");
+            print("EXPECTED RESULT 2: Ethwan interface name via HAL api and tdk_platform properties should be the same");
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
+            print("Failure details: %s" %details)
 
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ETHWAN interface name from  tdk_platform properties file";
-        print "EXPECTED RESULT 1: Should Get the ETHWAN interface name form tdk_platform properties file";
-        print "ACTUAL RESULT 1: The ETHWAN interface name from tdk_platform properties file : %s" % interface;
+        print("TEST STEP 1: Get the ETHWAN interface name from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the ETHWAN interface name form tdk_platform properties file");
+        print("ACTUAL RESULT 1: The ETHWAN interface name from tdk_platform properties file : %s" % interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("halethsw");
     obj1.unloadModule("sysutil");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -108,8 +108,8 @@ obj1.configureTestCase(ip,port,'TS_ETHWAN_GetMACsecRequiredEnableOnReboot');
 #Get the result of connection with test component and STB
 loadmodulestatus  = obj.getLoadModuleResult();
 loadmodulestatus1  = obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -121,77 +121,56 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj,status,Value = getMultipleParameterValues(obj1,paramList)
 
     if expectedresult in status  and Value[1] == "Ethernet" and Value[0] == "true":
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the WAN Enabled Mode and Operational Mode";
-       print "EXPECTED RESULT 1: Should get the WAN Enabled Mode as true and Operational Mode as Ethernet";
-       print "ACTUAL RESULT 1: WAN Enabled  Mode is  %s and  Operational Mode is %s" %(Value[0],Value[1]);
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the WAN Enabled Mode and Operational Mode");
+        print("EXPECTED RESULT 1: Should get the WAN Enabled Mode as true and Operational Mode as Ethernet");
+        print("ACTUAL RESULT 1: WAN Enabled  Mode is  %s and  Operational Mode is %s" %(Value[0],Value[1]));
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = obj.createTestStep('pam_GetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
-       expectedresult="SUCCESS";
+        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
+        expectedresult="SUCCESS";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       InitMACsecStatus = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        InitMACsecStatus = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Initial Mac Sec status";
-          print "EXPECTED RESULT 2: Should get the Initial Mac Sec status";
-          print "ACTUAL RESULT 2: Got the Initial Mac Sec status",InitMACsecStatus;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Initial Mac Sec status");
+            print("EXPECTED RESULT 2: Should get the Initial Mac Sec status");
+            print("ACTUAL RESULT 2: Got the Initial Mac Sec status",InitMACsecStatus);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          if  InitMACsecStatus == "true" :
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Get the Mac Sec status";
-              print "EXPECTED RESULT 3: Should get the Mac Sec status as true";
-              print "ACTUAL RESULT 3: Got the Mac Sec status as",InitMACsecStatus;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+            if  InitMACsecStatus == "true" :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Mac Sec status");
+                print("EXPECTED RESULT 3: Should get the Mac Sec status as true");
+                print("ACTUAL RESULT 3: Got the Mac Sec status as",InitMACsecStatus);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-              tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-              tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
-              tdkTestObj.addParameter("ParamValue","false");
-              tdkTestObj.addParameter("Type","bool");
-              expectedresult="SUCCESS";
+                tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+                tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
+                tdkTestObj.addParameter("ParamValue","false");
+                tdkTestObj.addParameter("Type","bool");
+                expectedresult="SUCCESS";
 
-              #Execute the test case in STB
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails();
+                #Execute the test case in STB
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
 
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 4: Toggle the Mac Sec status";
-                 print "EXPECTED RESULT 4: Should Toggle the Mac Sec status";
-                 print "ACTUAL RESULT 4: The Mac Sec status is : ",details;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                 tdkTestObj = obj.createTestStep('pam_GetParameterValues');
-                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
-                 expectedresult="SUCCESS";
-
-                 #Execute the test case in DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 GetMACsecStatus = tdkTestObj.getResultDetails();
-
-                 if expectedresult in actualresult and GetMACsecStatus == "false":
+                if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Get the Mac Sec status";
-                    print "EXPECTED RESULT 5: Get and  set Mac Sec status should be equal";
-                    print "ACTUAL RESULT 5: Got the Mac Sec status",GetMACsecStatus;
+                    print("TEST STEP 4: Toggle the Mac Sec status");
+                    print("EXPECTED RESULT 4: Should Toggle the Mac Sec status");
+                    print("ACTUAL RESULT 4: The Mac Sec status is : ",details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                    #rebooting the device
-                    obj.initiateReboot();
-                    sleep(300);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj.createTestStep('pam_GetParameterValues');
                     tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
@@ -200,91 +179,112 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
-                    MACsecStatus = tdkTestObj.getResultDetails();
+                    GetMACsecStatus = tdkTestObj.getResultDetails();
 
-                    if expectedresult in actualresult and MACsecStatus == "false":
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "TEST STEP 6: Get the Mac Sec status";
-                       print "EXPECTED RESULT 6:  Mac Sec status set should persist after reboot";
-                       print "ACTUAL RESULT 6: Mac Sec status is ",MACsecStatus;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
+                    if expectedresult in actualresult and GetMACsecStatus == "false":
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Get the Mac Sec status");
+                        print("EXPECTED RESULT 5: Get and  set Mac Sec status should be equal");
+                        print("ACTUAL RESULT 5: Got the Mac Sec status",GetMACsecStatus);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                       #Revert the value
-                       tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-                       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
-                       tdkTestObj.addParameter("ParamValue",InitMACsecStatus);
-                       tdkTestObj.addParameter("Type","bool");
-                       expectedresult="SUCCESS";
+                        #rebooting the device
+                        obj.initiateReboot();
+                        sleep(300);
 
-                       #Execute the test case in DUT
-                       tdkTestObj.executeTestCase(expectedresult);
-                       actualresult = tdkTestObj.getResult();
-                       details = tdkTestObj.getResultDetails();
+                        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+                        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
+                        expectedresult="SUCCESS";
 
-                       if expectedresult in actualresult:
-                          tdkTestObj.setResultStatus("SUCCESS");
-                          print "TEST STEP 7: Revert the Mac Sec status";
-                          print "EXPECTED RESULT 7: Should revert the Mac Sec status";
-                          print "ACTUAL RESULT 7: The Mac Sec status reverted to ",InitMACsecStatus;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : SUCCESS";
-                       else:
-                           tdkTestObj.setResultStatus("FAILURE");
-                           print "TEST STEP 7: Revert the Mac Sec status";
-                           print "EXPECTED RESULT 7: Should revert the Mac Sec status";
-                           print "ACTUAL RESULT 7: The Mac Sec status reverted to ",InitMACsecStatus;
-                           #Get the result of execution
-                           print "[TEST EXECUTION RESULT] : FAILURE";
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        MACsecStatus = tdkTestObj.getResultDetails();
+
+                        if expectedresult in actualresult and MACsecStatus == "false":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 6: Get the Mac Sec status");
+                            print("EXPECTED RESULT 6:  Mac Sec status set should persist after reboot");
+                            print("ACTUAL RESULT 6: Mac Sec status is ",MACsecStatus);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            #Revert the value
+                            tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+                            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.MACsecRequired.Enable");
+                            tdkTestObj.addParameter("ParamValue",InitMACsecStatus);
+                            tdkTestObj.addParameter("Type","bool");
+                            expectedresult="SUCCESS";
+
+                            #Execute the test case in DUT
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Revert the Mac Sec status");
+                                print("EXPECTED RESULT 7: Should revert the Mac Sec status");
+                                print("ACTUAL RESULT 7: The Mac Sec status reverted to ",InitMACsecStatus);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Revert the Mac Sec status");
+                                print("EXPECTED RESULT 7: Should revert the Mac Sec status");
+                                print("ACTUAL RESULT 7: The Mac Sec status reverted to ",InitMACsecStatus);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 6: Get the Mac Sec status");
+                            print("EXPECTED RESULT 6:  Mac Sec status set should persist after reboot");
+                            print("ACTUAL RESULT 6: Mac Sec status is ",MACsecStatus);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 6: Get the Mac Sec status";
-                        print "EXPECTED RESULT 6:  Mac Sec status set should persist after reboot";
-                        print "ACTUAL RESULT 6: Mac Sec status is ",MACsecStatus;
+                        print("TEST STEP 5: Get the Mac Sec status");
+                        print("EXPECTED RESULT 5: Get and  set Mac Sec status should be equal");
+                        print("ACTUAL RESULT 5: Got the Mac Sec status",GetMACsecStatus);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Get the Mac Sec status";
-                     print "EXPECTED RESULT 5: Get and  set Mac Sec status should be equal";
-                     print "ACTUAL RESULT 5: Got the Mac Sec status",GetMACsecStatus;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] :FAILURE";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4: Toggle the Mac Sec status";
-                  print "EXPECTED RESULT 4: Should Toggle the Mac Sec status";
-                  print "ACTUAL RESULT 4: The Mac Sec status is : ",details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the Mac Sec status";
-              print "EXPECTED RESULT 3: Should get the Mac Sec status as true";
-              print "ACTUAL RESULT 3: Got the Mac Sec status as",InitMACsecStatus;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] :FAILURE";
+                        print("[TEST EXECUTION RESULT] :FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Toggle the Mac Sec status");
+                    print("EXPECTED RESULT 4: Should Toggle the Mac Sec status");
+                    print("ACTUAL RESULT 4: The Mac Sec status is : ",details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Mac Sec status");
+                print("EXPECTED RESULT 3: Should get the Mac Sec status as true");
+                print("ACTUAL RESULT 3: Got the Mac Sec status as",InitMACsecStatus);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] :FAILURE");
 
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the Initial Mac Sec status";
-           print "EXPECTED RESULT 2: Should get the Initial Mac Sec status";
-           print "ACTUAL RESULT 2: Got the Initial Mac Sec status",InitMACsecStatus;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Initial Mac Sec status");
+            print("EXPECTED RESULT 2: Should get the Initial Mac Sec status");
+            print("ACTUAL RESULT 2: Got the Initial Mac Sec status",InitMACsecStatus);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the WAN Enabled Mode and Operational Mode";
-        print "EXPECTED RESULT 1: Should get the WAN Enabled Mode as true and Operational Mode as Ethernet";
-        print "ACTUAL RESULT 1: WAN Enabled  Mode is  %s and  Operational Mode is %s" %(Value[0],value[1]);
+        print("TEST STEP 1: Get the WAN Enabled Mode and Operational Mode");
+        print("EXPECTED RESULT 1: Should get the WAN Enabled Mode as true and Operational Mode as Ethernet");
+        print("ACTUAL RESULT 1: WAN Enabled  Mode is  %s and  Operational Mode is %s" %(Value[0],value[1]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        print "**************************************************"
-        print "The device is not in EthWan mode please check the device setup"
-        print "**************************************************"
+        print("**************************************************")
+        print("The device is not in EthWan mode please check the device setup")
+        print("**************************************************")
     obj.unloadModule("pam");
     obj1.unloadModule("tad");
 else:
-    print "Failed to load pam  module";
+    print("Failed to load pam  module");
     obj.setLoadModuleStatus("FAILURE");

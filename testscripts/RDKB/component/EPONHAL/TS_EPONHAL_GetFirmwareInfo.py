@@ -48,7 +48,7 @@
     <api_or_interface_used>dpoe_GetFirmwareInfo() </api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load eponhal module
-2. Invoke dpoe_GetFirmwareInfo() 
+2. Invoke dpoe_GetFirmwareInfo()
 3. Check if the details are non empty
 3. Unload eponhal module</automation_approch>
     <expected_output>The output of dpoe_GetFirmwareInfo() should be non empty holding the information</expected_output>
@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetFirmwareInfo');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,32 +94,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         info_appVersion =  resultDetails.split(':')[3].split(',')[0].strip()
         info_appCrc32   =  resultDetails.split(':')[4].strip()
         if info_bootVersion and info_bootCrc32 and info_appVersion and  info_appCrc32:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ";
-           print "EXPECTED RESULT 1: Should get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ";
-           print "ACTUAL RESULT 1: %s" %resultDetails;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ");
+            print("EXPECTED RESULT 1: Should get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ");
+            print("ACTUAL RESULT 1: %s" %resultDetails);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ";
-            print "EXPECTED RESULT 1: Should get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ";
-            print "ACTUAL RESULT 1: %s" %resultDetails;
+            print("TEST STEP 1: Get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ");
+            print("EXPECTED RESULT 1: Should get the info_bootVersion,info_bootCrc32,info_appVersion,info_appCrc32 ");
+            print("ACTUAL RESULT 1: %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the FirmwareInfo ";
-        print "EXPECTED RESULT 1: Should get the FirmwareInfo";
-        print "ACTUAL RESULT 1: Failed to get the , FirmwareInfo Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the FirmwareInfo ");
+        print("EXPECTED RESULT 1: Should get the FirmwareInfo");
+        print("ACTUAL RESULT 1: Failed to get the , FirmwareInfo Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

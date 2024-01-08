@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetDSChannel</api_or_interface_used>
     <input_parameters>paramName : ModulationAndSNRLevel</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. Get modulation and SNRlevel and validate it
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -56,9 +56,9 @@
 
 if modulation is 256QAM SNRLevel should be greater than 30 dB minimum.
 
-64 QAM: 24 dB minimum.  
+64 QAM: 24 dB minimum.
 
-16 QAM: 18 dB minimum. 
+16 QAM: 18 dB minimum.
 
 QPSK: 12 dB minimum.</except_output>
     <priority>High</priority>
@@ -70,8 +70,8 @@ QPSK: 12 dB minimum.</except_output>
   </test_cases>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
 
@@ -83,7 +83,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetSNRLevelWithModulation');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,11 +105,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         Details = tdkTestObj.getResultDetails();
         Details = ''.join(Details.split());
         List = Details.split(",");
-      
+
         for (lockstatus,modulation) in zip(LockStatusList,List):
             Data = modulation.split(":");
             lock = lockstatus.split(":");
-            print lock[0], " : ", Data[0], " : ", Data[1];
+            print(lock[0], " : ", Data[0], " : ", Data[1]);
 
             if "256" in Data[0]:
                 minSNR = 30;
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 minSNR = 30;
             else:
                 minSNR = 0;
-            print "minSNR: ",minSNR
+            print("minSNR: ",minSNR)
             if lock[0] == "Locked" and minSNR !=0 and float(Data[1].split("dB")[0]) >= minSNR:
                 status = "Success";
             elif lock[0] == "NotLocked":
@@ -134,23 +134,22 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and "Success" in status:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get and validate the DownStream Modulation and SNRlevel";
-            print "EXPECTED RESULT 1: Downstream SNRLevel should be within the range w.r.t Modulation";
-            print "ACTUAL RESULT 1: Successfully validated the SNRLevel";
+            print("TEST STEP 1: Get and validate the DownStream Modulation and SNRlevel");
+            print("EXPECTED RESULT 1: Downstream SNRLevel should be within the range w.r.t Modulation");
+            print("ACTUAL RESULT 1: Successfully validated the SNRLevel");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get and validate the DownStream Modulation and SNRlevel";
-            print "EXPECTED RESULT 1: Downstream SNRLevel should be within the range w.r.t Modulation";
-            print "ACTUAL RESULT 1: Validation of SNRLevel is failed";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get and validate the DownStream Modulation and SNRlevel");
+            print("EXPECTED RESULT 1: Downstream SNRLevel should be within the range w.r.t Modulation");
+            print("ACTUAL RESULT 1: Validation of SNRLevel is failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to get the lock status of downstream channels"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Failed to get the lock status of downstream channels")
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

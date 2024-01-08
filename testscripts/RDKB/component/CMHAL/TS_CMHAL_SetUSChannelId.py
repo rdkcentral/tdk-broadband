@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_SetUSChannelId');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,14 +94,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the initial US Channel ID";
-        print "EXPECTED RESULT 1: Should get the initial US Channel ID successfully";
-        print "ACTUAL RESULT 1: Initial US Channel ID is %s" %USChannelID;
+        print("TEST STEP 1: Get the initial US Channel ID");
+        print("EXPECTED RESULT 1: Should get the initial US Channel ID successfully");
+        print("ACTUAL RESULT 1: Initial US Channel ID is %s" %USChannelID);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	setValue = int(USChannelID) + 1;
-	print "The US Channel ID to set is %d" %setValue;
+        setValue = int(USChannelID) + 1;
+        print("The US Channel ID to set is %d" %setValue);
 
         tdkTestObj = obj.createTestStep("CMHAL_SetUSChannelId");
         tdkTestObj.addParameter("Value",setValue);
@@ -113,38 +113,38 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the upstream channel Id";
-            print "EXPECTED RESULT 2: Should set the upstream channel Id";
-            print "ACTUAL RESULT 2:  ",details;
+            print("TEST STEP 2: Set the upstream channel Id");
+            print("EXPECTED RESULT 2: Should set the upstream channel Id");
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #Validation of set function using get
-	    tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
-    	    tdkTestObj.addParameter("paramName","USChannelId");
-    	    expectedresult="SUCCESS";
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    USChannelID1 = tdkTestObj.getResultDetails();
+            #Validation of set function using get
+            tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
+            tdkTestObj.addParameter("paramName","USChannelId");
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            USChannelID1 = tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult and setValue != int(USChannelID1) and int(USChannelID1) == int(USChannelID):
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 3: Get the US Channel ID and it should be equal to the set value";
-    	        print "EXPECTED RESULT 3: Should get the US Channel ID successfully and it should be equal to the set value";
-    	        print "ACTUAL RESULT 3: US Channel ID is %s" %USChannelID1;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the US Channel ID";
-                print "EXPECTED RESULT 3: Should get the US Channel ID successfully";
-                print "ACTUAL RESULT 3: US Channel ID is %s" %USChannelID1;
+            if expectedresult in actualresult and setValue != int(USChannelID1) and int(USChannelID1) == int(USChannelID):
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the US Channel ID and it should be equal to the set value");
+                print("EXPECTED RESULT 3: Should get the US Channel ID successfully and it should be equal to the set value");
+                print("ACTUAL RESULT 3: US Channel ID is %s" %USChannelID1);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	    #revert the value of US Channel Id
-	    tdkTestObj = obj.createTestStep("CMHAL_SetUSChannelId");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the US Channel ID");
+                print("EXPECTED RESULT 3: Should get the US Channel ID successfully");
+                print("ACTUAL RESULT 3: US Channel ID is %s" %USChannelID1);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+            #revert the value of US Channel Id
+            tdkTestObj = obj.createTestStep("CMHAL_SetUSChannelId");
             tdkTestObj.addParameter("Value",int(USChannelID));
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
@@ -154,35 +154,35 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Revert the value of upstream channel Id";
-                print "EXPECTED RESULT : Should set the upstream channel Id";
-                print "ACTUAL RESULT :  ",details;
+                print("TEST STEP : Revert the value of upstream channel Id");
+                print("EXPECTED RESULT : Should set the upstream channel Id");
+                print("ACTUAL RESULT :  ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Revert the value of upstream channel Id";
-                print "EXPECTED RESULT : Should set the upstream channel Id";
-                print "ACTUAL RESULT :  ",details;
+                print("TEST STEP : Revert the value of upstream channel Id");
+                print("EXPECTED RESULT : Should set the upstream channel Id");
+                print("ACTUAL RESULT :  ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the upstream channel Id";
-            print "EXPECTED RESULT 2: Should set the upstream channel Id";
-            print "ACTUAL RESULT 2:  ",details;
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the upstream channel Id");
+            print("EXPECTED RESULT 2: Should set the upstream channel Id");
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the US Channel ID";
-        print "EXPECTED RESULT 1: Should get the US Channel ID successfully";
-        print "ACTUAL RESULT 1: US Channel ID is %s" %USChannelID;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the US Channel ID");
+        print("EXPECTED RESULT 1: Should get the US Channel ID successfully");
+        print("ACTUAL RESULT 1: US Channel ID is %s" %USChannelID);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

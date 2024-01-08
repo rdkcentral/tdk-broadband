@@ -80,66 +80,66 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_LocatePort_By_MacAdd');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the details of associated device";
-            print "EXPECTED RESULT 1: Should retrieve the details of associated device successfully";
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            print "%s" %details;
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the details of associated device");
+        print("EXPECTED RESULT 1: Should retrieve the details of associated device successfully");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
 
-            if "No Associated device" not in details:
-                port=details.split(',')[1].strip().split(' ')[1]
-                clientMac=details.split(',')[2].strip().split(' ')[2]
-                print "Associated device MAC is %s and port is %s" %(clientMac, port)
+        if "No Associated device" not in details:
+            port=details.split(',')[1].strip().split(' ')[1]
+            clientMac=details.split(',')[2].strip().split(' ')[2]
+            print("Associated device MAC is %s and port is %s" %(clientMac, port))
 
-                tdkTestObj = obj.createTestStep("ethsw_stub_hal_LocatePort_By_MacAddress");
-                tdkTestObj.addParameter("macID", clientMac);
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and details and int(details)== int(port):
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 2: Invoke CcspHalEthSwLocatePortByMacAddress() with a valid client MAC and check the port value returned";
-                    print "EXPECTED RESULT 2: CcspHalEthSwLocatePortByMacAddress() should return the port value: ", port;
-                    #Get the result of execution
-                    print "Actual result: port value retuned is %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Invoke CcspHalEthSwLocatePortByMacAddress() with a valid client MAC and check the port value returned";
-                    print "EXPECTED RESULT 2: CcspHalEthSwLocatePortByMacAddress() should return the port value: ", port;
-                    #Get the result of execution
-                    print "Actual result: port value retuned is %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    tdkTestObj.setResultStatus("FAILURE");
+            tdkTestObj = obj.createTestStep("ethsw_stub_hal_LocatePort_By_MacAddress");
+            tdkTestObj.addParameter("macID", clientMac);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and details and int(details)== int(port):
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Invoke CcspHalEthSwLocatePortByMacAddress() with a valid client MAC and check the port value returned");
+                print("EXPECTED RESULT 2: CcspHalEthSwLocatePortByMacAddress() should return the port value: ", port);
+                #Get the result of execution
+                print("Actual result: port value retuned is %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
             else:
-                print "ERROR: No Associated device found. Test requires a lan client"
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
-
+                print("TEST STEP 2: Invoke CcspHalEthSwLocatePortByMacAddress() with a valid client MAC and check the port value returned");
+                print("EXPECTED RESULT 2: CcspHalEthSwLocatePortByMacAddress() should return the port value: ", port);
+                #Get the result of execution
+                print("Actual result: port value retuned is %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-            #Set the result status of execution
+            print("ERROR: No Associated device found. Test requires a lan client")
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the details of associated device";
-            print "EXPECTED RESULT 1: Should retrieve the details of associated device successfully";
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
-        obj.unloadModule("halethsw");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the details of associated device");
+        print("EXPECTED RESULT 1: Should retrieve the details of associated device successfully");
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

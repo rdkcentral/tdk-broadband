@@ -98,13 +98,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#save device's current state before it goes for reboot
+        #save device's current state before it goes for reboot
         obj.saveCurrentState();
 
         #Initiate Factory reset before checking the default value
@@ -119,59 +119,59 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Initiate factory reset ";
-            print "EXPECTED RESULT 2: Should inititate factory reset";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Initiate factory reset ");
+            print("EXPECTED RESULT 2: Should inititate factory reset");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
 
-	    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    	    tdkTestObj.addParameter("ParamName","Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled");
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled");
 
-    	    #Execute the test case in DUT
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    newethwanEnable = tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            newethwanEnable = tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult and newethwanEnable == ethwanEnable:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 3: Get the enable status of Ethwan same as previous status";
-    	        print "EXPECTED RESULT 3: Should get the enable status of Ethwan same as previous status";
-    	        print "ACTUAL RESULT 3: Ethwan Enable status is %s" %newethwanEnable;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the enable status of Ethwan same as previous status";
-                print "EXPECTED RESULT 3: Should get the enable status of Ethwan same as previous status";
-                print "ACTUAL RESULT 3: Ethwan Enable status is %s" %newethwanEnable;
+            if expectedresult in actualresult and newethwanEnable == ethwanEnable:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the enable status of Ethwan same as previous status");
+                print("EXPECTED RESULT 3: Should get the enable status of Ethwan same as previous status");
+                print("ACTUAL RESULT 3: Ethwan Enable status is %s" %newethwanEnable);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the enable status of Ethwan same as previous status");
+                print("EXPECTED RESULT 3: Should get the enable status of Ethwan same as previous status");
+                print("ACTUAL RESULT 3: Ethwan Enable status is %s" %newethwanEnable);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	else:
-	    #Set the result status of execution
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Initiate factory reset ";
-            print "EXPECTED RESULT 2: Should inititate factory reset";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Initiate factory reset ");
+            print("EXPECTED RESULT 2: Should inititate factory reset");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("pam");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -121,19 +121,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should Get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should Get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "true" == ethwanEnable:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The device is in ethwan mode."
+            print("The device is in ethwan mode.")
             #rebooting the device
             obj.initiateReboot();
-            print "Wait till box comes up"
+            print("Wait till box comes up")
             sleep(600);
-            print "Wait for 20 minutes after box comes online"
+            print("Wait for 20 minutes after box comes online")
             sleep(1200);
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             cmd = "[ -f /rdklogs/logs/dcmscript.log ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -143,13 +143,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:dcmscript log file should be present";
-                print "ACTUAL RESULT 2:dcmscript log file is present";
+                print("TEST STEP 2:dcmscript log file should be present");
+                print("ACTUAL RESULT 2:dcmscript log file is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 query="cat /rdklogs/logs/dcmscript.log | grep -i \"HTTP RESPONSE CODE\" | cut -d':' -f5 |tr -d \"\r\n\" |tr ' ' '\n' | uniq |tr -d \"\n\""
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = obj1.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
@@ -158,36 +158,35 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 details = tdkTestObj.getResultDetails().strip().replace("\\n","");
                 if expectedresult in actualresult and details == "200":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: HTTP RESPONSE CODE should be 200 for each CURL query in dcmscript.log";
-                    print "ACTUAL RESULT 3:HTTP RESPONSE CODE is 200 for each CURL query in dcmscript.log" ;
+                    print("TEST STEP 3: HTTP RESPONSE CODE should be 200 for each CURL query in dcmscript.log");
+                    print("ACTUAL RESULT 3:HTTP RESPONSE CODE is 200 for each CURL query in dcmscript.log") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: HTTP RESPONSE CODE should be 200 for each CURL query in dcmscript.log";
-                    print "ACTUAL RESULT 3:Failed to get HTTP RESPONSE CODE as 200 for each CURL query in dcmscript.log" ;
+                    print("TEST STEP 3: HTTP RESPONSE CODE should be 200 for each CURL query in dcmscript.log");
+                    print("ACTUAL RESULT 3:Failed to get HTTP RESPONSE CODE as 200 for each CURL query in dcmscript.log") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:dcmscript log file should be present";
-                print "ACTUAL RESULT 2:dcmscript log file is not present";
+                print("TEST STEP 2:dcmscript log file should be present");
+                print("ACTUAL RESULT 2:dcmscript log file is not present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "The device is not in ethwan mode. Please check the device setup"
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

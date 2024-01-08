@@ -95,36 +95,35 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ecm_fsm_state_NullBuffer');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_fsm_state");
-        tdkTestObj.addParameter("flag",1)
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ecm_fsm_state");
+    tdkTestObj.addParameter("flag",1)
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS" ;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer";
-            print "EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the dhcp_stub_hal_get_ecm_fsm_state with NULL Buffer");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

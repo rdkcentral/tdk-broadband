@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSLockStatusWithModulation');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -107,14 +107,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails().lstrip("\n\r");
-    print "Details: %s" %Details
+    print("Details: %s" %Details)
     List = Details.split(",");
-    print "List:%s" %List;
-    
+    print("List:%s" %List);
+
     for item in List:
         #Data[0] is LockStatus and Data[1] is Modulation
         Data = item.split(":");
-        print "Data[0] : ", Data[0], Data[1]
+        print("Data[0] : ", Data[0], Data[1])
 
         if  "Locked" in Data[0].strip() and Data[1]!="":
         #if  Locked in Data[0].strip():
@@ -131,21 +131,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the UpStream Modulation and LockStatus";
-        print "EXPECTED RESULT 1: Should get Modulation if LockStatus is locked";
-        print "ACTUAL RESULT 1: Successfully validated the Lock Status with Modulation" ;
+        print("TEST STEP 1: Get and validate the UpStream Modulation and LockStatus");
+        print("EXPECTED RESULT 1: Should get Modulation if LockStatus is locked");
+        print("ACTUAL RESULT 1: Successfully validated the Lock Status with Modulation") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the UpStream Modulation and LockStatus";
-        print "EXPECTED RESULT 1: Should get Modulation if LockStatus is locked";
-        print "ACTUAL RESULT 1: Validation of LockStatus and Modulation failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the UpStream Modulation and LockStatus");
+        print("EXPECTED RESULT 1: Should get Modulation if LockStatus is locked");
+        print("ACTUAL RESULT 1: Validation of LockStatus and Modulation failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

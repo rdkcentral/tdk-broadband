@@ -76,66 +76,66 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_Set_Port_Admin_Status_True_Disa
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_Port_Admin_Status");
-        tdkTestObj.addParameter("PortID",testPort);
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        print "actualresult : %s" %actualresult
-        if expectedresult in actualresult and details:
-            currPortStatus = details;
-            print "TEST STEP 1: Retrieve the current Ethsw_Get_Port_Admin_Status";
-            print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully";
-            print "ACTUAL RESULT 1: Current port status is %s" %currPortStatus;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_Port_Admin_Status");
+    tdkTestObj.addParameter("PortID",testPort);
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    print("actualresult : %s" %actualresult)
+    if expectedresult in actualresult and details:
+        currPortStatus = details;
+        print("TEST STEP 1: Retrieve the current Ethsw_Get_Port_Admin_Status");
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully");
+        print("ACTUAL RESULT 1: Current port status is %s" %currPortStatus);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-            #if port status is disconnected then validate the test
-            if currPortStatus == "CCSP_HAL_ETHSW_AdminDown":
-                tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortAdminStatus");
-                tdkTestObj.addParameter("PortID",testPort);
-                tdkTestObj.addParameter("adminstatus","CCSP_HAL_ETHSW_AdminUp");
-                expectedresult = "FAILURE";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
+        #if port status is disconnected then validate the test
+        if currPortStatus == "CCSP_HAL_ETHSW_AdminDown":
+            tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortAdminStatus");
+            tdkTestObj.addParameter("PortID",testPort);
+            tdkTestObj.addParameter("adminstatus","CCSP_HAL_ETHSW_AdminUp");
+            expectedresult = "FAILURE";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-                tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_Port_Admin_Status");
-                tdkTestObj.addParameter("PortID",testPort);
-                tdkTestObj.executeTestCase("SUCCESS");
-                portStatusAfterSet = tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_Port_Admin_Status");
+            tdkTestObj.addParameter("PortID",testPort);
+            tdkTestObj.executeTestCase("SUCCESS");
+            portStatusAfterSet = tdkTestObj.getResultDetails();
 
-                if expectedresult in actualresult or portStatusAfterSet == currPortStatus:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 2: Retrieve the EthSw_SetPortAdminStatus of a port - %d" %testPort;
-                    print "EXPECTED RESULT 2: As the port is down, EthSw_SetPortAdminStatus should be failed";
-                    print "ACTUAL RESULT 2: %s" %details;
-                    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Retrieve the EthSw_SetPortAdminStatus of a down port - %d" %testPort;
-                    print "EXPECTED RESULT 2:As the port is down, EthSw_SetPortAdminStatus should be failed";
-                    print "ACTUAL RESULT 2: %s" %details;
-                    print "[TEST EXECUTION RESULT] : Failure";
+            if expectedresult in actualresult or portStatusAfterSet == currPortStatus:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Retrieve the EthSw_SetPortAdminStatus of a port - %d" %testPort);
+                print("EXPECTED RESULT 2: As the port is down, EthSw_SetPortAdminStatus should be failed");
+                print("ACTUAL RESULT 2: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "It seems port is connected to CPE, so test cannot be validated"
-                print "Please disconnect the port %d before validating the test" %testPort;
+                print("TEST STEP 2: Retrieve the EthSw_SetPortAdminStatus of a down port - %d" %testPort);
+                print("EXPECTED RESULT 2:As the port is down, EthSw_SetPortAdminStatus should be failed");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : Failure");
         else:
-            print "TEST STEP 1: Retrieve the current Ethsw_Get_Port_Admin_Status";
-            print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            tdkTestObj.setResultStatus("FAILURE");
+            print("It seems port is connected to CPE, so test cannot be validated")
+            print("Please disconnect the port %d before validating the test" %testPort);
+    else:
+        print("TEST STEP 1: Retrieve the current Ethsw_Get_Port_Admin_Status");
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-        obj.unloadModule("halethsw");
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

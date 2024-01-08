@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetRebootReady');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,20 +116,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and (count=="1" or count=="2"):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the GetRebootReady status";
-        print "EXPECTED RESULT 1: Should get the GetRebootReady status successfully";
-        print "ACTUAL RESULT 1: GetRebootReady status is  ",status;
+        print("TEST STEP 1: Get the GetRebootReady status");
+        print("EXPECTED RESULT 1: Should get the GetRebootReady status successfully");
+        print("ACTUAL RESULT 1: GetRebootReady status is  ",status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the GetRebootReady status";
-        print "EXPECTED RESULT 1: Should get the  GetRebootReady status successfully"
-        print "ACTUAL RESULT 1: Failed to get the  GetRebootReady status , Details os status :",status;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the GetRebootReady status");
+        print("EXPECTED RESULT 1: Should get the  GetRebootReady status successfully")
+        print("ACTUAL RESULT 1: Failed to get the  GetRebootReady status , Details os status :",status);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

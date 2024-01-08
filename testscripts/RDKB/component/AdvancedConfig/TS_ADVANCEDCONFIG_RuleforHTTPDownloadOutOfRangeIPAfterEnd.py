@@ -77,7 +77,7 @@ Input:
 1.PathName ("paramName")
 ( eg: "Device.NAT.X_CISCO_COM_PortTriggers.Enable" )
 2.Type: bool, Value: true</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (AdvancedConfig_Set, AdvancedConfig_AddObject - func name - "If not exists already"
  advancedconfig - module name
  Necessary I/P args as Mentioned in Input)
@@ -86,7 +86,7 @@ Input:
 4.advancedconfigstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named AdvancedConfig_Set, AdvancedConfig_AddObject through registered TDK advancedconfigstub function along with necessary Entry Values as arguments
 5.AdvancedConfig_Set function will call ssp_setParameterValue,that inturn will call CCSP Base Interface Function named CcspBaseIf_setParameterValues.
 6. AdvancedConfig_AddObject function will call ssp_addTableRow, that inturn will call CCSP Base Interface Function named CcspBaseIf_AddTblRow and AdvancedConfig_GetNames Will find the instance number of the row added and will process the function for the instance number generated.
-7.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console   
+7.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console
 8.advancedconfigstub will validate the available result (from ssp_setParameterValue as zero) with expected result (zero) and the result is updated in agent console log and json output variable
 9.TestManager will publish the result in GUI as SUCCESS/FAILURE based on the response from AdvancedConfig_Set and AdvancedConfig_AddObject functions.</automation_approch>
     <expected_output>Checkpoint 1:
@@ -94,7 +94,7 @@ Check if "WEB ADMIN:  LAN CPE:  Rule for HTTP  Download  with  invalid  IP  Addr
 CheckPoint 2:
 Success log should be available in Agent Console Log
 CheckPoint 3:
-TDK agent Test Function will log the test case result as SUCCESS based on API response 
+TDK agent Test Function will log the test case result as SUCCESS based on API response
 CheckPoint 4:
 TestManager GUI will publish the result as SUCCESS in Execution page</expected_output>
     <priority>High</priority>
@@ -107,7 +107,7 @@ TestManager GUI will publish the result as SUCCESS in Execution page</expected_o
   <script_tags />
 </xml>
 '''
-						#use tdklib library,which provides a wrapper for tdk testcase script0
+#use tdklib library,which provides a wrapper for tdk testcase script0
 import tdklib;
 import tdkutility;
 
@@ -122,148 +122,144 @@ obj.configureTestCase(ip,port,'TS_ADVANCEDCONFIG_RuleforHTTPDownloadOutOfRangeIP
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 if "SUCCESS" in loadModuleresult.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-	instance="";
+    obj.setLoadModuleStatus("SUCCESS");
+    instance="";
 
-        tdkTestObj = obj.createTestStep("AdvancedConfig_Get");
-        tdkTestObj.addParameter("paramName","Device.DHCPv4.Server.Pool.1.MaxAddress");
-        expectedresult="SUCCESS";
+    tdkTestObj = obj.createTestStep("AdvancedConfig_Get");
+    tdkTestObj.addParameter("paramName","Device.DHCPv4.Server.Pool.1.MaxAddress");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult= tdkTestObj.getResult();
+    details_max = tdkTestObj.getResultDetails();
+
+    if expectedresult in actualresult:
+        tdkTestObj.setResultStatus("SUCCESS");
+        maxip = details_max.split(':')[1];
+        iplist = maxip.split('.');
+        iplist[3]= str(int(iplist[3]) + 2);
+        clientIP = ".".join(iplist).strip();
+        print("[TEST STEP ]: Get the  DHCP pool max addresses");
+        print("[EXPECTED RESULT 1]: Should get the DHCP pool max addresses");
+        print("[ACTUAL RESULT 1]:  Max address: %s" % maxip)
+        print("[TEST EXECUTION RESULT] : %s" %actualresult)
+        print("InternalClientIP chosen from DHCP pool is ", clientIP)
+
+        #Enabling port forwarding - setting the port mapping as true
+        tdkTestObj = obj.createTestStep("AdvancedConfig_Set");
+        tdkTestObj.addParameter("paramName","Device.NAT.X_Comcast_com_EnablePortMapping");
+        tdkTestObj.addParameter("paramValue","true");
+        tdkTestObj.addParameter("paramType","boolean");
+        expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
-        actualresult= tdkTestObj.getResult();
-        details_max = tdkTestObj.getResultDetails();
-
+        actualresult = tdkTestObj.getResult();
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         if expectedresult in actualresult:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            maxip = details_max.split(':')[1];
-            iplist = maxip.split('.');
-            iplist[3]= str(int(iplist[3]) + 2);
-            clientIP = ".".join(iplist).strip();
-            print "[TEST STEP ]: Get the  DHCP pool max addresses";
-            print "[EXPECTED RESULT 1]: Should get the DHCP pool max addresses";
-            print "[ACTUAL RESULT 1]:  Max address: %s" % maxip
-            print "[TEST EXECUTION RESULT] : %s" %actualresult
-            print "InternalClientIP chosen from DHCP pool is ", clientIP
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 1]: Enabling Port Mapping");
+            print("[EXPECTED RESULT 1]: Should enable Port Mapping");
+            print("[ACTUAL RESULT 1]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Port forwarding is enabled \n")
 
-            #Enabling port forwarding - setting the port mapping as true
-            tdkTestObj = obj.createTestStep("AdvancedConfig_Set");
-            tdkTestObj.addParameter("paramName","Device.NAT.X_Comcast_com_EnablePortMapping");
-            tdkTestObj.addParameter("paramValue","true");
-            tdkTestObj.addParameter("paramType","boolean");
-            expectedresult = "SUCCESS";
+            # Adding a new row to the port forwarding table
+            tdkTestObj = obj.createTestStep("AdvancedConfig_AddObject");
+            tdkTestObj.addParameter("paramName","Device.NAT.PortMapping.");
+            expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
             if expectedresult in actualresult:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 1]: Enabling Port Mapping";
-                    print "[EXPECTED RESULT 1]: Should enable Port Mapping";
-                    print "[ACTUAL RESULT 1]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    print "Port forwarding is enabled \n"
-
-                    # Adding a new row to the port forwarding table
-                    tdkTestObj = obj.createTestStep("AdvancedConfig_AddObject");
-                    tdkTestObj.addParameter("paramName","Device.NAT.PortMapping.");
-                    expectedresult="SUCCESS";
+            #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                details = tdkTestObj.getResultDetails();
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST STEP 2]: Adding new rule to Port Mapping");
+                print("[EXPECTED RESULT 2]: Should add new rule to Port Mapping");
+                print("[ACTUAL RESULT 2]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Add service option is selected and a new table is created\n")
+                temp = details.split(':');
+                instance = temp[1];
+                if (int(instance) > 0):
+                    print("INSTANCE VALUE: %s" %instance)
+                    tdkTestObj = obj.createTestStep("AdvancedConfig_SetMultiple");
+                    tdkTestObj.addParameter("paramList","Device.NAT.PortMapping.%s.Enable|true|bool|Device.NAT.PortMapping.%s.ExternalPort|1|unsignedint|Device.NAT.PortMapping.%s.InternalPort|22|unsignedint|Device.NAT.PortMapping.%s.Protocol|TCP|string|Device.NAT.PortMapping.%s.InternalClient|%s|string|Device.NAT.PortMapping.%s.Description|NEW_RULE|string|Device.NAT.PortMapping.%s.ExternalPortEndRange|8050|unsignedint" %(instance, instance, instance, instance, instance, clientIP, instance, instance));
+                    expectedresult="FAILURE";
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     if expectedresult in actualresult:
-                    #Set the result status of execution
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            details = tdkTestObj.getResultDetails();
-                            print "ACTUAL RESULT 2: %s" %details;
-                            print "[TEST STEP 2]: Adding new rule to Port Mapping";
-                            print "[EXPECTED RESULT 2]: Should add new rule to Port Mapping";
-                            print "[ACTUAL RESULT 2]: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                            print "Add service option is selected and a new table is created\n"
-                            temp = details.split(':');
-                            instance = temp[1];
-                            if (instance > 0):
-                                print "INSTANCE VALUE: %s" %instance
-                                tdkTestObj = obj.createTestStep("AdvancedConfig_SetMultiple");
-                                tdkTestObj.addParameter("paramList","Device.NAT.PortMapping.%s.Enable|true|bool|Device.NAT.PortMapping.%s.ExternalPort|1|unsignedint|Device.NAT.PortMapping.%s.InternalPort|22|unsignedint|Device.NAT.PortMapping.%s.Protocol|TCP|string|Device.NAT.PortMapping.%s.InternalClient|%s|string|Device.NAT.PortMapping.%s.Description|NEW_RULE|string|Device.NAT.PortMapping.%s.ExternalPortEndRange|8050|unsignedint" %(instance, instance, instance, instance, instance, clientIP, instance, instance));
-                                expectedresult="FAILURE";
-                                tdkTestObj.executeTestCase(expectedresult);
-                                actualresult = tdkTestObj.getResult();
-                                if expectedresult in actualresult:
-                                    #Set the result status of execution
-                                    tdkTestObj.setResultStatus("SUCCESS");
-                                    details = tdkTestObj.getResultDetails();
-                                    print "[TEST STEP 3]: Setting external port";
-                                    print "[EXPECTED RESULT 3]: Should not set invalid IP";
-                                    print "[ACTUAL RESULT 3]: %s" %details;
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                                    print "Can not set invalid IP\n"
-                                else:
-                                    tdkTestObj.setResultStatus("FAILURE");
-                                    details = tdkTestObj.getResultDetails();
-                                    print "[TEST STEP 3]: Setting external port";
-                                    print "[EXPECTED RESULT 3]: Should not set invalid IP";
-                                    print "[ACTUAL RESULT 3]: %s" %details;
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
-                                    print "Failure in validating invalid IP\n"
-
-                            else:
-                                print "Instance value should be greater than 0\n"
-                                print "Wrong instance value\n"
-
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        details = tdkTestObj.getResultDetails();
+                        print("[TEST STEP 3]: Setting external port");
+                        print("[EXPECTED RESULT 3]: Should not set invalid IP");
+                        print("[ACTUAL RESULT 3]: %s" %details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        print("Can not set invalid IP\n")
                     else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            details = tdkTestObj.getResultDetails();
-                            print "[TEST STEP 2]: Adding new rule to Port Mapping";
-                            print "[EXPECTED RESULT 2]: Should add new rule to Port Mapping";
-                            print "[ACTUAL RESULT 2]: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                            print "Failure in adding the new port forwarding row\n"
+                        tdkTestObj.setResultStatus("FAILURE");
+                        details = tdkTestObj.getResultDetails();
+                        print("[TEST STEP 3]: Setting external port");
+                        print("[EXPECTED RESULT 3]: Should not set invalid IP");
+                        print("[ACTUAL RESULT 3]: %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        print("Failure in validating invalid IP\n")
+
+                else:
+                    print("Instance value should be greater than 0\n")
+                    print("Wrong instance value\n")
+
             else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 1]: Enabling Port Mapping";
-                    print "[EXPECTED RESULT 1]: Should enable Port Mapping";
-                    print "[ACTUAL RESULT 1]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    print "Failure in setting the port forwarding as true\n "
+                tdkTestObj.setResultStatus("FAILURE");
+                details = tdkTestObj.getResultDetails();
+                print("[TEST STEP 2]: Adding new rule to Port Mapping");
+                print("[EXPECTED RESULT 2]: Should add new rule to Port Mapping");
+                print("[ACTUAL RESULT 2]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Failure in adding the new port forwarding row\n")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST STEP ]: Get the  DHCP pool max addresses";
-            print "[EXPECTED RESULT ]: Should get the DHCP pool max addresses";
-            print "[ACTUAL RESULT ]: Failed to get the DHCP pool max addresses";
-            print "[TEST EXECUTION RESULT] : FAILURE";
-        #To delete the added table
-        if instance:
-            tdkTestObj = obj.createTestStep("AdvancedConfig_DelObject");
-            tdkTestObj.addParameter("paramName","Device.NAT.PortMapping.%s." %instance);
-            expectedresult = "SUCCESS";
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                details = tdkTestObj.getResultDetails();
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table is deleted successfully\n"
-            else:
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table could not be deleted\n"
-        obj.unloadModule("advancedconfig");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 1]: Enabling Port Mapping");
+            print("[EXPECTED RESULT 1]: Should enable Port Mapping");
+            print("[ACTUAL RESULT 1]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Failure in setting the port forwarding as true\n ")
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST STEP ]: Get the  DHCP pool max addresses");
+        print("[EXPECTED RESULT ]: Should get the DHCP pool max addresses");
+        print("[ACTUAL RESULT ]: Failed to get the DHCP pool max addresses");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    #To delete the added table
+    if instance:
+        tdkTestObj = obj.createTestStep("AdvancedConfig_DelObject");
+        tdkTestObj.addParameter("paramName","Device.NAT.PortMapping.%s." %instance);
+        expectedresult = "SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP ]: Deleting the added rule");
+            print("[EXPECTED RESULT ]: Should delete the added rule");
+            print("[ACTUAL RESULT]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Added table is deleted successfully\n")
+        else:
+            print("[TEST STEP ]: Deleting the added rule");
+            print("[EXPECTED RESULT ]: Should delete the added rule");
+            print("[ACTUAL RESULT]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Added table could not be deleted\n")
+    obj.unloadModule("advancedconfig");
 else:
-        print "FAILURE to load Advancedconfig module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-					
-
-					
+    print("FAILURE to load Advancedconfig module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

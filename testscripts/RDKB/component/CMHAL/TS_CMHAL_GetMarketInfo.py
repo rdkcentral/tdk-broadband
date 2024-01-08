@@ -81,8 +81,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetMarketInfo');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,24 +106,24 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    
+
     if expectedresult in actualresult and  details!=" ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the market info of cable modem";
-        print "EXPECTED RESULT 1: Should get the market info of cable modem successfully";
-        print "ACTUAL RESULT 1: Market info of cable modem is : %s"%details;
+        print("TEST STEP 1: Get the market info of cable modem");
+        print("EXPECTED RESULT 1: Should get the market info of cable modem successfully");
+        print("ACTUAL RESULT 1: Market info of cable modem is : %s"%details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the market info";
-        print "EXPECTED RESULT 1: Should get the market info of cable modem successfully";
-        print "ACTUAL RESULT 1: Failed to get the market info of cable modem";
-        print "[TEST EXECUTION RESULT] : FAILURE: %s"%details;
+        print("TEST STEP 1: Get the market info");
+        print("EXPECTED RESULT 1: Should get the market info of cable modem successfully");
+        print("ACTUAL RESULT 1: Failed to get the market info of cable modem");
+        print("[TEST EXECUTION RESULT] : FAILURE: %s"%details);
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

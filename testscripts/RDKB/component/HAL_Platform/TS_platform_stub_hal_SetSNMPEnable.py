@@ -79,118 +79,118 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_SetSNMPEnable');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetSNMPEnable");
-        expectedresult="SUCCESS";
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetSNMPEnable");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details and (details == "started" or details == "stopped"):
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetSNMPEnable");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetSNMPEnable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("details of snmp is %s" %details);
+
+        if details == "started":
+            currentSnmp = 1;
+            #Disable SNMP using SET API
+            Enable_snmp = 0;
+        else:
+            #Enable SNMP using SET API
+            currentSnmp = 0;
+            Enable_snmp = 1;
+
+        tdkTestObj = obj.createTestStep("platform_stub_hal_SetSNMPEnable");
+        tdkTestObj.addParameter("index", Enable_snmp);
+        expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details and (details == "started" or details == "stopped"):
+        if expectedresult in actualresult:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Platform_GetSNMPEnable";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetSNMPEnable successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "details of snmp is %s" %details;
-
-            if details == "started":
-	        currentSnmp = 1;
-                #Disable SNMP using SET API
-                Enable_snmp = 0;
-            else:
-                #Enable SNMP using SET API
-	        currentSnmp = 0;
-                Enable_snmp = 1;
-
-            tdkTestObj = obj.createTestStep("platform_stub_hal_SetSNMPEnable");
-            tdkTestObj.addParameter("index", Enable_snmp);
-            expectedresult = "SUCCESS";
+            details = tdkTestObj.getResultDetails();
+            print("TEST STEP 2: Retrieve the Platform_SetSNMPEnable");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_SetSNMPEnable successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            time.sleep(20);
+            tdkTestObj = obj.createTestStep("platform_stub_hal_GetSNMPEnable");
+            expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            if expectedresult in actualresult:
-                #Set the result status of execution
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and details and (details == "started" or details == "stopped"):
                 tdkTestObj.setResultStatus("SUCCESS");
-                details = tdkTestObj.getResultDetails();
-                print "TEST STEP 2: Retrieve the Platform_SetSNMPEnable";
-                print "EXPECTED RESULT 2: Should retrieve the Platform_SetSNMPEnable successfully";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                time.sleep(20);
-                tdkTestObj = obj.createTestStep("platform_stub_hal_GetSNMPEnable");
-                expectedresult="SUCCESS";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and details and (details == "started" or details == "stopped"):
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Retrieve the Platform_GetSNMPEnable";
-                    print "EXPECTED RESULT 3: Should retrieve the Platform_GetSNMPEnable successfully";
-                    print "ACTUAL RESULT 3: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    if details == "started":
-                        snmpAfterSet = 1;
-                    else:
-                        snmpAfterSet = 0;
-                    print "Enable_snmp = %s, snmpAfterSet = %s" %(Enable_snmp, snmpAfterSet);
-                    if Enable_snmp == snmpAfterSet:
-                        print "TEST STEP 4: Check whether SNMP Enable value is same as expected";
-                        print "EXPECTED RESULT 4: Should retrieve the Platform_GetSNMPEnable successfully";
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";         
-                        print "SNMP Enable value is %s" %details;
+                print("TEST STEP 3: Retrieve the Platform_GetSNMPEnable");
+                print("EXPECTED RESULT 3: Should retrieve the Platform_GetSNMPEnable successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                if details == "started":
+                    snmpAfterSet = 1;
+                else:
+                    snmpAfterSet = 0;
+                print("Enable_snmp = %s, snmpAfterSet = %s" %(Enable_snmp, snmpAfterSet));
+                if Enable_snmp == snmpAfterSet:
+                    print("TEST STEP 4: Check whether SNMP Enable value is same as expected");
+                    print("EXPECTED RESULT 4: Should retrieve the Platform_GetSNMPEnable successfully");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    print("SNMP Enable value is %s" %details);
 
-                        time.sleep(90);
-                        tdkTestObj = obj.createTestStep("platform_stub_hal_SetSNMPEnable");
-                        tdkTestObj.addParameter("index", currentSnmp);
-                        expectedresult = "SUCCESS";
-                        tdkTestObj.executeTestCase(expectedresult);
-                        actualresult = tdkTestObj.getResult();
-                        if expectedresult in actualresult:
-                            #Set the result status of execution
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            details = tdkTestObj.getResultDetails();
-                            print "TEST STEP 5: Retrieve the Platform_SetSNMPEnable";
-                            print "EXPECTED RESULT 5: Should retrieve the Platform_SetSNMPEnable successfully";
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                            print "Get Value Re-Setted successfully"; 
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5: Retrieve the Platform_SetSNMPEnable";
-                            print "EXPECTED RESULT 5: Should retrieve the Platform_SetSNMPEnable successfully";
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                            print "Resetting SNMP to original got failed"; 
+                    time.sleep(90);
+                    tdkTestObj = obj.createTestStep("platform_stub_hal_SetSNMPEnable");
+                    tdkTestObj.addParameter("index", currentSnmp);
+                    expectedresult = "SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        details = tdkTestObj.getResultDetails();
+                        print("TEST STEP 5: Retrieve the Platform_SetSNMPEnable");
+                        print("EXPECTED RESULT 5: Should retrieve the Platform_SetSNMPEnable successfully");
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                        print("Get Value Re-Setted successfully");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4:  Check SNMP Enable value is same as expected";
-                        print "EXPECTED RESULT 4: Should retrieve the Platform_GetSNMPEnable successfully";
-                        print "ACTUAL RESULT 4: %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Set and Get value are Same";
+                        print("TEST STEP 5: Retrieve the Platform_SetSNMPEnable");
+                        print("EXPECTED RESULT 5: Should retrieve the Platform_SetSNMPEnable successfully");
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+                        print("Resetting SNMP to original got failed");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    details = tdkTestObj.getResultDetails();
-                    print "TEST STEP 3: Retrieve the Platform_GetSNMPEnable";
-                    print "EXPECTED RESULT 3: Should retrieve the Platform_GetSNMPEnable successfully";
-                    print "ACTUAL RESULT 3: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("TEST STEP 4:  Check SNMP Enable value is same as expected");
+                    print("EXPECTED RESULT 4: Should retrieve the Platform_GetSNMPEnable successfully");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("Set and Get value are Same");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP 2: Retrieve the Platform_SetSNMPEnable";
-                print "EXPECTED RESULT 2: Should retrieve the Platform_SetSNMPEnable successfully";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP 3: Retrieve the Platform_GetSNMPEnable");
+                print("EXPECTED RESULT 3: Should retrieve the Platform_GetSNMPEnable successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the Platform_GetSNMPEnable";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetSNMPEnable successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        obj.unloadModule("halplatform");
+            details = tdkTestObj.getResultDetails();
+            print("TEST STEP 2: Retrieve the Platform_SetSNMPEnable");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_SetSNMPEnable successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Platform_GetSNMPEnable");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetSNMPEnable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

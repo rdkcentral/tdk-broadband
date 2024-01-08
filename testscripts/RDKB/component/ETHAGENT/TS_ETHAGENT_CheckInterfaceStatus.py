@@ -116,155 +116,155 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     NoofHost=tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and int(NoofHost) >0:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the no of  LAN clients connected";
-       print "EXPECTED RESULT 1: Should get the no of LAN clients connected"
-       print "ACTUAL RESULT 1:%s" %NoofHost
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the no of  LAN clients connected");
+        print("EXPECTED RESULT 1: Should get the no of LAN clients connected")
+        print("ACTUAL RESULT 1:%s" %NoofHost)
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       Ethclientfound = 0;
+        Ethclientfound = 0;
 
-       for i in range (1,int(NoofHost)+1):
-           expectedresult="SUCCESS";
-           tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-           tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           print "Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details);
-           if expectedresult in actualresult and details == "Ethernet":
-              tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-              tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              print "Device.Hosts.Host.%s.Active value is %s" %(i,details);
-              if  expectedresult in actualresult and details == "true":
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 2: Check if the connected LAN clinet is active";
-                  print "EXPECTED RESULT 2: Should get the connected LAN client active";
-                  print "ACTUAL RESULT 2:%s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
+        for i in range (1,int(NoofHost)+1):
+            expectedresult="SUCCESS";
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            print("Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details));
+            if expectedresult in actualresult and details == "Ethernet":
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                print("Device.Hosts.Host.%s.Active value is %s" %(i,details));
+                if  expectedresult in actualresult and details == "true":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2: Check if the connected LAN clinet is active");
+                    print("EXPECTED RESULT 2: Should get the connected LAN client active");
+                    print("ACTUAL RESULT 2:%s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                  Ethclientfound = 1;
-                  tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-                  tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.PhysAddress"%(i));
+                    Ethclientfound = 1;
+                    tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.PhysAddress"%(i));
 
-                  #Execute the test case in DUT
-                  tdkTestObj.executeTestCase(expectedresult);
-                  actualresult = tdkTestObj.getResult();
-                  macAddress = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    macAddress = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                  if expectedresult in actualresult :
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 3: Get the lan client mac";
-                     print "EXPECTED RESULT 3: Should get the lan client mac"
-                     print "ACTUAL RESULT 3:LAN client connected mac is:%s" %macAddress
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                     mac = macAddress.upper();
-                     break;
+                    if expectedresult in actualresult :
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 3: Get the lan client mac");
+                        print("EXPECTED RESULT 3: Should get the lan client mac")
+                        print("ACTUAL RESULT 3:LAN client connected mac is:%s" %macAddress)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        mac = macAddress.upper();
+                        break;
 
-       if Ethclientfound ==1:
-          interafce = 0;
-          for i in range (1,5):
-              tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-              tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress"%i);
+        if Ethclientfound ==1:
+            interafce = 0;
+            for i in range (1,5):
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress"%i);
 
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              associatedMACAddress = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              if expectedresult in actualresult and associatedMACAddress == mac:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 3: Get the MAC address of the Ethernet interface";
-                 print "EXPECTED RESULT 3: Should get the MAC address of the Ethernet interface"
-                 print "ACTUAL RESULT 3:Device.Ethernet.Interface.%s.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress is %s" %(i,associatedMACAddress);
-                 print "LAN client interafce connected at :%s" %i
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-                 interface = i;
-                 break;
-              else:
-                  retryCount = retryCount + 1;
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                associatedMACAddress = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult and associatedMACAddress == mac:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the MAC address of the Ethernet interface");
+                    print("EXPECTED RESULT 3: Should get the MAC address of the Ethernet interface")
+                    print("ACTUAL RESULT 3:Device.Ethernet.Interface.%s.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress is %s" %(i,associatedMACAddress));
+                    print("LAN client interafce connected at :%s" %i)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    interface = i;
+                    break;
+                else:
+                    retryCount = retryCount + 1;
 
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.Enable"%interface);
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          checkEnable = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-          if expectedresult in actualresult and checkEnable != "" and checkEnable == "true":
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 5: Check if Interface Enable status is true";
-             print "EXPECTED RESULT 5:Interface Enable status should be true"
-             print "ACTUAL RESULT 5:Interface Enable status is %s"  %checkEnable
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-             tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.Status"%interface);
-             #Execute the test case in DUT
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             checkStatus = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-             if expectedresult in actualresult and checkStatus != "" and  checkStatus == "Up":
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.Enable"%interface);
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            checkEnable = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if expectedresult in actualresult and checkEnable != "" and checkEnable == "true":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 6: Check if Interface status is up";
-                print "EXPECTED RESULT 6:Interface status should be up"
-                print "ACTUAL RESULT 6:Interface status is %s" %checkStatus
+                print("TEST STEP 5: Check if Interface Enable status is true");
+                print("EXPECTED RESULT 5:Interface Enable status should be true")
+                print("ACTUAL RESULT 5:Interface Enable status is %s"  %checkEnable)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-             else:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 6: Check if Interface status is up";
-                 print "EXPECTED RESULT 6:Interface status is up"
-                 print "ACTUAL RESULT 6:Interface status is  not %s"%checkStatus
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 5: Check if Interface  Enable status is true";
-              print "EXPECTED RESULT 5:Interface Enable status should be true"
-              print "ACTUAL RESULT 5:Interface Enable status is  %s" %checkEnable
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Ethernet.Interface.%s.Status"%interface);
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                checkStatus = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult and checkStatus != "" and  checkStatus == "Up":
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 6: Check if Interface status is up");
+                    print("EXPECTED RESULT 6:Interface status should be up")
+                    print("ACTUAL RESULT 6:Interface status is %s" %checkStatus)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 6: Check if Interface status is up");
+                    print("EXPECTED RESULT 6:Interface status is up")
+                    print("ACTUAL RESULT 6:Interface status is  not %s"%checkStatus)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 5: Check if Interface  Enable status is true");
+                print("EXPECTED RESULT 5:Interface Enable status should be true")
+                print("ACTUAL RESULT 5:Interface Enable status is  %s" %checkEnable)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-       if retryCount == MAX_RETRY:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 3: Get the active LAN client MAC"
-          print "EXPECTED RESULT 3: Should get the active LAN client MAC"
-          print "ACTUAL RESULT 3:Failed to get active LAN client MAC";
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        if retryCount == MAX_RETRY:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 3: Get the active LAN client MAC")
+            print("EXPECTED RESULT 3: Should get the active LAN client MAC")
+            print("ACTUAL RESULT 3:Failed to get active LAN client MAC");
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-       if Ethclientfound == 0:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 2: Get the active lan client connected interface"
-          print "EXPECTED RESULT 2: Should get the active lan client connected interface"
-          print "ACTUAL RESULT 2:No Ethernet client connected to DUT";
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        if Ethclientfound == 0:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the active lan client connected interface")
+            print("EXPECTED RESULT 2: Should get the active lan client connected interface")
+            print("ACTUAL RESULT 2:No Ethernet client connected to DUT");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the no of LAN clients connected";
-        print "EXPECTED RESULT 1: Should get the no of LAN clients connected"
-        print "ACTUAL RESULT 1:No clients associated with DUT %s" %NoofHost
+        print("TEST STEP 1: Get the no of LAN clients connected");
+        print("EXPECTED RESULT 1: Should get the no of LAN clients connected")
+        print("ACTUAL RESULT 1:No clients associated with DUT %s" %NoofHost)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

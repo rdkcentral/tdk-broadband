@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_FWUPGRADEHAL_GetRebootReady_NullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,22 +110,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready() with Null Buffer as input";
-        print "EXPECTED RESULT 1: The API fwupgrade_hal_reboot_ready() invocation should fail";
-        print "ACTUAL RESULT 1: The API invocation failed";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready() with Null Buffer as input");
+        print("EXPECTED RESULT 1: The API fwupgrade_hal_reboot_ready() invocation should fail");
+        print("ACTUAL RESULT 1: The API invocation failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         #Set the result status of execution
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready() with Null Buffer as input";
-        print "EXPECTED RESULT 1: The API fwupgrade_hal_reboot_ready() invocation should fail"
-        print "ACTUAL RESULT 1:  The API invocation is success";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready() with Null Buffer as input");
+        print("EXPECTED RESULT 1: The API fwupgrade_hal_reboot_ready() invocation should fail")
+        print("ACTUAL RESULT 1:  The API invocation is success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

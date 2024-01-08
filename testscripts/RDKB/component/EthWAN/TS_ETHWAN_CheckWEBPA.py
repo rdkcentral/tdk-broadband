@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from webpaUtility import *
 
 #Test component to be tested
@@ -99,55 +99,55 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if "true" == ethwanEnable:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "The device is in ethwan mode."
+        if "true" == ethwanEnable:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
-    	    if "SUCCESS" in preRequisiteStatus:
+            tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
+            if "SUCCESS" in preRequisiteStatus:
 
-    	        queryParam = {"name":"Device.DeviceInfo.ManufacturerOUI"}
-    	        queryResponse = webpaQuery(obj, queryParam)
+                queryParam = {"name":"Device.DeviceInfo.ManufacturerOUI"}
+                queryResponse = webpaQuery(obj, queryParam)
 
-    	        parsedResponse = parseWebpaResponse(queryResponse, 1)
-    	        tdkTestObj = obj.createTestStep('ExecuteCmd');
-    	        tdkTestObj.executeTestCase("SUCCESS");
-    	        if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
-    	            getStatus = parsedResponse[1];
-    	            if getStatus:
-    	                tdkTestObj.setResultStatus("SUCCESS");
-    	                print "ManufacturerOUI:",getStatus
-    	                print "[TEST EXECUTION RESULT] : SUCCESS"
-    	            else:
-    	                tdkTestObj.setResultStatus("FAILURE");
-    	                print "[TEST EXECUTION RESULT] : FAILURE, invalid status received"
-    	        else:
-    	            tdkTestObj.setResultStatus("FAILURE");
-    	            print "[TEST EXECUTION RESULT] : FAILURE"
-    	    else:
-    	        tdkTestObj.setResultStatus("FAILURE");
-    	        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+                parsedResponse = parseWebpaResponse(queryResponse, 1)
+                tdkTestObj = obj.createTestStep('ExecuteCmd');
+                tdkTestObj.executeTestCase("SUCCESS");
+                if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
+                    getStatus = parsedResponse[1];
+                    if getStatus:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("ManufacturerOUI:",getStatus)
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE, invalid status received")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "The device is not in ethwan mode. Please check the device setup"
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj1.unloadModule("tdkbtr181");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

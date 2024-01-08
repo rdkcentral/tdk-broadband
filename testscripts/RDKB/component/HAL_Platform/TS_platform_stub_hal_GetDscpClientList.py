@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetDscpClientList');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,42 +91,42 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-    print "\nTEST STEP 1: Invoke the HAL API platform_hal_getDscpClientList() to retrieve the DSCP Client List values";
-    print "EXPECTED RESULT 1: platform_hal_getDscpClientList() should be invoked successfully";
+    print("\nTEST STEP 1: Invoke the HAL API platform_hal_getDscpClientList() to retrieve the DSCP Client List values");
+    print("EXPECTED RESULT 1: platform_hal_getDscpClientList() should be invoked successfully");
 
     if expectedresult in actualresult and "platform_hal_getDscpClientList() function invocation was successful" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: platform_hal_getDscpClientList() API is invoked successfully";
+        print("ACTUAL RESULT 1: platform_hal_getDscpClientList() API is invoked successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if the DSCP details are valid
         flag = 0;
-        print "\nTEST STEP 2 : Check if the DSCP details retrieved are valid";
-        print "EXPECTED RESULT 2 : The DSCP details retrieved should be valid";
+        print("\nTEST STEP 2 : Check if the DSCP details retrieved are valid");
+        print("EXPECTED RESULT 2 : The DSCP details retrieved should be valid");
 
         #Get the total DSCP number of elements
         noOfElements = details.split("Total DSCP number of elements = ")[1].split(";")[0];
 
         if noOfElements.isdigit():
             noOfElements = int(noOfElements);
-            print "Total Number of DSCP Elements : ", noOfElements;
+            print("Total Number of DSCP Elements : ", noOfElements);
             tdkTestObj.setResultStatus("SUCCESS");
 
             for element in range(1, noOfElements+1):
-                print "\n**********For DSCP Element %d**********" %element;
+                print("\n**********For DSCP Element %d**********" %element);
                 elementDetails = details.split(";")[element + 1];
                 dscpValue = elementDetails.split("DSCP value[")[1].split("]")[0];
 
                 if dscpValue.isdigit() and int(dscpValue) >= 0 and int(dscpValue) <= 63:
-                    print "DSCP value of the element is %s and it is valid" %dscpValue;
+                    print("DSCP value of the element is %s and it is valid" %dscpValue);
                     tdkTestObj.setResultStatus("SUCCESS");
                     noOfClients = elementDetails.split("DSCP numClients[")[1].split("]")[0];
 
                     if noOfClients.isdigit() and int(noOfClients) > 0:
                         noOfClients = int(noOfClients);
-                        print "Total Number of Clients : ", noOfClients;
+                        print("Total Number of Clients : ", noOfClients);
                         tdkTestObj.setResultStatus("SUCCESS");
 
                         for client in range(1, noOfClients+1):
@@ -134,51 +134,51 @@ if "SUCCESS" in loadmodulestatus.upper():
                             mac = clientDetails.split("mac - ")[1].split(",")[0];
                             rxBytes = clientDetails.split("rxBytes - ")[1].split(",")[0];
                             txBytes = clientDetails.split("txBytes - ")[1].split(" ")[0];
-                            print "-----For Client %d-----" %client;
-                            print "MAC : %s" %mac;
-                            print "rxBytes : %s" %rxBytes;
-                            print "txBytes : %s" %txBytes;
+                            print("-----For Client %d-----" %client);
+                            print("MAC : %s" %mac);
+                            print("rxBytes : %s" %rxBytes);
+                            print("txBytes : %s" %txBytes);
 
                             if mac != "" and rxBytes.isdigit() and txBytes.isdigit():
-                                print "The DSCP counter details for client %d are valid" %client;
+                                print("The DSCP counter details for client %d are valid" %client);
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else:
                                 flag = 1;
-                                print "The DSCP counter details for client %d are NOT valid" %client;
+                                print("The DSCP counter details for client %d are NOT valid" %client);
                                 tdkTestObj.setResultStatus("FAILURE");
                                 break;
                     else:
                         flag = 1;
-                        print "Total Number of Clients is not a valid value";
+                        print("Total Number of Clients is not a valid value");
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     flag = 1;
-                    print "DSCP value of the element is %s and it is NOT valid" %dscpValue;
+                    print("DSCP value of the element is %s and it is NOT valid" %dscpValue);
                     tdkTestObj.setResultStatus("FAILURE");
         else:
             flag = 1;
-            print "Total Number of DSCP Elements is not a valid value";
+            print("Total Number of DSCP Elements is not a valid value");
             tdkTestObj.setResultStatus("FAILURE");
 
         if flag == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: The DSCP values retrieved are valid";
+            print("ACTUAL RESULT 2: The DSCP values retrieved are valid");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: The DSCP values retrieved are NOT valid";
+            print("ACTUAL RESULT 2: The DSCP values retrieved are NOT valid");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: %s"%details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: %s"%details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

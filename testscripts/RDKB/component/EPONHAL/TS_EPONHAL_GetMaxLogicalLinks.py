@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetMaxLogicalLinks');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,28 +98,28 @@ if "SUCCESS" in loadmodulestatus.upper():
         if int(biDirectional) > 0 and int(downStreamOnly) > 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the bidirectional and downstreamonly links and check if they are greater than 0";
-            print "EXPECTED RESULT 1: Should get the bidirectional and downstreamonly links value as greater than 0";
-            print "ACTUAL RESULT 1:  %s" %resultDetails;
+            print("TEST STEP 1: Get the bidirectional and downstreamonly links and check if they are greater than 0");
+            print("EXPECTED RESULT 1: Should get the bidirectional and downstreamonly links value as greater than 0");
+            print("ACTUAL RESULT 1:  %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the bidirectional and downstreamonly links and check if they are greater than 0";
-            print "EXPECTED RESULT 1: Should get the bidirectional and downstreamonly links value as greater than 0";
-            print "ACTUAL RESULT 1:  %s" %resultDetails;
+            print("TEST STEP 1: Get the bidirectional and downstreamonly links and check if they are greater than 0");
+            print("EXPECTED RESULT 1: Should get the bidirectional and downstreamonly links value as greater than 0");
+            print("ACTUAL RESULT 1:  %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the MaxLogicalLinks";
-        print "EXPECTED RESULT : Should get the MaxLogicalLinks successfully";
-        print "ACTUAL RESULT : Failed to get the MaxLogicalLinks, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP : Get the MaxLogicalLinks");
+        print("EXPECTED RESULT : Should get the MaxLogicalLinks successfully");
+        print("ACTUAL RESULT : Failed to get the MaxLogicalLinks, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

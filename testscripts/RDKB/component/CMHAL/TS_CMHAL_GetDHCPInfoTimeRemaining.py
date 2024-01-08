@@ -65,7 +65,7 @@
     <api_or_interface_used>cm_hal_GetDHCPInfo,cm_hal_GetIPv6DHCPInfo</api_or_interface_used>
     <input_parameters>Ipv4DhcpLeaseTimeRemaining,Ipv4DhcpRebindTimeRemaining,Ipv4DhcpRenewTimeRemaining,IPV6LeaseTimeRemaining,IPv6RebindTimeRemaining,IPv6RenewTimeRemaining</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. Get the ip type.If it is IPV4,Invoke cm_hal_GetDHCPInfo and get Ipv4DhcpLeaseTimeRemaining,Ipv4DhcpRebindTimeRemaining,Ipv4DhcpRenewTimeRemaining 
+2. Get the ip type.If it is IPV4,Invoke cm_hal_GetDHCPInfo and get Ipv4DhcpLeaseTimeRemaining,Ipv4DhcpRebindTimeRemaining,Ipv4DhcpRenewTimeRemaining
 3. If it is IPV6,Invoke cm_hal_GetIPv6DHCPInfo and get IPV6LeaseTimeRemaining,IPv6RebindTimeRemaining,IPv6RenewTimeRemaining
 4. Unload cmhal module</automation_approch>
     <except_output>Should get DhcpLeaseTimeRemaining,DhcpRebindTimeRemaining, DhcpRenewTimeRemaining of IPV4 or IPV6 depending upon the IPtype</except_output>
@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetDHCPInfoTimeRemaining');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -107,11 +107,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and IPType != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the provisioned wan0 iptype";
-        print "EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully";
-        print "ACTUAL RESULT 1: IPType is %s" %IPType;
+        print("TEST STEP 1: Get the provisioned wan0 iptype");
+        print("EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully");
+        print("ACTUAL RESULT 1: IPType is %s" %IPType);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "IPV6" in IPType.upper():
             tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
@@ -122,11 +122,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and IPv6LeaseTimeRemaining != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the IPV6LeaseTimeRemaining";
-                print "EXPECTED RESULT 2: Should get the IPV6LeaseTimeRemaining";
-                print "ACTUAL RESULT 2: IPV6LeaseTimeRemaing: %s" %IPv6LeaseTimeRemaining;
+                print("TEST STEP 2: Get the IPV6LeaseTimeRemaining");
+                print("EXPECTED RESULT 2: Should get the IPV6LeaseTimeRemaining");
+                print("ACTUAL RESULT 2: IPV6LeaseTimeRemaing: %s" %IPv6LeaseTimeRemaining);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
                 tdkTestObj.addParameter("paramName","IPv6RebindTimeRemaining");
@@ -136,11 +136,11 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult and IPv6RebindTimeRemaining != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the IPv6RebindTimeRemaining";
-                    print "EXPECTED RESULT 3: Should get the IPv6RebindTimeRemaining";
-                    print "ACTUAL RESULT 3: IPv6RebindTimeRemaining: %s" %IPv6RebindTimeRemaining;
+                    print("TEST STEP 3: Get the IPv6RebindTimeRemaining");
+                    print("EXPECTED RESULT 3: Should get the IPv6RebindTimeRemaining");
+                    print("ACTUAL RESULT 3: IPv6RebindTimeRemaining: %s" %IPv6RebindTimeRemaining);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
                     tdkTestObj.addParameter("paramName","IPv6RenewTimeRemaining");
@@ -150,35 +150,35 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult and IPv6RenewTimeRemaining != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Get the IPv6RenewTimeRemaining";
-                        print "EXPECTED RESULT 4: Should get the IPv6RenewTimeRemaining";
-                        print "ACTUAL RESULT 4: IPv6RenewTimeRemaining: %s" %IPv6RenewTimeRemaining;
+                        print("TEST STEP 4: Get the IPv6RenewTimeRemaining");
+                        print("EXPECTED RESULT 4: Should get the IPv6RenewTimeRemaining");
+                        print("ACTUAL RESULT 4: IPv6RenewTimeRemaining: %s" %IPv6RenewTimeRemaining);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Get the IPv6RenewTimeRemaining";
-                        print "EXPECTED RESULT 4: Should get the IPv6RenewTimeRemaining";
-                        print "ACTUAL RESULT 4:Failed to get IPv6RenewTimeRemaining";
+                        print("TEST STEP 4: Get the IPv6RenewTimeRemaining");
+                        print("EXPECTED RESULT 4: Should get the IPv6RenewTimeRemaining");
+                        print("ACTUAL RESULT 4:Failed to get IPv6RenewTimeRemaining");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the IPv6RebindTimeRemaining";
-                    print "EXPECTED RESULT 3: Should get the IPv6RebindTimeRemaining";
-                    print "ACTUAL RESULT 3: Failed to get IPv6RebindTimeRemaining";
+                    print("TEST STEP 3: Get the IPv6RebindTimeRemaining");
+                    print("EXPECTED RESULT 3: Should get the IPv6RebindTimeRemaining");
+                    print("ACTUAL RESULT 3: Failed to get IPv6RebindTimeRemaining");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the IPV6LeaseTimeRemaining";
-                print "EXPECTED RESULT 2: Should get the IPV6LeaseTimeRemaining";
-                print "ACTUAL RESULT 2: Failed to get IPV6LeaseTimeRemaing: ";
+                print("TEST STEP 2: Get the IPV6LeaseTimeRemaining");
+                print("EXPECTED RESULT 2: Should get the IPV6LeaseTimeRemaining");
+                print("ACTUAL RESULT 2: Failed to get IPV6LeaseTimeRemaing: ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         elif "IPV4" in IPType.upper():
             tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
             tdkTestObj.addParameter("paramName","LeaseTimeRemaining");
@@ -188,11 +188,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and Ipv4DhcpLeaseTimeRemaining != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Get the Ipv4DhcpLeaseTimeRemaining";
-                print "EXPECTED RESULT 5: Should get the Ipv4DhcpLeaseTimeRemaining";
-                print "ACTUAL RESULT 5: Ipv4DhcpLeaseTimeRemaining: %s" %Ipv4DhcpLeaseTimeRemaining;
+                print("TEST STEP 5: Get the Ipv4DhcpLeaseTimeRemaining");
+                print("EXPECTED RESULT 5: Should get the Ipv4DhcpLeaseTimeRemaining");
+                print("ACTUAL RESULT 5: Ipv4DhcpLeaseTimeRemaining: %s" %Ipv4DhcpLeaseTimeRemaining);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
                 tdkTestObj.addParameter("paramName","RebindTimeRemaining");
@@ -202,11 +202,11 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult and Ipv4DhcpRebindTimeRemaining != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 6: Get the Ipv4DhcpRebindTimeRemaining";
-                    print "EXPECTED RESULT 6: Should get the Ipv4DhcpRebindTimeRemaining";
-                    print "ACTUAL RESULT 6:Ipv4DhcpRebindTimeRemaining: %s" %Ipv4DhcpRebindTimeRemaining;
+                    print("TEST STEP 6: Get the Ipv4DhcpRebindTimeRemaining");
+                    print("EXPECTED RESULT 6: Should get the Ipv4DhcpRebindTimeRemaining");
+                    print("ACTUAL RESULT 6:Ipv4DhcpRebindTimeRemaining: %s" %Ipv4DhcpRebindTimeRemaining);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
                     tdkTestObj.addParameter("paramName","RenewTimeRemaining");
@@ -216,47 +216,46 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult and Ipv4DhcpRenewTimeRemaining != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 7: Get the Ipv4DhcpRenewTimeRemaining";
-                        print "EXPECTED RESULT 7: Should get the Ipv4DhcpRenewTimeRemaining";
-                        print "ACTUAL RESULT 7: Ipv4DhcpRenewTimeRemaining: %s" %Ipv4DhcpRenewTimeRemaining;
+                        print("TEST STEP 7: Get the Ipv4DhcpRenewTimeRemaining");
+                        print("EXPECTED RESULT 7: Should get the Ipv4DhcpRenewTimeRemaining");
+                        print("ACTUAL RESULT 7: Ipv4DhcpRenewTimeRemaining: %s" %Ipv4DhcpRenewTimeRemaining);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 7: Get the Ipv4DhcpRenewTimeRemaining";
-                        print "EXPECTED RESULT 7: Should get the Ipv4DhcpRenewTimeRemaining";
-                        print "ACTUAL RESULT 7:Failed to get Ipv4DhcpRenewTimeRemaining";
+                        print("TEST STEP 7: Get the Ipv4DhcpRenewTimeRemaining");
+                        print("EXPECTED RESULT 7: Should get the Ipv4DhcpRenewTimeRemaining");
+                        print("ACTUAL RESULT 7:Failed to get Ipv4DhcpRenewTimeRemaining");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 6: Get the Ipv4DhcpRebindTimeRemaining";
-                    print "EXPECTED RESULT 6: Should get the Ipv4DhcpRebindTimeRemaining";
-                    print "ACTUAL RESULT 6: Failed to get Ipv4DhcpRebindTimeRemaining";
+                    print("TEST STEP 6: Get the Ipv4DhcpRebindTimeRemaining");
+                    print("EXPECTED RESULT 6: Should get the Ipv4DhcpRebindTimeRemaining");
+                    print("ACTUAL RESULT 6: Failed to get Ipv4DhcpRebindTimeRemaining");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5: Get the Ipv4DhcpLeaseTimeRemaining";
-                print "EXPECTED RESULT 5: Should get the Ipv4DhcpLeaseTimeRemaining";
-                print "ACTUAL RESULT 5: Failed to get Ipv4DhcpLeaseTimeRemaining: ";
+                print("TEST STEP 5: Get the Ipv4DhcpLeaseTimeRemaining");
+                print("EXPECTED RESULT 5: Should get the Ipv4DhcpLeaseTimeRemaining");
+                print("ACTUAL RESULT 5: Failed to get Ipv4DhcpLeaseTimeRemaining: ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the provisioned wan0 iptype";
-        print "EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully";
-        print "ACTUAL RESULT 1: Failed to get IPType";
+        print("TEST STEP 1: Get the provisioned wan0 iptype");
+        print("EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully");
+        print("ACTUAL RESULT 1: Failed to get IPType");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

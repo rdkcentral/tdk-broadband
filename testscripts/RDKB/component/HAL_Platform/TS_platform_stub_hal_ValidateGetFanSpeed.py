@@ -95,8 +95,8 @@ obj1.configureTestCase(ip,port,'TS_platform_stub_hal_ValidateGetFanSpeed');
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
 result1=obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
-print "[LIB LOAD STATUS]  :  %s" %result1;
+print("[LIB LOAD STATUS]  :  %s" %result);
+print("[LIB LOAD STATUS]  :  %s" %result1);
 
 if "SUCCESS" in  result.upper() and "SUCCESS" in result1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,11 +113,11 @@ if "SUCCESS" in  result.upper() and "SUCCESS" in result1.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: move the speed_fan to /nvram/TDK/";
-        print "EXPECTED RESULT 1: Should move the speed_fan to /nvram/TDK/"
-        print "ACTUAL RESULT 1: File move was successfull"
+        print("TEST STEP 1: move the speed_fan to /nvram/TDK/");
+        print("EXPECTED RESULT 1: Should move the speed_fan to /nvram/TDK/")
+        print("ACTUAL RESULT 1: File move was successfull")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         #Script to load the configuration file of the component
         tdkTestObj = obj.createTestStep("platform_stub_hal_GetFanSpeed");
@@ -129,18 +129,18 @@ if "SUCCESS" in  result.upper() and "SUCCESS" in result1.upper():
         if expectedresult in actualresult and int(details) == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Retrieve the Platform_GetFanSpeed";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_GetFanSpeed as 0";
-            print "ACTUAL RESULT 2 :FanSpeed is  %s" %details;
+            print("TEST STEP 2: Retrieve the Platform_GetFanSpeed");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_GetFanSpeed as 0");
+            print("ACTUAL RESULT 2 :FanSpeed is  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Retrieve the Platform_GetFanSpeed";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_GetFanSpeed as 0";
-            print "ACTUAL RESULT 2: FanSpeed is  %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("TEST STEP 2: Retrieve the Platform_GetFanSpeed");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_GetFanSpeed as 0");
+            print("ACTUAL RESULT 2: FanSpeed is  %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
 
         tdkTestObj = obj1.createTestStep('ExecuteCmd');
         cmd = " mv /nvram/TDK/speed_fan  /tmp/";
@@ -150,34 +150,34 @@ if "SUCCESS" in  result.upper() and "SUCCESS" in result1.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult :
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: move the speed_fan back to /tmp/";
-           print "EXPECTED RESULT 3: Should move the speed_fan to /tmp/"
-           print "ACTUAL RESULT 3: File move failed"
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: move the speed_fan back to /tmp/");
+            print("EXPECTED RESULT 3: Should move the speed_fan to /tmp/")
+            print("ACTUAL RESULT 3: File move failed")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: move the speed_fan back to /tmp/";
-            print "EXPECTED RESULT 3: Should move the speed_fan to /tmp/"
-            print "ACTUAL RESULT 3: File move failed"
+            print("TEST STEP 3: move the speed_fan back to /tmp/");
+            print("EXPECTED RESULT 3: Should move the speed_fan to /tmp/")
+            print("ACTUAL RESULT 3: File move failed")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: move the speed_fan to /nvram/TDK/";
-        print "EXPECTED RESULT 1: Should move the speed_fan to /nvram/TDK/"
-        print "ACTUAL RESULT 1: File move failed"
+        print("TEST STEP 1: move the speed_fan to /nvram/TDK/");
+        print("EXPECTED RESULT 1: Should move the speed_fan to /nvram/TDK/")
+        print("ACTUAL RESULT 1: File move failed")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("halplatform");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

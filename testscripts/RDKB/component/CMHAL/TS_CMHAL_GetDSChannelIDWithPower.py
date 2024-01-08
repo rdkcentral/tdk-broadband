@@ -81,8 +81,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 
 #Test component to be tested
@@ -99,8 +99,8 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_GetDSChannelIDWithPower');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,12 +116,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult1 in actualresult1 and Details1.strip():
         tdkTestObj1.setResultStatus("SUCCESS");
-        print "TEST STEP 0: Execute the command";
-        print "EXPECTED RESULT 0: Should execute the command successfully";
-        print "ACTUAL RESULT 0: Details: %s" %Details1;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Details: %s" %Details1);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         powerlevels = Details1.split(",");
-        print "CM DS Power Levels : %s" %powerlevels;
+        print("CM DS Power Levels : %s" %powerlevels);
 
         #This method invokes the HAL API docsis_GetDSChannel to get the downstream channel id and power
         tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
@@ -133,57 +133,55 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         minPower = float(powerlevels[0]);
         maxPower = float(powerlevels[1]);
         List = Power.split(",");
-        print "%s" %List;
+        print("%s" %List);
         for item in List:
-	    #Data[0] is Channel ID and Data[1] is Power
+            #Data[0] is Channel ID and Data[1] is Power
             Data = item.split(":");
-            print "%s" %Data;
-        
+            print("%s" %Data);
+
             if  int(Data[0]) != 0 and "dBmV" in Data[1]:
-               if minPower<=float(Data[1].split(" ")[0])<=maxPower:
-                   status = "Success";
-               else:
-                   status = "Failure";
-                   break;
+                if minPower<=float(Data[1].split(" ")[0])<=maxPower:
+                    status = "Success";
+                else:
+                    status = "Failure";
+                    break;
             elif int(Data[0]) != 0 and "dBmV" not in Data[1] :
-               if minPower<=float(Data[1])<=maxPower:
-                   status = "Success";
-               else:
-                   status = "Failure";
-                   break;
+                if minPower<=float(Data[1])<=maxPower:
+                    status = "Success";
+                else:
+                    status = "Failure";
+                    break;
             elif int(Data[0])==0 and "" in Data[1]:
                 status = "Success";
             else:
                 status = "Failure";
                 break;
-        
+
         if expectedresult in actualresult and "Success" in status:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get and validate the DownStream power and ChannelID";
-            print "EXPECTED RESULT 1: Should get power if channelID not zero";
-            print "ACTUAL RESULT 1: Successfully validated the ChannelID with power" ;
+            print("TEST STEP 1: Get and validate the DownStream power and ChannelID");
+            print("EXPECTED RESULT 1: Should get power if channelID not zero");
+            print("ACTUAL RESULT 1: Successfully validated the ChannelID with power") ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get and validate the DownStream power and ChannelID";
-            print "EXPECTED RESULT 1: Should get power if channelID not zero";
-            print "ACTUAL RESULT 1: Validation of ChannelID and power failed";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get and validate the DownStream power and ChannelID");
+            print("EXPECTED RESULT 1: Should get power if channelID not zero");
+            print("ACTUAL RESULT 1: Validation of ChannelID and power failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 0: Execute the command";
-        print "EXPECTED RESULT 0: Should execute the command successfully";
-        print "ACTUAL RESULT 0: Failed to execute the command, Details :%s" %Details1;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 0: Execute the command");
+        print("EXPECTED RESULT 0: Should execute the command successfully");
+        print("ACTUAL RESULT 0: Failed to execute the command, Details :%s" %Details1);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        obj1.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-				
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

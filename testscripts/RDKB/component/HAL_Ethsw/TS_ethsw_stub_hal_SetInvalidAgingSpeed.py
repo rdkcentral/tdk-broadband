@@ -77,38 +77,38 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetInvalidAgingSpeed');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-	invalid_value = 3826
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetAgingSpeed");
-        tdkTestObj.addParameter("PortID",1);
-        tdkTestObj.addParameter("AgingSpeed",invalid_value);
-        expectedresult = "FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    invalid_value = 3826
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetAgingSpeed");
+    tdkTestObj.addParameter("PortID",1);
+    tdkTestObj.addParameter("AgingSpeed",invalid_value);
+    expectedresult = "FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Set the EthSw_SetAgingSpeed";
-            print "EXPECTED RESULT 1: Should not set the invalid EthSw_SetAgingSpeed";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-	    print "TEST STEP 1: Set the EthSw_SetAgingSpeed";
-            print "EXPECTED RESULT 1: Should not set the invalid EthSw_SetAgingSpeed";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
-        obj.unloadModule("halethsw");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Set the EthSw_SetAgingSpeed");
+        print("EXPECTED RESULT 1: Should not set the invalid EthSw_SetAgingSpeed");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Set the EthSw_SetAgingSpeed");
+        print("EXPECTED RESULT 1: Should not set the invalid EthSw_SetAgingSpeed");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

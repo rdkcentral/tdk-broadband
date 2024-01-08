@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_COSAMTA_GetBatteryActualCapacity');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,11 +113,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and (install == '0' or install == '1'):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the BatteryInstalled";
-        print "EXPECTED RESULT 1: Should get the BatteryInstalled successfully";
-        print "ACTUAL RESULT 1: The BatteryInstalled is %s" %status[int(install)];
+        print("TEST STEP 1: Get the BatteryInstalled");
+        print("EXPECTED RESULT 1: Should get the BatteryInstalled successfully");
+        print("ACTUAL RESULT 1: The BatteryInstalled is %s" %status[int(install)]);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep("CosaMTA_GetParamUlongValue");
         tdkTestObj.addParameter("handleType",0);
@@ -130,32 +130,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the BatteryActualCapacity";
-            print "EXPECTED RESULT 2: Should get the BatteryActualCapacity successfully";
-            print "ACTUAL RESULT 2: The BatteryActualCapacity is %s" %resultDetails;
+            print("TEST STEP 2: Get the BatteryActualCapacity");
+            print("EXPECTED RESULT 2: Should get the BatteryActualCapacity successfully");
+            print("ACTUAL RESULT 2: The BatteryActualCapacity is %s" %resultDetails);
             if  int(resultDetails) >= 0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "BatteryActualCapacity is within the expected range"
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("BatteryActualCapacity is within the expected range")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "BatteryActualCapacity is not within the expected range"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("BatteryActualCapacity is not within the expected range")
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the BatteryActualCapacity";
-            print "EXPECTED RESULT 2: Should get the BatteryActualCapacity successfully";
-            print "ACTUAL RESULT 2: Failed to get the BatteryActualCapacity, Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the BatteryActualCapacity");
+            print("EXPECTED RESULT 2: Should get the BatteryActualCapacity successfully");
+            print("ACTUAL RESULT 2: Failed to get the BatteryActualCapacity, Details : %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the BatteryInstalled";
-        print "EXPECTED RESULT 1: Should get the BatteryInstalled successfully";
-        print "ACTUAL RESULT 1: Failed to get the BatteryInstalled, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the BatteryInstalled");
+        print("EXPECTED RESULT 1: Should get the BatteryInstalled successfully");
+        print("ACTUAL RESULT 1: Failed to get the BatteryInstalled, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cosamta");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

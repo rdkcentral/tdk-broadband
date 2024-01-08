@@ -47,7 +47,7 @@
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load  platform module.
 2. From script invoke platform_stub_hal_DocsisParamsDBInit().
-3. Get the value 
+3. Get the value
 4. Validation of  the result is done within the python script and send the result status to Test Manager.
 5. Test Manager will publish the result in GUI as PASS/FAILURE based on the response from HAL_Platform stub.</automation_approch>
     <except_output>API should return SUCCESS</except_output>
@@ -75,36 +75,36 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_DocsisParamsDBInit');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_DocsisParamsDBInit");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_DocsisParamsDBInit");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the Platform_DocsisParamsDBInit";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_DocsisParamsDBInit successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the Platform_DocsisParamsDBInit";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_DocsisParamsDBInit successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Retrieve the Platform_DocsisParamsDBInit");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_DocsisParamsDBInit successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Retrieve the Platform_DocsisParamsDBInit");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_DocsisParamsDBInit successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-        obj.unloadModule("halplatform");
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

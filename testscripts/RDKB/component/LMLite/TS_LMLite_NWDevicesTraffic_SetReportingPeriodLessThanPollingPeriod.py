@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_LMLite_NWDevicesTraffic_SetReportingPeriodLess
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -121,11 +121,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ReportingPeriod of NetworkDevicesTraffic";
-        print "EXPECTED RESULT 1: Should get ReportingPeriod for NetworkDevicesTraffic";
-        print "ACTUAL RESULT 1: ReportingPeriod of NetworkDevicesTraffic :%s" %default;
+        print("TEST STEP 1: Get the ReportingPeriod of NetworkDevicesTraffic");
+        print("EXPECTED RESULT 1: Should get ReportingPeriod for NetworkDevicesTraffic");
+        print("ACTUAL RESULT 1: ReportingPeriod of NetworkDevicesTraffic :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('LMLiteStub_Get');
         tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic.PollingPeriod");
@@ -138,15 +138,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the PollingPeriod of NetworkDevicesTraffic";
-            print "EXPECTED RESULT 2: Should get a valid PollingPeriod for NetworkDevicesTraffic";
-            print "ACTUAL RESULT 2: PollingPeriod of NetworkDevicesTraffic :%s" %details;
+            print("TEST STEP 2: Get the PollingPeriod of NetworkDevicesTraffic");
+            print("EXPECTED RESULT 2: Should get a valid PollingPeriod for NetworkDevicesTraffic");
+            print("ACTUAL RESULT 2: PollingPeriod of NetworkDevicesTraffic :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    Index = PollingPeriod_list.index(details);
-	    if Index != 0:
-	        reportingperiod = PollingPeriod_list[Index-1];
-	        print "reporting period to be set is:%s" %reportingperiod;
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            Index = PollingPeriod_list.index(details);
+            if Index != 0:
+                reportingperiod = PollingPeriod_list[Index-1];
+                print("reporting period to be set is:%s" %reportingperiod);
                 tdkTestObj = obj.createTestStep('LMLiteStub_Set');
                 tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic.ReportingPeriod");
                 tdkTestObj.addParameter("ParamValue",reportingperiod);
@@ -159,28 +159,28 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Set ReportingPeriod as less than PollingPeriod";
-                    print "EXPECTED RESULT 3: Should not set ReportingPeriod less than  PollingPeriod for NetworkDevicesTraffic";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Set ReportingPeriod as less than PollingPeriod");
+                    print("EXPECTED RESULT 3: Should not set ReportingPeriod less than  PollingPeriod for NetworkDevicesTraffic");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Set ReportingPeriod as less than PollingPeriod";
-                    print "EXPECTED RESULT 3: Should not set ReportingPeriod less than  PollingPeriod for NetworkDevicesTraffic";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3: Set ReportingPeriod as less than PollingPeriod");
+                    print("EXPECTED RESULT 3: Should not set ReportingPeriod less than  PollingPeriod for NetworkDevicesTraffic");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the PollingPeriod of NetworkDevicesTraffic";
-            print "EXPECTED RESULT 2: Should get a valid PollingPeriod for NetworkDevicesTraffic";
-            print "ACTUAL RESULT 2: PollingPeriod of NetworkDevicesTraffic :%s" %details;
+            print("TEST STEP 2: Get the PollingPeriod of NetworkDevicesTraffic");
+            print("EXPECTED RESULT 2: Should get a valid PollingPeriod for NetworkDevicesTraffic");
+            print("ACTUAL RESULT 2: PollingPeriod of NetworkDevicesTraffic :%s" %details);
             #Get the result of execution
- 	    print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Set the reportingperiod to default value
         tdkTestObj = obj.createTestStep('LMLiteStub_Set');
@@ -195,30 +195,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Set ReportingPeriod to default value";
-            print "EXPECTED RESULT 4: Should set ReportingPeriod to default value";
-            print "ACTUAL RESULT 4: %s" %details;
+            print("TEST STEP 4: Set ReportingPeriod to default value");
+            print("EXPECTED RESULT 4: Should set ReportingPeriod to default value");
+            print("ACTUAL RESULT 4: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Set ReportingPeriod to default value";
-            print "EXPECTED RESULT 4: Should set ReportingPeriod to default value";
-            print "ACTUAL RESULT 4: %s" %details;
+            print("TEST STEP 4: Set ReportingPeriod to default value");
+            print("EXPECTED RESULT 4: Should set ReportingPeriod to default value");
+            print("ACTUAL RESULT 4: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ReportingPeriod of NetworkDevicesTraffic";
-        print "EXPECTED RESULT 1: Should get ReportingPeriod for NetworkDevicesTraffic";
-        print "ACTUAL RESULT 1: ReportingPeriod of NetworkDevicesTraffic :%s" %default;
+        print("TEST STEP 1: Get the ReportingPeriod of NetworkDevicesTraffic");
+        print("EXPECTED RESULT 1: Should get ReportingPeriod for NetworkDevicesTraffic");
+        print("ACTUAL RESULT 1: ReportingPeriod of NetworkDevicesTraffic :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("lmlite");
 else:
-        print "Failed to load lmlite module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load lmlite module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

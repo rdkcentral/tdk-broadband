@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetDOCSISInfo</api_or_interface_used>
     <input_parameters>paramName : version</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. The version of docsis should be retrieved successfully
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -75,9 +75,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetDocsisVersion');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,20 +94,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and "3.0" or "3.1" in version:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Docsis version";
-        print "EXPECTED RESULT 1: Should get the Docsis version successfully";
-        print "ACTUAL RESULT 1: Docsis version is %s" %version;
+        print("TEST STEP 1: Get the Docsis version");
+        print("EXPECTED RESULT 1: Should get the Docsis version successfully");
+        print("ACTUAL RESULT 1: Docsis version is %s" %version);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Docsis version";
-        print "EXPECTED RESULT 1: Should get the Docsis version successfully";
-        print "ACTUAL RESULT 1:Failed to get the Dicsis version, Details: %s" %version;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Docsis version");
+        print("EXPECTED RESULT 1: Should get the Docsis version successfully");
+        print("ACTUAL RESULT 1:Failed to get the Dicsis version, Details: %s" %version);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -83,8 +83,8 @@ CcspHalExtSw_getEthWanEnable</api_or_interface_used>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("halethsw","1");
@@ -97,100 +97,100 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_Set_EthWanEnable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        tdkTestObj = obj.createTestStep('ethsw_stub_hal_Get_EthWanEnable');
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep('ethsw_stub_hal_Get_EthWanEnable');
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details and (details == "0" or details == "1"):
+
+        #As part of set api validation, ethwan_enable state is NOT being toggled, as ETHWAN disable will cause the TDK test manager to lose connectivity with the test device. Hence using the current ethwanenable state as set's input
+        if details == "1":
+            Enable_ethwan = 1;
+            Enable_ethwan_str = "ENABLE"
+        else:
+            Enable_ethwan = 0;
+            Enable_ethwan_str = "DISABLE"
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+        print("EXPECTED RESULT 1: Should retrieve the ethsw_stub_hal_Get_EthWanEnable successfully");
+        print("ACTUAL RESULT 1: EthWanEnable state is %s" %Enable_ethwan_str);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+        #------------- Set ETHWAN Enable ----------------
+        tdkTestObj = obj.createTestStep("ethsw_stub_hal_Set_EthWanEnable");
+        tdkTestObj.addParameter("enable", Enable_ethwan);
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details and (details == "0" or details == "1"):
-           
-            #As part of set api validation, ethwan_enable state is NOT being toggled, as ETHWAN disable will cause the TDK test manager to lose connectivity with the test device. Hence using the current ethwanenable state as set's input 
-            if details == "1":
-                Enable_ethwan = 1;
-                Enable_ethwan_str = "ENABLE"
-            else:
-                Enable_ethwan = 0;
-                Enable_ethwan_str = "DISABLE"
-
+        if expectedresult in actualresult:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-            print "EXPECTED RESULT 1: Should retrieve the ethsw_stub_hal_Get_EthWanEnable successfully";
-            print "ACTUAL RESULT 1: EthWanEnable state is %s" %Enable_ethwan_str;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("TEST STEP 2: Set ethwan enable state using ethsw_stub_hal_Set_EthWanEnable");
+            print("EXPECTED RESULT 2: Should set ethwan enable state as: ", Enable_ethwan_str);
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-            #------------- Set ETHWAN Enable ----------------
-            tdkTestObj = obj.createTestStep("ethsw_stub_hal_Set_EthWanEnable");
-            tdkTestObj.addParameter("enable", Enable_ethwan);
+            #----------- Cross verify ethwan enable --------------------
+            tdkTestObj = obj.createTestStep('ethsw_stub_hal_Get_EthWanEnable');
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-                #Set the result status of execution
+
+            if expectedresult in actualresult and details and (details == "0" or details == "1"):
+                if details == "1":
+                    Enable_ethwan_new = 1;
+                    Enable_ethwan_new_str = "ENABLE"
+                else:
+                    Enable_ethwan_new = 0;
+                    Enable_ethwan_new_str = "DISABLE"
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set ethwan enable state using ethsw_stub_hal_Set_EthWanEnable";
-                print "EXPECTED RESULT 2: Should set ethwan enable state as: ", Enable_ethwan_str;
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP 3: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+                print("EXPECTED RESULT 3: Should retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully as: ", Enable_ethwan_str);
+                print("ACTUAL RESULT 3: EthWanEnable state is %s" %Enable_ethwan_new_str)
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-	        #----------- Cross verify ethwan enable --------------------
-	        tdkTestObj = obj.createTestStep('ethsw_stub_hal_Get_EthWanEnable');
-	        expectedresult="SUCCESS";
-	        tdkTestObj.executeTestCase(expectedresult);
-	        actualresult = tdkTestObj.getResult();
-	        details = tdkTestObj.getResultDetails();
-
-	        if expectedresult in actualresult and details and (details == "0" or details == "1"):
-                    if details == "1":
-                        Enable_ethwan_new = 1;
-                        Enable_ethwan_new_str = "ENABLE"
-                    else:
-                        Enable_ethwan_new = 0;
-                        Enable_ethwan_new_str = "DISABLE"
-                    tdkTestObj.setResultStatus("SUCCESS");
-		    print "TEST STEP 3: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-		    print "EXPECTED RESULT 3: Should retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully as: ", Enable_ethwan_str;
-		    print "ACTUAL RESULT 3: EthWanEnable state is %s" %Enable_ethwan_new_str
-		    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-
-                    if Enable_ethwan_new == Enable_ethwan:
-		        print "TEST STEP 4: Cross verifying values of GET and SET";
-		        print "EXPECTED RESULT 4: GET and SET values should be ",Enable_ethwan_str;
-		        print "ACTUAL RESULT 3: GET and SET value is %s" %Enable_ethwan_new_str;
-		        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE");
-		        print "TEST STEP 4: Cross verifying values of GET and SET";
-		        print "EXPECTED RESULT 4: GET and SET values should be :", Enable_ethwan_str;
-		        print "ACTUAL RESULT 4: %s" %details;
-		        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-		        print "GET and SET values are not same";
-
-               #Not adding the steps to revert ethwan state to original value, as we are not toggling its value in this script
+                if Enable_ethwan_new == Enable_ethwan:
+                    print("TEST STEP 4: Cross verifying values of GET and SET");
+                    print("EXPECTED RESULT 4: GET and SET values should be ",Enable_ethwan_str);
+                    print("ACTUAL RESULT 3: GET and SET value is %s" %Enable_ethwan_new_str);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-		    print "TEST STEP 3: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-		    print "EXPECTED RESULT 3: Should retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully as: ", Enable_ethwan_str;
-		    print "ACTUAL RESULT 3: %s" %details;
-		    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("TEST STEP 4: Cross verifying values of GET and SET");
+                    print("EXPECTED RESULT 4: GET and SET values should be :", Enable_ethwan_str);
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("GET and SET values are not same");
+
+           #Not adding the steps to revert ethwan state to original value, as we are not toggling its value in this script
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set ethwan enable using ethsw_stub_hal_Set_EthWanEnable";
-                print "EXPECTED RESULT 2: Should set ethwan enable state as: ", Enable_ethwan_str;
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ; 
+                print("TEST STEP 3: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+                print("EXPECTED RESULT 3: Should retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully as: ", Enable_ethwan_str);
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-                print "EXPECTED RESULT 1: Should Retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully";
-                print "ACTUAL RESULT 1: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE" 
-        obj.unloadModule("halethsw");
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set ethwan enable using ethsw_stub_hal_Set_EthWanEnable");
+            print("EXPECTED RESULT 2: Should set ethwan enable state as: ", Enable_ethwan_str);
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+        print("EXPECTED RESULT 1: Should Retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE")
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

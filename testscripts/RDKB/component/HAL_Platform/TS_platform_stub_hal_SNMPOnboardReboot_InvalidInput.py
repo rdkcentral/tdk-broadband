@@ -94,31 +94,31 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_SNMPOnboardReboot_InvalidInp
 result =obj.getLoadModuleResult();
 
 if "SUCCESS" in result.upper():
-   obj.setLoadModuleStatus("SUCCESS");
-   #Prmitive test case which associated to this Script
-   tdkTestObj = obj.createTestStep('platform_stub_hal_SetSNMPOnboardRebootEnable');
-   expectedresult ="FAILURE"
-   setValue ="Invalid"
-   tdkTestObj.addParameter("SNMPonboard",setValue)
-   #Execute the test case in DUT
-   tdkTestObj.executeTestCase("expectedresult");
-   #Get the result of execution
-   actualresult = tdkTestObj.getResult();
-   details = tdkTestObj.getResultDetails();
-   if expectedresult in actualresult:
-      print" TEST STEP 1: Set the SetSNMPOnboardRebootEnable with Invalid Value";
-      print" EXPECTED  RESULT 1: Should not set the SetSNMPOnboardRebootEnable";
-      print" ACTUAL RESULT 1: %s" %details
-      print "[TEST EXECUTION RESULT] : SUCCESS";
-      tdkTestObj.setResultStatus("SUCCESS");
-   else:
-       print" TEST STEP 1: Set the SetSNMPOnboardRebootEnable with Invalid Value";
-       print" EXPECTED  RESULT 1: Should not set the SetSNMPOnboardRebootEnable";
-       print" ACTUAL RESULT 1: %s" %details
-       print "[TEST EXECUTION RESULT] : FAILURE";
-       tdkTestObj.setResultStatus("FAILURE");
-   obj.unloadModule("halplatform");
+    obj.setLoadModuleStatus("SUCCESS");
+    #Prmitive test case which associated to this Script
+    tdkTestObj = obj.createTestStep('platform_stub_hal_SetSNMPOnboardRebootEnable');
+    expectedresult ="FAILURE"
+    setValue ="Invalid"
+    tdkTestObj.addParameter("SNMPonboard",setValue)
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase("expectedresult");
+    #Get the result of execution
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        print(" TEST STEP 1: Set the SetSNMPOnboardRebootEnable with Invalid Value");
+        print(" EXPECTED  RESULT 1: Should not set the SetSNMPOnboardRebootEnable");
+        print(" ACTUAL RESULT 1: %s" %details)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
+    else:
+        print(" TEST STEP 1: Set the SetSNMPOnboardRebootEnable with Invalid Value");
+        print(" EXPECTED  RESULT 1: Should not set the SetSNMPOnboardRebootEnable");
+        print(" ACTUAL RESULT 1: %s" %details)
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
+    obj.unloadModule("halplatform");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

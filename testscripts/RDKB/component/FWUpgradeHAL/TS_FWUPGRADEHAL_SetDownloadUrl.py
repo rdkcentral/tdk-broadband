@@ -101,8 +101,8 @@ obj1.configureTestCase(ip,port,'TS_FWUPGRADEHAL_SetDownloadUrl');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,13 +113,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if (expectedresult in actualresult) and (FirmwareFilename != " "):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 : Fetch the Firmware Filename and Firmware Location URL successfully from config file";
-        print "EXPECTED RESULT 1 : Firmware Filename and Firmware Location URL should be fetched successfully";
-        print "ACTUAL RESULT 1 : Firmware Details are fetched successfully";
-        print "Firmware Location URL : %s" %FirmwareLocationURL;
-        print "FirmwareFilename : %s" %FirmwareFilename;
+        print("TEST STEP 1 : Fetch the Firmware Filename and Firmware Location URL successfully from config file");
+        print("EXPECTED RESULT 1 : Firmware Filename and Firmware Location URL should be fetched successfully");
+        print("ACTUAL RESULT 1 : Firmware Details are fetched successfully");
+        print("Firmware Location URL : %s" %FirmwareLocationURL);
+        print("FirmwareFilename : %s" %FirmwareFilename);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep("FWUPGRADEHAL_Set_Download_Url");
         tdkTestObj.addParameter("URL",FirmwareLocationURL);
@@ -132,11 +132,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the Download URL and Filename using the HAL API fwupgrade_hal_set_download_url()";
-            print "EXPECTED RESULT 2: Should set the Download url: %s and Filename: %s" %(FirmwareLocationURL, FirmwareFilename);
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the Download URL and Filename using the HAL API fwupgrade_hal_set_download_url()");
+            print("EXPECTED RESULT 2: Should set the Download url: %s and Filename: %s" %(FirmwareLocationURL, FirmwareFilename));
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep("FWUPGRADEHAL_Get_Download_Url");
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
@@ -146,11 +146,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the Download URL and Filename using the HAL API fwupgrade_hal_get_download_url()";
-                print "EXPECTED RESULT 3: Should get the Download URL and Filename";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Get the Download URL and Filename using the HAL API fwupgrade_hal_get_download_url()");
+                print("EXPECTED RESULT 3: Should get the Download URL and Filename");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 url=details.split(" ")[2]
                 url = url[:-1]
                 fwName=details.split(" ")[5]
@@ -158,50 +158,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if url == FirmwareLocationURL and fwName == FirmwareFilename:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Verify the Download URL and Filename";
-                    print "EXPECTED RESULT 4: Should get the Download URL and Filename same as the set value";
-                    print "Download URL is %s and Filename is %s" %(url , fwName )
-                    print "ACTUAL RESULT 4: The Download URL and Filename are same as the set value"
+                    print("TEST STEP 4: Verify the Download URL and Filename");
+                    print("EXPECTED RESULT 4: Should get the Download URL and Filename same as the set value");
+                    print("Download URL is %s and Filename is %s" %(url , fwName ))
+                    print("ACTUAL RESULT 4: The Download URL and Filename are same as the set value")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Verify the Download URL and Filename";
-                    print "EXPECTED RESULT 4: Should get the Download URL and Filename same as the set value";
-                    print "Download URL is %s and Filename is %s" %(url , fwName )
-                    print "ACTUAL RESULT 4: The Download URL and Filename are not the same as the set value"
+                    print("TEST STEP 4: Verify the Download URL and Filename");
+                    print("EXPECTED RESULT 4: Should get the Download URL and Filename same as the set value");
+                    print("Download URL is %s and Filename is %s" %(url , fwName ))
+                    print("ACTUAL RESULT 4: The Download URL and Filename are not the same as the set value")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the Download URL and Filename using the HAL API fwupgrade_hal_get_download_url()";
-                print "EXPECTED RESULT 3: Should get the Download URL and Filename";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Get the Download URL and Filename using the HAL API fwupgrade_hal_get_download_url()");
+                print("EXPECTED RESULT 3: Should get the Download URL and Filename");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the Download URL and Filename using the HAL API fwupgrade_hal_set_download_url()";
-            print "EXPECTED RESULT 2: Should set the Download url: %s and Filename: %s" %(FirmwareLocationURL, FirmwareFilename);
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the Download URL and Filename using the HAL API fwupgrade_hal_set_download_url()");
+            print("EXPECTED RESULT 2: Should set the Download url: %s and Filename: %s" %(FirmwareLocationURL, FirmwareFilename));
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 : Fetch the Firmware Filename and Firmware Location URL successfully from config file";
-        print "EXPECTED RESULT 1 : Firmware Filename and Firmware Location URL should be fetched successfully";
-        print "ACTUAL RESULT 1 : Firmware Details are not fetched successfully";
-        print "Firmware Location URL : %s" %FirmwareLocationURL;
-        print "FirmwareFilename : %s" %FirmwareFilename;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1 : Fetch the Firmware Filename and Firmware Location URL successfully from config file");
+        print("EXPECTED RESULT 1 : Firmware Filename and Firmware Location URL should be fetched successfully");
+        print("ACTUAL RESULT 1 : Firmware Details are not fetched successfully");
+        print("Firmware Location URL : %s" %FirmwareLocationURL);
+        print("FirmwareFilename : %s" %FirmwareFilename);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

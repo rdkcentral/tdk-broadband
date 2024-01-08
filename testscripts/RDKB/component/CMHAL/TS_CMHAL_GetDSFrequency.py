@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetDSChannel</api_or_interface_used>
     <input_parameters>paramName : "DS_Frequency"</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. Get all the downstream frequencies and validate it
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -75,9 +75,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetDSFrequency');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,8 +90,8 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails();
     DS_freq = Details.split(",");
-    DS_freq = filter(None, DS_freq);
-    print DS_freq;
+    DS_freq = [_f for _f in DS_freq if _f];
+    print(DS_freq);
     maxFreq = 1002.00;
     minFreq = 108.00;
     for item in DS_freq:
@@ -99,28 +99,28 @@ if "SUCCESS" in loadmodulestatus.upper():
             frequency = float(item.split()[0]);
         else :
             frequency = float(item.split()[0])/1000000;
-	if minFreq <= frequency <= maxFreq:
-	    status = "Success";
-	else:
-	    status = "Failure";
-	    break;
+        if minFreq <= frequency <= maxFreq:
+            status = "Success";
+        else:
+            status = "Failure";
+            break;
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the DownStream Frequency";
-        print "EXPECTED RESULT 1: Downstream Frequencies should be within the range of 108MHz to 1.002GHz";
-        print "ACTUAL RESULT 1: Successfully validated the DownStream Frequency";
+        print("TEST STEP 1: Get and validate the DownStream Frequency");
+        print("EXPECTED RESULT 1: Downstream Frequencies should be within the range of 108MHz to 1.002GHz");
+        print("ACTUAL RESULT 1: Successfully validated the DownStream Frequency");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the DownStream Frequency";
-        print "EXPECTED RESULT 1: Downstream Frequencies should be within the range of 108MHz to 1.002GHz";
-        print "ACTUAL RESULT 1: Validation of DownStream Frequency is failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the DownStream Frequency");
+        print("EXPECTED RESULT 1: Downstream Frequencies should be within the range of 108MHz to 1.002GHz");
+        print("ACTUAL RESULT 1: Validation of DownStream Frequency is failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

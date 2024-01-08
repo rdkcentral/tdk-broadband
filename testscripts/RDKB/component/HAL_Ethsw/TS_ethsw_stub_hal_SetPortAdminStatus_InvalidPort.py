@@ -25,7 +25,7 @@
   <primitive_test_name>ethsw_stub_hal_SetPortAdminStatus</primitive_test_name>
   <primitive_test_version>7</primitive_test_version>
   <status>FREE</status>
-  <synopsis>To validate Ethsw HAL API CcspHalEthSwSetPortAdminStatus()	by giving invalid port number.</synopsis>
+  <synopsis>To validate Ethsw HAL API CcspHalEthSwSetPortAdminStatus()  by giving invalid port number.</synopsis>
   <groups_id/>
   <execution_time>5</execution_time>
   <long_duration>false</long_duration>
@@ -41,7 +41,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_HAL_Ethsw_17</test_case_id>
-    <test_objective>To validate Ethsw HAL API CcspHalEthSwSetPortAdminStatus()	by giving invalid port number.</test_objective>
+    <test_objective>To validate Ethsw HAL API CcspHalEthSwSetPortAdminStatus()  by giving invalid port number.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state of DUT
@@ -80,37 +80,37 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetPortAdminStatus_InvalidPort'
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper() :
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Setting invalid values
-	invalid_port = 0;
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortAdminStatus");
-        tdkTestObj.addParameter("PortID",invalid_port);
-        tdkTestObj.addParameter("adminstatus", testPortStatus);
-        expectedresult = "FAILURE";
-        print "Setting port status to %s for port %d" %(testPortStatus, invalid_port)
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details:
-            print "TEST STEP 1: Set port admin status to invalid port number";
-            print "EXPECTED RESULT 1: The port status should not set with invalid port number";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+    #Setting invalid values
+    invalid_port = 0;
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_SetPortAdminStatus");
+    tdkTestObj.addParameter("PortID",invalid_port);
+    tdkTestObj.addParameter("adminstatus", testPortStatus);
+    expectedresult = "FAILURE";
+    print("Setting port status to %s for port %d" %(testPortStatus, invalid_port))
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details:
+        print("TEST STEP 1: Set port admin status to invalid port number");
+        print("EXPECTED RESULT 1: The port status should not set with invalid port number");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1: Set port admin status to invalid port number";
-            print "EXPECTED RESULT 1: The port status should not set with invalid port number";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        obj.unloadModule("halethsw");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Set port admin status to invalid port number");
+        print("EXPECTED RESULT 1: The port status should not set with invalid port number");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

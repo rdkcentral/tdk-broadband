@@ -75,7 +75,7 @@ AdvancedConfig_Get
 Input
 1.PathName ("paramName")
 ( eg: "Device.NAT.X_CISCO_COM_PortTriggers.TriggerNumberOfEntries" )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (AdvancedConfig_Set, AdvancedConfig_AddObject - func name - "If not exists already"
  advancedconfig - module name
  Necessary I/P args as Mentioned in Input)
@@ -84,7 +84,7 @@ Input
 4.advancedconfigstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named AdvancedConfig_Set,AdvancedConfig_AddObject,AdvancedConfig_SetMultiple through registered TDK advancedconfigstub function along with necessary Entry Values as arguments
 5.AdvancedConfig_Set function will call ssp_setParameterValue,that inturn will call CCSP Base Interface Function named CcspBaseIf_setParameterValues.
 6. AdvancedConfig_AddObject function will call ssp_addTableRow, that inturn will call CCSP Base Interface Function named CcspBaseIf_AddTblRow and AdvancedConfig_GetNames Will find the instance number of the row added and will process the function for the instance number generated.
-7.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console   
+7.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console
 8.advancedconfigstub will validate the available result (from ssp_setParameterValue as zero) with expected result (zero) and the result is updated in agent console log and json output variable
 9.TestManager will publish the result in GUI as SUCCESS/FAILURE based on the response from AdvancedConfig_Set,AdvancedConfig_SetMultiple and AdvancedConfig_AddObject functions.</automation_approch>
     <except_output>Checkpoint 1:
@@ -92,7 +92,7 @@ Check if Advanced -&gt; Port Triggering -&gt; get the number of port triggering 
 CheckPoint 2:
 Success log should be available in Agent Console Log
 CheckPoint 3:
-TDK agent Test Function will log the test case result as SUCCESS based on API response 
+TDK agent Test Function will log the test case result as SUCCESS based on API response
 CheckPoint 4:
 TestManager GUI will publish the result as SUCCESS in Execution page</except_output>
     <priority>High</priority>
@@ -105,7 +105,7 @@ TestManager GUI will publish the result as SUCCESS in Execution page</except_out
   <script_tags />
 </xml>
 '''
-						#use tdklib library,which provides a wrapper for tdk testcase script
+                                                #use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import tdkutility;
 
@@ -120,34 +120,32 @@ obj.configureTestCase(ip,port,'TS_ADVANCEDCONFIG_TriggerNumberOfEntries');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        tdkTestObj = obj.createTestStep("AdvancedConfig_Get");
-        tdkTestObj.addParameter("paramName","Device.NAT.X_CISCO_COM_PortTriggers.TriggerNumberOfEntries");
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                details = tdkTestObj.getResultDetails();
-                print "[TEST STEP 1]: Get the number of PortTriggering Rules";
-                print "[EXPECTED RESULT 1]: Should get the number of PortTriggering Rules";
-                print "[ACTUAL RESULT 1]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        else:
-                tdkTestObj.setResultStatus("FAILURE");
-                details = tdkTestObj.getResultDetails();
-                print "[TEST STEP 1]: Get the number of PortTriggering Rules";
-                print "[EXPECTED RESULT 1]: Should get the number of PortTriggering Rules";
-                print "[ACTUAL RESULT 1]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        obj.unloadModule("advancedconfig");
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep("AdvancedConfig_Get");
+    tdkTestObj.addParameter("paramName","Device.NAT.X_CISCO_COM_PortTriggers.TriggerNumberOfEntries");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Get the number of PortTriggering Rules");
+        print("[EXPECTED RESULT 1]: Should get the number of PortTriggering Rules");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Get the number of PortTriggering Rules");
+        print("[EXPECTED RESULT 1]: Should get the number of PortTriggering Rules");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    obj.unloadModule("advancedconfig");
 else:
-        print "FAILURE to load Advancedconfig module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-					
+    print("FAILURE to load Advancedconfig module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

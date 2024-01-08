@@ -88,15 +88,15 @@ obj1.configureTestCase(ip,port,'TS_CMHAL_SetHTTPDownloadUrl');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     obj1.setLoadModuleStatus("SUCCESS");
 
     FirmwareVersion, FirmwareFilename = xconfUtilityLib.getFirmwareDetails(obj1)
-    print FirmwareFilename;
+    print(FirmwareFilename);
     if FirmwareFilename:
         #since CMHAL_GetHTTP_Download_Url() doesn't have an initial value, not saving it for revert
         tdkTestObj = obj.createTestStep("CMHAL_SetHTTP_Download_Url");
@@ -110,11 +110,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the Download url and filename";
-            print "EXPECTED RESULT 2: Should set the Download url: %s and filename: %s" %(FIRMWARELOCATION, FirmwareFilename);
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the Download url and filename");
+            print("EXPECTED RESULT 2: Should set the Download url: %s and filename: %s" %(FIRMWARELOCATION, FirmwareFilename));
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep("CMHAL_GetHTTP_Download_Url");
             expectedresult="SUCCESS";
@@ -125,51 +125,51 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the download url and filename";
-                print "EXPECTED RESULT 3: Should get the download url and filename";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Get the download url and filename");
+                print("EXPECTED RESULT 3: Should get the download url and filename");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 url=details.split(" ")[2]
                 url = url[:-1]
                 fwName=details.split(" ")[5]
                 if url == FIRMWARELOCATION and fwName == FirmwareFilename:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Verify the download url and filename";
-                    print "EXPECTED RESULT 4: Should get the download url and filename same as the set value";
-                    print " download url is %s and filename is %s" %(url , fwName )
-                    print "ACTUAL RESULT 4: The download url and filename are same as the set value"
+                    print("TEST STEP 4: Verify the download url and filename");
+                    print("EXPECTED RESULT 4: Should get the download url and filename same as the set value");
+                    print(" download url is %s and filename is %s" %(url , fwName ))
+                    print("ACTUAL RESULT 4: The download url and filename are same as the set value")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Verify the download url and filename";
-                    print "EXPECTED RESULT 4: Should get the download url and filename same as the set value";
-                    print "download url is %s and filename is %s" %(url , fwName )
-                    print "ACTUAL RESULT 4: The download url and filename are not the same as the set value"
+                    print("TEST STEP 4: Verify the download url and filename");
+                    print("EXPECTED RESULT 4: Should get the download url and filename same as the set value");
+                    print("download url is %s and filename is %s" %(url , fwName ))
+                    print("ACTUAL RESULT 4: The download url and filename are not the same as the set value")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the download url and filename";
-                print "EXPECTED RESULT 3: Should get the download url and filename";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Get the download url and filename");
+                print("EXPECTED RESULT 3: Should get the download url and filename");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the Download url and filename";
-            print "EXPECTED RESULT 2: Should set the Download url: %s and filename: %s" %(FIRMWARELOCATION, FirmwareFilename);
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the Download url and filename");
+            print("EXPECTED RESULT 2: Should set the Download url: %s and filename: %s" %(FIRMWARELOCATION, FirmwareFilename));
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	print "Failed to get the firmware details"
+        print("Failed to get the firmware details")
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        obj1.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

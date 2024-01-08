@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_FWUPGRADEHAL_GetRebootReady');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,12 +108,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready()";
-        print "EXPECTED RESULT 1: Should successfully invoke fwupgrade_hal_reboot_ready()";
-        print "ACTUAL RESULT 1: The API invocation is success";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready()");
+        print("EXPECTED RESULT 1: Should successfully invoke fwupgrade_hal_reboot_ready()");
+        print("ACTUAL RESULT 1: The API invocation is success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "Reboot Ready value : %s" %count;
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("Reboot Ready value : %s" %count);
 
         if count == "1":
             status="Ready";
@@ -125,30 +125,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if count=="1" or count=="2":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if the GetRebootReady status in [Ready, Not Ready]";
-            print "EXPECTED RESULT 2: The GetRebootReady status should be valid"
-            print "ACTUAL RESULT 2: GetRebootReady status is  ",status;
+            print("TEST STEP 2: Check if the GetRebootReady status in [Ready, Not Ready]");
+            print("EXPECTED RESULT 2: The GetRebootReady status should be valid")
+            print("ACTUAL RESULT 2: GetRebootReady status is  ",status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the GetRebootReady status in [Ready, Not Ready]";
-            print "EXPECTED RESULT 2: The GetRebootReady status should be valid"
-            print "ACTUAL RESULT 2: GetRebootReady status is  ",status;
+            print("TEST STEP 2: Check if the GetRebootReady status in [Ready, Not Ready]");
+            print("EXPECTED RESULT 2: The GetRebootReady status should be valid")
+            print("ACTUAL RESULT 2: GetRebootReady status is  ",status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready()";
-        print "EXPECTED RESULT 1: Should successfully invoke fwupgrade_hal_reboot_ready()"
-        print "ACTUAL RESULT 1: The API invocation is failure";
+        print("TEST STEP 1: Invoke the HAL API fwupgrade_hal_reboot_ready()");
+        print("EXPECTED RESULT 1: Should successfully invoke fwupgrade_hal_reboot_ready()")
+        print("ACTUAL RESULT 1: The API invocation is failure");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

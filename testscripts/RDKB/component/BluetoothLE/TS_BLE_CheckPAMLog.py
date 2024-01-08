@@ -81,8 +81,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -116,11 +116,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the BLERadio status";
-        print "EXPECTED RESULT 1: Should get the BLERadio status";
-        print "ACTUAL RESULT 1: BLERadio status is %s" %BLERadioOrg;
+        print("TEST STEP 1: Get the BLERadio status");
+        print("EXPECTED RESULT 1: Should get the BLERadio status");
+        print("ACTUAL RESULT 1: BLERadio status is %s" %BLERadioOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if BLERadioOrg == "true":
             setBLERadio = "false"
@@ -150,11 +150,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and expectedresult in actualresult1 and newBLERadio == setBLERadio:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Toggle the enable status of BLERadio";
-            print "EXPECTED RESULT 2: Should toggle the enable status of BLERadio";
-            print "ACTUAL RESULT 2: BLERadio toggle is success";
+            print("TEST STEP 2: Toggle the enable status of BLERadio");
+            print("EXPECTED RESULT 2: Should toggle the enable status of BLERadio");
+            print("ACTUAL RESULT 2: BLERadio toggle is success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             cmd = "tail -2 /rdklogs/logs/PAMlog.txt.0"
@@ -164,19 +164,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails().strip();
             if expectedresult in actualresult and details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if BLERadio enable/disable log is in PAM log";
-                print "EXPECTED RESULT 3: BLERadio enable/disable log should toggle should be available in PAM log";
-                print "ACTUAL RESULT 3: BLERadio enable/disable log found in PAM log: ",details;
+                print("TEST STEP 3: Check if BLERadio enable/disable log is in PAM log");
+                print("EXPECTED RESULT 3: BLERadio enable/disable log should toggle should be available in PAM log");
+                print("ACTUAL RESULT 3: BLERadio enable/disable log found in PAM log: ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if BLERadio enable/disable log is in PAM log";
-                print "EXPECTED RESULT 3: BLERadio enable/disable log should toggle should be available in PAM log";
-                print "ACTUAL RESULT 3: BLERadio enable/disable log not found in PAM log: ",details;
+                print("TEST STEP 3: Check if BLERadio enable/disable log is in PAM log");
+                print("EXPECTED RESULT 3: BLERadio enable/disable log should toggle should be available in PAM log");
+                print("ACTUAL RESULT 3: BLERadio enable/disable log not found in PAM log: ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-            
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
             #Revert to the original value of BLERadio status
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BLERadio");
@@ -191,40 +191,40 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Revert  enable status of BLERadio same as previous status";
-                print "EXPECTED RESULT 4: Should revert the enable status of BLERadio same as previous status";
-                print "ACTUAL RESULT 4: BLERadio revert is success";
+                print("TEST STEP 4: Revert  enable status of BLERadio same as previous status");
+                print("EXPECTED RESULT 4: Should revert the enable status of BLERadio same as previous status");
+                print("ACTUAL RESULT 4: BLERadio revert is success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert  enable status of BLERadio same as previous status";
-                print "EXPECTED RESULT 4: Should revert the enable status of BLERadio same as previous status";
-                print "ACTUAL RESULT 4: BLERadio revert failed";
+                print("TEST STEP 4: Revert  enable status of BLERadio same as previous status");
+                print("EXPECTED RESULT 4: Should revert the enable status of BLERadio same as previous status");
+                print("ACTUAL RESULT 4: BLERadio revert failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle the enable status of BLERadio";
-            print "EXPECTED RESULT 2: Should toggle the enable status of BLERadio";
-            print "ACTUAL RESULT 2: BLERadio toggle is success";
+            print("TEST STEP 2: Toggle the enable status of BLERadio");
+            print("EXPECTED RESULT 2: Should toggle the enable status of BLERadio");
+            print("ACTUAL RESULT 2: BLERadio toggle is success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the BLERadio status";
-        print "EXPECTED RESULT 1: Should get the BLERadio status";
-        print "ACTUAL RESULT 1: BLERadio status is %s" %BLERadioOrg;
+        print("TEST STEP 1: Get the BLERadio status");
+        print("EXPECTED RESULT 1: Should get the BLERadio status");
+        print("ACTUAL RESULT 1: BLERadio status is %s" %BLERadioOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

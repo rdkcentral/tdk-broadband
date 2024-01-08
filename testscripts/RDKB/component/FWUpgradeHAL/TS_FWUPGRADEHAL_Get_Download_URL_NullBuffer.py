@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_FWUPGRADEHAL_Get_Download_URL_NullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,23 +108,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Invoke fwupgrade_hal_get_download_url() by passing Null Buffer as input";
-        print "EXPECTED RESULT 1: Should not get the download URL with Null Buffer";
-        print "ACTUAL RESULT 1: fwupgrade_hal_get_download_url() invocation fails as expected";
+        print("TEST STEP 1: Invoke fwupgrade_hal_get_download_url() by passing Null Buffer as input");
+        print("EXPECTED RESULT 1: Should not get the download URL with Null Buffer");
+        print("ACTUAL RESULT 1: fwupgrade_hal_get_download_url() invocation fails as expected");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Invoke fwupgrade_hal_get_download_url() by passing Null Buffer as input";
-        print "EXPECTED RESULT 1: Should not get the download URL with Null Buffer"
-        print "ACTUAL RESULT 1 : fwupgrade_hal_get_download_url() invocation is success";
+        print("TEST STEP 1: Invoke fwupgrade_hal_get_download_url() by passing Null Buffer as input");
+        print("EXPECTED RESULT 1: Should not get the download URL with Null Buffer")
+        print("ACTUAL RESULT 1 : fwupgrade_hal_get_download_url() invocation is success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("fwupgradehal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_CMAGENT_5</test_case_id>
-    <test_objective>To Validate 
-Get Param Values Function for 
+    <test_objective>To Validate
+Get Param Values Function for
 CM Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -52,7 +52,7 @@ API Name
 TS_CMAGENT_GetParamValues
 Input
 1.Parameter Path (paramName)( eg: "Device.X_CISCO_COM_CableModem." )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (TS_CMAGENT_GetParamValues  - func name - "If not exists already"
  cmagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -81,8 +81,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmagent","RDKB");
@@ -95,17 +95,17 @@ obj.configureTestCase(ip,port,'TS_CMAGENT_GetParamValues');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load CM Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load CM Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 expectedresult = "SUCCESS";
-		
+
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CMAgent_Get');
 
@@ -118,17 +118,17 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("cmagent");

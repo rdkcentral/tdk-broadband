@@ -77,7 +77,7 @@ Input
 1.PathName ("paramName")
 ( eg: "Device.NAT.X_Comcast_com_EnablePortMapping" )
 Type: bool, Value: False</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (AdvancedConfig_Set - func name - "If not exists already"
  advancedconfig - module name
  Necessary I/P args as Mentioned in Input)
@@ -85,15 +85,15 @@ Type: bool, Value: False</input_parameters>
 3.Execute the generated Script(TS_ADVANCEDCONFIG_PFDisable.py) using execution page of  Test Manager GUI
 4.advancedconfigstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named AdvancedConfig_Set through registered TDK advancedconfigstub function along with necessary Entry Values as arguments
 5.AdvancedConfig_Set function will call ssp_setParameterValue,that inturn will call CCSP Base Interface Function named CcspBaseIf_setParameterValues.
-6.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and advancedcongifstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.advancedconfigstub will validate the available result (from ssp_setParameterValue as zero) with expected result (zero) and the result is updated in agent console log and json output variable
 8.TestManager will publish the result in GUI as SUCCESS/FAILURE based on the response from AdvancedConfig_Set function</automation_approch>
     <except_output>Checkpoint 1:
-Check if port forwarding disable functionality works. 
+Check if port forwarding disable functionality works.
 CheckPoint 2:
 Success log should be available in Agent Console Log
 CheckPoint 3:
-TDK agent Test Function will log the test case result as SUCCESS based on API response 
+TDK agent Test Function will log the test case result as SUCCESS based on API response
 CheckPoint 4:
 TestManager GUI will publish the result as SUCCESS in Execution page</except_output>
     <priority>High</priority>
@@ -106,7 +106,7 @@ TestManager GUI will publish the result as SUCCESS in Execution page</except_out
   <script_tags />
 </xml>
 '''
-																		#use tdklib library,which provides a wrapper for tdk testcase script
+                                                                                                                                                #use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
 #Test component to be tested
@@ -120,72 +120,66 @@ obj.configureTestCase(ip,port,'TS_ADVANCEDCONFIG_PFDisable');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 if "SUCCESS" in loadModuleresult.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Enabling port forwarding - setting the port mapping as true
+    #Enabling port forwarding - setting the port mapping as true
+    tdkTestObj = obj.createTestStep("AdvancedConfig_Set");
+    tdkTestObj.addParameter("paramName","Device.NAT.X_Comcast_com_EnablePortMapping");
+    tdkTestObj.addParameter("paramValue","true");
+    tdkTestObj.addParameter("paramType","boolean");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Enabling Port Mapping");
+        print("[EXPECTED RESULT 1]: Should enable Port Mapping");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Port forwarding is enabled\n")
+
+        # Disabling port forwarding
         tdkTestObj = obj.createTestStep("AdvancedConfig_Set");
         tdkTestObj.addParameter("paramName","Device.NAT.X_Comcast_com_EnablePortMapping");
-        tdkTestObj.addParameter("paramValue","true");
+        tdkTestObj.addParameter("paramValue","false");
         tdkTestObj.addParameter("paramType","boolean");
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
         if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                details = tdkTestObj.getResultDetails();
-                print "[TEST STEP 1]: Enabling Port Mapping";
-                print "[EXPECTED RESULT 1]: Should enable Port Mapping";
-                print "[ACTUAL RESULT 1]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Port forwarding is enabled\n"
-
-                # Disabling port forwarding
-                tdkTestObj = obj.createTestStep("AdvancedConfig_Set");
-                tdkTestObj.addParameter("paramName","Device.NAT.X_Comcast_com_EnablePortMapping");
-                tdkTestObj.addParameter("paramValue","false");
-                tdkTestObj.addParameter("paramType","boolean");
-                expectedresult = "SUCCESS";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                if expectedresult in actualresult:
-                #Set the result status of execution
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        details = tdkTestObj.getResultDetails();
-	                print "[TEST STEP 1]: Disabling Port Mapping";
-        	        print "[EXPECTED RESULT 1]: Should disable Port Mapping";
-                	print "[ACTUAL RESULT 1]: %s" %details;
-	                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Port forwading is disabled\n"
-                else:
-                        tdkTestObj.setResultStatus("FAILURE");
-                        details = tdkTestObj.getResultDetails();
-                        print "[TEST STEP 1]: Disabling Port Mapping";
-                        print "[EXPECTED RESULT 1]: Should disable Port Mapping";
-                        print "[ACTUAL RESULT 1]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Failure in setting the port forwarding as false\n"
+        #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 1]: Disabling Port Mapping");
+            print("[EXPECTED RESULT 1]: Should disable Port Mapping");
+            print("[ACTUAL RESULT 1]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Port forwading is disabled\n")
         else:
-                tdkTestObj.setResultStatus("FAILURE");
-                details = tdkTestObj.getResultDetails();
-                print "[TEST STEP 1]: Enabling Port Mapping";
-                print "[EXPECTED RESULT 1]: Should enable Port Mapping";
-                print "[ACTUAL RESULT 1]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Failure in setting the port forwarding as true\n "
+            tdkTestObj.setResultStatus("FAILURE");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 1]: Disabling Port Mapping");
+            print("[EXPECTED RESULT 1]: Should disable Port Mapping");
+            print("[ACTUAL RESULT 1]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Failure in setting the port forwarding as false\n")
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Enabling Port Mapping");
+        print("[EXPECTED RESULT 1]: Should enable Port Mapping");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Failure in setting the port forwarding as true\n ")
 
-        obj.unloadModule("advancedconfig");
+    obj.unloadModule("advancedconfig");
 else:
-        print "FAILURE to load Advancedconfig module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-					
-
-					
-
-					
+    print("FAILURE to load Advancedconfig module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

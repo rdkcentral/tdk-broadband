@@ -82,39 +82,39 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_GetAssociatedDevice');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-	#Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
-        expectedresult = "SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_AssociatedDevice");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult:
-            if "No Associated device" not in details:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Retrieve the details of associated device";
-                print "EXPECTED RESULT 1: Should retrieve the details of associated device successfully";
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-                print "%s" %details;
-            else:
-                print "ERROR: No Associated device found. Test requires a lan client"
-                tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
-        else:
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        if "No Associated device" not in details:
             #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Retrieve the details of associated device");
+            print("EXPECTED RESULT 1: Should retrieve the details of associated device successfully");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
+        else:
+            print("ERROR: No Associated device found. Test requires a lan client")
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the details of associated device";
-            print "EXPECTED RESULT 1: Should retrieve the details of associated device successfully";
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the details of associated device");
+        print("EXPECTED RESULT 1: Should retrieve the details of associated device successfully");
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
 
-        obj.unloadModule("halethsw");
+    obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

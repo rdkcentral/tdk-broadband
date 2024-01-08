@@ -49,7 +49,7 @@
 </api_or_interface_used>
     <input_parameters>paramName : "DS_OFDM_ChannelIndicator"</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. Invoke docsis_GetDsOfdmChanTable to get the channel Indicaor 
+2. Invoke docsis_GetDsOfdmChanTable to get the channel Indicaor
 3. Validate the channel indicator
 4. Unload cmhal module</automation_approch>
     <except_output>The channel indicator must be one of [other(1), primary(2), backupPrimary(3), nonPrimary(4)].</except_output>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_DS_OFDM_ChannelIndicator');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,13 +89,13 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details
+    print(details)
     expectedList = {"1":"other","2":"primary","3":"backupPrimary","4":"nonPrimary"}
 
     if expectedresult in actualresult:
         NoOfEntries = details.split(";")[0].split(":")[1];
-	if int(NoOfEntries) > 0:
-	    minValue = 1;
+        if int(NoOfEntries) > 0:
+            minValue = 1;
             maxValue = 4;
             ChanIndicator = details.split(";")[1].split(":")[1];
             if minValue <= int(ChanIndicator) <= maxValue:
@@ -103,26 +103,26 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the Channel indicator";
-                print "EXPECTED RESULT 1: Should get the channel indicator successfully";
-                print "ACTUAL RESULT 1: Channel indicator is %s" %ChanIndValue;
+                print("TEST STEP 1: Get the Channel indicator");
+                print("EXPECTED RESULT 1: Should get the channel indicator successfully");
+                print("ACTUAL RESULT 1: Channel indicator is %s" %ChanIndValue);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 ChanIndValue = "Invalid channel indicator received";
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the Channel indicator";
-                print "EXPECTED RESULT 1: Should get the channel indicator successfully";
-                print "ACTUAL RESULT 1: Channel indicator is %s" %ChanIndValue;
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    print "There are no entries in DS OFDM channel table"
+                print("TEST STEP 1: Get the Channel indicator");
+                print("EXPECTED RESULT 1: Should get the channel indicator successfully");
+                print("ACTUAL RESULT 1: Channel indicator is %s" %ChanIndValue);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("There are no entries in DS OFDM channel table")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Failed to get the values from api";
+        print("Failed to get the values from api");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

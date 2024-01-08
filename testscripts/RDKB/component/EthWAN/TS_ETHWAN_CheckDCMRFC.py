@@ -120,24 +120,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "true" == ethwanEnable:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The device is in ethwan mode."
+            print("The device is in ethwan mode.")
 
             #rebooting the device
             obj.initiateReboot();
-            print "Wait till box comes up"
+            print("Wait till box comes up")
             sleep(700);
-            print "Wait for 10 minutes after box comes online"
+            print("Wait for 10 minutes after box comes online")
             sleep(600);
 
             query="cat /rdklogs/logs/dcmrfc.log | grep -i \"tr181.Device.ManagementServer.EnableCWMP value\""
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -146,30 +146,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             checkRFC = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and "RFC" in checkRFC:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: DCM RFC must work in ETHWAN Mode";
-                print "ACTUAL RESULT 2:DCM RFC works in ETHWAN Mode"
+                print("TEST STEP 2: DCM RFC must work in ETHWAN Mode");
+                print("ACTUAL RESULT 2:DCM RFC works in ETHWAN Mode")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: DCM RFC must work in ETHWAN Mode";
-                print "ACTUAL RESULT 2:DCM RFC works in ETHWAN Mode"
+                print("TEST STEP 2: DCM RFC must work in ETHWAN Mode");
+                print("ACTUAL RESULT 2:DCM RFC works in ETHWAN Mode")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "The device is not in ethwan mode. Please check the device setup"
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

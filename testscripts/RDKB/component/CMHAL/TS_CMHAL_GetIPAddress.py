@@ -48,7 +48,7 @@
     <api_or_interface_used>cm_hal_GetIPv6DHCPInfo</api_or_interface_used>
     <input_parameters>paramName: Ipv6DhcpIPAddress</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. The buffer is already filled with an invalid value (invalid.ipaddress). So check whether the ipaddress is getting updated in the buffer successfully.
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetIPAddress');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -91,21 +91,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the provisioned wan0 iptype";
-        print "EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully";
-        print "ACTUAL RESULT 1: IPType is %s" %IPType;
+        print("TEST STEP 1: Get the provisioned wan0 iptype");
+        print("EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully");
+        print("ACTUAL RESULT 1: IPType is %s" %IPType);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-	IP =" ";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        IP =" ";
         if "IPv6" or "IPV6" in IPType:
-    	    tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
-    	    tdkTestObj.addParameter("paramName","Ipv6DhcpIPAddress");
-    	    expectedresult="SUCCESS";
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    IP = tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
+            tdkTestObj.addParameter("paramName","Ipv6DhcpIPAddress");
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            IP = tdkTestObj.getResultDetails();
 
-	elif "IPv4" or "IPV4" in IPType:
+        elif "IPv4" or "IPV4" in IPType:
             tdkTestObj = obj.createTestStep("CMHAL_GetParamUlongValue");
             tdkTestObj.addParameter("paramName","Ipv4DhcpIPAddress");
             expectedresult="SUCCESS";
@@ -115,25 +115,25 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and IP != " ":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the IPAddress";
-            print "EXPECTED RESULT 2: Should get the IPAddress successfully";
-            print "ACTUAL RESULT 2: The IP address is %s" %IP;
+            print("TEST STEP 2: Get the IPAddress");
+            print("EXPECTED RESULT 2: Should get the IPAddress successfully");
+            print("ACTUAL RESULT 2: The IP address is %s" %IP);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the IPAddress";
-            print "EXPECTED RESULT 2: Should get the IPAddress successfully";
-            print "ACTUAL RESULT 2: Failed to get the IP Address, Details :%s" %IP;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the IPAddress");
+            print("EXPECTED RESULT 2: Should get the IPAddress successfully");
+            print("ACTUAL RESULT 2: Failed to get the IP Address, Details :%s" %IP);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the provisioned wan0 iptype";
-        print "EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully";
-        print "ACTUAL RESULT 1: Failed to get the IPType, Details :%s" %IPType;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the provisioned wan0 iptype");
+        print("EXPECTED RESULT 1: Should get the provisioned wan0 iptype successfully");
+        print("ACTUAL RESULT 1: Failed to get the IPType, Details :%s" %IPType);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

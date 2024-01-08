@@ -141,11 +141,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
     if expectedresult in (actualresult1 and actualresult2):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT 1: Should disable WiFi";
-        print "ACTUAL RESULT 1:%s" %Details;
+        print("TEST STEP 1: Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT 1: Should disable WiFi");
+        print("ACTUAL RESULT 1:%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the number of clients connected. Should be greater than zero
         tdkTestObj = obj.createTestStep('LMLiteStub_Get');
@@ -160,22 +160,22 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in actualresult and int(NoOfClients)>0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the number of active clients connected";
-            print "EXPECTED RESULT 2: Should get the number of active clients connected as greater than zero";
-            print "ACTUAL RESULT 2: Number of active clients connected :%s" %NoOfClients;
+            print("TEST STEP 2: Get the number of active clients connected");
+            print("EXPECTED RESULT 2: Should get the number of active clients connected as greater than zero");
+            print("ACTUAL RESULT 2: Number of active clients connected :%s" %NoOfClients);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the wan MAC Address from DUT
             macaddress = " ";
             macaddress = snmplib.getMACAddress(sysObj);
             if macaddress != " " :
                 macaddress = macaddress.strip().upper();
-                print "TEST STEP 3:Get WAN mac from DUT";
-                print "EXPECTED RESULT 3: Should get WAN mac from DUT";
-                print "ACTUAL RESULT 3: WAN mac is %s" %macaddress;
+                print("TEST STEP 3:Get WAN mac from DUT");
+                print("EXPECTED RESULT 3: Should get WAN mac from DUT");
+                print("ACTUAL RESULT 3: WAN mac is %s" %macaddress);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
                 tdkTestObj = obj.createTestStep('LMLiteStub_Get');
                 tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries");
@@ -189,11 +189,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                 if expectedresult in actualresult and int(NoOfHosts)>0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the number of hosts";
-                    print "EXPECTED RESULT 4: Should get the number of hosts";
-                    print "ACTUAL RESULT 4: Number of hosts :%s" %NoOfHosts;
+                    print("TEST STEP 4: Get the number of hosts");
+                    print("EXPECTED RESULT 4: Should get the number of hosts");
+                    print("ACTUAL RESULT 4: Number of hosts :%s" %NoOfHosts);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     #Find the active hosts amoung the listed Hosts. List will contains the ids of active hosts
                     List=[];
                     for i in range(1,int(NoOfHosts)+1):
@@ -207,11 +207,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Get the active clients";
-                        print "EXPECTED RESULT 5: Should get the active clients";
-                        print "ACTUAL RESULT 5: Active clients are :",List;
+                        print("TEST STEP 5: Get the active clients");
+                        print("EXPECTED RESULT 5: Should get the active clients");
+                        print("ACTUAL RESULT 5: Active clients are :",List);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         #compare the MACs obtained
                         ret =0;
                         for i in range(0,len(List)):
@@ -222,60 +222,60 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                             actualresult = tdkTestObj.getResult();
                             wanMac = tdkTestObj.getResultDetails();
                             wanMac = wanMac.upper();
-                            print "WAN Address in Device.Hosts.: %s" %wanMac;
-			    print "WAN Address retrieved via Cable Modem: %s" %macaddress;
+                            print("WAN Address in Device.Hosts.: %s" %wanMac);
+                            print("WAN Address retrieved via Cable Modem: %s" %macaddress);
                             if wanMac == macaddress:
-                                print "Wan MAC of host instance ",n," matches";
+                                print("Wan MAC of host instance ",n," matches");
                             else:
-                                print "Wan MAC of host instance ",n," doesnt match";
+                                print("Wan MAC of host instance ",n," doesnt match");
                                 ret = 1
                         if expectedresult in actualresult and ret ==0:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5: Compare the WAN MACs obtained";
-                            print "EXPECTED RESULT 5: Both MACs should match";
-                            print "ACTUAL RESULT 5: The WAN MACs matched successfully";
+                            print("TEST STEP 5: Compare the WAN MACs obtained");
+                            print("EXPECTED RESULT 5: Both MACs should match");
+                            print("ACTUAL RESULT 5: The WAN MACs matched successfully");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5: Compare the WAN MACs obtained";
-                            print "EXPECTED RESULT 5: Both MACs should match";
-                            print "ACTUAL RESULT 5: The WAN MACs are not matching";
+                            print("TEST STEP 5: Compare the WAN MACs obtained");
+                            print("EXPECTED RESULT 5: Both MACs should match");
+                            print("ACTUAL RESULT 5: The WAN MACs are not matching");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Get the active clients";
-                        print "EXPECTED RESULT 4: Should get the active cleints";
-                        print "ACTUAL RESULT 4: FAiled to get the active clients";
+                        print("TEST STEP 4: Get the active clients");
+                        print("EXPECTED RESULT 4: Should get the active cleints");
+                        print("ACTUAL RESULT 4: FAiled to get the active clients");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Get the number of hosts";
-                    print "EXPECTED RESULT 1: Should get the number of hosts";
-                    print "ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts;
+                    print("TEST STEP 2: Get the number of hosts");
+                    print("EXPECTED RESULT 1: Should get the number of hosts");
+                    print("ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP 3:Should get the WAN MAC address";
-                print "EXPECTED RESULT 3: Should get the WAN MAC address";
-                print "ACTUAL RESULT 3: %s" %macaddress;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3:Should get the WAN MAC address");
+                print("EXPECTED RESULT 3: Should get the WAN MAC address");
+                print("ACTUAL RESULT 3: %s" %macaddress);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the number of active clients connected";
-            print "EXPECTED RESULT 2: Should get the number of active clients connected as greater than zero";
-            print "ACTUAL RESULT 2: Number of active clients connected :%s" %NoOfClients;
+            print("TEST STEP 2: Get the number of active clients connected");
+            print("EXPECTED RESULT 2: Should get the number of active clients connected as greater than zero");
+            print("ACTUAL RESULT 2: Number of active clients connected :%s" %NoOfClients);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Enabling WiFi before exiting the test
         tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
@@ -288,7 +288,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         actualresult1 = tdkTestObj.getResult();
         Details = tdkTestObj.getResultDetails();
 
-	tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
+        tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.SSID.2.Enable");
         tdkTestObj.addParameter("paramValue","true");
         tdkTestObj.addParameter("paramType","boolean");
@@ -300,32 +300,31 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in (actualresult1 and actualresult2):
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT 1: Should disable WiFi";
-        print "ACTUAL RESULT 1:%s" %Details;
+        print("TEST STEP 1: Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT 1: Should disable WiFi");
+        print("ACTUAL RESULT 1:%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("lmlite");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

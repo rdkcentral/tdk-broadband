@@ -65,7 +65,7 @@
     <api_or_interface_used>docsis_GetDOCSISInfo</api_or_interface_used>
     <input_parameters>paramName : "DOCSISDataRegComplete"</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. Invoke docsis_GetDOCSISInfo to get the Data Reg status of DOCSIS 
+2. Invoke docsis_GetDOCSISInfo to get the Data Reg status of DOCSIS
 3. Check if the Data Reg status is Complete if the cmstatus is OPERATIONAL
 4. The test should return FAILURE otherwise
 5. Unload cmhal module</automation_approch>
@@ -80,8 +80,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetDataRegComplete');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,16 +105,16 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     Status = tdkTestObj.getResultDetails();
-   
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the status of cable modem";
-        print "EXPECTED RESULT 1: Should get the status of cable modem  successfully";
-        print "ACTUAL RESULT 1: Status of cable modem is %s" %Status;
+        print("TEST STEP 1: Get the status of cable modem");
+        print("EXPECTED RESULT 1: Should get the status of cable modem  successfully");
+        print("ACTUAL RESULT 1: Status of cable modem is %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-   
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
         #This method invokes the HAL API docsis_GetDOCSISInfo to get the data reg status of docsis
         tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
         tdkTestObj.addParameter("paramName","DOCSISDataRegComplete");
@@ -126,31 +126,29 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and "OPERATIONAL" in Status and "Complete" in DOCSISDataReg:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get DOCSISDOCSISDataReg Status as complete ";
-            print "EXPECTED RESULT 1: Should get the DOCSISDataReg status as complete";
-            print "ACTUAL RESULT 1: The DOCSISDataReg Status is %s" %DOCSISDataReg;
+            print("TEST STEP 1: Get DOCSISDOCSISDataReg Status as complete ");
+            print("EXPECTED RESULT 1: Should get the DOCSISDataReg status as complete");
+            print("ACTUAL RESULT 1: The DOCSISDataReg Status is %s" %DOCSISDataReg);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the DOCSISDOCSISDataReg Status  as complete";
-            print "EXPECTED RESULT 1:Should get the DOCSISDOCSISDataReg Status  as complete ";
-            print "ACTUAL RESULT 1: Failed to get the DOCSISDOCSISDataReg Status  as complete, Details %s" %DOCSISDataReg;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the DOCSISDOCSISDataReg Status  as complete");
+            print("EXPECTED RESULT 1:Should get the DOCSISDOCSISDataReg Status  as complete ");
+            print("ACTUAL RESULT 1: Failed to get the DOCSISDOCSISDataReg Status  as complete, Details %s" %DOCSISDataReg);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the status of cable modem";
-        print "EXPECTED RESULT 1: Should get the status of cable modem ";
-        print "ACTUAL RESULT 1: Failed to get Status of cable modem  %s" %Status;
+        print("TEST STEP 1: Get the status of cable modem");
+        print("EXPECTED RESULT 1: Should get the status of cable modem ");
+        print("ACTUAL RESULT 1: Failed to get Status of cable modem  %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";    
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-				
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

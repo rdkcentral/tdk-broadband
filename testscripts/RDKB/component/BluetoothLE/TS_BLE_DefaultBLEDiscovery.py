@@ -84,9 +84,9 @@ Device.X_CISCO_COM_DeviceControl.FactoryReset</input_parameters>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
-import time; 
+import time;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -120,11 +120,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of BLEDiscovery";
-        print "EXPECTED RESULT 1: Should get the enable status of BLEDiscovery";
-        print "ACTUAL RESULT 1: BLEDiscovery Enable status is %s" %BLEDiscoveryOrg;
+        print("TEST STEP 1: Get the enable status of BLEDiscovery");
+        print("EXPECTED RESULT 1: Should get the enable status of BLEDiscovery");
+        print("ACTUAL RESULT 1: BLEDiscovery Enable status is %s" %BLEDiscoveryOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if BLEDiscoveryOrg == "false":
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
@@ -140,24 +140,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: If current enable state is false, set it as true";
-                print "EXPECTED RESULT 2: Should set the enable status of BLEDiscovery as true";
-                print "ACTUAL RESULT 2: BLEDiscovery set is success";
+                print("TEST STEP 2: If current enable state is false, set it as true");
+                print("EXPECTED RESULT 2: Should set the enable status of BLEDiscovery as true");
+                print("ACTUAL RESULT 2: BLEDiscovery set is success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: If current enable state is false, set it as true";
-                print "EXPECTED RESULT 2: Should set the enable status of BLEDiscovery as true";
-                print "ACTUAL RESULT 2: BLEDiscovery set is success"
+                print("TEST STEP 2: If current enable state is false, set it as true");
+                print("EXPECTED RESULT 2: Should set the enable status of BLEDiscovery as true");
+                print("ACTUAL RESULT 2: BLEDiscovery set is success")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 obj.unloadModule("tdkbtr181");
                 obj1.unloadModule("pam");
                 exit();
 
-	#save device's current state before it goes for reboot
+        #save device's current state before it goes for reboot
         obj.saveCurrentState();
 
         #Initiate Factory reset before checking the default value
@@ -172,38 +172,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Initiate factory reset ";
-            print "EXPECTED RESULT 3: Should initiate factory reset";
-            print "ACTUAL RESULT 3: %s" %details;
+            print("TEST STEP 3: Initiate factory reset ");
+            print("EXPECTED RESULT 3: Should initiate factory reset");
+            print("ACTUAL RESULT 3: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
 
-	    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    	    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BLE.Discovery");
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BLE.Discovery");
 
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    newBLEDiscovery = tdkTestObj.getResultDetails();
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            newBLEDiscovery = tdkTestObj.getResultDetails();
 
             if expectedresult in actualresult and newBLEDiscovery == "false":
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 4: Get the default BLEDiscovery after factory reset";
-    	        print "EXPECTED RESULT 4: Should get the default  BLEDiscovery as false";
-    	        print "ACTUAL RESULT 4: BLEDiscovery status is %s" %newBLEDiscovery;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Get the default BLEDiscovery after factory reset";
-                print "EXPECTED RESULT 4: Should get the default  BLEDiscovery as false";
-                print "ACTUAL RESULT 4: BLEDiscovery status is %s" %newBLEDiscovery;
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4: Get the default BLEDiscovery after factory reset");
+                print("EXPECTED RESULT 4: Should get the default  BLEDiscovery as false");
+                print("ACTUAL RESULT 4: BLEDiscovery status is %s" %newBLEDiscovery);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4: Get the default BLEDiscovery after factory reset");
+                print("EXPECTED RESULT 4: Should get the default  BLEDiscovery as false");
+                print("ACTUAL RESULT 4: BLEDiscovery status is %s" %newBLEDiscovery);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BLE.Discovery");
@@ -218,39 +218,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Revert  enable status of BLEDiscovery same as previous status";
-                print "EXPECTED RESULT 5: Should revert the enable status of BLEDiscovery same as previous status";
-                print "ACTUAL RESULT 5: BLEDiscovery revert is success";
+                print("TEST STEP 5: Revert  enable status of BLEDiscovery same as previous status");
+                print("EXPECTED RESULT 5: Should revert the enable status of BLEDiscovery same as previous status");
+                print("ACTUAL RESULT 5: BLEDiscovery revert is success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5: Revert  enable status of BLEDiscovery same as previous status";
-                print "EXPECTED RESULT 5: Should revert the enable status of BLEDiscovery same as previous status";
-                print "ACTUAL RESULT 5: BLEDiscovery revert failed";
+                print("TEST STEP 5: Revert  enable status of BLEDiscovery same as previous status");
+                print("EXPECTED RESULT 5: Should revert the enable status of BLEDiscovery same as previous status");
+                print("ACTUAL RESULT 5: BLEDiscovery revert failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	else:
-	    #Set the result status of execution
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Initiate factory reset ";
-            print "EXPECTED RESULT 2: Should inititate factory reset";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Initiate factory reset ");
+            print("EXPECTED RESULT 2: Should inititate factory reset");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of BLEDiscovery";
-        print "EXPECTED RESULT 1: Should get the enable status of BLEDiscovery";
-        print "ACTUAL RESULT 1: BLEDiscovery Enable status is %s" %BLEDiscoveryOrg;
+        print("TEST STEP 1: Get the enable status of BLEDiscovery");
+        print("EXPECTED RESULT 1: Should get the enable status of BLEDiscovery");
+        print("ACTUAL RESULT 1: BLEDiscovery Enable status is %s" %BLEDiscoveryOrg);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("pam");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

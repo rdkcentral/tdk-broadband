@@ -78,34 +78,34 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetTimeOffSet');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetTimeOffSet");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetTimeOffSet");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
 
-        if expectedresult in actualresult and details:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Platform_GetTimeOffSet";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetTimeOffSet successfully";
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "TimeOffSet : %s" %details;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the Platform_GetTimeOffSet";
-            print "EXPECTED RESULT 1: Should retrieve the Platform_GetTimeOffSet successfully";
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "TimeOffSet : %s" %details;
-        obj.unloadModule("halplatform");
+    if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetTimeOffSet");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetTimeOffSet successfully");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("TimeOffSet : %s" %details);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Platform_GetTimeOffSet");
+        print("EXPECTED RESULT 1: Should retrieve the Platform_GetTimeOffSet successfully");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("TimeOffSet : %s" %details);
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

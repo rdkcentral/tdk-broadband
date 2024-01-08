@@ -107,8 +107,8 @@ index  = -1;
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,7 +116,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     #Get the default value from properties file
     tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile ETHWAN_ETH_PORT" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj1.addParameter("command", cmd);
     tdkTestObj1.executeTestCase(expectedresult);
@@ -125,137 +125,136 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     details = tdkTestObj1.getResultDetails().strip();
     ethPort = ""
     ethPort = details.replace("\\n", "");
-    print"ETHWAN ETHERNET PORT:",ethPort
+    print("ETHWAN ETHERNET PORT:",ethPort)
     if ethPort != "" and ( expectedresult in  actualresult):
-       tdkTestObj1.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file";
-       print "EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file";
-       print "ACTUAL RESULT 1: The ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS"
+        tdkTestObj1.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file");
+        print("ACTUAL RESULT 1: The ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
-       tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecEnable");
-       tdkTestObj.addParameter("ethPort",int(ethPort));
-       flag = 0;
-       tdkTestObj.addParameter("index",flag)
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       InitMACsecState= tdkTestObj.getResultDetails();
-       print "Initail MACsec Enable Status %s"%InitMACsecState;
+        tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecEnable");
+        tdkTestObj.addParameter("ethPort",int(ethPort));
+        flag = 0;
+        tdkTestObj.addParameter("index",flag)
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        InitMACsecState= tdkTestObj.getResultDetails();
+        print("Initail MACsec Enable Status %s"%InitMACsecState);
 
-       if expectedresult in  actualresult and InitMACsecState != "":
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Retrieve the GetMACsecEnable";
-          print "EXPECTED RESULT 2: Should retrieve the  GetMACsecEnable successfully";
-          print "ACTUAL RESULT 2: GetMACsecEnable is : %s" %InitMACsecState;
-          print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        if expectedresult in  actualresult and InitMACsecState != "":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Retrieve the GetMACsecEnable");
+            print("EXPECTED RESULT 2: Should retrieve the  GetMACsecEnable successfully");
+            print("ACTUAL RESULT 2: GetMACsecEnable is : %s" %InitMACsecState);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-          #retriving the value to be toggled
-          if  int(InitMACsecState) == 0:
-              index  = 1;
-          else:
-              index =  0;
-          print "The value to be set is :",index
-          tdkTestObj = obj.createTestStep("platform_stub_hal_SetMACsecEnable");
-          tdkTestObj.addParameter("ethPort",int(ethPort));
-          tdkTestObj.addParameter("index",index);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails().replace("\\n", "");
+            #retriving the value to be toggled
+            if  int(InitMACsecState) == 0:
+                index  = 1;
+            else:
+                index =  0;
+            print("The value to be set is :",index)
+            tdkTestObj = obj.createTestStep("platform_stub_hal_SetMACsecEnable");
+            tdkTestObj.addParameter("ethPort",int(ethPort));
+            tdkTestObj.addParameter("index",index);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().replace("\\n", "");
 
-          if expectedresult in  actualresult :
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Set the SetMACsecEnable";
-             print "EXPECTED RESULT 3: Should set the SetMACsecEnable successfully";
-             print "ACTUAL RESULT 3:%s" %details;
-             print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-
-             tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecEnable");
-             tdkTestObj.addParameter("ethPort",int(ethPort));
-             flag = 0;
-             tdkTestObj.addParameter("index",flag);
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             GetMACsecState= tdkTestObj.getResultDetails();
-             print "GetMACsec Enable status after set is %s"%GetMACsecState;
-
-             if expectedresult in  actualresult :
+            if expectedresult in  actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Retrieve the GetMACsecEnable after SetMACsecEnable";
-                print "EXPECTED RESULT 4: Should retrieve the  GetMACsecEnable after SetMACsecEnable successfully";
-                print "ACTUAL RESULT 4: GetMACsecEnable after SetMACsecEnable is : %s" %GetMACsecState;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("TEST STEP 3: Set the SetMACsecEnable");
+                print("EXPECTED RESULT 3: Should set the SetMACsecEnable successfully");
+                print("ACTUAL RESULT 3:%s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                print "The value set by SetMACsecEnable is :",index
-                print "The get value after set is :",GetMACsecState
+                tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecEnable");
+                tdkTestObj.addParameter("ethPort",int(ethPort));
+                flag = 0;
+                tdkTestObj.addParameter("index",flag);
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                GetMACsecState= tdkTestObj.getResultDetails();
+                print("GetMACsec Enable status after set is %s"%GetMACsecState);
 
-                if int(GetMACsecState) == index:
-                   print "TEST STEP 5: Check if Get MACsecEnable is equal to the the set value "
-                   print "EXPECTED RESULT 5: Get MACsecEnable should be  equal to the the set value"
-                   print "ACTUAL RESULT 5: Get MACsecEnable is  equal to the the set value"
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "[TEST EXECUTION RESULT] : SUCCESS"
+                if expectedresult in  actualresult :
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Retrieve the GetMACsecEnable after SetMACsecEnable");
+                    print("EXPECTED RESULT 4: Should retrieve the  GetMACsecEnable after SetMACsecEnable successfully");
+                    print("ACTUAL RESULT 4: GetMACsecEnable after SetMACsecEnable is : %s" %GetMACsecState);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+                    print("The value set by SetMACsecEnable is :",index)
+                    print("The get value after set is :",GetMACsecState)
+
+                    if int(GetMACsecState) == index:
+                        print("TEST STEP 5: Check if Get MACsecEnable is equal to the the set value ")
+                        print("EXPECTED RESULT 5: Get MACsecEnable should be  equal to the the set value")
+                        print("ACTUAL RESULT 5: Get MACsecEnable is  equal to the the set value")
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        print("TEST STEP 5: Check if Get MACsecEnable is equal to the the set value ")
+                        print("EXPECTED RESULT 5: Get MACsecEnable should be  equal to the the set value")
+                        print("ACTUAL RESULT 5: Get MACsecEnable is not equal to the the set value")
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    print "TEST STEP 5: Check if Get MACsecEnable is equal to the the set value "
-                    print "EXPECTED RESULT 5: Get MACsecEnable should be  equal to the the set value"
-                    print "ACTUAL RESULT 5: Get MACsecEnable is not equal to the the set value"
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE"
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 4: Retrieve the GetMACsecEnable after SetMACsecEnable";
-                 print "EXPECTED RESULT 4: Should retrieve the  GetMACsecEnable after SetMACsecEnable successfully";
-                 print "ACTUAL RESULT 4: Failed to GetMACsecEnable after SetMACsecEnable : %s" %InitMACsecState;
-                 print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Set the SetMACsecEnable";
-              print "EXPECTED RESULT 3: Should set the SetMACsecEnable successfully";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("TEST STEP 4: Retrieve the GetMACsecEnable after SetMACsecEnable");
+                    print("EXPECTED RESULT 4: Should retrieve the  GetMACsecEnable after SetMACsecEnable successfully");
+                    print("ACTUAL RESULT 4: Failed to GetMACsecEnable after SetMACsecEnable : %s" %InitMACsecState);
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Set the SetMACsecEnable");
+                print("EXPECTED RESULT 3: Should set the SetMACsecEnable successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-          #Reverting the value
-          tdkTestObj = obj.createTestStep("platform_stub_hal_SetMACsecEnable");
-          tdkTestObj.addParameter("ethPort",int(ethPort));
-          tdkTestObj.addParameter("index",int(InitMACsecState));
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails().replace("\\n", "");
+            #Reverting the value
+            tdkTestObj = obj.createTestStep("platform_stub_hal_SetMACsecEnable");
+            tdkTestObj.addParameter("ethPort",int(ethPort));
+            tdkTestObj.addParameter("index",int(InitMACsecState));
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().replace("\\n", "");
 
-          if expectedresult in  actualresult:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 6: Should Revert  the MACsecEnable";
-             print "EXPECTED RESULT 6: Should revert SetMACsecEnable successfully";
-             print "ACTUAL RESULT 6 : %s" %details;
-             print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 6: Should Revert  the  SetMACsecEnable";
-              print "EXPECTED RESULT 6: Should Revert  the SetMACsecEnable successfully";
-              print "ACTUAL RESULT 6: %s" %details;
-              print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Retrieve the GetMACsecEnable";
-           print "EXPECTED RESULT 2: Should retrieve the  GetMACsecEnable successfully";
-           print "ACTUAL RESULT 2: GetMACsecEnable failed the details is : %s" %InitMACsecState;
-           print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            if expectedresult in  actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 6: Should Revert  the MACsecEnable");
+                print("EXPECTED RESULT 6: Should revert SetMACsecEnable successfully");
+                print("ACTUAL RESULT 6 : %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 6: Should Revert  the  SetMACsecEnable");
+                print("EXPECTED RESULT 6: Should Revert  the SetMACsecEnable successfully");
+                print("ACTUAL RESULT 6: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Retrieve the GetMACsecEnable");
+            print("EXPECTED RESULT 2: Should retrieve the  GetMACsecEnable successfully");
+            print("ACTUAL RESULT 2: GetMACsecEnable failed the details is : %s" %InitMACsecState);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file";
-        print "EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file";
-        print "ACTUAL RESULT 1: Failed to get  ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort;
+        print("TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file");
+        print("ACTUAL RESULT 1: Failed to get  ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("halplatform");
     obj1.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

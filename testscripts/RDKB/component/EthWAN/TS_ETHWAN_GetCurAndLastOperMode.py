@@ -109,79 +109,79 @@ if "SUCCESS" in loadmodulestatus.upper():
     WanEnabled = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the status of WAN Enabled";
-       print "EXPECTED RESULT 1: Should get the WAN Enabled";
-       print "ACTUAL RESULT 1: Wan enabled status is :",WanEnabled;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the status of WAN Enabled");
+        print("EXPECTED RESULT 1: Should get the WAN Enabled");
+        print("ACTUAL RESULT 1: Wan enabled status is :",WanEnabled);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       if WanEnabled == "true":
+        if WanEnabled == "true":
             Mode = "ETHERNET";
-       else:
+        else:
             Mode = "DOCSIS";
 
-       tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-       tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_EthernetWAN.CurrentOperationalMode");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details  = tdkTestObj.getResultDetails();
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_EthernetWAN.CurrentOperationalMode");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details  = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult and details == Mode:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Current Operational Mode";
-          print "EXPECTED RESULT 2: Should get Current operationl mode as ",details,"if Wan status is ",WanEnabled;
-          print "ACTUAL RESULT 2: Cuurent Operational mode is :",details;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult and details == Mode:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Current Operational Mode");
+            print("EXPECTED RESULT 2: Should get Current operationl mode as ",details,"if Wan status is ",WanEnabled);
+            print("ACTUAL RESULT 2: Cuurent Operational mode is :",details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_EthernetWAN.LastKnownOperationalMode");
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details  = tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_EthernetWAN.LastKnownOperationalMode");
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details  = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult and details == Mode:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the Last Known Operational Mode";
-             print "EXPECTED RESULT 3: Should get the  Last Known operationl mode as ",details,"if Wan status is ",WanEnabled;
-             print "ACTUAL RESULT 3: Last Known Operational mode is :",details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the Last Known Operational Mode";
-              print "EXPECTED RESULT 3: Should get the  Last Known operationl mode as ",details,"if Wan status is ",WanEnabled;
-              print "ACTUAL RESULT 3: Last Known Operational mode is :",details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the Current Operational Mode";
-           print "EXPECTED RESULT 2: Should get Current operationl mode as ",details,"if Wan status is ",WanEnabled;
-           print "ACTUAL RESULT 2:Cuurent Operational mode is:",details;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            if expectedresult in actualresult and details == Mode:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Last Known Operational Mode");
+                print("EXPECTED RESULT 3: Should get the  Last Known operationl mode as ",details,"if Wan status is ",WanEnabled);
+                print("ACTUAL RESULT 3: Last Known Operational mode is :",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Last Known Operational Mode");
+                print("EXPECTED RESULT 3: Should get the  Last Known operationl mode as ",details,"if Wan status is ",WanEnabled);
+                print("ACTUAL RESULT 3: Last Known Operational mode is :",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Current Operational Mode");
+            print("EXPECTED RESULT 2: Should get Current operationl mode as ",details,"if Wan status is ",WanEnabled);
+            print("ACTUAL RESULT 2:Cuurent Operational mode is:",details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the status of WAN Enabled";
-        print "EXPECTED RESULT 1: Should get the WAN Enabled";
-        print "ACTUAL RESULT 1: Wan enabled status is :",WanEnabled;
+        print("TEST STEP 1: Get the status of WAN Enabled");
+        print("EXPECTED RESULT 1: Should get the WAN Enabled");
+        print("ACTUAL RESULT 1: Wan enabled status is :",WanEnabled);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

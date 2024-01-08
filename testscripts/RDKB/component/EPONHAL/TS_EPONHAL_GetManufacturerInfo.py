@@ -75,7 +75,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetManufacturerInfo');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,34 +90,33 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult and resultDetails != " " :
         manufacturer_Info =  resultDetails.split(':')[2].split(',')[0].strip()
-        print "manufacturer_Info:",manufacturer_Info;
+        print("manufacturer_Info:",manufacturer_Info);
         manufacturer_OrganizationName = resultDetails.split(':')[3].strip()
-        print"manufacturer_OrganizationName:",manufacturer_OrganizationName;
+        print("manufacturer_OrganizationName:",manufacturer_OrganizationName);
         if not  manufacturer_Info and not manufacturer_OrganizationName:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 1: Get the manufacturer_OrganizationName ,manufacturer_Info ";
-           print "EXPECTED RESULT 1: Should get the manufacturer_OrganizationName ,manufacturer_Info";
-           print "ACTUAL RESULT 1: %s" %resultDetails;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the manufacturer_OrganizationName ,manufacturer_Info ");
+            print("EXPECTED RESULT 1: Should get the manufacturer_OrganizationName ,manufacturer_Info");
+            print("ACTUAL RESULT 1: %s" %resultDetails);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the manufacturer_OrganizationName ,manufacturer_Info ";
-            print "EXPECTED RESULT 1: Should get the manufacturer_OrganizationName ,manufacturer_Info";
-            print "ACTUAL RESULT 1:  ManufacturerInfo Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1: Get the manufacturer_OrganizationName ,manufacturer_Info ");
+            print("EXPECTED RESULT 1: Should get the manufacturer_OrganizationName ,manufacturer_Info");
+            print("ACTUAL RESULT 1:  ManufacturerInfo Details : %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the manufacturer_Info";
-        print "EXPECTED RESULT : Should get the manufacturer_Info  successfully";
-        print "ACTUAL RESULT : Failed to get the manufacturer_Info, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP : Get the manufacturer_Info");
+        print("EXPECTED RESULT : Should get the manufacturer_Info  successfully");
+        print("ACTUAL RESULT : Failed to get the manufacturer_Info, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

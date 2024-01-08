@@ -65,7 +65,7 @@
     <api_or_interface_used>dpoe_hal_Reboot_Ready</api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1. Load eponhal module
-2. Invoke dpoe_hal_Reboot_Ready 
+2. Invoke dpoe_hal_Reboot_Ready
 3. Check if the value returned is 1 or 2
 3. Unload eponhal module</automation_approch>
     <expected_output>The value retrieved using dpoe_hal_Reboot_Ready should be equal to 1 or 2</expected_output>
@@ -92,7 +92,7 @@ obj.configureTestCase(ip,port,'TS_EPONHAL_GetHalRebootReady');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,32 +109,30 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #To know wether the value received id Ready or NotReady
     if (int(resultDetails)== 1) :
-       details = "Ready"
+        details = "Ready"
     elif(int(resultDetails)== 2) :
-         details = "NotReady"
+        details = "NotReady"
     else:
         details = "Invalid state"
-         
+
 
     if expectedresult in actualresult and resultDetails != " " and (int(resultDetails)== 1 or int(resultDetails)== 2) :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the hal_Reboot_Ready value";
-        print "EXPECTED RESULT 1: Should get the hal_Reboot_Ready value";
-        print "ACTUAL RESULT 1: The hal_Reboot_Ready value is :%s for %s" %(resultDetails,details);
+        print("TEST STEP 1: Get the hal_Reboot_Ready value");
+        print("EXPECTED RESULT 1: Should get the hal_Reboot_Ready value");
+        print("ACTUAL RESULT 1: The hal_Reboot_Ready value is :%s for %s" %(resultDetails,details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the hal_Reboot_Ready value";
-        print "EXPECTED RESULT 1: Should get the hal_Reboot_Ready  value ";
-        print "ACTUAL RESULT 1: Failed to get the hal_Reboot_Ready value is :%s, Details : %s" %(resultDetails,details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the hal_Reboot_Ready value");
+        print("EXPECTED RESULT 1: Should get the hal_Reboot_Ready  value ");
+        print("ACTUAL RESULT 1: Failed to get the hal_Reboot_Ready value is :%s, Details : %s" %(resultDetails,details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("eponhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-                                                       
-
+    print("Module loading failed");

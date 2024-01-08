@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile PARTNER_ID" %TDK_PATH;
-    print command;
+    print(command);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
@@ -115,11 +115,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult and configPartnerID != " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get value of PARTNER_ID"
-        print "EXPECTED RESULT 1: Should get the value of PARTNER_ID";
-        print "ACTUAL RESULT 1:Partner ID from config file  %s" %configPartnerID;
+        print("TEST STEP 1: Get value of PARTNER_ID")
+        print("EXPECTED RESULT 1: Should get the value of PARTNER_ID");
+        print("ACTUAL RESULT 1:Partner ID from config file  %s" %configPartnerID);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep("platform_stub_hal_getFactoryPartnerId");
         expectedresult="SUCCESS";
@@ -129,47 +129,46 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         if expectedresult in actualresult and factoryPartnerID != " ":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Retrieve the Platform_getFactoryPartnerId";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_getFactoryPartnerId successfully";
-            print "ACTUAL RESULT 2: Platform_getFactoryPartnerId value retrieved: %s" %factoryPartnerID
+            print("TEST STEP 2: Retrieve the Platform_getFactoryPartnerId");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_getFactoryPartnerId successfully");
+            print("ACTUAL RESULT 2: Platform_getFactoryPartnerId value retrieved: %s" %factoryPartnerID)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             if configPartnerID == factoryPartnerID:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Validate the Platform_getFactoryPartnerId";
-                print "EXPECTED RESULT 3: Should validate the Platform_getFactoryPartnerId successfully";
-                print "ACTUAL RESULT 3: Platform_getFactoryPartnerId validated successfully"
+                print("TEST STEP 3: Validate the Platform_getFactoryPartnerId");
+                print("EXPECTED RESULT 3: Should validate the Platform_getFactoryPartnerId successfully");
+                print("ACTUAL RESULT 3: Platform_getFactoryPartnerId validated successfully")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Validate the Platform_getFactoryPartnerId";
-                print "EXPECTED RESULT 3: Should validate the Platform_getFactoryPartnerId successfully";
-                print "ACTUAL RESULT 3: Platform_getFactoryPartnerId and partner ID retrieved from config file are not same"
+                print("TEST STEP 3: Validate the Platform_getFactoryPartnerId");
+                print("EXPECTED RESULT 3: Should validate the Platform_getFactoryPartnerId successfully");
+                print("ACTUAL RESULT 3: Platform_getFactoryPartnerId and partner ID retrieved from config file are not same")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Retrieve the Platform_getFactoryPartnerId";
-            print "EXPECTED RESULT 2: Should retrieve the Platform_getFactoryPartnerId successfully";
-            print "ACTUAL RESULT 2: Failed to retrieve Platform_getFactoryPartnerId"
+            print("TEST STEP 2: Retrieve the Platform_getFactoryPartnerId");
+            print("EXPECTED RESULT 2: Should retrieve the Platform_getFactoryPartnerId successfully");
+            print("ACTUAL RESULT 2: Failed to retrieve Platform_getFactoryPartnerId")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get value of PARTNER_ID"
-        print "EXPECTED RESULT 1: Should get the value of PARTNER_ID";
-        print "ACTUAL RESULT 1: Failed to get PARTNER_ID from configuration file" ;
+        print("TEST STEP 1: Get value of PARTNER_ID")
+        print("EXPECTED RESULT 1: Should get the value of PARTNER_ID");
+        print("ACTUAL RESULT 1: Failed to get PARTNER_ID from configuration file") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("halplatform");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

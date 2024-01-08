@@ -99,7 +99,7 @@ obj.configureTestCase(ip,port,'TS_LMLite_SetDscpCountEnableAllAndInterval_CheckD
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -111,15 +111,15 @@ if "SUCCESS" in loadmodulestatus1.upper():
     pre_req_set, tdkTestObj, step, revert_flag, initial_lanmode = CheckWANTrafficCountsPre_requisite(obj, step);
 
     if pre_req_set == 1:
-        print "\n*************RFC Pre-requisite set for the DUT*****************";
+        print("\n*************RFC Pre-requisite set for the DUT*****************");
 
         #Get the initial DscpCountEnable and DscpCountInterval values
         step = step + 1;
         initial_values = [];
         get_flag = 0;
         paramList = ["Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable", "Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval"];
-        print "\nTEST STEP %d : Get the initial DSCP Count Enable and DSCP Count Interval" %(step);
-        print "EXPECTED RESULT %d : DSCP count enable and DSCP Count Interval should be retrieved successfully" %step;
+        print("\nTEST STEP %d : Get the initial DSCP Count Enable and DSCP Count Interval" %(step));
+        print("EXPECTED RESULT %d : DSCP count enable and DSCP Count Interval should be retrieved successfully" %step);
 
         for param in paramList:
             tdkTestObj = obj.createTestStep("LMLiteStub_Get");
@@ -130,24 +130,24 @@ if "SUCCESS" in loadmodulestatus1.upper():
 
             if expectedresult in actualresult :
                 initial_values.append(details);
-                print "%s is retrieved successfully as : %s" %(param, details);
+                print("%s is retrieved successfully as : %s" %(param, details));
                 tdkTestObj.setResultStatus("SUCCESS");
             else :
                 get_flag = 1;
-                print "%s is NOT retrieved successfully";
+                print("%s is NOT retrieved successfully");
                 tdkTestObj.setResultStatus("FAILURE");
 
         if get_flag == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : The initial values are retrieved successfully" %step;
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("ACTUAL RESULT %d : The initial values are retrieved successfully" %step);
+            print("TEST EXECUTION RESULT : SUCCESS");
 
             #Set DscpCountEnable to -1 to enable traffic counts for all DSCP WAN values
             step = step + 1;
             dscpCountEnable_str = "-1";
-            print "\nTEST STEP %d : Set the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable to %s and validate the operation" %(step, dscpCountEnable_str);
-            print "EXPECTED RESULT %d : DSCP count enable set validation should be success" %step;
+            print("\nTEST STEP %d : Set the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable to %s and validate the operation" %(step, dscpCountEnable_str));
+            print("EXPECTED RESULT %d : DSCP count enable set validation should be success" %step);
 
             tdkTestObj = obj.createTestStep("LMLiteStub_Set_Get");
             tdkTestObj.addParameter("ParamName",paramList[0]);
@@ -160,8 +160,8 @@ if "SUCCESS" in loadmodulestatus1.upper():
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : DSCP count enable set operation success; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("ACTUAL RESULT %d : DSCP count enable set operation success; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : SUCCESS");
 
                 #Set DscpCountInterval
                 step = step + 1;
@@ -172,8 +172,8 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 else:
                     dscpCountInterval = "100";
 
-                print "\nTEST STEP %d : Set the DSCP Count Interval using Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval to %s and validate the operation" %(step, dscpCountInterval);
-                print "EXPECTED RESULT %d : DSCP count interval set validation should be success" %step;
+                print("\nTEST STEP %d : Set the DSCP Count Interval using Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval to %s and validate the operation" %(step, dscpCountInterval));
+                print("EXPECTED RESULT %d : DSCP count interval set validation should be success" %step);
 
                 tdkTestObj = obj.createTestStep("LMLiteStub_Set_Get");
                 tdkTestObj.addParameter("ParamName",paramList[1]);
@@ -187,18 +187,18 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     interval_revert_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : DSCP count interval set operation success; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("ACTUAL RESULT %d : DSCP count interval set operation success; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : SUCCESS");
 
                     #Sleep for the DSCP Count Interval set + 5s for DSCP Total to be populated
                     sleep_time = int(dscpCountInterval) + 5;
-                    print "Sleeping the DSCP Count Interval set : %ss for WAN Traffic Counts to be updated" %sleep_time;
+                    print("Sleeping the DSCP Count Interval set : %ss for WAN Traffic Counts to be updated" %sleep_time);
                     sleep(sleep_time);
 
                     #Check if the DSCP Count Total is non-empty
                     step = step + 1;
-                    print "\nTEST STEP %d : Get the DSCP Count Total using Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal" %(step);
-                    print "EXPECTED RESULT %d : DSCP count total should be retrieved successfully as non-empty" %step;
+                    print("\nTEST STEP %d : Get the DSCP Count Total using Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal" %(step));
+                    print("EXPECTED RESULT %d : DSCP count total should be retrieved successfully as non-empty" %step);
 
                     tdkTestObj = obj.createTestStep("LMLiteStub_Get");
                     tdkTestObj.addParameter("paramName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal");
@@ -209,8 +209,8 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : DSCP count total is retrieved as : %s" %(step, details);
-                        print "TEST EXECUTION RESULT : SUCCESS";
+                        print("ACTUAL RESULT %d : DSCP count total is retrieved as : %s" %(step, details));
+                        print("TEST EXECUTION RESULT : SUCCESS");
 
                         #Separate the DSCP records
                         dscp_records = details.split(";");
@@ -220,82 +220,82 @@ if "SUCCESS" in loadmodulestatus1.upper():
                         #Check if the data held in the DSCP records are valid
                         step = step + 1;
                         record_flag = 0;
-                        print "\nTEST STEP %d : Check if the value of Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal retrieved is valid" %step;
-                        print "EXPECTED RESULT %d : Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal data retrieved should be valid" %step;
+                        print("\nTEST STEP %d : Check if the value of Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal retrieved is valid" %step);
+                        print("EXPECTED RESULT %d : Device.X_RDK_WAN.Interface.1.Stats.DscpCountTotal data retrieved should be valid" %step);
 
                         for record in range(0, num_dscp_records):
-                            print "\n-----For DSCP record : %s-----" %dscp_records[record];
+                            print("\n-----For DSCP record : %s-----" %dscp_records[record]);
                             #DSCP WAN value of the record
                             dscp_wan = dscp_records[record].split("|")[0];
-                            print "DSCP WAN value : %s" %dscp_wan;
+                            print("DSCP WAN value : %s" %dscp_wan);
 
                             #Check if DSCP WAN value is in the applicable DSCP WAN range
                             if dscp_wan.isdigit() and int(dscp_wan) >= 0 and int(dscp_wan) < 63 :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "DSCP WAN value is valid";
+                                print("DSCP WAN value is valid");
 
                                 #Get the DSCP client list
                                 dscp_client_list = dscp_records[record].split("|");
                                 #Remove the first element as it is the DSCP WAN value
                                 dscp_client_list.remove(dscp_client_list[0]);
                                 dscp_client_length = len(dscp_client_list);
-                                print "Number of clients : %s" %dscp_client_length;
+                                print("Number of clients : %s" %dscp_client_length);
 
                                 for client in range(0, dscp_client_length):
-                                    print "--For Client %d--" %(client+1);
+                                    print("--For Client %d--" %(client+1));
                                     #Separate the client details
                                     client_details = dscp_client_list[client].split(",");
                                     #Mac address of interface
                                     mac_addr = client_details[0];
-                                    print "Mac address : %s" %mac_addr;
+                                    print("Mac address : %s" %mac_addr);
                                     #Tx Total
                                     tx_total = client_details[1];
-                                    print "Tx Total : %s" %tx_total;
+                                    print("Tx Total : %s" %tx_total);
                                     #Rx Total
                                     rx_total = client_details[2];
-                                    print "Rx Total : %s" %rx_total;
+                                    print("Rx Total : %s" %rx_total);
 
-                                    if len(mac_addr) == 17 and 	tx_total.isdigit() and rx_total.isdigit():
+                                    if len(mac_addr) == 17 and  tx_total.isdigit() and rx_total.isdigit():
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "Client details are valid";
+                                        print("Client details are valid");
                                     else:
                                         record_flag = 1;
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "Client details are NOT valid";
+                                        print("Client details are NOT valid");
                             else:
                                 record_flag = 1;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "DSCP WAN value is NOT valid";
+                                print("DSCP WAN value is NOT valid");
 
                         if record_flag == 0:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : DSCP count total retrieved is valid" %(step);
-                            print "TEST EXECUTION RESULT : SUCCESS";
+                            print("ACTUAL RESULT %d : DSCP count total retrieved is valid" %(step));
+                            print("TEST EXECUTION RESULT : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : DSCP count total retrieved is NOT valid" %(step);
-                            print "TEST EXECUTION RESULT : FAILURE";
+                            print("ACTUAL RESULT %d : DSCP count total retrieved is NOT valid" %(step));
+                            print("TEST EXECUTION RESULT : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : DSCP count total is retrieved as : %s" %(step, details);
-                        print "TEST EXECUTION RESULT : FAILURE";
+                        print("ACTUAL RESULT %d : DSCP count total is retrieved as : %s" %(step, details));
+                        print("TEST EXECUTION RESULT : FAILURE");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : DSCP count interval set operation failed; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d : DSCP count interval set operation failed; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : FAILURE");
 
                 #Revert DscpCountEnable to initial value
                 step = step + 1;
-                print "\nTEST STEP %d : Revert the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %step;
-                print "EXPECTED RESULT %d : DSCP count enable revert operation should be success" %step;
+                print("\nTEST STEP %d : Revert the DSCP Count Enable using Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable" %step);
+                print("EXPECTED RESULT %d : DSCP count enable revert operation should be success" %step);
 
                 tdkTestObj = obj.createTestStep("LMLiteStub_Set_Get");
                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountEnable");
@@ -308,19 +308,19 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 if expectedresult in actualresult :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : DSCP count enable revert operation success; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("ACTUAL RESULT %d : DSCP count enable revert operation success; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : SUCCESS");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : DSCP count enable revert operation failed; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d : DSCP count enable revert operation failed; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : FAILURE");
 
                 #Revert DscpCountInterval to initial value
                 if interval_revert_flag == 1:
                     step = step + 1;
-                    print "\nTEST STEP %d : Revert the DSCP Count Interval using Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval" %step;
-                    print "EXPECTED RESULT %d : DSCP count interval revert operation should be success" %step;
+                    print("\nTEST STEP %d : Revert the DSCP Count Interval using Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval" %step);
+                    print("EXPECTED RESULT %d : DSCP count interval revert operation should be success" %step);
 
                     tdkTestObj = obj.createTestStep("LMLiteStub_Set_Get");
                     tdkTestObj.addParameter("ParamName","Device.X_RDK_WAN.Interface.1.Stats.DscpCountInterval");
@@ -333,25 +333,25 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     if expectedresult in actualresult :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : DSCP count interval revert operation success; Details : %s" %(step, details);
-                        print "TEST EXECUTION RESULT : SUCCESS";
+                        print("ACTUAL RESULT %d : DSCP count interval revert operation success; Details : %s" %(step, details));
+                        print("TEST EXECUTION RESULT : SUCCESS");
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : DSCP count interval revert operation failed; Details : %s" %(step, details);
-                        print "TEST EXECUTION RESULT : FAILURE";
+                        print("ACTUAL RESULT %d : DSCP count interval revert operation failed; Details : %s" %(step, details));
+                        print("TEST EXECUTION RESULT : FAILURE");
                 else:
                     "DSCP Interval revert operation not required";
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : DSCP count enable set operation failed; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d : DSCP count enable set operation failed; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : FAILURE");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : DSCP values NOT retrieved successfully" %step;
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d : DSCP values NOT retrieved successfully" %step);
+            print("TEST EXECUTION RESULT : FAILURE");
 
         #Revert the Pre-requisites for WAN Traffic Counts
         step = step + 1;
@@ -360,18 +360,18 @@ if "SUCCESS" in loadmodulestatus1.upper():
         if status == 1:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Revert operations completed successfully";
+            print("Revert operations completed successfully");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Revert operations NOT completed successfully";
+            print("Revert operations NOT completed successfully");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisite is not set successfully";
+        print("Pre-Requisite is not set successfully");
 
     obj.unloadModule("lmlite");
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

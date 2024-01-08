@@ -48,7 +48,7 @@
     <api_or_interface_used>docsis_GetDSChannel</api_or_interface_used>
     <input_parameters>paramName: LockStatusAndChannelID</input_parameters>
     <automation_approch>1. Load  cmhal module
-2. From script invoke CMHAL_GetParamCharValue() 
+2. From script invoke CMHAL_GetParamCharValue()
 3. Get ChannelID and LockStatus and validate it
 4. Validation of  the result is done within the stub and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from TAD stub.</automation_approch>
@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -75,9 +75,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_CMHAL_GetChannelIDWithLockStatus');
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -89,13 +89,13 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     Details = tdkTestObj.getResultDetails();
-    print Details;
+    print(Details);
     if Details !="" :
         tdkTestObj.setResultStatus("SUCCESS");
         Details = ''.join(Details.split());
         List = Details.split(",");
         for item in List:
-	    #Data[0] is LockStatus and Data[1] is ChannelID
+            #Data[0] is LockStatus and Data[1] is ChannelID
             Data = item.split(":");
             if "Locked" in Data[0] and int(Data[1]) > 0:
                 status = "Success";
@@ -107,22 +107,22 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and "Success" in status:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get and validate the DownStream LockStatus and ChannelID";
-            print "EXPECTED RESULT 1: ChannelID should not be zero if the frequency is Locked";
-            print "ACTUAL RESULT 1: Successfully validated the ChannelID with Lockstatus" ;
+            print("TEST STEP 1: Get and validate the DownStream LockStatus and ChannelID");
+            print("EXPECTED RESULT 1: ChannelID should not be zero if the frequency is Locked");
+            print("ACTUAL RESULT 1: Successfully validated the ChannelID with Lockstatus") ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get and validate the DownStream LockStatus and ChannelID";
-            print "EXPECTED RESULT 1: ChannelID should not be zero if the frequency is Locked";
-            print "ACTUAL RESULT 1: Validation of ChannelID with LockStatus failed";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get and validate the DownStream LockStatus and ChannelID");
+            print("EXPECTED RESULT 1: ChannelID should not be zero if the frequency is Locked");
+            print("ACTUAL RESULT 1: Validation of ChannelID with LockStatus failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "Details returned from the HAL API are empty";
+        print("Details returned from the HAL API are empty");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

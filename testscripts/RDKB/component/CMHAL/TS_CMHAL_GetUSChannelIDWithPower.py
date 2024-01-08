@@ -81,8 +81,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSChannelIDWithPower');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,55 +110,52 @@ if "SUCCESS" in loadmodulestatus.upper():
     minPower = 8.00;
     maxPower = 58.00;
     List = Power.split(",");
-    print "%s" %List;
+    print("%s" %List);
     for item in List:
-	#Data[0] is Channel ID and Data[1] is Power
+        #Data[0] is Channel ID and Data[1] is Power
         Data = item.split(":");
-        print "%s" %Data;
-        
-        if  int(Data[0]) >0 and "dBmV" in Data[1]:
-           
-           if  float(Data[1].split(" ")[0])>=minPower:
-            status = "Success";
-           else:
-            status = "Failure";
-            break;
-        elif int(Data[0]) != 0 and "dBmV" not in Data[1] :
-             
-        
-             if  Data[1]>=minPower:
-               status = "Success";
-             else:
-               status = "Failure";
-               break;
+        print("%s" %Data);
 
-             
+        if  int(Data[0]) >0 and "dBmV" in Data[1]:
+
+            if  float(Data[1].split(" ")[0])>=minPower:
+                status = "Success";
+            else:
+                status = "Failure";
+                break;
+        elif int(Data[0]) != 0 and "dBmV" not in Data[1] :
+
+
+            if  Data[1]>=minPower:
+                status = "Success";
+            else:
+                status = "Failure";
+                break;
+
+
         elif int(Data[0])==0 and "" in Data[1]:
             status = "Success";
         else:
             status = "Failure";
             break;
-        
+
     if expectedresult in actualresult and "Success" in status:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get and validate the UpStream power and ChannelID";
-        print "EXPECTED RESULT 1: Should get power if channelID not zero";
-        print "ACTUAL RESULT 1: Successfully validated the ChannelID with Power" ;
+        print("TEST STEP 1: Get and validate the UpStream power and ChannelID");
+        print("EXPECTED RESULT 1: Should get power if channelID not zero");
+        print("ACTUAL RESULT 1: Successfully validated the ChannelID with Power") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get and validate the UpStream power and ChannelID";
-        print "EXPECTED RESULT 1: Should get power if channelID not zero";
-        print "ACTUAL RESULT 1: Validation of ChannelID and power failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get and validate the UpStream power and ChannelID");
+        print("EXPECTED RESULT 1: Should get power if channelID not zero");
+        print("ACTUAL RESULT 1: Validation of ChannelID and power failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-				
-				
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -76,7 +76,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_DS_OFDM_GetSubcarrierSpacing');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -88,33 +88,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details
+    print(details)
     expectedList = [ "50","25"]
     if expectedresult in actualresult:
-	NoOfEntries = details.split(";")[0].split(":")[1];
+        NoOfEntries = details.split(";")[0].split(":")[1];
         if int(NoOfEntries) > 0:
-	    SubcarrierSpacing = details.split(";")[1].split(":")[1];
+            SubcarrierSpacing = details.split(";")[1].split(":")[1];
             if SubcarrierSpacing in expectedList:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the SubcarrierSpacing";
-                print "EXPECTED RESULT 1: Should get the SubcarrierSpacing in the expected range";
-                print "ACTUAL RESULT 1: SubcarrierSpacing is %s" %SubcarrierSpacing;
+                print("TEST STEP 1: Get the SubcarrierSpacing");
+                print("EXPECTED RESULT 1: Should get the SubcarrierSpacing in the expected range");
+                print("ACTUAL RESULT 1: SubcarrierSpacing is %s" %SubcarrierSpacing);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the SubcarrierSpacing";
-                print "EXPECTED RESULT 1: Should get the SubcarrierSpacing in the expected range";
-                print "ACTUAL RESULT 1: SubcarrierSpacing is %s" %SubcarrierSpacing;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 1: Get the SubcarrierSpacing");
+                print("EXPECTED RESULT 1: Should get the SubcarrierSpacing in the expected range");
+                print("ACTUAL RESULT 1: SubcarrierSpacing is %s" %SubcarrierSpacing);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "There are no entries in DS OFDM channel table"
+            print("There are no entries in DS OFDM channel table")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to get the values from api"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Failed to get the values from api")
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

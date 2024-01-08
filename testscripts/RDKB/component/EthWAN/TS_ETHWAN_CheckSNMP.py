@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -99,51 +99,51 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if "true" == ethwanEnable:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "The device is in ethwan mode."
+        if "true" == ethwanEnable:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The device is in ethwan mode.")
 
-	    #Get the Community String
-    	    communityString = snmplib.getCommunityString(obj1,"snmpget");
-    	    #Get the IP Address
-    	    ipaddress = snmplib.getIPAddress(obj1);
-    	    tdkTestObj = obj1.createTestStep('GetCommString');
-    	    actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.2.1.2.2.1.6.1", ipaddress);
-    	    tdkTestObj = obj1.createTestStep('ExecuteCmd');
-    	    tdkTestObj.executeTestCase("SUCCESS");
+            #Get the Community String
+            communityString = snmplib.getCommunityString(obj1,"snmpget");
+            #Get the IP Address
+            ipaddress = snmplib.getIPAddress(obj1);
+            tdkTestObj = obj1.createTestStep('GetCommString');
+            actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.2.1.2.2.1.6.1", ipaddress);
+            tdkTestObj = obj1.createTestStep('ExecuteCmd');
+            tdkTestObj.executeTestCase("SUCCESS");
 
-    	    if "ERROR" in actResponse:
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 2:Execute snmpget for erouter0 mac";
-    	        print "EXPECTED RESULT 2: snmpget should fail in ethwan mode";
-    	        print "ACTUAL RESULT 2:  %s" %actResponse;
+            if "ERROR" in actResponse:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2:Execute snmpget for erouter0 mac");
+                print("EXPECTED RESULT 2: snmpget should fail in ethwan mode");
+                print("ACTUAL RESULT 2:  %s" %actResponse);
 
-	    else:
-        	tdkTestObj.setResultStatus("FAILURE");
-        	details = tdkTestObj.getResultDetails();
-        	print "TEST STEP 2:Execute snmpget for erouter0 mac";
-        	print "EXPECTED RESULT 2: snmpget should fail in ethwan mode";
-        	print "ACTUAL RESULT 2: %s" %actResponse;
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "The device is not in ethwan mode. Please check the device setup"
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                details = tdkTestObj.getResultDetails();
+                print("TEST STEP 2:Execute snmpget for erouter0 mac");
+                print("EXPECTED RESULT 2: snmpget should fail in ethwan mode");
+                print("ACTUAL RESULT 2: %s" %actResponse);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("The device is not in ethwan mode. Please check the device setup")
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Ethwan";
-        print "EXPECTED RESULT 1: Should get the enable status of Ethwan";
-        print "ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable;
+        print("TEST STEP 1: Get the enable status of Ethwan");
+        print("EXPECTED RESULT 1: Should get the enable status of Ethwan");
+        print("ACTUAL RESULT 1: Ethwan Enable status is %s" %ethwanEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

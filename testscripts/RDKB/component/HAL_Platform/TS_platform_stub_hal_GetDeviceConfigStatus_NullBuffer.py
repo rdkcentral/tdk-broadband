@@ -77,35 +77,35 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetDeviceConfigStatus_NullBu
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetDeviceConfigStatus");
-        tdkTestObj.addParameter("flag",1);
-        expectedresult="FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details != " ":
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1: Retrieve the Platform_GetDeviceConfigStatus  with NULL buffer";
-           print "EXPECTED RESULT 1: Should not retrieve the Platform_GetDeviceConfigStatus  with NULL buffer";
-           print "ACTUAL RESULT 1: Platform_GetDeviceConfigStatus api call failed";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 1: Retrieve the Platform_GetDeviceConfigStatus  with NULL buffer";
-           print "EXPECTED RESULT 1: Should not retrieve the Platform_GetDeviceConfigStatus  with NULL buffer";
-           print "ACTUAL RESULT 1: Platform_GetDeviceConfigStatus api call sucess";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE"
-        obj.unloadModule("halplatform");
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetDeviceConfigStatus");
+    tdkTestObj.addParameter("flag",1);
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details != " ":
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the Platform_GetDeviceConfigStatus  with NULL buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the Platform_GetDeviceConfigStatus  with NULL buffer");
+        print("ACTUAL RESULT 1: Platform_GetDeviceConfigStatus api call failed");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Platform_GetDeviceConfigStatus  with NULL buffer");
+        print("EXPECTED RESULT 1: Should not retrieve the Platform_GetDeviceConfigStatus  with NULL buffer");
+        print("ACTUAL RESULT 1: Platform_GetDeviceConfigStatus api call sucess");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] :FAILURE")
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

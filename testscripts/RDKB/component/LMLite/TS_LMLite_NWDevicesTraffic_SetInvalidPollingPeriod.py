@@ -105,7 +105,7 @@ obj.configureTestCase(ip,port,'TS_LMLite_NWDevicesTraffic_SetInvalidPollingPerio
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -123,12 +123,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details_polling in PollingPeriod_list:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the PollingPeriod of NetworkDevicesTraffic";
-        print "EXPECTED RESULT 1: Should get a valid PollingPeriod for NetworkDevicesTraffic";
-        print "ACTUAL RESULT 1: PollingPeriod of NetworkDevicesTraffic :%s" %details_polling;
+        print("TEST STEP 1: Get the PollingPeriod of NetworkDevicesTraffic");
+        print("EXPECTED RESULT 1: Should get a valid PollingPeriod for NetworkDevicesTraffic");
+        print("ACTUAL RESULT 1: PollingPeriod of NetworkDevicesTraffic :%s" %details_polling);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-	tdkTestObj = obj.createTestStep('LMLiteStub_Set');
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj = obj.createTestStep('LMLiteStub_Set');
         tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic.PollingPeriod");
         tdkTestObj.addParameter("ParamValue","100");
         tdkTestObj.addParameter("Type","unsignedint");
@@ -140,19 +140,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set an invalid PollingPeriod of NetworkDevicesTraffic";
-            print "EXPECTED RESULT 2: Should not set an invalid PollingPeriod for NetworkDevicesTraffic";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set an invalid PollingPeriod of NetworkDevicesTraffic");
+            print("EXPECTED RESULT 2: Should not set an invalid PollingPeriod for NetworkDevicesTraffic");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    #Set the result status of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set an invalid PollingPeriod of NetworkDevicesTraffic";
-            print "EXPECTED RESULT 2: Should not set an invalid PollingPeriod for NetworkDevicesTraffic";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set an invalid PollingPeriod of NetworkDevicesTraffic");
+            print("EXPECTED RESULT 2: Should not set an invalid PollingPeriod for NetworkDevicesTraffic");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         tdkTestObj = obj.createTestStep('LMLiteStub_Set');
         tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic.PollingPeriod");
@@ -164,29 +164,29 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-	    #Set the result status of execution
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Set the PollingPeriod of NetworkDevicesTraffic to default value";
-            print "EXPECTED RESULT 3: Should set a valid PollingPeriod for NetworkDevicesTraffic to default value";
-            print "ACTUAL RESULT 3: PollingPeriod of NetworkDevicesTraffic :%s" %details;
+            print("TEST STEP 3: Set the PollingPeriod of NetworkDevicesTraffic to default value");
+            print("EXPECTED RESULT 3: Should set a valid PollingPeriod for NetworkDevicesTraffic to default value");
+            print("ACTUAL RESULT 3: PollingPeriod of NetworkDevicesTraffic :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-	    #Set the result status of execution
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Set the PollingPeriod of NetworkDevicesTraffic to default value";
-            print "EXPECTED RESULT 3: Should set a valid PollingPeriod for NetworkDevicesTraffic to default value";
-            print "ACTUAL RESULT 3: PollingPeriod of NetworkDevicesTraffic :%s" %details;
+            print("TEST STEP 3: Set the PollingPeriod of NetworkDevicesTraffic to default value");
+            print("EXPECTED RESULT 3: Should set a valid PollingPeriod for NetworkDevicesTraffic to default value");
+            print("ACTUAL RESULT 3: PollingPeriod of NetworkDevicesTraffic :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the PollingPeriod of NetworkDevicesTraffic";
-        print "EXPECTED RESULT 1: Should get a valid PollingPeriod for NetworkDevicesTraffic";
-        print "ACTUAL RESULT 1: PollingPeriod of NetworkDevicesTraffic :%s" %details_polling;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the PollingPeriod of NetworkDevicesTraffic");
+        print("EXPECTED RESULT 1: Should get a valid PollingPeriod for NetworkDevicesTraffic");
+        print("ACTUAL RESULT 1: PollingPeriod of NetworkDevicesTraffic :%s" %details_polling);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("lmlite");
 else:
-        print "Failed to load lmlite module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load lmlite module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

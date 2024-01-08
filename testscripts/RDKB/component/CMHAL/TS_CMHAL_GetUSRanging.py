@@ -80,8 +80,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetUSRanging');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,12 +109,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution as success
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the CMStatus";
-        print "EXPECTED RESULT 1: Should get value of CMStatus ";
-        print "ACTUAL RESULT 1:Failed to get CMStatus %s" %Status;
+        print("TEST STEP 1: Get the CMStatus");
+        print("EXPECTED RESULT 1: Should get value of CMStatus ");
+        print("ACTUAL RESULT 1:Failed to get CMStatus %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-    
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
         #This method invohes the HAL API docsis_GetDOCSISInfo to get upstream ranging
         tdkTestObj = obj.createTestStep("CMHAL_GetParamCharValue");
         tdkTestObj.addParameter("paramName","UpstreamRanging");
@@ -127,30 +127,29 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and "OPERATIONAL" in Status and "Complete" in UpstreamRanging:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get DOCSISUpstreamRanging as complete ";
-            print "EXPECTED RESULT 1: Should get the DOCSISUpstreamRanging as complete";
-            print "ACTUAL RESULT 1: TheDOCSISUpstreamRanging  is %s" %UpstreamRanging;
+            print("TEST STEP 1: Get DOCSISUpstreamRanging as complete ");
+            print("EXPECTED RESULT 1: Should get the DOCSISUpstreamRanging as complete");
+            print("ACTUAL RESULT 1: TheDOCSISUpstreamRanging  is %s" %UpstreamRanging);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: DOCSISUpstreamRanging as complete";
-            print "EXPECTED RESULT 1:Should get the DOCSISUpstreamRanging as complete ";
-            print "ACTUAL RESULT 1: Failed to get the DOCSISUpstreamRanging as complete, Details %s" %UpstreamRanging;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: DOCSISUpstreamRanging as complete");
+            print("EXPECTED RESULT 1:Should get the DOCSISUpstreamRanging as complete ");
+            print("ACTUAL RESULT 1: Failed to get the DOCSISUpstreamRanging as complete, Details %s" %UpstreamRanging);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         #Set the result status of execution as success
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the CMStatus";
-        print "EXPECTED RESULT 1: Should get value of CMStatus ";
-        print "ACTUAL RESULT 1:Failed to get CMStatus %s" %Status;
+        print("TEST STEP 1: Get the CMStatus");
+        print("EXPECTED RESULT 1: Should get value of CMStatus ");
+        print("ACTUAL RESULT 1:Failed to get CMStatus %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

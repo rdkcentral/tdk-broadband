@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_SetPortAdminStatus_InvalidStatu
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,11 +97,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         currPortStatus = details;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %port_id;
-        print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully";
-        print "ACTUAL RESULT 1: Current port status is  %s" %currPortStatus;
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %port_id);
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully");
+        print("ACTUAL RESULT 1: Current port status is  %s" %currPortStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
         #Setting invalid value
         #Script to load the configuration file of the component
@@ -109,58 +109,58 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.addParameter("PortID",port_id);
         tdkTestObj.addParameter("adminstatus", testPortStatus);
         expectedresult = "FAILURE";
-        print "Setting port status to %s for port %d" %(testPortStatus, port_id)
+        print("Setting port status to %s for port %d" %(testPortStatus, port_id))
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult and details:
-	    tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set invalid port status for port %d" %port_id;
-            print "EXPECTED RESULT 2: The invalid port status should not set";
-            print "ACTUAL RESULT 2: %s" %(details);
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set invalid port status for port %d" %port_id);
+            print("EXPECTED RESULT 2: The invalid port status should not set");
+            print("ACTUAL RESULT 2: %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Set invalid port status for port %d" %port_id;
-            print "EXPECTED RESULT 2: The invalid port status should not set";
-            print "ACTUAL RESULT 2: %s" %(details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set invalid port status for port %d" %port_id);
+            print("EXPECTED RESULT 2: The invalid port status should not set");
+            print("ACTUAL RESULT 2: %s" %(details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #Reset the original status
-	    tdkTestObj.addParameter("PortID",port_id);
+            #Reset the original status
+            tdkTestObj.addParameter("PortID",port_id);
             tdkTestObj.addParameter("adminstatus", currPortStatus);
             expectedresult = "SUCCESS";
-            print "Setting port status to %s for port %d" %(currPortStatus, port_id)
+            print("Setting port status to %s for port %d" %(currPortStatus, port_id))
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult and details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set old port status for port %d" %port_id;
-                print "EXPECTED RESULT 2: The port status should set successfully";
-                print "ACTUAL RESULT 2: %s" %(details);
+                print("TEST STEP 2: Set old port status for port %d" %port_id);
+                print("EXPECTED RESULT 2: The port status should set successfully");
+                print("ACTUAL RESULT 2: %s" %(details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set old port status for port %d" %port_id;
-                print "EXPECTED RESULT 2: The port status should set successfully";
-                print "ACTUAL RESULT 2: %s" %(details);
+                print("TEST STEP 2: Set old port status for port %d" %port_id);
+                print("EXPECTED RESULT 2: The port status should set successfully");
+                print("ACTUAL RESULT 2: %s" %(details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %port_id;
-        print "EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully";
-        print "ACTUAL RESULT 1: Current port status is  %s" %currPortStatus;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the Ethsw_Get_Port_Admin_Status for port %d" %port_id);
+        print("EXPECTED RESULT 1: Should retrieve the Ethsw_Get_Port_Admin_Status successfully");
+        print("ACTUAL RESULT 1: Current port status is  %s" %currPortStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
     obj.unloadModule("halethsw");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

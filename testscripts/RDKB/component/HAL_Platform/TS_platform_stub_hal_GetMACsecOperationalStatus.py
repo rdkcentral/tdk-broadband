@@ -84,7 +84,7 @@ obj1.configureTestCase(ip,port,'TS_platform_stub_hal_GetMACsecOperationalStatus'
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,7 +93,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     #Get the default value from properties file
     tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile ETHWAN_ETH_PORT" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj1.addParameter("command", cmd);
     tdkTestObj1.executeTestCase(expectedresult);
@@ -102,50 +102,48 @@ if "SUCCESS" in (loadmodulestatus.upper() and  loadmodulestatus1.upper()):
     details = tdkTestObj1.getResultDetails().strip();
     ethPort = ""
     ethPort = details.replace("\\n", "");
-    print" ETHWAN ETHERNET PORT:",ethPort
+    print(" ETHWAN ETHERNET PORT:",ethPort)
     if ethPort != "" and ( expectedresult in  actualresult):
-       tdkTestObj1.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file";
-       print "EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file";
-       print "ACTUAL RESULT 1: The ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS"
-       tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecOperationalStatus");
-       tdkTestObj.addParameter("ethPort",int(ethPort));
-       index  = 0;
-       tdkTestObj.addParameter("index",index);
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = ""
-       details = tdkTestObj.getResultDetails();
+        tdkTestObj1.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file");
+        print("ACTUAL RESULT 1: The ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        tdkTestObj = obj.createTestStep("platform_stub_hal_GetMACsecOperationalStatus");
+        tdkTestObj.addParameter("ethPort",int(ethPort));
+        index  = 0;
+        tdkTestObj.addParameter("index",index);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = ""
+        details = tdkTestObj.getResultDetails();
 
-       if  expectedresult in  actualresult and details != "":
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Retrieve the GetMACsecOperationalStatus";
-           print "EXPECTED RESULT 2: Should retrieve the GetMACsecOperationalStatus successfully";
-           print "ACTUAL RESULT 2:GetMACsecOperationalStatus is : %s" %details;
-           print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        if  expectedresult in  actualresult and details != "":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Retrieve the GetMACsecOperationalStatus");
+            print("EXPECTED RESULT 2: Should retrieve the GetMACsecOperationalStatus successfully");
+            print("ACTUAL RESULT 2:GetMACsecOperationalStatus is : %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Retrieve the GetMACsecOperationalStatus";
-           print "EXPECTED RESULT 2: Should retrieve the GetMACsecOperationalStatus successfully";
-           print "ACTUAL RESULT 2:GetMACsecOperationalStatus is : %s" %details;
-           print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Retrieve the GetMACsecOperationalStatus");
+            print("EXPECTED RESULT 2: Should retrieve the GetMACsecOperationalStatus successfully");
+            print("ACTUAL RESULT 2:GetMACsecOperationalStatus is : %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         tdkTestObj1.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file";
-        print "EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file";
-        print "ACTUAL RESULT 1: Failed to get  ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort;
+        print("TEST STEP 1: Get the ETHERNET PORT  from  tdk_platform properties file");
+        print("EXPECTED RESULT 1: Should Get the default ETHERNET PORT form tdk_platfrom properties file");
+        print("ACTUAL RESULT 1: Failed to get  ETHERNET PORT from tdk_pltaform properties file : %s" % ethPort);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("halplatform");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

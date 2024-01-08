@@ -89,9 +89,9 @@ loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =obj2.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -106,212 +106,212 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     NoOfHost=tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and int(NoOfHost) >0:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the no of clients connected";
-       print "EXPECTED RESULT 1: Should get the no of clients connected"
-       print "ACTUAL RESULT 1:%s" %NoOfHost
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the no of clients connected");
+        print("EXPECTED RESULT 1: Should get the no of clients connected")
+        print("ACTUAL RESULT 1:%s" %NoOfHost)
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       clientfound = 0;
-       for i in range (1,int(NoOfHost)+1):
-           expectedresult="SUCCESS";
-           tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
-           tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           print "Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details);
-           if expectedresult in actualresult and details == "Ethernet":
-              tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
-              tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              print "Device.Hosts.Host.%s.Active value is %s" %(i,details);
-              if expectedresult in actualresult and details == "true":
-                  clientfound = 1;
-                  instance = i;
-                  break;
-       if clientfound == 1:
-          tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          curlanMode = tdkTestObj.getResultDetails().strip();
-          if expectedresult in actualresult :
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Get the LAN  mode";
-             print "EXPECTED RESULT 2: Should get the lan-mode"
-             print "ACTUAL RESULT 2:%s" %curlanMode
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             revertflag = 0 ;
-             flag = 1;
-             if curlanMode != "router":
-                 tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Set');
-                 tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-                 tdkTestObj.addParameter("ParamValue","router");
-                 tdkTestObj.addParameter("Type","string");
-                 expectedresult="SUCCESS";
-                 #Execute the test case in DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 details = tdkTestObj.getResultDetails();
-                 if expectedresult in actualresult:
-                     revertflag =1;
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP : Set the lanMode to router";
-                     print "EXPECTED RESULT : Should set the lanMode to router";
-                     print "ACTUAL RESULT : %s" %details;
-                     print "[TEST EXECUTION RESULT] : SUCCESS" ;
-                     time.sleep(90);
-                 else:
-                      flag =0 ;
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "TEST STEP : Set the lanMode to router";
-                      print "EXPECTED RESULT : Should set the lanMode to router";
-                      print "ACTUAL RESULT : %s" %details;
-                      print "[TEST EXECUTION RESULT] : FAILURE" ;
-             if flag == 1:
-                 #Script to load the configuration file of the component
-                 tdkTestObj = obj.createTestStep("CMHAL_GetCPEList");
-                 tdkTestObj.addParameter("lanMode","router")
-                 expectedresult="SUCCESS";
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 details = tdkTestObj.getResultDetails();
-                 instNum= details.split("InstNum :")[-1];
-                 details = details.split("InstNum :")[0];
-                 print details;
-                 if expectedresult in actualresult and int(instNum) > 0:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     cpeList = details.split("::");
-                     print "cpeList",cpeList;
-                     for i in cpeList:
-                         if i != cpeList[-1]:
-                            val = i.split(",");
-                            ip += val[0];
-                            ip += ","
-                            mac += val[1];
-                            mac += ","
-                         else:
-                             break;
+        clientfound = 0;
+        for i in range (1,int(NoOfHost)+1):
+            expectedresult="SUCCESS";
+            tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Layer1Interface"%(i));
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            print("Device.Hosts.Host.%s.Layer1Interface value is %s" %(i,details));
+            if expectedresult in actualresult and details == "Ethernet":
+                tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Hosts.Host.%s.Active"%(i));
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                print("Device.Hosts.Host.%s.Active value is %s" %(i,details));
+                if expectedresult in actualresult and details == "true":
+                    clientfound = 1;
+                    instance = i;
+                    break;
+        if clientfound == 1:
+            tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            curlanMode = tdkTestObj.getResultDetails().strip();
+            if expectedresult in actualresult :
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the LAN  mode");
+                print("EXPECTED RESULT 2: Should get the lan-mode")
+                print("ACTUAL RESULT 2:%s" %curlanMode)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                revertflag = 0 ;
+                flag = 1;
+                if curlanMode != "router":
+                    tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
+                    tdkTestObj.addParameter("ParamValue","router");
+                    tdkTestObj.addParameter("Type","string");
+                    expectedresult="SUCCESS";
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        revertflag =1;
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP : Set the lanMode to router");
+                        print("EXPECTED RESULT : Should set the lanMode to router");
+                        print("ACTUAL RESULT : %s" %details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+                        time.sleep(90);
+                    else:
+                        flag =0 ;
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP : Set the lanMode to router");
+                        print("EXPECTED RESULT : Should set the lanMode to router");
+                        print("ACTUAL RESULT : %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE") ;
+                if flag == 1:
+                    #Script to load the configuration file of the component
+                    tdkTestObj = obj.createTestStep("CMHAL_GetCPEList");
+                    tdkTestObj.addParameter("lanMode","router")
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    instNum= details.split("InstNum :")[-1];
+                    details = details.split("InstNum :")[0];
+                    print(details);
+                    if expectedresult in actualresult and int(instNum) > 0:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        cpeList = details.split("::");
+                        print("cpeList",cpeList);
+                        for i in cpeList:
+                            if i != cpeList[-1]:
+                                val = i.split(",");
+                                ip += val[0];
+                                ip += ","
+                                mac += val[1];
+                                mac += ","
+                            else:
+                                break;
 
-                     print "TEST STEP 3: Get the cpe list from cmhal_getCPEList";
-                     print "EXPECTED RESULT 3: Should get cpe list successfully";
-                     print "ACTUAL RESULT 3: Instance number is", instNum ,",IP address ", ip, "MAC address ", mac;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 3: Get the cpe list from cmhal_getCPEList");
+                        print("EXPECTED RESULT 3: Should get cpe list successfully");
+                        print("ACTUAL RESULT 3: Instance number is", instNum ,",IP address ", ip, "MAC address ", mac);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                     #validate the cpe list
-                     tdkTestObj = obj1.createTestStep('ExecuteCmd');
-                     cmd= "arp -a | grep brlan0 |tr '\n' ','";
-                     tdkTestObj.addParameter("command", cmd);
-                     expectedresult="SUCCESS";
-                     #Execute the test case in DUT
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails().strip();
-                     if expectedresult in actualresult:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 4: Get the cpe list connected to DUT using arp -a";
-                         print "EXPECTED RESULT 4: Should get cpe list from DUT successfully";
-                         print "ACTUAL RESULT 4: %s" %details;
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                         ipList = ip.split(",");
-                         macList = mac.split(",");
-                         for i in ipList:
-                             if i != ipList[-1]:
-                                if i in details:
-                                   print "Validated the ip address: ", i;
-                                else:
-                                     print "Validation failed for ",i
-                                     tdkTestObj.setResultStatus("FAILURE");
-                                     break;
-                         for i in macList:
-                             if i != macList[-1]:
-                                if i in details:
-                                   print "Validated the mac address: ", i;
-                                else:
-                                    print "Validation failed for ",i
-                                    tdkTestObj.setResultStatus("FAILURE");
-                                    break;
-                     else:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "TEST STEP 4: Get the cpe list connected to DUT using arp -a";
-                         print "EXPECTED RESULT 4: Should get cpe list from DUT successfully";
-                         print "ACTUAL RESULT 4: %s" %details;
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 3: Get the cpe list from from cmhal_getCPEList";
-                     print "EXPECTED RESULT 3: Should get cpe list successfully";
-                     print "ACTUAL RESULT 3: %s" %details;
-                     print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "****The LAN mode was not router and failed on setting the mode to router";
+                        #validate the cpe list
+                        tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                        cmd= "arp -a | grep brlan0 |tr '\n' ','";
+                        tdkTestObj.addParameter("command", cmd);
+                        expectedresult="SUCCESS";
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip();
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 4: Get the cpe list connected to DUT using arp -a");
+                            print("EXPECTED RESULT 4: Should get cpe list from DUT successfully");
+                            print("ACTUAL RESULT 4: %s" %details);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            ipList = ip.split(",");
+                            macList = mac.split(",");
+                            for i in ipList:
+                                if i != ipList[-1]:
+                                    if i in details:
+                                        print("Validated the ip address: ", i);
+                                    else:
+                                        print("Validation failed for ",i)
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        break;
+                            for i in macList:
+                                if i != macList[-1]:
+                                    if i in details:
+                                        print("Validated the mac address: ", i);
+                                    else:
+                                        print("Validation failed for ",i)
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        break;
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Get the cpe list connected to DUT using arp -a");
+                            print("EXPECTED RESULT 4: Should get cpe list from DUT successfully");
+                            print("ACTUAL RESULT 4: %s" %details);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 3: Get the cpe list from from cmhal_getCPEList");
+                        print("EXPECTED RESULT 3: Should get cpe list successfully");
+                        print("ACTUAL RESULT 3: %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("****The LAN mode was not router and failed on setting the mode to router");
 
-             if revertflag == 1:
-                 tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Set');
-                 tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-                 tdkTestObj.addParameter("ParamValue",curlanMode);
-                 tdkTestObj.addParameter("Type","string");
-                 expectedresult="SUCCESS";
-                 #Execute the test case in DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 details = tdkTestObj.getResultDetails();
-                 if expectedresult in actualresult:
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 5: Revert the lan mode to previous";
-                     print "EXPECTED RESULT 5: Should revert lan mode to %s" %curlanMode;
-                     print "ACTUAL RESULT 5: %s" %details;
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                     time.sleep(90);
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Revert the lan mode to previous";
-                     print "EXPECTED RESULT 5: Should revert lan mode to %s" %curlanMode;
-                     print "ACTUAL RESULT 5: %s" %details;
-                     print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 2: Get the LAN  mode";
-              print "EXPECTED RESULT 2: Should get the lan-mode"
-              print "ACTUAL RESULT 2:%s" %curlanMode
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "********No Ethernet client connected to DUT********";
+                if revertflag == 1:
+                    tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
+                    tdkTestObj.addParameter("ParamValue",curlanMode);
+                    tdkTestObj.addParameter("Type","string");
+                    expectedresult="SUCCESS";
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Revert the lan mode to previous");
+                        print("EXPECTED RESULT 5: Should revert lan mode to %s" %curlanMode);
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        time.sleep(90);
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Revert the lan mode to previous");
+                        print("EXPECTED RESULT 5: Should revert lan mode to %s" %curlanMode);
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Get the LAN  mode");
+                print("EXPECTED RESULT 2: Should get the lan-mode")
+                print("ACTUAL RESULT 2:%s" %curlanMode)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("********No Ethernet client connected to DUT********");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the no of clients connected";
-        print "EXPECTED RESULT 1: Should get the no of clients connected greater than zero"
-        print "ACTUAL RESULT 1:%s" %NoOfHost
+        print("TEST STEP 1: Get the no of clients connected");
+        print("EXPECTED RESULT 1: Should get the no of clients connected greater than zero")
+        print("ACTUAL RESULT 1:%s" %NoOfHost)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
     obj1.unloadModule("sysutil");
     obj2.unloadModule("tdkbtr181");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
-     obj2.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -78,102 +78,102 @@ obj.configureTestCase(ip,port,'TS_platform_stub_hal_SetWebUITimeout');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("platform_stub_hal_GetWebUITimeout");
+    obj.setLoadModuleStatus("SUCCESS");
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("platform_stub_hal_GetWebUITimeout");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    actualValue = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and int (actualValue) >= 0:
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get timeout value from Platform_GetWebUITimeout");
+        print("EXPECTED RESULT 1: Should get the value from Platform_GetWebUITimeout successfully");
+        print("ACTUAL RESULT 1: %s" %actualValue);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+
+        #Verify SET operation
+        tdkTestObj = obj.createTestStep("platform_stub_hal_SetWebUITimeout");
+        tdkTestObj.addParameter("index",testTimeout);
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        actualValue = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and int (actualValue) >= 0:
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get timeout value from Platform_GetWebUITimeout";
-            print "EXPECTED RESULT 1: Should get the value from Platform_GetWebUITimeout successfully";
-            print "ACTUAL RESULT 1: %s" %actualValue;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            print("TEST STEP 2: Set timeout value from Platform_SetWebUITimeout");
+            print("EXPECTED RESULT 2: Should set the value from Platform_SetWebUITimeout successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-            #Verify SET operation
-            tdkTestObj = obj.createTestStep("platform_stub_hal_SetWebUITimeout");
-            tdkTestObj.addParameter("index",testTimeout);
+            #get timeout value after SET operation to cross verify
+            tdkTestObj = obj.createTestStep("platform_stub_hal_GetWebUITimeout");
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
+            valueAfterSet = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and int (valueAfterSet) >= 0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set timeout value from Platform_SetWebUITimeout";
-                print "EXPECTED RESULT 2: Should set the value from Platform_SetWebUITimeout successfully";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP 3: Get timeout value from Platform_GetWebUITimeout");
+                print("EXPECTED RESULT 3: Should get the value from Platform_GetWebUITimeout successfully");
+                print("ACTUAL RESULT 3: value = %s" %valueAfterSet);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-                #get timeout value after SET operation to cross verify
-                tdkTestObj = obj.createTestStep("platform_stub_hal_GetWebUITimeout");
-                expectedresult="SUCCESS";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                valueAfterSet = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and int (valueAfterSet) >= 0:
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get timeout value from Platform_GetWebUITimeout";
-                    print "EXPECTED RESULT 3: Should get the value from Platform_GetWebUITimeout successfully";
-                    print "ACTUAL RESULT 3: value = %s" %valueAfterSet;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                if int (valueAfterSet) == testTimeout:
+                    print("TEST STEP 4: Cross verifing the value");
+                    print("EXPECTED RESULT 4: Timeout value should match");
+                    print("ACTUAL RESULT 4: Value is set successfully");
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-                    if int (valueAfterSet) == testTimeout:
-                        print "TEST STEP 4: Cross verifing the value";
-                        print "EXPECTED RESULT 4: Timeout value should match";    
-                        print "ACTUAL RESULT 4: Value is set successfully";
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-                        #Reverting timeout value 
-                        tdkTestObj = obj.createTestStep("platform_stub_hal_SetWebUITimeout");
-                        tdkTestObj.addParameter("index", int(actualValue));
-                        expectedresult="SUCCESS";
-                        tdkTestObj.executeTestCase(expectedresult);
-                        actualresult = tdkTestObj.getResult();
-                        details = tdkTestObj.getResultDetails();
-                        if expectedresult in actualresult:
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5: Set timeout value from Platform_SetWebUITimeout";
-                            print "EXPECTED RESULT 5: Should set the value from Platform_SetWebUITimeout successfully";
-                            print "ACTUAL RESULT 5: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5: Set timeout value from Platform_SetWebUITimeout";
-                            print "EXPECTED RESULT 5: Should set the value from Platform_SetWebUITimeout successfully";
-                            print "ACTUAL RESULT 5: %s" %details;
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    #Reverting timeout value
+                    tdkTestObj = obj.createTestStep("platform_stub_hal_SetWebUITimeout");
+                    tdkTestObj.addParameter("index", int(actualValue));
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Set timeout value from Platform_SetWebUITimeout");
+                        print("EXPECTED RESULT 5: Should set the value from Platform_SetWebUITimeout successfully");
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Cross verifing the value";
-                        print "EXPECTED RESULT 4: Timeout value should match";    
-                        print "ACTUAL RESULT 4: Value is not set successfully";
-                        print "[TEST EXECUTION RESULT] : FAILURE"; 
+                        print("TEST STEP 5: Set timeout value from Platform_SetWebUITimeout");
+                        print("EXPECTED RESULT 5: Should set the value from Platform_SetWebUITimeout successfully");
+                        print("ACTUAL RESULT 5: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get timeout value from Platform_GetWebUITimeout";
-                    print "EXPECTED RESULT 3: Should get the value from Platform_GetWebUITimeout successfully";
-                    print "ACTUAL RESULT 3: %s" %valueAfterSet;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("TEST STEP 4: Cross verifing the value");
+                    print("EXPECTED RESULT 4: Timeout value should match");
+                    print("ACTUAL RESULT 4: Value is not set successfully");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set timeout value from Platform_SetWebUITimeout";
-                print "EXPECTED RESULT 2: Should set the value from Platform_SetWebUITimeout successfully";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("TEST STEP 3: Get timeout value from Platform_GetWebUITimeout");
+                print("EXPECTED RESULT 3: Should get the value from Platform_GetWebUITimeout successfully");
+                print("ACTUAL RESULT 3: %s" %valueAfterSet);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get timeout value from Platform_GetWebUITimeout";
-            print "EXPECTED RESULT 1: Should get the value from Platform_GetWebUITimeout successfully";
-            print "ACTUAL RESULT 1: %s" %actualValue;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            print("TEST STEP 2: Set timeout value from Platform_SetWebUITimeout");
+            print("EXPECTED RESULT 2: Should set the value from Platform_SetWebUITimeout successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get timeout value from Platform_GetWebUITimeout");
+        print("EXPECTED RESULT 1: Should get the value from Platform_GetWebUITimeout successfully");
+        print("ACTUAL RESULT 1: %s" %actualValue);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-        obj.unloadModule("halplatform");
+    obj.unloadModule("halplatform");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

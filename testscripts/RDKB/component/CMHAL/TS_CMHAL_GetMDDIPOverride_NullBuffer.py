@@ -80,8 +80,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("cmhal","1");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_GetMDDIPOverride_NullBuffer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,20 +112,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get MddIp Mode Override on passing null buffer";
-        print "EXPECTED RESULT 1: Should not get the value on passing null buffer";
-        print "ACTUAL RESULT 1: %s" %Details;
+        print("TEST STEP 1: Get MddIp Mode Override on passing null buffer");
+        print("EXPECTED RESULT 1: Should not get the value on passing null buffer");
+        print("ACTUAL RESULT 1: %s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get MddIp Mode Override on passing null buffer";
-        print "EXPECTED RESULT 1:Should not get the value on passing null buffer";
-        print "ACTUAL RESULT 1: %s" %Details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get MddIp Mode Override on passing null buffer");
+        print("EXPECTED RESULT 1:Should not get the value on passing null buffer");
+        print("ACTUAL RESULT 1: %s" %Details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

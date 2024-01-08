@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_CMHAL_SetInvalidMddIpModeOverride');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -93,11 +93,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the MddIpModeOverride";
-        print "EXPECTED RESULT 1: Should get the MddIpModeOverride successfully";
-        print "ACTUAL RESULT 1: MddIpModeOverride is %s" %MddIpValue;
+        print("TEST STEP 1: Get the MddIpModeOverride");
+        print("EXPECTED RESULT 1: Should get the MddIpModeOverride successfully");
+        print("ACTUAL RESULT 1: MddIpModeOverride is %s" %MddIpValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         invalid_mddip = "DUMMY_MDDIP"
         tdkTestObj = obj.createTestStep("CMHAL_SetMddIpModeOverride");
@@ -110,18 +110,18 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set MddIpModeOverride as ",invalid_mddip;
-            print "EXPECTED RESULT 2: Set of MddIpModeOverride as %s should fail" %invalid_mddip ;
-            print "ACTUAL RESULT 2:  ",details;
+            print("TEST STEP 2: Set MddIpModeOverride as ",invalid_mddip);
+            print("EXPECTED RESULT 2: Set of MddIpModeOverride as %s should fail" %invalid_mddip) ;
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set MddIpModeOverride as ",invalid_mddip;
-            print "EXPECTED RESULT 2: Set of MddIpModeOverride as %s should fail" %invalid_mddip ;
-            print "ACTUAL RESULT 2:  ",details;
+            print("TEST STEP 2: Set MddIpModeOverride as ",invalid_mddip);
+            print("EXPECTED RESULT 2: Set of MddIpModeOverride as %s should fail" %invalid_mddip) ;
+            print("ACTUAL RESULT 2:  ",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert the value of MddIpModeOverride
             tdkTestObj = obj.createTestStep("CMHAL_SetMddIpModeOverride");
@@ -134,29 +134,29 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Revert MddIpModeOverride";
-                print "EXPECTED RESULT 3: Should revert MddIpModeOverride to ", MddIpValue;
-                print "ACTUAL RESULT 3:  ",details;
+                print("TEST STEP 3: Revert MddIpModeOverride");
+                print("EXPECTED RESULT 3: Should revert MddIpModeOverride to ", MddIpValue);
+                print("ACTUAL RESULT 3:  ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Revert MddIpModeOverride";
-                print "EXPECTED RESULT 3: Should revert MddIpModeOverride to ", MddIpValue;
-                print "ACTUAL RESULT 3:  ",details;
+                print("TEST STEP 3: Revert MddIpModeOverride");
+                print("EXPECTED RESULT 3: Should revert MddIpModeOverride to ", MddIpValue);
+                print("ACTUAL RESULT 3:  ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the MddIpModeOverride";
-        print "EXPECTED RESULT 1: Should get the MddIpModeOverride successfully";
-        print "ACTUAL RESULT 1: MddIpModeOverride is %s" %MddIpValue;
+        print("TEST STEP 1: Get the MddIpModeOverride");
+        print("EXPECTED RESULT 1: Should get the MddIpModeOverride successfully");
+        print("ACTUAL RESULT 1: MddIpModeOverride is %s" %MddIpValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("cmhal");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

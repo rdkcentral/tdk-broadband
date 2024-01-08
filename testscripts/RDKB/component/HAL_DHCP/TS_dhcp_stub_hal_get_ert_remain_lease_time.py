@@ -62,7 +62,7 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
 #Test component to be tested
@@ -78,36 +78,36 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ert_remain_lease_time');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_remain_lease_time");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_remain_lease_time");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if (expectedresult == actualresult and int(details) > 0):
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_remain_lease_time");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_remain_lease_time successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("dhcp_ert_remain_lease_time: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        if (expectedresult == actualresult and int(details) > 0):
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_remain_lease_time";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_remain_lease_time successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "dhcp_ert_remain_lease_time: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_remain_lease_time";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_remain_lease_time successfully";
-            print "Time is not valid %s" %details;
-            print "[TEST EXECUTION RESULT] : Failure";
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_remain_lease_time");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_remain_lease_time successfully");
+        print("Time is not valid %s" %details);
+        print("[TEST EXECUTION RESULT] : Failure");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

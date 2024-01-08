@@ -81,8 +81,8 @@ tr181obj.configureTestCase(ip,port,'TS_platform_stub_hal_GetRPM');
 loadmodulestatus =obj.getLoadModuleResult();
 tr181loadmodulestatus =tr181obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %tr181loadmodulestatus) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,63 +97,62 @@ if "SUCCESS" in (loadmodulestatus.upper() and  tr181loadmodulestatus.upper()):
     Tr181FanSpeed = tdkTestObj.getResultDetails();
     Tr181FanSpeed= int(Tr181FanSpeed)
     if expectedresult in actualresult and Tr181FanSpeed  >= 0:
-       print "TEST STEP 1: Get the Thermal fan speed using tr181 parameter";
-       print "EXPECTED RESULT 1: Should get the thermal fan speed as greater than or equal to 0";
-       print "ACTUAL RESULT 1: The Thermal Fan speed is :",Tr181FanSpeed;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Thermal fan speed using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the thermal fan speed as greater than or equal to 0");
+        print("ACTUAL RESULT 1: The Thermal Fan speed is :",Tr181FanSpeed);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
 
-       #Script to load the configuration file of the component
-       tdkTestObj = obj.createTestStep("platform_stub_hal_getRPM");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Script to load the configuration file of the component
+        tdkTestObj = obj.createTestStep("platform_stub_hal_getRPM");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult :
-          print "TEST STEP 2: Get the platform_stub_hal_getRPM"
-          print "EXPECTED RESULT 2: platform_stub_hal_getRPM call should be successful"
-          print "ACTUAL RESULT 2: platform_stub_hal_getRPM call succesful"
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult :
+            print("TEST STEP 2: Get the platform_stub_hal_getRPM")
+            print("EXPECTED RESULT 2: platform_stub_hal_getRPM call should be successful")
+            print("ACTUAL RESULT 2: platform_stub_hal_getRPM call succesful")
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          HalFanSpeed = details.split(":")[1].strip();
-          print "Fan Speed value  Retrieved from TR181 Paramater: ",Tr181FanSpeed
-          print "Fan Speed Value retrieved from HAL API call: ",HalFanSpeed
+            HalFanSpeed = details.split(":")[1].strip();
+            print("Fan Speed value  Retrieved from TR181 Paramater: ",Tr181FanSpeed)
+            print("Fan Speed Value retrieved from HAL API call: ",HalFanSpeed)
 
-          if int(HalFanSpeed) == Tr181FanSpeed:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the Thermal fan speed using Hal api ";
-             print "EXPECTED RESULT 3: Should get the Thermal fan speed from hal api call and tr181 equal ";
-             print "ACTUAL RESULT 3: %s" %details;
-             print "[TEST EXECUTION RESULT] : SUCCESS";
+            if int(HalFanSpeed) == Tr181FanSpeed:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Thermal fan speed using Hal api ");
+                print("EXPECTED RESULT 3: Should get the Thermal fan speed from hal api call and tr181 equal ");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the Thermal fan speed using Hal api ";
-              print "EXPECTED RESULT 3: Should get the Thermal fan speed from hal api call and tr181 equal ";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           print "TEST STEP 2: Get the platform_stub_hal_getRPM"
-           print "EXPECTED RESULT 2: platform_stub_hal_getRPM call should be successful"
-           print "ACTUAL RESULT 2: platform_stub_hal_getRPM call failed"
-           tdkTestObj.setResultStatus("FAILURE");
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Thermal fan speed using Hal api ");
+                print("EXPECTED RESULT 3: Should get the Thermal fan speed from hal api call and tr181 equal ");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("TEST STEP 2: Get the platform_stub_hal_getRPM")
+            print("EXPECTED RESULT 2: platform_stub_hal_getRPM call should be successful")
+            print("ACTUAL RESULT 2: platform_stub_hal_getRPM call failed")
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-        print "TEST STEP 1: Get the Thermal fan speed using tr181 parameter";
-        print "EXPECTED RESULT 1: Should get the thermal fan speed as greater than or equal to 0";
-        print "ACTUAL RESULT 1: Failed to get Thermal Fan speed is :",Tr181FanSpeed;
+        print("TEST STEP 1: Get the Thermal fan speed using tr181 parameter");
+        print("EXPECTED RESULT 1: Should get the thermal fan speed as greater than or equal to 0");
+        print("ACTUAL RESULT 1: Failed to get Thermal Fan speed is :",Tr181FanSpeed);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("halplatform");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

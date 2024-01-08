@@ -77,72 +77,72 @@ obj.configureTestCase(ip,port,'TS_dhcp_stub_hal_get_ert_gw');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Script to load the configuration file of the component
-        tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_gw");
-        expectedresult="SUCCESS";
+    #Script to load the configuration file of the component
+    tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_gw");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details1 = details;
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_gw");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_gw successfully");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Erouter gateway address is %s" %details1);
+        tdkTestObj = obj.createTestStep("erouter_ip_stub_get_ip_address");
+        expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-
-        details = tdkTestObj.getResultDetails();
-        if expectedresult in actualresult and details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details3 = tdkTestObj.getResultDetails();
+        details4 = details3;
+        details5 = details4.split(".")[0]+"."+details4.split(".")[1]+"."+details4.split(".")[2];
+        details6 = details1.split(".")[0]+"."+details1.split(".")[1]+"."+details1.split(".")[2];
+        if details6 == details5:
+            print("valid Gateway address");
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            details1 = details;
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_gw";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_gw successfully";
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "Erouter gateway address is %s" %details1;
-            tdkTestObj = obj.createTestStep("erouter_ip_stub_get_ip_address");
-            expectedresult = "SUCCESS";
+            details3= tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_mask");
+            expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
-            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            details3 = tdkTestObj.getResultDetails();
-            details4 = details3;
-            details5 = details4.split(".")[0]+"."+details4.split(".")[1]+"."+details4.split(".")[2];
-            details6 = details1.split(".")[0]+"."+details1.split(".")[1]+"."+details1.split(".")[2];
-            if details6 == details5:
-                print "valid Gateway address";
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                details3= tdkTestObj.getResultDetails();
-                tdkTestObj = obj.createTestStep("dhcp_stub_hal_get_ert_mask");
-                expectedresult="SUCCESS";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                tdkTestObj.setResultStatus("SUCCESS");
-                details7= tdkTestObj.getResultDetails();
-                details8 = details7;
-                print "Mask of erouter IP is %s" %details8;
-                details9 = details8.split(".");
-                details10 = details9[3];
-                details13 = int(details10);
-                details11 = details4[0:-3];
-                if details13 == 0:
-                    details13 = int(details13 + 1);
-                    details13 = str(details13);
-                    details12 = details11 + "." + details13;
-                    print "only one Network so the gateway address is %s" %details12;
-            else:
-                print "invalid ip address"; 
-                tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
+            details7= tdkTestObj.getResultDetails();
+            details8 = details7;
+            print("Mask of erouter IP is %s" %details8);
+            details9 = details8.split(".");
+            details10 = details9[3];
+            details13 = int(details10);
+            details11 = details4[0:-3];
+            if details13 == 0:
+                details13 = int(details13 + 1);
+                details13 = str(details13);
+                details12 = details11 + "." + details13;
+                print("only one Network so the gateway address is %s" %details12);
         else:
+            print("invalid ip address");
             tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_gw";
-            print "EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_gw successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Retrieve the dhcp_stub_hal_get_ert_gw");
+        print("EXPECTED RESULT 1: Should retrieve the dhcp_stub_hal_get_ert_gw successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("dhcp");
+    obj.unloadModule("dhcp");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

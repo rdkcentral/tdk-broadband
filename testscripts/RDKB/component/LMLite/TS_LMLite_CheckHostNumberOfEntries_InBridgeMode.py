@@ -52,7 +52,7 @@
     <!--  -->
     <box_type>Emulator</box_type>
     <!--  -->
-    
+
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
@@ -139,11 +139,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
     if expectedresult in (actualresult1 and actualresult2):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT : Should disable WiFi";
-        print "ACTUAL RESULT :%s" %Details;
+        print("TEST STEP : Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT : Should disable WiFi");
+        print("ACTUAL RESULT :%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if device is in bridge mode or not
         tdkTestObj = obj.createTestStep('LMLiteStub_Get');
@@ -162,11 +162,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Check if the device is in bridge mode or not";
-            print "EXPECTED RESULT 1: Should get the mode of device";
-            print "ACTUAL RESULT 1:  :LanMode is %s" %Mode;
+            print("TEST STEP 1: Check if the device is in bridge mode or not");
+            print("EXPECTED RESULT 1: Should get the mode of device");
+            print("ACTUAL RESULT 1:  :LanMode is %s" %Mode);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             if "bridge mode" not in Mode:
                 tdkTestObj = obj.createTestStep('LMLiteStub_Set');
                 tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
@@ -181,25 +181,25 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 2: Set the LanMode as bridge ";
-                    print "EXPECTED RESULT 2: Should set the LanMode as bridge mode";
-                    print "ACTUAL RESULT 2:  : %s" %details;
+                    print("TEST STEP 2: Set the LanMode as bridge ");
+                    print("EXPECTED RESULT 2: Should set the LanMode as bridge mode");
+                    print("ACTUAL RESULT 2:  : %s" %details);
                     Mode = "bridge mode";
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Set the LanMode as bridge ";
-                    print "EXPECTED RESULT 2: Should set the LanMode as bridge mode";
-                    print "ACTUAL RESULT 2:  : %s" %details;
+                    print("TEST STEP 2: Set the LanMode as bridge ");
+                    print("EXPECTED RESULT 2: Should set the LanMode as bridge mode");
+                    print("ACTUAL RESULT 2:  : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     obj.unloadModule("lmlite");
                     exit();
 
             #Wait for few seconds for the Lan mode to get reflected
-	    sleep(30);
+            sleep(30);
 
             tdkTestObj = obj.createTestStep('LMLiteStub_Get');
             tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries");
@@ -207,32 +207,32 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             NoOfHosts = tdkTestObj.getResultDetails();
-	    print "Lan Mode retrieved is: %s" %Mode;
+            print("Lan Mode retrieved is: %s" %Mode);
             if expectedresult in actualresult:
                 if "bridge mode" in Mode and int(NoOfHosts) == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3:Check the number of hosts";
-                    print "EXPECTED RESULT 3: The number of hosts should be zero if device is in bridge mode";
-                    print "ACTUAL RESULT 3:  :No of hosts is %s" %NoOfHosts;
+                    print("TEST STEP 3:Check the number of hosts");
+                    print("EXPECTED RESULT 3: The number of hosts should be zero if device is in bridge mode");
+                    print("ACTUAL RESULT 3:  :No of hosts is %s" %NoOfHosts);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3:Check the number of hosts";
-                    print "EXPECTED RESULT 3: The number of hosts should be zero if device is in bridge mode";
-                    print "ACTUAL RESULT 3:  :No of hosts is %s" %NoOfHosts;
+                    print("TEST STEP 3:Check the number of hosts");
+                    print("EXPECTED RESULT 3: The number of hosts should be zero if device is in bridge mode");
+                    print("ACTUAL RESULT 3:  :No of hosts is %s" %NoOfHosts);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Get the number of hosts";
-                print "EXPECTED RESULT 2: Should get the number of hosts";
-                print "ACTUAL RESULT 2:  :No of Hosts is %s" %NoOfHosts;
+                print("TEST STEP 2:Get the number of hosts");
+                print("EXPECTED RESULT 2: Should get the number of hosts");
+                print("ACTUAL RESULT 2:  :No of Hosts is %s" %NoOfHosts);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #set default LanMode
             tdkTestObj = obj.createTestStep('LMLiteStub_Set');
             tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
@@ -247,30 +247,30 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Set the LanMode to default ";
-                print "EXPECTED RESULT : Should set the LanMode as default value";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP : Set the LanMode to default ");
+                print("EXPECTED RESULT : Should set the LanMode as default value");
+                print("ACTUAL RESULT : %s" %details);
                 Mode = "bridge mode";
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Wait for few seconds for the Lan mode to get reflected
                 sleep(70);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Set the LanMode to default ";
-                print "EXPECTED RESULT : Should set the LanMode as default value";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP : Set the LanMode to default ");
+                print("EXPECTED RESULT : Should set the LanMode as default value");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Check if the device is in bridge mode or not";
-            print "EXPECTED RESULT 1: Should get the mode of device";
-            print "ACTUAL RESULT 1:  :LanMode is %s" %Current_Mode;
+            print("TEST STEP 1: Check if the device is in bridge mode or not");
+            print("EXPECTED RESULT 1: Should get the mode of device");
+            print("ACTUAL RESULT 1:  :LanMode is %s" %Current_Mode);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Enabling WiFi before exiting the test
         tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
@@ -283,7 +283,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         actualresult1 = tdkTestObj.getResult();
         Details = tdkTestObj.getResultDetails();
 
-	tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
+        tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.SSID.2.Enable");
         tdkTestObj.addParameter("paramValue","true");
         tdkTestObj.addParameter("paramType","boolean");
@@ -296,32 +296,32 @@ if "SUCCESS" in (loadmodulestatus.upper() and wifiloadmodulestatus.upper()):
         if expectedresult in (actualresult1 and actualresult2):
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Enable WiFi before exiting test";
-            print "EXPECTED RESULT : Should enable WiFi";
-            print "ACTUAL RESULT :%s" %Details;
+            print("TEST STEP : Enable WiFi before exiting test");
+            print("EXPECTED RESULT : Should enable WiFi");
+            print("ACTUAL RESULT :%s" %Details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Disable WiFi before testing LMLite features";
-        print "EXPECTED RESULT : Should disable WiFi";
-        print "ACTUAL RESULT :%s" %Details;
+        print("TEST STEP : Disable WiFi before testing LMLite features");
+        print("EXPECTED RESULT : Should disable WiFi");
+        print("ACTUAL RESULT :%s" %Details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("lmlite");
     wifiobj.unloadModule("wifiagent");
 
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -67,7 +67,7 @@
     <api_or_interface_used>GWP_GetEthWanLinkStatus</api_or_interface_used>
     <input_parameters>none</input_parameters>
     <automation_approch>1. Load  halethsw module.
-2.Get the ETHWAN enable state 
+2.Get the ETHWAN enable state
 3. Get the EthWan link status by invoking the HAL API GWP_GetEthWanLinkStatus
 4. Check if the ethwan is enabled then whether link status is up . Else if the ethwan is disabled, whether link is down
 5. Unload halethsw module</automation_approch>
@@ -82,8 +82,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("halethsw","1");
@@ -96,14 +96,14 @@ obj.configureTestCase(ip,port,'TS_ethsw_stub_hal_Get_EthWanLinkStatus');
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('ethsw_stub_hal_Get_EthWanLinkStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -123,10 +123,10 @@ if "SUCCESS" in loadmodulestatus.upper() :
             Enable_ethwan_str = "DISABLE"
 
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-        print "EXPECTED RESULT 1: Should retrieve the ethsw_stub_hal_Get_EthWanEnable successfully";
-        print "ACTUAL RESULT 1: EthWanEnable state is %s" %Enable_ethwan_str;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+        print("EXPECTED RESULT 1: Should retrieve the ethsw_stub_hal_Get_EthWanEnable successfully");
+        print("ACTUAL RESULT 1: EthWanEnable state is %s" %Enable_ethwan_str);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep("ethsw_stub_hal_Get_EthWanLinkStatus");
         expectedresult = "SUCCESS";
@@ -141,42 +141,42 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 linkStatus = "ETH_WAN_LINK_UP"
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Retrieve the ethwan link status via HAL api";
-            print "EXPECTED RESULT 2: Should retrieve the ethwan link status via HAL api";
+            print("TEST STEP 2: Retrieve the ethwan link status via HAL api");
+            print("EXPECTED RESULT 2: Should retrieve the ethwan link status via HAL api");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            print "Ethwan link status is %s" %linkStatus;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("Ethwan link status is %s" %linkStatus);
 
             if (Enable_ethwan_str == "ENABLE" and linkStatus == "ETH_WAN_LINK_UP") or (Enable_ethwan_str == "DISABLE" and linkStatus == "ETH_WAN_LINK_DOWN"):
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if ethwan link status is UP when ethwan is enabled and DOWN when ethwan is disabled";
-                print "EXPECTED RESULT 3: Ethwan link status should match with ethwan enable state";
-                print "[ACTUAL RESULT 3] : Ethwan enable state is : %s, link status is : %s" %(Enable_ethwan_str, linkStatus)
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3: Check if ethwan link status is UP when ethwan is enabled and DOWN when ethwan is disabled");
+                print("EXPECTED RESULT 3: Ethwan link status should match with ethwan enable state");
+                print("[ACTUAL RESULT 3] : Ethwan enable state is : %s, link status is : %s" %(Enable_ethwan_str, linkStatus))
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if ethwan link status is UP when ethwan is enabled and DOWN when ethwan is disabled";
-                print "EXPECTED RESULT 3: Ethwan link status should match with ethwan enable state";
-                print "[ACTUAL RESULT 3] : Ethwan enable state is : %s, link status is : %s" %(Enable_ethwan_str, linkStatus)
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check if ethwan link status is UP when ethwan is enabled and DOWN when ethwan is disabled");
+                print("EXPECTED RESULT 3: Ethwan link status should match with ethwan enable state");
+                print("[ACTUAL RESULT 3] : Ethwan enable state is : %s, link status is : %s" %(Enable_ethwan_str, linkStatus))
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Retrieve the ethwan link status via HAL api";
-            print "EXPECTED RESULT 2: Should retrieve the ethwan link status via HAL api";
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
-            print "Failure details: %s" %details
+            print("TEST STEP 2: Retrieve the ethwan link status via HAL api");
+            print("EXPECTED RESULT 2: Should retrieve the ethwan link status via HAL api");
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
+            print("Failure details: %s" %details)
 
     else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable";
-            print "EXPECTED RESULT 1: Should Retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE" 
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the value of ethsw_stub_hal_Get_EthWanEnable");
+        print("EXPECTED RESULT 1: Should Retrieve the value of ethsw_stub_hal_Get_EthWanEnable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("halethsw");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");
