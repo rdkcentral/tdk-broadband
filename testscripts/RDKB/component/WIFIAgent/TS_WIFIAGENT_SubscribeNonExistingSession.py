@@ -98,11 +98,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     if expectedresult not  in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Verify CSI Table is empty";
-        print "EXPECTED RESULT 1: With no client and subsciberts table should be empty";
-        print "ACTUAL RESULT 1: No entries found";
+        print("TEST STEP 1: Verify CSI Table is empty");
+        print("EXPECTED RESULT 1: With no client and subsciberts table should be empty");
+        print("ACTUAL RESULT 1: No entries found");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", "wifi_events_consumer -e 7 -s 1");
@@ -114,28 +114,28 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
         if expectedresult in actualresult and details!= "" and "consumer: exit"  in details:
             tdkTestObj.setResultStatus("SUCCESS");
             #Set the result status of execution
-            print "TEST STEP 2: Subscribe CSI data for session 1"
-            print "EXPECTED RESULT 2: CSI data should not be retreived for non-existing session";
-            print "ACTUAL RESULT 2: ",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Subscribe CSI data for session 1")
+            print("EXPECTED RESULT 2: CSI data should not be retreived for non-existing session");
+            print("ACTUAL RESULT 2: ",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Subscribe CSI data for session 1"
-            print "EXPECTED RESULT 2: CSI data should not be retreived for non-existing session";
-            print "ACTUAL RESULT 2: ",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Subscribe CSI data for session 1")
+            print("EXPECTED RESULT 2: CSI data should not be retreived for non-existing session");
+            print("ACTUAL RESULT 2: ",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Verify CSI Table is empty";
-        print "EXPECTED RESULT 1: With no client and subsciberts table should be empty";
-        print "ACTUAL RESULT 1: Subscriber entries are found in the table disconnect the subscribers and execute script";
+        print("TEST STEP 1: Verify CSI Table is empty");
+        print("EXPECTED RESULT 1: With no client and subsciberts table should be empty");
+        print("ACTUAL RESULT 1: Subscriber entries are found in the table disconnect the subscribers and execute script");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

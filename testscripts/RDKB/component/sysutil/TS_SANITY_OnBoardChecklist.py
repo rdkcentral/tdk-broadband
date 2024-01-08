@@ -95,120 +95,120 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and details == "OnBoarded":
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the OnBoarding_State";
-       print "EXPECTED RESULT 1: Should get the OnBoarding_State as OnBoarded";
-       print "ACTUAL RESULT 1: OnBoarding_State is :%s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the OnBoarding_State");
+        print("EXPECTED RESULT 1: Should get the OnBoarding_State as OnBoarded");
+        print("ACTUAL RESULT 1: OnBoarding_State is :%s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       #Check whether the file is present or not
-       tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-       cmd = "[ -f /etc/ONBOARD_LOGGING_ENABLE ] && echo \"File exist\" || echo \"File does not exist\"";
-       tdkTestObj.addParameter("command",cmd);
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-       if details == "File exist":
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Check for existence of ONBOARD_LOGGING_ENABLE file";
-          print "EXPECTED RESULT 2:ONBOARD_LOGGING_ENABLE file should be present";
-          print "ACTUAL RESULT 2:ONBOARD_LOGGING_ENABLE file is present";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Check whether the file is present or not
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        cmd = "[ -f /etc/ONBOARD_LOGGING_ENABLE ] && echo \"File exist\" || echo \"File does not exist\"";
+        tdkTestObj.addParameter("command",cmd);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+        if details == "File exist":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check for existence of ONBOARD_LOGGING_ENABLE file");
+            print("EXPECTED RESULT 2:ONBOARD_LOGGING_ENABLE file should be present");
+            print("ACTUAL RESULT 2:ONBOARD_LOGGING_ENABLE file is present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          #Check whether the file is present or not
-          tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-          cmd = "[ -f /nvram/.device_onboarded ] && echo \"File exist\" || echo \"File does not exist\"";
-          tdkTestObj.addParameter("command",cmd);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-          if details == "File exist":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Check for existence of .device_onboarded file";
-             print "EXPECTED RESULT 3: .device_onboarded file should be present";
-             print "ACTUAL RESULT 3:.device_onboarded  file is present";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-             cmd= "syscfg get unit_activated";
-             expectedresult="SUCCESS";
-             tdkTestObj.addParameter("command",cmd);
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             syscfg_unit_activated  = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
-             if expectedresult in actualresult and int(syscfg_unit_activated)== 1:
-                #Set the result status of execution
+            #Check whether the file is present or not
+            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+            cmd = "[ -f /nvram/.device_onboarded ] && echo \"File exist\" || echo \"File does not exist\"";
+            tdkTestObj.addParameter("command",cmd);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Get the unit_activated via syscfg get";
-                print "EXPECTED RESULT 4: Should get the unit_activated as 1 via syscfg get";
-                print "ACTUAL RESULT 4: unit_activated returned via syscfg get:%s" %syscfg_unit_activated;
+                print("TEST STEP 3: Check for existence of .device_onboarded file");
+                print("EXPECTED RESULT 3: .device_onboarded file should be present");
+                print("ACTUAL RESULT 3:.device_onboarded  file is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                cmd= "sysevent get snmp-onboard-reboot";
+                cmd= "syscfg get unit_activated";
                 expectedresult="SUCCESS";
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
-                snmponboardreboot  = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                syscfg_unit_activated  = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                if expectedresult in actualresult and snmponboardreboot == "":
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 5: Get the snmp-onboard-reboot via syscfg get";
-                   print "EXPECTED RESULT 5: Should get the  snmp-onboard-reboot as empty  via syscfg get";
-                   print "ACTUAL RESULT 5: snmp-onboard-reboot  via syscfg get:%s" %snmponboardreboot;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                if expectedresult in actualresult and int(syscfg_unit_activated)== 1:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the unit_activated via syscfg get");
+                    print("EXPECTED RESULT 4: Should get the unit_activated as 1 via syscfg get");
+                    print("ACTUAL RESULT 4: unit_activated returned via syscfg get:%s" %syscfg_unit_activated);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    cmd= "sysevent get snmp-onboard-reboot";
+                    expectedresult="SUCCESS";
+                    tdkTestObj.addParameter("command",cmd);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    snmponboardreboot  = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+
+                    if expectedresult in actualresult and snmponboardreboot == "":
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Get the snmp-onboard-reboot via syscfg get");
+                        print("EXPECTED RESULT 5: Should get the  snmp-onboard-reboot as empty  via syscfg get");
+                        print("ACTUAL RESULT 5: snmp-onboard-reboot  via syscfg get:%s" %snmponboardreboot);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the snmp-onboard-reboot via syscfg get");
+                        print("EXPECTED RESULT 5: Should get the  snmp-onboard-reboot as empty  via syscfg get");
+                        print("ACTUAL RESULT 5: snmp-onboard-reboot  via syscfg get:%s" %snmponboardreboot);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Get the snmp-onboard-reboot via syscfg get";
-                    print "EXPECTED RESULT 5: Should get the  snmp-onboard-reboot as empty  via syscfg get";
-                    print "ACTUAL RESULT 5: snmp-onboard-reboot  via syscfg get:%s" %snmponboardreboot;
+                    print("TEST STEP 4: Get the unit_activated via syscfg get");
+                    print("EXPECTED RESULT 4: Should get the unit_activated as 1 via syscfg get");
+                    print("ACTUAL RESULT 4: unit_activated returned via syscfg get:%s" %syscfg_unit_activated);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 4: Get the unit_activated via syscfg get";
-                 print "EXPECTED RESULT 4: Should get the unit_activated as 1 via syscfg get";
-                 print "ACTUAL RESULT 4: unit_activated returned via syscfg get:%s" %syscfg_unit_activated;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Check for existence of .device_onboarded file";
-              print "EXPECTED RESULT 3: .device_onboarded file should be present";
-              print "ACTUAL RESULT 3:.device_onboarded  file is not present";
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check for existence of ONBOARD_LOGGING_ENABLE file";
-           print "EXPECTED RESULT 2:ONBOARD_LOGGING_ENABLE file should be present";
-           print "ACTUAL RESULT 2:ONBOARD_LOGGING_ENABLE file is not present";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT]: FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Check for existence of .device_onboarded file");
+                print("EXPECTED RESULT 3: .device_onboarded file should be present");
+                print("ACTUAL RESULT 3:.device_onboarded  file is not present");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for existence of ONBOARD_LOGGING_ENABLE file");
+            print("EXPECTED RESULT 2:ONBOARD_LOGGING_ENABLE file should be present");
+            print("ACTUAL RESULT 2:ONBOARD_LOGGING_ENABLE file is not present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT]: FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the OnBoarding_State";
-        print "EXPECTED RESULT 1: Should get the OnBoarding_State as OnBoarded";
-        print "ACTUAL RESULT 1: OnBoarding_State is :%s" %details;
+        print("TEST STEP 1: Get the OnBoarding_State");
+        print("EXPECTED RESULT 1: Should get the OnBoarding_State as OnBoarded");
+        print("ACTUAL RESULT 1: OnBoarding_State is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("lmlite")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load lmlite/sysutil module";
+    print("Failed to load lmlite/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

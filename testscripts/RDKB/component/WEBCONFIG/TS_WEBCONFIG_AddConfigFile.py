@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     tdkTestObj = sysobj.createTestStep("ExecuteCmd");
     cmd = "syscfg get WebConfig_NextInstanceNumber";
-    print cmd;
+    print(cmd);
     tdkTestObj.addParameter("command", cmd);
     expectedresult="SUCCESS"
     tdkTestObj.executeTestCase(expectedresult);
@@ -101,10 +101,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult and inst.isdigit():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the next instance number of webconfig config file";
-        print "EXPECTED RESULT 1: Should get the instance number of webconfig config file";
-        print "ACTUAL RESULT 1: The next instance number is %s" %inst;
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Get the next instance number of webconfig config file");
+        print("EXPECTED RESULT 1: Should get the instance number of webconfig config file");
+        print("ACTUAL RESULT 1: The next instance number is %s" %inst);
+        print("TEST EXECUTION RESULT : %s" %actualresult);
 
         tdkTestObj = obj.createTestStep("TDKB_TR181Stub_AddObject");
         tdkTestObj.addParameter("paramName","Device.X_RDK_WebConfig.ConfigFile.");
@@ -114,14 +114,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Adding new Configfile  for webconfig";
-            print "EXPECTED RESULT 2: Should add new Configfile";
-            print "ACTUAL RESULT 2: added new Config file :%s" %details;
-            print "TEST EXECUTION RESULT : %s" %actualresult;
+            print("TEST STEP 2: Adding new Configfile  for webconfig");
+            print("EXPECTED RESULT 2: Should add new Configfile");
+            print("ACTUAL RESULT 2: added new Config file :%s" %details);
+            print("TEST EXECUTION RESULT : %s" %actualresult);
 
             tdkTestObj = sysobj.createTestStep("ExecuteCmd");
             cmd = "syscfg get WebConfig_NextInstanceNumber";
-            print cmd;
+            print(cmd);
             tdkTestObj.addParameter("command", cmd);
             expectedresult="SUCCESS"
             tdkTestObj.executeTestCase(expectedresult);
@@ -130,10 +130,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult and int(details) == int(inst)+1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if the next instance number increased by 1 after Config file instance addition";
-                print "EXPECTED RESULT 3: Should get the next instance number increased";
-                print "ACTUAL RESULT 3: The next instance number is %s, the inst before adding was %s" %(details,inst);
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("TEST STEP 3: Check if the next instance number increased by 1 after Config file instance addition");
+                print("EXPECTED RESULT 3: Should get the next instance number increased");
+                print("ACTUAL RESULT 3: The next instance number is %s, the inst before adding was %s" %(details,inst));
+                print("TEST EXECUTION RESULT : SUCCESS");
 
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get");
                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WebConfig.ConfigFile.%s.ForceSyncCheck" %(inst));
@@ -143,24 +143,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult and details =="false":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Query the Force Sync check parameter with newley added config file";
-                    print "EXPECTED RESULT 4: Get call is expected to be successful with default value false";
-                    print "ACTUAL RESULT 4: %s" %details;
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("TEST STEP 4: Query the Force Sync check parameter with newley added config file");
+                    print("EXPECTED RESULT 4: Get call is expected to be successful with default value false");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Query the Force Sync check parameter parameters with newley added config file";
-                    print "EXPECTED RESULT 4: Get call is expected to be successful with default value false";
-                    print "ACTUAL RESULT 4: %s" %details;
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("TEST STEP 4: Query the Force Sync check parameter parameters with newley added config file");
+                    print("EXPECTED RESULT 4: Get call is expected to be successful with default value false");
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if the next instance number increased by 1 after Config file instance addition";
-                print "EXPECTED RESULT 3: Should get the next instance number increased";
-                print "ACTUAL RESULT 3: The next instance number is %s, the inst before adding was %s" %(details,inst);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("TEST STEP 3: Check if the next instance number increased by 1 after Config file instance addition");
+                print("EXPECTED RESULT 3: Should get the next instance number increased");
+                print("ACTUAL RESULT 3: The next instance number is %s, the inst before adding was %s" %(details,inst));
+                print("TEST EXECUTION RESULT : FAILURE");
 
             #Delete the added row
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
@@ -172,36 +172,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST STEP 4]: Deleting the added Config file";
-                print "[EXPECTED RESULT 4]: Should delete the added Config file";
-                print "[ACTUAL RESULT 4]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table is deleted successfully\n"
+                print("[TEST STEP 4]: Deleting the added Config file");
+                print("[EXPECTED RESULT 4]: Should delete the added Config file");
+                print("[ACTUAL RESULT 4]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table is deleted successfully\n")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST STEP 4]: Deleting the added Config file";
-                print "[EXPECTED RESULT 4]: Should delete the added Config file";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table could not be deleted\n";
+                print("[TEST STEP 4]: Deleting the added Config file");
+                print("[EXPECTED RESULT 4]: Should delete the added Config file");
+                print("[ACTUAL RESULT]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table could not be deleted\n");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Adding new Configfile  for webconfig";
-            print "EXPECTED RESULT 2: Should add new Configfile";
-            print "ACTUAL RESULT 2: added new Config file :%s" %details;
-            print "TEST EXECUTION RESULT : %s" %actualresult;
+            print("TEST STEP 2: Adding new Configfile  for webconfig");
+            print("EXPECTED RESULT 2: Should add new Configfile");
+            print("ACTUAL RESULT 2: added new Config file :%s" %details);
+            print("TEST EXECUTION RESULT : %s" %actualresult);
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the next instance number of webconfig config file";
-        print "EXPECTED RESULT 1: Should get the instance number of webconfig config file";
-        print "ACTUAL RESULT 1: Failed to get the next instance number of webconfig config file" ;
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Get the next instance number of webconfig config file");
+        print("EXPECTED RESULT 1: Should get the instance number of webconfig config file");
+        print("ACTUAL RESULT 1: Failed to get the next instance number of webconfig config file") ;
+        print("TEST EXECUTION RESULT : %s" %actualresult);
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

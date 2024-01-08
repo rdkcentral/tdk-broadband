@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 from tdkbVariables import *;
 
@@ -82,14 +82,14 @@ sysObj.configureTestCase(ip,port,'TS_XDNS_SelfHeal_DnsmasqProcess');
 #Get the result of connection with test component and DUT
 loadmodulestatus =sysObj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     sysObj.setLoadModuleStatus("SUCCESS");
 
     # Check whether the process is running
     query="sh %s/tdk_platform_utility.sh checkProcess dnsmasq" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -98,35 +98,35 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase("SUCCESS");
     actualresult = tdkTestObj.getResult();
     pid = tdkTestObj.getResultDetails().strip()
-    print "dnsmasq PID: %s" %pid
+    print("dnsmasq PID: %s" %pid)
 
     if expectedresult in actualresult and pid:
-        print "TEST STEP 1:Check if dnsmasq process is running"
-        print "EXPECTED RESULT 1: dnsmasq should be running";
-        print "ACTUAL RESULT 1: dnsmasq process is running"
+        print("TEST STEP 1:Check if dnsmasq process is running")
+        print("EXPECTED RESULT 1: dnsmasq should be running");
+        print("ACTUAL RESULT 1: dnsmasq process is running")
         tdkTestObj.setResultStatus("SUCCESS");
 
         # Kill the process
         query="sh %s/tdk_platform_utility.sh killProcess dnsmasq" %TDK_PATH
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj.addParameter("command", query)
         tdkTestObj.executeTestCase("SUCCESS");
         actualresult = tdkTestObj.getResult();
         result = tdkTestObj.getResultDetails().strip()
         if expectedresult in actualresult:
-            print "TEST STEP 1:Kill dnsmasq process"
-            print "EXPECTED RESULT 1: dnsmasq should be killed";
-            print "ACTUAL RESULT 1: dnsmasq should be killed"
+            print("TEST STEP 1:Kill dnsmasq process")
+            print("EXPECTED RESULT 1: dnsmasq should be killed");
+            print("ACTUAL RESULT 1: dnsmasq should be killed")
             tdkTestObj.setResultStatus("SUCCESS");
 
             #check whether the process is restarted automatically
             query="sh %s/tdk_platform_utility.sh checkProcess dnsmasq" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
 
-            print "Check for every 10 secs whether the process is up"
+            print("Check for every 10 secs whether the process is up")
             retryCount = 0;
             while retryCount < MAX_RETRY:
                 tdkTestObj.executeTestCase("SUCCESS");
@@ -139,7 +139,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                     retryCount = retryCount + 1;
 
             if not pid:
-                print "Retry Again: Check for every 5 mins whether the process is up"
+                print("Retry Again: Check for every 5 mins whether the process is up")
                 retryCount = 0;
                 while retryCount < MAX_RETRY:
                     tdkTestObj.executeTestCase("SUCCESS");
@@ -152,32 +152,32 @@ if "SUCCESS" in loadmodulestatus.upper():
                         retryCount = retryCount + 1;
 
             if expectedresult in actualresult and pid:
-                print "TEST STEP 3:Check if dnsmasq process is running"
-                print "EXPECTED RESULT 3: dnsmasq should be running";
-                print "ACTUAL RESULT 3: dnsmasq process is running"
-                print "dnsmasq PID: %s" %pid
+                print("TEST STEP 3:Check if dnsmasq process is running")
+                print("EXPECTED RESULT 3: dnsmasq should be running");
+                print("ACTUAL RESULT 3: dnsmasq process is running")
+                print("dnsmasq PID: %s" %pid)
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3:Check if dnsmasq process is running"
-                print "EXPECTED RESULT 3: dnsmasq should be running";
-                print "ACTUAL RESULT 3: dnsmasq process is not running"
+                print("TEST STEP 3:Check if dnsmasq process is running")
+                print("EXPECTED RESULT 3: dnsmasq should be running");
+                print("ACTUAL RESULT 3: dnsmasq process is not running")
                 tdkTestObj.setResultStatus("FAILURE");
                 # Initiate reboot if process is not restarted automatically
                 sysObj.initiateReboot();
 
         else:
-            print "TEST STEP 1:Kill dnsmasq process"
-            print "EXPECTED RESULT 1: dnsmasq should be killed";
-            print "ACTUAL RESULT 1: dnsmasq not killed"
+            print("TEST STEP 1:Kill dnsmasq process")
+            print("EXPECTED RESULT 1: dnsmasq should be killed");
+            print("ACTUAL RESULT 1: dnsmasq not killed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1:Check if dnsmasq process is running"
-        print "EXPECTED RESULT 1: dnsmasq should be running";
-        print "ACTUAL RESULT 1: dnsmasq process is not running"
+        print("TEST STEP 1:Check if dnsmasq process is running")
+        print("EXPECTED RESULT 1: dnsmasq should be running");
+        print("ACTUAL RESULT 1: dnsmasq process is not running")
         tdkTestObj.setResultStatus("FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

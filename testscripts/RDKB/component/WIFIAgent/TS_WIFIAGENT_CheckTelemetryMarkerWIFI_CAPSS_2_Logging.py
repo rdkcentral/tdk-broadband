@@ -122,8 +122,8 @@ sysObj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckTelemetryMarkerWIFI_CAPSS_2_
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatus.upper():
     #Set the result status of execution
@@ -141,48 +141,48 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for wifihealth log file presence under /rdklogs/logs" %step;
-    print "EXPECTED RESULT %d:wifihealth log file should be present under /rdklogs/logs" %step;
+    print("\nTEST STEP %d: Check for wifihealth log file presence under /rdklogs/logs" %step);
+    print("EXPECTED RESULT %d:wifihealth log file should be present under /rdklogs/logs" %step);
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d:wifihealth log file is present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the value of the spatial streams client capability Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr
         step = step + 1;
         paramName = "Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr";
         actualresult, details = getParameter(obj, paramName);
 
-        print "\nTEST STEP %d: Get the spatial streams client capability using Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr" %step;
-        print "EXPECTED RESULT %d: Should get the spatial streams client capability using Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr" %step;
+        print("\nTEST STEP %d: Get the spatial streams client capability using Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr" %step);
+        print("EXPECTED RESULT %d: Should get the spatial streams client capability using Device.WiFi.AccessPoint.2.AssociatedDevice.1.X_RDK_CapSpaStr" %step);
 
         if expectedresult in actualresult and details != "":
             capss = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Client Capbility Spatial Streams : %s" %(step, capss);
+            print("ACTUAL RESULT %d: Client Capbility Spatial Streams : %s" %(step, capss));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if capss.isdigit() and int(capss) > 0 and int(capss) <= 8:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Client Capability Spatial Streams value is a valid value greater than 0 and less than or equal to 8";
+                print("Client Capability Spatial Streams value is a valid value greater than 0 and less than or equal to 8");
 
                 #Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval
                 step = step + 1;
                 paramName = "Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval";
                 actualresult, details = getParameter(obj, paramName);
 
-                print "\nTEST STEP %d: Get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step;
-                print "EXPECTED RESULT %d: Should get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step;
+                print("\nTEST STEP %d: Get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step);
+                print("EXPECTED RESULT %d: Should get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step);
 
                 if expectedresult in actualresult and details != "":
                     DeflogInt = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,DeflogInt);
+                    print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,DeflogInt));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if DeflogInt.isdigit():
                         if DeflogInt != "300":
@@ -193,165 +193,165 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         #Set the LogInterval to newlogInt, the set is cross checked with get
                         step = step + 1;
                         actualresult, details = setParameter(obj, paramName, newlogInt, "int");
-                        print "\nTEST STEP %d: Set the TELEMETRY LogInterval to %ss" %(step, newlogInt);
-                        print "EXPECTED RESULT %d: Should set the TELEMETRY LogInterval to %ss" %(step, newlogInt);
+                        print("\nTEST STEP %d: Set the TELEMETRY LogInterval to %ss" %(step, newlogInt));
+                        print("EXPECTED RESULT %d: Should set the TELEMETRY LogInterval to %ss" %(step, newlogInt));
 
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details);
+                            print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            print "\nGet the number of log lines \"WIFI_CAPSS_2\" in /rdklogs/logs/wifihealth.txt";
+                            print("\nGet the number of log lines \"WIFI_CAPSS_2\" in /rdklogs/logs/wifihealth.txt");
                             step = step + 1;
                             tdkTestObj1 = sysObj.createTestStep('ExecuteCmd');
                             log = "WIFI_CAPSS_2";
                             file = "/rdklogs/logs/wifihealth.txt"
                             no_of_lines_initial = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                            print "The initial number of log lines \"WIFI_CAPSS_2\" in wifihealth.txt is : %d" %no_of_lines_initial;
+                            print("The initial number of log lines \"WIFI_CAPSS_2\" in wifihealth.txt is : %d" %no_of_lines_initial);
 
                             #Sleeping for initial telemetry interval newlogInt + 60 (as the polling of Log Interval happens every 60s)
                             sleep_time = 60 + int(newlogInt);
-                            print "\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time;
+                            print("\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time);
                             sleep(sleep_time);
-                            print "\nGet the final number of log lines \"WIFI_CAPSS_2\" in /rdklogs/logs/wifihealth.txt";
+                            print("\nGet the final number of log lines \"WIFI_CAPSS_2\" in /rdklogs/logs/wifihealth.txt");
                             step = step + 1;
                             no_of_lines_final = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                            print "The final number of log lines \"WIFI_CAPSS_2\" in wifihealth.txt is : %d" %no_of_lines_final;
+                            print("The final number of log lines \"WIFI_CAPSS_2\" in wifihealth.txt is : %d" %no_of_lines_final);
 
                             #Check if the difference between the final and initial number of Markers is >= 1
                             step = step + 1;
                             difference = no_of_lines_final - no_of_lines_initial;
-                            print "\nThe WIFI_CAPSS_2 markers can be >= 1, after accounting for the polling interval and the new log interval set";
-                            print "TEST STEP %d: Should get WIFI_CAPSS_2 markers count greater than or equal to 1" %step;
-                            print "EXPECTED RESULT %d: The WIFI_CAPSS_2 markers count should be greater than or equal to 1" %step;
+                            print("\nThe WIFI_CAPSS_2 markers can be >= 1, after accounting for the polling interval and the new log interval set");
+                            print("TEST STEP %d: Should get WIFI_CAPSS_2 markers count greater than or equal to 1" %step);
+                            print("EXPECTED RESULT %d: The WIFI_CAPSS_2 markers count should be greater than or equal to 1" %step);
 
                             if difference >= 1:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Number of new WIFI_CAPSS_2 markers are : %d" %(step, difference);
+                                print("ACTUAL RESULT %d: Number of new WIFI_CAPSS_2 markers are : %d" %(step, difference));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Check if the marker value of WIFI_CAPSS_2 is valid and is of the form <client capability/number of spatial streams>
                                 step = step + 1;
                                 cmd= "cat /rdklogs/logs/wifihealth.txt | grep \"WIFI_CAPSS_2:\"";
-                                print "\nCommand : ", cmd;
+                                print("\nCommand : ", cmd);
                                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                                 actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                                print "\nTEST STEP %d : Check if the marker value of WIFI_CAPSS_2 is valid" %(step);
-                                print "EXPECTED RESULT %d : The marker value of WIFI_CAPSS_2 should be valid" %(step);
+                                print("\nTEST STEP %d : Check if the marker value of WIFI_CAPSS_2 is valid" %(step));
+                                print("EXPECTED RESULT %d : The marker value of WIFI_CAPSS_2 should be valid" %(step));
 
                                 if expectedresult in actualresult and details != "":
                                     marker_val = details.strip().split("WIFI_CAPSS_2:")[1].split(",")[0];
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: The marker value is : %s" %(step, marker_val);
+                                    print("ACTUAL RESULT %d: The marker value is : %s" %(step, marker_val));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     client_cap = marker_val.split("/")[0];
                                     spatial_str = marker_val.split("/")[1];
-                                    print "Client capability : %s" %client_cap;
-                                    print "Number of spatial streams : %s" %spatial_str;
+                                    print("Client capability : %s" %client_cap);
+                                    print("Number of spatial streams : %s" %spatial_str);
 
                                     if client_cap.isdigit() and spatial_str.isdigit() and int(client_cap) > 0 and int(spatial_str) > 0:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "The marker values are valid";
+                                        print("The marker values are valid");
 
                                         #Check if the client capability and spatial streams values are valid
                                         flag = 0;
                                         step = step + 1;
-                                        print "\nTEST STEP %d : Check if the client capability from the marker is same as the TR181 value and the number of spatial streams supported is less than or equal to the client capability" %step;
-                                        print "EXPECTED RESULT %d : The client capability from the marker should be the same as the TR181 value and the number of spatial streams supported should be less than or equal to the client capability" %step;
+                                        print("\nTEST STEP %d : Check if the client capability from the marker is same as the TR181 value and the number of spatial streams supported is less than or equal to the client capability" %step);
+                                        print("EXPECTED RESULT %d : The client capability from the marker should be the same as the TR181 value and the number of spatial streams supported should be less than or equal to the client capability" %step);
 
                                         if int(client_cap) == int(capss):
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "The client capability marker value : %s is same as the TR181 value : %s" %(client_cap, capss);
+                                            print("The client capability marker value : %s is same as the TR181 value : %s" %(client_cap, capss));
 
                                             if int(spatial_str) <= int(client_cap):
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print "The number of spatial streams supported : %s is less than or equal to the client capability : %s" %(spatial_str, client_cap);
+                                                print("The number of spatial streams supported : %s is less than or equal to the client capability : %s" %(spatial_str, client_cap));
                                             else:
                                                 flag = 1;
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "The number of spatial streams supported : %s is NOT less than or equal to the client capability : %s" %(spatial_str, client_cap);
+                                                print("The number of spatial streams supported : %s is NOT less than or equal to the client capability : %s" %(spatial_str, client_cap));
                                         else:
                                             flag = 1;
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "The client capability marker value : %s is NOT same as the TR181 value : %s" %(client_cap, capss);
+                                            print("The client capability marker value : %s is NOT same as the TR181 value : %s" %(client_cap, capss));
 
                                         if flag == 0:
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "ACTUAL RESULT %d: The client capability or spatial streams value is as expected" %step;
+                                            print("ACTUAL RESULT %d: The client capability or spatial streams value is as expected" %step);
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "ACTUAL RESULT %d: The client capability or spatial streams value is NOT as expected" %step;
+                                            print("ACTUAL RESULT %d: The client capability or spatial streams value is NOT as expected" %step);
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : FAILURE";
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "The marker values are NOT valid";
+                                        print("The marker values are NOT valid");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: The marker value is : %s" %(step, details);
+                                    print("ACTUAL RESULT %d: The marker value is : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Number of new WIFI_CAPSS_2 markers are : %d" %(step, difference);
+                                print("ACTUAL RESULT %d: Number of new WIFI_CAPSS_2 markers are : %d" %(step, difference));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert the Log Interval value
                             step = step + 1;
                             actualresult, details = setParameter(obj, paramName, DeflogInt, "int");
-                            print "\nTEST STEP %d: Revert the TELEMETRY LogInterval to initial value" %step;
-                            print "EXPECTED RESULT %d: Should revert the TELEMETRY LogInterval to initial value" %step;
+                            print("\nTEST STEP %d: Revert the TELEMETRY LogInterval to initial value" %step);
+                            print("EXPECTED RESULT %d: Should revert the TELEMETRY LogInterval to initial value" %step);
 
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Revert of TELEMETRY LogInterval is successful" %step;
+                                print("ACTUAL RESULT %d: Revert of TELEMETRY LogInterval is successful" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Revertion of TELEMETRY LogInterval failed" %step;
+                                print("ACTUAL RESULT %d: Revertion of TELEMETRY LogInterval failed" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Set operation failed" %(step);
+                            print("ACTUAL RESULT %d: Set operation failed" %(step));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] :FAILURE";
+                            print("[TEST EXECUTION RESULT] :FAILURE");
 
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TELEMETRY LogInterval not a valid value" %step;
+                        print("TELEMETRY LogInterval not a valid value" %step);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details);
+                    print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Client Capability Spatial Streams value is NOT a valid value greater than 0 and less than or equal to 8";
+                print("Client Capability Spatial Streams value is NOT a valid value greater than 0 and less than or equal to 8");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Client Capbility Spatial Streams : %s" %(step, details);
+            print("ACTUAL RESULT %d: Client Capbility Spatial Streams : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d:wifihealth log file is not present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is not present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

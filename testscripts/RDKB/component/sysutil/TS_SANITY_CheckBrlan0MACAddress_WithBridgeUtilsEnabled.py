@@ -90,8 +90,8 @@ tr181obj.configureTestCase(ip,port,'TS_SANITY_CheckBrlan0MACAddress_WithBridgeUt
 #Get the result of connection with test component and DUT
 loadmodulestatus=sysobj.getLoadModuleResult();
 loadmodulestatus1=tr181obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if  "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -105,31 +105,31 @@ if  "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upp
     tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     actualresult, initial_enable = getTR181Value(tdkTestObj, paramName);
 
-    print "\nTEST STEP %d: Get the initial Bridge Utils Enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step;
-    print "EXPECTED RESULT %d: Should successfully get the initial value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step;
+    print("\nTEST STEP %d: Get the initial Bridge Utils Enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step);
+    print("EXPECTED RESULT %d: Should successfully get the initial value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step);
 
     if expectedresult in actualresult and initial_enable != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Initial Enable state is : %s" %(step, initial_enable);
+        print("ACTUAL RESULT %d: Initial Enable state is : %s" %(step, initial_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the brlan0 MAC address
         step = step + 1;
         cmd= "ifconfig brlan0 | grep \"HWaddr\"";
-        print "\nCommand : ", cmd;
+        print("\nCommand : ", cmd);
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-        print "\nTEST STEP %d : Get the Brlan0 Mac Address when the Bridge Utils enable state is %s" %(step, initial_enable);
-        print "EXPECTED RESULT %d : Should get the Brlan0 Mac Address successfully when Bridge Utils enable state is %s" %(step, initial_enable);
+        print("\nTEST STEP %d : Get the Brlan0 Mac Address when the Bridge Utils enable state is %s" %(step, initial_enable));
+        print("EXPECTED RESULT %d : Should get the Brlan0 Mac Address successfully when Bridge Utils enable state is %s" %(step, initial_enable));
 
         if expectedresult in actualresult and details != "":
             brlan0_mac_initial = details.strip().split("HWaddr ")[1];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, brlan0_mac_initial);
+            print("ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, brlan0_mac_initial));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Toggle the Bridge Utils Enable status
             step = step + 1;
@@ -141,19 +141,19 @@ if  "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upp
 
             tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly');
             actualresult, details = setTR181Value(tdkTestObj, paramName, setValue, "boolean");
-            print "\nTEST STEP %d : Set Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, setValue);
-            print "EXPECTED RESULT %d : Should set the Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, setValue);
+            print("\nTEST STEP %d : Set Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, setValue));
+            print("EXPECTED RESULT %d : Should set the Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, setValue));
 
             if expectedresult in actualresult and details != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Reboot the DUT for the RFC to take effect
-                print "\nInitiating Reboot...";
+                print("\nInitiating Reboot...");
                 sysobj.initiateReboot();
-                print "Sleeping for 300s..."
+                print("Sleeping for 300s...")
                 sleep(300);
 
                 #Check if the Bridge Utils RFC is set successfully
@@ -161,111 +161,111 @@ if  "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upp
                 tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get');
                 actualresult, curr_enable = getTR181Value(tdkTestObj, paramName);
 
-                print "\nTEST STEP %d: Get the current Bridge Utils Enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step;
-                print "EXPECTED RESULT %d: Should successfully get the current value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step;
+                print("\nTEST STEP %d: Get the current Bridge Utils Enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step);
+                print("EXPECTED RESULT %d: Should successfully get the current value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable" %step);
 
                 if expectedresult in actualresult and curr_enable != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Current Enable state is : %s" %(step, curr_enable);
+                    print("ACTUAL RESULT %d: Current Enable state is : %s" %(step, curr_enable));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if curr_enable == setValue:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Bridge Utils Enable is successfully set to %s" %setValue;
+                        print("Bridge Utils Enable is successfully set to %s" %setValue);
 
                         #Get the MAC address for brlan0 interface
                         step = step + 1;
                         cmd= "ifconfig brlan0 | grep \"HWaddr\"";
-                        print "\nCommand : ", cmd;
+                        print("\nCommand : ", cmd);
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                         actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                        print "\nTEST STEP %d : Get the Brlan0 Mac Address when the Bridge Utils enable state is set to %s" %(step, initial_enable);
-                        print "EXPECTED RESULT %d : Should get the Brlan0 Mac Address successfully when Bridge Utils enable state is set to %s" %(step, initial_enable);
+                        print("\nTEST STEP %d : Get the Brlan0 Mac Address when the Bridge Utils enable state is set to %s" %(step, initial_enable));
+                        print("EXPECTED RESULT %d : Should get the Brlan0 Mac Address successfully when Bridge Utils enable state is set to %s" %(step, initial_enable));
 
                         if expectedresult in actualresult and details != "":
                             brlan0_mac_final = details.strip().split("HWaddr ")[1];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, brlan0_mac_final);
+                            print("ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, brlan0_mac_final));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if the MAC address for brlan0 interface remains unchanged
                             step = step + 1;
-                            print "\nTEST STEP %d : Check if the Brlan0 Mac Address remain unchanged irrespective of the Bridge Utils Enable state" %(step);
-                            print "EXPECTED RESULT %d : The Brlan0 Mac Address should remain unchanged irrespective of the Bridge Utils Enable state" %(step);
-                            print "Brlan0 Mac Address when Bridge Utils is %s : %s" %(initial_enable, brlan0_mac_initial);
-                            print "Brlan0 Mac Address when Bridge Utils is %s : %s" %(curr_enable, brlan0_mac_final);
+                            print("\nTEST STEP %d : Check if the Brlan0 Mac Address remain unchanged irrespective of the Bridge Utils Enable state" %(step));
+                            print("EXPECTED RESULT %d : The Brlan0 Mac Address should remain unchanged irrespective of the Bridge Utils Enable state" %(step));
+                            print("Brlan0 Mac Address when Bridge Utils is %s : %s" %(initial_enable, brlan0_mac_initial));
+                            print("Brlan0 Mac Address when Bridge Utils is %s : %s" %(curr_enable, brlan0_mac_final));
 
                             if brlan0_mac_final == brlan0_mac_initial:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Brlan0 Mac Address remians unchanged" %(step);
+                                print("ACTUAL RESULT %d: Brlan0 Mac Address remians unchanged" %(step));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Brlan0 Mac Address is NOT the same" %(step);
+                                print("ACTUAL RESULT %d: Brlan0 Mac Address is NOT the same" %(step));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, details);
+                            print("ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Revert operation
                         step = step + 1;
                         tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly');
                         actualresult, details = setTR181Value(tdkTestObj, paramName, initial_enable, "boolean");
-                        print "\nTEST STEP %d : Revert Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, initial_enable);
-                        print "EXPECTED RESULT %d : Should revert the Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, initial_enable);
+                        print("\nTEST STEP %d : Revert Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, initial_enable));
+                        print("EXPECTED RESULT %d : Should revert the Bridge Utils Enable RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.BridgeUtilsEnable to %s" %(step, initial_enable));
 
                         if expectedresult in actualresult and details != "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Reboot the DUT for the RFC to take effect
-                            print "\nInitiating Reboot...";
+                            print("\nInitiating Reboot...");
                             sysobj.initiateReboot();
-                            print "Sleeping for 300s..."
+                            print("Sleeping for 300s...")
                             sleep(300);
-                            print "Revert operation completed";
+                            print("Revert operation completed");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Bridge Utils Enable is NOT successfully set to %s" %setValue;
+                        print("Bridge Utils Enable is NOT successfully set to %s" %setValue);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Current Enable state is : %s" %(step, curr_enable);
+                    print("ACTUAL RESULT %d: Current Enable state is : %s" %(step, curr_enable));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, details);
+            print("ACTUAL RESULT %d: Brlan0 Mac Address is : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Initial Enable state is : %s" %(step, initial_enable);
+        print("ACTUAL RESULT %d: Initial Enable state is : %s" %(step, initial_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysobj.unloadModule("sysutil");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil/tr181 module";
+    print("Failed to load sysutil/tr181 module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

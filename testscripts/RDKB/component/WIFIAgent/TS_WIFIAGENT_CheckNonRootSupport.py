@@ -91,26 +91,26 @@ def set_EnableNonRootRFC(pamobj, value, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        print "Reboot the device for the RFC to take effect";
+        print("Reboot the device for the RFC to take effect");
         pamobj.initiateReboot();
         sleep(300);
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status, tdkTestObj;
 
 def get_EnableNonRootRFC(pamobj, step):
@@ -124,21 +124,21 @@ def get_EnableNonRootRFC(pamobj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Get the non-root support parameter Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable" %step;
-    print "EXPECTED RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable should be retrieved successfully" %step;
+    print("\nTEST STEP %d: Get the non-root support parameter Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable" %step);
+    print("EXPECTED RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable should be retrieved successfully" %step);
 
     if expectedresult in actualresult and details != "":
         status = 0;
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is retrieved successfully; Details : %s" %(step, details);
+        print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is retrieved successfully; Details : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully; Details : %s" %(step, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully; Details : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status, details, tdkTestObj;
 
 def check_WiFiProcess(sysobj, step):
@@ -151,32 +151,32 @@ def check_WiFiProcess(sysobj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Get the CcspWifiSsp proccess details" %step;
-    print "EXPECTED RESULT %d:  Should get the CcspWifiSsp proccess details" %step;
+    print("\nTEST STEP %d: Get the CcspWifiSsp proccess details" %step);
+    print("EXPECTED RESULT %d:  Should get the CcspWifiSsp proccess details" %step);
 
     if expectedresult in actualresult and "CcspWifiSsp" in details:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: CcspWifiSsp is running in the device ; Details : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: CcspWifiSsp is running in the device ; Details : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if CcspWifiSSp has non-root privilage
         step = step + 1;
-        print "\nTEST STEP %d: Check if the user-type is non-root" %step;
-        print "EXPECTED RESULT %d: Should get the user type as non-root" %step;
+        print("\nTEST STEP %d: Check if the user-type is non-root" %step);
+        print("EXPECTED RESULT %d: Should get the user type as non-root" %step);
 
         if "non-root" in details:
             status = 0;
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: The user type is non-root" %(step);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: The user type is non-root" %(step));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: The user type is not non-root" %(step);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT %d: The user type is not non-root" %(step));
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: CcspWifiSsp is not running in the device; Details : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: CcspWifiSsp is not running in the device; Details : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return tdkTestObj, status;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -209,7 +209,7 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     status, details, tdkTestObj = get_EnableNonRootRFC(pamobj, step);
 
     if status == 0 and details == "true":
-        print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is enabled";
+        print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is enabled");
 
         #Get the CcspWifiSsp process details
         step = step + 1;
@@ -217,13 +217,13 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
 
         if status == 0:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The CcspWifiSsp process is running as non-root";
+            print("The CcspWifiSsp process is running as non-root");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The CcspWifiSsp process is not running as non-root";
+            print("The CcspWifiSsp process is not running as non-root");
 
     elif status == 0 and details == "false":
-        print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is disabled";
+        print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is disabled");
 
         #Set non-root support RFC Enable to true
         step = step + 1;
@@ -236,14 +236,14 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             status, details, tdkTestObj = get_EnableNonRootRFC(pamobj, step)
 
             if status == 0 and details == "true":
-                print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is Enabled";
+                print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is Enabled");
                 #Get the CcspWifiSsp process details
                 step = step + 1;
                 tdkTestObj, status = check_WiFiProcess(sysobj, step);
 
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The CcspWifiSsp process is running as non-root";
+                    print("The CcspWifiSsp process is running as non-root");
 
                     #Revert back to initial state
                     #Set the Enable parameter to false
@@ -253,26 +253,26 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
 
                     if status == 0:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Revert operation is successful";
+                        print("Revert operation is successful");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Revert operation is not successful";
+                        print("Revert operation is not successful");
                 else:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The CcspWifiSsp process is not running as non-root";
+                    print("The CcspWifiSsp process is not running as non-root");
             else:
-                print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not set successfully";
+                print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not set successfully");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully";
+            print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully";
+        print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.NonRootSupport.Enable is not retrieved successfully");
         tdkTestObj.setResultStatus("FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

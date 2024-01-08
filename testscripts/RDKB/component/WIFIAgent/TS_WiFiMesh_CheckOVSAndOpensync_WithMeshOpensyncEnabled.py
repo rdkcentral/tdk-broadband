@@ -87,21 +87,21 @@ wifiobj.configureTestCase(ip,port,'TS_WiFiMesh_CheckOVSAndOpensync_WithMeshOpens
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1=wifiobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     wifiobj.setLoadModuleStatus("SUCCESS");
     expectedresult="SUCCESS";
 
-    print "\n**********Pre-Requites Check Start**********";
+    print("\n**********Pre-Requites Check Start**********");
     #Get the initial OVS enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable and Opensync Enable using Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync
     step = 1;
     initial_enable = [];
     status = 0;
     paramList =["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable", "Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync"];
-    print "\nTEST STEP %d: Get the initial OVS and Opensync enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable and Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync" %step;
-    print "EXPECTED RESULT %d: Should successfully get the initial value of OVS and Opensync enable" %step;
+    print("\nTEST STEP %d: Get the initial OVS and Opensync enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable and Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync" %step);
+    print("EXPECTED RESULT %d: Should successfully get the initial value of OVS and Opensync enable" %step);
 
     for param in paramList:
         tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
@@ -114,35 +114,35 @@ if "SUCCESS" in loadmodulestatus1.upper():
             tdkTestObj.setResultStatus("SUCCESS");
             enable = details.split("VALUE:")[1].split(" ")[0].strip();
             initial_enable.append(enable);
-            print "\n%s : %s" %(param, enable);
+            print("\n%s : %s" %(param, enable));
         else:
             status = 1;
             tdkTestObj.setResultStatus("FAILURE");
-            print "\n%s : %s" %(param, details);
+            print("\n%s : %s" %(param, details));
 
     if status == 0 :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Initial enable state for OVS : %s, Opensync : %s" %(step, initial_enable[0], initial_enable[1]);
+        print("ACTUAL RESULT %d: Initial enable state for OVS : %s, Opensync : %s" %(step, initial_enable[0], initial_enable[1]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if OVS and Opensync and disabled initially
         step = step + 1;
-        print "\nTEST STEP %d: Check if OVS and Opensync are disabled as pre-requisite" %step;
-        print "EXPECTED RESULT %d: OVS and Opensync should be disabled as pre-requisite" %step;
+        print("\nTEST STEP %d: Check if OVS and Opensync are disabled as pre-requisite" %step);
+        print("EXPECTED RESULT %d: OVS and Opensync should be disabled as pre-requisite" %step);
 
         if initial_enable[0] == "false" and initial_enable[1] == "false":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: OVS and Opensync are disabled as pre-requisites" %step;
+            print("ACTUAL RESULT %d: OVS and Opensync are disabled as pre-requisites" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "\n**********Pre-Requites Check Complete**********";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("\n**********Pre-Requites Check Complete**********");
 
             #Enable Mesh Opensync
             step = step + 1;
             setValue = "true";
-            print "\nTEST STEP %d: Enable Mesh Opensync using %s" %(step, paramList[1]);
-            print "EXPECTED RESULT %d: %s should be disabled successfully" %(step, paramList[1]);
+            print("\nTEST STEP %d: Enable Mesh Opensync using %s" %(step, paramList[1]));
+            print("EXPECTED RESULT %d: %s should be disabled successfully" %(step, paramList[1]));
 
             tdkTestObj = wifiobj.createTestStep('WIFIAgent_Set_Get');
             tdkTestObj.addParameter("paramName",paramList[1]);
@@ -154,21 +154,21 @@ if "SUCCESS" in loadmodulestatus1.upper():
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Mesh Opensync enabled successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Mesh Opensync enabled successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Reboot the DUT for the RFC to take effect
-                print "\nInitiating Reboot...";
+                print("\nInitiating Reboot...");
                 wifiobj.initiateReboot();
-                print "Sleeping for 300s..."
+                print("Sleeping for 300s...")
                 sleep(300);
 
                 #Get the current OVS and Opensync enable status
                 final_enable = [];
                 status = 0;
-                print "\nTEST STEP %d: Get the current OVS and Opensync enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable and Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync" %step;
-                print "EXPECTED RESULT %d: Should successfully get the current value of OVS and Opensync enable" %step;
+                print("\nTEST STEP %d: Get the current OVS and Opensync enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.OVS.Enable and Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Opensync" %step);
+                print("EXPECTED RESULT %d: Should successfully get the current value of OVS and Opensync enable" %step);
 
                 for param in paramList:
                     tdkTestObj = wifiobj.createTestStep("WIFIAgent_Get");
@@ -181,49 +181,49 @@ if "SUCCESS" in loadmodulestatus1.upper():
                         tdkTestObj.setResultStatus("SUCCESS");
                         enable = details.split("VALUE:")[1].split(" ")[0].strip();
                         final_enable.append(enable);
-                        print "\n%s : %s" %(param, enable);
+                        print("\n%s : %s" %(param, enable));
                     else:
                         status = 1;
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "\n%s : %s" %(param, details);
+                        print("\n%s : %s" %(param, details));
 
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Current enable state for OVS : %s, Opensync : %s" %(step, final_enable[0], final_enable[1]);
+                    print("ACTUAL RESULT %d: Current enable state for OVS : %s, Opensync : %s" %(step, final_enable[0], final_enable[1]));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if both OVS and Opensync are in disabled state after Mesh Opensync alone is enabled and DUT is rebooted
                     if final_enable[0] == "false" and final_enable[1] == "false":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "OVS and Opensync are in disabled state post reboot";
+                        print("OVS and Opensync are in disabled state post reboot");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "OVS and Opensync are NOT in disabled state post reboot";
+                        print("OVS and Opensync are NOT in disabled state post reboot");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Current enable state for OVS and Opensync NOT retrieved successfully" %(step);
+                    print("ACTUAL RESULT %d: Current enable state for OVS and Opensync NOT retrieved successfully" %(step));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Mesh Opensync NOT enabled successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Mesh Opensync NOT enabled successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: OVS and Opensync are NOT disabled as pre-requisites" %step;
+            print("ACTUAL RESULT %d: OVS and Opensync are NOT disabled as pre-requisites" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
-            print "\n**********Pre-Requites Check Complete**********";
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("\n**********Pre-Requites Check Complete**********");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Initial enable states for OVS and Opensync NOT retrieved successfully" %(step);
+        print("ACTUAL RESULT %d: Initial enable states for OVS and Opensync NOT retrieved successfully" %(step));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     wifiobj.unloadModule("wifiagent")
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     wifiobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

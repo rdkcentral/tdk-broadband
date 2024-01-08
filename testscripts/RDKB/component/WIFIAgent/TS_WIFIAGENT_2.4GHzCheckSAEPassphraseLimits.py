@@ -110,7 +110,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHzCheckSAEPassphraseLimits');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -124,34 +124,34 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
+    print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
 
     if expectedresult in actualresult:
         initial_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode));
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         #Check the Pre-requisites - WPA3_Personal_Transition RFC should be enabled
         step = step + 1;
         pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
 
         if pre_req_set == 1:
-            print "\n*************RFC Pre-requisite set for the DUT*****************";
+            print("\n*************RFC Pre-requisite set for the DUT*****************");
             #Get the initial SAEPassphrase
             step = step + 1;
             tdkTestObj = obj.createTestStep("WIFIAgent_Get");
             actualresult, details = getSAEPassphrase(tdkTestObj, expectedresult);
 
-            print "\nTEST STEP %d : Get the initial SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step;
-            print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step;
+            print("\nTEST STEP %d : Get the initial SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step);
+            print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step);
 
             if expectedresult in actualresult:
                 initial_sae = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_sae);
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_sae));
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #If the initial mode is not WPA3-Personal-Transition, then SET to WPA3-Personal-Transition
                 mode = "WPA3-Personal-Transition";
@@ -167,13 +167,13 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode);
-                    print "EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode);
+                    print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode));
+                    print("EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode));
 
                     if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :SUCCESS");
 
                         #Verify the SET with GET
                         step = step + 1;
@@ -183,54 +183,54 @@ if "SUCCESS" in loadmodulestatus.upper():
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step;
-                        print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step;
+                        print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step);
+                        print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step);
 
                         if expectedresult in actualresult:
                             final_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode));
+                            print("TEST EXECUTION RESULT :SUCCESS");
 
-                            print "Set Mode : ", mode;
-                            print "Get Mode : ", final_mode;
+                            print("Set Mode : ", mode);
+                            print("Get Mode : ", final_mode);
 
                             if final_mode == mode:
                                 mode_flag = 1;
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "SET is reflected in GET";
+                                print("SET is reflected in GET");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "SET is NOT reflected in GET";
+                                print("SET is NOT reflected in GET");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, final_mode);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, final_mode));
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     mode_flag = 1;
-                    print "Security Mode is already WPA3-Personal-transition..."
+                    print("Security Mode is already WPA3-Personal-transition...")
 
                 final_sae = "";
                 if mode_flag == 1:
                     #Set the SAEPassPhrase to a value which has less than 8 characters
-                    print "\n*************Checking for Lower Limit condition*************";
+                    print("\n*************Checking for Lower Limit condition*************");
                     expectedresult = "FAILURE";
                     step = step + 1;
                     saePassphrase = "test_" + str(randint(10, 100));
                     tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                     actualresult, details = setSAEPassphrase(tdkTestObj, saePassphrase, expectedresult);
 
-                    print "\nTEST STEP %d : Check if setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value less than the lower limit of charcters(<8) - %s fails" %(step, saePassphrase);
-                    print "EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value less than the lower limit of charcters(<8) - %s should fail" %(step,saePassphrase);
+                    print("\nTEST STEP %d : Check if setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value less than the lower limit of charcters(<8) - %s fails" %(step, saePassphrase));
+                    print("EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value less than the lower limit of charcters(<8) - %s should fail" %(step,saePassphrase));
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :SUCCESS");
 
                         #Verify SET with GET
                         step = step + 1;
@@ -238,52 +238,52 @@ if "SUCCESS" in loadmodulestatus.upper():
                         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                         actualresult, details = getSAEPassphrase(tdkTestObj, expectedresult);
 
-                        print "\nTEST STEP %d : Get the SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase after the SET operation" %step;
-                        print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step;
+                        print("\nTEST STEP %d : Get the SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase after the SET operation" %step);
+                        print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step);
 
                         if expectedresult in actualresult:
                             final_sae = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_sae);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_sae));
+                            print("TEST EXECUTION RESULT :SUCCESS");
 
-                            print "Set SAEPassphrase : ", saePassphrase;
-                            print "Get SAEPassphrase : ", final_sae;
+                            print("Set SAEPassphrase : ", saePassphrase);
+                            print("Get SAEPassphrase : ", final_sae);
 
                             if saePassphrase != final_sae and final_sae == initial_sae:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "SAEPassPhrase remains unchanged from its initial value";
+                                print("SAEPassPhrase remains unchanged from its initial value");
                             else:
                                 if saePassphrase == final_sae :
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SAEPassPhrase SET is reflected in GET even if the length of the Passphrase is less than lower limit";
+                                    print("SAEPassPhrase SET is reflected in GET even if the length of the Passphrase is less than lower limit");
                                 else :
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SAEPassPhrase does not retain the initial value";
+                                    print("SAEPassPhrase does not retain the initial value");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :FAILURE");
 
                     #Set the SAEPassPhrase to a value which has more than 63 characters
-                    print "\n*************Checking for Upper Limit condition*************";
+                    print("\n*************Checking for Upper Limit condition*************");
                     expectedresult = "FAILURE";
                     step = step + 1;
                     saePassphrase = "qwertyuioplkjhgfdsazxcvbnm@#$%^&*()_____MKIOPLSDDFWERG1234567890"
                     tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                     actualresult, details = setSAEPassphrase(tdkTestObj, saePassphrase, expectedresult);
 
-                    print "\nTEST STEP %d : Check if setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value more than the upper limit of charcters(>63) - %s fails" %(step, saePassphrase);
-                    print "EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value more than the upper limit of charcters(>63) - %s should fail" %(step,saePassphrase);
+                    print("\nTEST STEP %d : Check if setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value more than the upper limit of charcters(>63) - %s fails" %(step, saePassphrase));
+                    print("EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.1.Security.SAEPassphrase to a value more than the upper limit of charcters(>63) - %s should fail" %(step,saePassphrase));
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :SUCCESS");
 
                         #Verify SET with GET
                         step = step + 1;
@@ -291,92 +291,92 @@ if "SUCCESS" in loadmodulestatus.upper():
                         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                         actualresult, details = getSAEPassphrase(tdkTestObj, expectedresult);
 
-                        print "\nTEST STEP %d : Get the SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase after the SET operation" %step;
-                        print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step;
+                        print("\nTEST STEP %d : Get the SAEPassphrase using Device.WiFi.AccessPoint.1.Security.SAEPassphrase after the SET operation" %step);
+                        print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.SAEPassphrase" %step);
 
                         if expectedresult in actualresult:
                             final_sae = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_sae);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_sae));
+                            print("TEST EXECUTION RESULT :SUCCESS");
 
-                            print "Set SAEPassphrase : ", saePassphrase;
-                            print "Get SAEPassphrase : ", final_sae;
+                            print("Set SAEPassphrase : ", saePassphrase);
+                            print("Get SAEPassphrase : ", final_sae);
 
                             if saePassphrase != final_sae and final_sae == initial_sae:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "SAEPassPhrase remains unchanged from its initial value";
+                                print("SAEPassPhrase remains unchanged from its initial value");
                             else:
                                 if saePassphrase == final_sae :
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SAEPassPhrase SET is reflected in GET even if the length of the Passphrase is more than upper limit";
+                                    print("SAEPassPhrase SET is reflected in GET even if the length of the Passphrase is more than upper limit");
                                 else :
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SAEPassPhrase does not retain the initial value";
+                                    print("SAEPassPhrase does not retain the initial value");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to set the security mode to WPA3-Personal-Transition";
+                    print("Unable to set the security mode to WPA3-Personal-Transition");
 
                 #Revert operation
                 if final_sae != initial_sae:
-                    print "\nReverting to initial SAEPassPhrase..."
+                    print("\nReverting to initial SAEPassPhrase...")
                     step = step + 1;
                     tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                     expectedresult = "SUCCESS";
                     actualresult, details = setSAEPassphrase(tdkTestObj, initial_sae, expectedresult);
 
-                    print "TEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.SAEPassphrase to %s" %(step, initial_sae);
-                    print "EXPECTED RESULT %d : Should successfully revert Device.WiFi.AccessPoint.1.Security.SAEPassphrase to %s" %(step, initial_sae);
+                    print("TEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.SAEPassphrase to %s" %(step, initial_sae));
+                    print("EXPECTED RESULT %d : Should successfully revert Device.WiFi.AccessPoint.1.Security.SAEPassphrase to %s" %(step, initial_sae));
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
-                    print "\nSAEPassPhrase revert operation not required...";
+                    print("\nSAEPassPhrase revert operation not required...");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT :FAILURE");
 
             #Revert the pre-requisites set
             if revert_flag == 1:
                 step = step + 1;
                 status = RevertWPA3Pre_requisite(obj, initial_value);
-                print "\nTEST STEP %d : Revert the pre-requisite to initial value" %step;
-                print "EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+                print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
+                print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
                 if status == 1:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Revert operation was success" %step;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d : Revert operation was success" %step);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Revert operation failed" %step;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Revert operation failed" %step);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "\nReverting pre-requisites not required";
+                print("\nReverting pre-requisites not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Pre-Requisite is not set successfully";
+            print("Pre-Requisite is not set successfully");
 
         #Revert operation of security mode
         if mode != initial_mode:
-            print "\nReverting to initial Security Mode..."
+            print("\nReverting to initial Security Mode...")
             step = step + 1;
             tdkTestObj = obj.createTestStep("WIFIAgent_Set");
             expectedresult = "SUCCESS";
@@ -387,26 +387,26 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode);
-            print "EXPECTED RESULT %d : Reverting to initial security mode should be success" %step;
+            print("\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode));
+            print("EXPECTED RESULT %d : Reverting to initial security mode should be success" %step);
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : SUCCESS");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : FAILURE");
         else :
-            print "\nReverting Security Mode not required..."
+            print("\nReverting Security Mode not required...")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -101,10 +101,10 @@ def getParam(wifiobj, paramName):
 
     if expectedresult in actualresult and details != "":
         value = details.split("VALUE:")[1].split(" ")[0].strip();
-        print "%s : %s" %(paramName, value);
+        print("%s : %s" %(paramName, value));
         tdkTestObj.setResultStatus("SUCCESS");
     else:
-        print "%s is not retrieved successfully" %paramName;
+        print("%s is not retrieved successfully" %paramName);
         tdkTestObj.setResultStatus("FAILURE");
     return actualresult, value;
 
@@ -115,19 +115,19 @@ def getPublicWiFiConfigValues(sysobj):
     cmd2 = "sh %s/tdk_utility.sh parseConfigFile PRIMARYREMOTEENDPOINT" %TDK_PATH;
     cmd3 = "sh %s/tdk_utility.sh parseConfigFile SECONDARYREMOTEENDPOINT" %TDK_PATH;
 
-    print cmd1;
+    print(cmd1);
     tdkTestObj_Sys_ExeCmd.addParameter("command", cmd1);
     tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
     actualresult1 = tdkTestObj_Sys_ExeCmd.getResult();
     DSCPMarkPolicy = tdkTestObj_Sys_ExeCmd.getResultDetails().replace("\\n", "");
 
-    print cmd2;
+    print(cmd2);
     tdkTestObj_Sys_ExeCmd.addParameter("command", cmd2);
     tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
     actualresult2 = tdkTestObj_Sys_ExeCmd.getResult();
     PrimaryRemoteEndpoint = tdkTestObj_Sys_ExeCmd.getResultDetails().replace("\\n", "");
 
-    print cmd3;
+    print(cmd3);
     tdkTestObj_Sys_ExeCmd.addParameter("command", cmd3);
     tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
     actualresult3 = tdkTestObj_Sys_ExeCmd.getResult();
@@ -163,7 +163,7 @@ sysobj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckSecurityModeEnabled_WithOpen
 #Get the result of connection with test component and DUT
 wifiloadmodulestatus=wifiobj.getLoadModuleResult();
 sysloadmodulestatus=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus) ;
 
 if "SUCCESS" in wifiloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -181,15 +181,15 @@ if "SUCCESS" in wifiloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Initiate a factory reset";
-    print "EXPECTED RESULT 1: Factory reset should be initiated successfully";
+    print("\nTEST STEP 1: Initiate a factory reset");
+    print("EXPECTED RESULT 1: Factory reset should be initiated successfully");
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Factory reset is initiated successfully";
+        print("ACTUAL RESULT 1: Factory reset is initiated successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #Restore the device state saved before reboot
         wifiobj.restorePreviousStateAfterReboot();
@@ -198,36 +198,36 @@ if "SUCCESS" in wifiloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
 
         #Get the security mode enabled for Open Hotspot vAPs 5, 6
         paramList = ["Device.WiFi.AccessPoint.5.Security.ModeEnabled", "Device.WiFi.AccessPoint.6.Security.ModeEnabled"];
-        print "\nTEST STEP 2 : Get the default values of Security Mode Enabled for the Open Hotspot vAPs and check if they are \"None\"";
-        print "EXPECTED RESULT 2 : The default values of Security Mode Enabled for the Open Hotspot vAPs should be retrieved successfully as \"None\"";
+        print("\nTEST STEP 2 : Get the default values of Security Mode Enabled for the Open Hotspot vAPs and check if they are \"None\"");
+        print("EXPECTED RESULT 2 : The default values of Security Mode Enabled for the Open Hotspot vAPs should be retrieved successfully as \"None\"");
         actualresult1, modeenabled_5 = getParam(wifiobj, paramList[0]);
         actualresult2, modeenabled_6 = getParam(wifiobj, paramList[1]);
 
-        if actualresult1 in expectedresult and 	actualresult2 in expectedresult:
+        if actualresult1 in expectedresult and  actualresult2 in expectedresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: The default values are retrived successfully";
+            print("ACTUAL RESULT 2: The default values are retrived successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             #Check if the default value is "None"
             if modeenabled_5 == "None" and modeenabled_6 == "None":
-                print "The initial security modes are open by default";
+                print("The initial security modes are open by default");
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Enable the open xfinity SSID
-                print "\nTEST STEP 3 : Get the default values of Open Xfinity WiFi";
-                print "TEST STEP 3 : Should get the default values of Open Xfinity WiFi";
+                print("\nTEST STEP 3 : Get the default values of Open Xfinity WiFi");
+                print("TEST STEP 3 : Should get the default values of Open Xfinity WiFi");
                 tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(wifiobj);
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3 : The default values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", orgValue;
-                    print "[TEST EXECUTION RESULT]: SUCCESS";
+                    print("ACTUAL RESULT 3 : The default values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", orgValue);
+                    print("[TEST EXECUTION RESULT]: SUCCESS");
 
                     #Set values to enable Open Xfinity WiFi
-                    print "\nTEST STEP 4 : Enable the Open Xfinity WiFi";
-                    print "EXPECTED RESULT 4 : Should enable the Open Xfinity WiFi successfully";
+                    print("\nTEST STEP 4 : Enable the Open Xfinity WiFi");
+                    print("EXPECTED RESULT 4 : Should enable the Open Xfinity WiFi successfully");
                     configValues, tdkTestObj ,actualresult = getPublicWiFiConfigValues(sysobj);
 
                     if expectedresult in actualresult :
@@ -236,102 +236,102 @@ if "SUCCESS" in wifiloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
 
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 4: Details : %s" %details;
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("ACTUAL RESULT 4: Details : %s" %details);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Cross check if values are set successfully
-                            print "\nTEST STEP 5 : Get the current values of Open Xfinity WiFi";
-                            print "TEST STEP 5 : Should get the current values of Open Xfinity WiFi";
+                            print("\nTEST STEP 5 : Get the current values of Open Xfinity WiFi");
+                            print("TEST STEP 5 : Should get the current values of Open Xfinity WiFi");
                             tdkTestObj,actualresult,currValue = getPublicWiFiParamValues(wifiobj);
 
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 5 : The current values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", currValue;
-                                print "[TEST EXECUTION RESULT]: SUCCESS";
+                                print("ACTUAL RESULT 5 : The current values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", currValue);
+                                print("[TEST EXECUTION RESULT]: SUCCESS");
 
                                 if currValue[0] == setvalues[0] and currValue[1] == setvalues[1] and currValue[2] == setvalues[2] and currValue[3] == setvalues[3] and currValue[4] == setvalues[4]:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "GET values match with SET; Open Xfinity WiFi is enabled successfully";
+                                    print("GET values match with SET; Open Xfinity WiFi is enabled successfully");
 
                                     #Check if the security mode remains as open and does not change to secured modes
-                                    print "\nTEST STEP 6 : Get the current values of Security Mode Enabled for the Open Hotspot vAPs and check if they are \"None\"";
-                                    print "EXPECTED RESULT 6 : The current values of Security Mode Enabled for the Open Hotspot vAPs should be retrieved successfully as \"None\"";
+                                    print("\nTEST STEP 6 : Get the current values of Security Mode Enabled for the Open Hotspot vAPs and check if they are \"None\"");
+                                    print("EXPECTED RESULT 6 : The current values of Security Mode Enabled for the Open Hotspot vAPs should be retrieved successfully as \"None\"");
                                     actualresult1, modeenabled_5_curr = getParam(wifiobj, paramList[0]);
                                     actualresult2, modeenabled_6_curr = getParam(wifiobj, paramList[1]);
 
-                                    if actualresult1 in expectedresult and 	actualresult2 in expectedresult:
+                                    if actualresult1 in expectedresult and      actualresult2 in expectedresult:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT 6: The default values are retrived successfully";
+                                        print("ACTUAL RESULT 6: The default values are retrived successfully");
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                                        print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                         #Check if the default value is "None"
                                         if modeenabled_5_curr == "None" and modeenabled_6_curr == "None":
-                                            print "The current security modes are open after enabling the Open Xfinity WiFi";
+                                            print("The current security modes are open after enabling the Open Xfinity WiFi");
                                             tdkTestObj.setResultStatus("SUCCESS");
                                         else:
-                                            print "The current security modes are NOT open after enabling the Open Xfinity WiFi";
+                                            print("The current security modes are NOT open after enabling the Open Xfinity WiFi");
                                             tdkTestObj.setResultStatus("FAILURE");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT 6: The default values are NOT retrived successfully";
+                                        print("ACTUAL RESULT 6: The default values are NOT retrived successfully");
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE"
+                                        print("[TEST EXECUTION RESULT] : FAILURE")
 
                                     #Revert the Open Xfinity WiFi enable
-                                    print "\nTEST STEP 7 : Revert the Open Xfinity WiFi to initial state";
-                                    print "EXPECTED RESULT 7 : Should revert the Open Xfinity WiFi to initial state successfully";
+                                    print("\nTEST STEP 7 : Revert the Open Xfinity WiFi to initial state");
+                                    print("EXPECTED RESULT 7 : Should revert the Open Xfinity WiFi to initial state successfully");
                                     tdkTestObj, actualresult, details = setPublicWiFiParamValues(wifiobj,orgValue);
 
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT 7: Details : %s" %details;
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("ACTUAL RESULT 7: Details : %s" %details);
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT 7: Details : %s" %details;
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("ACTUAL RESULT 7: Details : %s" %details);
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "GET values does NOT match with SET; Open Xfinity WiFi is NOT enabled successfully";
+                                    print("GET values does NOT match with SET; Open Xfinity WiFi is NOT enabled successfully");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 5 : The current values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", currValue;
-                                print "[TEST EXECUTION RESULT]: FAILURE";
+                                print("ACTUAL RESULT 5 : The current values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", currValue);
+                                print("[TEST EXECUTION RESULT]: FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 4: Details : %s" %details;
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT 4: Details : %s" %details);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: Open Xfinity WiFi Configuration values are not retrieved successfully";
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("ACTUAL RESULT 4: Open Xfinity WiFi Configuration values are not retrieved successfully");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3 : The default values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", orgValue;
-                    print "[TEST EXECUTION RESULT]: FAILURE";
+                    print("ACTUAL RESULT 3 : The default values for DSCPMarkPolicy, PrimaryRemoteEndpoint, SecondaryRemoteEndpoint, SSID 5 Enable, SSID 6 Enable and Xfinity WiFi Enable are ", orgValue);
+                    print("[TEST EXECUTION RESULT]: FAILURE");
             else:
-                print "The initial security modes are NOT open by default";
+                print("The initial security modes are NOT open by default");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: The default values are NOT retrived successfully";
+            print("ACTUAL RESULT 2: The default values are NOT retrived successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Factory reset is not initiated successfully";
+        print("ACTUAL RESULT 1: Factory reset is not initiated successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     wifiobj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     wifiobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

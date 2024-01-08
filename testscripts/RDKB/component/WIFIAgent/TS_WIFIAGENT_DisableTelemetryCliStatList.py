@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_DisableWiFiTelemetryClistatlist');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,15 +96,15 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current telemetry Clistat List";
-        print "EXPECTED RESULT 1: Should get the current  telemetry Clistat List";
-	print "ACTUAL RESULT 1: Current  telemetry Clistat List is  %s" %details
+        print("TEST STEP 1: Get the current telemetry Clistat List");
+        print("EXPECTED RESULT 1: Should get the current  telemetry Clistat List");
+        print("ACTUAL RESULT 1: Current  telemetry Clistat List is  %s" %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.CliStatList")
-	tdkTestObj.addParameter("paramValue","")
-	tdkTestObj.addParameter("paramType","string")
+        tdkTestObj.addParameter("paramValue","")
+        tdkTestObj.addParameter("paramType","string")
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails()
@@ -112,12 +112,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set Telemetry Clistat List";
-            print "EXPECTED RESULT 2: Should set new Telemetry Clistat List";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set Telemetry Clistat List");
+            print("EXPECTED RESULT 2: Should set new Telemetry Clistat List");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    #check if Clistat List is set
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            #check if Clistat List is set
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.CliStatList")
             tdkTestObj.executeTestCase(expectedresult);
@@ -125,17 +125,17 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             cliStatValue = details.split("VALUE:")[1].split(' ')[0];
 
-	    if expectedresult in actualresult  and cliStatValue == "":
+            if expectedresult in actualresult  and cliStatValue == "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if  telemetry Clistat List is set to new value"
-                print "EXPECTED RESULT 3:  Telemetry Clistat List should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if  telemetry Clistat List is set to new value")
+                print("EXPECTED RESULT 3:  Telemetry Clistat List should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.CliStatList")
-	        tdkTestObj.addParameter("paramValue",orgCliStatList);
-	        tdkTestObj.addParameter("paramType","string");
+                tdkTestObj.addParameter("paramValue",orgCliStatList);
+                tdkTestObj.addParameter("paramType","string");
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
@@ -143,42 +143,42 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Revert the Telemetry Clistat List";
-                    print "EXPECTED RESULT 4: Should set the original Telemetry Clistat List";
-                    print "ACTUAL RESULT 4: Details:  %s " %details;
+                    print("TEST STEP 4: Revert the Telemetry Clistat List");
+                    print("EXPECTED RESULT 4: Should set the original Telemetry Clistat List");
+                    print("ACTUAL RESULT 4: Details:  %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Revert the Telemetry Clistat List";
-                    print "EXPECTED RESULT 4: Should set the original Telemetry Clistat List";
-                    print "ACTUAL RESULT 4: Details:  %s " %details;
+                    print("TEST STEP 4: Revert the Telemetry Clistat List");
+                    print("EXPECTED RESULT 4: Should set the original Telemetry Clistat List");
+                    print("ACTUAL RESULT 4: Details:  %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if  telemetry Clistat List is set to new value"
-                print "EXPECTED RESULT 3:  Telemetry Clistat List should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if  telemetry Clistat List is set to new value")
+                print("EXPECTED RESULT 3:  Telemetry Clistat List should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set Telemetry Clistat List";
-            print "EXPECTED RESULT 2: Should set new Telemetry Clistat List";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set Telemetry Clistat List");
+            print("EXPECTED RESULT 2: Should set new Telemetry Clistat List");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current  telemetry Clistat List";
-        print "EXPECTED RESULT 1: Should get the current  telemetry Clistat List";
-        print "ACTUAL RESULT 1: Details is %s" %details;
+        print("TEST STEP 1: Get the current  telemetry Clistat List");
+        print("EXPECTED RESULT 1: Should get the current  telemetry Clistat List");
+        print("ACTUAL RESULT 1: Details is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

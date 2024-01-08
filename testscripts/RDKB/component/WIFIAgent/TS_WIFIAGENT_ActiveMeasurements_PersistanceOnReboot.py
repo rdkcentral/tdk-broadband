@@ -109,52 +109,52 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     expectedresult = "SUCCESS";
     tdkTestObj = obj.createTestStep('TADstub_Get');
     paramList=["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable" ,"Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.PacketSize", "Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.NumberOfSamples", "Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.SampleDuration"]
-    print "TEST STEP 1 : Get the ActiveMeasurement values";
-    print "EXPECTED RESULT 1: Should get the ActiveMeasurement values";
+    print("TEST STEP 1 : Get the ActiveMeasurement values");
+    print("EXPECTED RESULT 1: Should get the ActiveMeasurement values");
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-    print "The initial ActiveMeasurement parameters values are %s" %paramList;
+    print("The initial ActiveMeasurement parameters values are %s" %paramList);
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "" and orgValue[3] != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1:  Enable: %s, PacketSize: %s, NumberOfSamples : %s and SampleDuration : %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]);
+        print("ACTUAL RESULT 1:  Enable: %s, PacketSize: %s, NumberOfSamples : %s and SampleDuration : %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         typeList = ["bool","unsignedint","unsignedint","unsignedint"]
-        print "TEST STEP 2: Set the ActiveMeasurement parameters to given value";
-        print "EXPECTED RESULT 2: Should set ActiveMeasurement parameters to given value";
+        print("TEST STEP 2: Set the ActiveMeasurement parameters to given value");
+        print("EXPECTED RESULT 2: Should set ActiveMeasurement parameters to given value");
         for param, value, dtype in zip(paramList, set_ActiveMeasurementValues, typeList):
-             tdkTestObj = obj1.createTestStep("WIFIAgent_Set_Get");
-             tdkTestObj.addParameter("paramName", param);
-             tdkTestObj.addParameter("paramValue", value);
-             tdkTestObj.addParameter("paramType", dtype);
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails();
-             if expectedresult in actualresult and details != "":
-                 flag = 1
-                 print "Value %s set successfully to %s" %(value, param);
-             else:
-                 print "Value %s set failed for %s" %(value, param);
+            tdkTestObj = obj1.createTestStep("WIFIAgent_Set_Get");
+            tdkTestObj.addParameter("paramName", param);
+            tdkTestObj.addParameter("paramValue", value);
+            tdkTestObj.addParameter("paramType", dtype);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and details != "":
+                flag = 1
+                print("Value %s set successfully to %s" %(value, param));
+            else:
+                print("Value %s set failed for %s" %(value, param));
         if flag == 1:
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST EXECUTION RESULT :SUCCESS";
-            print "Device is going for reboot and so waiting for the device to come up";
+            print("TEST EXECUTION RESULT :SUCCESS");
+            print("Device is going for reboot and so waiting for the device to come up");
             obj1.initiateReboot();
             #waiting for the device to come up after reboot
             sleep(300);
             tdkTestObj = obj.createTestStep('TADstub_Get');
             tdkTestObj,status,PostrebootValue = getMultipleParameterValues(obj,paramList)
-            print "The ActiveMeasurementValues after reboot are %s" %PostrebootValue;
-            print "TEST STEP 3: Check if values persistent after reboot";
-            print "EXPECTED RESULT 3: The values should be persistant after reboot";
+            print("The ActiveMeasurementValues after reboot are %s" %PostrebootValue);
+            print("TEST STEP 3: Check if values persistent after reboot");
+            print("EXPECTED RESULT 3: The values should be persistant after reboot");
             if expectedresult in status and PostrebootValue[0] != "" and PostrebootValue[1] != "" and PostrebootValue[2] != "" and PostrebootValue[3] != "" and PostrebootValue == set_ActiveMeasurementValues:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: The ActiveMeasurements values persist after reboot";
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 3: The ActiveMeasurements values persist after reboot");
+                print("TEST EXECUTION RESULT :SUCCESS");
 
-                print "TEST STEP 4: Revert ActiveMeasurement parameters to original values";
-                print "EXPECTED RESULT 4: Should revert ActiveMeasurement parameters to original values";
+                print("TEST STEP 4: Revert ActiveMeasurement parameters to original values");
+                print("EXPECTED RESULT 4: Should revert ActiveMeasurement parameters to original values");
                 for param, value, dtype in zip(paramList, org_Value, typeList):
                     tdkTestObj = obj1.createTestStep("WIFIAgent_Set_Get");
                     tdkTestObj.addParameter("paramName", param);
@@ -165,36 +165,36 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
                     details = tdkTestObj.getResultDetails();
                     if expectedresult in actualresult:
                         flag = 0;
-                        print "Value %s set successfully to %s" %(value, param);
+                        print("Value %s set successfully to %s" %(value, param));
                     else:
                         flag = 1;
-                        print "Value %s set failed for %s" %(value, param);
+                        print("Value %s set failed for %s" %(value, param));
                 if flag == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("ACTUAL RESULT 4: %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3:The ActiveMeasurements values do not persist after reboot";
+                print("ACTUAL RESULT 3:The ActiveMeasurements values do not persist after reboot");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("TEST EXECUTION RESULT :FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1:Failed to get ActiveMeasurements values ";
+        print("ACTUAL RESULT 1:Failed to get ActiveMeasurements values ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     obj1.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

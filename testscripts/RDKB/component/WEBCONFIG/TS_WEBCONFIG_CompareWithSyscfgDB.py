@@ -112,33 +112,33 @@ def Validate(dbVariables,parameters):
         actualresult = tdkTestObj.getResult();
         details  = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-            print "%s value is %s" %(item,details);
+            print("%s value is %s" %(item,details));
             tdkTestObj = sysobj.createTestStep("ExecuteCmd");
             cmd = "syscfg get %s" %dbVariables[index];
-            print cmd;
+            print(cmd);
             tdkTestObj.addParameter("command", cmd);
             expectedresult="SUCCESS"
             tdkTestObj.executeTestCase(expectedresult);
             actualresult=tdkTestObj.getResult();
             dbValue = tdkTestObj.getResultDetails().replace("\\n", "");
             if expectedresult in actualresult :
-                print "****Checking if the value in syscfg.db and Tr181 are equal****";
+                print("****Checking if the value in syscfg.db and Tr181 are equal****");
                 if dbValue == details:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "value in syscfg.db is %s and via tr181 is %s" %(dbValue,details);
-                    print "TEST EXECUTION RESULT :SUCCESS"
-                    print "\n";
+                    print("value in syscfg.db is %s and via tr181 is %s" %(dbValue,details));
+                    print("TEST EXECUTION RESULT :SUCCESS")
+                    print("\n");
                 else:
                     statusflag =1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "value in syscfg.db is %s and via tr181 is %s" %(dbValue,details);
-                    print "TEST EXECUTION RESULT :FAILURE";
-                    print "\n";
+                    print("value in syscfg.db is %s and via tr181 is %s" %(dbValue,details));
+                    print("TEST EXECUTION RESULT :FAILURE");
+                    print("\n");
         else:
             statusflag =1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "%s query failed" %item;
+            print("%s query failed" %item);
         index=index+1;
     return statusflag;
 
@@ -154,45 +154,45 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     noOfEntries  = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and  int(noOfEntries) > 0:
-         noOfEntries = int(noOfEntries);
-         tdkTestObj.setResultStatus("SUCCESS");
-         print "TEST STEP 1: Get the Config file number of entries";
-         print "EXPECTED RESULT 1: Should get the Config file number of entries";
-         print "ACTUAL RESULT 1: Config file number of entries is : %s" %noOfEntries;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : SUCCESS";
+        noOfEntries = int(noOfEntries);
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Config file number of entries");
+        print("EXPECTED RESULT 1: Should get the Config file number of entries");
+        print("ACTUAL RESULT 1: Config file number of entries is : %s" %noOfEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-         statusflag = 0;
-         dbVariables = ["WebConfigRfcEnabled","ConfigFileNumberOfEntries"];
-         parameters = ["Device.X_RDK_WebConfig.RfcEnable","Device.X_RDK_WebConfig.ConfigFileNumberOfEntries"];
-         #Calling function to Validate
-         statusflag = Validate(dbVariables,parameters);
-         #In case there are more than one instance number
-         while noOfEntries > 0:
-               configfile_Url = "configfile_"+str(noOfEntries)+"_Url";
-               configfile_SyncCheckOk = "configfile_"+str(noOfEntries)+"_SyncCheckOk";
-               tr181configfile_Url = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".URL";
-               tr181configfile_SyncCheckOk = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".SyncCheckOK"
+        statusflag = 0;
+        dbVariables = ["WebConfigRfcEnabled","ConfigFileNumberOfEntries"];
+        parameters = ["Device.X_RDK_WebConfig.RfcEnable","Device.X_RDK_WebConfig.ConfigFileNumberOfEntries"];
+        #Calling function to Validate
+        statusflag = Validate(dbVariables,parameters);
+        #In case there are more than one instance number
+        while noOfEntries > 0:
+            configfile_Url = "configfile_"+str(noOfEntries)+"_Url";
+            configfile_SyncCheckOk = "configfile_"+str(noOfEntries)+"_SyncCheckOk";
+            tr181configfile_Url = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".URL";
+            tr181configfile_SyncCheckOk = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".SyncCheckOK"
 
-               dbVariables = [configfile_Url,configfile_SyncCheckOk];
-               parameters = [tr181configfile_Url,tr181configfile_SyncCheckOk];
-               statusflag = Validate(dbVariables,parameters);
-               noOfEntries = noOfEntries -1 ;
+            dbVariables = [configfile_Url,configfile_SyncCheckOk];
+            parameters = [tr181configfile_Url,tr181configfile_SyncCheckOk];
+            statusflag = Validate(dbVariables,parameters);
+            noOfEntries = noOfEntries -1 ;
     else:
-         noOfEntries = int(noOfEntries);
-         tdkTestObj.setResultStatus("FAILURE");
-         print "TEST STEP 1: Get the Config file number of entries";
-         print "EXPECTED RESULT 1: Should get the Config file number of entries";
-         print "ACTUAL RESULT 1: Config file number of entries is : %s" %noOfEntries;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : FAILURE";
+        noOfEntries = int(noOfEntries);
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the Config file number of entries");
+        print("EXPECTED RESULT 1: Should get the Config file number of entries");
+        print("ACTUAL RESULT 1: Config file number of entries is : %s" %noOfEntries);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     # setting the script status as FAILURE in case any condition in the loop was failed
     if statusflag == 1:
-       tdkTestObj.setResultStatus("FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

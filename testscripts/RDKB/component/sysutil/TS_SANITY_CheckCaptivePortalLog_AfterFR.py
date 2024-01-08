@@ -111,28 +111,28 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "\nTEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("\nTEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         pamobj.restorePreviousStateAfterReboot();
 
         #After the device comes up check if the Captive Portal Mode is enabled
         paramList = ["Device.DeviceInfo.X_RDKCENTRAL-COM_CaptivePortalEnable", "Device.DeviceInfo.X_RDKCENTRAL-COM_ConfigureWiFi", "Device.DeviceInfo.X_RDKCENTRAL-COM_WiFiNeedsPersonalization"];
         tdkTestObj,actualresult,orgValue = getMultipleParameterValues(tadobj,paramList);
-        print "\nTEST STEP 2: Check if the Captive Portal Mode is enabled";
-        print "EXPECTED RESULT 2: The Captive Portal Mode should be enabled; Get the Values of the parameters : ", paramList;
+        print("\nTEST STEP 2: Check if the Captive Portal Mode is enabled");
+        print("EXPECTED RESULT 2: The Captive Portal Mode should be enabled; Get the Values of the parameters : ", paramList);
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : The values of the parameters are : Device.DeviceInfo.X_RDKCENTRAL-COM_CaptivePortalEnable - %s, Device.DeviceInfo.X_RDKCENTRAL-COM_ConfigureWiFi - %s, Device.DeviceInfo.X_RDKCENTRAL-COM_WiFiNeedsPersonalization - %s" %(orgValue[0], orgValue[1], orgValue[2]);
+            print("ACTUAL RESULT 2 : The values of the parameters are : Device.DeviceInfo.X_RDKCENTRAL-COM_CaptivePortalEnable - %s, Device.DeviceInfo.X_RDKCENTRAL-COM_ConfigureWiFi - %s, Device.DeviceInfo.X_RDKCENTRAL-COM_WiFiNeedsPersonalization - %s" %(orgValue[0], orgValue[1], orgValue[2]));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if orgValue[0] == "true" and orgValue[1] == "true" and orgValue[2] == "true":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "\nThe Captive Portal Mode is Enabled";
+                print("\nThe Captive Portal Mode is Enabled");
 
                 #Check if the required logs are present in the Consolelog.txt.0
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -141,42 +141,41 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                print "\nTEST STEP 3: Check if the log line \"Enter_WiFi_Personalization_captive_mode\" is present in Consolelog.txt.0";
-                print "EXPECTED RESULT 3: The required log line should be present in Consolelog.txt.0";
+                print("\nTEST STEP 3: Check if the log line \"Enter_WiFi_Personalization_captive_mode\" is present in Consolelog.txt.0");
+                print("EXPECTED RESULT 3: The required log line should be present in Consolelog.txt.0");
 
                 if expectedresult in actualresult and details != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Required log line is present, Details : %s" %details;
+                    print("ACTUAL RESULT 3: Required log line is present, Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Required log line is not present, Details : %s" %details;
+                    print("ACTUAL RESULT 3: Required log line is not present, Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "\nThe Captive Portal Mode is not Enabled";
+                print("\nThe Captive Portal Mode is not Enabled");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Get operation failed";
+            print("ACTUAL RESULT 2: Get operation failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset"
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset")
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
     tadobj.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
     tadobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

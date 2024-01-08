@@ -109,7 +109,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHzOffChannelNchannelValidation_Wit
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -118,127 +118,127 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Set the pre-requisites
     step = 1;
-    print "\n*************Set Pre-requisite Start*****************";
+    print("\n*************Set Pre-requisite Start*****************");
     tdkTestObj, pre_req_set, revert_flag, step = WiFiOffChannelScanEnable_PreReq(obj, step);
 
     if pre_req_set == 0:
-        print "\n*************Set Pre-requisite Complete*****************";
+        print("\n*************Set Pre-requisite Complete*****************");
         #Get the initial DFS Enable status
         step = step + 1;
         param = "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"
 
-        print "\nTEST STEP %d: Get the initial DFS enable status using Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable successfully" %step;
+        print("\nTEST STEP %d: Get the initial DFS enable status using Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable successfully" %step);
         actualresult, details = getParameter(obj, param, expectedresult);
 
         if expectedresult in actualresult and details != "":
             dfs_initial = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Initial DFS Enable : %s" %(step, dfs_initial);
+            print("ACTUAL RESULT %d: Initial DFS Enable : %s" %(step, dfs_initial));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the DFS enabled is "true", else set to "true"
             proceed_flag = 0;
             if dfs_initial != "true":
                 step = step + 1;
                 set_val = "true"
-                print "\nTEST STEP %d: Set Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable to %s" %(step, set_val);
-                print "EXPECTED RESULT %d: Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable should be enabled successfully" %step;
+                print("\nTEST STEP %d: Set Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable to %s" %(step, set_val));
+                print("EXPECTED RESULT %d: Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable should be enabled successfully" %step);
                 actualresult, details = setParameter(obj, param, set_val, "boolean", expectedresult);
 
                 if expectedresult in actualresult and details != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: DFS Enable set is success; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: DFS Enable set is success; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     proceed_flag = 1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: DFS Enable set failed; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: DFS Enable set failed; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable is already disabled, set operation not required";
+                print("Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable is already disabled, set operation not required");
 
             #Check the N channel value if DFS is enabled
             if proceed_flag == 0:
                 step = step + 1;
                 param = "Device.WiFi.Radio.2.X_RDK_OffChannelNchannel"
 
-                print "\nTEST STEP %d: Get the number of channels that are scanned using Device.WiFi.Radio.2.X_RDK_OffChannelNchannel" %step;
-                print "EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelNchannel successfully" %step;
+                print("\nTEST STEP %d: Get the number of channels that are scanned using Device.WiFi.Radio.2.X_RDK_OffChannelNchannel" %step);
+                print("EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelNchannel successfully" %step);
                 actualresult, details = getParameter(obj, param, expectedresult);
 
                 if expectedresult in actualresult and details != "":
                     n_channel = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: N channel value : %s" %(step, n_channel);
+                    print("ACTUAL RESULT %d: N channel value : %s" %(step, n_channel));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the value is 24 when DFS is in enabled state
                     step = step + 1;
-                    print "\nTEST STEP %d: Check if the number of channels that are scanned using Device.WiFi.Radio.2.X_RDK_OffChannelNchannel returns 24 with DFS disabled" %step;
-                    print "EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelNchannel as 24 with DFS in enabled state" %step;
+                    print("\nTEST STEP %d: Check if the number of channels that are scanned using Device.WiFi.Radio.2.X_RDK_OffChannelNchannel returns 24 with DFS disabled" %step);
+                    print("EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelNchannel as 24 with DFS in enabled state" %step);
 
                     if n_channel.isdigit() and int(n_channel) == 24:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: The N channel value is 24 as expected" %(step);
+                        print("ACTUAL RESULT %d: The N channel value is 24 as expected" %(step));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: The N channel value is NOT 24 as expected" %(step);
+                        print("ACTUAL RESULT %d: The N channel value is NOT 24 as expected" %(step));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: N channel value : %s" %(step, details);
+                    print("ACTUAL RESULT %d: N channel value : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert DFS Enable state
                 if dfs_initial != "true":
                     step = step + 1;
                     set_val = "false"
                     paramName = "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable";
-                    print "\nTEST STEP %d: Revert Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable to %s" %(step, set_val);
-                    print "EXPECTED RESULT %d: Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable should be reverted successfully" %step;
+                    print("\nTEST STEP %d: Revert Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable to %s" %(step, set_val));
+                    print("EXPECTED RESULT %d: Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable should be reverted successfully" %step);
                     actualresult, details = setParameter(obj, paramName, set_val, "boolean", expectedresult);
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: DFS Enable revert is success; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: DFS Enable revert is success; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: DFS Enable set failed; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: DFS Enable set failed; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable revert operation not required";
+                    print("Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable revert operation not required");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Unable to enable Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable, cannot proceed..."
+                print("Unable to enable Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable, cannot proceed...")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Initial DFS Enable : %s" %(step, details);
+            print("ACTUAL RESULT %d: Initial DFS Enable : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Revert the pre-requisites
         step = step + 1;
-        print "\n*************Revert Pre-requisite Start*****************";
+        print("\n*************Revert Pre-requisite Start*****************");
         WiFiOffChannelScanEnable_Revert(obj, revert_flag, step);
-        print "\n*************Revert Pre-requisite Complete*****************";
+        print("\n*************Revert Pre-requisite Complete*****************");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Unable to enable the pre-requisites, cannot proceed..";
+        print("Unable to enable the pre-requisites, cannot proceed..");
 
     obj.unloadModule("wifiagent")
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

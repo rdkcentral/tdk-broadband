@@ -97,16 +97,16 @@ def getHashPassword(cmd):
 def checkHashPassword(hash_password_3, details):
     if hash_password_3 == details:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP :Check hash_password_3 from syscfg.db  in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same";
-        print "EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value should be same";
-        print "ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same ";
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("TEST STEP :Check hash_password_3 from syscfg.db  in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same");
+        print("EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value should be same");
+        print("ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same ");
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP :Check hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same";
-        print "EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value should be same";
-        print "ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are not same ";
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP :Check hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are same");
+        print("EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value should be same");
+        print("ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password value are not same ");
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
 #Get the result of connection with test component and DUT
 pamloadmodulestatus=pamobj.getLoadModuleResult();
@@ -117,17 +117,17 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     pamobj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult="SUCCESS";
-    print "Invoking function to get hash password"
+    print("Invoking function to get hash password")
     cmd= "cat /tmp/syscfg.db  | grep -i hash_password_3";
     tdkTestObj,hash_password_3_details = getHashPassword(cmd);
 
     if hash_password_3_details != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-        print "EXPECTED RESULT 1: hash_password_3 entry should be present in syscfg.db in /tmp";
-        print "ACTUAL RESULT 1: hash_password_3 entry is present in syscfg.db in /tmp: %s" %(hash_password_3_details);
+        print("TEST STEP 1: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+        print("EXPECTED RESULT 1: hash_password_3 entry should be present in syscfg.db in /tmp");
+        print("ACTUAL RESULT 1: hash_password_3 entry is present in syscfg.db in /tmp: %s" %(hash_password_3_details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         hash_password=(hash_password_3_details.split('='))
         hash_password_3 = hash_password[1]
         tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
@@ -137,29 +137,29 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-        print "Invoking function to check if hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password are same";
+        print("Invoking function to check if hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password are same");
         checkHashPassword(hash_password_3, details);
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if user_password_3 entry is present in syscfg.db in /tmp";
-        print "EXPECTED RESULT 1: user_password_3 entry is present in syscfg.db in /tmp";
-        print "ACTUAL RESULT 1: user_password_3 entry is present in syscfg.db in /tmp";
+        print("TEST STEP 1: Check if user_password_3 entry is present in syscfg.db in /tmp");
+        print("EXPECTED RESULT 1: user_password_3 entry is present in syscfg.db in /tmp");
+        print("ACTUAL RESULT 1: user_password_3 entry is present in syscfg.db in /tmp");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         #Change the admin password
         password = "testPassword"
         tdkutility.changeAdminPassword(pamobj,password);
-        print "Invoking function to get hash password"
+        print("Invoking function to get hash password")
         cmd= "cat /tmp/syscfg.db  | grep -i hash_password_3";
         tdkTestObj,hash_password_3_details = getHashPassword(cmd);
 
         if hash_password_3_details != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-            print "EXPECTED RESULT 4:Default password got changed. hash_password_3 entry should be present in syscfg.db in /tmp";
-            print "ACTUAL RESULT 4: Default password got changed.hash_password_3 entry is present in syscfg.db in /tmp";
+            print("TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+            print("EXPECTED RESULT 4:Default password got changed. hash_password_3 entry should be present in syscfg.db in /tmp");
+            print("ACTUAL RESULT 4: Default password got changed.hash_password_3 entry is present in syscfg.db in /tmp");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             hash_password=(hash_password_3_details.split('='))
             hash_password_3 = hash_password[1]
             tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
@@ -169,15 +169,15 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-            print "Invoking function to check if hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password are same";
+            print("Invoking function to check if hash_password_3 from syscfg.db in /tmp and Device.Users.User.3.X_CISCO_COM_Password are same");
             checkHashPassword(hash_password_3, details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-            print "EXPECTED RESULT 4:Default password got changed. hash_password_3 entry should be present in syscfg.db in /tmp";
-            print "ACTUAL RESULT 4: hash_password_3 entry is not present in syscfg.db in /tmp";
+            print("TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+            print("EXPECTED RESULT 4:Default password got changed. hash_password_3 entry should be present in syscfg.db in /tmp");
+            print("ACTUAL RESULT 4: hash_password_3 entry is not present in syscfg.db in /tmp");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
         #Revert the password to default
         tdkutility.changeAdminPassword(pamobj,password);
@@ -185,7 +185,7 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

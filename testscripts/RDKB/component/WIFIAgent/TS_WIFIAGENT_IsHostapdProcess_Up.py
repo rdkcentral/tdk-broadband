@@ -83,8 +83,8 @@
   </script_tags>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 
 #Test component to be tested
@@ -107,7 +107,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile HOSTAPD_PROCESS" %TDK_PATH;
-    print command;
+    print(command);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
@@ -116,38 +116,38 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     hostapd_process = hostapd_process.replace("\\n", "");
     if "Invalid Argument passed" not in hostapd_process:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the hostapd process names of device";
-        print "EXPECTED RESULT 1: Should get the hostapd process names of device";
-        print "ACTUAL RESULT 1: %s" %hostapd_process;
+        print("TEST STEP 1: Get the hostapd process names of device");
+        print("EXPECTED RESULT 1: Should get the hostapd process names of device");
+        print("ACTUAL RESULT 1: %s" %hostapd_process);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
-	hostapd_process = hostapd_process.split(",");
-	for item in hostapd_process:
-	    tdkTestObj.addParameter("command", "ps -ef | grep %s | grep -v grep" %item);
-	    #Execute the test case in STB
+        hostapd_process = hostapd_process.split(",");
+        for item in hostapd_process:
+            tdkTestObj.addParameter("command", "ps -ef | grep %s | grep -v grep" %item);
+            #Execute the test case in STB
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
 
             if expectedresult in actualresult and details:
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "%s is running" %item
-		print "[TEST EXECUTION RESULT] : SUCCESS"
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "%s is not running" %item
-		print "[TEST EXECUTION RESULT] : FAILURE"
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("%s is running" %item)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("%s is not running" %item)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the hostapd process names of device";
-        print "EXPECTED RESULT 1: Should get the hostapd process names of device";
-        print "ACTUAL RESULT 1: %s" %hostapd_process;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the hostapd process names of device");
+        print("EXPECTED RESULT 1: Should get the hostapd process names of device");
+        print("ACTUAL RESULT 1: %s" %hostapd_process);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("wifiagent");
     sysObj.unloadModule("sysutil");
 else:
-        print "Failed to load module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

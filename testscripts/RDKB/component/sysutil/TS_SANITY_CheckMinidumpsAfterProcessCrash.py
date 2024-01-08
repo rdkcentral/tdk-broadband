@@ -102,7 +102,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     expectedresult="SUCCESS";
     #check whether the process is running or not
     query="sh %s/tdk_platform_utility.sh checkProcess CcspPandMSsp" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     tdkTestObj.executeTestCase("SUCCESS");
@@ -110,10 +110,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
     if expectedresult in actualresult and pid:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:CcspPandMSsp process should be running";
-        print "ACTUAL RESULT 1: PID of CcspPandMSsp %s" %pid;
+        print("TEST STEP 1:CcspPandMSsp process should be running");
+        print("ACTUAL RESULT 1: PID of CcspPandMSsp %s" %pid);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         cmd = "ls /minidumps | grep -i .dmp | wc -l";
         tdkTestObj.addParameter("command",cmd);
@@ -122,10 +122,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         details_beforecrash = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Get number of minidump files created before process crash";
-            print "ACTUAL RESULT 2:Retrieved number of minidump files created before process crash";
+            print("TEST STEP 2:Get number of minidump files created before process crash");
+            print("ACTUAL RESULT 2:Retrieved number of minidump files created before process crash");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "kill -11 %s" %pid;
             tdkTestObj.addParameter("command",cmd);
@@ -134,10 +134,10 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:CcspPandMSsp should be crashed";
-                print "ACTUAL RESULT 3: CcspPandMSsp process is crashed";
+                print("TEST STEP 3:CcspPandMSsp should be crashed");
+                print("ACTUAL RESULT 3: CcspPandMSsp process is crashed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj.createTestStep('ExecuteCmd');
                 cmd = "ls /minidumps | grep -i .dmp | wc -l";
                 tdkTestObj.addParameter("command",cmd);
@@ -151,15 +151,15 @@ if "SUCCESS" in loadmodulestatus.upper():
                 dumpfile = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and int(dumpfiledetails) > int(details_beforecrash):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4:minidump files should be created after process crash";
-                    print "ACTUAL RESULT 4:minidump files are created after process crash:%s" %dumpfile;
+                    print("TEST STEP 4:minidump files should be created after process crash");
+                    print("ACTUAL RESULT 4:minidump files are created after process crash:%s" %dumpfile);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     query="sh %s/tdk_platform_utility.sh checkProcess CcspPandMSsp" %TDK_PATH
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj = obj.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", query)
-                    print "Check for every 10 secs whether the process is up"
+                    print("Check for every 10 secs whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -172,7 +172,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                             retryCount = retryCount + 1;
 
                     if not pid:
-                        print "Retry Again: Check for every 5 mins whether the process is up"
+                        print("Retry Again: Check for every 5 mins whether the process is up")
                         retryCount = 0;
                         while retryCount < MAX_RETRY:
                             tdkTestObj.executeTestCase("SUCCESS");
@@ -186,44 +186,43 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                     if expectedresult in actualresult and pid:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5:CcspPandMSsp process should be running";
-                        print "ACTUAL RESULT 5: PID of CcspPandMSsp %s" %pid;
+                        print("TEST STEP 5:CcspPandMSsp process should be running");
+                        print("ACTUAL RESULT 5: PID of CcspPandMSsp %s" %pid);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5:Check CcspPandMSsp process";
-                        print "ACTUAL RESULT 5:CcspPandMSsp is not running";
+                        print("TEST STEP 5:Check CcspPandMSsp process");
+                        print("ACTUAL RESULT 5:CcspPandMSsp is not running");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:minidump files should be created after process crash";
-                    print "ACTUAL RESULT 4:minidump files are not created after process crash";
+                    print("TEST STEP 4:minidump files should be created after process crash");
+                    print("ACTUAL RESULT 4:minidump files are not created after process crash");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:CcspPandMSsp should be crashed";
-                print "ACTUAL RESULT 3: CcspPandMSsp process is not crashed";
+                print("TEST STEP 3:CcspPandMSsp should be crashed");
+                print("ACTUAL RESULT 3: CcspPandMSsp process is not crashed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Get number of minidump files created before process crash";
-            print "ACTUAL RESULT 2:Retrieved number of minidump files created before process crash";
+            print("TEST STEP 2:Get number of minidump files created before process crash");
+            print("ACTUAL RESULT 2:Retrieved number of minidump files created before process crash");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Check CcspPandMSsp process";
-        print "ACTUAL RESULT 1:CcspPandMSsp is not running";
+        print("TEST STEP 1:Check CcspPandMSsp process");
+        print("ACTUAL RESULT 1:CcspPandMSsp is not running");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
-
+    print("Module loading failed")

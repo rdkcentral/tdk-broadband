@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_GetBridgeStatus');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -110,7 +110,7 @@ if "SUCCESS" in result.upper() :
     if "SUCCESS" in preRequisiteStatus:
 
         bridgeStatus =  {"Disabled", "Enabled", "Error"}
-        print "Expected bridge status : ", bridgeStatus
+        print("Expected bridge status : ", bridgeStatus)
         queryParam = {"name":"Device.Bridging.Bridge.1.Status"}
         queryResponse = webpaQuery(obj, queryParam)
 
@@ -121,20 +121,20 @@ if "SUCCESS" in result.upper() :
             getStatus = parsedResponse[1];
             if getStatus in bridgeStatus:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Device Bridge Status::",getStatus
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("Device Bridge Status::",getStatus)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE, invalid status received"
+                print("[TEST EXECUTION RESULT] : FAILURE, invalid status received")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

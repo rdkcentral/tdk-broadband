@@ -145,8 +145,8 @@ sysObj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckTelemetryMarkerUP_RetransCou
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatus.upper():
     #Set the result status of execution
@@ -164,29 +164,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for wifihealth log file presence under /rdklogs/logs" %step;
-    print "EXPECTED RESULT %d:wifihealth log file should be present under /rdklogs/logs" %step;
+    print("\nTEST STEP %d: Check for wifihealth log file presence under /rdklogs/logs" %step);
+    print("EXPECTED RESULT %d:wifihealth log file should be present under /rdklogs/logs" %step);
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d:wifihealth log file is present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the value of the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable
         step = step + 1;
         paramName = "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable";
         actualresult, details = getParameter(obj, paramName);
 
-        print "\nTEST STEP %d: Get the enable state of the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable" %step;
-        print "EXPECTED RESULT %d: Should get the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable" %step;
+        print("\nTEST STEP %d: Get the enable state of the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable" %step);
+        print("EXPECTED RESULT %d: Should get the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable" %step);
 
         if expectedresult in actualresult and details != "":
             rfc_initial = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Errors Received Enable is : %s" %(step,rfc_initial);
+            print("ACTUAL RESULT %d: Errors Received Enable is : %s" %(step,rfc_initial));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #If RFC not enabled, enable it and validate the set operation
             proceed_flag = 0;
@@ -195,24 +195,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                 step = step + 1;
                 actualresult, details = setParameter(obj, paramName, "true", "boolean");
 
-                print "\nTEST STEP %d: Set the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to true" %step;
-                print "EXPECTED RESULT %d: Should set the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to true" %step;
+                print("\nTEST STEP %d: Set the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to true" %step);
+                print("EXPECTED RESULT %d: Should set the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to true" %step);
 
                 if expectedresult in actualresult and details != "":
                     proceed_flag = 1;
                     revert_flag_rfc = 1;
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: RFC value is set successfully; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: RFC value is set successfully; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: RFC value is NOT set successfully; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: RFC value is NOT set successfully; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 proceed_flag = 1;
-                print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable is already enabled, SET operation not required";
+                print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable is already enabled, SET operation not required");
 
             if proceed_flag == 1:
                 #Check if Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable for the AP 1 is enabled
@@ -220,15 +220,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                 paramName = "Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable";
                 actualresult, details = getParameter(obj, paramName);
 
-                print "\nTEST STEP %d: Get the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable" %step;
-                print "EXPECTED RESULT %d: Should get the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable" %step;
+                print("\nTEST STEP %d: Get the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable" %step);
+                print("EXPECTED RESULT %d: Should get the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable" %step);
 
                 if expectedresult in actualresult and details != "":
                     error_stats_initial = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is : %s" %(step, error_stats_initial);
+                    print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is : %s" %(step, error_stats_initial));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #If not enabled, enable it and validate the set operation
                     proceed_flag = 0;
@@ -238,24 +238,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         step = step + 1;
                         actualresult, details = setParameter(obj, paramName, "true", "boolean");
 
-                        print "\nTEST STEP %d: Set Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to true" %step;
-                        print "EXPECTED RESULT %d: Should set the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to true" %step;
+                        print("\nTEST STEP %d: Set Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to true" %step);
+                        print("EXPECTED RESULT %d: Should set the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to true" %step);
 
                         if expectedresult in actualresult and details != "":
                             proceed_flag = 1;
                             revert_flag_stats = 1;
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is SET; Details : %s" %(step,details);
+                            print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is SET; Details : %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable value is NOT set successfully; Details : %s" %(step,details);
+                            print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable value is NOT set successfully; Details : %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         proceed_flag = 1;
-                        print "Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable is already enabled, SET operation not required";
+                        print("Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable is already enabled, SET operation not required");
 
                     if proceed_flag == 1:
                         #Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval
@@ -263,15 +263,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         paramName = "Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval";
                         actualresult, details = getParameter(obj, paramName);
 
-                        print "\nTEST STEP %d: Get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step;
-                        print "EXPECTED RESULT %d: Should get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step;
+                        print("\nTEST STEP %d: Get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step);
+                        print("EXPECTED RESULT %d: Should get the TELEMETRY LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval" %step);
 
                         if expectedresult in actualresult and details != "":
                             DeflogInt = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,DeflogInt);
+                            print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,DeflogInt));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if DeflogInt.isdigit():
 
@@ -284,114 +284,114 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                                 step = step + 1;
                                 actualresult, details = setParameter(obj, paramName, newlogInt, "int");
 
-                                print "\nTEST STEP %d: Set the TELEMETRY LogInterval to %ss" %(step, newlogInt);
-                                print "EXPECTED RESULT %d: Should set the TELEMETRY LogInterval to %ss" %(step, newlogInt);
+                                print("\nTEST STEP %d: Set the TELEMETRY LogInterval to %ss" %(step, newlogInt));
+                                print("EXPECTED RESULT %d: Should set the TELEMETRY LogInterval to %ss" %(step, newlogInt));
 
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details);
+                                    print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                    print "\nGet the number of log lines \"UP_RetransCount_1\" in /rdklogs/logs/wifihealth.txt";
+                                    print("\nGet the number of log lines \"UP_RetransCount_1\" in /rdklogs/logs/wifihealth.txt");
                                     step = step + 1;
                                     tdkTestObj1 = sysObj.createTestStep('ExecuteCmd');
                                     log = "UP_RetransCount_1";
                                     file = "/rdklogs/logs/wifihealth.txt"
                                     no_of_lines_initial = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                                    print "The initial number of log lines \"UP_RetransCount_1\" in wifihealth.txt is : %d" %no_of_lines_initial;
+                                    print("The initial number of log lines \"UP_RetransCount_1\" in wifihealth.txt is : %d" %no_of_lines_initial);
 
                                     #Sleeping for initial telemetry interval newlogInt + 60 (as the polling of Log Interval happens every 60s)
                                     sleep_time = 60 + int(newlogInt);
-                                    print "\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time;
+                                    print("\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time);
                                     sleep(sleep_time);
 
-                                    print "\nGet the final number of log lines \"UP_RetransCount_1\" in /rdklogs/logs/wifihealth.txt";
+                                    print("\nGet the final number of log lines \"UP_RetransCount_1\" in /rdklogs/logs/wifihealth.txt");
                                     step = step + 1;
                                     no_of_lines_final = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                                    print "The final number of log lines \"UP_RetransCount_1\" in wifihealth.txt is : %d" %no_of_lines_final;
+                                    print("The final number of log lines \"UP_RetransCount_1\" in wifihealth.txt is : %d" %no_of_lines_final);
 
                                     #Check if the difference between the final and initial number of Markers is >= 1
                                     step = step + 1;
                                     difference = no_of_lines_final - no_of_lines_initial;
-                                    print "\nThe UP_RetransCount_1 markers can be >= 1, after accounting for the polling interval and the new log interval set";
+                                    print("\nThe UP_RetransCount_1 markers can be >= 1, after accounting for the polling interval and the new log interval set");
 
-                                    print "TEST STEP %d: Should get UP_RetransCount_1 markers count greater than or equal to 1" %step;
-                                    print "EXPECTED RESULT %d: The UP_RetransCount_1 markers count should be greater than or equal to 1" %step;
+                                    print("TEST STEP %d: Should get UP_RetransCount_1 markers count greater than or equal to 1" %step);
+                                    print("EXPECTED RESULT %d: The UP_RetransCount_1 markers count should be greater than or equal to 1" %step);
 
                                     if difference >= 1:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d: Number of new UP_RetransCount_1 markers are : %d" %(step, difference);
+                                        print("ACTUAL RESULT %d: Number of new UP_RetransCount_1 markers are : %d" %(step, difference));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                         #Check if the marker value of UP_RetransCount_1 >= 0
                                         step = step + 1;
                                         cmd= "cat /rdklogs/logs/wifihealth.txt | grep \"UP_RetransCount_1:\"";
-                                        print "\nCommand : ", cmd;
+                                        print("\nCommand : ", cmd);
                                         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                                         actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                                        print "\nTEST STEP %d : Check if the marker value of UP_RetransCount_1 is greater than or equal to 0" %(step);
-                                        print "EXPECTED RESULT %d : The marker value of UP_RetransCount_1 should be greater than or equal to 0" %(step);
+                                        print("\nTEST STEP %d : Check if the marker value of UP_RetransCount_1 is greater than or equal to 0" %(step));
+                                        print("EXPECTED RESULT %d : The marker value of UP_RetransCount_1 should be greater than or equal to 0" %(step));
 
                                         if expectedresult in actualresult and details != "":
                                             marker_val = details.strip().split("UP_RetransCount_1:")[1].split(",")[0];
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "ACTUAL RESULT %d: The marker value is : %s" %(step, marker_val);
+                                            print("ACTUAL RESULT %d: The marker value is : %s" %(step, marker_val));
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                             if marker_val.isdigit() and int(marker_val) >= 0:
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print "Marker value is valid and greater than or equal to 0";
+                                                print("Marker value is valid and greater than or equal to 0");
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "Marker value is NOT valid or NOT greater than 0 or equal to 0";
+                                                print("Marker value is NOT valid or NOT greater than 0 or equal to 0");
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "ACTUAL RESULT %d: The marker value is : %s" %(step, details);
+                                            print("ACTUAL RESULT %d: The marker value is : %s" %(step, details));
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : FAILURE";
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d: Number of new UP_RetransCount_1 markers are : %d" %(step, difference);
+                                        print("ACTUAL RESULT %d: Number of new UP_RetransCount_1 markers are : %d" %(step, difference));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Set operation failed" %(step);
+                                    print("ACTUAL RESULT %d: Set operation failed" %(step));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] :FAILURE";
+                                    print("[TEST EXECUTION RESULT] :FAILURE");
 
                                 #Revert the Log Interval value
                                 step = step + 1;
                                 actualresult, details = setParameter(obj, paramName, DeflogInt, "int");
 
-                                print "\nTEST STEP %d: Revert the TELEMETRY LogInterval to initial value" %step;
-                                print "EXPECTED RESULT %d: Should revert the TELEMETRY LogInterval to initial value" %step;
+                                print("\nTEST STEP %d: Revert the TELEMETRY LogInterval to initial value" %step);
+                                print("EXPECTED RESULT %d: Should revert the TELEMETRY LogInterval to initial value" %step);
 
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Revert of TELEMETRY LogInterval is successful" %step;
+                                    print("ACTUAL RESULT %d: Revert of TELEMETRY LogInterval is successful" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Revertion of TELEMETRY LogInterval failed" %step;
+                                    print("ACTUAL RESULT %d: Revertion of TELEMETRY LogInterval failed" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TELEMETRY LogInterval not a valid value" %step;
+                                print("TELEMETRY LogInterval not a valid value" %step);
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details);
+                            print("ACTUAL RESULT %d: TELEMETRY LogInterval: %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Unable to enable Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable, cannot proceed..";
+                        print("Unable to enable Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable, cannot proceed..");
 
                     #Revert the Associated Devices Errors Received Stats Enable
                     if revert_flag_stats == 1:
@@ -399,26 +399,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         paramName = "Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable"
                         actualresult, details = setParameter(obj, paramName, error_stats_initial, "boolean");
 
-                        print "\nTEST STEP %d: Revert Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to initial value" %step;
-                        print "EXPECTED RESULT %d: Should revert the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to initial value" %step;
+                        print("\nTEST STEP %d: Revert Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to initial value" %step);
+                        print("EXPECTED RESULT %d: Should revert the enable state of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable to initial value" %step);
 
                         if expectedresult in actualresult and details != "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is reverted; Details : %s" %(step,details);
+                            print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is reverted; Details : %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable value is NOT reverted; Details : %s" %(step,details);
+                            print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable value is NOT reverted; Details : %s" %(step,details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "Revert of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable not required";
+                        print("Revert of Device.WiFi.AccessPoint.1.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable not required");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Associated Devices Errors Received Stats Enable is : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable
                 if revert_flag_rfc == 1:
@@ -426,39 +426,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                     paramName = "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable"
                     actualresult, details = setParameter(obj, paramName, rfc_initial, "boolean");
 
-                    print "\nTEST STEP %d: Revert Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to initial value" %step;
-                    print "EXPECTED RESULT %d: Should revert the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to initial value" %step;
+                    print("\nTEST STEP %d: Revert Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to initial value" %step);
+                    print("EXPECTED RESULT %d: Should revert the enable state of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable to initial value" %step);
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: RFC Enable is reverted; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RFC Enable is reverted; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: RFC Enable value is NOT reverted; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RFC Enable value is NOT reverted; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Revert of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable not required";
+                    print("Revert of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable not required");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Unable to enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable, cannot proceed..";
+                print("Unable to enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable, cannot proceed..");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Errors Received Enable is : %s" %(step,details);
+            print("ACTUAL RESULT %d: Errors Received Enable is : %s" %(step,details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d:wifihealth log file is not present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is not present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

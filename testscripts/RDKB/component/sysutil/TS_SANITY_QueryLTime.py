@@ -83,41 +83,41 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     expectedresult ="SUCCESS";
     command = "LTime";
-    print "command:",command;
+    print("command:",command);
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip();
     details = details.replace("\\n", "");
     if expectedresult in actualresult and "" != details:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Query the LTime of the DUT";
-       print "EXPECTED RESULT 1:  Should Query the LTime of the DUT";
-       print "ACTUAL RESULT 1: " ,details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS"
-       if re.match ("(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ,details):
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Check if the LTime is in HH:MM:SS format";
-          print "EXPECTED RESULT 2 :LTime should be in HH:MM:SS format";
-          print "ACTUAL RESULT 2: LTime is in HH:MM:SS format ";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS"
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check if the LTime is in HH:MM:SS format";
-           print "EXPECTED RESULT 2 :LTime should be in HH:MM:SS format";
-           print "ACTUAL RESULT 2: LTime is not in HH:MM:SS format ";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE"
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Query the LTime of the DUT");
+        print("EXPECTED RESULT 1:  Should Query the LTime of the DUT");
+        print("ACTUAL RESULT 1: " ,details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        if re.match ("(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ,details):
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if the LTime is in HH:MM:SS format");
+            print("EXPECTED RESULT 2 :LTime should be in HH:MM:SS format");
+            print("ACTUAL RESULT 2: LTime is in HH:MM:SS format ");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check if the LTime is in HH:MM:SS format");
+            print("EXPECTED RESULT 2 :LTime should be in HH:MM:SS format");
+            print("ACTUAL RESULT 2: LTime is not in HH:MM:SS format ");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Query the LTime of the DUT";
-        print "EXPECTED RESULT 1:  Should Query the LTime of the DUT";
-        print "ACTUAL RESULT 1: ", details;
+        print("TEST STEP 1: Query the LTime of the DUT");
+        print("EXPECTED RESULT 1:  Should Query the LTime of the DUT");
+        print("ACTUAL RESULT 1: ", details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

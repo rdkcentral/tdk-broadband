@@ -83,17 +83,17 @@ def setKeyPassphrase(obj1, keyPassphrase, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.KeyPassphrase to %s" %(step, keyPassphrase);
-    print "EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.KeyPassphrase to %s" %(step,keyPassphrase);
+    print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.KeyPassphrase to %s" %(step, keyPassphrase));
+    print("EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.KeyPassphrase to %s" %(step,keyPassphrase));
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
     return actualresult;
 
 def setSecurityMode(obj1, mode, step):
@@ -106,17 +106,17 @@ def setSecurityMode(obj1, mode, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode);
-    print "EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode);
+    print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode));
+    print("EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode));
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
     return actualresult;
 
 def getSecurityMode(obj1, step):
@@ -127,19 +127,19 @@ def getSecurityMode(obj1, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
+    print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
 
     if expectedresult in actualresult:
         details = details.split("VALUE:")[1].split(' ')[0].split(',');
         details = details[0];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
     return actualresult, details;
 
 def getKeyPassphrase(obj1, step):
@@ -150,19 +150,19 @@ def getKeyPassphrase(obj1, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the Security KeyPassphrase using Device.WiFi.AccessPoint.1.Security.KeyPassphrase" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.KeyPassphrase" %step;
+    print("\nTEST STEP %d : Get the Security KeyPassphrase using Device.WiFi.AccessPoint.1.Security.KeyPassphrase" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.KeyPassphrase" %step);
 
     if expectedresult in actualresult:
         details = details.split("VALUE:")[1].split(' ')[0].split(',');
         details = details[0];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
     return actualresult, details;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -194,15 +194,15 @@ if "SUCCESS" in loadmodulestatus1.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the supported modes supported using Device.WiFi.AccessPoint.1.Security.ModesSupported" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModesSupported" %step;
+    print("\nTEST STEP %d : Get the supported modes supported using Device.WiFi.AccessPoint.1.Security.ModesSupported" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModesSupported" %step);
 
     if expectedresult in actualresult:
         supported_modes = details.split("VALUE:")[1].split(' ')[0].split(',');
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-        print "Supported Modes : ", supported_modes;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+        print("Supported Modes : ", supported_modes);
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         #Get the initial security mode
         step = step + 1;
@@ -218,10 +218,10 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 for mode in supported_modes:
                     #KeyPassphrase should be SET only in applicable Personal modes
                     if "Personal" in mode:
-                        print "\n****************For Mode %s********************" %mode;
+                        print("\n****************For Mode %s********************" %mode);
 
                         if "WPA3" in mode :
-                            print "The security mode %s is a WPA3 Personal mode for which KeyPassphrase setting is not applicable..." %mode;
+                            print("The security mode %s is a WPA3 Personal mode for which KeyPassphrase setting is not applicable..." %mode);
                         else :
                             #Set the security mode
                             step = step + 1;
@@ -231,12 +231,12 @@ if "SUCCESS" in loadmodulestatus1.upper():
                                 #Verify the SET with GET
                                 step = step + 1;
                                 actualresult, final_mode = getSecurityMode(obj1, step);
-                                print "Set Mode : ", mode;
-                                print "Get Mode : ", final_mode;
+                                print("Set Mode : ", mode);
+                                print("Get Mode : ", final_mode);
 
                                 if final_mode == mode:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "SET is reflected in GET";
+                                    print("SET is reflected in GET");
 
                                     #Set the KeyPassPhrase
                                     step = step + 1;
@@ -247,63 +247,63 @@ if "SUCCESS" in loadmodulestatus1.upper():
                                         #Check if the SET is reflected in GET
                                         step = step + 1;
                                         actualresult, final_passphrase = getKeyPassphrase(obj1, step);
-                                        print "Set KeyPassphrase : ", keyPassphrase;
-                                        print "Get KeyPassphrase : ", final_passphrase;
+                                        print("Set KeyPassphrase : ", keyPassphrase);
+                                        print("Get KeyPassphrase : ", final_passphrase);
 
                                         if keyPassphrase == final_passphrase:
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "SET is reflected in GET";
+                                            print("SET is reflected in GET");
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "SET is not reflected in GET";
+                                            print("SET is not reflected in GET");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "SET operation failed";
+                                        print("SET operation failed");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SET is not reflected in GET";
+                                    print("SET is not reflected in GET");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "SET operation failed";
+                                print("SET operation failed");
                     else:
                         continue;
 
                 #Revert operation
-                print "\nReverting to initial KeyPassPhrase..."
+                print("\nReverting to initial KeyPassPhrase...")
                 step = step + 1;
                 actualresult = setKeyPassphrase(obj1, initial_passphrase, step)
 
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Reverting to initial KeyPassPhrase was successful";
+                    print("Reverting to initial KeyPassPhrase was successful");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Reverting to initial KeyPassPhrase was not successful";
+                    print("Reverting to initial KeyPassPhrase was not successful");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "GET operation failed";
+                print("GET operation failed");
 
             #Revert operation
-            print "Reverting to initial Security Mode..."
+            print("Reverting to initial Security Mode...")
             step = step + 1;
             actualresult = setSecurityMode(obj1, initial_mode, step);
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Reverting Mode to initial value was successful";
+                print("Reverting Mode to initial value was successful");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Reverting Mode to initial value was not successful";
+                print("Reverting Mode to initial value was not successful");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "GET operation failed";
+            print("GET operation failed");
     else:
         tdkTestObj.setResultStatus("FAILED");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj1.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

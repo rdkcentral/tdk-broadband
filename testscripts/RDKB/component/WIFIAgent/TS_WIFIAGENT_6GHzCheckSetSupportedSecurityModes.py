@@ -90,8 +90,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIAGENT_6GHzCheckSetSupportedSecurityMode
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -102,21 +102,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     step = 1;
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile PRIVATE_6G_AP_INDEX" %TDK_PATH;
-    print "\nCommand : ", cmd;
+    print("\nCommand : ", cmd);
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     vap = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Get the 6GHz private access point index from platform property file" %step;
-    print "EXPECTED RESULT %d: Should successfully get the 6GHz private access point index from platform property file" %step;
+    print("\nTEST STEP %d: Get the 6GHz private access point index from platform property file" %step);
+    print("EXPECTED RESULT %d: Should successfully get the 6GHz private access point index from platform property file" %step);
 
     if expectedresult in actualresult and vap != "" :
         #Access Point index = vap + 1
         apIndex = int(vap) + 1;
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: 6GHz private access point index : %d" %(step, apIndex);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: 6GHz private access point index : %d" %(step, apIndex));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the initial security mode
         step = step + 1;
@@ -127,38 +127,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d : Get the Security Mode using %s" %(step, mode_enabled_param);
-        print "EXPECTED RESULT %d : Should successfully get %s" %(step, mode_enabled_param);
+        print("\nTEST STEP %d : Get the Security Mode using %s" %(step, mode_enabled_param));
+        print("EXPECTED RESULT %d : Should successfully get %s" %(step, mode_enabled_param));
 
         if expectedresult in actualresult:
             initial_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode);
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode));
+            print("TEST EXECUTION RESULT :SUCCESS");
 
             #Check if it is WPA3-Personal
             step = step + 1;
-            print "\nTEST STEP %d : Check if the security mode enabled in 6Ghz private access point is WPA3-Personal" %step;
-            print "EXPECTED RESULT %d: The security mode enabled in 6Ghz private access point should be WPA3-Personal" %step;
+            print("\nTEST STEP %d : Check if the security mode enabled in 6Ghz private access point is WPA3-Personal" %step);
+            print("EXPECTED RESULT %d: The security mode enabled in 6Ghz private access point should be WPA3-Personal" %step);
 
             if initial_mode == "WPA3-Personal":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The security mode enabled in 6Ghz private access point is WPA3-Personal" %(step);
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT %d: The security mode enabled in 6Ghz private access point is WPA3-Personal" %(step));
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Check the Pre-requisites - WPA3_Personal_Transition RFC should be enabled
                 step = step + 1;
                 pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
 
                 if pre_req_set == 1:
-                    print "\n*************RFC Pre-requisite set for the DUT*****************";
+                    print("\n*************RFC Pre-requisite set for the DUT*****************");
                     #Set all modes to the 6G private access point when the WPA3 RFC is in enabled state
                     #Set operation should fail for all modes other than WPA3-Personal
                     set_modes = ["None", "WPA2-Personal", "WPA3-Personal-Transition"]
                     revert_mode = 0;
 
                     for mode in set_modes:
-                        print "\n****************For Mode %s*******************" %mode;
+                        print("\n****************For Mode %s*******************" %mode);
                         expectedresult = "FAILURE"
                         #Set the security mode
                         step = step + 1;
@@ -170,18 +170,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d : Set %s to %s" %(step, mode_enabled_param, mode);
-                        print "EXPECTED RESULT %d : Should not SET %s to %s" %(step, mode_enabled_param, mode);
+                        print("\nTEST STEP %d : Set %s to %s" %(step, mode_enabled_param, mode));
+                        print("EXPECTED RESULT %d : Should not SET %s to %s" %(step, mode_enabled_param, mode));
 
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :SUCCESS");
                         else :
                             revert_mode = 1;
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :FAILURE");
                             break;
 
                     #Revert to WPA3-Personal if revert flag is set
@@ -197,61 +197,61 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d : Revert %s to %s" %(step, mode_enabled_param, mode);
-                        print "EXPECTED RESULT %d : Should revert %s to %s" %(step, mode_enabled_param, mode);
+                        print("\nTEST STEP %d : Revert %s to %s" %(step, mode_enabled_param, mode));
+                        print("EXPECTED RESULT %d : Should revert %s to %s" %(step, mode_enabled_param, mode));
 
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :SUCCESS");
                         else :
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else:
-                        print "Security Mode enable revert operation not required";
+                        print("Security Mode enable revert operation not required");
 
                     #Revert the pre-requisites set
                     if revert_flag == 1:
                         step = step + 1;
                         status = RevertWPA3Pre_requisite(obj, initial_value);
 
-                        print "\nTEST STEP %d : Revert the pre-requisite to initial value" %step;
-                        print "EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+                        print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
+                        print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
                         if status == 1:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Revert operation was success" %step;
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("ACTUAL RESULT %d : Revert operation was success" %step);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Revert operation failed" %step;
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT %d : Revert operation failed" %step);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "Reverting pre-requisites not required";
+                        print("Reverting pre-requisites not required");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Pre-Requisite is not set successfully";
+                    print("Pre-Requisite is not set successfully");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: The security mode enabled in 6Ghz private access point is NOT WPA3-Personal" %(step);
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT %d: The security mode enabled in 6Ghz private access point is NOT WPA3-Personal" %(step));
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+            print("TEST EXECUTION RESULT :FAILURE");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: 6GHz private access point index not retrieved" %(step);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: 6GHz private access point index not retrieved" %(step));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

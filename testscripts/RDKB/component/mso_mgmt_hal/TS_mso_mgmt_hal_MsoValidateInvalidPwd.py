@@ -101,8 +101,8 @@ Invalid_password = "Invalid"
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,24 +116,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult and Status == "Invalid_PWD":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should validate the password";
-        print "EXPECTED RESULT 1: Should get the status of password validation as Invalid_PWD";
-        print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+        print("TEST STEP 1: Should validate the password");
+        print("EXPECTED RESULT 1: Should get the status of password validation as Invalid_PWD");
+        print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should validate the password";
-        print "EXPECTED RESULT 1:Should get the status of password validation as Invalid_PWD";
-        print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+        print("TEST STEP 1: Should validate the password");
+        print("EXPECTED RESULT 1:Should get the status of password validation as Invalid_PWD");
+        print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysobj.unloadModule("sysutil");
     obj.unloadModule("mso_mgmt_hal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

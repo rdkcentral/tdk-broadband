@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_SetBandSteeringCapability');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -108,61 +108,59 @@ if "SUCCESS" in result.upper() :
     if "SUCCESS" in preRequisiteStatus:
 
 
-        print "TEST STEP 1: Get and save the current BandSteering capability"
+        print("TEST STEP 1: Get and save the current BandSteering capability")
         queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability"}
         queryResponse = webpaQuery(obj, queryParam)
 
         parsedResponse = parseWebpaResponse(queryResponse, 1)
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0]:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS"
+            print("TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS")
 
             orgValue = parsedResponse[1];
-            print "BandSteering Capability: ",orgValue
+            print("BandSteering Capability: ",orgValue)
 
             newValue = "false"
 
-            print "TEST STEP 2: Set the BandSteering Capability as false"
+            print("TEST STEP 2: Set the BandSteering Capability as false")
             queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability","value":newValue,"dataType":3}
             queryResponse = webpaQuery(obj, queryParam, "set")
             parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
             tdkTestObj.executeTestCase("SUCCESS");
             if "FAILURE" in parsedResponse[0] and "520" in queryResponse:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "EXPECTED RESULT 2: BandSteering Capability should not be set to false";
-                print "ACTUAL RESULT 2: BandSteering Capability is not set to false";                
-                print "TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS"
+                print("EXPECTED RESULT 2: BandSteering Capability should not be set to false");
+                print("ACTUAL RESULT 2: BandSteering Capability is not set to false");
+                print("TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "EXPECTED RESULT 2: BandSteering Capability should not be set to false";
-                print "ACTUAL RESULT 2: BandSteering Capability is set to false";
-                print "TEST STEP 2[TEST EXECUTION RESULT] : FAILURE"
-                print "TEST STEP 3:Revert the Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability to original value "
+                print("EXPECTED RESULT 2: BandSteering Capability should not be set to false");
+                print("ACTUAL RESULT 2: BandSteering Capability is set to false");
+                print("TEST STEP 2[TEST EXECUTION RESULT] : FAILURE")
+                print("TEST STEP 3:Revert the Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability to original value ")
                 queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability","value":orgValue,"dataType":3}
                 queryResponse = webpaQuery(obj, queryParam, "set")
                 parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
                 tdkTestObj.executeTestCase("SUCCESS");
                 if "SUCCESS" in parsedResponse[0]:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS"
+                    print("TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3:Revert the Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability to original value: FAILURE"
+                    print("TEST STEP 3:Revert the Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Capability to original value: FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
-
+    print("Module loading FAILURE");

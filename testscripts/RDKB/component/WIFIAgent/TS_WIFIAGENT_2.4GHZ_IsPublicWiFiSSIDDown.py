@@ -68,8 +68,8 @@ Device.WiFi.SSID.5.Status</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 from xfinityWiFiLib import *
 
@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHZ_IsPublicWiFiSSIDDown');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -94,73 +94,73 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(obj);
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "TEST STEP 1 : Should get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("TEST STEP 1 : Should get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set values to enable public wifi
         setvalues = ["44","68.86.15.199","68.86.15.171","false","true","true"];
         tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,setvalues);
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable public wifi"
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Enable public wifi")
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #check the status of SSID5
-	    tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+            #check the status of SSID5
+            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.WiFi.SSID.5.Status")
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             status = details.split("VALUE:")[1].split(' ')[0];
 
-	    if expectedresult in actualresult and "Down" in status:
+            if expectedresult in actualresult and "Down" in status:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if SSID staus is Down";
-                print "EXPECTED RESULT 3: SSID staus should be down";
-                print "ACTUAL RESULT 3: Status of SSID5: %s" %status;
+                print("TEST STEP 3: Check if SSID staus is Down");
+                print("EXPECTED RESULT 3: SSID staus should be down");
+                print("ACTUAL RESULT 3: Status of SSID5: %s" %status);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if SSID staus is Down";
-                print "EXPECTED RESULT 3: SSID staus should be down";
-                print "ACTUAL RESULT 3: Status of SSID5: %s" %details;
+                print("TEST STEP 3: Check if SSID staus is Down");
+                print("EXPECTED RESULT 3: SSID staus should be down");
+                print("ACTUAL RESULT 3: Status of SSID5: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #Revert the values of public wifi params
             tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,orgValue);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4:Revert the PublicWiFi param values"
-                print "TEST STEP 4 : Should revert the PublicWiFi values"
-                print "ACTUAL RESULT 4:%s" %details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 4:Revert the PublicWiFi param values")
+                print("TEST STEP 4 : Should revert the PublicWiFi values")
+                print("ACTUAL RESULT 4:%s" %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4:Revert the PublicWiFi param values"
-                print "TEST STEP 4 : Should revert the PublicWiFi param values"
-                print "ACTUAL RESULT 4:%s" %details
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 4:Revert the PublicWiFi param values")
+                print("TEST STEP 4 : Should revert the PublicWiFi param values")
+                print("ACTUAL RESULT 4:%s" %details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Enable PublicWiFi"
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2:Enable PublicWiFi")
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "TEST STEP 1 : Should get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("TEST STEP 1 : Should get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

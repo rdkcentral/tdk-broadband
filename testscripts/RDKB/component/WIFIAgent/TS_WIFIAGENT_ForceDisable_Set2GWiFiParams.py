@@ -114,8 +114,8 @@ def getTelLogFileTotalLinesCount(tdkTestObj):
     RPC_CMD = tdkTestObj.getResultDetails().strip()
     RPC_CMD = RPC_CMD.replace("\\n", "");
     if RPC_CMD:
-       print "The device needs rpc command";
-       cmd = RPC_CMD + " \"cat /rdklogs/logs/WiFilog.txt.0 | wc -l \" | grep -v \"*\" | sed -r \"/^\s*$/d\" ";
+        print("The device needs rpc command");
+        cmd = RPC_CMD + " \"cat /rdklogs/logs/WiFilog.txt.0 | wc -l \" | grep -v \"*\" | sed -r \"/^\s*$/d\" ";
     else:
         cmd = "cat /rdklogs/logs/WiFilog.txt.0| wc -l";
 
@@ -123,21 +123,21 @@ def getTelLogFileTotalLinesCount(tdkTestObj):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "current WiFilog.txt.0 line count :",details;
+    print("current WiFilog.txt.0 line count :",details);
     if expectedresult in actualresult:
-       if  details.isdigit():
+        if  details.isdigit():
             linecount = int(details);
     return actualresult,linecount;
 
 def SetOperation(tdkTestObj,parameter):
     expectedresult="FAILURE";
     if parameter == "Device.WiFi.AccessPoint.1.Security.X_COMCAST-COM_KeyPassphrase":
-       tdkTestObj.addParameter("paramName",parameter)
-       tdkTestObj.addParameter("paramValue", "tdkbtestcase");
-       tdkTestObj.addParameter("paramType","string")
-       tdkTestObj.executeTestCase("expectedresult");
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        tdkTestObj.addParameter("paramName",parameter)
+        tdkTestObj.addParameter("paramValue", "tdkbtestcase");
+        tdkTestObj.addParameter("paramType","string")
+        tdkTestObj.executeTestCase("expectedresult");
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
     else:
         tdkTestObj.addParameter("paramName",parameter)
         tdkTestObj.addParameter("paramValue", "true");
@@ -160,10 +160,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         default = default.split("VALUE:")[1].split(" ")[0].strip();
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current WiFi Force Disable state";
-        print "EXPECTED RESULT 1: Should get current WiFi Force Disable state";
-        print "ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current WiFi Force Disable state");
+        print("EXPECTED RESULT 1: Should get current WiFi Force Disable state");
+        print("ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
@@ -174,103 +174,103 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Enable the WiFi Force Disable";
-           print "EXPECTED RESULT 2: Should enable Force Disable state";
-           print "ACTUAL RESULT 2: %s" %details;
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Enable the WiFi Force Disable");
+            print("EXPECTED RESULT 2: Should enable Force Disable state");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           params = ["Device.WiFi.Radio.1.Enable" ,"Device.WiFi.AccessPoint.1.Enable","Device.WiFi.AccessPoint.1.Security.X_COMCAST-COM_KeyPassphrase"]
-           for parameter in params:
-               tdkTestObj = obj1.createTestStep('ExecuteCmd');
-               lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj);
+            params = ["Device.WiFi.Radio.1.Enable" ,"Device.WiFi.AccessPoint.1.Enable","Device.WiFi.AccessPoint.1.Security.X_COMCAST-COM_KeyPassphrase"]
+            for parameter in params:
+                tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj);
 
-               if expectedresult in lineCountResult:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-                  print "***performing write operation on  %s ****" %parameter;
-                  actualresult,expectedResult= SetOperation(tdkTestObj,parameter);
-                  if expectedResult in actualresult:
-                     sleep(10);
-                     tdkTestObj = obj1.createTestStep('ExecuteCmd');
-                     lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj);
-                     if expectedResult in actualresult:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         tdkTestObj = obj1.createTestStep('ExecuteCmd');
-                         RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
-                         tdkTestObj.addParameter("command", RPCCmd);
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         RPC_CMD = tdkTestObj.getResultDetails().strip();
-                         RPC_CMD = RPC_CMD.replace("\\n", "");
-                         if RPC_CMD:
-                             print "The device needs rpc command";
-                             cmd = RPC_CMD + " sed -n -e %s,%sp /rdklogs/logs/WiFilog.txt.0 | grep -i \'WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED\' "%(initialLinesCount,lineCountAfterSimu);
-                         else:
-                             cmd = "sed -n -e %s,%sp /rdklogs/logs/WiFilog.txt.0 | grep -i \"WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED\"" %(initialLinesCount,lineCountAfterSimu) ;
-
-                         print "cmd:",cmd;
-                         print "WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED log message should be present in WiFilog.txt.0";
-                         tdkTestObj.addParameter("command", cmd);
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                         if expectedresult in actualresult and "WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED"  in details:
+                if expectedresult in lineCountResult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+                    print("***performing write operation on  %s ****" %parameter);
+                    actualresult,expectedResult= SetOperation(tdkTestObj,parameter);
+                    if expectedResult in actualresult:
+                        sleep(10);
+                        tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                        lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj);
+                        if expectedResult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print details;
-                            print "[TEST EXECUTION RESULT] :SUCCESS";
-                            print "********************************************";
-                         else:
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED  didnot populate when trying to set %s in WiFilog.txt.0" %parameter;
-                             print "[TEST EXECUTION RESULT] :FAILURE";
-                             print "*****************************************";
-                     else:
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "*******Failed get the line count of the log file*****";
-                  else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "%s set was success even with Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable  being enabled";
-                      print "*********************************************"
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "*******Failed get the line count of the log file*****";
-           #Revertion
-           tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-           tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
-           tdkTestObj.addParameter("paramValue", default);
-           tdkTestObj.addParameter("paramType","boolean")
-           tdkTestObj.executeTestCase("expectedresult");
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
+                            tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                            RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
+                            tdkTestObj.addParameter("command", RPCCmd);
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            RPC_CMD = tdkTestObj.getResultDetails().strip();
+                            RPC_CMD = RPC_CMD.replace("\\n", "");
+                            if RPC_CMD:
+                                print("The device needs rpc command");
+                                cmd = RPC_CMD + " sed -n -e %s,%sp /rdklogs/logs/WiFilog.txt.0 | grep -i \'WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED\' "%(initialLinesCount,lineCountAfterSimu);
+                            else:
+                                cmd = "sed -n -e %s,%sp /rdklogs/logs/WiFilog.txt.0 | grep -i \"WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED\"" %(initialLinesCount,lineCountAfterSimu) ;
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP : Revert the WiFi Force Disable to previous";
-              print "EXPECTED RESULT : Should revert  Force Disable state to %s" %default;
-              print "ACTUAL RESULT : %s" %details;
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP : Revert the WiFi Force Disable to previous";
-               print "EXPECTED RESULT : Should revert  Force Disable state to %s" %default;
-               print "ACTUAL RESULT : %s" %details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("cmd:",cmd);
+                            print("WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED log message should be present in WiFilog.txt.0");
+                            tdkTestObj.addParameter("command", cmd);
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                            if expectedresult in actualresult and "WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED"  in details:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print(details);
+                                print("[TEST EXECUTION RESULT] :SUCCESS");
+                                print("********************************************");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("WIFI_ATTEMPT_TO_CHANGE_CONFIG_WHEN_FORCE_DISABLED  didnot populate when trying to set %s in WiFilog.txt.0" %parameter);
+                                print("[TEST EXECUTION RESULT] :FAILURE");
+                                print("*****************************************");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("*******Failed get the line count of the log file*****");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("%s set was success even with Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable  being enabled");
+                        print("*********************************************")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("*******Failed get the line count of the log file*****");
+            #Revertion
+            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+            tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
+            tdkTestObj.addParameter("paramValue", default);
+            tdkTestObj.addParameter("paramType","boolean")
+            tdkTestObj.executeTestCase("expectedresult");
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : Revert the WiFi Force Disable to previous");
+                print("EXPECTED RESULT : Should revert  Force Disable state to %s" %default);
+                print("ACTUAL RESULT : %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : Revert the WiFi Force Disable to previous");
+                print("EXPECTED RESULT : Should revert  Force Disable state to %s" %default);
+                print("ACTUAL RESULT : %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Disable the WiFi Force Disable";
-            print "EXPECTED RESULT 2: Should Disable Force Disable state";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Disable the WiFi Force Disable");
+            print("EXPECTED RESULT 2: Should Disable Force Disable state");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current WiFi Force Disable state";
-        print "EXPECTED RESULT 1: Should get current WiFi Force Disable state";
-        print "ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current WiFi Force Disable state");
+        print("EXPECTED RESULT 1: Should get current WiFi Force Disable state");
+        print("ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent")
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load wifiagent/sysutil module";
+    print("Failed to load wifiagent/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

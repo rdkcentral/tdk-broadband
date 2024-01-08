@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_NotifyComp_SetValid_NotifyValue');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -106,39 +106,37 @@ if "SUCCESS" in result.upper() :
 
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
-         #set the attribute as 0
-         print "TEST STEP 1: Set the notify value as 0"
-         queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 0}}
-         queryResponse = webpaQuery(obj, queryParam, "set")
-         parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
-         tdkTestObj.executeTestCase("SUCCESS");
-         if "SUCCESS" in parsedResponse[0]:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 1[TEST EXECUTION RESULT] : SUCCESS"
-             #set the attribute as 1
-             print "TEST STEP 2: Set the notify value as 1"
-             queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 1}}
-             queryResponse = webpaQuery(obj, queryParam, "set")
-             parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
-             tdkTestObj.executeTestCase("SUCCESS");
-             if "SUCCESS" in parsedResponse[0]:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS"
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 2[TEST EXECUTION RESULT] : FAILURE"
-         else:
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+        #set the attribute as 0
+        print("TEST STEP 1: Set the notify value as 0")
+        queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 0}}
+        queryResponse = webpaQuery(obj, queryParam, "set")
+        parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
+        tdkTestObj.executeTestCase("SUCCESS");
+        if "SUCCESS" in parsedResponse[0]:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1[TEST EXECUTION RESULT] : SUCCESS")
+            #set the attribute as 1
+            print("TEST STEP 2: Set the notify value as 1")
+            queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 1}}
+            queryResponse = webpaQuery(obj, queryParam, "set")
+            parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
+            tdkTestObj.executeTestCase("SUCCESS");
+            if "SUCCESS" in parsedResponse[0]:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
-
+    print("Module loading FAILURE");

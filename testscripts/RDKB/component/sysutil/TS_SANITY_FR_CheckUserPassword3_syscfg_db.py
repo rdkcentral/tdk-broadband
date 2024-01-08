@@ -107,11 +107,11 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         sysobj.restorePreviousStateAfterReboot();
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -135,47 +135,47 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
         user_password_3_bkup_details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if user_password_3_details != "" and user_password_3_bkup_details != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if user_password_3 entry is present in syscfg.db in /tmp and /nvram";
-            print "EXPECTED RESULT 2: user_password_3 entry is present in syscfg.db in /tmp and /nvram";
-            print "ACTUAL RESULT 2: user_password_3 present in syscfg.db in /tmp and /nvram are : %s, %s" %(user_password_3_details, user_password_3_bkup_details);
+            print("TEST STEP 2: Check if user_password_3 entry is present in syscfg.db in /tmp and /nvram");
+            print("EXPECTED RESULT 2: user_password_3 entry is present in syscfg.db in /tmp and /nvram");
+            print("ACTUAL RESULT 2: user_password_3 present in syscfg.db in /tmp and /nvram are : %s, %s" %(user_password_3_details, user_password_3_bkup_details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             user_password=(user_password_3_details.split('='))
             user_password_3 = user_password[1]
             user_password=(user_password_3_bkup_details.split('='))
             user_password_3_bkup = user_password[1]
             if user_password_3 == user_password_3_bkup and user_password_3 == default_password:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check user_password_3 from syscfg.db in /tmp and /nvram and default password are same";
-                print "EXPECTED RESULT 3: user_password_3 from syscfg.db in /tmp and /nvram and default password should be same";
-                print "ACTUAL RESULT 3:user_password_3 from syscfg.db in /tmp and /nvram and default password are same : %s" %user_password_3;
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("TEST STEP 3:Check user_password_3 from syscfg.db in /tmp and /nvram and default password are same");
+                print("EXPECTED RESULT 3: user_password_3 from syscfg.db in /tmp and /nvram and default password should be same");
+                print("ACTUAL RESULT 3:user_password_3 from syscfg.db in /tmp and /nvram and default password are same : %s" %user_password_3);
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check user_password_3 from syscfg.db in /tmp and /nvram and default password are same";
-                print "EXPECTED RESULT 3: user_password_3 from syscfg.db in /tmp and /nvram and default password should be same";
-                print "ACTUAL RESULT 3:user_password_3 from syscfg.db in /tmp and /nvram and default password are not same : %s" %user_password_3;
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 3:Check user_password_3 from syscfg.db in /tmp and /nvram and default password are same");
+                print("EXPECTED RESULT 3: user_password_3 from syscfg.db in /tmp and /nvram and default password should be same");
+                print("ACTUAL RESULT 3:user_password_3 from syscfg.db in /tmp and /nvram and default password are not same : %s" %user_password_3);
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if user_password_3 entry is present in syscfg.db in /tmp and /nvram";
-            print "EXPECTED RESULT 2: user_password_3 entry is present in syscfg.db in /tmp and /nvram";
-            print "ACTUAL RESULT 2: user_password_3 entry is not present in syscfg.db in /tmp and /nvram";
+            print("TEST STEP 2: Check if user_password_3 entry is present in syscfg.db in /tmp and /nvram");
+            print("EXPECTED RESULT 2: user_password_3 entry is present in syscfg.db in /tmp and /nvram");
+            print("ACTUAL RESULT 2: user_password_3 entry is not present in syscfg.db in /tmp and /nvram");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

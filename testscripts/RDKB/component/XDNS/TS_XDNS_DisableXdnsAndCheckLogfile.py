@@ -109,14 +109,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj = obj.createTestStep('TADstub_Get');
     expectedresult = "SUCCESS"
     paramList=["Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS", "Device.X_Comcast_com_ParentalControl.ManagedSites.Enable", "Device.X_Comcast_com_ParentalControl.ManagedServices.Enable", "Device.X_Comcast_com_ParentalControl.ManagedDevices.Enable"]
-    print "TEST STEP 1: Should get the Enable status of XDNS,Parental Control ManagedSites, Parental Control ManagedServices,Parental Control ManagedDevices"
+    print("TEST STEP 1: Should get the Enable status of XDNS,Parental Control ManagedSites, Parental Control ManagedServices,Parental Control ManagedDevices")
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
 
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "" and orgValue[3] != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1:Enable status of XDNS :%s,Parental Control ManagedSites : %s, Parental Control ManagedServices : %s ,Parental Control ManagedDevices: %s " %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]);
+        print("ACTUAL RESULT 1:Enable status of XDNS :%s,Parental Control ManagedSites : %s, Parental Control ManagedServices : %s ,Parental Control ManagedDevices: %s " %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         paramList =["Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS","Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","Device.X_Comcast_com_ParentalControl.ManagedServices.Enable","Device.X_Comcast_com_ParentalControl.ManagedDevices.Enable"]
 
@@ -130,12 +130,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult not in actualresult:
-               break;
+                break;
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Should disable XDNS and parental control features"
-            print "ACTUAL RESULT 2: %s" %details;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("TEST STEP 2: Should disable XDNS and parental control features")
+            print("ACTUAL RESULT 2: %s" %details);
+            print("TEST EXECUTION RESULT :SUCCESS");
 
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             cmd = "[ -f /var/log/messages ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -145,10 +145,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if messages file is present";
-                print "ACTUAL RESULT 3: messages file is present";
+                print("TEST STEP 3:Check if messages file is present");
+                print("ACTUAL RESULT 3: messages file is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 cmd = "cat /var/log/messages  | grep -i \"override dns server not found\""
@@ -158,20 +158,20 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 xdns_details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and xdns_details == "":
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print "TEST STEP 4:Check XDNS related log messages are present in messages";
-                    print "ACTUAL RESULT 4: XDNS related log messages are not present in messages";
+                    print("TEST STEP 4:Check XDNS related log messages are present in messages");
+                    print("ACTUAL RESULT 4: XDNS related log messages are not present in messages");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print "TEST STEP 4:Check XDNS related log messages are present in messages";
-                    print "ACTUAL RESULT 4: XDNS related log messages are  present in messages";
+                    print("TEST STEP 4:Check XDNS related log messages are present in messages");
+                    print("ACTUAL RESULT 4: XDNS related log messages are  present in messages");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if messages file is present";
-                print "ACTUAL RESULT 3: messages file is not present";
+                print("TEST STEP 3:Check if messages file is present");
+                print("ACTUAL RESULT 3: messages file is not present");
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 cmd = "journalctl | grep -i \"override dns server not found\"";
                 tdkTestObj.addParameter("command",cmd);
@@ -181,16 +181,16 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
                 if expectedresult in actualresult and details == "":
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print "TEST STEP 4:Check XDNS related log messages are present in journalctl logs";
-                    print "ACTUAL RESULT 4: XDNS related log messages are not present in journalctl logs";
+                    print("TEST STEP 4:Check XDNS related log messages are present in journalctl logs");
+                    print("ACTUAL RESULT 4: XDNS related log messages are not present in journalctl logs");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print "TEST STEP 4:Check XDNS related log messages are present in journalctl logs";
-                    print "ACTUAL RESULT 4: XDNS related log messages are present in journalctl logs";
+                    print("TEST STEP 4:Check XDNS related log messages are present in journalctl logs");
+                    print("ACTUAL RESULT 4: XDNS related log messages are present in journalctl logs");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             paramList =["Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS","Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","Device.X_Comcast_com_ParentalControl.ManagedServices.Enable","Device.X_Comcast_com_ParentalControl.ManagedDevices.Enable"]
             i =0;
@@ -204,32 +204,32 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 details = tdkTestObj.getResultDetails();
                 i=i+1;
                 if expectedresult not in actualresult:
-                   break;
+                    break;
             if  expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Should revert XDNS and parental control features"
-                print "ACTUAL RESULT : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP : Should revert XDNS and parental control features")
+                print("ACTUAL RESULT : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Should revert XDNS and parental control features"
-                print "ACTUAL RESULT : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP : Should revert XDNS and parental control features")
+                print("ACTUAL RESULT : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Should disable XDNS and parental control features"
-            print "ACTUAL RESULT 2: %s" %details;
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("TEST STEP 2: Should disable XDNS and parental control features")
+            print("ACTUAL RESULT 2: %s" %details);
+            print("TEST EXECUTION RESULT :FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should get the Enable status of XDNS,Parental Control ManagedSites, Parental Control ManagedServices,Parental Control ManagedDevices"
-        print "ACTUAL RESULT 1:Failed to get Enable status of XDNS,Parental Control ManagedSites , Parental Control ManagedServices ,Parental Control ManagedDevices ";
+        print("TEST STEP 1: Should get the Enable status of XDNS,Parental Control ManagedSites, Parental Control ManagedServices,Parental Control ManagedDevices")
+        print("ACTUAL RESULT 1:Failed to get Enable status of XDNS,Parental Control ManagedSites , Parental Control ManagedServices ,Parental Control ManagedDevices ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

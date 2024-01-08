@@ -95,11 +95,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Moca";
-        print "EXPECTED RESULT 1: Should get the enable status of Moca";
-        print "ACTUAL RESULT 1: Moca Enable status is %s" %mocaInitial;
+        print("TEST STEP 1: Get the enable status of Moca");
+        print("EXPECTED RESULT 1: Should get the enable status of Moca");
+        print("ACTUAL RESULT 1: Moca Enable status is %s" %mocaInitial);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
         #Execute the test case in DUT
@@ -108,116 +108,177 @@ if "SUCCESS" in loadmodulestatus.upper():
         lanmodeInitial = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Get the lanmode";
-           print "EXPECTED RESULT 2: Should get the lanmode";
-           print "ACTUAL RESULT 2: Lanmode is :",lanmodeInitial;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the lanmode");
+            print("EXPECTED RESULT 2: Should get the lanmode");
+            print("ACTUAL RESULT 2: Lanmode is :",lanmodeInitial);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           if lanmodeInitial == "bridge-static":
-              print "The Device is in bridge static mode"
-              tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    	      tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-    	      #Execute the test case in DUT
-    	      tdkTestObj.executeTestCase(expectedresult);
-    	      actualresult = tdkTestObj.getResult();
-    	      mocaStatus_new = tdkTestObj.getResultDetails();
-              if expectedresult in actualresult and mocaStatus_new == "false":
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 4: Get the enable status of Moca";
-                 print "EXPECTED RESULT 4: Should get the enable status of Moca false in bridge-static mode";
-                 print "ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4: Get the enable status of Moca";
-                  print "EXPECTED RESULT 4: Should get the enable status of Moca disabled in bridge-static mode";
-                  print "ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-           else:
-               print "The Device is in router mode"
-               print "Checking if the moca status is true else set it to true"
-               flag = 1
-               if mocaInitial == "false" :
-                  #setting moca status to true
-                  tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                  tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-                  tdkTestObj.addParameter("ParamValue","true");
-                  tdkTestObj.addParameter("Type","boolean");
+            if lanmodeInitial == "bridge-static":
+                print("The Device is in bridge static mode")
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                mocaStatus_new = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult and mocaStatus_new == "false":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the enable status of Moca");
+                    print("EXPECTED RESULT 4: Should get the enable status of Moca false in bridge-static mode");
+                    print("ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Get the enable status of Moca");
+                    print("EXPECTED RESULT 4: Should get the enable status of Moca disabled in bridge-static mode");
+                    print("ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new)
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                print("The Device is in router mode")
+                print("Checking if the moca status is true else set it to true")
+                flag = 1
+                if mocaInitial == "false" :
+                    #setting moca status to true
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+                    tdkTestObj.addParameter("ParamValue","true");
+                    tdkTestObj.addParameter("Type","boolean");
 
-                  #Execute the test case in DUT
-                  tdkTestObj.executeTestCase(expectedresult);
-                  actualresult = tdkTestObj.getResult();
-                  details = tdkTestObj.getResultDetails();
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
 
-                  if expectedresult in actualresult:
-                     flag = 0
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 3:  Setting the moca status to true";
-                     print "EXPECTED RESULT 3: Should set the moca status to true";
-                     print "ACTUAL RESULT 3: %s" %details;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-               else:
-                   flag = 0
-                   print "The Moca status is already set to true"
-
-               if flag == 0:
-                  #setting lan-mode to bridge static
-
-                  tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                  tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-                  tdkTestObj.addParameter("ParamValue","bridge-static");
-                  tdkTestObj.addParameter("Type","string");
-
-
-                  #Execute the test case in DUT
-                  tdkTestObj.executeTestCase(expectedresult);
-                  actualresult = tdkTestObj.getResult();
-                  details = tdkTestObj.getResultDetails();
-
-                  if expectedresult in actualresult:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 4:  Setting the  lanmode to bridge static";
-                     print "EXPECTED RESULT 4: Should set the lanmode to bridge-static";
-                     print "ACTUAL RESULT 4: %s" %details;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                     
-                     obj.setLoadModuleStatus("SUCCESS");
-                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                     tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-                     expectedresult="SUCCESS";
-                     # adding sleep  to reflect status of Moca after changing lan mode
-                     sleep(20);
-                     #Execute the test case in DUT
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     mocaStatus_new  = tdkTestObj.getResultDetails();
-
-
-                     if expectedresult in actualresult and mocaStatus_new == "false":
+                    if expectedresult in actualresult:
+                        flag = 0
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Get the enable status of Moca";
-                        print "EXPECTED RESULT 4: Should get the enable status of Moca false in bridge-static mode";
-                        print "ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new;
+                        print("TEST STEP 3:  Setting the moca status to true");
+                        print("EXPECTED RESULT 3: Should set the moca status to true");
+                        print("ACTUAL RESULT 3: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    flag = 0
+                    print("The Moca status is already set to true")
 
-                        #setting lan-mode to router to verify if the moca status is enabled
+                if flag == 0:
+                    #setting lan-mode to bridge static
 
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+                    tdkTestObj.addParameter("ParamValue","bridge-static");
+                    tdkTestObj.addParameter("Type","string");
+
+
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4:  Setting the  lanmode to bridge static");
+                        print("EXPECTED RESULT 4: Should set the lanmode to bridge-static");
+                        print("ACTUAL RESULT 4: %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        obj.setLoadModuleStatus("SUCCESS");
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                        tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+                        expectedresult="SUCCESS";
+                        # adding sleep  to reflect status of Moca after changing lan mode
+                        sleep(20);
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        mocaStatus_new  = tdkTestObj.getResultDetails();
+
+
+                        if expectedresult in actualresult and mocaStatus_new == "false":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 4: Get the enable status of Moca");
+                            print("EXPECTED RESULT 4: Should get the enable status of Moca false in bridge-static mode");
+                            print("ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            #setting lan-mode to router to verify if the moca status is enabled
+
+                            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+                            tdkTestObj.addParameter("ParamValue","router");
+                            tdkTestObj.addParameter("Type","string");
+
+
+                            #Execute the test case in DUT
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails();
+
+                            if expectedresult in actualresult:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 5:  Setting the  lanmode to router");
+                                print("EXPECTED RESULT 5: Should set the lanmode to router");
+                                print("ACTUAL RESULT 5: %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                                tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+                                # adding sleep  to reflect status of Moca after changing lan mode
+                                sleep(20);
+                                #Execute the test case in DUT
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                mocaStatus_new = tdkTestObj.getResultDetails();
+
+                                if expectedresult in actualresult and mocaStatus_new == "true":
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 6: Get the enable status of Moca");
+                                    print("EXPECTED RESULT 6: Moca status should be enabled in router mode ");
+                                    print("ACTUAL RESULT 6: Moca Enable status is %s" %mocaStatus_new);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 6: Get the enable status of Moca");
+                                    print("EXPECTED RESULT 6: Moca status should be enabled in router mode ");
+                                    print("ACTUAL RESULT 6: Moca Enable status is %s" %mocaStatus_new)
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 5:  Setting the  lanmode to router");
+                                print("EXPECTED RESULT 5: Should set the lanmode to router");
+                                print("ACTUAL RESULT 5: %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Get the enable status of Moca");
+                            print("EXPECTED RESULT 4: Should get the enable status of Moca disabled in bridge-static mode");
+                            print("ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new)
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        #Set lan mode to previous value
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-                        tdkTestObj.addParameter("ParamValue","router");
+                        tdkTestObj.addParameter("ParamValue",lanmodeInitial);
                         tdkTestObj.addParameter("Type","string");
-
 
                         #Execute the test case in DUT
                         tdkTestObj.executeTestCase(expectedresult);
@@ -225,149 +286,88 @@ if "SUCCESS" in loadmodulestatus.upper():
                         details = tdkTestObj.getResultDetails();
 
                         if expectedresult in actualresult:
-                           #Set the result status of execution
-                           tdkTestObj.setResultStatus("SUCCESS");
-                           print "TEST STEP 5:  Setting the  lanmode to router";
-                           print "EXPECTED RESULT 5: Should set the lanmode to router";
-                           print "ACTUAL RESULT 5: %s" %details;
-                           #Get the result of execution
-                           print "[TEST EXECUTION RESULT] : SUCCESS";
-                          
-                           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                           tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-                           # adding sleep  to reflect status of Moca after changing lan mode
-                           sleep(20);
-                           #Execute the test case in DUT
-                           tdkTestObj.executeTestCase(expectedresult);
-                           actualresult = tdkTestObj.getResult();
-                           mocaStatus_new = tdkTestObj.getResultDetails();
-
-                           if expectedresult in actualresult and mocaStatus_new == "true":
-                              tdkTestObj.setResultStatus("SUCCESS");
-                              print "TEST STEP 6: Get the enable status of Moca";
-                              print "EXPECTED RESULT 6: Moca status should be enabled in router mode ";
-        	              print "ACTUAL RESULT 6: Moca Enable status is %s" %mocaStatus_new;
-                              #Get the result of execution
-                              print "[TEST EXECUTION RESULT] : SUCCESS";
-                           else:
-                               #Set the result status of execution
-                               tdkTestObj.setResultStatus("FAILURE");
-                               print "TEST STEP 6: Get the enable status of Moca";
-                               print "EXPECTED RESULT 6: Moca status should be enabled in router mode ";
-                               print "ACTUAL RESULT 6: Moca Enable status is %s" %mocaStatus_new
-                               #Get the result of execution
-                               print "[TEST EXECUTION RESULT] : FAILURE";
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Set the lanmode to previous value");
+                            print("EXPECTED RESULT 5: Should set the lanmode to previous value");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5:  Setting the  lanmode to router";
-                            print "EXPECTED RESULT 5: Should set the lanmode to router";
-                            print "ACTUAL RESULT 5: %s" %details;
+                            print("TEST STEP 5: Set the lanmode to previous value");
+                            print("EXPECTED RESULT 5: Should set the lanmode to previous value");
+                            print("ACTUAL RESULT 5: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                     else:
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+
+
+
+                        #Set moca Enable status  to previous value
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                        tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+                        tdkTestObj.addParameter("ParamValue",mocaInitial);
+                        tdkTestObj.addParameter("Type","boolean");
+
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Set the moca enable state to previous value");
+                            print("EXPECTED RESULT 5: Should set the moca enable state to previous value");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Set the moca enable state  to previous value");
+                            print("EXPECTED RESULT 5: Should set the moca enable state  to previous value");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Get the enable status of Moca";
-                        print "EXPECTED RESULT 4: Should get the enable status of Moca disabled in bridge-static mode";
-                        print "ACTUAL RESULT 4: Moca Enable status is %s" %mocaStatus_new
+                        print("TEST STEP 4:  Setting the  lanmode to bridge static");
+                        print("EXPECTED RESULT 4: Should set the lanmode to bridge-static");
+                        print("ACTUAL RESULT 4: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-
-                     #Set lan mode to previous value
-                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-                     tdkTestObj.addParameter("ParamValue",lanmodeInitial);
-                     tdkTestObj.addParameter("Type","string");
-
-                     #Execute the test case in DUT
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails();
-
-                     if expectedresult in actualresult:
-                        #Set the result status of execution
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Set the lanmode to previous value";
-                        print "EXPECTED RESULT 5: Should set the lanmode to previous value";
-                        print "ACTUAL RESULT 5: %s" %details;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-                     else:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "TEST STEP 5: Set the lanmode to previous value";
-                         print "EXPECTED RESULT 5: Should set the lanmode to previous value";
-                         print "ACTUAL RESULT 5: %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-
-
-
-
-                     #Set moca Enable status  to previous value
-                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                     tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-                     tdkTestObj.addParameter("ParamValue",mocaInitial);
-                     tdkTestObj.addParameter("Type","boolean");
-
-                     #Execute the test case in DUT
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails();
-
-                     if expectedresult in actualresult:
-                        #Set the result status of execution
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Set the moca enable state to previous value";
-                        print "EXPECTED RESULT 5: Should set the moca enable state to previous value";
-                        print "ACTUAL RESULT 5: %s" %details;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-                     else:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "TEST STEP 5: Set the moca enable state  to previous value";
-                         print "EXPECTED RESULT 5: Should set the moca enable state  to previous value";
-                         print "ACTUAL RESULT 5: %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                  else:
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "TEST STEP 4:  Setting the  lanmode to bridge static";
-                      print "EXPECTED RESULT 4: Should set the lanmode to bridge-static";
-                      print "ACTUAL RESULT 4: %s" %details;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] :FAILURE";
-               else:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 1: Set the enable status of Moca to true";
-                   print "EXPECTED RESULT 1: Should set the enable status of Moca to true";
-                   print "ACTUAL RESULT 1: Moca Enable status is %s" %mocaStatus;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] :FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 1: Set the enable status of Moca to true");
+                    print("EXPECTED RESULT 1: Should set the enable status of Moca to true");
+                    print("ACTUAL RESULT 1: Moca Enable status is %s" %mocaStatus);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
 
-	    #Set the result status of execution
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the lanmode";
-            print "EXPECTED RESULT 2: Should get the lanmode";
-            print "ACTUAL RESULT 2: Lanmode is %s" %lanmodeInitial;
+            print("TEST STEP 2: Get the lanmode");
+            print("EXPECTED RESULT 2: Should get the lanmode");
+            print("ACTUAL RESULT 2: Lanmode is %s" %lanmodeInitial);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Moca";
-        print "EXPECTED RESULT 1: Should get the enable status of Moca";
-        print "ACTUAL RESULT 1: Moca Enable status is %s" %mocaStatus;
+        print("TEST STEP 1: Get the enable status of Moca");
+        print("EXPECTED RESULT 1: Should get the enable status of Moca");
+        print("ACTUAL RESULT 1: Moca Enable status is %s" %mocaStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

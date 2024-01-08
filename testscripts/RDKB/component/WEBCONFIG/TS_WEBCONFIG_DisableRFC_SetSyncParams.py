@@ -85,8 +85,8 @@ sysobj.configureTestCase(ip,port,'TS_WEBCONFIG_DisableRFC_SetSyncParams');
 #Get the result of connection with test component and DUT
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 revert = 0;
 if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -105,11 +105,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_RDK_WebConfig.RfcEnable");
@@ -124,11 +124,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             revert =1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set Web Config Enable status to false";
-            print "EXPECTED RESULT 2: Should set Web Config Enable status to false";
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set Web Config Enable status to false");
+            print("EXPECTED RESULT 2: Should set Web Config Enable status to false");
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = pamobj.createTestStep("pam_GetParameterValues");
             tdkTestObj.addParameter("ParamName","Device.X_RDK_WebConfig.ConfigFileNumberOfEntries");
@@ -138,54 +138,54 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             if expectedresult in actualresult and  int(noOfEntries) > 0:
                 noOfEntries = int(noOfEntries);
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the Config file number of entries";
-                print "EXPECTED RESULT 3: Should get the Config file number of entries";
-                print "ACTUAL RESULT 3: Config file number of entries is : %s" %noOfEntries;
+                print("TEST STEP 3: Get the Config file number of entries");
+                print("EXPECTED RESULT 3: Should get the Config file number of entries");
+                print("ACTUAL RESULT 3: Config file number of entries is : %s" %noOfEntries);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 while noOfEntries > 0:
-                      ForceSyncCheck = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".ForceSyncCheck";
-                      SyncCheckOK = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".SyncCheckOK";
-                      paramlist = [ForceSyncCheck,SyncCheckOK];
+                    ForceSyncCheck = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".ForceSyncCheck";
+                    SyncCheckOK = "Device.X_RDK_WebConfig.ConfigFile."+str(noOfEntries)+".SyncCheckOK";
+                    paramlist = [ForceSyncCheck,SyncCheckOK];
 
-                      print "*******Checking if write on following parameters fail with Webconfig RFC Disabled*****";
-                      print paramlist;
-                      for item in  paramlist:
-                          tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
-                          tdkTestObj.addParameter("ParamName",item);
-                          tdkTestObj.addParameter("ParamValue","true");
-                          tdkTestObj.addParameter("Type","boolean");
-                          expectedresult="FAILURE";
-                          #Execute testcase on DUT
-                          tdkTestObj.executeTestCase(expectedresult);
-                          actualresult = tdkTestObj.getResult();
-                          result = tdkTestObj.getResultDetails();
-                          if expectedresult in actualresult:
-                              tdkTestObj.setResultStatus("SUCCESS");
-                              print"Set on %s failed with RFC Webconfig disabled" %item;
-                              print "[TEST EXECUTION RESULT] : SUCCESS";
-                          else:
-                              tdkTestObj.setResultStatus("FAILURE");
-                              print"Set on %s is success with RFC Webconfig disabled" %item;
-                              print "[TEST EXECUTION RESULT] : FAILURE";
-                      noOfEntries = noOfEntries -1;
+                    print("*******Checking if write on following parameters fail with Webconfig RFC Disabled*****");
+                    print(paramlist);
+                    for item in  paramlist:
+                        tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
+                        tdkTestObj.addParameter("ParamName",item);
+                        tdkTestObj.addParameter("ParamValue","true");
+                        tdkTestObj.addParameter("Type","boolean");
+                        expectedresult="FAILURE";
+                        #Execute testcase on DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        result = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Set on %s failed with RFC Webconfig disabled" %item);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Set on %s is success with RFC Webconfig disabled" %item);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    noOfEntries = noOfEntries -1;
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the Config file number of entries";
-                print "EXPECTED RESULT 3: Should get the Config file number of entries";
-                print "ACTUAL RESULT 3: Config file number of entries is : %s" %noOfEntries;
+                print("TEST STEP 3: Get the Config file number of entries");
+                print("EXPECTED RESULT 3: Should get the Config file number of entries");
+                print("ACTUAL RESULT 3: Config file number of entries is : %s" %noOfEntries);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             revert =0;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set Web Config Enable status to false";
-            print "EXPECTED RESULT 2: Should set Web Config Enable status to false";
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set Web Config Enable status to false");
+            print("EXPECTED RESULT 2: Should set Web Config Enable status to false");
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if revert ==1 :
             tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
@@ -200,31 +200,31 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Revert the Web Config Enable status to previous"
-                print "EXPECTED RESULT 4: Should revert Web Config status to previous"
-                print "ACTUAL RESULT 4: %s" %result;
+                print("TEST STEP 4: Revert the Web Config Enable status to previous")
+                print("EXPECTED RESULT 4: Should revert Web Config status to previous")
+                print("ACTUAL RESULT 4: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert Web Config Enable status to previous"
-                print "EXPECTED RESULT 4: Should revert  Web Config Enable status to previous"
-                print "ACTUAL RESULT 4: %s" %result;
+                print("TEST STEP 4: Revert Web Config Enable status to previous")
+                print("EXPECTED RESULT 4: Should revert  Web Config Enable status to previous")
+                print("ACTUAL RESULT 4: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

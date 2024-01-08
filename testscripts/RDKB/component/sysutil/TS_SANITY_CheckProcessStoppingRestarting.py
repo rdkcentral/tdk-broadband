@@ -93,33 +93,33 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_CheckProcessStoppingRestarting');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-   #Set the result status of execution
-   obj.setLoadModuleStatus("SUCCESS");
-   logFile = "/rdklogs/logs/systemd_processRestart.log";
-   logMsg ="Stopping/Restarting";
-   print "TEST STEP 1: Checking if Stopping/Restarting processes log message is present in systemd_processRestart.log";
-   query="grep -rin \"%s\" \"%s\"| grep -v \"rdkfwupgrader\" | grep -v \"snmpd\" | grep -v \"snmp_v2_subagent\" | grep -v \"Xcal-Device Service\"" %(logMsg,logFile);
-   print "query:%s" %query
-   tdkTestObj = obj.createTestStep('ExecuteCmd');
-   tdkTestObj.addParameter("command", query)
-   expectedresult="SUCCESS";
-   tdkTestObj.executeTestCase(expectedresult);
-   actualresult = tdkTestObj.getResult();
-   details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-   if (len(details) != 0)  and  logMsg in details:
-      tdkTestObj.setResultStatus("FAILURE");
-      print "EXPECTED RESULT 1 : no processes should restart/stop";
-      print "ACTUAL RESULT 1 :Search Result :%s "%details;
-      print "[TEST EXECUTION RESULT] : FAILURE";
-   else:
-       print "EXPECTED RESULT 1 : no processes should restart/stop";
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "ACTUAL RESULT 1 :Search Result :%s "%details;
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-   obj.unloadModule("sysutil");
+    #Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
+    logFile = "/rdklogs/logs/systemd_processRestart.log";
+    logMsg ="Stopping/Restarting";
+    print("TEST STEP 1: Checking if Stopping/Restarting processes log message is present in systemd_processRestart.log");
+    query="grep -rin \"%s\" \"%s\"| grep -v \"rdkfwupgrader\" | grep -v \"snmpd\" | grep -v \"snmp_v2_subagent\" | grep -v \"Xcal-Device Service\"" %(logMsg,logFile);
+    print("query:%s" %query)
+    tdkTestObj = obj.createTestStep('ExecuteCmd');
+    tdkTestObj.addParameter("command", query)
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+    if (len(details) != 0)  and  logMsg in details:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("EXPECTED RESULT 1 : no processes should restart/stop");
+        print("ACTUAL RESULT 1 :Search Result :%s "%details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        print("EXPECTED RESULT 1 : no processes should restart/stop");
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("ACTUAL RESULT 1 :Search Result :%s "%details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

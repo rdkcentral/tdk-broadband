@@ -97,42 +97,40 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHZ_PublicWiFi_GetModesSupported'
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
-   obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-   #Get the modes supported for 2.4GHZ public wifi
-   tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-   tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.5.Security.ModesSupported")
-   expectedresult = "SUCCESS"
-   tdkTestObj.executeTestCase(expectedresult);
-   actualresult = tdkTestObj.getResult();
-   details = tdkTestObj.getResultDetails();
-   Mode = details.split("VALUE:")[1].split(' ')[0].split(',');
-   expectedModes = ["None", "WEP-64", "WEP-128", "WPA-Personal","WPA2-Personal","WPA-WPA2-Personal","WPA-Enterprise","WPA2-Enterprise","WPA-WPA2-Enterprise","WPA3-Personal","WPA3-Enterprise","WPA3-Personal-Transition"]
+    #Get the modes supported for 2.4GHZ public wifi
+    tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+    tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.5.Security.ModesSupported")
+    expectedresult = "SUCCESS"
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    Mode = details.split("VALUE:")[1].split(' ')[0].split(',');
+    expectedModes = ["None", "WEP-64", "WEP-128", "WPA-Personal","WPA2-Personal","WPA-WPA2-Personal","WPA-Enterprise","WPA2-Enterprise","WPA-WPA2-Enterprise","WPA3-Personal","WPA3-Enterprise","WPA3-Personal-Transition"]
 
-   #Check if the get modes are all available in expectedModes
-   result =  all(elem in expectedModes for elem in Mode)
-   if result and expectedresult in actualresult:
+    #Check if the get modes are all available in expectedModes
+    result =  all(elem in expectedModes for elem in Mode)
+    if result and expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 3: Get the modes supported";
-        print "EXPECTED RESULT 3: Should get the supported Modes";
-        print "ACTUAL RESULT 3: Supported Mode is %s" %Mode;
+        print("TEST STEP 3: Get the modes supported");
+        print("EXPECTED RESULT 3: Should get the supported Modes");
+        print("ACTUAL RESULT 3: Supported Mode is %s" %Mode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-   else:
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 3: Get the modes supported";
-        print "EXPECTED RESULT 3: Should get the supported Modes";
-        print "ACTUAL RESULT 3: Supported Mode is %s" %Mode;
+        print("TEST STEP 3: Get the modes supported");
+        print("EXPECTED RESULT 3: Should get the supported Modes");
+        print("ACTUAL RESULT 3: Supported Mode is %s" %Mode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
-   obj.unloadModule("wifiagent");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("wifiagent");
 
 else:
-   print "Failed to load wifi module";
-   obj.setLoadModuleStatus("FAILURE");
-   print "Module loading failed";
-
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

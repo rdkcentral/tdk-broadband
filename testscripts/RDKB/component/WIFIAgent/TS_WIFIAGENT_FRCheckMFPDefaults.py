@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_FRCheckMFPDefaults');
 
 #Get the result of connection with test component
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,11 +96,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
@@ -113,72 +113,72 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and details !="":
             details=details.split("VALUE:")[1].split(' ')[0];
             if details == "false":
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 2: Get the enable status of Feature MFP Config";
-               print "EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false";
-               print "ACTUAL RESULT 2: %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Get the enable status of Feature MFP Config");
+                print("EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false");
+                print("ACTUAL RESULT 2: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               print "TEST STEP 3 : Check if MFP Access Points have Optional and Disabled as their values alternatively";
-               i= 1;
-               while i <= 16:
-                     if (i % 2) == 0:
+                print("TEST STEP 3 : Check if MFP Access Points have Optional and Disabled as their values alternatively");
+                i= 1;
+                while i <= 16:
+                    if (i % 2) == 0:
                         value = "Disabled";
-                     else:
-                         value = "Optional";
+                    else:
+                        value = "Optional";
 
-                     tdkTestObj = obj.createTestStep("WIFIAgent_Get");
-                     tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%i.Security.MFPConfig"%i);
-                     expectedresult="SUCCESS";
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails();
+                    tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                    tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.%i.Security.MFPConfig"%i);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
 
-                     if expectedresult in actualresult and details != "":
-                         details=details.split("VALUE:")[1].split(' ')[0];
-                         if details in value:
-                            print "RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value in a sequence"%(i,details);
+                    if expectedresult in actualresult and details != "":
+                        details=details.split("VALUE:")[1].split(' ')[0];
+                        if details in value:
+                            print("RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value in a sequence"%(i,details));
                             i=i+1;
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-                         else:
-                              print "RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value not in a sequence"%(i,details);
-                              tdkTestObj.setResultStatus("FAILURE");
-                              print "[TEST EXECUTION RESULT] : FAILURE";
-                              break;
-                     else:
-                         print "RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value not in a sequence"%(i,details);
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                         break;
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            print("RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value not in a sequence"%(i,details));
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                            break;
+                    else:
+                        print("RESULT : Device.WiFi.AccessPoint.%i.Security.MFPConfig has %s expected value not in a sequence"%(i,details));
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        break;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the enable status of Feature MFP Config";
-                print "EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Get the enable status of Feature MFP Config");
+                print("EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the enable status of Feature MFP Config";
-            print "EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Get the enable status of Feature MFP Config");
+            print("EXPECTED RESULT 2: Should get enable status of Feature MFP Config as false");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "FAILURE to load wifiagent module";
+    print("FAILURE to load wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

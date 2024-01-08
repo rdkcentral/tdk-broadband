@@ -83,8 +83,8 @@
   </script_tags>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
@@ -99,7 +99,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     snmpProcess= "sh %s/tdk_utility.sh parseConfigFile SNMP_PROCESS" %TDK_PATH;
-    print snmpProcess;
+    print(snmpProcess);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", snmpProcess);
     tdkTestObj.executeTestCase(expectedresult);
@@ -108,39 +108,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     snmpProcessList = snmpProcessList.replace("\\n", "");
     if "Invalid Argument passed" not in snmpProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of SNMP process";
-        print "EXPECTED RESULT 1: Should Get the list of SNMP Process";
-        print "ACTUAL RESULT 1: SNMP process: %s" %snmpProcessList;
+        print("TEST STEP 1: Get the list of SNMP process");
+        print("EXPECTED RESULT 1: Should Get the list of SNMP Process");
+        print("ACTUAL RESULT 1: SNMP process: %s" %snmpProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
-	snmpProcessList = snmpProcessList.split(",");
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        snmpProcessList = snmpProcessList.split(",");
         for item in snmpProcessList:
-	    command = "pidof %s" %item
+            command = "pidof %s" %item
             tdkTestObj.addParameter("command", command);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
-	    details = details.replace("\\n", "");
-	    if expectedresult in actualresult and "" != details:
-		tdkTestObj.setResultStatus("SUCCESS");
-	        print "Process Name : %s" %item;
-		print "PID : %s" %details;
-		print "%s with process ID %s is running" %(item,details)
-	 	print "[TEST EXECUTION RESULT] : SUCCESS"
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "Process Name : %s" %item
-		print "%s is not running" %item
-		print "[TEST EXECUTION RESULT] : FAILURE"
+            details = details.replace("\\n", "");
+            if expectedresult in actualresult and "" != details:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("Process Name : %s" %item);
+                print("PID : %s" %details);
+                print("%s with process ID %s is running" %(item,details))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("Process Name : %s" %item)
+                print("%s is not running" %item)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of SNMP process";
-        print "EXPECTED RESULT 1: Should Get the list of SNMP Process";
-        print "ACTUAL RESULT 1: SNMP process: %s" %snmpProcessList;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the list of SNMP process");
+        print("EXPECTED RESULT 1: Should Get the list of SNMP Process");
+        print("ACTUAL RESULT 1: SNMP process: %s" %snmpProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

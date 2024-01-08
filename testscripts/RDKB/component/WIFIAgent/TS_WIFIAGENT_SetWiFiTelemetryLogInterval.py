@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_SetWiFiTelemetryLogInterval');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,25 +113,25 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current telemetry LogInterval value";
-        print "EXPECTED RESULT 1: Should get the current  telemetry LogInterval Value";
+        print("TEST STEP 1: Get the current telemetry LogInterval value");
+        print("EXPECTED RESULT 1: Should get the current  telemetry LogInterval Value");
         orgLogInterval = int(details.split("VALUE:")[1].split(' ')[0]);
-	print "ACTUAL RESULT 1: Current  telemetry LogInterval value is  %s" %orgLogInterval
+        print("ACTUAL RESULT 1: Current  telemetry LogInterval value is  %s" %orgLogInterval)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Change LogInterval value
-	if orgLogInterval > 3540:
-	    print "setLogInterval = orgLogInterval - 60"
+        if orgLogInterval > 3540:
+            print("setLogInterval = orgLogInterval - 60")
             setLogInterval = int(orgLogInterval) - 60;
-	else:
-	    print "setLogInterval = orgLogInterval + 60"
+        else:
+            print("setLogInterval = orgLogInterval + 60")
             setLogInterval = int(orgLogInterval) + 60;
 
-        print "setLogInterval Value to be set is %s"%setLogInterval;
+        print("setLogInterval Value to be set is %s"%setLogInterval);
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval")
-	tdkTestObj.addParameter("paramValue",str(setLogInterval))
-	tdkTestObj.addParameter("paramType","int")
+        tdkTestObj.addParameter("paramValue",str(setLogInterval))
+        tdkTestObj.addParameter("paramType","int")
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
@@ -139,35 +139,35 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set Telemetry LogInterval Value";
-            print "EXPECTED RESULT 2: Should set new Telemetry LogInterval value";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set Telemetry LogInterval Value");
+            print("EXPECTED RESULT 2: Should set new Telemetry LogInterval value");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    #check if LogInterval value is set
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            #check if LogInterval value is set
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval")
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-	    newLogInterval =  int(details.split("VALUE:")[1].split(' ')[0]);
+            newLogInterval =  int(details.split("VALUE:")[1].split(' ')[0]);
 
-	    if expectedresult in actualresult and newLogInterval == setLogInterval:
+            if expectedresult in actualresult and newLogInterval == setLogInterval:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if  telemetry LogInterval value is set to new value"
-                print "EXPECTED RESULT 3:  Telemetry LogInterval value should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if  telemetry LogInterval value is set to new value")
+                print("EXPECTED RESULT 3:  Telemetry LogInterval value should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if  telemetry LogInterval value is set to new value"
-                print "EXPECTED RESULT 3:  Telemetry LogInterval value should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if  telemetry LogInterval value is set to new value")
+                print("EXPECTED RESULT 3:  Telemetry LogInterval value should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #change LogIntervalvalue state to previous one
+            #change LogIntervalvalue state to previous one
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval")
             tdkTestObj.addParameter("paramValue",str(orgLogInterval))
@@ -179,36 +179,36 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Restore initial  telemetry LogInterval value";
-                print "EXPECTED RESULT 4: Should restore initial  telemetry LogInterval value";
-                print "ACTUAL RESULT 4: Details is %s " %details;
+                print("TEST STEP 4: Restore initial  telemetry LogInterval value");
+                print("EXPECTED RESULT 4: Should restore initial  telemetry LogInterval value");
+                print("ACTUAL RESULT 4: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Restore initial  telemetry LogInterval value";
-                print "EXPECTED RESULT 4: Should restore initial  telemetry LogInterval value";
-                print "ACTUAL RESULT 4: Details is %s " %details;
+                print("TEST STEP 4: Restore initial  telemetry LogInterval value");
+                print("EXPECTED RESULT 4: Should restore initial  telemetry LogInterval value");
+                print("ACTUAL RESULT 4: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable LogInterval telemetry markers for  Home Security access points";
-            print "TEST STEP 2: Set Telemetry LogInterval Value";
-            print "EXPECTED RESULT 2: Should set new Telemetry LogInterval value";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Enable LogInterval telemetry markers for  Home Security access points");
+            print("TEST STEP 2: Set Telemetry LogInterval Value");
+            print("EXPECTED RESULT 2: Should set new Telemetry LogInterval value");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current  telemetry LogInterval value";
-        print "EXPECTED RESULT 1: Should get the current  telemetry LogInterval value";
-        print "ACTUAL RESULT 1: Details is %s" %details;
+        print("TEST STEP 1: Get the current  telemetry LogInterval value");
+        print("EXPECTED RESULT 1: Should get the current  telemetry LogInterval value");
+        print("ACTUAL RESULT 1: Details is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

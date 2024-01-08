@@ -97,7 +97,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_EPON_GetDPoE_OnuLinkStatistics_Entries')
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -114,38 +114,38 @@ if "SUCCESS" in result.upper() :
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             entryCount = parsedResponse[1]
             entryCount = int(entryCount)
 
-            print "OnuLinkStatisticsNumberOfEntries: ",entryCount
+            print("OnuLinkStatisticsNumberOfEntries: ",entryCount)
             flag = "true"
             for i in range(1, entryCount+1):
                 queryParam = {"name":"Device.DPoE.DPoE_OnuLinkStatistics.%s.rxUnicastFrames,Device.DPoE.DPoE_OnuLinkStatistics.%s.txUnicastFrames,Device.DPoE.DPoE_OnuLinkStatistics.%s.rxFrameTooShort,Device.DPoE.DPoE_OnuLinkStatistics.%s.rxFrame64" %(i,i,i,i)}
                 queryResponse = webpaQuery(obj, queryParam)
                 parsedResponse = parseWebpaResponse(queryResponse, 4)
                 if "SUCCESS" not in parsedResponse[0]:
-            	    flag = "false"
-            	    break;
+                    flag = "false"
+                    break;
             if flag == "true" :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                print "The no: of entries in Device.DPoE.DPoE_OnuLinkStatistics table is equal to Device.DPoE.DPoE_OnuLinkStatisticsNumberOfEntries"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("The no: of entries in Device.DPoE.DPoE_OnuLinkStatistics table is equal to Device.DPoE.DPoE_OnuLinkStatisticsNumberOfEntries")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
-                print "The no: of entries in Device.DPoE.DPoE_OnuLinkStatistics table is not equal to Device.DPoE.DPoE_OnuLinkStatisticsNumberOfEntries"
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("The no: of entries in Device.DPoE.DPoE_OnuLinkStatistics table is not equal to Device.DPoE.DPoE_OnuLinkStatisticsNumberOfEntries")
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

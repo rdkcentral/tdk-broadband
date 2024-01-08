@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_EPON_GetDPoE_DynamicMacAndCheck');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -114,34 +114,34 @@ if "SUCCESS" in result.upper() :
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             mac1 = parsedResponse[1]
 
             tdkTestObj.addParameter("command", "ifconfig erouter0 | grep HWaddr | awk '{ print $5 }' | tr '\r\n' ' '")
             tdkTestObj.executeTestCase("SUCCESS");
             actualresult = tdkTestObj.getResult();
             mac2 = tdkTestObj.getResultDetails().strip();
-            print "MAC from ifconfig: ", mac2
+            print("MAC from ifconfig: ", mac2)
 
             if expectedresult in actualresult and mac2.lower() in mac1:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                print "MAC address from EPON param and erouter0 interface are the same"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("MAC address from EPON param and erouter0 interface are the same")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
-                print "MAC address from EPON param and erouter0 interface are not the same"
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("MAC address from EPON param and erouter0 interface are not the same")
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

@@ -65,7 +65,7 @@ pam</test_stub_interface>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkbVariables import *;
 
@@ -101,50 +101,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %xdnsEnable;
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %xdnsEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv4");
-	#Execute the test case in DUT
+        tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv4");
+        #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult1 = tdkTestObj.getResult();
         defIPV4 = tdkTestObj.getResultDetails();
-	defIPV4 = defIPV4.replace("\\n", "");
+        defIPV4 = defIPV4.replace("\\n", "");
 
         tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv6");
         #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult2 = tdkTestObj.getResult();
         defIPV6 = tdkTestObj.getResultDetails();
-	defIPV6 = defIPV6.replace("\\n", "");
+        defIPV6 = defIPV6.replace("\\n", "");
 
         tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceTag");
         #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult3 = tdkTestObj.getResult();
         defTag = tdkTestObj.getResultDetails();
-	defTag = defTag.replace("\\n", "");
+        defTag = defTag.replace("\\n", "");
 
-	if expectedresult in (actualresult1 and actualresult2 and actualresult3):
-	    #Set the result status of execution
+        if expectedresult in (actualresult1 and actualresult2 and actualresult3):
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the default params of XDNS";
-            print "EXPECTED RESULT 2: Should get the default params of XDNS";
-            print "ACTUAL RESULT 2: Default params values %s %s %s" %(defIPV4,defIPV6,defTag);
+            print("TEST STEP 2: Get the default params of XDNS");
+            print("EXPECTED RESULT 2: Should get the default params of XDNS");
+            print("ACTUAL RESULT 2: Default params values %s %s %s" %(defIPV4,defIPV6,defTag));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    if '' in (defIPV4,defIPV6,defTag):
-		tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetMultiple');
-		tdkTestObj.addParameter("paramList","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv4|%s|string|Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv6|%s|string|Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceTag|empty|string"%(XDNS_DEFAULT_IPV4,XDNS_DEFAULT_IPV6));	
-		tdkTestObj.executeTestCase(expectedresult);
+            if '' in (defIPV4,defIPV6,defTag):
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetMultiple');
+                tdkTestObj.addParameter("paramList","Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv4|%s|string|Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceDnsIPv6|%s|string|Device.X_RDKCENTRAL-COM_XDNS.DefaultDeviceTag|empty|string"%(XDNS_DEFAULT_IPV4,XDNS_DEFAULT_IPV6));
+                tdkTestObj.executeTestCase(expectedresult);
                 setresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-	    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS");
             tdkTestObj.addParameter("ParamValue","true");
             tdkTestObj.addParameter("Type","bool");
@@ -155,18 +155,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-	    if expectedresult  and actualresult:
-	        #Set the result status of execution
+            if expectedresult  and actualresult:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set the enable status of XDNS as true";
-                print "EXPECTED RESULT 3: Should enable XDNS";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set the enable status of XDNS as true");
+                print("EXPECTED RESULT 3: Should enable XDNS");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 # Check whether the process CcspXdnsSsp went down on enabling XDns
                 query="sh %s/tdk_platform_utility.sh checkProcess CcspXdnsSsp" %TDK_PATH
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
@@ -175,29 +175,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 tdkTestObj.executeTestCase("SUCCESS");
                 actualresult = tdkTestObj.getResult();
                 pid = tdkTestObj.getResultDetails().strip()
-                print "CcspXdnsSsp PID: %s" %pid
+                print("CcspXdnsSsp PID: %s" %pid)
 
                 if expectedresult in actualresult and pid:
-                    print "TEST STEP 4:Check if CcspXdnsSsp process went down on enabling Xdns"
-                    print "EXPECTED RESULT 4: CcspXdnsSsp should be running";
-                    print "ACTUAL RESULT 4: CcspXdnsSsp process is running"
+                    print("TEST STEP 4:Check if CcspXdnsSsp process went down on enabling Xdns")
+                    print("EXPECTED RESULT 4: CcspXdnsSsp should be running");
+                    print("ACTUAL RESULT 4: CcspXdnsSsp process is running")
                     tdkTestObj.setResultStatus("SUCCESS");
                 else:
-                    print "TEST STEP 4:Check if CcspXdnsSsp process went down on enabling Xdns"
-                    print "EXPECTED RESULT 4: CcspXdnsSsp should be running";
-                    print "ACTUAL RESULT 4: CcspXdnsSsp process is not running"
+                    print("TEST STEP 4:Check if CcspXdnsSsp process went down on enabling Xdns")
+                    print("EXPECTED RESULT 4: CcspXdnsSsp should be running");
+                    print("ACTUAL RESULT 4: CcspXdnsSsp process is not running")
                     tdkTestObj.setResultStatus("FAILURE");
-	    else:
-	        #Set the result status of execution
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set the enable status of XDNS as true";
-                print "EXPECTED RESULT 3: Should enable XDNS";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set the enable status of XDNS as true");
+                print("EXPECTED RESULT 3: Should enable XDNS");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #Revert the value of XDNS Enable
-	    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            #Revert the value of XDNS Enable
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS");
             tdkTestObj.addParameter("ParamValue",xdnsEnable);
             tdkTestObj.addParameter("Type","bool");
@@ -211,36 +211,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Revert the enable status of XDNS ";
-                print "EXPECTED RESULT : Should revert XDNS status to previous value";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP : Revert the enable status of XDNS ");
+                print("EXPECTED RESULT : Should revert XDNS status to previous value");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Revert the enable status of XDNS";
-                print "EXPECTED RESULT : Should revert XDNS status to previous value";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP : Revert the enable status of XDNS");
+                print("EXPECTED RESULT : Should revert XDNS status to previous value");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the default params of XDNS";
-            print "EXPECTED RESULT 2: Should get the default params of XDNS";
-            print "ACTUAL RESULT 2: Default params values %s %s %s" %(defIPV4,defIPV6,defTag);
+            print("TEST STEP 2: Get the default params of XDNS");
+            print("EXPECTED RESULT 2: Should get the default params of XDNS");
+            print("ACTUAL RESULT 2: Default params values %s %s %s" %(defIPV4,defIPV6,defTag));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %xdnsEnable
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %xdnsEnable)
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

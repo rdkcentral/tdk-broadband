@@ -38,7 +38,7 @@
     <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
-  </box_types>  
+  </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
@@ -82,8 +82,8 @@ obj1.configureTestCase(ip,port,'TS_SANITY_CheckForLANInitStartAndComplete_onFR')
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -103,10 +103,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult and details !="":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Check if log message LAN init start is logged";
-            print "EXPECTED RESULT 2: LAN init start log message should be logged";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2 : Check if log message LAN init start is logged");
+            print("EXPECTED RESULT 2: LAN init start log message should be logged");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "grep -rin \"LAN_init_complete\" /rdklogs/logs/";
             tdkTestObj.addParameter("command",cmd);
@@ -133,35 +133,35 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult and details !="":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 : Check if log message LAN init complete is logged";
-                print "EXPECTED RESULT 3: LAN init complete log message should be logged";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3 : Check if log message LAN init complete is logged");
+                print("EXPECTED RESULT 3: LAN init complete log message should be logged");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 : Check if log message LAN init complete is logged";
-                print "EXPECTED RESULT 3: LAN init complete log message should be logged";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3 : Check if log message LAN init complete is logged");
+                print("EXPECTED RESULT 3: LAN init complete log message should be logged");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if log message LAN init start is logged";
-            print "EXPECTED RESULT 2: LAN init start log message should be logged";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Check if log message LAN init start is logged");
+            print("EXPECTED RESULT 2: LAN init start log message should be logged");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("sysutil");
     obj1.unloadModule("pam");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

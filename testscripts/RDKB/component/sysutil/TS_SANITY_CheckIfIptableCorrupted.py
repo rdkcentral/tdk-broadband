@@ -38,7 +38,7 @@
     <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
-  </box_types>  
+  </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
@@ -90,39 +90,39 @@ if "SUCCESS" in loadmodulestatus1.upper():
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and details!= "":
         #Set the result status of execution
-        print "TEST STEP 1: Check if log files have log message for iptables corrupted"
-        print "EXPECTED RESULT 1: Log files should not have log message for iptables corrupted";
-	print "ACTUAL RESULT 1: log message found :",details;
+        print("TEST STEP 1: Check if log files have log message for iptables corrupted")
+        print("EXPECTED RESULT 1: Log files should not have log message for iptables corrupted");
+        print("ACTUAL RESULT 1: log message found :",details);
 
-   	tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", "grep -rin \"restarting firewall\" /rdklogs/logs/");
         expectedresult="SUCCESS";
         #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult and details!= "":
-	    tdkTestObj.setResultStatus("SUCCESS");
+        if expectedresult in actualresult and details!= "":
+            tdkTestObj.setResultStatus("SUCCESS");
             #Set the result status of execution
-            print "TEST STEP 2: Check if firewall restarted as iptable was corrupted"
-            print "EXPECTED RESULT 2: firewall should restart as iptable was corrupted";
-	    print "ACTUAL RESULT 2: Search result is :",details;
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Check if firewall restarted as iptable was corrupted")
+            print("EXPECTED RESULT 2: firewall should restart as iptable was corrupted");
+            print("ACTUAL RESULT 2: Search result is :",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if firewall restarted as iptable was corrupted"
-            print "EXPECTED RESULT 2: firewall should restart as iptable was corrupted";
-            print "ACTUAL RESULT 2: search result is :",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Check if firewall restarted as iptable was corrupted")
+            print("EXPECTED RESULT 2: firewall should restart as iptable was corrupted");
+            print("ACTUAL RESULT 2: search result is :",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-	tdkTestObj.setResultStatus("SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
         #Set the result status of execution
-        print "TEST STEP 1: Check if log files have log message for iptables corrupted"
-        print "EXPECTED RESULT 1: Log files should not have log message for iptables corrupted";
-	print "ACTUAL RESULT 1: log message not found:",details;
-	print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Check if log files have log message for iptables corrupted")
+        print("EXPECTED RESULT 1: Log files should not have log message for iptables corrupted");
+        print("ACTUAL RESULT 1: log message not found:",details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

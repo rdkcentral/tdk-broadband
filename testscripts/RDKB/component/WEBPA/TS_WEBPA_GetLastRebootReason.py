@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_GetLastRebootReason');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -110,44 +110,44 @@ if "SUCCESS" in result.upper() :
     if "SUCCESS" in preRequisiteStatus:
 
         #set RebootDevice value
-        print "TEST STEP 1: Reboot the device via webpa "
+        print("TEST STEP 1: Reboot the device via webpa ")
         queryParam = {"name":"Device.X_CISCO_COM_DeviceControl.RebootDevice","value":"Device","dataType":0}
         queryResponse = webpaQuery(obj, queryParam, "set")
 
         parsedResponse = parseWebpaResponse(queryResponse, 1,"set")
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0]:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
-	    #get the last Reboot Reason
-	    print "TEST STEP 2: Get the last Reboot Reason value"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            #get the last Reboot Reason
+            print("TEST STEP 2: Get the last Reboot Reason value")
             queryParam = {"name":"Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason"}
             queryResponse = webpaQuery(obj, queryParam)
             parsedResponse = parseWebpaResponse(queryResponse, 1)
             tdkTestObj.executeTestCase("SUCCESS");
             if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
-	      RebootReason= parsedResponse[1];
-	      print "last Reboot Reason is : ", RebootReason
-              if RebootReason == "webpa-reboot":
-	        tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-              else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                RebootReason= parsedResponse[1];
+                print("last Reboot Reason is : ", RebootReason)
+                if RebootReason == "webpa-reboot":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
-       tdkTestObj.setResultStatus("FAILURE");
-       print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

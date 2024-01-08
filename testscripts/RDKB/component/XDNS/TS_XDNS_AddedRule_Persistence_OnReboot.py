@@ -94,14 +94,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : %s" %actualresult);
         temp = details.split(':');
         instance = temp[1];
-        if (instance > 0):
-            print "INSTANCE VALUE: %s" %instance
+        if (int(instance) > 0):
+            print("INSTANCE VALUE: %s" %instance)
 
             #Set dummy values to each namespace in the table
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -111,23 +111,23 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Reboot the device
-		obj.initiateReboot();
-		sleep(300)
+                obj.initiateReboot();
+                sleep(300)
                 #Getting the number of instances
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get");
                 tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTableNumberOfEntries");
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                print "Number of XDNS instance: %s" %details
-		noOfInstance=int(details);
-	        noOfInstance=noOfInstance+1;
+                print("Number of XDNS instance: %s" %details)
+                noOfInstance=int(details);
+                noOfInstance=noOfInstance+1;
 
                 #Loop to know the instance number of the XDNS rule added
                 for instances in range (1,noOfInstance):
@@ -138,80 +138,74 @@ if "SUCCESS" in loadmodulestatus.upper():
                     details2 = tdkTestObj.getResultDetails().strip().replace("\\n","");
                     setValue =  "a:b:c:d";
                     if details2 == setValue:
-		       inst=instances;
-                       break;
+                        inst=instances;
+                        break;
 
-		print inst;
+                print(inst);
 
 
                 if inst != "":
-		   #Check if the added rule is  persistent or not
-            	   tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get")
-            	   tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %inst);
-            	   tdkTestObj.executeTestCase(expectedresult);
-            	   actualresult = tdkTestObj.getResult();
-            	   if expectedresult in actualresult:
-		      tdkTestObj.setResultStatus("SUCCESS");
-		      print "TEST STEP 3:Check if the  added rule persists on reboot"
-		      print "EXPECTED RESULT 3: The added rule must persist on reboot"
-		      print "ACTUAL RESULT 3 : The added rule is not deleted after reboot"
-		      print "TEST EXECUTION RESULT : SUCCESS"
+                    #Check if the added rule is  persistent or not
+                    tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get")
+                    tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %inst);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 3:Check if the  added rule persists on reboot")
+                        print("EXPECTED RESULT 3: The added rule must persist on reboot")
+                        print("ACTUAL RESULT 3 : The added rule is not deleted after reboot")
+                        print("TEST EXECUTION RESULT : SUCCESS")
 
-		      #Delete the added row
-            	      tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
-            	      tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %inst);
-            	      expectedresult = "SUCCESS";
-            	      tdkTestObj.executeTestCase(expectedresult);
-            	      actualresult = tdkTestObj.getResult();
-            	      details = tdkTestObj.getResultDetails();
-            	      if expectedresult in actualresult:
-            	         #Set the result status of execution
-            	         tdkTestObj.setResultStatus("SUCCESS");
-            	         print "[TEST STEP ]: Deleting the added rule";
-            	         print "[EXPECTED RESULT ]: Should delete the added rule";
-            	         print "[ACTUAL RESULT]: %s" %details;
-            	         print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            	         print "Added table is deleted successfully\n"
-            	      else:
-            	          tdkTestObj.setResultStatus("FAILURE");
-            	          print "[TEST STEP ]: Deleting the added rule";
-            	          print "[EXPECTED RESULT ]: Should delete the added rule";
-            	          print "[ACTUAL RESULT]: %s" %details;
-            	          print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            	          print "Added table could not be deleted\n"
-		   else:
-		       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 3:Check if the  added rule persists on reboot"
-                       print "EXPECTED RESULT 3: The added rule must persist on reboot"
-                       print "ACTUAL RESULT 3 : The added rule is deleted after reboot"
-                       print "TEST EXECUTION RESULT : FAILURE"
+                        #Delete the added row
+                        tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
+                        tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %inst);
+                        expectedresult = "SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST STEP ]: Deleting the added rule");
+                            print("[EXPECTED RESULT ]: Should delete the added rule");
+                            print("[ACTUAL RESULT]: %s" %details);
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                            print("Added table is deleted successfully\n")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST STEP ]: Deleting the added rule");
+                            print("[EXPECTED RESULT ]: Should delete the added rule");
+                            print("[ACTUAL RESULT]: %s" %details);
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                            print("Added table could not be deleted\n")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 3:Check if the  added rule persists on reboot")
+                        print("EXPECTED RESULT 3: The added rule must persist on reboot")
+                        print("ACTUAL RESULT 3 : The added rule is deleted after reboot")
+                        print("TEST EXECUTION RESULT : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "EXPECTED RESULT : Should retrive the instance number";
-                    print "ACTUAL RESULT :Couldnt retrive the instance number";
-                    print "TEST EXECUTION RESULT : FAILURE"
+                    print("EXPECTED RESULT : Should retrive the instance number");
+                    print("ACTUAL RESULT :Couldnt retrive the instance number");
+                    print("TEST EXECUTION RESULT : FAILURE")
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
-
-
+    print("Module loading failed");

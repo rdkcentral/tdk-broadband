@@ -62,8 +62,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -91,22 +91,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and "false" in details:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS as false";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %details;
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS as false");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS as false";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS as false");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

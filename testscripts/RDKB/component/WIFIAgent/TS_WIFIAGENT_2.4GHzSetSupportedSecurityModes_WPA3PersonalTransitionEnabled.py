@@ -87,7 +87,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHzSetSupportedSecurityModes_WPA3
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -101,21 +101,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
+    print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
 
     if expectedresult in actualresult:
         initial_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode));
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         #Check the Pre-requisites - WPA3_Personal_Transition RFC should be enabled
         step = step + 1;
         pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
 
         if pre_req_set == 1:
-            print "\n*************RFC Pre-requisite set for the DUT*****************";
+            print("\n*************RFC Pre-requisite set for the DUT*****************");
             #Get the supported Security Modes
             step =  step + 1;
             tdkTestObj = obj.createTestStep("WIFIAgent_Get");
@@ -124,20 +124,20 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d : Get the supported modes supported using Device.WiFi.AccessPoint.1.Security.ModesSupported" %step;
-            print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModesSupported" %step;
+            print("\nTEST STEP %d : Get the supported modes supported using Device.WiFi.AccessPoint.1.Security.ModesSupported" %step);
+            print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModesSupported" %step);
 
             if expectedresult in actualresult:
                 supported_modes = details.split("VALUE:")[1].split(' ')[0].split(',');
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-                print "Supported Modes : ", supported_modes;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+                print("Supported Modes : ", supported_modes);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Set all supported modes to the 2.4G private access point except the Enterprise modes when the WPA3 RFC is in enabled state
                 for mode in supported_modes:
                     if "Enterprise" not in mode:
-                        print "\n****************For Mode %s*******************" %mode;
+                        print("\n****************For Mode %s*******************" %mode);
                         #Set the security mode
                         step = step + 1;
                         tdkTestObj = obj.createTestStep("WIFIAgent_Set");
@@ -148,13 +148,13 @@ if "SUCCESS" in loadmodulestatus.upper():
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode);
-                        print "EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode);
+                        print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode));
+                        print("EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode));
 
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :SUCCESS");
 
                             #Verify the SET with GET
                             step = step + 1;
@@ -164,32 +164,32 @@ if "SUCCESS" in loadmodulestatus.upper():
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
 
-                            print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step;
-                            print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step;
+                            print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step);
+                            print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step);
 
                             if expectedresult in actualresult:
                                 final_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode);
-                                print "TEST EXECUTION RESULT :SUCCESS";
+                                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode));
+                                print("TEST EXECUTION RESULT :SUCCESS");
 
-                                print "Set Mode : ", mode;
-                                print "Get Mode : ", final_mode;
+                                print("Set Mode : ", mode);
+                                print("Get Mode : ", final_mode);
 
                                 if final_mode == mode:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "SET is reflected in GET";
+                                    print("SET is reflected in GET");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "SET is NOT reflected in GET";
+                                    print("SET is NOT reflected in GET");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                                print "TEST EXECUTION RESULT : FAILURE";
+                                print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                                print("TEST EXECUTION RESULT : FAILURE");
                         else :
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else:
                         continue;
 
@@ -198,28 +198,28 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step = step + 1;
                 status = RevertWPA3Pre_requisite(obj, initial_value);
 
-                print "\nTEST STEP %d : Revert the pre-requisite to initial value" %step;
-                print "EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+                print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
+                print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
                 if status == 1:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Revert operation was success" %step;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d : Revert operation was success" %step);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Revert operation failed" %step;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Revert operation failed" %step);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Reverting pre-requisites not required";
+                print("Reverting pre-requisites not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Pre-Requisite is not set successfully";
+            print("Pre-Requisite is not set successfully");
 
         #Revert operation of security mode
-        print "Reverting to initial Security Mode..."
+        print("Reverting to initial Security Mode...")
         step = step + 1;
         tdkTestObj = obj.createTestStep("WIFIAgent_Set");
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.ModeEnabled");
@@ -229,24 +229,24 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode);
-        print "EXPECTED RESULT %d : Reverting to initial security mode should be success" %step;
+        print("\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode));
+        print("EXPECTED RESULT %d : Reverting to initial security mode should be success" %step);
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : SUCCESS");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

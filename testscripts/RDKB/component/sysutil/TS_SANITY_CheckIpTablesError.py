@@ -103,14 +103,14 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details1 = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP 1: Check for ipv4table_error and ipv6table_error file presence";
-    print "EXPECTED RESULT 1: Files should be present";
+    print("\nTEST STEP 1: Check for ipv4table_error and ipv6table_error file presence");
+    print("EXPECTED RESULT 1: Files should be present");
 
     if details == "File exist" and details1 == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1 :  ipv4table_error and ipv6table_error file are present";
+        print("ACTUAL RESULT 1 :  ipv4table_error and ipv6table_error file are present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = sysObj.createTestStep('ExecuteCmd');
         cmd1 = "cat /tmp/.ipv4table_error";
@@ -128,28 +128,28 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
         actualresult2 = tdkTestObj.getResult();
         details2 = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP 2: Check if error logs are present in ipv4table_error and ipv6table_error";
-        print "EXPECTED RESULT 2: Files are expected to be empty without error";
+        print("\nTEST STEP 2: Check if error logs are present in ipv4table_error and ipv6table_error");
+        print("EXPECTED RESULT 2: Files are expected to be empty without error");
 
         if (expectedresult in ( actualresult1  and actualresult2))  and ((details1 and details2)  == "") :
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "ACTUAL RESULT 2 : Files are empty no errors flooded";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("ACTUAL RESULT 2 : Files are empty no errors flooded");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "ACTUAL RESULT 2 : Files are non empty";
-           print "ipv4table_error :",details1;
-           print "ipv6table_error :",details2;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("ACTUAL RESULT 2 : Files are non empty");
+            print("ipv4table_error :",details1);
+            print("ipv6table_error :",details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1 :  ipv4table_error and ipv6table_error file are not present";
+        print("ACTUAL RESULT 1 :  ipv4table_error and ipv6table_error file are not present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

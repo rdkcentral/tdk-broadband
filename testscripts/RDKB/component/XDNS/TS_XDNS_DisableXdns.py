@@ -63,8 +63,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -94,11 +94,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %orgVal;
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %orgVal);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS");
@@ -114,19 +114,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the enable status of XDNS as false";
-            print "EXPECTED RESULT 2: Should disable XDNS";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the enable status of XDNS as false");
+            print("EXPECTED RESULT 2: Should disable XDNS");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the enable status of XDNS as false";
-            print "EXPECTED RESULT 2: Should disable XDNS";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the enable status of XDNS as false");
+            print("EXPECTED RESULT 2: Should disable XDNS");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
         #Revert the value of XDNS Enable
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_EnableXDNS");
@@ -142,27 +142,27 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Revert the enable status of XDNS ";
-            print "EXPECTED RESULT : Should revert XDNS status to previous value";
-            print "ACTUAL RESULT : %s" %details;
+            print("TEST STEP : Revert the enable status of XDNS ");
+            print("EXPECTED RESULT : Should revert XDNS status to previous value");
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Revert the enable status of XDNS";
-            print "EXPECTED RESULT : Should revert XDNS status to previous value";
-            print "ACTUAL RESULT : %s" %details;
+            print("TEST STEP : Revert the enable status of XDNS");
+            print("EXPECTED RESULT : Should revert XDNS status to previous value");
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of XDNS";
-        print "EXPECTED RESULT 1: Should get the enable status of XDNS";
-        print "ACTUAL RESULT 1: XDNS Enable status is %s" %orgVal;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the enable status of XDNS");
+        print("EXPECTED RESULT 1: Should get the enable status of XDNS");
+        print("ACTUAL RESULT 1: XDNS Enable status is %s" %orgVal);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

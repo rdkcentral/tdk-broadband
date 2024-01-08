@@ -134,10 +134,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         time.sleep(180);
@@ -151,10 +151,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "" and orgValue[3] != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the bandtsteering enable status and SSID names";
-            print "ACTUAL RESULT 2: Bandstering enable status,SSID names and 5GHZ SSID Enable status: %s %s %s %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]) ;
+            print("TEST STEP 2: Get the bandtsteering enable status and SSID names");
+            print("ACTUAL RESULT 2: Bandstering enable status,SSID names and 5GHZ SSID Enable status: %s %s %s %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3])) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
             tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable|true|bool|Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string|Device.WiFi.SSID.2.Enable|false|bool|Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting|true|bool|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool" %(SSID1,SSID1));
@@ -163,12 +163,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Set Bandsteering enable status,wifi 5GHZ SSID enable status as false and same wifi SSID names for 2.4GHZ and 5 GHZ"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 3:Set Bandsteering enable status,wifi 5GHZ SSID enable status as false and same wifi SSID names for 2.4GHZ and 5 GHZ")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
                 #check whether the process is running or not
                 query="pidof lbd"
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = obj2.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
@@ -177,10 +177,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 pid = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and pid == "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4:lbd process should not be running";
-                    print "ACTUAL RESULT 4: lbd process is not running";
+                    print("TEST STEP 4:lbd process should not be running");
+                    print("ACTUAL RESULT 4: lbd process is not running");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                     tdkTestObj.addParameter("paramList","Device.WiFi.SSID.2.Enable|true|bool|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool")
 
@@ -192,14 +192,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if expectedresult in  actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Set the enable status of 5GHZ WIFI SSID as true";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Set the enable status of 5GHZ WIFI SSID as true");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #check whether the process is running or not
                         query="pidof lbd"
-                        print "query:%s" %query
+                        print("query:%s" %query)
                         tdkTestObj = obj2.createTestStep('ExecuteCmd');
                         tdkTestObj.addParameter("command", query)
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -207,25 +207,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
                         if expectedresult in actualresult and pid:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6:lbd process should be running";
-                            print "ACTUAL RESULT 6: PID of lbd %s" %pid;
-                            print "TEST EXECUTION RESULT :SUCCESS";
+                            print("TEST STEP 6:lbd process should be running");
+                            print("ACTUAL RESULT 6: PID of lbd %s" %pid);
+                            print("TEST EXECUTION RESULT :SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6:lbd process should be running";
-                            print "ACTUAL RESULT 6: PID of lbd %s" %pid;
-                            print "TEST EXECUTION RESULT :FAILURE";
+                            print("TEST STEP 6:lbd process should be running");
+                            print("ACTUAL RESULT 6: PID of lbd %s" %pid);
+                            print("TEST EXECUTION RESULT :FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Set same SSID for 2.4GHZ and 5GHZ"
-                        print "ACTUAL RESULT 5 : %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("TEST STEP 5: Set same SSID for 2.4GHZ and 5GHZ")
+                        print("ACTUAL RESULT 5 : %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Check if lbd process is running";
-                    print "ACTUAL RESULT 4: lbd process is running";
+                    print("TEST STEP 4:Check if lbd process is running");
+                    print("ACTUAL RESULT 4: lbd process is running");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                 tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable|%s|bool|Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string|Device.WiFi.SSID.2.Enable|%s|bool|Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting|true|bool|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]));
                 tdkTestObj.executeTestCase(expectedresult);
@@ -233,41 +233,39 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP :Revert 5GHZ WIFI SSID enable status and wifi SSID names for 2.4GHZ and 5 GHZ"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP :Revert 5GHZ WIFI SSID enable status and wifi SSID names for 2.4GHZ and 5 GHZ")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP :Revert 5GHZ WIFI SSID enable status and different wifi SSID names for 2.4GHZ and 5 GHZ"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("TEST STEP :Revert 5GHZ WIFI SSID enable status and different wifi SSID names for 2.4GHZ and 5 GHZ")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Set 5GHZ WIFI SSID enable status as false and different wifi SSID names for 2.4GHZ and 5 GHZ"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 3:Set 5GHZ WIFI SSID enable status as false and different wifi SSID names for 2.4GHZ and 5 GHZ")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the enable status of bandsteering and SSID names";
-            print "ACTUAL RESULT 2: Failed to get Bandsteering enable status and SSID names";
+            print("TEST STEP 2: Get the enable status of bandsteering and SSID names");
+            print("ACTUAL RESULT 2: Failed to get Bandsteering enable status and SSID names");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

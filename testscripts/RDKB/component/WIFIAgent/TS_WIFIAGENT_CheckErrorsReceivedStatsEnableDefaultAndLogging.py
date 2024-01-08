@@ -92,7 +92,7 @@ def setParameter(obj, param, setValue, type):
 
     if expectedresult not in actualresult:
         status = 1;
-        print "%s SET operation failed" %param;
+        print("%s SET operation failed" %param);
     return status;
 
 
@@ -116,8 +116,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckErrorsReceivedStatsEnableDef
 #Get the result of connection with test component and DUT
 wifiloadmodulestatus=wifiobj.getLoadModuleResult();
 sysloadmodulestatus=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.upper():
     #Set the result status of execution
@@ -135,15 +135,15 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Initiate a factory reset";
-    print "EXPECTED RESULT 1: Factory reset should be initiated successfully";
+    print("\nTEST STEP 1: Initiate a factory reset");
+    print("EXPECTED RESULT 1: Factory reset should be initiated successfully");
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Factory reset is initiated successfully";
+        print("ACTUAL RESULT 1: Factory reset is initiated successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #Restore the device state saved before reboot
         wifiobj.restorePreviousStateAfterReboot();
@@ -157,28 +157,28 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP 2: Get the default value of the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable";
-        print "EXPECTED RESULT 2: Should get the default value of Errors Received Enable RFC as false";
+        print("\nTEST STEP 2: Get the default value of the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable");
+        print("EXPECTED RESULT 2: Should get the default value of Errors Received Enable RFC as false");
 
         if expectedresult in actualresult and details != "":
             rfc_enable = details.split("VALUE:")[1].split(" ")[0].strip();
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable : %s" %rfc_enable;
+            print("ACTUAL RESULT 2: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable : %s" %rfc_enable);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             if rfc_enable == "false":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Errors Received Enable RFC is disabled by default";
+                print("Errors Received Enable RFC is disabled by default");
 
                 #Check the default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable for APs 1,2,3,4,5,6,7,8,9,10
                 #It should be enabled for APs 1,2,5,6,9,10 and disabled for 3,4,7,8
                 Value = [];
                 status = 0;
 
-                print "\nTEST STEP 3 : Get the default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable for APs 1,2,3,4,5,6,7,8,9,10";
-                print "EXPECTED RESULT 3 : The default values should be retrieved successfully";
+                print("\nTEST STEP 3 : Get the default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable for APs 1,2,3,4,5,6,7,8,9,10");
+                print("EXPECTED RESULT 3 : The default values should be retrieved successfully");
 
                 for index in range(0, 10):
                     paramName = "Device.WiFi.AccessPoint." + str(index + 1) + ".X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable";
@@ -192,27 +192,27 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
                         tdkTestObj.setResultStatus("SUCCESS");
                         details = details.split("VALUE:")[1].split(" ")[0].strip();
                         Value.append(details);
-                        print "\n%s : %s" %(paramName, Value[index]);
+                        print("\n%s : %s" %(paramName, Value[index]));
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
                         status = 1;
-                        print "\n%s : %s" %(paramName, details);
+                        print("\n%s : %s" %(paramName, details));
 
                 if status == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: The default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable are retrieved successfully";
+                    print("ACTUAL RESULT 3: The default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable are retrieved successfully");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     #Check if the default values are as expected
                     def_status = 0;
                     expected_def = ["true", "true", "false", "false", "true", "true", "false", "false", "true", "true"];
-                    print "\nTEST STEP 4 : Check if the Associated Devices Errors Received Stats Enable have the expected default values";
-                    print "EXPECTED RESULT 4 : Associated Devices Errors Received Stats Enable should have the expected default values : For Private and HotSpot SSIDS, it should be enabled and disabled for all others";
+                    print("\nTEST STEP 4 : Check if the Associated Devices Errors Received Stats Enable have the expected default values");
+                    print("EXPECTED RESULT 4 : Associated Devices Errors Received Stats Enable should have the expected default values : For Private and HotSpot SSIDS, it should be enabled and disabled for all others");
 
                     for index in range(0, 10):
-                        print "For SSID %d, expected : %s, actual : %s" %(index + 1, expected_def[index], Value[index]);
+                        print("For SSID %d, expected : %s, actual : %s" %(index + 1, expected_def[index], Value[index]));
 
                         if Value[index] == expected_def[index]:
                             tdkTestObj.setResultStatus("SUCCESS");
@@ -223,29 +223,29 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
                     if def_status == 0 :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: Associated Devices Errors Received Stats Enable have the expected default values";
+                        print("ACTUAL RESULT 4: Associated Devices Errors Received Stats Enable have the expected default values");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
 
                         #Enable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable
                         status = setParameter(wifiobj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable", "true", "boolean");
 
-                        print "\nTEST STEP 5 : Enable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable";
-                        print "EXPECTED RESULT 5 : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable should be enabled successfully";
+                        print("\nTEST STEP 5 : Enable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable");
+                        print("EXPECTED RESULT 5 : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable should be enabled successfully");
 
                         if status == 0:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 5: Errors Received Enable RFC is set successfully; Details : %s" %details;
+                            print("ACTUAL RESULT 5: Errors Received Enable RFC is set successfully; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS"
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
 
                             #Enable the Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8
                             enable_set = 0;
                             revert_flag = [];
                             paramList = ["Device.WiFi.AccessPoint.3.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable", "Device.WiFi.AccessPoint.4.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable", "Device.WiFi.AccessPoint.7.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable", "Device.WiFi.AccessPoint.8.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable"];
-                            print "\nTEST STEP 6 : Enable Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8";
-                            print "EXPECTED RESULT 6 : Should successfully set Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8";
+                            print("\nTEST STEP 6 : Enable Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8");
+                            print("EXPECTED RESULT 6 : Should successfully set Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8");
 
                             for iteration in range(0, 4):
                                 status = setParameter(wifiobj, paramList[iteration], "true", "boolean");
@@ -254,25 +254,25 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
                                     revert_flag.append(1);
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "%s is set successfully to true" %(paramList[iteration]);
+                                    print("%s is set successfully to true" %(paramList[iteration]));
                                 else:
                                     enable_set = 1;
                                     revert_flag.append(0);
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "%s is NOT set successfully to true" %(paramList[iteration]);
+                                    print("%s is NOT set successfully to true" %(paramList[iteration]));
 
                             if enable_set == 0:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 6: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are enabled" ;
+                                print("ACTUAL RESULT 6: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are enabled") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Check for the presence of of the logs "AccessPoint_SetParamBoolValue: RxRetryList 1,2,3,4,5,6,7,8,9,10"
                                 sleep(10);
-                                print "\nTEST STEP 7 : Check if the log \"AccessPoint_SetParamBoolValue: RxRetryList 1,2,3,4,5,6,7,8,9,10\" is present in WiFilog.txt.0";
-                                print "EXPECTED RESULT 7 : The required log should be present in WiFilog.txt.0";
+                                print("\nTEST STEP 7 : Check if the log \"AccessPoint_SetParamBoolValue: RxRetryList 1,2,3,4,5,6,7,8,9,10\" is present in WiFilog.txt.0");
+                                print("EXPECTED RESULT 7 : The required log should be present in WiFilog.txt.0");
 
                                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                 cmd = "cat /rdklogs/logs/WiFilog.txt.0 | grep -i \"AccessPoint_SetParamBoolValue: RxRetryList 1,2,3,4,5,6,7,8,9,10\"";
@@ -283,111 +283,111 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
 
                                 if expectedresult in actualresult and "RxRetryList" in details:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT 7: Log is present; Details : %s" %details;
+                                    print("ACTUAL RESULT 7: Log is present; Details : %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT 7: Log is NOT present; Details : %s" %details;
+                                    print("ACTUAL RESULT 7: Log is NOT present; Details : %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 6: Associated Devices Errors Received Stats Enable are NOT set to true for all of the SSIDs 3,4,7,8" ;
+                                print("ACTUAL RESULT 6: Associated Devices Errors Received Stats Enable are NOT set to true for all of the SSIDs 3,4,7,8") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert of Associated Devices Errors Received Stats Enable
                             revert_complete = 0;
-                            print "\nTEST STEP 8 : Revert the Associated Devices Errors Received Stats Enable if required";
-                            print "EXPECTED RESULT 8 : Associated Devices Errors Received Stats Enable revert operation should be success";
+                            print("\nTEST STEP 8 : Revert the Associated Devices Errors Received Stats Enable if required");
+                            print("EXPECTED RESULT 8 : Associated Devices Errors Received Stats Enable revert operation should be success");
 
                             for iteration in range(0,4):
                                 if revert_flag[iteration] == 0:
-                                    print "Revert of %s not required" %paramList[iteration];
+                                    print("Revert of %s not required" %paramList[iteration]);
                                 else:
                                     status = setParameter(wifiobj, paramList[iteration], "false", "boolean");
 
                                     if status == 0:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "%s is successfully reverted" %(paramList[iteration]);
+                                        print("%s is successfully reverted" %(paramList[iteration]));
                                     else:
                                         revert_complete = 1;
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "%s is NOT successfully reverted" %(paramList[iteration]);
+                                        print("%s is NOT successfully reverted" %(paramList[iteration]));
 
                             if revert_complete == 0:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 8: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are reverted" ;
+                                print("ACTUAL RESULT 8: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are reverted") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 8: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are NOT reverted" ;
+                                print("ACTUAL RESULT 8: Associated Devices Errors Received Stats Enable for the SSIDs 3,4,7,8 are NOT reverted") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert the RFC
                             status = setParameter(wifiobj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable", "false", "boolean");
 
-                            print "\nTEST STEP 9 : Revert the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable";
-                            print "EXPECTED RESULT 9 : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable should be reverted successfully";
+                            print("\nTEST STEP 9 : Revert the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable");
+                            print("EXPECTED RESULT 9 : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable should be reverted successfully");
 
                             if status == 0:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 9: Errors Received Enable RFC is reverted successfully";
+                                print("ACTUAL RESULT 9: Errors Received Enable RFC is reverted successfully");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS"
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 9: Errors Received Enable RFC is NOT reverted successfully";
+                                print("ACTUAL RESULT 9: Errors Received Enable RFC is NOT reverted successfully");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE"
+                                print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 5: Errors Received Enable RFC is NOT set successfully; Details : %s" %details;
+                            print("ACTUAL RESULT 5: Errors Received Enable RFC is NOT set successfully; Details : %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE"
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: Associated Devices Errors Received Stats Enable does NOT have the expected default values";
+                        print("ACTUAL RESULT 4: Associated Devices Errors Received Stats Enable does NOT have the expected default values");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE"
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: The default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable are NOT retrieved successfully";
+                    print("ACTUAL RESULT 3: The default values of Device.WiFi.AccessPoint.{i}.X_COMCAST-COM_AssociatedDevicesErrorsReceivedStatsEnable are NOT retrieved successfully");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Errors Received Enable RFC is NOT disabled by default";
+                print("Errors Received Enable RFC is NOT disabled by default");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable : %s" %details;
+            print("ACTUAL RESULT 2: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ErrorsReceived.Enable : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Factory reset is not initiated successfully";
+        print("ACTUAL RESULT 1: Factory reset is not initiated successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     wifiobj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     wifiobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -101,7 +101,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_SetFirewallLevel');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -113,79 +113,79 @@ if "SUCCESS" in result.upper() :
         firewallLevelList =  {"High", "Low", "Medium"}
 
         #get the current firewall level
-        print "TEST STEP 1: Get and save the current firewall level"
+        print("TEST STEP 1: Get and save the current firewall level")
         queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel"}
         queryResponse = webpaQuery(obj, queryParam)
 
         parsedResponse = parseWebpaResponse(queryResponse, 1)
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "" and parsedResponse[1] in firewallLevelList:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS"
+            print("TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS")
 
-	    orgValue = parsedResponse[1];
-	    print "original firewall level: ",orgValue
+            orgValue = parsedResponse[1];
+            print("original firewall level: ",orgValue)
 
-	    if orgValue == "Low":
-	        newValue="Medium"
-	    else:
-	        newValue="Low"
+            if orgValue == "Low":
+                newValue="Medium"
+            else:
+                newValue="Low"
 
-	    #set the new firewall level
-	    print "TEST STEP 2: Set the new firewall level value"
-	    queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel","value":newValue,"dataType":0}
-	    queryResponse = webpaQuery(obj, queryParam, "set")
-	    parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
-	    tdkTestObj.executeTestCase("SUCCESS");
+            #set the new firewall level
+            print("TEST STEP 2: Set the new firewall level value")
+            queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel","value":newValue,"dataType":0}
+            queryResponse = webpaQuery(obj, queryParam, "set")
+            parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
+            tdkTestObj.executeTestCase("SUCCESS");
             if "SUCCESS" in parsedResponse[0]:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS"
+                print("TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS")
 
-	        #get the current firewall level and check if its the same as the set value
-	        print "TEST STEP 3: Get the new firewall level and check if its the same as the set value"
+                #get the current firewall level and check if its the same as the set value
+                print("TEST STEP 3: Get the new firewall level and check if its the same as the set value")
                 queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel"}
                 queryResponse = webpaQuery(obj, queryParam)
                 parsedResponse = parseWebpaResponse(queryResponse, 1)
                 tdkTestObj.executeTestCase("SUCCESS");
                 if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
-		    setValue = parsedResponse[1];
-		    print "Firewall level after set is : ", setValue
-		    if setValue == newValue:
+                    setValue = parsedResponse[1];
+                    print("Firewall level after set is : ", setValue)
+                    if setValue == newValue:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS"
-		    else:
+                        print("TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS")
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3 [TEST EXECUTION RESULT] : FAILURE"
+                        print("TEST STEP 3 [TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3[TEST EXECUTION RESULT] : FAILURE"
+                    print("TEST STEP 3[TEST EXECUTION RESULT] : FAILURE")
 
-	        print "TEST STEP 4: Revert the firewall level"
-	        queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel","value":orgValue,"dataType":0}
+                print("TEST STEP 4: Revert the firewall level")
+                queryParam = {"name":"Device.X_CISCO_COM_Security.Firewall.FirewallLevel","value":orgValue,"dataType":0}
                 queryResponse = webpaQuery(obj, queryParam, "set")
                 parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
                 tdkTestObj.executeTestCase("SUCCESS");
                 if "SUCCESS" in parsedResponse[0]:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS"
+                    print("TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4[TEST EXECUTION RESULT] : FAILURE"
-	    else:
+                    print("TEST STEP 4[TEST EXECUTION RESULT] : FAILURE")
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 2[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

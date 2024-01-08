@@ -84,8 +84,8 @@
   </script_tags>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     webpaProcess= "sh %s/tdk_utility.sh parseConfigFile WEBPA_PROCESS" %TDK_PATH;
-    print webpaProcess;
+    print(webpaProcess);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", webpaProcess);
     tdkTestObj.executeTestCase(expectedresult);
@@ -109,39 +109,39 @@ if "SUCCESS" in loadmodulestatus.upper():
     webpaProcessList = webpaProcessList.replace("\\n", "");
     if "Invalid Argument passed" not in webpaProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of WEBPA process";
-        print "EXPECTED RESULT 1: Should Get the list of WEBPA Process";
-        print "ACTUAL RESULT 1: WEBPA process: %s" %webpaProcessList;
+        print("TEST STEP 1: Get the list of WEBPA process");
+        print("EXPECTED RESULT 1: Should Get the list of WEBPA Process");
+        print("ACTUAL RESULT 1: WEBPA process: %s" %webpaProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
-	webpaProcessList = webpaProcessList.split(",");
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        webpaProcessList = webpaProcessList.split(",");
         for item in webpaProcessList:
-	    command = "pidof %s" %item
+            command = "pidof %s" %item
             tdkTestObj.addParameter("command", command);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
-	    details = details.replace("\\n", "");
-	    if expectedresult in actualresult and "" != details:
-		tdkTestObj.setResultStatus("SUCCESS");
-	        print "Process Name : %s" %item;
-		print "PID : %s" %details;
-		print "%s with process ID %s is running" %(item,details)
-	 	print "[TEST EXECUTION RESULT] : SUCCESS"
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "Process Name : %s" %item
-		print "%s is not running" %item
-		print "[TEST EXECUTION RESULT] : FAILURE"
+            details = details.replace("\\n", "");
+            if expectedresult in actualresult and "" != details:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("Process Name : %s" %item);
+                print("PID : %s" %details);
+                print("%s with process ID %s is running" %(item,details))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("Process Name : %s" %item)
+                print("%s is not running" %item)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of WEBPA process";
-        print "EXPECTED RESULT 1: Should Get the list of WEBPA Process";
-        print "ACTUAL RESULT 1: WEBPA process: %s" %webpaProcessList;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the list of WEBPA process");
+        print("EXPECTED RESULT 1: Should Get the list of WEBPA Process");
+        print("ACTUAL RESULT 1: WEBPA process: %s" %webpaProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

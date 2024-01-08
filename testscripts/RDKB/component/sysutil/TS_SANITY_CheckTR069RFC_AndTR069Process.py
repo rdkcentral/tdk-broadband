@@ -81,23 +81,23 @@ def syscfg_get_EnableTR069(sysobj, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d : Get the value of EnableTR69Binary from syscfg.db" %step;
-    print "EXPECTED RESULT %d : Should get the value of EnableTR69Binary from syscfg.db" %step;
+    print("\nTEST STEP %d : Get the value of EnableTR69Binary from syscfg.db" %step);
+    print("EXPECTED RESULT %d : Should get the value of EnableTR69Binary from syscfg.db" %step);
 
     if expectedresult in actualresult and details != "":
         status = 0;
         syscfg_enable = details.strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : EnableTR69Binary from syscfg.db is : %s" %(step, syscfg_enable);
+        print("ACTUAL RESULT %d : EnableTR69Binary from syscfg.db is : %s" %(step, syscfg_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : EnableTR69Binary from syscfg.db is : %s" %(step, syscfg_enable);
+        print("ACTUAL RESULT %d : EnableTR69Binary from syscfg.db is : %s" %(step, syscfg_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status, syscfg_enable;
 
 
@@ -112,22 +112,22 @@ def set_EnableTR069(pamobj, value, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 
@@ -144,24 +144,24 @@ def check_TR069Process(sysobj):
 
 def compare_values(value1, value2, step):
     status = 1;
-    print "\nTEST STEP %d : Check the TR069 Enable values queried via TR181 and syscfg get are same" %step;
-    print "EXPECTED RESULT %d : TR069 Enable values queried via TR181 and syscfg get should be the same" %step;
-    print "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable : %s" %value1;
-    print "syscfg get EnableTR69Binary : %s" %value2;
+    print("\nTEST STEP %d : Check the TR069 Enable values queried via TR181 and syscfg get are same" %step);
+    print("EXPECTED RESULT %d : TR069 Enable values queried via TR181 and syscfg get should be the same" %step);
+    print("Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable : %s" %value1);
+    print("syscfg get EnableTR69Binary : %s" %value2);
 
     if value1 == value2:
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : TR069 Enable values queried via TR181 and syscfg are the same" %step;
+        print("ACTUAL RESULT %d : TR069 Enable values queried via TR181 and syscfg are the same" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : TR069 Enable values queried via TR181 and syscfg are not the same" %step;
+        print("ACTUAL RESULT %d : TR069 Enable values queried via TR181 and syscfg are not the same" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 
@@ -200,16 +200,16 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP 1 : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable";
-    print "EXPECTED RESULT 1 : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable";
+    print("\nTEST STEP 1 : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable");
+    print("EXPECTED RESULT 1 : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable");
 
     if expectedresult in actualresult and details != "":
         enable = details.strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1 : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %enable;
+        print("ACTUAL RESULT 1 : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %enable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the syscfg.db value of the TR069 RFC
         step = 2;
@@ -225,16 +225,16 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 step = step + 1;
 
                 if enable == "true" and syscfg_enable == "true":
-                    print "\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step;
-                    print "EXPECTED RESULT %d : CcspTr069PaSsp should be running in the device" %step;
+                    print("\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step);
+                    print("EXPECTED RESULT %d : CcspTr069PaSsp should be running in the device" %step);
                     tdkTestObj, actualresult, details = check_TR069Process(sysobj);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details);
+                        print("ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Set the Enable parameter to false
                         step = step + 1;
@@ -256,15 +256,15 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                                     #check if TR069 process is running or not
                                     tdkTestObj, actualresult, details = check_TR069Process(sysobj);
                                     step = step + 1;
-                                    print "\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step;
-                                    print "EXPECTED RESULT %d : CcspTr069PaSsp should not be running in the device" %step;
+                                    print("\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step);
+                                    print("EXPECTED RESULT %d : CcspTr069PaSsp should not be running in the device" %step);
 
                                     if expectedresult in actualresult and details == "":
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details);
+                                        print("ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                         #Revert back to initial state
                                         #Set the Enable parameter to true
@@ -274,31 +274,31 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
 
                                         if status == 0:
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "Revert operation is successful";
+                                            print("Revert operation is successful");
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "Revert operation is not successful";
+                                            print("Revert operation is not successful");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details);
+                                        print("ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
-                                    print "The values are not equal";
+                                    print("The values are not equal");
                                     tdkTestObj.setResultStatus("FAILURE");
                             else:
-                                print "TR069 Enable value not retrieved from syscfg.db";
+                                print("TR069 Enable value not retrieved from syscfg.db");
                                 tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "Set operation failed";
+                            print("Set operation failed");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details);
+                        print("ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the Enable parameter to true
                     value = "true";
@@ -318,15 +318,15 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                             if status == 0:
                                 #check if TR069 process is running or not
                                 tdkTestObj, actualresult, details = check_TR069Process(sysobj);
-                                print "\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step;
-                                print "EXPECTED RESULT %d : CcspTr069PaSsp should be running in the device" %step;
+                                print("\nTEST STEP %d: Check if CcspTr069PaSsp is running in the device" %step);
+                                print("EXPECTED RESULT %d : CcspTr069PaSsp should be running in the device" %step);
 
                                 if expectedresult in actualresult and details != "":
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details);
+                                    print("ACTUAL RESULT %d : CcspTr069PaSsp is running with PID : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     #Revert back to initial state
                                     #Set the Enable parameter to false
@@ -336,43 +336,41 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
 
                                     if status == 0:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "Revert operation is successful";
+                                        print("Revert operation is successful");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "Revert operation is not successful";
+                                        print("Revert operation is not successful");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details);
+                                    print("ACTUAL RESULT %d : CcspTr069PaSsp is not running in the device : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
-                                print "The values are not equal";
+                                print("The values are not equal");
                                 tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "TR069 Enable value not retrieved from syscfg.db";
+                            print("TR069 Enable value not retrieved from syscfg.db");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "Set operation failed";
+                        print("Set operation failed");
                         tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "The values are not equal";
+                print("The values are not equal");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "TR069 Enable value not retrieved from syscfg.db";
+            print("TR069 Enable value not retrieved from syscfg.db");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1 : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved";
+        print("ACTUAL RESULT 1 : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-
-

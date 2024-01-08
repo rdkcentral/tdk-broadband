@@ -101,7 +101,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_GetFirmwareName');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -127,26 +127,26 @@ if "SUCCESS" in result.upper() :
         details = tdkTestObj.getResultDetails().strip();
         FirmwareVersion = details;
 
-        print "Firmware Name from version.txt:",FirmwareVersion
-        print "Firmware Name via WEBPA:",parsedResponse[1]
+        print("Firmware Name from version.txt:",FirmwareVersion)
+        print("Firmware Name via WEBPA:",parsedResponse[1])
 
         #Compare whether the firmware name retrieved via version.txt and webpa are same
         if expectedresult in actualresult and "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "" and parsedResponse[1] == FirmwareVersion:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Check whether firmware name retrieved via version.txt and webpa are same"
-            print "Actual Result: Firmware name retrieved via version.txt and webpa are same"
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("TEST STEP 1: Check whether firmware name retrieved via version.txt and webpa are same")
+            print("Actual Result: Firmware name retrieved via version.txt and webpa are same")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Check whether firmware name retrieved via version.txt and webpa are same"
-            print "Actual Result: Firmware name retrieved via version.txt and webpa are not same"
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1: Check whether firmware name retrieved via version.txt and webpa are same")
+            print("Actual Result: Firmware name retrieved via version.txt and webpa are not same")
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

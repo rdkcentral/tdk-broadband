@@ -108,11 +108,11 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         sysobj.restorePreviousStateAfterReboot();
         tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
@@ -125,32 +125,31 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
         if expectedresult in actualresult and details == "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Get the Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset ";
-            print "EXPECTED RESULT 2: Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset should be empty";
-            print "ACTUAL RESULT 2:Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset is empty";
+            print("TEST STEP 2:Get the Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset ");
+            print("EXPECTED RESULT 2: Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset should be empty");
+            print("ACTUAL RESULT 2:Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset is empty");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Get the Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset ";
-            print "EXPECTED RESULT 2: Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset should be empty";
-            print "ACTUAL RESULT 2:Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset is not empty";
+            print("TEST STEP 2:Get the Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset ");
+            print("EXPECTED RESULT 2: Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset should be empty");
+            print("ACTUAL RESULT 2:Admin password via Device.Users.User.3.X_CISCO_COM_Password after factory reset is not empty");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

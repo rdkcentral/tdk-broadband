@@ -120,15 +120,15 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     paramList = paramList.split(",");
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of TR-181 parameters to be queried";
-        print "EXPECTED RESULT 1: Should get the list of TR-181 parameters to be queried";
-        print "ACTUAL RESULT 1: Got the list of TR-181 parameters to be queried ";
+        print("TEST STEP 1: Get the list of TR-181 parameters to be queried");
+        print("EXPECTED RESULT 1: Should get the list of TR-181 parameters to be queried");
+        print("ACTUAL RESULT 1: Got the list of TR-181 parameters to be queried ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        print "TEST STEP 2: Query the below listed parameters";
+        print("TEST STEP 2: Query the below listed parameters");
 
-        print paramList;
+        print(paramList);
 
         logFile = "/rdklogs/logs/";
         logMsg = "Failed to get parameter value";
@@ -137,7 +137,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
         getFailure =0;
         patternFound =0;
         for item in paramList:
-            print "Querying  %s" %item;
+            print("Querying  %s" %item);
 
             tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
             tdkTestObj.addParameter("ParamName","Device.%s." %item);
@@ -146,60 +146,60 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             if expectedresult not in actualresult:
-               getFailure =1;
-               getresult.append(item);
+                getFailure =1;
+                getresult.append(item);
 
         if  getFailure == 0:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "EXPECTED RESULT 2: Should Query the listed parameters";
-            print "ACTUAL RESULT 2: Get was successfull";
+            print("EXPECTED RESULT 2: Should Query the listed parameters");
+            print("ACTUAL RESULT 2: Get was successfull");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "EXPECTED RESULT 2: Should Query the listed parameters";
-            print "ACTUAL RESULT 2: Failed to Query:",getresult;
+            print("EXPECTED RESULT 2: Should Query the listed parameters");
+            print("ACTUAL RESULT 2: Failed to Query:",getresult);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         query="grep -rin \"%s\" \"%s\"" %(logMsg,logFile);
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query)
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        print "Search Result :%s "%details;
+        print("Search Result :%s "%details);
         if (len(details) != 0)  and  logMsg in details:
-           logresult.append(details);
-           patternFound = 1;
+            logresult.append(details);
+            patternFound = 1;
 
         if patternFound ==0:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: Check if %s pattern seen in log file" %logMsg
-           print "EXPECTED RESULT 3: Should Check if the pattern is present in log file";
-           print "ACTUAL RESULT 3: No such pattern found";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS"
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Check if %s pattern seen in log file" %logMsg)
+            print("EXPECTED RESULT 3: Should Check if the pattern is present in log file");
+            print("ACTUAL RESULT 3: No such pattern found");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Check if %s pattern seen in log file" %logMsg
-            print "EXPECTED RESULT 3: Should Check if the pattern is present in log file";
-            print "ACTUAL RESULT 3: " ,logresult;
+            print("TEST STEP 3: Check if %s pattern seen in log file" %logMsg)
+            print("EXPECTED RESULT 3: Should Check if the pattern is present in log file");
+            print("ACTUAL RESULT 3: " ,logresult);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of TR-181 parameters to be queried";
-        print "EXPECTED RESULT 1: Should get the list of TR-181 parameters to be queried";
-        print "ACTUAL RESULT 1: Failed to get the list of TR-181 parameters to be queried ";
+        print("TEST STEP 1: Get the list of TR-181 parameters to be queried");
+        print("EXPECTED RESULT 1: Should get the list of TR-181 parameters to be queried");
+        print("ACTUAL RESULT 1: Failed to get the list of TR-181 parameters to be queried ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

@@ -105,55 +105,55 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check for existence of journal_logs.txt.0 ";
-        print "EXPECTED RESULT 1: journal_logs.txt.0  file should be present";
-        print "ACTUAL RESULT 1:journal_logs.txt.0  file is present";
+        print("TEST STEP 1: Check for existence of journal_logs.txt.0 ");
+        print("EXPECTED RESULT 1: journal_logs.txt.0  file should be present");
+        print("ACTUAL RESULT 1:journal_logs.txt.0  file is present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         logFile = "/rdklogs/logs/journal_logs.txt.0 ";
         logMsg = ["/etc/rdm/opensslVerifier.sh: line 148: [: : integer expression expected"];
         markerfound = 0;
         for list in logMsg:
             if markerfound == 1:
-               break;
+                break;
             else:
                 query="cat %s | grep -i \"%s\"" %(logFile,list);
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                print "Marker Detail Found fromLog file is: %s "%details;
+                print("Marker Detail Found fromLog file is: %s "%details);
                 if (len(details) == 0)  or list  not in details:
-                   markerfound = 0;
+                    markerfound = 0;
                 else:
                     markerfound = 1;
         if expectedresult in actualresult and markerfound == 1:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check if Error Log Message present in journal_logs.txt.0 ";
-           print "EXPECTED RESULT 2:  Error log Message should not be present";
-           print "ACTUAL RESULT 2: ",details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check if Error Log Message present in journal_logs.txt.0 ");
+            print("EXPECTED RESULT 2:  Error log Message should not be present");
+            print("ACTUAL RESULT 2: ",details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Check if Error Message present in journal_logs.txt.0 ";
-           print "EXPECTED RESULT 2:  Error log Message should not be present";
-           print "ACTUAL RESULT 2: Log Message not found";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if Error Message present in journal_logs.txt.0 ");
+            print("EXPECTED RESULT 2:  Error log Message should not be present");
+            print("ACTUAL RESULT 2: Log Message not found");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-         tdkTestObj.setResultStatus("FAILURE");
-         print "TEST STEP 1: Check for existence of journal_logs.txt.0 ";
-         print "EXPECTED RESULT 1: journal_logs.txt.0  file should be present";
-         print "ACTUAL RESULT 1:journal_logs.txt.0  file is not present";
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Check for existence of journal_logs.txt.0 ");
+        print("EXPECTED RESULT 1: journal_logs.txt.0  file should be present");
+        print("ACTUAL RESULT 1:journal_logs.txt.0  file is not present");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     sysObj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    sysObj.setLoadModuleStatus("FAILURE");

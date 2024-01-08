@@ -92,11 +92,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the lanmode";
-        print "EXPECTED RESULT 1: Should get the lanmode";
-        print "ACTUAL RESULT 1: Lanmode is :",lanmodeInitial;
+        print("TEST STEP 1: Get the lanmode");
+        print("EXPECTED RESULT 1: Should get the lanmode");
+        print("ACTUAL RESULT 1: Lanmode is :",lanmodeInitial);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.Time.TimeOffset");
@@ -107,115 +107,115 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult and details!= "0":
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Get the non-zero TimeOffset value with current mode";
-           print "EXPECTED RESULT 2: Should get non-zero TimeOffset";
-           print "ACTUAL RESULT 2: TimeOffset value is %s" %details;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the non-zero TimeOffset value with current mode");
+            print("EXPECTED RESULT 2: Should get non-zero TimeOffset");
+            print("ACTUAL RESULT 2: TimeOffset value is %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           if lanmodeInitial == "bridge-static":
-               setValue = "router";
-           else:
+            if lanmodeInitial == "bridge-static":
+                setValue = "router";
+            else:
                 setValue = "bridge-static";
 
-           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-           tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-           tdkTestObj.addParameter("ParamValue",setValue);
-           tdkTestObj.addParameter("Type","string");
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
-           if expectedresult in actualresult:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Changing the lanmode to %s"%setValue;
-              print "EXPECTED RESULT 3: Should set the lanmode";
-              print "ACTUAL RESULT 3: %s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+            tdkTestObj.addParameter("ParamValue",setValue);
+            tdkTestObj.addParameter("Type","string");
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Changing the lanmode to %s"%setValue);
+                print("EXPECTED RESULT 3: Should set the lanmode");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-              tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-              tdkTestObj.addParameter("ParamName","Device.Time.TimeOffset");
-              expectedresult="SUCCESS";
-              sleep(20);
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details  = tdkTestObj.getResultDetails();
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Time.TimeOffset");
+                expectedresult="SUCCESS";
+                sleep(20);
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details  = tdkTestObj.getResultDetails();
 
-              if expectedresult in actualresult and details != "0":
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 4: Get the non-zero TimeOffset value with current mode";
-                  print "EXPECTED RESULT 4: Should get non-zero TimeOffset";
-                  print "ACTUAL RESULT 4: TimeOffset value is %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4: Get the non-zero TimeOffset value with current mode";
-                  print "EXPECTED RESULT 4: Should get non-zero TimeOffset";
-                  print "ACTUAL RESULT 4: TimeOffset value is %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
+                if expectedresult in actualresult and details != "0":
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the non-zero TimeOffset value with current mode");
+                    print("EXPECTED RESULT 4: Should get non-zero TimeOffset");
+                    print("ACTUAL RESULT 4: TimeOffset value is %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Get the non-zero TimeOffset value with current mode");
+                    print("EXPECTED RESULT 4: Should get non-zero TimeOffset");
+                    print("ACTUAL RESULT 4: TimeOffset value is %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-              #Set lan mode to previous value
-              tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-              tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-              tdkTestObj.addParameter("ParamValue",lanmodeInitial);
-              tdkTestObj.addParameter("Type","string");
+                #Set lan mode to previous value
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+                tdkTestObj.addParameter("ParamValue",lanmodeInitial);
+                tdkTestObj.addParameter("Type","string");
 
-              #Execute the test case in DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails();
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
 
-              if expectedresult in actualresult:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 5: Set the lanmode to previous value";
-                  print "EXPECTED RESULT 5: Should set the lanmode to previous value";
-                  print "ACTUAL RESULT 5: %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 5: Set the lanmode to previous value";
-                  print "EXPECTED RESULT 5: Should set the lanmode to previous value";
-                  print "ACTUAL RESULT 5: %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Changing the lanmode to %s"%setValue;
-               print "EXPECTED RESULT 3: Should set the lanmode";
-               print "ACTUAL RESULT 3: %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 5: Set the lanmode to previous value");
+                    print("EXPECTED RESULT 5: Should set the lanmode to previous value");
+                    print("ACTUAL RESULT 5: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 5: Set the lanmode to previous value");
+                    print("EXPECTED RESULT 5: Should set the lanmode to previous value");
+                    print("ACTUAL RESULT 5: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Changing the lanmode to %s"%setValue);
+                print("EXPECTED RESULT 3: Should set the lanmode");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the non-zero TimeOffset value with current mode";
-           print "EXPECTED RESULT 2: Should get non-zero TimeOffset";
-           print "ACTUAL RESULT 2: TimeOffset value is %s" %details;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the non-zero TimeOffset value with current mode");
+            print("EXPECTED RESULT 2: Should get non-zero TimeOffset");
+            print("ACTUAL RESULT 2: TimeOffset value is %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the lanmode";
-        print "EXPECTED RESULT 1: Should get the lanmode";
-        print "ACTUAL RESULT 1: Lanmode is :",lanmodeInitial;
+        print("TEST STEP 1: Get the lanmode");
+        print("EXPECTED RESULT 1: Should get the lanmode");
+        print("ACTUAL RESULT 1: Lanmode is :",lanmodeInitial);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

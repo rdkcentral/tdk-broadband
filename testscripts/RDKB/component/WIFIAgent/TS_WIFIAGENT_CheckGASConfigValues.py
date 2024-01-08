@@ -116,11 +116,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the GAS Configuration";
-        print "EXPECTED RESULT 1: Should get GAS Configuration";
-        print "ACTUAL RESULT 1: GAS Configuration retreived successful";
+        print("TEST STEP 1: Get the GAS Configuration");
+        print("EXPECTED RESULT 1: Should get GAS Configuration");
+        print("ACTUAL RESULT 1: GAS Configuration retreived successful");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         advertId = int(details.split("AdvertisementId")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
         pauseForServerResp = details.split("PauseForServerResp")[1].split(":")[1].split(",")[0].strip().replace("\\n", "");
@@ -129,70 +129,70 @@ if "SUCCESS" in loadmodulestatus.upper():
         respBufferTime = int(details.split("RespBufferTime")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
         queryRespLengthLimit=int(details.split("QueryRespLengthLimit")[1].split(":")[1].split("}")[0].strip().replace("\\n", ""));
 
-        print "*** Checking if the Configurations are within the expected range***";
+        print("*** Checking if the Configurations are within the expected range***");
         if 0<= advertId <= 255:
-           print "advertId:",advertId;
-           print "advertId is within the expected range from 0 to 255";
+            print("advertId:",advertId);
+            print("advertId is within the expected range from 0 to 255");
         else:
             flag =0;
-            print "advertId:",advertId;
-            print "advertId is not within the expected range 0 to 255";
+            print("advertId:",advertId);
+            print("advertId is not within the expected range 0 to 255");
 
         if "true" in pauseForServerResp or "false" in pauseForServerResp:
-           print "pauseForServerResp:",pauseForServerResp;
-           print "pauseForServerResp should be either true or false";
+            print("pauseForServerResp:",pauseForServerResp);
+            print("pauseForServerResp should be either true or false");
         else:
             flag =0;
-            print "pauseForServerResp:",pauseForServerResp;
-            print "pauseForServerResp doesnot hold a boolean value";
+            print("pauseForServerResp:",pauseForServerResp);
+            print("pauseForServerResp doesnot hold a boolean value");
 
         if 1000<= respTimeout <= 65535:
-           print "respTimeout:",respTimeout
-           print "respTimeout is within the expected range of 1000 to 65535";
+            print("respTimeout:",respTimeout)
+            print("respTimeout is within the expected range of 1000 to 65535");
         else:
             flag =0;
-            print "respTimeout is not within the expected range of 1000 to 65535";
+            print("respTimeout is not within the expected range of 1000 to 65535");
 
         if 0<= comebackDelay <= 65535:
-           print "comebackDelay:" ,comebackDelay
-           print "comebackDelay is within the expected range of to 0 to 65535";
+            print("comebackDelay:" ,comebackDelay)
+            print("comebackDelay is within the expected range of to 0 to 65535");
         else:
             flag =0;
-            print "comebackDelay:" ,comebackDelay
-            print "comebackDelay is not within the expected range of to 0 to 65535";
+            print("comebackDelay:" ,comebackDelay)
+            print("comebackDelay is not within the expected range of to 0 to 65535");
 
         if 0<=respBufferTime <= 65535:
-           print "respBufferTime:",respBufferTime;
-           print"respBufferTime is within the expected range of  0 to 65535";
+            print("respBufferTime:",respBufferTime);
+            print("respBufferTime is within the expected range of  0 to 65535");
         else:
             flag =0;
-            print "respBufferTime:",respBufferTime;
-            print "respBufferTime is not within the expected range of  0 to 65535";
+            print("respBufferTime:",respBufferTime);
+            print("respBufferTime is not within the expected range of  0 to 65535");
 
         if 1<= queryRespLengthLimit <= 127:
-           print "queryRespLengthLimit: ",queryRespLengthLimit;
-           print "queryRespLengthLimit is within the expected range of 1 to 127";
+            print("queryRespLengthLimit: ",queryRespLengthLimit);
+            print("queryRespLengthLimit is within the expected range of 1 to 127");
         else:
             flag =0;
-            print "queryRespLengthLimit: ",queryRespLengthLimit;
-            print "queryRespLengthLimit is not within the expected range of 1 to 127";
+            print("queryRespLengthLimit: ",queryRespLengthLimit);
+            print("queryRespLengthLimit is not within the expected range of 1 to 127");
 
         if flag == 1:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "********All the GAS Configurations are within the expected range*****";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("********All the GAS Configurations are within the expected range*****");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "*****All the GAS Configurations are not within the expected range*****";
+            print("*****All the GAS Configurations are not within the expected range*****");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the GAS Configuration";
-        print "EXPECTED RESULT 1: Should get GAS Configuration";
-        print "ACTUAL RESULT 1: Failed to  retrieve GAS Configuration";
+        print("TEST STEP 1: Get the GAS Configuration");
+        print("EXPECTED RESULT 1: Should get GAS Configuration");
+        print("ACTUAL RESULT 1: Failed to  retrieve GAS Configuration");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

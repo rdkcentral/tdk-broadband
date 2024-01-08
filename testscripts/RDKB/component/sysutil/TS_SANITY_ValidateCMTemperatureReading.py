@@ -68,24 +68,24 @@
 def CheckFilePresence(tdkTestObj, step, file):
     expectedresult = "SUCCESS";
     cmd = "[ -f " + file + " ] && echo \"File exist\" || echo \"File does not exist\"";
-    print "Command : ", cmd;
+    print("Command : ", cmd);
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "\nTEST STEP %d: Check for %s file presence" %(step, file);
-    print "EXPECTED RESULT %d: %s file should be present" %(step, file);
+    print("\nTEST STEP %d: Check for %s file presence" %(step, file));
+    print("EXPECTED RESULT %d: %s file should be present" %(step, file));
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s file is present" %(step, file);
+        print("ACTUAL RESULT %d: %s file is present" %(step, file));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s file is not present" %(step, file);
+        print("ACTUAL RESULT %d: %s file is not present" %(step, file));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return details;
 
 
@@ -119,23 +119,23 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "%s is found" %file;
+        print("%s is found" %file);
 
         #Read the CM temperature value from the file
         step = step + 1;
         cmd = "cat " + file ;
-        print "Command : ", cmd;
+        print("Command : ", cmd);
         actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-        print "\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file);
-        print "EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file);
+        print("\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file));
+        print("EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file));
 
         if expectedresult in actualresult and details.isdigit() :
             thermal_CM_Temp = int(details);
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp);
+            print("ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the file CMTemperatureRpcDataFile is found under /tmp
             step = step + 1;
@@ -145,53 +145,53 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
 
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "%s is found" %file;
+                print("%s is found" %file);
 
                 #Remove the file from /tmp
                 step = step + 1;
                 cmd = "rm -rf " + file ;
-                print "Command : ", cmd;
+                print("Command : ", cmd);
                 actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
                 sleep(5);
 
-                print "\nTEST STEP %d : Remove the file %s" %(step, file);
-                print "EXPECTED RESULT %d : Remove the file %s" %(step, file);
+                print("\nTEST STEP %d : Remove the file %s" %(step, file));
+                print("EXPECTED RESULT %d : Remove the file %s" %(step, file));
 
                 if expectedresult in actualresult and details == "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: The file is removed successfully" %step;
+                    print("ACTUAL RESULT %d: The file is removed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if /tmp/thermal_cm reads 0 value
                     step = step + 1;
                     file = "/tmp/thermal_cm";
                     cmd = "cat " + file ;
-                    print "Command : ", cmd;
+                    print("Command : ", cmd);
                     actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                    print "\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file);
-                    print "EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file);
+                    print("\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file));
+                    print("EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file));
 
                     if expectedresult in actualresult and details.isdigit() :
                         thermal_CM_Temp_curr = int(details);
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp_curr);
+                        print("ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp_curr));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         step = step + 1;
-                        print "\nTEST STEP %d : Check if CM Temperature read error writes value 0 to %s" %(step, file);
-                        print "EXPECTED RESULT %d : CM Temperature read error should write value 0 to %s" %(step, file);
+                        print("\nTEST STEP %d : Check if CM Temperature read error writes value 0 to %s" %(step, file));
+                        print("EXPECTED RESULT %d : CM Temperature read error should write value 0 to %s" %(step, file));
 
                         if thermal_CM_Temp_curr == 0:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: CM Temperature read error writes value 0 to %s" %(step, file);
+                            print("ACTUAL RESULT %d: CM Temperature read error writes value 0 to %s" %(step, file));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if /tmp/CMTemperatureRpcDataFile gets created again after 60s
-                            print "sleeping 60s for /tmp/CMTemperatureRpcDataFile to be created again";
+                            print("sleeping 60s for /tmp/CMTemperatureRpcDataFile to be created again");
                             sleep(60);
                             step = step + 1;
                             file = "/tmp/CMTemperatureRpcDataFile";
@@ -200,69 +200,69 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
 
                             if details == "File exist":
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "%s is found" %file;
+                                print("%s is found" %file);
 
                                 #Check if /tmp/thermal_cm holds a valid value
                                 step = step + 1;
                                 file = "/tmp/thermal_cm";
                                 cmd = "cat " + file ;
-                                print "Command : ", cmd;
+                                print("Command : ", cmd);
                                 actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                                print "\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file);
-                                print "EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file);
+                                print("\nTEST STEP %d: Get the CM Temperarture reading from the %s" %(step, file));
+                                print("EXPECTED RESULT %d: Should get the CM Temperarture reading from the file %s" %(step, file));
 
                                 if expectedresult in actualresult and details.isdigit() :
                                     thermal_CM_Temp_new = int(details);
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp_new);
+                                    print("ACTUAL RESULT %d: CM Temperature : %d" %(step, thermal_CM_Temp_new));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     #Check if the value is non-zero
                                     if thermal_CM_Temp_new > 0:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "CM Temperature reading a valid non-zero value";
+                                        print("CM Temperature reading a valid non-zero value");
                                     else:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "CM Temperature reading is not valid non-zero value";
+                                        print("CM Temperature reading is not valid non-zero value");
                                 else :
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: CM Temperature : %d" %(step, details);
+                                    print("ACTUAL RESULT %d: CM Temperature : %d" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "%s is not found" %file;
+                                print("%s is not found" %file);
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: CM Temperature read error does not write value 0 to %s" %(step, file);
+                            print("ACTUAL RESULT %d: CM Temperature read error does not write value 0 to %s" %(step, file));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: CM Temperature : %d" %(step, details);
+                        print("ACTUAL RESULT %d: CM Temperature : %d" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: The file is not removed successfully" %step;
+                    print("ACTUAL RESULT %d: The file is not removed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "%s is not found" %file;
+                print("%s is not found" %file);
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: CM Temperature : %d" %(step, details);
+            print("ACTUAL RESULT %d: CM Temperature : %d" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "%s is not found" %file;
+        print("%s is not found" %file);
 
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

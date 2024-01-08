@@ -137,13 +137,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and  "SUCCESS" in loadmodulestatus2.up
     tdkTestObj = obj.createTestStep('TADstub_Get');
 
     paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.UtilizationThreshold" ,"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.PhyRateThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.UtilizationThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold"]
-    print "TEST STEP 1: Should get the bandsteering values"
+    print("TEST STEP 1: Should get the bandsteering values")
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "" and orgValue[3] != "" and orgValue[4] != "" and orgValue[5] != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1:  2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %(orgValue[0],orgValue[1],orgValue[2],orgValue[3],orgValue[4],orgValue[5]);
+        print("ACTUAL RESULT 1:  2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %(orgValue[0],orgValue[1],orgValue[2],orgValue[3],orgValue[4],orgValue[5]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
         tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.UtilizationThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.RSSIThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.PhyRateThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.UtilizationThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.RSSIThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold|%s|int" %(set_UtilzationThreshold1,set_SignalThreshold1,set_PhysicalRateThreshold1,set_UtilzationThreshold2,set_SignalThreshold2,set_PhysicalRateThreshold2));
@@ -152,23 +152,23 @@ if "SUCCESS" in loadmodulestatus1.upper() and  "SUCCESS" in loadmodulestatus2.up
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Should set bandsteering values"
-            print "ACTUAL RESULT 2: %s" %details;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("TEST STEP 2: Should set bandsteering values")
+            print("ACTUAL RESULT 2: %s" %details);
+            print("TEST EXECUTION RESULT :SUCCESS");
             paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.UtilizationThreshold","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.PhyRateThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.UtilizationThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold"]
-            print "TEST STEP 3: Should get the bandsteering values after set"
+            print("TEST STEP 3: Should get the bandsteering values after set")
             tdkTestObj,status,setValue = getMultipleParameterValues(obj,paramList)
 
             if expectedresult in status and setValue[0] != "" and setValue[1] != "" and setValue[2] != "" and setValue[3] != "" and setValue[4] != "" and setValue[5] != "" :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3:2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %(setValue[0],setValue[1],setValue[2],setValue[3],setValue[4],setValue[5]);
+                print("ACTUAL RESULT 3:2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %(setValue[0],setValue[1],setValue[2],setValue[3],setValue[4],setValue[5]));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 if set_ThresholdValues == setValue:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4:Set and get values should be same"
-                    print "ACTUAL RESULT 4:Set and get bandsteering values are validated successfully";
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP 4:Set and get values should be same")
+                    print("ACTUAL RESULT 4:Set and get bandsteering values are validated successfully");
+                    print("TEST EXECUTION RESULT :SUCCESS");
                     tdkTestObj = pamobj.createTestStep('pam_Setparams');
                     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.FactoryReset");
                     tdkTestObj.addParameter("ParamValue","Wifi");
@@ -180,25 +180,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and  "SUCCESS" in loadmodulestatus2.up
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Initiate wifi factory reset ";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Initiate wifi factory reset ");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         sleep(200);
                         tdkTestObj = obj.createTestStep('TADstub_Get');
 
                         paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.UtilizationThreshold" ,"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.PhyRateThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.UtilizationThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.RSSIThreshold", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold"]
-                        print "TEST STEP 6: Should get the bandsteering values after factory reset"
+                        print("TEST STEP 6: Should get the bandsteering values after factory reset")
                         tdkTestObj,status,defaultValue = getMultipleParameterValues(obj,paramList)
                         if expectedresult in status and defaultValue[0] != "" and defaultValue[1] != "" and defaultValue[2] != "" and defaultValue[3] != "" and defaultValue[4] != "" and defaultValue[5] != "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6:  2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %( defaultValue[0], defaultValue[1], defaultValue[2] ,defaultValue[3], defaultValue[4], defaultValue[5]);
+                            print("ACTUAL RESULT 6:  2.4GHZ BandSteering UtilizationThreshold: %s,2.4GHZ BandSteering RSSIThreshold: %s, 2.4GHZ BandSteering PhyRateThreshold  : %s ,5GHZ BandSteering UtilizationThreshold: %s,5GHZ BandSteering RSSIThreshold: %s,5GHZ BandSteering PhyRateThreshold  : %s  " %( defaultValue[0], defaultValue[1], defaultValue[2] ,defaultValue[3], defaultValue[4], defaultValue[5]));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             tdkTestObj = obj2.createTestStep('ExecuteCmd');
                             bandSteeringValues= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_BANDSTEERING_THRESHOLD_VALUES" %TDK_PATH;
-                            print  bandSteeringValues;
+                            print(bandSteeringValues);
                             expectedresult="SUCCESS";
                             tdkTestObj.addParameter("command", bandSteeringValues);
                             tdkTestObj.executeTestCase(expectedresult);
@@ -206,56 +206,56 @@ if "SUCCESS" in loadmodulestatus1.upper() and  "SUCCESS" in loadmodulestatus2.up
                             bandSteeringValuesList = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                             if expectedresult in actualresult and bandSteeringValuesList != "":
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 7: Should get the values from properties file"
-                                print "ACTUAL RESULT 7:Band steering value from properties file:%s" %bandSteeringValuesList;
+                                print("TEST STEP 7: Should get the values from properties file")
+                                print("ACTUAL RESULT 7:Band steering value from properties file:%s" %bandSteeringValuesList);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 bandSteeringValuesList = bandSteeringValuesList.split(",");
                                 for item in bandSteeringValuesList:
-                                     if item == defaultValue[i]:
-                                         tdkTestObj.setResultStatus("SUCCESS");
-                                         print "TEST STEP 8: Should get the default Threshold values after wifi factory reset"
-                                         print "ACTUAL RESULT 8:Comparing threshold value %s and %s from properties file" %(item,defaultValue[i]);
-                                         #Get the result of execution
-                                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                                         i = i+1;
-                                     else:
-                                         tdkTestObj.setResultStatus("FAILURE");
-                                         print "TEST STEP 8: Should get the default Threshold values after wifi factory reset"
-                                         print "ACTUAL RESULT 8:Comparing threshold value %s and %s from properties file" %(item,defaultValue[i]);
-                                         #Get the result of execution
-                                         print "[TEST EXECUTION RESULT] : FAILURE";
+                                    if item == defaultValue[i]:
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("TEST STEP 8: Should get the default Threshold values after wifi factory reset")
+                                        print("ACTUAL RESULT 8:Comparing threshold value %s and %s from properties file" %(item,defaultValue[i]));
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                        i = i+1;
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("TEST STEP 8: Should get the default Threshold values after wifi factory reset")
+                                        print("ACTUAL RESULT 8:Comparing threshold value %s and %s from properties file" %(item,defaultValue[i]));
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 7: Should get the values from properties file"
-                                print "ACTUAL RESULT 7:Failed to get Band steering value from properties file";
+                                print("TEST STEP 7: Should get the values from properties file")
+                                print("ACTUAL RESULT 7:Failed to get Band steering value from properties file");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Should get the Threshold values after wifi factory reset"
-                            print "ACTUAL RESULT 6:Failed to retrieve Threshold values after wifi factory reset";
+                            print("TEST STEP 6: Should get the Threshold values after wifi factory reset")
+                            print("ACTUAL RESULT 6:Failed to retrieve Threshold values after wifi factory reset");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Should get the values from properties file"
-                        print "ACTUAL RESULT 5:Failed to get values from Band steering value from properties file";
+                        print("TEST STEP 5: Should get the values from properties file")
+                        print("ACTUAL RESULT 5:Failed to get values from Band steering value from properties file");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Set and get values should be same"
-                    print "ACTUAL RESULT 4:Set and get bandsteering values are not same" ;
-                    print "TEST EXECUTION RESULT 4:FAILURE";
+                    print("TEST STEP 4:Set and get values should be same")
+                    print("ACTUAL RESULT 4:Set and get bandsteering values are not same") ;
+                    print("TEST EXECUTION RESULT 4:FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Should get bandsteering values after set";
-                print "ACTUAL RESULT 3:Failed to get  bandsteering values after set";
+                print("TEST STEP 3: Should get bandsteering values after set");
+                print("ACTUAL RESULT 3:Failed to get  bandsteering values after set");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
             tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.UtilizationThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.RSSIThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.PhyRateThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.UtilizationThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.RSSIThreshold|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold|%s|int" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3],orgValue[4],orgValue[5]));
@@ -264,33 +264,31 @@ if "SUCCESS" in loadmodulestatus1.upper() and  "SUCCESS" in loadmodulestatus2.up
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP:Should revert bandsteering values"
-                print "ACTUAL RESULT: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP:Should revert bandsteering values")
+                print("ACTUAL RESULT: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Should revert bandsteering values"
-                print "ACTUAL RESULT: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP : Should revert bandsteering values")
+                print("ACTUAL RESULT: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Should set bandsteering values"
-            print "ACTUAL RESULT 2: %s" %details;
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("TEST STEP 2: Should set bandsteering values")
+            print("ACTUAL RESULT 2: %s" %details);
+            print("TEST EXECUTION RESULT :FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should get Bandsteering values"
-        print "ACTUAL RESULT 1:Failed to get Bandsteering values ";
+        print("TEST STEP 1: Should get Bandsteering values")
+        print("ACTUAL RESULT 1:Failed to get Bandsteering values ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

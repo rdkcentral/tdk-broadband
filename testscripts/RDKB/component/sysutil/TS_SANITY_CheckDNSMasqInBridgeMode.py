@@ -121,12 +121,12 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     if expectedresult in actualresult and lanMode:
         tdkTestObj.setResultStatus("SUCCESS");
         #Set the result status of execution
-        print "TEST STEP 1: Get the current lanMode"
-        print "EXPECTED RESULT 1: Should get the current lanMode"
-        print "ACTUAL RESULT 1: Current lanMode is %s" %lanMode;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current lanMode")
+        print("EXPECTED RESULT 1: Should get the current lanMode")
+        print("ACTUAL RESULT 1: Current lanMode is %s" %lanMode);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        print "Check if lan mode is bridge static else set to bridge-static";
+        print("Check if lan mode is bridge static else set to bridge-static");
         if lanMode != "bridge-static":
             #Set the lanMode to bridge-static
             tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
@@ -142,20 +142,20 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
 
             if expectedresult in actualresult:
                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 2: Set the lanMode to bridge-static";
-                 print "EXPECTED RESULT 2: Should set the lanMode to bridge-static";
-                 print "ACTUAL RESULT 2: %s" %details;
-                 print "[TEST EXECUTION RESULT] : SUCCESS" ;
-                 print"***wait for the set operation to get reflected****";
-                 sleep(150);
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Set the lanMode to bridge-static");
+                print("EXPECTED RESULT 2: Should set the lanMode to bridge-static");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
+                print("***wait for the set operation to get reflected****");
+                sleep(150);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the lanMode to bridge-static";
-                print "EXPECTED RESULT 2: Should set the lanMode to bridge-static";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
+                print("TEST STEP 2: Set the lanMode to bridge-static");
+                print("EXPECTED RESULT 2: Should set the lanMode to bridge-static");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE") ;
 
         #Get the current Lan mode
         tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
@@ -168,9 +168,9 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
         details = tdkTestObj.getResultDetails().strip();
 
         if expectedresult in actualresult and details =="bridge-static":
-            print "the device is in bridge mode";
+            print("the device is in bridge mode");
             query="pidof dnsmasq";
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -180,17 +180,17 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
             if expectedresult in  actualresult  and details == "":
                 tdkTestObj.setResultStatus("SUCCESS");
                 #Set the result status of execution
-                print "TEST STEP 3: Check if dnsmasq process is running"
-                print "EXPECTED RESULT 3: dnsmasq process should not be running "
-                print "ACTUAL RESULT 3: pid of dnsmasq is %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3: Check if dnsmasq process is running")
+                print("EXPECTED RESULT 3: dnsmasq process should not be running ")
+                print("ACTUAL RESULT 3: pid of dnsmasq is %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 #Set the result status of execution
-                print "TEST STEP 3: Check if dnsmasq process is running"
-                print "EXPECTED RESULT 3: dnsmasq process should not be running "
-                print "ACTUAL RESULT 3: pid of dnsmasq is %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check if dnsmasq process is running")
+                print("EXPECTED RESULT 3: dnsmasq process should not be running ")
+                print("ACTUAL RESULT 3: pid of dnsmasq is %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert the value of lanMode
             tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
@@ -207,33 +207,33 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4:Revert the value of lanMode";
-                print "EXPECTED RESULT 4: Should revert the lanMode";
-                print "ACTUAL RESULT 4: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                print("TEST STEP 4:Revert the value of lanMode");
+                print("EXPECTED RESULT 4: Should revert the lanMode");
+                print("ACTUAL RESULT 4: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4:Revert the value of lanMode";
-                print "EXPECTED RESULT 4: Should revert the lanMode";
-                print "ACTUAL RESULT 4: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
+                print("TEST STEP 4:Revert the value of lanMode");
+                print("EXPECTED RESULT 4: Should revert the lanMode");
+                print("ACTUAL RESULT 4: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE") ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Cuurent lan mode is not bridge-static and failed on set";
+            print("Cuurent lan mode is not bridge-static and failed on set");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         #Set the result status of execution
-        print "TEST STEP 1: Get the current lanMode"
-        print "EXPECTED RESULT 1: Should get the current lanMode"
-        print "ACTUAL RESULT 1: Current lanMode is %s" %lanMode;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current lanMode")
+        print("EXPECTED RESULT 1: Should get the current lanMode")
+        print("ACTUAL RESULT 1: Current lanMode is %s" %lanMode);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-     print "Failed to load sysutil module";
-     obj.setLoadModuleStatus("FAILURE");
-     pamObj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

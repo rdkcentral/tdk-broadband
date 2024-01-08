@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_EPON_DPoE_IsMTAMAC_InDynamicMac');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -98,32 +98,32 @@ if "SUCCESS" in result.upper() :
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             dpoeMac1 = parsedResponse[1].lstrip(" ").rstrip(" ").split(" ")[0]
             dpoeMac2 = parsedResponse[1].lstrip(" ").rstrip(" ").split(" ")[1]
             MTAMac = parsedResponse[1].lstrip(" ").rstrip(" ").split(" ")[4]
 
-            print "MACs are: ", dpoeMac1, dpoeMac2,MTAMac
+            print("MACs are: ", dpoeMac1, dpoeMac2,MTAMac)
 
             if MTAMac.lower()==dpoeMac1 or MTAMac.lower()==dpoeMac2:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                print "Found MTA MAC in EPON dynamic MAC list"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("Found MTA MAC in EPON dynamic MAC list")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
-                print "Cannot find MTA MAC in EPON dynamic MAC list"
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("Cannot find MTA MAC in EPON dynamic MAC list")
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

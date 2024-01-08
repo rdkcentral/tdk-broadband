@@ -97,7 +97,7 @@ Invalid_password = "abc123456789"
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,23 +111,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and Status == "Invalid_PWD":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Validate for the password length greater that 10";
-        print "EXPECTED RESULT 1: Should get the status of password validation as Invalid_PWD";
-        print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+        print("TEST STEP 1: Validate for the password length greater that 10");
+        print("EXPECTED RESULT 1: Should get the status of password validation as Invalid_PWD");
+        print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Validate for the password length greater that 10";
-        print "EXPECTED RESULT 1:Should get the status of password validation as Invalid_PWD";
-        print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+        print("TEST STEP 1: Validate for the password length greater that 10");
+        print("EXPECTED RESULT 1:Should get the status of password validation as Invalid_PWD");
+        print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mso_mgmt_hal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

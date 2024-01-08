@@ -38,7 +38,7 @@
     <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
-  </box_types>  
+  </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
@@ -109,11 +109,11 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         sysObj.restorePreviousStateAfterReboot();
 
@@ -129,32 +129,32 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             if expectedresult in actualresult and "error fetching interface information" not in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Check if %s is up"%interafces;
-                print "EXPECTED RESULT : %s should be up"%interafces;
-                print "ACTUAL RESULT : %s inteface is present"%interafces;
+                print("TEST STEP : Check if %s is up"%interafces);
+                print("EXPECTED RESULT : %s should be up"%interafces);
+                print("ACTUAL RESULT : %s inteface is present"%interafces);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Check if %s is up"%interafces;
-                print "EXPECTED RESULT : %s should be up"%interafces;
-                print "ACTUAL RESULT : %s inteface is not present"%interafces;
+                print("TEST STEP : Check if %s is up"%interafces);
+                print("EXPECTED RESULT : %s should be up"%interafces);
+                print("ACTUAL RESULT : %s inteface is not present"%interafces);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("[TEST EXECUTION RESULT] :FAILURE");
                 break;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamobj.unloadModule("pam");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

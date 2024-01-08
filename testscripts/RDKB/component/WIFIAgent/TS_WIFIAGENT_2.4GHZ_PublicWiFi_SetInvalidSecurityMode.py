@@ -65,8 +65,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from xfinityWiFiLib import *
 
 #Test component to be tested
@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHZ_PublicWiFi_SetInvalidSecurity
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -90,23 +90,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(obj);
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "TEST STEP 1 : Should get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("TEST STEP 1 : Should get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set values to enable public wifi
         setvalues = ["44","68.86.15.199","68.86.15.171","true","true","true"];
         tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,setvalues);
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable public wifi"
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Enable public wifi")
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #Get the current value of ModeEnabled
-	    tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+            #Get the current value of ModeEnabled
+            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.5.Security.ModeEnabled")
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
@@ -115,14 +115,14 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the current mode";
-                print "EXPECTED RESULT 3: Should get the current mode";
-                print "ACTUAL RESULT 3: Current security mode is %s" %mode;
+                print("TEST STEP 3: Get the current mode");
+                print("EXPECTED RESULT 3: Should get the current mode");
+                print("ACTUAL RESULT 3: Current security mode is %s" %mode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		#Set the security mode to an invalid value
-		tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+                #Set the security mode to an invalid value
+                tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.5.Security.ModeEnabled")
                 tdkTestObj.addParameter("paramValue","WEP-WPA2")
                 tdkTestObj.addParameter("paramType","string")
@@ -133,22 +133,22 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult not in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set the security mode to an invalid value";
-                    print "EXPECTED RESULT 4: Should fail to set the invalid security mode"
-                    print "ACTUAL RESULT 4: %s " %details;
+                    print("TEST STEP 4: Set the security mode to an invalid value");
+                    print("EXPECTED RESULT 4: Should fail to set the invalid security mode")
+                    print("ACTUAL RESULT 4: %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
-		else:
-		    #Set the result status of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set the security mode to an invalid value";
-                    print "EXPECTED RESULT 4: Should fail to set the invalid security mode"
-                    print "ACTUAL RESULT 4: %s " %details;
+                    print("TEST STEP 4: Set the security mode to an invalid value");
+                    print("EXPECTED RESULT 4: Should fail to set the invalid security mode")
+                    print("ACTUAL RESULT 4: %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
 
-		    #Revert the security mode if the invalid value is set
-		    tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+                    #Revert the security mode if the invalid value is set
+                    tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                     tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.5.Security.ModeEnabled")
                     tdkTestObj.addParameter("paramValue",mode)
                     tdkTestObj.addParameter("paramType","string")
@@ -159,55 +159,55 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Revert the value of security mode";
-                        print "EXPECTED RESULT 5: Should revert the value of security mode"
-                        print "ACTUAL RESULT 5: %s " %details;
+                        print("TEST STEP 5: Revert the value of security mode");
+                        print("EXPECTED RESULT 5: Should revert the value of security mode")
+                        print("ACTUAL RESULT 5: %s " %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
-		    else:
-			#Set the result status of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Revert the value of security mode";
-                        print "EXPECTED RESULT 5: Should revert the value of security mode"
-                        print "ACTUAL RESULT 5: %s " %details;
+                        print("TEST STEP 5: Revert the value of security mode");
+                        print("EXPECTED RESULT 5: Should revert the value of security mode")
+                        print("ACTUAL RESULT 5: %s " %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE"
-  	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the current mode";
-                print "EXPECTED RESULT 3: Should get the current mode";
-                print "ACTUAL RESULT 3: Current security mode is %s" %mode;
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the current mode");
+                print("EXPECTED RESULT 3: Should get the current mode");
+                print("ACTUAL RESULT 3: Current security mode is %s" %mode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #Revert the values of public wifi params
             tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,orgValue);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 6:Revert the PublicWiFi param values"
-                print "TEST STEP 6 : Should revert the PublicWiFi values"
-                print "ACTUAL RESULT 6:%s" %details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 6:Revert the PublicWiFi param values")
+                print("TEST STEP 6 : Should revert the PublicWiFi values")
+                print("ACTUAL RESULT 6:%s" %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 6:Revert the PublicWiFi param values"
-                print "TEST STEP 6 : Should revert the PublicWiFi param values"
-                print "ACTUAL RESULT 6:%s" %details
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable public wifi"
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 6:Revert the PublicWiFi param values")
+                print("TEST STEP 6 : Should revert the PublicWiFi param values")
+                print("ACTUAL RESULT 6:%s" %details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Enable public wifi")
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "TEST STEP 1 : Should get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("TEST STEP 1 : Should get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

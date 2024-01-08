@@ -72,8 +72,8 @@ webpaPreRequisite</api_or_interface_used>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import time;
 from webpaUtility import *
 
@@ -88,7 +88,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_5GHzMACFilterEnable');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -97,75 +97,75 @@ if "SUCCESS" in result.upper() :
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
         #get the current state
-        print "TEST STEP 1: Get and save the state of Mac Filter for 5GHz"
+        print("TEST STEP 1: Get and save the state of Mac Filter for 5GHz")
         queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable"}
         queryResponse = webpaQuery(obj,queryParam)
         parsedResponse = parseWebpaResponse(queryResponse, 1)
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
 
 
         #Checking if the response value is not null
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-              OrgValue = parsedResponse[1];
-              print "Mac Filter for 5 GHz's State: ",OrgValue;
-              #toggling by using set
-              print "TEST STEP 2: Toggling the value"
-              if parsedResponse[1] == "false":
-                 flag="true"
-                 queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":flag,"dataType":3}
-                 queryResponse = webpaQuery(obj, queryParam,"set")
-                 setResponse = parseWebpaResponse(queryResponse, 1,"set")
-                 tdkTestObj.executeTestCase("SUCCESS");
-              else:
-                 flag="false"
-                 queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":flag,"dataType":3}
-                 queryResponse = webpaQuery(obj, queryParam,"set")
-                 setResponse = parseWebpaResponse(queryResponse, 1,"set")
-                 tdkTestObj.executeTestCase("SUCCESS");
-              
-              time.sleep(30)
-              #getting the set value which is toggled
-              print "TEST STEP 3: Getting the toggled value"
-              queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable"}
-              queryResponse = webpaQuery(obj, queryParam)
-              getResponse = parseWebpaResponse(queryResponse, 1)
-              tdkTestObj.executeTestCase("SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            OrgValue = parsedResponse[1];
+            print("Mac Filter for 5 GHz's State: ",OrgValue);
+            #toggling by using set
+            print("TEST STEP 2: Toggling the value")
+            if parsedResponse[1] == "false":
+                flag="true"
+                queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":flag,"dataType":3}
+                queryResponse = webpaQuery(obj, queryParam,"set")
+                setResponse = parseWebpaResponse(queryResponse, 1,"set")
+                tdkTestObj.executeTestCase("SUCCESS");
+            else:
+                flag="false"
+                queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":flag,"dataType":3}
+                queryResponse = webpaQuery(obj, queryParam,"set")
+                setResponse = parseWebpaResponse(queryResponse, 1,"set")
+                tdkTestObj.executeTestCase("SUCCESS");
 
-              #check for successful set
-              if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "[TEST EXECUTION RESULT] : SUCCESS"
-                 Value = parsedResponse[1];
-                 print "Mac Filter  for 5GHz 's  State: ",Value;
-              else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "[TEST EXECUTION RESULT] : FAILURE"
+            time.sleep(30)
+            #getting the set value which is toggled
+            print("TEST STEP 3: Getting the toggled value")
+            queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable"}
+            queryResponse = webpaQuery(obj, queryParam)
+            getResponse = parseWebpaResponse(queryResponse, 1)
+            tdkTestObj.executeTestCase("SUCCESS");
 
-              #Setting back to original
-              print "TEST STEP 4: Setting back to original value"
-              queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":OrgValue,"dataType":3}
-              queryResponse = webpaQuery(obj, queryParam,"set")
-              setResponse = parseWebpaResponse(queryResponse, 1,"set")
-              tdkTestObj.executeTestCase("SUCCESS");
-              if "SUCCESS" in setResponse[0]:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS"
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4[TEST EXECUTION RESULT] : FAILURE"
+            #check for successful set
+            if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                Value = parsedResponse[1];
+                print("Mac Filter  for 5GHz 's  State: ",Value);
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
+            #Setting back to original
+            print("TEST STEP 4: Setting back to original value")
+            queryParam = {"name":"Device.WiFi.AccessPoint.10002.X_CISCO_COM_MACFilter.Enable","value":OrgValue,"dataType":3}
+            queryResponse = webpaQuery(obj, queryParam,"set")
+            setResponse = parseWebpaResponse(queryResponse, 1,"set")
+            tdkTestObj.executeTestCase("SUCCESS");
+            if "SUCCESS" in setResponse[0]:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4[TEST EXECUTION RESULT] : FAILURE")
         else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "[TEST EXECUTION RESULT] : FAILURE"
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

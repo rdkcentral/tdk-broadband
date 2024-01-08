@@ -91,11 +91,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the WifiClient Default OverrideTTL";
-        print "EXPECTED RESULT 1: Should get WifiClient Default OverrideTTL";
-        print "ACTUAL RESULT 1: WifiClient current Default OverrideTTL:%s" %default;
+        print("TEST STEP 1: Get the WifiClient Default OverrideTTL");
+        print("EXPECTED RESULT 1: Should get WifiClient Default OverrideTTL");
+        print("ACTUAL RESULT 1: WifiClient current Default OverrideTTL:%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         tdkTestObj.addParameter("ParamName","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.Default.OverrideTTL");
@@ -106,59 +106,59 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         Setresult = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Set the WifiClient Default OverrideTTL  to a invalid value like 901";
-           print "EXPECTED RESULT 2: Should not set WifiClient Default OverrideTTL to a invalid value";
-           print "ACTUAL RESULT 2: set operation failed for the WifiClient Default OverrideTTL with a invalid value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the WifiClient Default OverrideTTL  to a invalid value like 901");
+            print("EXPECTED RESULT 2: Should not set WifiClient Default OverrideTTL to a invalid value");
+            print("ACTUAL RESULT 2: set operation failed for the WifiClient Default OverrideTTL with a invalid value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the WifiClient Default OverrideTTL to a invalid value like 901";
-           print "EXPECTED RESULT 2: Should not set WifiClient Default OverrideTTL to a invalid value";
-           print "ACTUAL RESULT 2: set operation was success for WifiClient Default OverrideTTL with a invalid value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the WifiClient Default OverrideTTL to a invalid value like 901");
+            print("EXPECTED RESULT 2: Should not set WifiClient Default OverrideTTL to a invalid value");
+            print("ACTUAL RESULT 2: set operation was success for WifiClient Default OverrideTTL with a invalid value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
-           #Reverting to default in case set operation was success
-           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-           tdkTestObj.addParameter("ParamName","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.Default.OverrideTTL");
-           expectedresult="SUCCESS";
-           tdkTestObj.addParameter("ParamValue",default);
-           tdkTestObj.addParameter("Type","unsignedint");
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           result = tdkTestObj.getResultDetails();
+            #Reverting to default in case set operation was success
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.Default.OverrideTTL");
+            expectedresult="SUCCESS";
+            tdkTestObj.addParameter("ParamValue",default);
+            tdkTestObj.addParameter("Type","unsignedint");
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            result = tdkTestObj.getResultDetails();
 
-           if expectedresult in  expectedresult:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Revert the Default OverrideTTL WifiClient to its default value :",default;
-              print "EXPECTED RESULT 3: Revert  Default OverrideTTL WifiClient to previous value";
-              print "ACTUAL RESULT 3: Revert Operation sucesss:",result ;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Revert the Default OverrideTTL WifiClient to its default:",default;
-               print "EXPECTED RESULT 3: Revert  Default OverrideTTL WifiClient to previous value";
-               print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE"
+            if expectedresult in  expectedresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Revert the Default OverrideTTL WifiClient to its default value :",default);
+                print("EXPECTED RESULT 3: Revert  Default OverrideTTL WifiClient to previous value");
+                print("ACTUAL RESULT 3: Revert Operation sucesss:",result) ;
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Revert the Default OverrideTTL WifiClient to its default:",default);
+                print("EXPECTED RESULT 3: Revert  Default OverrideTTL WifiClient to previous value");
+                print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the WifiClient Default OverrideTTL";
-        print "EXPECTED RESULT 1: Should get WifiClient Default OverrideTTL";
-        print "ACTUAL RESULT 1: WifiClient current Default OverrideTTL  :%s" %default;
+        print("TEST STEP 1: Get the WifiClient Default OverrideTTL");
+        print("EXPECTED RESULT 1: Should get WifiClient Default OverrideTTL");
+        print("ACTUAL RESULT 1: WifiClient current Default OverrideTTL  :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

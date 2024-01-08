@@ -79,22 +79,22 @@ def getLogFileTotalLinesCount(tdkTestObj, string, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\n*********************************************";
-    print "TEST STEP %d : Get the number of log lines currently present" %step;
-    print "EXPECTED RESULT %d : Should get the number of log lines currently present" %step;
-    print "Query : %s" %cmd;
+    print("\n*********************************************");
+    print("TEST STEP %d : Get the number of log lines currently present" %step);
+    print("EXPECTED RESULT %d : Should get the number of log lines currently present" %step);
+    print("Query : %s" %cmd);
     count = 0;
 
     if expectedresult in actualresult:
         count = int(tdkTestObj.getResultDetails().strip().replace("\\n", ""));
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Successfully captured the number of log lines present : %d" %(step, count);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: Successfully captured the number of log lines present : %d" %(step, count));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Failed to  capture the number of log lines present : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
-    print "*********************************************\n";
+        print("ACTUAL RESULT %d: Failed to  capture the number of log lines present : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    print("*********************************************\n");
     return count,step;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -132,14 +132,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for wifihealth log file presence" %step;
-    print "EXPECTED RESULT %d:wifihealth log file should be present" %step;
+    print("\nTEST STEP %d: Check for wifihealth log file presence" %step);
+    print("EXPECTED RESULT %d:wifihealth log file should be present" %step);
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d:wifihealth log file is present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         step = step + 1;
         #Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.ChUtilityLogInterval
@@ -150,15 +150,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
         actualresult = tdkTestObj.getResult();
         initial_value = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Get the TELEMETRY Channel Utility LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.ChUtilityLogInterval" %step;
-        print "EXPECTED RESULT %d: Should get the TELEMETRY Channel Utility LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.ChUtilityLogInterval" %step;
+        print("\nTEST STEP %d: Get the TELEMETRY Channel Utility LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.ChUtilityLogInterval" %step);
+        print("EXPECTED RESULT %d: Should get the TELEMETRY Channel Utility LogInterval from Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.ChUtilityLogInterval" %step);
 
         if expectedresult in actualresult and initial_value != "":
             DeflogInt = int(initial_value);
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %d" %(step,DeflogInt);
+            print("ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %d" %(step,DeflogInt));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if DeflogInt == 30:
                 newlogInt = "60";
@@ -176,56 +176,56 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Set the TELEMETRY Channel Utility LogInterval to %ss" %(step, newlogInt);
-            print "EXPECTED RESULT %d: Should set the TELEMETRY Channel Utility LogInterval to %ss" %(step, newlogInt);
+            print("\nTEST STEP %d: Set the TELEMETRY Channel Utility LogInterval to %ss" %(step, newlogInt));
+            print("EXPECTED RESULT %d: Should set the TELEMETRY Channel Utility LogInterval to %ss" %(step, newlogInt));
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %s" %(step,details);
+                print("ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %s" %(step,details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nGet the number of log lines \"CHUTIL_1\" in /rdklogs/logs/wifihealth.txt";
+                print("\nGet the number of log lines \"CHUTIL_1\" in /rdklogs/logs/wifihealth.txt");
                 step = step + 1;
                 tdkTestObj1 = sysObj.createTestStep('ExecuteCmd');
                 log = "CHUTIL_1";
                 no_of_lines_initial,step = getLogFileTotalLinesCount(tdkTestObj1, log, step);
-                print "The initial number of log lines \"CHUTIL_1\" in wifihealth.txt is : %d" %no_of_lines_initial;
+                print("The initial number of log lines \"CHUTIL_1\" in wifihealth.txt is : %d" %no_of_lines_initial);
 
                 #Sleeping for initial telemetry interval DeflogInt + newlogInt
                 sleep_time = DeflogInt + int(newlogInt);
-                print "\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time;
+                print("\nSleeping for duration : %d to check if the logging is happening according to the new log interval set" %sleep_time);
                 sleep(sleep_time);
 
-                print "\nGet the final number of log lines \"CHUTIL_1\" in /rdklogs/logs/wifihealth.txt";
+                print("\nGet the final number of log lines \"CHUTIL_1\" in /rdklogs/logs/wifihealth.txt");
                 step = step + 1;
                 tdkTestObj1 = sysObj.createTestStep('ExecuteCmd');
                 log = "CHUTIL_1";
                 no_of_lines_final,step = getLogFileTotalLinesCount(tdkTestObj1, log, step);
-                print "The initial number of log lines \"CHUTIL_1\" in wifihealth.txt is : %d" %no_of_lines_final;
+                print("The initial number of log lines \"CHUTIL_1\" in wifihealth.txt is : %d" %no_of_lines_final);
 
                 step = step + 1;
                 difference = no_of_lines_final - no_of_lines_initial;
-                print "\nThe CHUTIL_1 log lines can be >= 2, after accounting for the initial log interval and the new log interval set";
+                print("\nThe CHUTIL_1 log lines can be >= 2, after accounting for the initial log interval and the new log interval set");
 
-                print "TEST STEP %d: Should get CHUTIL_1 markers count greater than or equal to 2" %step;
-                print "EXPECTED RESULT %d: The CHUTIL_1 markers count should be greater than or equal to 2" %step;
+                print("TEST STEP %d: Should get CHUTIL_1 markers count greater than or equal to 2" %step);
+                print("EXPECTED RESULT %d: The CHUTIL_1 markers count should be greater than or equal to 2" %step);
 
                 if difference >= 2:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Number of new CHUTIL_1 markers are : %d" %(step, difference);
+                    print("ACTUAL RESULT %d: Number of new CHUTIL_1 markers are : %d" %(step, difference));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Number of new CHUTIL_1 markers are : %d" %(step, difference);
+                    print("ACTUAL RESULT %d: Number of new CHUTIL_1 markers are : %d" %(step, difference));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Set operation failed" %(step);
+                print("ACTUAL RESULT %d: Set operation failed" %(step));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("[TEST EXECUTION RESULT] :FAILURE");
 
             #Revert the Value
             step = step + 1;
@@ -238,35 +238,34 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Revert the TELEMETRY Channel Utility LogInterval to initial value" %step;
-            print "EXPECTED RESULT %d: Should revert the TELEMETRY Channel Utility LogInterval to initial value" %step;
+            print("\nTEST STEP %d: Revert the TELEMETRY Channel Utility LogInterval to initial value" %step);
+            print("EXPECTED RESULT %d: Should revert the TELEMETRY Channel Utility LogInterval to initial value" %step);
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Revert successful" %step;
+                print("ACTUAL RESULT %d: Revert successful" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Revertion failed" %step;
+                print("ACTUAL RESULT %d: Revertion failed" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %s" %(step,details);
+            print("ACTUAL RESULT %d: TELEMETRY Channel Utility LogInterval: %s" %(step,details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d:wifihealth log file is not present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is not present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

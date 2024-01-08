@@ -93,8 +93,8 @@ obj1.configureTestCase(ip,port,'TS_WIFIAGENT_AddAndDeleteCSITableInstance_CheckD
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     pre_req_set, tdkTestObj, step, revert_flag, initial_val = CheckPreReqForCSI(obj1, obj);
 
     if pre_req_set == 1:
-        print "\n*************All pre-requisites set for the DUT*****************";
+        print("\n*************All pre-requisites set for the DUT*****************");
         #Add a new CSI Object
         step = step + 1;
         tdkTestObj = obj.createTestStep("TDKB_TR181Stub_AddObject");
@@ -115,19 +115,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Add a new CSI Table instance" %step;
-        print "EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step;
+        print("\nTEST STEP %d: Add a new CSI Table instance" %step);
+        print("EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step);
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : %s" %actualresult;
+            print("ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : %s" %actualresult);
             instance = details.split(':')[1];
 
             if instance.isdigit() and int(instance) > 0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "INSTANCE VALUE : %s" %instance;
+                print("INSTANCE VALUE : %s" %instance);
 
                 #Check default values of the Enable value and ClientMaclist after instance is created
                 step = step + 1;
@@ -138,20 +138,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult1, details1 = getTR181Value(tdkTestObj, enable_param);
                 actualresult2, details2 = getTR181Value(tdkTestObj, ClientMaclist_param);
 
-                print "\nTEST STEP %d : Get the default values of %s and %s and check if it is false and empty respectively" %(step, enable_param, ClientMaclist_param);
-                print "EXPECTED RESULT %d : The values should be retrieved successfully and it should be false and empty respectively" %step;
+                print("\nTEST STEP %d : Get the default values of %s and %s and check if it is false and empty respectively" %(step, enable_param, ClientMaclist_param));
+                print("EXPECTED RESULT %d : The values should be retrieved successfully and it should be false and empty respectively" %step);
 
                 if expectedresult in actualresult1 and expectedresult in actualresult2:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : The default values of the newly added instance retrieved successfully" %step;
-                    print "%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2);
+                    print("ACTUAL RESULT %d : The default values of the newly added instance retrieved successfully" %step);
+                    print("%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if details1 == "false" and details2 == "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "The default values of the new CSI Table instance - %s is false and %s is empty as expected" %(enable_param, ClientMaclist_param);
+                        print("The default values of the new CSI Table instance - %s is false and %s is empty as expected" %(enable_param, ClientMaclist_param));
 
                         #Check if are able to set new values to both parameters
                         hostMacAddress = "aabbccddeeff";
@@ -160,15 +160,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult1, details1 = setTR181Value(tdkTestObj, enable_param, "true", "boolean");
                         actualresult2, details2 = setTR181Value(tdkTestObj, ClientMaclist_param, hostMacAddress, "string");
 
-                        print "\nTEST STEP %d : Set values for %s and %s to true and %s respectively" %(step, enable_param, ClientMaclist_param, hostMacAddress);
-                        print "EXPECTED RESULT %d : The values should be set successfully" %step;
+                        print("\nTEST STEP %d : Set values for %s and %s to true and %s respectively" %(step, enable_param, ClientMaclist_param, hostMacAddress));
+                        print("EXPECTED RESULT %d : The values should be set successfully" %step);
 
                         if expectedresult in actualresult1 and expectedresult in actualresult2:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance set successfully" %step;
+                            print("ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance set successfully" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Cross check the SET values with GET
                             step = step + 1;
@@ -176,44 +176,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             actualresult1, details1 = getTR181Value(tdkTestObj, enable_param);
                             actualresult2, details2 = getTR181Value(tdkTestObj, ClientMaclist_param);
 
-                            print "\nTEST STEP %d : Get the values of %s and %s and check if it is same as set values" %(step, enable_param, ClientMaclist_param);
-                            print "EXPECTED RESULT %d : The values should be retrieved successfully and it should be the same as set values" %step;
+                            print("\nTEST STEP %d : Get the values of %s and %s and check if it is same as set values" %(step, enable_param, ClientMaclist_param));
+                            print("EXPECTED RESULT %d : The values should be retrieved successfully and it should be the same as set values" %step);
 
                             if expectedresult in actualresult1 and expectedresult in actualresult2:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d : The values of the newly added instance retrieved successfully" %step;
-                                print "%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2);
+                                print("ACTUAL RESULT %d : The values of the newly added instance retrieved successfully" %step);
+                                print("%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 if details1 == "true" and details2 == hostMacAddress:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "The values of the new CSI Table instance - %s is true and %s is %s as expected" %(enable_param, ClientMaclist_param, hostMacAddress);
+                                    print("The values of the new CSI Table instance - %s is true and %s is %s as expected" %(enable_param, ClientMaclist_param, hostMacAddress));
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "The GET values of the new CSI Table instance are not as expected";
+                                    print("The GET values of the new CSI Table instance are not as expected");
                             else :
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step;
+                                print("ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance NOT set successfully" %step;
+                            print("ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance NOT set successfully" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "The default values of the new CSI Table instance are not as expected";
+                        print("The default values of the new CSI Table instance are not as expected");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step;
+                    print("ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Delete the added instance from the CSI Table
                 step = step + 1;
@@ -223,57 +223,57 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP %d : Delete the newly added CSI Table instance" %step;
-                print "EXPECTED RESULT %d: Should delete the newly added CSI Table instance successfully" %step;
+                print("\nTEST STEP %d : Delete the newly added CSI Table instance" %step);
+                print("EXPECTED RESULT %d: Should delete the newly added CSI Table instance successfully" %step);
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details);
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    print "Added instance is deleted successfully";
+                    print("ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details));
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("Added instance is deleted successfully");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details);
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                    print "Added instance could not be deleted";
+                    print("ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details));
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    print("Added instance could not be deleted");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "INSTANCE VALUE : %s is not a valid value" %instance
+                print("INSTANCE VALUE : %s is not a valid value" %instance)
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Unable to add a new instance to CSI Table; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d: Unable to add a new instance to CSI Table; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : FAILURE");
 
         #Revert the pre-requisites set
         if revert_flag == 1:
             step = step + 1;
             status = RevertCSIPreReq(obj, initial_val);
-            print "\nTEST STEP %d : Revert the pre-requisites set to initial values" %step;
-            print "\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+            print("\nTEST STEP %d : Revert the pre-requisites set to initial values" %step);
+            print("\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
             if status == 1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Revert operation was success" %step;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d : Revert operation was success" %step);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Revert operation failed" %step;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d : Revert operation failed" %step);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Revert operations not required";
+            print("Revert operations not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

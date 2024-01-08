@@ -90,8 +90,8 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     step = 1;
     for index in range(1,3):
-        print "\n***************For radio index : %d*********************" %index;
-        print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AFTX - Tx Channel Utilization of Self BSS use in units of percentage" %index;
+        print("\n***************For radio index : %d*********************" %index);
+        print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AFTX - Tx Channel Utilization of Self BSS use in units of percentage" %index);
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_AFTX";
         tdkTestObj.addParameter("ParamName",param);
@@ -100,20 +100,20 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Get the Tx Channel Utilitization of Self BSS from %s" %(step,param);
-        print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-        print "Details : %s" %details;
+        print("\nTEST STEP %d: Get the Tx Channel Utilitization of Self BSS from %s" %(step,param));
+        print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+        print("Details : %s" %details);
 
         if expectedresult in actualresult and details != "":
             ActivityFactor_TX = int(details);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor_TX);
+            print("ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor_TX));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             step = step + 1;
-            print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AFRX - Rx Channel Utilization of Self BSS use in units of percentage" %index;
+            print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AFRX - Rx Channel Utilization of Self BSS use in units of percentage" %index);
             param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_AFRX";
             tdkTestObj.addParameter("ParamName",param);
             expectedresult="SUCCESS";
@@ -121,20 +121,20 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Get the Rx Channel Utilitization of Self BSS from %s" %(step,param);
-            print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-            print "Details : %s" %details;
+            print("\nTEST STEP %d: Get the Rx Channel Utilitization of Self BSS from %s" %(step,param));
+            print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+            print("Details : %s" %details);
 
             if expectedresult in actualresult and details != "":
                 ActivityFactor_RX = int(details);
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor_RX);
+                print("ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor_RX));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 step = step + 1;
-                print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was transmitting or receiving Wi-Fi packets" %index;
+                print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was transmitting or receiving Wi-Fi packets" %index);
                 param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_AF";
                 tdkTestObj.addParameter("ParamName",param);
                 expectedresult="SUCCESS";
@@ -142,61 +142,60 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP %d: Get the Activity Factor from %s" %(step,param);
-                print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-                print "Details : %s" %details;
+                print("\nTEST STEP %d: Get the Activity Factor from %s" %(step,param));
+                print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+                print("Details : %s" %details);
 
                 if expectedresult in actualresult and details != "":
                     ActivityFactor = int(details);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor);
+                    print("ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     step = step + 1;
                     #Check if the Activity Factor is equal to the sum of Tx + Rx Channel utilizations
                     calculated_AF = ActivityFactor_TX + ActivityFactor_RX;
-                    print "\nTEST STEP %d: Check if the Activity Factor retrieved is equal to the sum of Tx and Rx Channel utilizations" %(step);
-                    print "EXPECTED RESULT %d: The Activity Factor retrieved should be equal to the sum of Tx and Rx Channel utilizations" %(step);
-                    print "Activity Factor retrieved from TR181 parameter : %d" %ActivityFactor;
-                    print "Activity Factor from adding Tx and Rx Channel Utilizations : %d" %calculated_AF;
+                    print("\nTEST STEP %d: Check if the Activity Factor retrieved is equal to the sum of Tx and Rx Channel utilizations" %(step));
+                    print("EXPECTED RESULT %d: The Activity Factor retrieved should be equal to the sum of Tx and Rx Channel utilizations" %(step));
+                    print("Activity Factor retrieved from TR181 parameter : %d" %ActivityFactor);
+                    print("Activity Factor from adding Tx and Rx Channel Utilizations : %d" %calculated_AF);
 
                     if ActivityFactor == calculated_AF:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: The values are equal" %step;
+                        print("ACTUAL RESULT %d: The values are equal" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: The values are not equal" %step;
+                        print("ACTUAL RESULT %d: The values are not equal" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Failed to get the value" %step;
+                    print("ACTUAL RESULT %d: Failed to get the value" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Failed to get the value" %step;
+                print("ACTUAL RESULT %d: Failed to get the value" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Failed to get the value" %step;
+            print("ACTUAL RESULT %d: Failed to get the value" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         step = step + 1;
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

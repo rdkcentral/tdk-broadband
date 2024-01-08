@@ -83,20 +83,20 @@ def checkLogs(obj2, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for the presence of the string \"%s\"" %(step, string_to_check);
-    print "EXPECTED RESULT %d: The string should be present in Consolelog.txt.0" %step;
+    print("\nTEST STEP %d: Check for the presence of the string \"%s\"" %(step, string_to_check));
+    print("EXPECTED RESULT %d: The string should be present in Consolelog.txt.0" %step);
 
     if string_to_check in details :
         status = 0;
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Required string is found; Details : %s" %(step,details);
+        print("ACTUAL RESULT %d: Required string is found; Details : %s" %(step,details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Required string is not found; Details : %s" %(step,details);
+        print("ACTUAL RESULT %d: Required string is not found; Details : %s" %(step,details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 
@@ -133,22 +133,22 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     paramList=["Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold", "Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync"]
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
 
-    print "\nTEST STEP 1: Get the values of Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync";
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the values of Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync");
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold is : %s and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync is : %s" %(orgValue[0],orgValue[1]) ;
+        print("ACTUAL RESULT 1: Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold is : %s and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync is : %s" %(orgValue[0],orgValue[1])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         set_threshold = "0";
         set_sync = "false";
         #Check the GET values, if they match reboot the device directly else SET the values and reboot
         if orgValue[0] == set_threshold and orgValue[1] == set_sync:
-            print "\nSet operation for Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync is not required";
-            print "****DUT is going for a reboot and will be up after 360 seconds*****";
+            print("\nSet operation for Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync is not required");
+            print("****DUT is going for a reboot and will be up after 360 seconds*****");
             obj2.initiateReboot();
             sleep(360);
 
@@ -156,10 +156,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             step = 2;
             status = checkLogs(obj2, step);
             if status == 0:
-                print "The required logs are present under Consolelog.txt.0"
+                print("The required logs are present under Consolelog.txt.0")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "The required logs are not present under Consolelog.txt.0"
+                print("The required logs are not present under Consolelog.txt.0")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -168,28 +168,28 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2 : Set Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold to %s and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync to %s" %(set_threshold,set_sync);
-            print "EXPECTED RESULT 2 : SET operations should be success";
+            print("\nTEST STEP 2 : Set Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold to %s and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync to %s" %(set_threshold,set_sync));
+            print("EXPECTED RESULT 2 : SET operations should be success");
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Set operation success; Details : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 2: Set operation success; Details : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Validate the SET with GET
                 tdkTestObj,status,setValue = getMultipleParameterValues(obj,paramList)
 
-                print "\nTEST STEP 3: Get the values of Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync";
-                print "EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values";
+                print("\nTEST STEP 3: Get the values of Device.SelfHeal.X_RDKCENTRAL-COM_LogBackupThreshold and Device.SelfHeal.X_RDKCENTRAL-COM_NoWaitLogSync");
+                print("EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values");
 
                 if expectedresult in status and setValue[0] == set_threshold and setValue[1] == set_sync :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Values after the GET are same as the SET values : %s, %s" %(setValue[0],setValue[1]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are same as the SET values : %s, %s" %(setValue[0],setValue[1])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                    print "\n****DUT is going for a reboot and will be up after 360 seconds*****";
+                    print("\n****DUT is going for a reboot and will be up after 360 seconds*****");
                     obj2.initiateReboot();
                     sleep(360);
 
@@ -197,35 +197,34 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     step = 4;
                     status = checkLogs(obj2, step);
                     if status == 0:
-                        print "The required logs are present under Consolelog.txt.0"
+                        print("The required logs are present under Consolelog.txt.0")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "The required logs are not present under Consolelog.txt.0"
+                        print("The required logs are not present under Consolelog.txt.0")
                         tdkTestObj.setResultStatus("FAILURE");
-                    print "Revert operation is not required as Preserve Logs parameters are RFC";
+                    print("Revert operation is not required as Preserve Logs parameters are RFC");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s" %(setValue[0],setValue[1]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s" %(setValue[0],setValue[1])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:Set operation failed; Details : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT 2:Set operation failed; Details : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: GET operation failed; Details : %s" %details;
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT 1: GET operation failed; Details : %s" %details);
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

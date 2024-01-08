@@ -70,28 +70,28 @@
 def checkActivatingServices(obj, step):
     status = 0;
     query="systemctl -a --state=activating | grep -rin \"activating\"";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print "Search Result :%s "%details;
+    print("Search Result :%s "%details);
 
     if expectedresult in actualresult and "activating" in details:
         status = 1;
         tdkTestObj.setResultStatus("FAILURE");
-        print "\nTEST STEP %d: Checking if any Activating Services are seen" %step;
-        print "EXPECTED RESULT %d: No Activating Services should be present" %step;
-        print "ACTUAL RESULT %d : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("\nTEST STEP %d: Checking if any Activating Services are seen" %step);
+        print("EXPECTED RESULT %d: No Activating Services should be present" %step);
+        print("ACTUAL RESULT %d : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "\nTEST STEP %d: Checking if any Activating Services are seen" %step;
-        print "EXPECTED RESULT %d: No Activating Services should be present" %step;
-        print "ACTUAL RESULT %d: %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("\nTEST STEP %d: Checking if any Activating Services are seen" %step);
+        print("EXPECTED RESULT %d: No Activating Services should be present" %step);
+        print("ACTUAL RESULT %d: %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     return status, tdkTestObj;
 
 
@@ -127,31 +127,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Get the UpTime";
-    print "EXPECTED RESULT 1: Should get the UpTime";
+    print("\nTEST STEP 1: Get the UpTime");
+    print("EXPECTED RESULT 1: Should get the UpTime");
 
     if expectedresult in actualresult and details.isdigit():
         uptime = int(details);
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: UpTime is %d" %uptime;
+        print("ACTUAL RESULT 1: UpTime is %d" %uptime);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #check if any services are found in activating state in the device
         step = 2;
         status, tdkTestObj = checkActivatingServices(obj, step);
         if status == 1:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Services are found in activating state after an uptime of %ds" %uptime;
+            print("Services are found in activating state after an uptime of %ds" %uptime);
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Services are not found in activating state after an uptime of %ds" %uptime;
+            print("Services are not found in activating state after an uptime of %ds" %uptime);
 
         #check if any service is in activating state after reboot if the uptime is greater than 10mins
         if uptime >= 600 and status == 0:
             #Initiate a device reboot and check if any services are in activating state after devices comes up
-            print "\n****DUT is going for a reboot and will be up after 360 seconds*****";
+            print("\n****DUT is going for a reboot and will be up after 360 seconds*****");
             obj.initiateReboot();
             sleep(360);
             step = 3;
@@ -159,19 +159,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
             if status == 1:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Services are found in activating state after device boot-up";
+                print("Services are found in activating state after device boot-up");
             else:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Services are not found in activating state after device boot-up";
+                print("Services are not found in activating state after device boot-up");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Failure in getting the UpTime. Details: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: Failure in getting the UpTime. Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     pamobj.setLoadModuleStatus("FAILURE");
-

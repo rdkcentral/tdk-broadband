@@ -132,16 +132,16 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         time.sleep(180);
 
         paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.IdleInactiveTime", "Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.IdleInactiveTime","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.OverloadInactiveTime","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.OverloadInactiveTime","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.APGroup"]
-        print "TEST STEP 2: Should get the bandsteering values"
+        print("TEST STEP 2: Should get the bandsteering values")
         tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
         bandSteeringEnable = orgValue[0]
         bandSteeringIdleInactiveTime1 = orgValue[1]
@@ -153,9 +153,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
         if expectedresult in status and bandSteeringEnable != "" and bandSteeringIdleInactiveTime1 != "" and bandSteeringIdleInactiveTime2 != "" and bandSteeringOverloadInactiveTime1 != "" and  bandSteeringOverloadInactiveTime2 != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2:BandSteering Enable status: %s, 2.4GHZ BandSteeringIdleInactiveTime : %s ,5GHZ BandSteeringIdleInactiveTime :  %s ,2.4GHZ  BandSteeringOverloadInactiveTime :%s, 5GHZ BandSteeringOverloadInactiveTime: %s,BandSteeringAPGroup: %s" %(bandSteeringEnable,bandSteeringIdleInactiveTime1,bandSteeringIdleInactiveTime2,bandSteeringOverloadInactiveTime1,bandSteeringOverloadInactiveTime2,bandSteeringAPGroup);
+            print("ACTUAL RESULT 2:BandSteering Enable status: %s, 2.4GHZ BandSteeringIdleInactiveTime : %s ,5GHZ BandSteeringIdleInactiveTime :  %s ,2.4GHZ  BandSteeringOverloadInactiveTime :%s, 5GHZ BandSteeringOverloadInactiveTime: %s,BandSteeringAPGroup: %s" %(bandSteeringEnable,bandSteeringIdleInactiveTime1,bandSteeringIdleInactiveTime2,bandSteeringOverloadInactiveTime1,bandSteeringOverloadInactiveTime2,bandSteeringAPGroup));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             bandSteeringValues= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_BANDSTEERING_VALUES" %TDK_PATH;
@@ -166,10 +166,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             bandSteeringValuesList = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Should get the values from properties file"
-                print "ACTUAL RESULT 3:Band steering value from properties file:%s" %bandSteeringValuesList;
+                print("TEST STEP 3: Should get the values from properties file")
+                print("ACTUAL RESULT 3:Band steering value from properties file:%s" %bandSteeringValuesList);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 details=[]
                 def Convert(string):
@@ -180,49 +180,47 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 for x in range(len(c)):
                     if '[' in c[x]:
                         if ']' in c[x]:
-                                e=c[x].strip('[')
-                                details.append(e.strip(']'))
+                            e=c[x].strip('[')
+                            details.append(e.strip(']'))
                         else:
-                                details.append(c[x].strip('['))
+                            details.append(c[x].strip('['))
 
                 if orgValue == details:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Should get default bandsteering values after factory reset"
-                    print "ACTUAL RESULT 4:Restored to default bandsteering values after factory reset";
+                    print("TEST STEP 4: Should get default bandsteering values after factory reset")
+                    print("ACTUAL RESULT 4:Restored to default bandsteering values after factory reset");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Should get default bandsteering values after factory reset"
-                    print "ACTUAL RESULT 4:Failed to restore to default bandsteering values after factory reset";
+                    print("TEST STEP 4: Should get default bandsteering values after factory reset")
+                    print("ACTUAL RESULT 4:Failed to restore to default bandsteering values after factory reset");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Should get the values from properties file"
-                print "ACTUAL RESULT 3:Failed to get value from properties file ";
+                print("TEST STEP 3: Should get the values from properties file")
+                print("ACTUAL RESULT 3:Failed to get value from properties file ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Should get bandsteering values after factory reset";
-            print "ACTUAL RESULT 2:Failed to get bandsteering values after factory reset";
+            print("TEST STEP 2:Should get bandsteering values after factory reset");
+            print("ACTUAL RESULT 2:Failed to get bandsteering values after factory reset");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

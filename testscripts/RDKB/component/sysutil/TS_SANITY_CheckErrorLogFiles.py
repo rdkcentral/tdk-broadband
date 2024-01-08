@@ -126,25 +126,24 @@ if "SUCCESS" in loadmodulestatus1.upper():
         actualresult = tdkTestObj.getResult();
         errordetails = tdkTestObj.getResultDetails().strip().replace("\\n","");
         if expectedresult in actualresult and errordetails != "":
-            print "Error logs in %s" %i
-            print errordetails
+            print("Error logs in %s" %i)
+            print(errordetails)
             count =count + 1;
     if count == 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if log files have error"
-        print "ACTUAL RESULT 1: Log files does not have error logs";
+        print("TEST STEP 1: Check if log files have error")
+        print("ACTUAL RESULT 1: Log files does not have error logs");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check if log files have error"
-        print "ACTUAL RESULT 1: Log files has error logs ";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Check if log files have error")
+        print("ACTUAL RESULT 1: Log files has error logs ");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
 
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

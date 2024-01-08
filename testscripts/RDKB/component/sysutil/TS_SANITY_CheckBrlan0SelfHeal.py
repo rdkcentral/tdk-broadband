@@ -121,8 +121,8 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     #Get the Lan Mode
     step = 1;
     lan_param = "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode";
-    print "\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-    print "EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step;
+    print("\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+    print("EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step);
 
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
     actualresult, lanmodeInitial = getTR181Value(tdkTestObj, lan_param);
@@ -130,9 +130,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial);
+        print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #If the Lan Mode is not router, set to router
         proceed_flag = 0;
@@ -143,130 +143,130 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             actualresult, details = setTR181Value(tdkTestObj, lan_param, setValue, "string");
 
-            print "\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-            print "EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue);
+            print("\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+            print("EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the Lan Mode is set properly
                 sleep(120);
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                 actualresult, currLanMode = getTR181Value(tdkTestObj, lan_param);
 
-                print "\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-                print "EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue);
+                print("\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+                print("EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if currLanMode == setValue :
                         revert_lan = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "SET reflects in GET";
+                        print("SET reflects in GET");
                     else :
                         proceed_flag = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "SET does not reflect in GET";
+                        print("SET does not reflect in GET");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: GET operation failed; Details  : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation failed; Details  : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Lan Mode is initially router, SET operation not required";
+            print("Lan Mode is initially router, SET operation not required");
 
         #Check if Device.SelfHeal.X_RDKCENTRAL-COM_Enable is enabled
         if proceed_flag == 0 :
             step = step + 1;
             selfheal_param = "Device.SelfHeal.X_RDKCENTRAL-COM_Enable";
-            print "\nTEST STEP %d: Get the initial value of  Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step;
-            print "EXPECTED RESULT %d: Device.SelfHeal.X_RDKCENTRAL-COM_Enable should be retrieved successfully" %step;
+            print("\nTEST STEP %d: Get the initial value of  Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step);
+            print("EXPECTED RESULT %d: Device.SelfHeal.X_RDKCENTRAL-COM_Enable should be retrieved successfully" %step);
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
             actualresult, selfhealInitial = getTR181Value(tdkTestObj, selfheal_param);
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Self Heal enable retrieved as : %s" %(step, selfhealInitial);
+                print("ACTUAL RESULT %d : Self Heal enable retrieved as : %s" %(step, selfhealInitial));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Enable SelfHeal if it is disabled initially
                 revert_selfheal = 0;
                 if selfhealInitial == "false":
                     step = step + 1;
-                    print "\nTEST STEP %d: Enable Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step;
-                    print "EXPECTED RESULT %d: Should enable Device.SelfHeal.X_RDKCENTRAL-COM_Enable successfully" %step;
+                    print("\nTEST STEP %d: Enable Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step);
+                    print("EXPECTED RESULT %d: Should enable Device.SelfHeal.X_RDKCENTRAL-COM_Enable successfully" %step);
 
                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                     actualresult, details = setTR181Value(tdkTestObj, selfheal_param, "true", "boolean");
 
                     if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : Self Heal enabled successfully; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d : Self Heal enabled successfully; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Validate with GET
                         step = step + 1;
-                        print "\nTEST STEP %d: Get the current value of  Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step;
-                        print "EXPECTED RESULT %d: Current Device.SelfHeal.X_RDKCENTRAL-COM_Enable should be retrieved successfully" %step;
+                        print("\nTEST STEP %d: Get the current value of  Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step);
+                        print("EXPECTED RESULT %d: Current Device.SelfHeal.X_RDKCENTRAL-COM_Enable should be retrieved successfully" %step);
 
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                         actualresult, selfhealFinal = getTR181Value(tdkTestObj, selfheal_param);
 
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Current Self Heal enable retrieved as : %s" %(step, selfhealFinal);
+                            print("ACTUAL RESULT %d : Current Self Heal enable retrieved as : %s" %(step, selfhealFinal));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if selfhealFinal == "true":
                                 revert_selfheal = 1;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "SET reflects in GET";
+                                print("SET reflects in GET");
                             else :
                                 proceed_flag = 1;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "SET does not reflect in GET";
+                                print("SET does not reflect in GET");
                         else :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Current Self Heal enable NOT retrieved; Details : %s" %(step, selfhealFinal);
+                            print("ACTUAL RESULT %d : Current Self Heal enable NOT retrieved; Details : %s" %(step, selfhealFinal));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : Self Heal NOT enabled successfully; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d : Self Heal NOT enabled successfully; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Self Heal already enabled, SET operation not required";
+                    print("Self Heal already enabled, SET operation not required");
 
                 #Check if brlan0 is getting IP
                 if proceed_flag == 0:
                     step = step + 1;
-                    print "\nTEST STEP %d : Verify whether brlan0 is assigned properly with valid DHCPv4 address" %step;
-                    print "EXPECTED RESULT %d : brlan0 IP should be valid" %step;
+                    print("\nTEST STEP %d : Verify whether brlan0 is assigned properly with valid DHCPv4 address" %step);
+                    print("EXPECTED RESULT %d : brlan0 IP should be valid" %step);
 
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", "ifconfig brlan0 | grep \"inet addr\" | cut -f2 -d ':' | cut -f1 -d ' '");
@@ -278,14 +278,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if expectedresult in actualresult and ip != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: brlan0 is up with IP %s" %(step, ip);
+                        print("ACTUAL RESULT %d: brlan0 is up with IP %s" %(step, ip));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Check if brlan0 Interface is UP or DOWN
                         step = step + 1;
-                        print "\nTEST STEP %d : Check whether brlan0 interface is UP or DOWN" %step;
-                        print "EXPECTED RESULT %d : brlan0 interface should be UP or DOWN" %step;
+                        print("\nTEST STEP %d : Check whether brlan0 interface is UP or DOWN" %step);
+                        print("EXPECTED RESULT %d : brlan0 interface should be UP or DOWN" %step);
 
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                         tdkTestObj.addParameter("command", "/sbin/ip a show brlan0 | grep -m1 \"brlan0\" | cut -f9 -d ' '");
@@ -297,15 +297,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         if expectedresult in actualresult and status != "":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: brlan0 interface status is : %s" %(step, status);
+                            print("ACTUAL RESULT %d: brlan0 interface status is : %s" %(step, status));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #If status is UP, bring it DOWN
                             if status == "UP":
                                 step = step + 1;
-                                print "\nTEST STEP %d : Bring down the brlan0 interface using \"ifconfig brlan0 down\"" %step;
-                                print "EXPECTED RESULT %d : brlan0 interface should be brought down" %step;
+                                print("\nTEST STEP %d : Bring down the brlan0 interface using \"ifconfig brlan0 down\"" %step);
+                                print("EXPECTED RESULT %d : brlan0 interface should be brought down" %step);
 
                                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                 tdkTestObj.addParameter("command", "ifconfig brlan0 down");
@@ -317,14 +317,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 if expectedresult in actualresult and details == "":
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Command to bring down brlan0 interface was executed successfully" %step;
+                                    print("ACTUAL RESULT %d: Command to bring down brlan0 interface was executed successfully" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     #Verify if the Interface is down
                                     step = step + 1;
-                                    print "\nTEST STEP %d : Verify whether brlan0 interface is DOWN" %step;
-                                    print "EXPECTED RESULT %d : brlan0 interface should be DOWN" %step;
+                                    print("\nTEST STEP %d : Verify whether brlan0 interface is DOWN" %step);
+                                    print("EXPECTED RESULT %d : brlan0 interface should be DOWN" %step);
 
                                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                     tdkTestObj.addParameter("command", "/sbin/ip a show brlan0 | grep -m1 \"brlan0\" | cut -f9 -d ' '");
@@ -336,38 +336,38 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                     if expectedresult in actualresult and status == "DOWN":
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d: brlan0 interface status is DOWN" %step;
+                                        print("ACTUAL RESULT %d: brlan0 interface status is DOWN" %step);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
                                         proceed_flag = 1;
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d: brlan0 interface status is NOT DOWN" %step;
+                                        print("ACTUAL RESULT %d: brlan0 interface status is NOT DOWN" %step);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Command to bring down brlan0 interface was NOT executed successfully" %step;
+                                    print("ACTUAL RESULT %d: Command to bring down brlan0 interface was NOT executed successfully" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
-                                print "Status is already DOWN, need not bring down again";
+                                print("Status is already DOWN, need not bring down again");
 
                             #Wait for a duration of 15mins for 60s iterations for brlan0 interface to come UP again
                             if proceed_flag == 0:
                                 step = step + 1;
                                 statusUp = 0;
-                                print "\nTEST STEP %d : Check if SelfHeal brings up brlan0 interface within 15mins" %step;
-                                print "EXPECTED RESULT %d : SelfHeal should bring up brlan0 interface within 15mins" %step;
+                                print("\nTEST STEP %d : Check if SelfHeal brings up brlan0 interface within 15mins" %step);
+                                print("EXPECTED RESULT %d : SelfHeal should bring up brlan0 interface within 15mins" %step);
 
                                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                 tdkTestObj.addParameter("command", "/sbin/ip a show brlan0 | grep -m1 \"brlan0\" | cut -f9 -d ' '");
 
                                 #Checking every 60s for 15 mins
                                 for sub_iteration in range(1,17):
-                                    print "Waiting for brlan0 to be brought up by SelfHeal....\nIteration : %d" %sub_iteration;
+                                    print("Waiting for brlan0 to be brought up by SelfHeal....\nIteration : %d" %sub_iteration);
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
                                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -381,67 +381,67 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
                                 if statusUp == 1:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: brlan0 interface is successfully brought up by SelfHeal" %step;
+                                    print("ACTUAL RESULT %d: brlan0 interface is successfully brought up by SelfHeal" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: brlan0 interface is NOT successfully brought up by SelfHeal" %step;
+                                    print("ACTUAL RESULT %d: brlan0 interface is NOT successfully brought up by SelfHeal" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "Unable to bring down brlan0, cannot proceed....";
+                                print("Unable to bring down brlan0, cannot proceed....");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: brlan0 interface status is : %s" %(step, status);
+                            print("ACTUAL RESULT %d: brlan0 interface status is : %s" %(step, status));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: brlan0 does not have IP" %step;
+                        print("ACTUAL RESULT %d: brlan0 does not have IP" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Revert Self Heal enable
                     if revert_selfheal == 1:
                         step = step + 1;
-                        print "\nTEST STEP %d: Revert Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step;
-                        print "EXPECTED RESULT %d: Should revert Device.SelfHeal.X_RDKCENTRAL-COM_Enable successfully" %step;
+                        print("\nTEST STEP %d: Revert Device.SelfHeal.X_RDKCENTRAL-COM_Enable" %step);
+                        print("EXPECTED RESULT %d: Should revert Device.SelfHeal.X_RDKCENTRAL-COM_Enable successfully" %step);
 
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                         actualresult, details = setTR181Value(tdkTestObj, selfheal_param, "false", "boolean");
 
                         if expectedresult in actualresult :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Self Heal reverted successfully; Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d : Self Heal reverted successfully; Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else :
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Self Heal NOT reverted successfully; Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d : Self Heal NOT reverted successfully; Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "Self Heal enable revert operation not required";
+                        print("Self Heal enable revert operation not required");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to enable SelfHeal, cannot proceed...";
+                    print("Unable to enable SelfHeal, cannot proceed...");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Self Heal enable retrieved as : %s" %(step, selfhealInitial);
+                print("ACTUAL RESULT %d : Self Heal enable retrieved as : %s" %(step, selfhealInitial));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert Lan Mode
             if revert_lan == 1:
                 step = step + 1;
                 setValue = "bridge-static";
-                print "\nTEST STEP %d: Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-                print "EXPECTED RESULT %d: Should revert the Lan Mode to %s successfully" %(step, setValue);
+                print("\nTEST STEP %d: Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+                print("EXPECTED RESULT %d: Should revert the Lan Mode to %s successfully" %(step, setValue));
 
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                 actualresult, details = setTR181Value(tdkTestObj, lan_param, setValue, "string");
@@ -449,32 +449,32 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Lan Mode reverted successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode reverted successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Lan Mode NOT reverted successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode NOT reverted successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
-                print "Lan Mode revert operation not required";
+                print("Lan Mode revert operation not required");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Unable to set the Lan Mode to router, cannot proceed...";
+            print("Unable to set the Lan Mode to router, cannot proceed...");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, lanmodeInitial);
+        print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, lanmodeInitial));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

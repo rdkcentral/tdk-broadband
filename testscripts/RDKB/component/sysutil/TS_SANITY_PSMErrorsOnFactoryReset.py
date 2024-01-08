@@ -79,8 +79,8 @@ obj1.configureTestCase(ip,port,'TS_SANITY_PSMErrorsOnFactoryReset');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,10 +98,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         sleep(200);
@@ -114,28 +114,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult and details =="":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Check if no PSM errors are seen on Factory reset";
-            print "EXPECTED RESULT 2: PSM errors should not show up on Factory reset";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2 : Check if no PSM errors are seen on Factory reset");
+            print("EXPECTED RESULT 2: PSM errors should not show up on Factory reset");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 : Check if no PSM errors are seen on Factory reset";
-            print "EXPECTED RESULT 2: PSM errors should not show up on Factory reset";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2 : Check if no PSM errors are seen on Factory reset");
+            print("EXPECTED RESULT 2: PSM errors should not show up on Factory reset");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("sysutil");
     obj1.unloadModule("wifiagent");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

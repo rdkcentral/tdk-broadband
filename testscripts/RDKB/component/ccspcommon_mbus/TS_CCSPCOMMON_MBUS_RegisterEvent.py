@@ -43,7 +43,7 @@
     <test_case_id>TC_CCSPMBUS_3</test_case_id>
     <test_objective>To Validate Ccsp Interface Register Event Function</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>Emulator, 
+    <test_setup>Emulator,
 XB3</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component"
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
@@ -53,7 +53,7 @@ API Name
 CCSPMBUS_RegisterEvent
 Input
 eventName</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (CCSPMBUS_RegisterEvent - func name - "If not exists already"
  ccspcommon_mbus - module name
  Necessary I/P args as Mentioned in Input)
@@ -61,7 +61,7 @@ eventName</input_parameters>
 3.Execute the generated Script(TS_CCSPCOMMON_MBUS_RegisterEvent.py) using execution page of  Test Manager GUI
 4.mbusstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named CCSPMBUS_RegisterEvent through registered TDK mbusstub function along with necessary Entry Values as arguments
 5.CCSPMBUS_RegisterEvent function will call ssp_mbus_init and ssp_mbus_register_path with necessary arguments,then it call ssp_mbus_register_event that inturn will call CCSP Base Interface Function named CcspBaseIf_Register_Event which is under test to register event to Message bus
-6.Responses(printf) from TDK Component,Ccsp Library function and mbusstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and mbusstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.mbusstub will validate the available result (from ssp_mbus_register_event as CCSP_Message_Bus_OK [100] ) with expected result (CCSP_Message_Bus_OK [100] ) and the result is updated in agent console log and json output variable
 8.ssp_mbus_exit function is invoked by CCSPMBUS_RegisterEvent to close the bus handle created by ssp_mbus_init and returns the updated results to Test Manager
 9.TestManager will publish the result in GUI as PASS/FAILURE based on the response from CCSPMBUS_RegisterEvent function</automation_approch>
@@ -83,7 +83,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 '''
 
 #use tdklib library,which provides a wrapper for tdk testcase script
-import tdklib; 
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("ccspcommon_mbus","RDKB");
@@ -96,14 +96,14 @@ obj.configureTestCase(ip,port,'TS_CCSPCOMMON_MBUS_RegisterEvent');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s\n" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s\n" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load MBUS Agent Stub from from env TDK_PATH]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load MBUS Agent Stub from from env TDK_PATH]")
+    print("[Exiting the Script]")
+    exit();
 
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CCSPMBUS_LoadCfg');
@@ -119,22 +119,22 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "\n[TEST ACTUAL RESULT] : %s" %actualresult ;
+print("\n[TEST ACTUAL RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "\nMessage Bus Load Config is SUCCESS"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nMessage Bus Load Config is SUCCESS")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nMessage Bus Load Config is FAILURE"
-        obj.unloadModule("ccspcommon_mbus");
-        exit();
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nMessage Bus Load Config is FAILURE")
+    obj.unloadModule("ccspcommon_mbus");
+    exit();
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CCSPMBUS_Init');
@@ -147,22 +147,22 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "\n[TEST ACTUAL RESULT] : %s" %actualresult ;
+print("\n[TEST ACTUAL RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "\nMessage Bus Initialization is SUCCESS"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nMessage Bus Initialization is SUCCESS")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nMessage Bus Initialization is FAILURE"
-        obj.unloadModule("ccspcommon_mbus");
-        exit();
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nMessage Bus Initialization is FAILURE")
+    obj.unloadModule("ccspcommon_mbus");
+    exit();
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 
 
 #Primitive test case which associated to this Script
@@ -175,22 +175,22 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "\n[TEST ACTUAL RESULT] : %s" %actualresult ;
+print("\n[TEST ACTUAL RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "\nMessage Bus Register Path Function is Success"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nMessage Bus Register Path Function is Success")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nMessage Bus Register Path Function is FAILURE"
-        obj.unloadModule("ccspcommon_mbus");
-        exit();
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nMessage Bus Register Path Function is FAILURE")
+    obj.unloadModule("ccspcommon_mbus");
+    exit();
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 
 
 #Primitive test case which associated to this Script
@@ -204,22 +204,22 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "\n[TEST ACTUAL RESULT] : %s" %actualresult ;
+print("\n[TEST ACTUAL RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "\nMessage Bus Register Event Function is Success"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nMessage Bus Register Event Function is Success")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nMessage Bus Register Event Function is FAILURE"
-        obj.unloadModule("ccspcommon_mbus");
-        exit();
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nMessage Bus Register Event Function is FAILURE")
+    obj.unloadModule("ccspcommon_mbus");
+    exit();
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('CCSPMBUS_Exit');
 
@@ -230,19 +230,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "\n[TEST ACTUAL RESULT] : %s" %actualresult ;
+print("\n[TEST ACTUAL RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "\nMessage Bus De-Initialization/Exit is SUCCESS"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nMessage Bus De-Initialization/Exit is SUCCESS")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nMessage Bus De-Initialization/Exit is FAILURE"
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nMessage Bus De-Initialization/Exit is FAILURE")
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 
 obj.unloadModule("ccspcommon_mbus");

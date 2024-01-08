@@ -87,8 +87,8 @@
   </script_tags>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -118,18 +118,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult and "Can't find destination component" not in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if wifi namespaces are available or not"
-        print "EXPECTED RESULT 1: WiFi namespaces should be available"
-        print "ACTUAL RESULT 1: SUCCESS";
+        print("TEST STEP 1: Check if wifi namespaces are available or not")
+        print("EXPECTED RESULT 1: WiFi namespaces should be available")
+        print("ACTUAL RESULT 1: SUCCESS");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check if wifi namespaces are available or not"
-        print "EXPECTED RESULT 1: WiFi namespaces should be available"
-        print "ACTUAL RESULT 1: FAILURE";
+        print("TEST STEP 1: Check if wifi namespaces are available or not")
+        print("EXPECTED RESULT 1: WiFi namespaces should be available")
+        print("ACTUAL RESULT 1: FAILURE");
     obj.unloadModule("wifiagent");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-

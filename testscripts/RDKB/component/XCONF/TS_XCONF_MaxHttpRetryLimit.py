@@ -76,8 +76,8 @@ mv " + xconfFile + "_bck " + xconfFile</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import xconfUtilityLib;
 from xconfUtilityLib import *;
 from xconfVariables import *;
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_XCONF_MaxHttpRetryLimit');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -109,17 +109,17 @@ if "SUCCESS" in result.upper() :
         actualresult, propVal = xconfUtilityLib.GetPlatformProperties(obj, "CDN_LOG");
         if expectedresult in actualresult:
             cdnLog = propVal
-            print "SUCCESS:get log file name"
+            print("SUCCESS:get log file name")
         else:
-            print "FAILURE:failed to get log file name"
+            print("FAILURE:failed to get log file name")
 
         ################get CDN file name from tdk_platform.properties
         actualresult, propVal = xconfUtilityLib.GetPlatformProperties(obj, "CDN_FILE");
         if expectedresult in actualresult:
-            print "SUCCESS:get cdn file name"
+            print("SUCCESS:get cdn file name")
             cdnFile = propVal
         else:
-            print "FAILURE:failed to get log file name"
+            print("FAILURE:failed to get log file name")
 
         #Remove the exsisting logs
         result = xconfUtilityLib.removeLog(obj, cdnLog);
@@ -133,19 +133,19 @@ if "SUCCESS" in result.upper() :
             details = tdkTestObj.getResultDetails();
             if "SUCCESS" in result:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Initiate firmware download"
-                print "EXPECTED RESULT 5: firmware download should be initiated"
-                print "ACTUAL RESULT 5: is %s " %details
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("TEST STEP 5: Initiate firmware download")
+                print("EXPECTED RESULT 5: firmware download should be initiated")
+                print("ACTUAL RESULT 5: is %s " %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5: Initiate firmware download"
-                print "EXPECTED RESULT 5: firmware download should be initiated"
-                print "ACTUAL RESULT 5: is %s " %details
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 5: Initiate firmware download")
+                print("EXPECTED RESULT 5: firmware download should be initiated")
+                print("ACTUAL RESULT 5: is %s " %details)
+                print("[TEST EXECUTION RESULT] : FAILURE")
 
             ######since the url is invalid, on each retry http code 000 should be returned
-	    time.sleep(30)
+            time.sleep(30)
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command","grep -inr \"RETRY is \" " + cdnLog)
             tdkTestObj.executeTestCase("SUCCESS");
@@ -153,17 +153,17 @@ if "SUCCESS" in result.upper() :
             result = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if details and "RETRY is 5" not in details:
-                print "TEST STEP 6: Search for pattern in logs"
-                print "EXPECTED RESULT 6: Should find the pattern in the logs"
-                print "ACTUAL RESULT 6: is %s " %details
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("TEST STEP 6: Search for pattern in logs")
+                print("EXPECTED RESULT 6: Should find the pattern in the logs")
+                print("ACTUAL RESULT 6: is %s " %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 6: Search for pattern in logs"
-                print "EXPECTED RESULT 6: Should find the pattern in the logs"
-                print "ACTUAL RESULT 6: is %s " %details
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 6: Search for pattern in logs")
+                print("EXPECTED RESULT 6: Should find the pattern in the logs")
+                print("ACTUAL RESULT 6: is %s " %details)
+                print("[TEST EXECUTION RESULT] : FAILURE")
                 tdkTestObj.setResultStatus("FAILURE");
 
     ###########restore the override file
@@ -171,7 +171,6 @@ if "SUCCESS" in result.upper() :
 
     obj.unloadModule("sysutil");
 else:
-    print"Load module failed";
+    print("Load module failed");
     #Set the module loading status
     obj.setLoadModuleStatus("FAILURE");
-

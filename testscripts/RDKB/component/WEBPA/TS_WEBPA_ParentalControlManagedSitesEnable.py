@@ -53,7 +53,7 @@ webpaPreRequisite</api_or_interface_used>
     <automation_approch>1. Load sysutil module
 2. Configure WEBPA server to send get request for  Device.X_Comcast_com_ParentalControl.ManagedSites.Enable.
 3. Parse the WEBPA response
-4. Using sysutil ExecuteCmd command get the current state 
+4. Using sysutil ExecuteCmd command get the current state
 5. If webpa response status is SUCCESS, get operation was success otherwise failure
 6. Toggle the value using set based on the response received.
 7. Using sysutil ExecuteCmd command set the state.
@@ -72,8 +72,8 @@ webpaPreRequisite</api_or_interface_used>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from webpaUtility import *
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","1");
@@ -86,7 +86,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_ParentalControlManagedSitesEnable');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -94,77 +94,77 @@ if "SUCCESS" in result.upper() :
 
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
-        #get the current state 
-        print "TEST STEP 1: Get and save the state of Managed sites"
+        #get the current state
+        print("TEST STEP 1: Get and save the state of Managed sites")
         queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"}
         queryResponse = webpaQuery(obj,queryParam)
         parsedResponse = parseWebpaResponse(queryResponse, 1)
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
 
 
         #Checking if the response value is not null
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-              OrgValue = parsedResponse[1];
-              print "Managed Sites State: ",OrgValue;
-              #toggling by using set
-              print "TEST STEP 2: Toggling the value"
-              if parsedResponse[1] == "false":
-                 flag="true"
-                 queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":flag,"dataType":3}
-                 queryResponse = webpaQuery(obj, queryParam,"set")
-                 setResponse = parseWebpaResponse(queryResponse, 1,"set")
-                 tdkTestObj.executeTestCase("SUCCESS");
-              else:
-                 flag="false"
-                 queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":flag,"dataType":3}
-                 queryResponse = webpaQuery(obj, queryParam,"set")
-                 setResponse = parseWebpaResponse(queryResponse, 1,"set")
-                 tdkTestObj.executeTestCase("SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            OrgValue = parsedResponse[1];
+            print("Managed Sites State: ",OrgValue);
+            #toggling by using set
+            print("TEST STEP 2: Toggling the value")
+            if parsedResponse[1] == "false":
+                flag="true"
+                queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":flag,"dataType":3}
+                queryResponse = webpaQuery(obj, queryParam,"set")
+                setResponse = parseWebpaResponse(queryResponse, 1,"set")
+                tdkTestObj.executeTestCase("SUCCESS");
+            else:
+                flag="false"
+                queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":flag,"dataType":3}
+                queryResponse = webpaQuery(obj, queryParam,"set")
+                setResponse = parseWebpaResponse(queryResponse, 1,"set")
+                tdkTestObj.executeTestCase("SUCCESS");
 
 
-              #getting the set value which is toggled
-              print "TEST STEP 3: Getting the toggled value"
-              queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"}
-              queryResponse = webpaQuery(obj, queryParam)
-              getResponse = parseWebpaResponse(queryResponse, 1)
+            #getting the set value which is toggled
+            print("TEST STEP 3: Getting the toggled value")
+            queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"}
+            queryResponse = webpaQuery(obj, queryParam)
+            getResponse = parseWebpaResponse(queryResponse, 1)
 
-              tdkTestObj.executeTestCase("SUCCESS");
+            tdkTestObj.executeTestCase("SUCCESS");
 
-              #check for successful set
-              if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "[TEST EXECUTION RESULT] : SUCCESS"
-                 Value = parsedResponse[1];
-                 print "Managed Sites State: ",Value;
-              else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "[TEST EXECUTION RESULT] : FAILURE"
+            #check for successful set
+            if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                Value = parsedResponse[1];
+                print("Managed Sites State: ",Value);
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE")
 
-              #Setting back to original
-              print "TEST STEP 4: Setting back to original value"
-              queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":OrgValue,"dataType":3}
-              queryResponse = webpaQuery(obj, queryParam,"set")
-              setResponse = parseWebpaResponse(queryResponse, 1,"set")
-              tdkTestObj.executeTestCase("SUCCESS");
-              if "SUCCESS" in setResponse[0]:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS"
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4[TEST EXECUTION RESULT] : FAILURE"
+            #Setting back to original
+            print("TEST STEP 4: Setting back to original value")
+            queryParam = {"name":"Device.X_Comcast_com_ParentalControl.ManagedSites.Enable","value":OrgValue,"dataType":3}
+            queryResponse = webpaQuery(obj, queryParam,"set")
+            setResponse = parseWebpaResponse(queryResponse, 1,"set")
+            tdkTestObj.executeTestCase("SUCCESS");
+            if "SUCCESS" in setResponse[0]:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4[TEST EXECUTION RESULT] : FAILURE")
         else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "[TEST EXECUTION RESULT] : FAILURE"
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

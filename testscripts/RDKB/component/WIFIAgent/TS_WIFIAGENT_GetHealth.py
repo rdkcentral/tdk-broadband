@@ -53,14 +53,14 @@ WIFIAgent_GetHealth
 Input
 1.PathName ("paramName")
 ( eg: "Device.WiFi." )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIAgent_GetHealth  - func name - "If not exists already"
  wifiagent - module name
  Necessary I/P args as Mentioned in Input)
 2.Python Script will be generated/overrided automatically by Test Manager with provided arguments in configure page (TS_WIFIAGENT_GetHealth.py)
 3.Execute the generated Script(TS_WIFIAGENT_GetHealth.py) using execution page of  Test Manager GUI
 4.wifiagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named WIFIAgent_GetHealth through registered TDK wifiagentstub function along with necessary Path Name as arguments
-5.WIFIAgent_GetHealth function will call Ccsp Base Function named "CcspBaseIf_healthCheck" , that inturn will call WIFI Agent Library Function "ssp_PnmMbi_GetHealth" 
+5.WIFIAgent_GetHealth function will call Ccsp Base Function named "CcspBaseIf_healthCheck" , that inturn will call WIFI Agent Library Function "ssp_PnmMbi_GetHealth"
 6.Response(s)(printf) from TDK Component,Ccsp Library function and wifiagentstub would be logged in Agent Console log based on the debug info redirected to agent console.
 7.wifiagentstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result (eg:"Health of WIFIAGENT " along with info) and  the same is updated to agent console log.
 8.Test Manager will publish the result in GUI as SUCCESS/FAILURE based on the response from wifiagentstub.</automation_approch>
@@ -81,8 +81,8 @@ Test Manager GUI will publish the result as SUCCESS in Execution page</except_ou
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
@@ -95,14 +95,14 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_GetHealth');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('WIFIAgent_GetHealth');
@@ -117,19 +117,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Successfully retrieved the component health"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("Successfully retrieved the component health")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to retrieve the component health"	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("Failed to retrieve the component health")
 
-print "[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails) ;
 
 obj.unloadModule("wifiagent");

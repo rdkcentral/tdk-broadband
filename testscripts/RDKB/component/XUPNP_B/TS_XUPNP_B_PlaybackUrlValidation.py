@@ -94,69 +94,69 @@ obj.configureTestCase(ip,port,'TS_XUPNP_B_PlaybackUrlValidation');
 
 #Get the result of connection with test component and STB
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper() :
-            #Set the result status of execution
-            obj.setLoadModuleStatus("SUCCESS");
-            tdkTestObj = obj.createTestStep("XUPNPStub_CheckXDiscOutputFile");
-            expectedresult = "SUCCESS";
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult :
-                tdkTestObj.setResultStatus("SUCCESS");
-                logpath = details.split(" ")[0];
-                print "\n\n\n**************XUPNP DUT LOG TRANSFER - BEGIN*************\n\n"
-                print "Transfering output log file : %s from DUT"%logpath;
-                logpath = tdkTestObj.transferLogs(logpath, "false");
-                print "Local file path of Testrunner output log : %s" %logpath;
-                info = open(logpath,'r');
-                output = info.read();
-                dictionary = LogParser(output,"playbackUrl");
-                info.close()
-                print "\n**************XUPNP DUT LOG TRANSFER - END*************\n\n"
-                clientip_logfile_dic,NO_OF_CLIENTS = TransferLogsParser(obj);
-                if len(dictionary) == NO_OF_CLIENTS + 1 :
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "All the connected clients data is populated in output.json file";
-                    for key in clientip_logfile_dic :
-                        print "\n********XUPNP CLIENT WITH IP : %s LOG TRANSFER - BEGIN********\n\n"%key;
-                        print "Transfering output log file : %s from client with ip : %s"%(clientip_logfile_dic.get(key),key);
-                        filepath = tdkTestObj.transferLogs_from_box(key,clientip_logfile_dic.get(key), "false")
-                        print "Local file path of Testrunner output log : %s" %filepath;
-                        data = open(filepath,'r');
-                        message = data.read()
-                        cli_dictionary = LogParser(message,"playbackUrl");
-                        print "\n********XUPNP CLIENT WITH IP : %s LOG TRANSFER - END********\n\n"%key;
-                        print "\n**************XUPNP OUTPUT - BEGIN*************\n\n"
-                        for key in dictionary :
-                            if dictionary.get(key) == cli_dictionary.get(key):
-                                tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP : Compare whether the playbackUrl parameters from DUT and connected client are equal";
-                                print "EXPECTED RESULT : The playbackUrl parameters from DUT and connected client should be equal";
-                                print "ACTUAL RESULT : The playbackUrl is %s for corresponding %s bcastMacAddress"%(dictionary.get(key),key);
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
-                                print "\n********************************************************************************************\n";
-                            else :
-                                tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP : Compare whether the playbackUrl parameters from DUT and connected client are equal";
-                                print "EXPECTED RESULT : The playbackUrl parameters from DUT and connected client should be equal";
-                                print "ACTUAL RESULT : The playbackUrl is %s for corresponding %s bcastMacAddress"%(dictionary.get(key),key);
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-                                print "\n********************************************************************************************\n";
-                        data.close()
-                        print "\n**************XUPNP OUTPUT - END*************\n\n"
-                else :
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "All the connected clients data is NOT populated in output.json file";
-            else :
-                tdkTestObj.setResultStatus("FAILURE");
-                print "Failed to get output.json file path from DUT";
-                print "DETAILS :",details;
-            #Unload upnp module
-            obj.unloadModule("xupnp");
+    #Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep("XUPNPStub_CheckXDiscOutputFile");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult :
+        tdkTestObj.setResultStatus("SUCCESS");
+        logpath = details.split(" ")[0];
+        print("\n\n\n**************XUPNP DUT LOG TRANSFER - BEGIN*************\n\n")
+        print("Transfering output log file : %s from DUT"%logpath);
+        logpath = tdkTestObj.transferLogs(logpath, "false");
+        print("Local file path of Testrunner output log : %s" %logpath);
+        info = open(logpath,'r');
+        output = info.read();
+        dictionary = LogParser(output,"playbackUrl");
+        info.close()
+        print("\n**************XUPNP DUT LOG TRANSFER - END*************\n\n")
+        clientip_logfile_dic,NO_OF_CLIENTS = TransferLogsParser(obj);
+        if len(dictionary) == NO_OF_CLIENTS + 1 :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("All the connected clients data is populated in output.json file");
+            for key in clientip_logfile_dic :
+                print("\n********XUPNP CLIENT WITH IP : %s LOG TRANSFER - BEGIN********\n\n"%key);
+                print("Transfering output log file : %s from client with ip : %s"%(clientip_logfile_dic.get(key),key));
+                filepath = tdkTestObj.transferLogs_from_box(key,clientip_logfile_dic.get(key), "false")
+                print("Local file path of Testrunner output log : %s" %filepath);
+                data = open(filepath,'r');
+                message = data.read()
+                cli_dictionary = LogParser(message,"playbackUrl");
+                print("\n********XUPNP CLIENT WITH IP : %s LOG TRANSFER - END********\n\n"%key);
+                print("\n**************XUPNP OUTPUT - BEGIN*************\n\n")
+                for key in dictionary :
+                    if dictionary.get(key) == cli_dictionary.get(key):
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP : Compare whether the playbackUrl parameters from DUT and connected client are equal");
+                        print("EXPECTED RESULT : The playbackUrl parameters from DUT and connected client should be equal");
+                        print("ACTUAL RESULT : The playbackUrl is %s for corresponding %s bcastMacAddress"%(dictionary.get(key),key));
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        print("\n********************************************************************************************\n");
+                    else :
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP : Compare whether the playbackUrl parameters from DUT and connected client are equal");
+                        print("EXPECTED RESULT : The playbackUrl parameters from DUT and connected client should be equal");
+                        print("ACTUAL RESULT : The playbackUrl is %s for corresponding %s bcastMacAddress"%(dictionary.get(key),key));
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        print("\n********************************************************************************************\n");
+                data.close()
+                print("\n**************XUPNP OUTPUT - END*************\n\n")
+        else :
+            tdkTestObj.setResultStatus("FAILURE");
+            print("All the connected clients data is NOT populated in output.json file");
+    else :
+        tdkTestObj.setResultStatus("FAILURE");
+        print("Failed to get output.json file path from DUT");
+        print("DETAILS :",details);
+    #Unload upnp module
+    obj.unloadModule("xupnp");
 else:
-    print "Failed to load upnp module";
+    print("Failed to load upnp module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

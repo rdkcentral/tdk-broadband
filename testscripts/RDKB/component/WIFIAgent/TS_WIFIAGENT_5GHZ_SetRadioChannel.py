@@ -71,7 +71,7 @@ WIFIAgent_Set</api_or_interface_used>
     <input_parameters>Device.WiFi.Radio.2.PossibleChannels
 Device.WiFi.Radio.2.Channel</input_parameters>
     <automation_approch>1. Load wifiagent module
-2. Using WIFIAgent_Get, get and save the value of Device.WiFi.Radio.2.Channel 
+2. Using WIFIAgent_Get, get and save the value of Device.WiFi.Radio.2.Channel
 3. Using WIFIAgent_Get, get Device.WiFi.Radio.2.PossibleChannels
 4. Using WIFIAgent_Set, set a value to Device.WiFi.Radio.2.Channel from possible channel list
 5. Using WIFIAgent_Get, verify the set operation
@@ -88,8 +88,8 @@ Device.WiFi.Radio.2.Channel</input_parameters>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import time;
 
 #Test component to be tested
@@ -103,7 +103,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_SetRadioChannel');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of possible channles"
-        print "EXPECTED RESULT 1: Should get the list of possible channles"
-        print "ACTUAL RESULT 1: channel list is %s " %details
+        print("TEST STEP 1: Get the list of possible channles")
+        print("EXPECTED RESULT 1: Should get the list of possible channles")
+        print("ACTUAL RESULT 1: channel list is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #get the current channel and save it
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -136,18 +136,18 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the current channel"
-            print "EXPECTED RESULT 1: Should get the current channel"
-            print "ACTUAL RESULT 1: Channel is %s " %details
+            print("TEST STEP 1: Get the current channel")
+            print("EXPECTED RESULT 1: Should get the current channel")
+            print("ACTUAL RESULT 1: Channel is %s " %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #set a new channel value manually from possible list
             for index in range(len(possChannels)):
                 if possChannels[index] != currChannel:
                     channel = possChannels[index] ;
                     break;
-	    #this function will set a value and do a get to see if set was success
+            #this function will set a value and do a get to see if set was success
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Channel")
             tdkTestObj.addParameter("paramValue",channel)
@@ -156,7 +156,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult1 = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-	    time.sleep(5);
+            time.sleep(5);
             #get the current channel and compare it the set value
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Channel")
@@ -168,11 +168,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult1 and expectedresult in actualresult2 and newChannel == channel :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Set the current channel and verify using get"
-                print "EXPECTED RESULT 1: Should set the current channel and verify using get"
-                print "ACTUAL RESULT 1: Channel is %s " %details
+                print("TEST STEP 1: Set the current channel and verify using get")
+                print("EXPECTED RESULT 1: Should set the current channel and verify using get")
+                print("ACTUAL RESULT 1: Channel is %s " %details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #set the channel value to previous one
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
@@ -185,30 +185,29 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Set channel value to orginal one"
-                    print "EXPECTED RESULT 1: should set channel value to orginal one"
-                    print "ACTUAL RESULT 1:  %s " %details
+                    print("TEST STEP 1: Set channel value to orginal one")
+                    print("EXPECTED RESULT 1: should set channel value to orginal one")
+                    print("ACTUAL RESULT 1:  %s " %details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Set channel value to orginal one"
-                    print "EXPECTED RESULT 1: should set channel value to orginal one"
-                    print "ACTUAL RESULT 1:  %s " %details
+                    print("TEST STEP 1: Set channel value to orginal one")
+                    print("EXPECTED RESULT 1: should set channel value to orginal one")
+                    print("ACTUAL RESULT 1:  %s " %details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Set the current channel and verify using get"
-                print "EXPECTED RESULT 1: Should set the current channel and verify using get"
-                print "ACTUAL RESULT 1: Channel is %s " %details
+                print("TEST STEP 1: Set the current channel and verify using get")
+                print("EXPECTED RESULT 1: Should set the current channel and verify using get")
+                print("ACTUAL RESULT 1: Channel is %s " %details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj.setLoadModuleStatus("FAILURE");
-

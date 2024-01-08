@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_5GHzSetBandSteeringPhyRateThreshold');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -92,76 +92,75 @@ if "SUCCESS" in result.upper() :
     if "SUCCESS" in preRequisiteStatus:
 
 
-        print "TEST STEP 1: Get and save the current 5GHz bandsteering bandsetting PhyRateThreshold"
+        print("TEST STEP 1: Get and save the current 5GHz bandsteering bandsetting PhyRateThreshold")
         queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold"}
         queryResponse = webpaQuery(obj, queryParam)
 
         parsedResponse = parseWebpaResponse(queryResponse, 1)
-        print "parsedResponse : %s" %parsedResponse;
+        print("parsedResponse : %s" %parsedResponse);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS"
+            print("TEST STEP 1 [TEST EXECUTION RESULT] : SUCCESS")
 
             orgValue = parsedResponse[1];
-            print "original 5GHz bandsteering bandsetting PhyRateThreshold: ",orgValue
+            print("original 5GHz bandsteering bandsetting PhyRateThreshold: ",orgValue)
 
             newValue = "40"
             #set the new bandsteering bandsetting PhyRateThreshold
-            print "TEST STEP 2: Set the new 5GHz bandsteering bandsetting PhyRateThreshold value"
+            print("TEST STEP 2: Set the new 5GHz bandsteering bandsetting PhyRateThreshold value")
             queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold","value":newValue,"dataType":1}
             queryResponse = webpaQuery(obj, queryParam,"set")
             setResponse = parseWebpaResponse(queryResponse, 1,"set")
             tdkTestObj.executeTestCase("SUCCESS");
             if "SUCCESS" in parsedResponse[0]:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS"
+                print("TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS")
 
                 #get the current bandsteering bandsetting PhyRateThreshold and check if its the same as the set value
-                print "TEST STEP 3: Get the new 5GHz  bandsteering bandsetting PhyRateThreshold and check if its the same as the set value"
+                print("TEST STEP 3: Get the new 5GHz  bandsteering bandsetting PhyRateThreshold and check if its the same as the set value")
                 queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold"}
                 queryResponse = webpaQuery(obj, queryParam)
                 parsedResponse = parseWebpaResponse(queryResponse, 1)
                 tdkTestObj.executeTestCase("SUCCESS");
                 if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
                     setValue = parsedResponse[1];
-                    print "5GHz Bandsteering bandsetting PhyRateThreshold after set is : ", setValue
+                    print("5GHz Bandsteering bandsetting PhyRateThreshold after set is : ", setValue)
                     if setValue == newValue:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS"
+                        print("TEST STEP 3 [TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3 [TEST EXECUTION RESULT] : FAILURE"
+                        print("TEST STEP 3 [TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3[TEST EXECUTION RESULT] : FAILURE"
+                    print("TEST STEP 3[TEST EXECUTION RESULT] : FAILURE")
 
-                print "TEST STEP 4: Revert the bandsteering bandsetting PhyRateThreshold"
+                print("TEST STEP 4: Revert the bandsteering bandsetting PhyRateThreshold")
                 queryParam = {"name":"Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.2.PhyRateThreshold","value":orgValue,"dataType":1}
                 queryResponse = webpaQuery(obj, queryParam, "set")
                 parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
                 tdkTestObj.executeTestCase("SUCCESS");
                 if "SUCCESS" in parsedResponse[0]:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS"
+                    print("TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4[TEST EXECUTION RESULT] : FAILURE"
+                    print("TEST STEP 4[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP 2[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
+    print("Module loading FAILURE");

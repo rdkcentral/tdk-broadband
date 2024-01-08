@@ -98,10 +98,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         default = default.split("VALUE:")[1].split(" ")[0].strip();
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current WiFi Security mode enabled";
-        print "EXPECTED RESULT 1: Should get current WiFi Security mode enabled";
-        print "ACTUAL RESULT 1: current WiFi Security mode enabled is %s" %default;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current WiFi Security mode enabled");
+        print("EXPECTED RESULT 1: Should get current WiFi Security mode enabled");
+        print("ACTUAL RESULT 1: current WiFi Security mode enabled is %s" %default);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.ModeEnabled")
@@ -113,13 +113,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the WiFi Security mode to None";
-            print "EXPECTED RESULT 2: Should set the WiFi Security mode to None";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Set the WiFi Security mode to None");
+            print("EXPECTED RESULT 2: Should set the WiFi Security mode to None");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #wait for the logging to take place
             sleep(30);
-            print "Check if the device is dual core or not since WiFi logging takes place on arm side"
+            print("Check if the device is dual core or not since WiFi logging takes place on arm side")
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
             tdkTestObj.addParameter("command", RPCCmd);
@@ -128,10 +128,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             RPC_CMD = tdkTestObj.getResultDetails().strip();
             RPC_CMD = RPC_CMD.replace("\\n", "");
             if RPC_CMD:
-               print "The device needs rpc command";
-               cmd = RPC_CMD + " 'cat /rdklogs/logs/WiFilog.txt.0' | grep -rn \'RDKB_WIFI_CONFIG_CHANGED\' ";
+                print("The device needs rpc command");
+                cmd = RPC_CMD + " 'cat /rdklogs/logs/WiFilog.txt.0' | grep -rn \'RDKB_WIFI_CONFIG_CHANGED\' ";
             else:
-                print "The device doesn't need rpc command"
+                print("The device doesn't need rpc command")
                 cmd = "cat /rdklogs/logs//WiFilog.txt.0 | grep -rn \"RDKB_WIFI_CONFIG_CHANGED\" ";
 
             tdkTestObj.addParameter("command", cmd);
@@ -140,53 +140,53 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult and "RDKB_WIFI_CONFIG_CHANGED"  in details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if RDKB_WIFI_CONFIG_CHANGED is present in WiFilog.txt.0";
-                print "EXPECTED RESULT 3: RDKB_WIFI_CONFIG_CHANGED should be present in WiFilog.txt.0 ";
-                print "ACTUAL RESULT 3: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3: Check if RDKB_WIFI_CONFIG_CHANGED is present in WiFilog.txt.0");
+                print("EXPECTED RESULT 3: RDKB_WIFI_CONFIG_CHANGED should be present in WiFilog.txt.0 ");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if RDKB_WIFI_CONFIG_CHANGED is present in WiFilog.txt.0";
-                print "EXPECTED RESULT 3: RDKB_WIFI_CONFIG_CHANGED should be present in WiFilog.txt.0 ";
-                print "ACTUAL RESULT 3: %s" %details;
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("TEST STEP 3: Check if RDKB_WIFI_CONFIG_CHANGED is present in WiFilog.txt.0");
+                print("EXPECTED RESULT 3: RDKB_WIFI_CONFIG_CHANGED should be present in WiFilog.txt.0 ");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the WiFi Security mode to None";
-            print "EXPECTED RESULT 2: Should set Security mode to None";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set the WiFi Security mode to None");
+            print("EXPECTED RESULT 2: Should set Security mode to None");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #revert operation
         if default !="None":
-           tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-           tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.ModeEnabled")
-           tdkTestObj.addParameter("paramValue", default);
-           tdkTestObj.addParameter("paramType","string")
-           tdkTestObj.executeTestCase("expectedresult");
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
-           if expectedresult in actualresult:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 4: Revert the WiFi Security mode to previous";
-               print "EXPECTED RESULT 4: Should revert  Security mode enabled to %s" %default;
-               print "ACTUAL RESULT 4: %s" %details;
-               print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 4: Revert the WiFi Security mode to previous";
-               print "EXPECTED RESULT 4: Should revert  Security mode enabled to %s" %default;
-               print "ACTUAL RESULT 4: %s" %details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+            tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.ModeEnabled")
+            tdkTestObj.addParameter("paramValue", default);
+            tdkTestObj.addParameter("paramType","string")
+            tdkTestObj.executeTestCase("expectedresult");
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4: Revert the WiFi Security mode to previous");
+                print("EXPECTED RESULT 4: Should revert  Security mode enabled to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4: Revert the WiFi Security mode to previous");
+                print("EXPECTED RESULT 4: Should revert  Security mode enabled to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current WiFi Security mode enabled";
-        print "EXPECTED RESULT 1: Should get current WiFi Security mode enabled";
-        print "ACTUAL RESULT 1: current WiFi Security mode enabled is %s" %default;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current WiFi Security mode enabled");
+        print("EXPECTED RESULT 1: Should get current WiFi Security mode enabled");
+        print("ACTUAL RESULT 1: current WiFi Security mode enabled is %s" %default);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent")
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load wifiagent/sysutil module";
+    print("Failed to load wifiagent/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

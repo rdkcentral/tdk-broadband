@@ -86,33 +86,33 @@ if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
 
-    print "****DUT is going for a reboot and will be up after 300 seconds*****";
+    print("****DUT is going for a reboot and will be up after 300 seconds*****");
     obj.initiateReboot();
     sleep(300);
 
     query="systemctl -a --state=failed | grep -rin \"failed\"";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print "Search Result :%s "%details;
+    print("Search Result :%s "%details);
 
     if expectedresult in actualresult and "failed" in details:
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1: Checking if any Failed Services are seen on device boot-up";
-       print "EXPECTED RESULT 1: No Failed proccess should be present";
-       print "ACTUAL RESULT 1:",details;
-       print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Checking if any Failed Services are seen on device boot-up");
+        print("EXPECTED RESULT 1: No Failed proccess should be present");
+        print("ACTUAL RESULT 1:",details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Checking if any Failed Services are seen on device boot-up";
-        print "EXPECTED RESULT 1: No Failed proccess should be present";
-        print "ACTUAL RESULT 1:",details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Checking if any Failed Services are seen on device boot-up");
+        print("EXPECTED RESULT 1: No Failed proccess should be present");
+        print("ACTUAL RESULT 1:",details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

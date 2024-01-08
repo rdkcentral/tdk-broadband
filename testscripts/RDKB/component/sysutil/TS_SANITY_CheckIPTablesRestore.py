@@ -106,21 +106,21 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
     step = 1;
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     cmd = "firewall";
-    print "Command : ", cmd;
+    print("Command : ", cmd);
     tdkTestObj.addParameter("command",cmd);
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Restore Firewall using the \"firewall\" command" %step;
-    print "EXPECTED RESULT %d: Firewall Restore should be success" %step;
+    print("\nTEST STEP %d: Restore Firewall using the \"firewall\" command" %step);
+    print("EXPECTED RESULT %d: Firewall Restore should be success" %step);
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Firewall Restore operation complete" %step;
+        print("ACTUAL RESULT %d: Firewall Restore operation complete" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if /tmp/.ipv4table_error and /tmp/.ipv6table_error files are present and if they contain error logs
         sleep(10);
@@ -129,60 +129,59 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
         for file in ["/tmp/.ipv4table_error", "/tmp/.ipv6table_error"]:
             step = step + 1;
             cmd = "[ -f " + file + " ] && echo \"File exist\" || echo \"File does not exist\"";
-            print "Command : ", cmd;
+            print("Command : ", cmd);
             tdkTestObj.addParameter("command",cmd);
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d: Check for %s file presence" %(step, file);
-            print "EXPECTED RESULT %d: %s file should be present" %(step, file);
+            print("\nTEST STEP %d: Check for %s file presence" %(step, file));
+            print("EXPECTED RESULT %d: %s file should be present" %(step, file));
 
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: %s file is present" %(step, file);
+                print("ACTUAL RESULT %d: %s file is present" %(step, file));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the file contains error logs
                 step = step + 1;
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 cmd = "cat " + file + " | grep -ire \"Error\"";
-                print "Command : ", cmd;
+                print("Command : ", cmd);
                 tdkTestObj.addParameter("command",cmd);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP %d: Check if Error is found in the file %s" %(step, file);
-                print "EXPECTED RESULT %d: Error logs should not be present in the file %s" %(step, file);
+                print("\nTEST STEP %d: Check if Error is found in the file %s" %(step, file));
+                print("EXPECTED RESULT %d: Error logs should not be present in the file %s" %(step, file));
 
                 if expectedresult in actualresult and "Error" not in details :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Error logs are not found; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: Error logs are not found; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Error logs are found; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: Error logs are found; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: %s file is not present" %(step, file);
+                print("ACTUAL RESULT %d: %s file is not present" %(step, file));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Unable to perform the firewall restore operation" %step;
+        print("ACTUAL RESULT %d: Unable to perform the firewall restore operation" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

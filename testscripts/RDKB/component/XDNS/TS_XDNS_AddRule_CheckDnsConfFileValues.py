@@ -50,7 +50,7 @@
     <automation_approch>1. Load tdkbtr181 module
 2. Add a new rule to the DNS table
 3. Set values to all the fields in the new row
-4. Check the values in dns config file 
+4. Check the values in dns config file
 5. Delete the added rule</automation_approch>
     <except_output>The dns config file should be updated with the values in the new rule</except_output>
     <priority>High</priority>
@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from tdkbVariables import *;
 
 #Test component to be tested
@@ -97,14 +97,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : %s" %actualresult);
         temp = details.split(':');
         instance = temp[1];
-        if (instance > 0):
-            print "INSTANCE VALUE: %s" %instance
+        if (int(instance) > 0):
+            print("INSTANCE VALUE: %s" %instance)
 
             #Set dummy values to each namespace in the table
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -114,62 +114,62 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
-		#Check if the conf file created with the added values
-		tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-	        cmd= "sh %s/tdk_utility.sh parseConfigFile DNS_CONF_PATH" %TDK_PATH;
-		print cmd;
-    		tdkTestObj.addParameter("command", cmd);
-    		tdkTestObj.executeTestCase(expectedresult);
-    		actualresult = tdkTestObj.getResult();
-    		conf_path = tdkTestObj.getResultDetails().strip();
-    		conf_path = conf_path.replace("\\n", "");
-    		if "Invalid Argument passed" not in conf_path and conf_path:
-    		    tdkTestObj.setResultStatus("SUCCESS");
-    		    print "TEST STEP 3: Get the location of dnsmasq conf file";
-    		    print "EXPECTED RESULT 3: Should get the location of dnsmasq conf file";
-    		    print "ACTUAL RESULT 3: %s" %conf_path;
-    		    #Get the result of execution
-    		    print "[TEST EXECUTION RESULT] : SUCCESS"
+                #Check if the conf file created with the added values
+                tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                cmd= "sh %s/tdk_utility.sh parseConfigFile DNS_CONF_PATH" %TDK_PATH;
+                print(cmd);
+                tdkTestObj.addParameter("command", cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                conf_path = tdkTestObj.getResultDetails().strip();
+                conf_path = conf_path.replace("\\n", "");
+                if "Invalid Argument passed" not in conf_path and conf_path:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the location of dnsmasq conf file");
+                    print("EXPECTED RESULT 3: Should get the location of dnsmasq conf file");
+                    print("ACTUAL RESULT 3: %s" %conf_path);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
-		    cmd = "cat %s/dnsmasq_servers.conf" %conf_path
-		    print cmd;
+                    cmd = "cat %s/dnsmasq_servers.conf" %conf_path
+                    print(cmd);
                     tdkTestObj.addParameter("command", cmd);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     dns_conf_value = tdkTestObj.getResultDetails().strip();
-		    dns_conf_value = dns_conf_value.replace("\\n", "");
-		    print dns_conf_value;
+                    dns_conf_value = dns_conf_value.replace("\\n", "");
+                    print(dns_conf_value);
 
-		    if "a:b:c:d x.y.z.a p:q:r:s Default" in dns_conf_value:
-		        tdkTestObj.setResultStatus("SUCCESS");
-		        print "TEST STEP 4: Get dnsmasq conf and validate"
-                        print "EXPECTED RESULT 4: dnsmasq conf file should contain the valid values"
-                        print "ACTUAL RESULT 4: %s" %details;
-                        print "TEST EXECUTION RESULT :SUCCESS";
-		    else:
-		        tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Get dnsmasq conf and validate"
-                        print "EXPECTED RESULT 4: dnsmasq conf file should contain the valid values"
-                        print "ACTUAL RESULT 4: %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the location of dnsmasq conf file";
-                    print "EXPECTED RESULT 3: Should get the location of dnsmasq conf file";
-                    print "ACTUAL RESULT 3: %s" %conf_path;
+                    if "a:b:c:d x.y.z.a p:q:r:s Default" in dns_conf_value:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Get dnsmasq conf and validate")
+                        print("EXPECTED RESULT 4: dnsmasq conf file should contain the valid values")
+                        print("ACTUAL RESULT 4: %s" %details);
+                        print("TEST EXECUTION RESULT :SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Get dnsmasq conf and validate")
+                        print("EXPECTED RESULT 4: dnsmasq conf file should contain the valid values")
+                        print("ACTUAL RESULT 4: %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the location of dnsmasq conf file");
+                    print("EXPECTED RESULT 3: Should get the location of dnsmasq conf file");
+                    print("ACTUAL RESULT 3: %s" %conf_path);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
-	    else:
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
             #Delete the added row
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
             tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %instance);
@@ -180,28 +180,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table is deleted successfully\n"
+                print("[TEST STEP ]: Deleting the added rule");
+                print("[EXPECTED RESULT ]: Should delete the added rule");
+                print("[ACTUAL RESULT]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table is deleted successfully\n")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table could not be deleted\n"
+                print("[TEST STEP ]: Deleting the added rule");
+                print("[EXPECTED RESULT ]: Should delete the added rule");
+                print("[ACTUAL RESULT]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table could not be deleted\n")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : FAILURE");
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

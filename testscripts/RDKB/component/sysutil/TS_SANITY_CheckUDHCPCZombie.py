@@ -67,23 +67,23 @@
 '''
 def udhcpczombie(obj, step):
     status = 0;
-    print "\nTEST STEP %d: Check if UDHCPC zombie process is present" %step;
-    print "EXPECTED RESULT %d: UDHCPC zombie process should not be present" %step;
+    print("\nTEST STEP %d: Check if UDHCPC zombie process is present" %step);
+    print("EXPECTED RESULT %d: UDHCPC zombie process should not be present" %step);
 
     query="ps | grep \"\\[udhcpc\\]\"";
-    print "query:%s" %query;
+    print("query:%s" %query);
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
     if expectedresult in actualresult and details == "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : UDHCPC zombie process is not present" %(step);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d : UDHCPC zombie process is not present" %(step));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         status = 1;
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: UDHCPC zombie process is present; %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: UDHCPC zombie process is present; %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     return status, tdkTestObj;
 
@@ -121,49 +121,49 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Get the UpTime";
-    print "EXPECTED RESULT 1: Should get the UpTime";
+    print("\nTEST STEP 1: Get the UpTime");
+    print("EXPECTED RESULT 1: Should get the UpTime");
 
     if expectedresult in actualresult and details.isdigit():
         uptime = int(details);
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: UpTime is %d" %uptime;
+        print("ACTUAL RESULT 1: UpTime is %d" %uptime);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if UDHCPC process is in zombie state
         step = 2;
         status, tdkTestObj = udhcpczombie(obj, step);
         if status == 1:
             tdkTestObj.setResultStatus("FAILURE");
-            print "UDHCPC zombie process found after an uptime of %ds" %uptime;
+            print("UDHCPC zombie process found after an uptime of %ds" %uptime);
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "UDHCPC zombie process NOT found after an uptime of %ds" %uptime;
+            print("UDHCPC zombie process NOT found after an uptime of %ds" %uptime);
 
         #check if UDHCPC is in zombie state after reboot if the uptime is greater than 5 mins
         if uptime >= 300 and status == 0:
             #Initiate a device reboot and check if any services are in activating state after devices comes up
-            print "\n****DUT is going for a reboot and will be up after 360 seconds*****";
+            print("\n****DUT is going for a reboot and will be up after 360 seconds*****");
             pam.initiateReboot();
             sleep(360);
             step = 3;
             status, tdkTestObj = udhcpczombie(obj, step);
             if status == 1:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "UDHCPC zombie process found after device boot-up";
+                print("UDHCPC zombie process found after device boot-up");
             else:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "UDHCPC zombie process not found after device boot-up";
+                print("UDHCPC zombie process not found after device boot-up");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Failure in getting the UpTime. Details: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: Failure in getting the UpTime. Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     pamobj.setLoadModuleStatus("FAILURE");

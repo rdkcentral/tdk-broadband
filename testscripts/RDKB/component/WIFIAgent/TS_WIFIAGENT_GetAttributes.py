@@ -53,7 +53,7 @@ API Name
 Input
 1.PathName (paramname)
 ( eg: "Device.WiFi.SSIDNumberOfEntries" )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIAgent_GetAttr  - func name - "If not exists already"
  wifiagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -81,8 +81,8 @@ Test Manager GUI will publish the result as SUCCESS in Execution page</except_ou
 
 '''
 
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
@@ -95,15 +95,15 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_GetAttributes');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]"
-        print "[Exiting the Script]"
-        exit();
-		
+    print("[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]")
+    print("[Exiting the Script]")
+    exit();
+
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('WIFIAgent_GetAttr');
 
@@ -117,17 +117,17 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
 
-print "[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails) ;
 
 obj.unloadModule("wifiagent");

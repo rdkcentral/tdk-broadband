@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHzGetSecurityMode_WPA3PersonalTr
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the load module status
@@ -100,37 +100,37 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Get  the WPA3 Transition Enable statuts";
-        print "EXPECTED RESULT 1: Should get the WPA3 Transition Enable statuts";
-        print "ACTUAL RESULT 1: Status %s" %defvalue;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1 :Get  the WPA3 Transition Enable statuts");
+        print("EXPECTED RESULT 1: Should get the WPA3 Transition Enable statuts");
+        print("ACTUAL RESULT 1: Status %s" %defvalue);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if defvalue =="true":
-           tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-           tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable");
-           tdkTestObj.addParameter("paramValue","false");
-           tdkTestObj.addParameter("paramType","bool");
-           expectedresult="SUCCESS";
+            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+            tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable");
+            tdkTestObj.addParameter("paramValue","false");
+            tdkTestObj.addParameter("paramType","bool");
+            expectedresult="SUCCESS";
 
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
-           if expectedresult in actualresult:
-              revertflag =1;
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 2 : Disable the  WPA3 Transition Enable";
-              print "EXPECTED RESULT 2: Should disable  WPA3 Transition Enable";
-              print "ACTUAL RESULT 2: Status %s" %details;
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 2 : Disable the  WPA3 Transition Enable";
-               print "EXPECTED RESULT 2: Should disable  WPA3 Transition Enable";
-               print "ACTUAL RESULT 2: Status %s" %details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult:
+                revertflag =1;
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2 : Disable the  WPA3 Transition Enable");
+                print("EXPECTED RESULT 2: Should disable  WPA3 Transition Enable");
+                print("ACTUAL RESULT 2: Status %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2 : Disable the  WPA3 Transition Enable");
+                print("EXPECTED RESULT 2: Should disable  WPA3 Transition Enable");
+                print("ACTUAL RESULT 2: Status %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         if expectedresult in actualresult:
             #Get the encryption method after set
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -145,31 +145,31 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if "WPA2-Personal" in value:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled";
-                    print "EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal"
-                    print "ACTUAL RESULT 3: Security Mode is %s" %value;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled");
+                    print("EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal")
+                    print("ACTUAL RESULT 3: Security Mode is %s" %value);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled";
-                    print "EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal";
-                    print "ACTUAL RESULT 3: Security Mode is %s" %value;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled");
+                    print("EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal");
+                    print("ACTUAL RESULT 3: Security Mode is %s" %value);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled";
-                print "EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal";
-                print "ACTUAL RESULT 3: Security Mode is %s" %value;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Get the security mode of 2.4GHZ WIFI with WPA3 Transition disabled");
+                print("EXPECTED RESULT 3 Should get the security mode of 2.4GHZ WIFI as WPA2-Personal");
+                print("ACTUAL RESULT 3: Security Mode is %s" %value);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-             print "WPA3 transition Disable operation failed";
+            print("WPA3 transition Disable operation failed");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Get  the WPA3 Transition Enable statuts";
-        print "EXPECTED RESULT 1: Should get the WPA3 Transition Enable statuts";
-        print "ACTUAL RESULT 1: Status %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1 :Get  the WPA3 Transition Enable statuts");
+        print("EXPECTED RESULT 1: Should get the WPA3 Transition Enable statuts");
+        print("ACTUAL RESULT 1: Status %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     #Revert operations
     if revertflag ==1:
@@ -186,19 +186,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4:Revert  the  WPA3 Transition Enable";
-            print "EXPECTED RESULT 4: Should revert  WPA3 Transition Enable";
-            print "ACTUAL RESULT 4: Status %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 4:Revert  the  WPA3 Transition Enable");
+            print("EXPECTED RESULT 4: Should revert  WPA3 Transition Enable");
+            print("ACTUAL RESULT 4: Status %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Revert the  WPA3 Transition Enable";
-            print "EXPECTED RESULT 4: Should revert  WPA3 Transition Enable";
-            print "ACTUAL RESULT 4: Status %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 4: Revert the  WPA3 Transition Enable");
+            print("EXPECTED RESULT 4: Should revert  WPA3 Transition Enable");
+            print("ACTUAL RESULT 4: Status %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifi agent module";
+    print("Failed to load wifi agent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

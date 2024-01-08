@@ -105,7 +105,7 @@ obj1.configureTestCase(ip,port,'TS_SANITY_SyscfgPartnerIDCorrectiveActionOnFR');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -119,42 +119,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     revert_flag = 0;
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     cmd = "syscfg get PartnerID";
-    print "\nCommand : ", cmd;
+    print("\nCommand : ", cmd);
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     initial_id = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d : Retrieve the Partner ID in Syscfg" %step;
-    print "EXPECTED RESULT %d : Partner ID should be retrieved from Syscfg successfully" %step;
+    print("\nTEST STEP %d : Retrieve the Partner ID in Syscfg" %step);
+    print("EXPECTED RESULT %d : Partner ID should be retrieved from Syscfg successfully" %step);
 
     if expectedresult in actualresult and initial_id != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Syscfg Partner ID retrieved successfully : %s" %(step, initial_id);
+        print("ACTUAL RESULT %d : Syscfg Partner ID retrieved successfully : %s" %(step, initial_id));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #If Partner ID is not unknown, set to unknown partner ID
         if initial_id != "Unknown":
             step = step + 1;
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "syscfg set PartnerID \"Unknown\"";
-            print "\nCommand : ", cmd;
+            print("\nCommand : ", cmd);
             tdkTestObj.addParameter("command",cmd);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d : Set the Partner ID in Syscfg to Unknown" %step;
-            print "EXPECTED RESULT %d : Partner ID should be set successfully" %step;
+            print("\nTEST STEP %d : Set the Partner ID in Syscfg to Unknown" %step);
+            print("EXPECTED RESULT %d : Partner ID should be set successfully" %step);
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Partner ID set successfully" %step;
+                print("ACTUAL RESULT %d : Partner ID set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 #Cross check the Partner ID with GET
                 step = step + 1;
@@ -165,30 +165,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 set_id = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP %d : Retrieve the Partner ID in Syscfg and the value should be \"Unknown\"" %step;
-                print "EXPECTED RESULT %d : Partner ID should be retrieved from Syscfg successfully and the value should be \"Unknown\"" %step;
+                print("\nTEST STEP %d : Retrieve the Partner ID in Syscfg and the value should be \"Unknown\"" %step);
+                print("EXPECTED RESULT %d : Partner ID should be retrieved from Syscfg successfully and the value should be \"Unknown\"" %step);
 
                 if expectedresult in actualresult and set_id == "Unknown":
                     revert_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Syscfg Partner ID retrieved successfully : %s" %(step, set_id);
+                    print("ACTUAL RESULT %d : Syscfg Partner ID retrieved successfully : %s" %(step, set_id));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     proceed_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Syscfg Partner ID not as expected : %s" %(step, set_id);
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Syscfg Partner ID not as expected : %s" %(step, set_id));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Partner ID NOT set successfully" %step;
+                print("ACTUAL RESULT %d : Partner ID NOT set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            print "Partner ID is Unknown initially, SET operation not required";
+            print("Partner ID is Unknown initially, SET operation not required");
 
         #Check if /nvram/.partner_ID file exists
         if proceed_flag == 0:
@@ -196,26 +196,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             step = step + 1;
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "[ -f /nvram/.partner_ID ] && echo \"File exist\" || echo \"File does not exist\""
-            print "\nCommand : ", cmd;
+            print("\nCommand : ", cmd);
             tdkTestObj.addParameter("command",cmd);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d : Check if the file .partner_ID is present under nvram, if present remove it" %step;
-            print "EXPECTED RESULT %d : The .partner_ID should be removed from nvram" %step;
+            print("\nTEST STEP %d : Check if the file .partner_ID is present under nvram, if present remove it" %step);
+            print("EXPECTED RESULT %d : The .partner_ID should be removed from nvram" %step);
 
             if expectedresult in actualresult and details == "File does not exist" :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : File not present" %step;
+                print("ACTUAL RESULT %d : File not present" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-                print "\nFile exists under nvram, removing the file...";
+                print("\nFile exists under nvram, removing the file...");
                 tdkTestObj = obj.createTestStep('ExecuteCmd');
                 cmd = "rm -rf /nvram/.partner_ID";
-                print "Command : ", cmd;
+                print("Command : ", cmd);
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
@@ -224,37 +224,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : File is removed from nvram" %step;
+                    print("ACTUAL RESULT %d : File is removed from nvram" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: File is NOT removed from nvram" %step;
+                    print("ACTUAL RESULT %d: File is NOT removed from nvram" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Unable to set the Partner ID to unknown, cannot proceed...";
+            print("Unable to set the Partner ID to unknown, cannot proceed...");
 
         #Get the location of apply_system_defaults script from platform properties
         step = step + 1;
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         cmd = "sh %s/tdk_utility.sh parseConfigFile APPLY_SYSTEM_DEFAULTS" %TDK_PATH;
-        print "\nCommand : ", cmd;
+        print("\nCommand : ", cmd);
         tdkTestObj.addParameter("command", cmd);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         file = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP %d: Get the Apply System Defaults file location from platform property file" %step;
-        print "EXPECTED RESULT %d: Should successfully get the Apply System Defaults file location from platform property file" %step;
+        print("\nTEST STEP %d: Get the Apply System Defaults file location from platform property file" %step);
+        print("EXPECTED RESULT %d: Should successfully get the Apply System Defaults file location from platform property file" %step);
 
         if expectedresult in actualresult and details != "" :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: File location is retrieved successfully" %step;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: File location is retrieved successfully" %step);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the required file exists in the DUT at that location
             step = step + 1;
@@ -264,14 +264,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d: Check for Apply System Defaults script presence in the DUT" %(step);
-            print "EXPECTED RESULT %d: The Apply System Defaults script should be present in the DUT" %(step);
+            print("\nTEST STEP %d: Check for Apply System Defaults script presence in the DUT" %(step));
+            print("EXPECTED RESULT %d: The Apply System Defaults script should be present in the DUT" %(step));
 
             if expectedresult in actualresult and details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Apply System Defaults script is present" %(step);
+                print("ACTUAL RESULT %d: Apply System Defaults script is present" %(step));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Run apply_system_defaults to use the PartnerID "Unknown"
                 step = step + 1;
@@ -280,14 +280,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP %d: Execute the Apply System Defaults script to use the PartnerID \"Unknown\"" %step;
-                print "EXPECTED RESULT %d: The Apply System Defaults script should be executed successfully" %step;
+                print("\nTEST STEP %d: Execute the Apply System Defaults script to use the PartnerID \"Unknown\"" %step);
+                print("EXPECTED RESULT %d: The Apply System Defaults script should be executed successfully" %step);
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Apply System Defaults script executed successfully" %step;
+                    print("ACTUAL RESULT %d: Apply System Defaults script executed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Restore the device state saved before reboot
                     obj.saveCurrentState();
@@ -302,15 +302,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP %d: Initiate factory reset" %step;
-                    print "EXPECTED RESULT %d : DUT should be factory resetted successfully" %step;
+                    print("\nTEST STEP %d: Initiate factory reset" %step);
+                    print("EXPECTED RESULT %d : DUT should be factory resetted successfully" %step);
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Restore the device state saved before reboot
                         obj.restorePreviousStateAfterReboot();
@@ -319,79 +319,79 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         step = step + 1;
                         tdkTestObj = obj.createTestStep('ExecuteCmd');
                         cmd = "syscfg get PartnerID";
-                        print "\nCommand : ", cmd;
+                        print("\nCommand : ", cmd);
                         tdkTestObj.addParameter("command",cmd);
                         tdkTestObj.executeTestCase(expectedresult);
                         actualresult = tdkTestObj.getResult();
                         final_id = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                        print "\nTEST STEP %d : Get the Partner ID value in Syscfg and check if it is not \"Unknown\"" %step;
-                        print "EXPECTED RESULT %d : Should retrieve the value present under in Syscfg and it should not be \"Unknown\"" %step;
+                        print("\nTEST STEP %d : Get the Partner ID value in Syscfg and check if it is not \"Unknown\"" %step);
+                        print("EXPECTED RESULT %d : Should retrieve the value present under in Syscfg and it should not be \"Unknown\"" %step);
 
                         if expectedresult in actualresult and final_id != "" :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Partner ID retrieved from Syscfg is : %s" %(step, final_id);
+                            print("ACTUAL RESULT %d : Partner ID retrieved from Syscfg is : %s" %(step, final_id));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if final_id != "Unknown":
                                 revert_flag = 0;
-                                print "The Partner ID is not retrieved as \"Unknown\" from Syscfg";
+                                print("The Partner ID is not retrieved as \"Unknown\" from Syscfg");
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
                             else:
                                 revert_flag = 1;
-                                print "The Partner ID is retrieved as \"Unknown\" from Syscfg";
+                                print("The Partner ID is retrieved as \"Unknown\" from Syscfg");
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Partner ID retrieved from Syscfg is : %s" %(step, final_id);
+                            print("ACTUAL RESULT %d : Partner ID retrieved from Syscfg is : %s" %(step, final_id));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Apply System Defaults script NOT executed successfully" %step;
+                    print("ACTUAL RESULT %d: Apply System Defaults script NOT executed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Apply System Defaults script is NOT present" %(step);
+                print("ACTUAL RESULT %d: Apply System Defaults script is NOT present" %(step));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: File location : %s" %(step, file);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT %d: File location : %s" %(step, file));
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Revert to initial value
         if revert_flag == 1:
             step = step + 1;
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "syscfg set PartnerID " + initial_id;
-            print "\nCommand : ", cmd;
+            print("\nCommand : ", cmd);
             tdkTestObj.addParameter("command",cmd);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d : Set the Partner ID in Syscfg to %s" %(step, initial_id);
-            print "EXPECTED RESULT %d : Partner ID should be set successfully" %step;
+            print("\nTEST STEP %d : Set the Partner ID in Syscfg to %s" %(step, initial_id));
+            print("EXPECTED RESULT %d : Partner ID should be set successfully" %step);
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Partner ID set successfully" %step;
+                print("ACTUAL RESULT %d : Partner ID set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 #Run apply_system_defaults to use the initial PartnerID
                 step = step + 1;
@@ -400,37 +400,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP %d: Execute the Apply System Defaults script to use the PartnerID %s" %(step, initial_id);
-                print "EXPECTED RESULT %d: The Apply System Defaults script should be executed successfully" %step;
+                print("\nTEST STEP %d: Execute the Apply System Defaults script to use the PartnerID %s" %(step, initial_id));
+                print("EXPECTED RESULT %d: The Apply System Defaults script should be executed successfully" %step);
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Apply System Defaults script executed successfully" %step;
+                    print("ACTUAL RESULT %d: Apply System Defaults script executed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Apply System Defaults script NOT executed successfully" %step;
+                    print("ACTUAL RESULT %d: Apply System Defaults script NOT executed successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Partner ID NOT set successfully" %step;
+                print("ACTUAL RESULT %d : Partner ID NOT set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Revert operation not required";
+            print("Revert operation not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Syscfg Partner ID is NOT retrieved successfully : %s" %(step, initial_id);
+        print("ACTUAL RESULT %d : Syscfg Partner ID is NOT retrieved successfully : %s" %(step, initial_id));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil");
     obj1.unloadModule("pam");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

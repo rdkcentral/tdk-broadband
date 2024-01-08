@@ -84,7 +84,7 @@ pamObj.configureTestCase(ip,port,'TS_SANITY_CheckBasicBridgeMode_PersistenceOnRe
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -102,14 +102,14 @@ if "SUCCESS" in loadmodulestatus1.upper():
     actualresult = tdkTestObj.getResult();
     lanMode_initial = tdkTestObj.getResultDetails().strip();
 
-    print "\nTEST STEP %d : Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-    print "EXPECTED RESULT %d : Should successfully retrieve the initial Lan Mode" %step;
+    print("\nTEST STEP %d : Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+    print("EXPECTED RESULT %d : Should successfully retrieve the initial Lan Mode" %step);
 
     if expectedresult in actualresult and lanMode_initial != "":
         tdkTestObj.setResultStatus("SUCCESS");
         #Set the result status of execution
-        print "ACTUAL RESULT %d : Initial Lan Mode is %s" %(step, lanMode_initial);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d : Initial Lan Mode is %s" %(step, lanMode_initial));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set the Lan Mode to basic bridge mode : full-bridge-static if not already in that mode
         if lanMode_initial != "full-bridge-static":
@@ -124,14 +124,14 @@ if "SUCCESS" in loadmodulestatus1.upper():
             details = tdkTestObj.getResultDetails();
             sleep(150);
 
-            print "\nTEST STEP %d : Set the Lan Mode to Basic bridge mode : full-bridge-static using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-            print "EXPECTED RESULT %d : Should set to basic bridge mode successfully" %step;
+            print("\nTEST STEP %d : Set the Lan Mode to Basic bridge mode : full-bridge-static using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+            print("EXPECTED RESULT %d : Should set to basic bridge mode successfully" %step);
 
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Setting to full-bridge-static was success; Details : %s" %(step, details);
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                print("ACTUAL RESULT %d: Setting to full-bridge-static was success; Details : %s" %(step, details));
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
                 #Validate the set operation with get
                 step = step + 1;
@@ -142,47 +142,47 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 actualresult = tdkTestObj.getResult();
                 lanMode_current = tdkTestObj.getResultDetails().strip();
 
-                print "\nTEST STEP %d : Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-                print "EXPECTED RESULT %d : Should successfully retrieve the current Lan Mode" %step;
+                print("\nTEST STEP %d : Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+                print("EXPECTED RESULT %d : Should successfully retrieve the current Lan Mode" %step);
 
                 if expectedresult in actualresult and lanMode_current != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Current Lan Mode is %s" %(step, lanMode_current);
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d : Current Lan Mode is %s" %(step, lanMode_current));
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if lanMode_current == "full-bridge-static":
                         revert_flag = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Device is in Basic Bridge Mode";
+                        print("Device is in Basic Bridge Mode");
                     else:
                         proceed_flag = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Device is NOT in Basic Bridge Mode";
+                        print("Device is NOT in Basic Bridge Mode");
                 else:
                     proceed_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Unable to retrieve the current Lan Mode; Details : %s" %(step, lanMode_current);
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Unable to retrieve the current Lan Mode; Details : %s" %(step, lanMode_current));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 proceed_flag = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Setting to full-bridge-static failed; Details : %s" %(step, details);
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                print("ACTUAL RESULT %d: Setting to full-bridge-static failed; Details : %s" %(step, details));
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
         else:
-            print "DUT already in full-bridge-static mode, SET operation not required...";
+            print("DUT already in full-bridge-static mode, SET operation not required...");
 
         if proceed_flag == 0:
-	        #rebooting the device
-            print "\n********************Rebooting the Device********************";
+                #rebooting the device
+            print("\n********************Rebooting the Device********************");
             pamObj.initiateReboot();
-            print "Sleeping for 300s";
+            print("Sleeping for 300s");
             sleep(300);
-            print "\n********************Device Up after reboot********************";
+            print("\n********************Device Up after reboot********************");
 
             #Check if the full-bridge-static mode persists on reboot
             step = step + 1;
@@ -193,25 +193,25 @@ if "SUCCESS" in loadmodulestatus1.upper():
             actualresult = tdkTestObj.getResult();
             lanMode = tdkTestObj.getResultDetails().strip();
 
-            print "\nTEST STEP %d : Retrieve the Lan Mode after reboot" %step;
-            print "EXPECTED RESULT %d : Lan Mode should be retrieved successfully after reboot" %step;
+            print("\nTEST STEP %d : Retrieve the Lan Mode after reboot" %step);
+            print("EXPECTED RESULT %d : Lan Mode should be retrieved successfully after reboot" %step);
 
             if expectedresult in actualresult :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Lan Mode after reboot is : %s" %(step, lanMode);
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d: Lan Mode after reboot is : %s" %(step, lanMode));
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if basic bridge mode persists on reboot
                 step = step + 1;
-                print "\nTEST STEP %d : Check if the Basic bridge mode set is persisting on device reboot" %step;
-                print "EXPECTED RESULT %d : Basic bridge mode set should persist on device reboot" %step;
+                print("\nTEST STEP %d : Check if the Basic bridge mode set is persisting on device reboot" %step);
+                print("EXPECTED RESULT %d : Basic bridge mode set should persist on device reboot" %step);
 
                 if lanMode == "full-bridge-static":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Basic Bridge Mode persists on reboot" %step;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d : Basic Bridge Mode persists on reboot" %step);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if revert_flag == 1:
                         step = step + 1;
@@ -225,43 +225,43 @@ if "SUCCESS" in loadmodulestatus1.upper():
                         details = tdkTestObj.getResultDetails();
                         sleep(150);
 
-                        print "\nTEST STEP %d : Revert the Lan Mode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, lanMode_initial);
-                        print "EXPECTED RESULT %d : Should revert to initial lan mode successfully" %step;
+                        print("\nTEST STEP %d : Revert the Lan Mode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, lanMode_initial));
+                        print("EXPECTED RESULT %d : Should revert to initial lan mode successfully" %step);
 
                         if expectedresult in actualresult and details != "":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Reverting the lan mode was success; Details : %s" %(step, details);
-                            print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                            print("ACTUAL RESULT %d: Reverting the lan mode was success; Details : %s" %(step, details));
+                            print("[TEST EXECUTION RESULT] : SUCCESS") ;
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Reverting the lan mode failed; Details : %s" %(step, details);
-                            print "[TEST EXECUTION RESULT] : FAILURE" ;
+                            print("ACTUAL RESULT %d: Reverting the lan mode failed; Details : %s" %(step, details));
+                            print("[TEST EXECUTION RESULT] : FAILURE") ;
                     else :
-                        print "Lan Mode revert operation not required";
+                        print("Lan Mode revert operation not required");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Basic Bridge Mode does NOT persist on reboot" %step;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Basic Bridge Mode does NOT persist on reboot" %step);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Lan Mode after reboot is not retrieved; Details : %s" %(step, lanMode);
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d: Lan Mode after reboot is not retrieved; Details : %s" %(step, lanMode));
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Lan Mode is not set to Basic bridge static, cannot proceed...";
+            print("Lan Mode is not set to Basic bridge static, cannot proceed...");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         #Set the result status of execution
-        print "ACTUAL RESULT %d : Initial Lan Mode is not retrieved successfully; Details : %s" %(step, lanMode_initial);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d : Initial Lan Mode is not retrieved successfully; Details : %s" %(step, lanMode_initial));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamObj.unloadModule("pam");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     pamObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

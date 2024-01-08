@@ -87,8 +87,8 @@ if "SUCCESS" in sysloadmodulestatus.upper():
     expectedresult="SUCCESS";
 
     #In nvram check if the file bbhm_cur_cfg.xml is not present
-    print "\nTEST STEP 1: Check if bbhm_cur_cfg.xml is present or not under nvram";
-    print "EXPECTED RESULT 1: bbhm_cur_cfg.xml should not be present under nvram";
+    print("\nTEST STEP 1: Check if bbhm_cur_cfg.xml is present or not under nvram");
+    print("EXPECTED RESULT 1: bbhm_cur_cfg.xml should not be present under nvram");
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     cmd = "[ -f /nvram/bbhm_cur_cfg.xml ] && echo \"File exist\" || echo \"File does not exist\"";
     tdkTestObj.addParameter("command",cmd);
@@ -99,13 +99,13 @@ if "SUCCESS" in sysloadmodulestatus.upper():
 
     if details == "File does not exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1 : bbhm_cur_cfg.xml is not present under nvram";
+        print("ACTUAL RESULT 1 : bbhm_cur_cfg.xml is not present under nvram");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check whether bbhm_bak_cfg.xml is present or not under nvram
-        print "TEST STEP 2: Check if bbhm_bak_cfg.xml is present or not under nvram";
-        print "EXPECTED RESULT 2: bbhm_bak_cfg.xml should be prsent under nvram";
+        print("TEST STEP 2: Check if bbhm_bak_cfg.xml is present or not under nvram");
+        print("EXPECTED RESULT 2: bbhm_bak_cfg.xml should be prsent under nvram");
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         cmd = "[ -f /nvram/bbhm_bak_cfg.xml ] && echo \"File exist\" || echo \"File does not exist\"";
         tdkTestObj.addParameter("command",cmd);
@@ -116,13 +116,13 @@ if "SUCCESS" in sysloadmodulestatus.upper():
 
         if details == "File exist":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: bbhm_bak_cfg.xml is present under nvram";
+            print("ACTUAL RESULT 2: bbhm_bak_cfg.xml is present under nvram");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check whether bbhm_cur_cfg.xml is present or not under tmp
-            print "TEST STEP 3: Check if bbhm_cur_cfg.xml is present or not under tmp";
-            print "EXPECTED RESULT 3: bbhm_cur_cfg.xml should be present under tmp";
+            print("TEST STEP 3: Check if bbhm_cur_cfg.xml is present or not under tmp");
+            print("EXPECTED RESULT 3: bbhm_cur_cfg.xml should be present under tmp");
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             cmd = "[ -f /tmp/bbhm_cur_cfg.xml ] && echo \"File exist\" || echo \"File does not exist\"";
             tdkTestObj.addParameter("command",cmd);
@@ -133,27 +133,26 @@ if "SUCCESS" in sysloadmodulestatus.upper():
 
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: bbhm_cur_cfg.xml is present under tmp";
+                print("ACTUAL RESULT 3: bbhm_cur_cfg.xml is present under tmp");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: bbhm_cur_cfg.xml is not present under tmp";
+                print("ACTUAL RESULT 3: bbhm_cur_cfg.xml is not present under tmp");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: bbhm_bak_cfg.xml is not present under nvram";
+            print("ACTUAL RESULT 2: bbhm_bak_cfg.xml is not present under nvram");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1 : bbhm_cur_cfg.xml is present under nvram";
+        print("ACTUAL RESULT 1 : bbhm_cur_cfg.xml is present under nvram");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
-

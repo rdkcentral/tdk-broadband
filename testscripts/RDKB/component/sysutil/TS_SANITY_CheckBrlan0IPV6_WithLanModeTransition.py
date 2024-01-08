@@ -129,15 +129,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
     actualresult, lanmodeInitial = getLanMode(tdkTestObj);
 
-    print "\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-    print "EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step;
+    print("\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+    print("EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial);
+        print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set lan mode to bridge if not already in bridge mode
         currLanMode = lanmodeInitial;
@@ -150,15 +150,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
             tdkTestObj = pamObj.createTestStep('pam_Setparams');
             actualresult, details = setLanMode(tdkTestObj, setValue);
 
-            print "\nTEST STEP %d: Set the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-            print "EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue);
+            print("\nTEST STEP %d: Set the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+            print("EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the Lan Mode is set properly
                 sleep(30);
@@ -166,39 +166,39 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
                 tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
                 actualresult, currLanMode = getLanMode(tdkTestObj)
 
-                print "\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-                print "EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue);
+                print("\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+                print("EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if currLanMode == setValue :
                         mode_set = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "SET reflects in GET";
+                        print("SET reflects in GET");
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "SET does NOT reflect in GET";
+                        print("SET does NOT reflect in GET");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Lan Mode is already bridge-static, SET operation not required";
+            print("Lan Mode is already bridge-static, SET operation not required");
             mode_set = 1;
 
         if mode_set == 1:
@@ -206,15 +206,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
             step = step + 1;
             actualresult, details = CheckIPV6(sysObj);
 
-            print "\nTEST STEP %d : Check if brlan0 interface does not get IPV6 when the DUT is in bridge mode" %step;
-            print "EXPECTED RESULT %d : brlan0 interface should not get IPV6 when the DUT is in bridge mode" %step;
+            print("\nTEST STEP %d : Check if brlan0 interface does not get IPV6 when the DUT is in bridge mode" %step);
+            print("EXPECTED RESULT %d : brlan0 interface should not get IPV6 when the DUT is in bridge mode" %step);
 
             if expectedresult in actualresult and "inet6 addr: " not in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: brlan0 interface does NOT get IPV6 : %s" %(step, details);
+                print("ACTUAL RESULT %d: brlan0 interface does NOT get IPV6 : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Transition to router mode and check if the brlan0 interface gets IPV6
                 setValue = "router";
@@ -222,15 +222,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
                 tdkTestObj = pamObj.createTestStep('pam_Setparams');
                 actualresult, details = setLanMode(tdkTestObj, setValue);
 
-                print "\nTEST STEP %d: Set the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-                print "EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue);
+                print("\nTEST STEP %d: Set the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+                print("EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the Lan Mode is set properly
                     sleep(30);
@@ -238,68 +238,68 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
                     tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
                     actualresult, currLanMode = getLanMode(tdkTestObj)
 
-                    print "\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-                    print "EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue);
+                    print("\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+                    print("EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue));
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode);
+                        print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         if currLanMode == setValue :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "SET reflects in GET";
+                            print("SET reflects in GET");
 
                             #Check if brlan0 interface has IPV6 in router mode
                             step = step + 1;
                             actualresult, details = CheckIPV6(sysObj);
 
-                            print "\nTEST STEP %d : Check if brlan0 interface gets IPV6 when the DUT is transitioned to router mode" %step;
-                            print "EXPECTED RESULT %d : brlan0 interface should get IPV6 when the DUT is transitioned to router mode" %step;
+                            print("\nTEST STEP %d : Check if brlan0 interface gets IPV6 when the DUT is transitioned to router mode" %step);
+                            print("EXPECTED RESULT %d : brlan0 interface should get IPV6 when the DUT is transitioned to router mode" %step);
 
                             if expectedresult in actualresult and "inet6 addr: " in details:
                                 wanipv6 = details.split("inet6 addr: ")[1];
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: brlan0 interface gets IPV6 : %s" %(step, wanipv6);
+                                print("ACTUAL RESULT %d: brlan0 interface gets IPV6 : %s" %(step, wanipv6));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: brlan0 interface does not get IPV6; Details : %s" %(step, details);
+                                print("ACTUAL RESULT %d: brlan0 interface does not get IPV6; Details : %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "SET does NOT reflect in GET";
+                            print("SET does NOT reflect in GET");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode);
+                        print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 wanipv6 = details.split("inet6 addr: ")[1];
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: brlan0 interface gets IPV6 : %s" %(step, wanipv6);
+                print("ACTUAL RESULT %d: brlan0 interface gets IPV6 : %s" %(step, wanipv6));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Cannot proceed with the next steps as DUT is not set to router mode...";
+            print("Cannot proceed with the next steps as DUT is not set to router mode...");
 
         #Revert operation
         if currLanMode != lanmodeInitial:
@@ -307,34 +307,34 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
             tdkTestObj = pamObj.createTestStep('pam_Setparams');
             actualresult, details = setLanMode(tdkTestObj, setValue);
 
-            print "\nTEST STEP %d: Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-            print "EXPECTED RESULT %d: Should revert the Lan Mode to %s successfully" %(step, setValue);
+            print("\nTEST STEP %d: Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+            print("EXPECTED RESULT %d: Should revert the Lan Mode to %s successfully" %(step, setValue));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Lan Mode reverted successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode reverted successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Lan Mode NOT reverted successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode NOT reverted successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Reverting Lan Mode not required";
+            print("Reverting Lan Mode not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode);
+        print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
     pamObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -75,8 +75,8 @@
   <script_tags />
 </xml>
 '''
-																																				
-#use tdklib library,which provides a wrapper for tdk testcase script 
+
+#use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -91,51 +91,39 @@ obj.configureTestCase(ip,port,'TS_WECB_Set_WPS_Update');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        #Enable moca interface
-        tdkTestObj = obj.createTestStep("WIFIAgent_Set");
-        tdkTestObj.addParameter("paramName","Device.MoCA.X_CISCO_COM_WiFi_Extender.X_CISCO_COM_WPS_Updated");
-        tdkTestObj.addParameter("paramValue","true");
-        tdkTestObj.addParameter("paramType","boolean");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
+    #Enable moca interface
+    tdkTestObj = obj.createTestStep("WIFIAgent_Set");
+    tdkTestObj.addParameter("paramName","Device.MoCA.X_CISCO_COM_WiFi_Extender.X_CISCO_COM_WPS_Updated");
+    tdkTestObj.addParameter("paramValue","true");
+    tdkTestObj.addParameter("paramType","boolean");
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
 
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Enable the WPS update";
-            print "EXPECTED RESULT 1: Should enable the WPS update";
-            print "ACTUAL RESULT 1: %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Enable the WPS update";
-            print "EXPECTED RESULT 1: Should enable the WPS update";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;              
-            
-        obj.unloadModule("wifiagent");
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Enable the WPS update");
+        print("EXPECTED RESULT 1: Should enable the WPS update");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Enable the WPS update");
+        print("EXPECTED RESULT 1: Should enable the WPS update");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+    obj.unloadModule("wifiagent");
 else:
-        print "Failed to load WECB controller module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-					
-
-					
-
-					
-
-					
-
-					
-
-					
+    print("Failed to load WECB controller module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

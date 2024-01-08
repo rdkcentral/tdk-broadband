@@ -82,7 +82,7 @@
 '''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
-import ConfigParser;
+import configparser;
 from tdkbVariables import *;
 import os;
 
@@ -100,37 +100,37 @@ sysobj.configureTestCase(ip,port,'TS_mso_mgmt_hal_MsoValidateGoodPwd');
 
 
 def parseMsoConfig(obj):
-        #Get the device name configured in test manager
-        config = ConfigParser.ConfigParser()
-        #Get the current directory path
-        configFilePath = os.path.dirname(os.path.realpath(__file__))
-        configFilePath = configFilePath + "/tdkbDeviceConfig"
-        config.read(configFilePath+'/mso.config')
-        deviceConfig = "mso" + ".config"
-        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-        deviceType= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH
-        expectedresult="SUCCESS";
-        tdkTestObj.addParameter("command", deviceType);
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        deviceType = tdkTestObj.getResultDetails().strip();
-        deviceType = deviceType.replace("\\n", "");
-        podVarName= deviceType+"_POD"
-        pod=config.get(deviceConfig, podVarName)
-        return pod
+    #Get the device name configured in test manager
+    config = configparser.ConfigParser()
+    #Get the current directory path
+    configFilePath = os.path.dirname(os.path.realpath(__file__))
+    configFilePath = configFilePath + "/tdkbDeviceConfig"
+    config.read(configFilePath+'/mso.config')
+    deviceConfig = "mso" + ".config"
+    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+    deviceType= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH
+    expectedresult="SUCCESS";
+    tdkTestObj.addParameter("command", deviceType);
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    deviceType = tdkTestObj.getResultDetails().strip();
+    deviceType = deviceType.replace("\\n", "");
+    podVarName= deviceType+"_POD"
+    pod=config.get(deviceConfig, podVarName)
+    return pod
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     pod = parseMsoConfig(obj)
     if pod != "":
-        print "Value retrieved from config file:%s" %pod
+        print("Value retrieved from config file:%s" %pod)
         tdkTestObj = obj.createTestStep("mso_mgmt_hal_MsoValidatePwd");
         tdkTestObj.addParameter("paramValue",pod);
         expectedresult="SUCCESS";
@@ -141,27 +141,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and Status == "Good_PWD":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Should validate the password";
-            print "EXPECTED RESULT 1: Should get the status of password validation as good password";
-            print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+            print("TEST STEP 1: Should validate the password");
+            print("EXPECTED RESULT 1: Should get the status of password validation as good password");
+            print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Should validate the password";
-            print "EXPECTED RESULT 1:Should get the status of password validation as good password";
-            print "ACTUAL RESULT 1: Status of password validation is %s" %Status;
+            print("TEST STEP 1: Should validate the password");
+            print("EXPECTED RESULT 1:Should get the status of password validation as good password");
+            print("ACTUAL RESULT 1: Status of password validation is %s" %Status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "POD value is not configured/missing in config file"
+        print("POD value is not configured/missing in config file")
         tdkTestObj.setResultStatus("FAILURE");
 
     sysobj.unloadModule("sysutil");
     obj.unloadModule("mso_mgmt_hal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

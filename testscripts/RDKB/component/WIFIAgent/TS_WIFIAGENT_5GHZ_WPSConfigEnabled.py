@@ -71,7 +71,7 @@
 Device.WiFi.AccessPoint.2.WPS.ConfigMethodsEnabled</input_parameters>
     <automation_approch>1. Load wifiagent module
 2. Using WIFIAgent_Get, get and save Device.WiFi.AccessPoint.2.WPS.ConfigMethodsSupported value
-3. Using WIFIAgent_Get, get Device.WiFi.AccessPoint.2.WPS.ConfigMethodsEnabled 
+3. Using WIFIAgent_Get, get Device.WiFi.AccessPoint.2.WPS.ConfigMethodsEnabled
 5.Check if config method enabled is from supported methos list
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
 7.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from wifiagent stub.</automation_approch>
@@ -86,8 +86,8 @@ Device.WiFi.AccessPoint.2.WPS.ConfigMethodsEnabled</input_parameters>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_WPSConfigEnabled');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,12 +118,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of supported wps config methods"
-        print "EXPECTED RESULT 1: Should get the list of supported wps config methods"
+        print("TEST STEP 1: Get the list of supported wps config methods")
+        print("EXPECTED RESULT 1: Should get the list of supported wps config methods")
         suppMethods = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: config methods are %s %s" %(details,suppMethods)
+        print("ACTUAL RESULT 1: config methods are %s %s" %(details,suppMethods))
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #get the current security mode enabled
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -136,31 +136,30 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and methods in suppMethods:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the current wps config method"
-            print "EXPECTED RESULT 1: current wps config method should be from supported list"
-            print "ACTUAL RESULT 1: config method is %s " %details
+            print("TEST STEP 1: Get the current wps config method")
+            print("EXPECTED RESULT 1: current wps config method should be from supported list")
+            print("ACTUAL RESULT 1: config method is %s " %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the current  wps config method"
-            print "EXPECTED RESULT 1: current wps config method should be from supported list"
-            print "ACTUAL RESULT 1: State is %s" %details
+            print("TEST STEP 1: Get the current  wps config method")
+            print("EXPECTED RESULT 1: current wps config method should be from supported list")
+            print("ACTUAL RESULT 1: State is %s" %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of supported security modes"
-        print "EXPECTED RESULT 1: Should get the list of supported security modes"
+        print("TEST STEP 1: Get the list of supported security modes")
+        print("EXPECTED RESULT 1: Should get the list of supported security modes")
         suppModes = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: State is %s %s" %(details,suppModes)
+        print("ACTUAL RESULT 1: State is %s %s" %(details,suppModes))
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

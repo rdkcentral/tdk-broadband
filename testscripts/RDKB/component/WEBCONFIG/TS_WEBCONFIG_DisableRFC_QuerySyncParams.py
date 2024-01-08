@@ -86,8 +86,8 @@ sysobj.configureTestCase(ip,port,'TS_WEBCONFIG_DisableRFC_QuerySyncParams');
 #Get the result of connection with test component and DUT
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 revert = 0;
 if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -106,11 +106,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_RDK_WebConfig.RfcEnable");
@@ -125,11 +125,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             revert =1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set Web Config Enable status to false";
-            print "EXPECTED RESULT 2: Should set Web Config Enable status to false";
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set Web Config Enable status to false");
+            print("EXPECTED RESULT 2: Should set Web Config Enable status to false");
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             paramlist = ["Device.X_RDK_WebConfig.ConfigFile.1.ForceSyncCheck","Device.X_RDK_WebConfig.ConfigFile.1.SyncCheckOK"];
             logMsgs = ["ForceSyncCheck GET from DB failed","SyncCheckOK GET from DB failed"];
@@ -143,13 +143,13 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip();
                 if expectedresult in actualresult:
-                    print "Querying %s parameter is sucessfull" %item;
-                    print "Check if DB failed message is seen on querying this specific parameter";
+                    print("Querying %s parameter is sucessfull" %item);
+                    print("Check if DB failed message is seen on querying this specific parameter");
                     sleep(5);
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     expectedresult="SUCCESS";
                     cmd= "cat /rdklogs/logs/WebConfig.log  | grep -rn \"%s\" " %logMsgs[i];
-                    print cmd;
+                    print(cmd);
                     expectedresult="SUCCESS";
                     tdkTestObj.addParameter("command", cmd);
                     tdkTestObj.executeTestCase(expectedresult);
@@ -157,24 +157,24 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                     i= i+1;
                     if expectedresult in actualresult and details:
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print"%s" %details;
-                       print"The expected log message is present when Queried";
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("%s" %details);
+                        print("The expected log message is present when Queried");
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "The expected log message is not present: %s" %logMsgs[i];
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("The expected log message is not present: %s" %logMsgs[i]);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         break;
         else:
             revert =0;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set Web Config Enable status to false";
-            print "EXPECTED RESULT 2: Should set Web Config Enable status to false";
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set Web Config Enable status to false");
+            print("EXPECTED RESULT 2: Should set Web Config Enable status to false");
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if revert ==1 :
             tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
@@ -189,31 +189,31 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Revert the Web Config Enable status to previous"
-                print "EXPECTED RESULT 3: Should revert Web Config status to previous"
-                print "ACTUAL RESULT 3: %s" %result;
+                print("TEST STEP 3: Revert the Web Config Enable status to previous")
+                print("EXPECTED RESULT 3: Should revert Web Config status to previous")
+                print("ACTUAL RESULT 3: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Revert Web Config Enable status to previous"
-                print "EXPECTED RESULT 3: Should revert  Web Config Enable status to previous"
-                print "ACTUAL RESULT 3: %s" %result;
+                print("TEST STEP 3: Revert Web Config Enable status to previous")
+                print("EXPECTED RESULT 3: Should revert  Web Config Enable status to previous")
+                print("ACTUAL RESULT 3: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

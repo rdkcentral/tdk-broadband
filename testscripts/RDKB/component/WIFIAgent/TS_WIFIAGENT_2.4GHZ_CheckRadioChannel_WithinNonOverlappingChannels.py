@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_2.4GHZ_CheckRadioChannel_WithinNonOv
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,43 +96,43 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current Channel"
-        print "EXPECTED RESULT 1: Should get the current Channel"
-        print "ACTUAL RESULT 1: Current Channel is %s " %details
+        print("TEST STEP 1: Get the current Channel")
+        print("EXPECTED RESULT 1: Should get the current Channel")
+        print("ACTUAL RESULT 1: Current Channel is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         nonOverlappingChannelsList = [1,6,11];
         checkStatus = 0;
         for channel in nonOverlappingChannelsList:
             if int (details) == channel :
-               checkStatus =1;
+                checkStatus =1;
 
         if checkStatus == 1:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Check if the Current Channel has one of %s non-overlapping Channel" %nonOverlappingChannelsList;
-           print "EXPECTED RESULT 2: Should have one of the non-overlapping Channels";
-           print "ACTUAL RESULT 2: The current Channel for 2.4GHz WiFi is a non-overlapping channel";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if the Current Channel has one of %s non-overlapping Channel" %nonOverlappingChannelsList);
+            print("EXPECTED RESULT 2: Should have one of the non-overlapping Channels");
+            print("ACTUAL RESULT 2: The current Channel for 2.4GHz WiFi is a non-overlapping channel");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the Current Channel has one of %s  non-overlapping Channel" %nonOverlappingChannelsList;
-            print "EXPECTED RESULT 2: Should have one of the non-overlapping Channels";
-            print "ACTUAL RESULT 2: The current Channel for 2.4GHz WiFi is not a non-overlapping channel";
+            print("TEST STEP 2: Check if the Current Channel has one of %s  non-overlapping Channel" %nonOverlappingChannelsList);
+            print("EXPECTED RESULT 2: Should have one of the non-overlapping Channels");
+            print("ACTUAL RESULT 2: The current Channel for 2.4GHz WiFi is not a non-overlapping channel");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current Channel"
-        print "EXPECTED RESULT 1: Should get the current Channel"
-        print "ACTUAL RESULT 1: Current Channel is %s " %details
+        print("TEST STEP 1: Get the current Channel")
+        print("EXPECTED RESULT 1: Should get the current Channel")
+        print("ACTUAL RESULT 1: Current Channel is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load tdkbtr181 module";
+    print("Failed to load tdkbtr181 module");
     obj.setLoadModuleStatus("FAILURE");

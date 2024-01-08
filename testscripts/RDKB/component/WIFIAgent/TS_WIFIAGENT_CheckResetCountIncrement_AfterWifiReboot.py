@@ -86,18 +86,18 @@ def getValues(obj, num_of_radios):
         if expectedresult in actualresult and details != "":
             details = details.split("VALUE:")[1].split(" ")[0].strip();
             Value.append(details);
-            print "\n%s : %s" %(param, Value[index-1]);
+            print("\n%s : %s" %(param, Value[index-1]));
 
             if Value[index-1].isdigit():
-                print "Radio Reset Count retrieved is a valid integer";
+                print("Radio Reset Count retrieved is a valid integer");
                 continue;
             else:
-                print "Radio Reset Count retrieved is not a valid integer";
+                print("Radio Reset Count retrieved is not a valid integer");
                 status = 1;
                 break;
         else :
             status = 1;
-            print "%s : %s" %(param, details);
+            print("%s : %s" %(param, details));
             break;
     return status, Value;
 
@@ -136,23 +136,23 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and details != "":
-        print "\n6G applicable for the DUT...";
+        print("\n6G applicable for the DUT...");
         num_of_radios = 3;
     else:
-        print "\n6G not applicable for the DUT...";
+        print("\n6G not applicable for the DUT...");
         num_of_radios = 2;
 
     #Get the initial reset counts
-    print "\nTEST STEP 1 : Get the Initial Radio Reset Count for all applicable radios";
-    print "EXPECTED RESULT 1 : Should get the Radio Reset Count for all applicable radios";
+    print("\nTEST STEP 1 : Get the Initial Radio Reset Count for all applicable radios");
+    print("EXPECTED RESULT 1 : Should get the Radio Reset Count for all applicable radios");
 
     status, initialValue = getValues(obj, num_of_radios);
 
     if status == 0 :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1 : Initial Radio Reset Counts are retrieved successfully";
+        print("ACTUAL RESULT 1 : Initial Radio Reset Counts are retrieved successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Reboot Wifi
         tdkTestObj = obj.createTestStep("WIFIAgent_Set");
@@ -163,77 +163,77 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP 2 : Initiate WiFi reboot using Device.X_CISCO_COM_DeviceControl.RebootDevice";
-        print "EXPECTED RESULT 2 : The WiFi reboot operation should be successful";
+        print("\nTEST STEP 2 : Initiate WiFi reboot using Device.X_CISCO_COM_DeviceControl.RebootDevice");
+        print("EXPECTED RESULT 2 : The WiFi reboot operation should be successful");
 
         if expectedresult in actualresult and details != "" :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : WiFi reboot operation was success; Details : %s" %details;
+            print("ACTUAL RESULT 2 : WiFi reboot operation was success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Sleep for 90s for the WiFi reboot operation to take effect
-            print "Sleeping 90s for the WiFi reboot operation...";
+            print("Sleeping 90s for the WiFi reboot operation...");
             sleep(90);
 
             #Get the final reset counts
-            print "\nTEST STEP 3 : Get the Radio Reset Count for all applicable radios after WiFi reboot";
-            print "EXPECTED RESULT 3 : Should get the Radio Reset Count for all applicable radios after WiFi reboot";
+            print("\nTEST STEP 3 : Get the Radio Reset Count for all applicable radios after WiFi reboot");
+            print("EXPECTED RESULT 3 : Should get the Radio Reset Count for all applicable radios after WiFi reboot");
 
             status, finalValue = getValues(obj, num_of_radios);
 
             if status == 0:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3 : Final Radio Reset Counts are retrieved successfully";
+                print("ACTUAL RESULT 3 : Final Radio Reset Counts are retrieved successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the reset counts are incremented by 1
-                print "\nTEST STEP 4 : Check if the Radio Reset Counts are incremented by 1";
-                print "EXPECTED RESULT 4 : The Radio Reset counts should be incremented by 1";
+                print("\nTEST STEP 4 : Check if the Radio Reset Counts are incremented by 1");
+                print("EXPECTED RESULT 4 : The Radio Reset counts should be incremented by 1");
 
                 result = 0;
                 for index in range(1, num_of_radios+1):
                     param = "Device.WiFi.Radio." + str(index) + ".RadioResetCount";
-                    print "\nFor %s, initial reset count : %s, final reset count : %s" %(param, initialValue[index-1], finalValue[index-1]);
+                    print("\nFor %s, initial reset count : %s, final reset count : %s" %(param, initialValue[index-1], finalValue[index-1]));
 
                     if int(finalValue[index-1]) == int(initialValue[index-1]) + 1:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "%s is incremented by 1" %param;
+                        print("%s is incremented by 1" %param);
                     else:
                         result = 1;
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "%s is NOT incremented by 1" %param;
+                        print("%s is NOT incremented by 1" %param);
 
                 if result == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4 : The Radio Reset Counts are incremented by 1";
+                    print("ACTUAL RESULT 4 : The Radio Reset Counts are incremented by 1");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4 : The Radio Reset Counts are NOT incremented by 1";
+                    print("ACTUAL RESULT 4 : The Radio Reset Counts are NOT incremented by 1");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3 : Final Radio Reset Counts are NOT retrieved successfully";
+                print("ACTUAL RESULT 3 : Final Radio Reset Counts are NOT retrieved successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2 : WiFi reboot operation failed; Details : %s" %details;
+            print("ACTUAL RESULT 2 : WiFi reboot operation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1 : Initial Radio Reset Counts are NOT retrieved successfully";
+        print("ACTUAL RESULT 1 : Initial Radio Reset Counts are NOT retrieved successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

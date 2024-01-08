@@ -103,7 +103,7 @@ def getValues(obj, paramList):
         if expectedresult in actualresult and details != "":
             enable = details.split("VALUE:")[1].split(" ")[0].strip();
             Values.append(enable);
-            print "\n%s : %s" %(param, enable);
+            print("\n%s : %s" %(param, enable));
 
             if enable != "":
                 #Set the result status of execution
@@ -118,7 +118,7 @@ def getValues(obj, paramList):
             status = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "%s : %s" %(param, details);
+            print("%s : %s" %(param, details));
             break;
     return tdkTestObj, status, Values;
 
@@ -136,7 +136,7 @@ def setParameter(obj, param, setValue, type):
 
     if expectedresult not in actualresult:
         status = 1;
-        print "%s SET operation failed" %param;
+        print("%s SET operation failed" %param);
     return status;
 
 def preRequisite(obj, paramList, values):
@@ -151,15 +151,15 @@ def preRequisite(obj, paramList, values):
                 revertFlag[index] = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "%s is set to enabled successfully" %paramList[index];
+                print("%s is set to enabled successfully" %paramList[index]);
             else:
                 retVal = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "%s is NOT set to enabled successfully" %paramList[index];
+                print("%s is NOT set to enabled successfully" %paramList[index]);
                 break;
         else:
-            print "%s is enabled initially, set operation not required" %paramList[index];
+            print("%s is enabled initially, set operation not required" %paramList[index]);
     return retVal, revertFlag;
 
 
@@ -191,22 +191,22 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     #Get the initial Radio and SSID enable values
     paramList = ["Device.WiFi.Radio.1.Enable", "Device.WiFi.Radio.2.Enable", "Device.WiFi.SSID.1.Enable", "Device.WiFi.SSID.2.Enable"];
-    print "\nTEST STEP 1: Get the initial Radios and SSID enable state - ", paramList;
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the initial Radios and SSID enable state - ", paramList);
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     tdkTestObj, status, initial_values = getValues(obj, paramList);
 
     if status == 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: The values retrieved are respectively : %s, %s, %s, %s" %(initial_values[0], initial_values[1], initial_values[2], initial_values[3]) ;
+        print("ACTUAL RESULT 1: The values retrieved are respectively : %s, %s, %s, %s" %(initial_values[0], initial_values[1], initial_values[2], initial_values[3])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if the pre-requisites are set else set them
-        print "\n**********Pre-Requisites Start**********";
-        print "\nTEST STEP 2 : Check if the Radios and SSIDs are enabled initially else enable them as pre-requisites";
-        print "EXPECTED RESULT 2 : Radios and SSIDs should be enabled as pre-requisites";
+        print("\n**********Pre-Requisites Start**********");
+        print("\nTEST STEP 2 : Check if the Radios and SSIDs are enabled initially else enable them as pre-requisites");
+        print("EXPECTED RESULT 2 : Radios and SSIDs should be enabled as pre-requisites");
 
         preReq = 0;
         #Check if Radios and SSIDs are enabled
@@ -216,72 +216,72 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 if preReq == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s is set to enabled successfully" %paramList[index];
+                    print("%s is set to enabled successfully" %paramList[index]);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s is NOT set to enabled successfully" %paramList[index];
+                    print("%s is NOT set to enabled successfully" %paramList[index]);
                     break;
             else:
-                print "%s is enabled initially, set operation not required" %paramList[index];
+                print("%s is enabled initially, set operation not required" %paramList[index]);
 
         if preReq == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: Radios and SSIDs are enabled as pre-requisite";
+            print("ACTUAL RESULT 2: Radios and SSIDs are enabled as pre-requisite");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            print "\n**********Pre-Requistes Complete**********"
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("\n**********Pre-Requistes Complete**********")
 
             #Disable the SSIDs keeping the radio as enabled
             paramList_ssid = ["Device.WiFi.SSID.1.Enable", "Device.WiFi.SSID.2.Enable"];
             setvalues = ["false", "false"];
-            print "\nTEST STEP 3: Set the SSID enable parameters to disabled values - ", paramList_ssid;
-            print "EXPECTED RESULT 3 : The SSID enable parameters should be set to disabled successfully";
+            print("\nTEST STEP 3: Set the SSID enable parameters to disabled values - ", paramList_ssid);
+            print("EXPECTED RESULT 3 : The SSID enable parameters should be set to disabled successfully");
 
             for index in range(0, 2):
                 status = setParameter(obj, paramList_ssid[index], "false", "boolean");
                 if status == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s is set successfully to %s" %(paramList_ssid[index], setvalues[index]);
+                    print("%s is set successfully to %s" %(paramList_ssid[index], setvalues[index]));
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s is NOT set successfully to %s" %(paramList_ssid[index], setvalues[index]);
+                    print("%s is NOT set successfully to %s" %(paramList_ssid[index], setvalues[index]));
                     break;
 
             if status == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: SSIDs are disabled successfully keeping the radios enabled" ;
+                print("ACTUAL RESULT 3: SSIDs are disabled successfully keeping the radios enabled") ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Get the Radio and SSID statuses after a 20s sleep time for changes to reflect
                 sleep(20);
                 paramList_status = ["Device.WiFi.Radio.1.Status", "Device.WiFi.Radio.2.Status", "Device.WiFi.SSID.1.Status", "Device.WiFi.SSID.2.Status"];
 
-                print "\nTEST STEP 4: Get the current Radio and SSID status - ", paramList_status;
-                print "EXPECTED RESULT 4 : The values should be retrieved successfully";
+                print("\nTEST STEP 4: Get the current Radio and SSID status - ", paramList_status);
+                print("EXPECTED RESULT 4 : The values should be retrieved successfully");
                 tdkTestObj, status, values = getValues(obj, paramList_status);
 
                 if status == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: The values retrieved are respectively : %s, %s, %s, %s" %(values[0], values[1], values[2], values[3]) ;
+                    print("ACTUAL RESULT 4: The values retrieved are respectively : %s, %s, %s, %s" %(values[0], values[1], values[2], values[3])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the Radio status is Up and SSID status is Down
-                    print "\nTEST STEP 5: Check if the Radio statuses are Up and SSID statuses are Down";
-                    print "EXPECTED RESULT 5 : The Radio statuses should be Up and SSID statuses should be Down";
+                    print("\nTEST STEP 5: Check if the Radio statuses are Up and SSID statuses are Down");
+                    print("EXPECTED RESULT 5 : The Radio statuses should be Up and SSID statuses should be Down");
 
                     if values[0] == "Up" and values[1] == "Up" and values[2] == "Down" and values[3] == "Down":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5 : The Radio and SSID statuses are as expected";
+                        print("ACTUAL RESULT 5 : The Radio and SSID statuses are as expected");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Check for the presense of SelfHeal.txt.0
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -291,14 +291,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                        print "\nTEST STEP 6: Check for SelfHeal.txt.0 file presence";
-                        print "EXPECTED RESULT 6: SelfHeal.txt.0 should be present";
+                        print("\nTEST STEP 6: Check for SelfHeal.txt.0 file presence");
+                        print("EXPECTED RESULT 6: SelfHeal.txt.0 should be present");
 
                         if details == "File exist" :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6 : SelfHeal.txt.0 is present";
+                            print("ACTUAL RESULT 6 : SelfHeal.txt.0 is present");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if the "5G Radio(Radio 2) is Enabled, only 5G Private SSID is DISABLED" and "2G Radio(Radio 1) is Enabled, only 2G Private SSID is DISABLED" logs are found in SelfHeal.txt.0
                             step = 6;
@@ -311,12 +311,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 cmd = "grep -ire \"" + search_strings[iteration] +  "\" /rdklogs/logs/SelfHeal.txt.0";
                                 tdkTestObj.addParameter("command",cmd);
 
-                                print "\nTEST STEP %d: Check if the log line \"%s\" is present in SelfHeal.txt.0" %(step, search_strings[iteration]);
-                                print "EXPECTED RESULT %d: The required log line should be present in SelfHeal.txt.0" %step;
+                                print("\nTEST STEP %d: Check if the log line \"%s\" is present in SelfHeal.txt.0" %(step, search_strings[iteration]));
+                                print("EXPECTED RESULT %d: The required log line should be present in SelfHeal.txt.0" %step);
 
                                 #Checking every 60s for 15 mins
                                 for sub_iteration in range(1,17):
-                                    print "Waiting for the string to get populated in SelfHeal.txt.0....\nIteration : %d" %sub_iteration;
+                                    print("Waiting for the string to get populated in SelfHeal.txt.0....\nIteration : %d" %sub_iteration);
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
                                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -330,35 +330,35 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
                                 if stringfound == 1:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Required log line is present, Details : %s" %(step, details);
+                                    print("ACTUAL RESULT %d: Required log line is present, Details : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Required log line is NOT present, Details : %s" %(step, details);
+                                    print("ACTUAL RESULT %d: Required log line is NOT present, Details : %s" %(step, details));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                         else :
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6 : SelfHeal.txt.0 is not present";
+                            print("ACTUAL RESULT 6 : SelfHeal.txt.0 is not present");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5 : The Radio and SSID statuses are NOT as expected";
+                        print("ACTUAL RESULT 5 : The Radio and SSID statuses are NOT as expected");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: The values are NOT retrieved successfully" ;
+                    print("ACTUAL RESULT 4: The values are NOT retrieved successfully") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert the SSID enable if required
                 status = 0;
-                print "\nTEST STEP 9 : Revert the SSID Enable if required";
-                print "EXPECTED RESULT 9 : Revert operation should be success wherever required";
+                print("\nTEST STEP 9 : Revert the SSID Enable if required");
+                print("EXPECTED RESULT 9 : Revert operation should be success wherever required");
 
                 for index in range(2, 4):
                     if initial_values[index] != "false":
@@ -366,38 +366,38 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         if status == 0:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "%s is reverted successfully to %s" %(paramList[index], initial_values[index]);
+                            print("%s is reverted successfully to %s" %(paramList[index], initial_values[index]));
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "%s is NOT reverted successfully to %s" %(paramList[index], initial_values[index]);
+                            print("%s is NOT reverted successfully to %s" %(paramList[index], initial_values[index]));
                             break;
                     else:
-                        print "%s revert operation is not required" %paramList[index];
+                        print("%s revert operation is not required" %paramList[index]);
 
                 if status == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 9: SSID enable revert operations completed" ;
+                    print("ACTUAL RESULT 9: SSID enable revert operations completed") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 9: SSID enable revert operations NOT completed" ;
+                    print("ACTUAL RESULT 9: SSID enable revert operations NOT completed") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: SSIDs are NOT disabled successfully keeping the radios enabled" ;
+                print("ACTUAL RESULT 3: SSIDs are NOT disabled successfully keeping the radios enabled") ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert the Radio enable states if required
             status = 0;
-            print "\nTEST STEP 10 : Revert the Radio Enable if required";
-            print "EXPECTED RESULT 10 : Revert operation should be success wherever required";
+            print("\nTEST STEP 10 : Revert the Radio Enable if required");
+            print("EXPECTED RESULT 10 : Revert operation should be success wherever required");
 
             for index in range(0, 2):
                 if initial_values[index] != "true":
@@ -405,43 +405,43 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if status == 0:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "%s is reverted successfully to %s" %(paramList[index], initial_values[index]);
+                        print("%s is reverted successfully to %s" %(paramList[index], initial_values[index]));
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "%s is NOT reverted successfully to %s" %(paramList[index], initial_values[index]);
+                        print("%s is NOT reverted successfully to %s" %(paramList[index], initial_values[index]));
                         break;
                 else:
-                    print "%s revert operation is not required" %paramList[index];
+                    print("%s revert operation is not required" %paramList[index]);
 
             if status == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 9: Radio enable revert operations completed" ;
+                print("ACTUAL RESULT 9: Radio enable revert operations completed") ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 9: Radio enable revert operations NOT completed" ;
+                print("ACTUAL RESULT 9: Radio enable revert operations NOT completed") ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Radios and SSIDs are NOT enabled as pre-requisite";
+            print("ACTUAL RESULT 2: Radios and SSIDs are NOT enabled as pre-requisite");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: The values are NOT retrieved successfully" ;
+        print("ACTUAL RESULT 1: The values are NOT retrieved successfully") ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

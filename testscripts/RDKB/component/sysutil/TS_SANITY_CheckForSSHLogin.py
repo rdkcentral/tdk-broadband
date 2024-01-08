@@ -104,7 +104,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile INTERFACE" %TDK_PATH;
-    print command;
+    print(command);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
@@ -113,11 +113,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     interface = interface.replace("\\n", "");
     if "Invalid Argument passed" not in interface:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the wan interface of device";
-        print "EXPECTED RESULT 1: Should get the wan interface of device";
-        print "ACTUAL RESULT 1: %s" %interface;
+        print("TEST STEP 1: Get the wan interface of device");
+        print("EXPECTED RESULT 1: Should get the wan interface of device");
+        print("ACTUAL RESULT 1: %s" %interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         tdkTestObj.addParameter("command", "ifconfig | grep -A 1 %s | grep \"inet addr\" | cut -f2 -d ':' | cut -f1 -d ' '| tr \"\n\" \" \"" %interface);
         expectedresult="SUCCESS";
@@ -131,73 +131,73 @@ if "SUCCESS" in loadmodulestatus.upper():
             ipaddress = details;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if wan interface is up"
-            print "EXPECTED RESULT 2: wan interface should be up";
-            print "ACTUAL RESULT 2: wan interface is up with ip %s" %ipaddress;
+            print("TEST STEP 2: Check if wan interface is up")
+            print("EXPECTED RESULT 2: wan interface should be up");
+            print("ACTUAL RESULT 2: wan interface is up with ip %s" %ipaddress);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             try:
-                  status = "SUCCESS";
-                  print "Connect to Gateway Device"
-                  session = pxssh.pxssh(options={
-                            "StrictHostKeyChecking": "no",
-                            "UserKnownHostsFile": "/dev/null"})
-                  isSessionActive = session.login(ipaddress,"root")
-            except Exception, e:
-                   print e;
-                   status = "SSH to gateway failed"
+                status = "SUCCESS";
+                print("Connect to Gateway Device")
+                session = pxssh.pxssh(options={
+                          "StrictHostKeyChecking": "no",
+                          "UserKnownHostsFile": "/dev/null"})
+                isSessionActive = session.login(ipaddress,"root")
+            except Exception as e:
+                print(e);
+                status = "SSH to gateway failed"
 
-            print "SSH to gateway is :%s" %status;
+            print("SSH to gateway is :%s" %status);
             if expectedresult in status:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Check if ssh to gateway is possible"
-               print "EXPECTED RESULT 3: Should be able to ssh to gateway";
-               print "ACTUAL RESULT 3: SSH is success";
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check if ssh to gateway is possible")
+                print("EXPECTED RESULT 3: Should be able to ssh to gateway");
+                print("ACTUAL RESULT 3: SSH is success");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               tdkTestObj = obj.createTestStep('ExecuteCmd');
-               tdkTestObj.addParameter("command", "ps -ef  | grep \"dropbear\" | grep -v \"grep\"");
-               expectedresult="SUCCESS";
-               #Execute the test case in DUT
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               details = tdkTestObj.getResultDetails().strip();
+                tdkTestObj = obj.createTestStep('ExecuteCmd');
+                tdkTestObj.addParameter("command", "ps -ef  | grep \"dropbear\" | grep -v \"grep\"");
+                expectedresult="SUCCESS";
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip();
 
-               if expectedresult in actualresult and  details!= "":
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 4: Check if dropbear process is running"
-                  print "EXPECTED RESULT 4: dropbear process should be running ";
-                  print "ACTUAL RESULT 4:",details;
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 4: Check if dropbear process is running";
-                   print "EXPECTED RESULT 4: dropbear process should be running ";
-                   print "ACTUAL RESULT 4:",details;
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                if expectedresult in actualresult and  details!= "":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Check if dropbear process is running")
+                    print("EXPECTED RESULT 4: dropbear process should be running ");
+                    print("ACTUAL RESULT 4:",details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Check if dropbear process is running");
+                    print("EXPECTED RESULT 4: dropbear process should be running ");
+                    print("ACTUAL RESULT 4:",details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if ssh to gateway is possible"
-                print "EXPECTED RESULT 3: Should be able to ssh to gateway";
-                print "ACTUAL RESULT 3: SSH is failed";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check if ssh to gateway is possible")
+                print("EXPECTED RESULT 3: Should be able to ssh to gateway");
+                print("ACTUAL RESULT 3: SSH is failed");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if wan interface is up"
-            print "EXPECTED RESULT 2: wan interface should be up";
-            print "ACTUAL RESULT 2: wan interface is up with ip %s" %details;
+            print("TEST STEP 2: Check if wan interface is up")
+            print("EXPECTED RESULT 2: wan interface should be up");
+            print("ACTUAL RESULT 2: wan interface is up with ip %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the wan interface of device";
-        print "EXPECTED RESULT 1: Should get the wan interface of device";
-        print "ACTUAL RESULT 1: %s" %interface;
+        print("TEST STEP 1: Get the wan interface of device");
+        print("EXPECTED RESULT 1: Should get the wan interface of device");
+        print("ACTUAL RESULT 1: %s" %interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

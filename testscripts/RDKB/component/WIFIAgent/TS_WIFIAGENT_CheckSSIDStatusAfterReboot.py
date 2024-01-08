@@ -70,7 +70,7 @@ Device.WiFi.SSID.3.Enable ,
 Device.WiFi.SSID.4.Enable,
 Device.WiFi.SSID.5.Enable,
 Device.WiFi.SSID.6.Enable
-	</input_parameters>
+        </input_parameters>
     <automation_approch>1.Load the module.
 2. Get and save the current SSID enable status values of private,home security and public wifi
 3. Set the SSID enable as false for  private,home security and public wifi and return SUCCESS for non empty value,else FAILURE.
@@ -146,60 +146,60 @@ if "SUCCESS" in wifiloadmodulestatus.upper():
 
     if expectedresult in ssid1Result and  expectedresult in ssid2Result:
         #Set the result status of execution
-        print "TEST STEP 1 : Get Private SSID's Enable Status";
-        print "EXPECTED RESULT 1: Should Get the Private SSID's Enable status";
-        print "ACTUAL RESULT 1: Get Function for Private SSID's Enable status Success %s and %s"%(orgSSID1Status,orgSSID2Status);
+        print("TEST STEP 1 : Get Private SSID's Enable Status");
+        print("EXPECTED RESULT 1: Should Get the Private SSID's Enable status");
+        print("ACTUAL RESULT 1: Get Function for Private SSID's Enable status Success %s and %s"%(orgSSID1Status,orgSSID2Status));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         ssid3Result,orgSSID3Status = wifi_SSID_Get_Call("Device.WiFi.SSID.3.Enable");
         ssid4Result,orgSSID4Status = wifi_SSID_Get_Call("Device.WiFi.SSID.4.Enable");
 
         if expectedresult in ssid3Result and  expectedresult in ssid4Result:
             #Set the result status of execution
-            print "TEST STEP 2: Get Home Security SSID's Enable status";
-            print "EXPECTED RESULT 2: Should Get Home Security SSID's Enable status";
-            print "ACTUAL RESULT 2: Get Home Security SSID's Enable status success %s and %s"%(orgSSID3Status,orgSSID4Status);
+            print("TEST STEP 2: Get Home Security SSID's Enable status");
+            print("EXPECTED RESULT 2: Should Get Home Security SSID's Enable status");
+            print("ACTUAL RESULT 2: Get Home Security SSID's Enable status success %s and %s"%(orgSSID3Status,orgSSID4Status));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             # Get current values of public wifi params
             tdkTestObj,publicWiFiGetResult,orgValue = getPublicWiFiParamValues(wifiobj);
 
             if expectedresult in publicWiFiGetResult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Get values of PublicWiFi params"
-                print "TEST STEP 3 : Should get values of PublicWiFi params"
-                print "ACTUAL RESULT 3:%s" %orgValue
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3:Get values of PublicWiFi params")
+                print("TEST STEP 3 : Should get values of PublicWiFi params")
+                print("ACTUAL RESULT 3:%s" %orgValue)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 ssid1SetResult,detailsSSID1 = wifi_SSID_Set_Call("Device.WiFi.SSID.1.Enable","false");
                 ssid2SetResult,detailsSSID2 = wifi_SSID_Set_Call("Device.WiFi.SSID.2.Enable","false");
 
                 if expectedresult in ssid1SetResult and expectedresult in ssid2SetResult:
                     #Set the result status of execution
-                    print "TEST STEP 4: Disable Private WiFi SSID";
-                    print "EXPECTED RESULT 4: Should disable WiFi";
-                    print "ACTUAL RESULT 4: SSID 1:%s and SSID 2:%s" %(detailsSSID1,detailsSSID2);
+                    print("TEST STEP 4: Disable Private WiFi SSID");
+                    print("EXPECTED RESULT 4: Should disable WiFi");
+                    print("ACTUAL RESULT 4: SSID 1:%s and SSID 2:%s" %(detailsSSID1,detailsSSID2));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     ssid3SetResult,detailsSSID3 = wifi_SSID_Set_Call("Device.WiFi.SSID.3.Enable","false");
                     ssid4SetResult,detailsSSID4 = wifi_SSID_Set_Call("Device.WiFi.SSID.4.Enable","false");
 
                     if expectedresult in ssid3SetResult and expectedresult in ssid4SetResult:
                         #Set the result status of execution
-                        print "TEST STEP 5: Disable Home Seurity WiFi SSID's";
-                        print "EXPECTED RESULT 5: Should disable WiFi";
-                        print "ACTUAL RESULT 5: SSID 3:%s and SSID 4:%s" %(detailsSSID3,detailsSSID4);
+                        print("TEST STEP 5: Disable Home Seurity WiFi SSID's");
+                        print("EXPECTED RESULT 5: Should disable WiFi");
+                        print("ACTUAL RESULT 5: SSID 3:%s and SSID 4:%s" %(detailsSSID3,detailsSSID4));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Set false to xfinitywifiEnable
                         setvalues = ["44","68.86.15.199","68.86.15.171","true","true","false"];
                         tdkTestObj, publicWiFiSetResult, details = setPublicWiFiParamValues(wifiobj,setvalues);
                         if expectedresult in publicWiFiSetResult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Disable public wifi "
-                            print "TEST STEP 6 : Should disable PublicWiFi"
-                            print "ACTUAL RESULT 6:%s" %details
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("TEST STEP 6: Disable public wifi ")
+                            print("TEST STEP 6 : Should disable PublicWiFi")
+                            print("ACTUAL RESULT 6:%s" %details)
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #rebooting the device
                             wifiobj.initiateReboot();
@@ -208,133 +208,133 @@ if "SUCCESS" in wifiloadmodulestatus.upper():
                             ssid1GetResult,newSSID1Status = wifi_SSID_Get_Call("Device.WiFi.SSID.1.Enable");
                             ssid2GetResult,newSSID2Status = wifi_SSID_Get_Call("Device.WiFi.SSID.2.Enable");
                             if expectedresult in ssid1GetResult and expectedresult in ssid2GetResult and "false" == newSSID1Status and  "false" == newSSID2Status:
-                                print "TEST STEP 7: Check if Private SSID's SSID1 and SSID2 are Disabled";
-                                print "EXPECTED RESULT 7: SSID1 and SSID2 staus should be Disabled";
-                                print "ACTUAL RESULT 7: Status is %s %s" %(newSSID1Status,newSSID2Status);
+                                print("TEST STEP 7: Check if Private SSID's SSID1 and SSID2 are Disabled");
+                                print("EXPECTED RESULT 7: SSID1 and SSID2 staus should be Disabled");
+                                print("ACTUAL RESULT 7: Status is %s %s" %(newSSID1Status,newSSID2Status));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                                 ssid3GetResult,newSSID3Status  = wifi_SSID_Get_Call("Device.WiFi.SSID.3.Enable");
                                 ssid4GetResult,newSSID4Status  = wifi_SSID_Get_Call("Device.WiFi.SSID.4.Enable");
 
-            	                if expectedresult in ssid3GetResult and expectedresult in ssid4GetResult and "false" == newSSID3Status and  "false" == newSSID4Status:
-                                    print "TEST STEP 8: Check if Home security SSID's SSID3 and SSID4 are Disabled";
-                                    print "EXPECTED RESULT 8: SSID3 and SSID4 staus should be Disabled";
-                                    print "ACTUAL RESULT 8: Status is %s %s" %(newSSID3Status,newSSID4Status);
+                                if expectedresult in ssid3GetResult and expectedresult in ssid4GetResult and "false" == newSSID3Status and  "false" == newSSID4Status:
+                                    print("TEST STEP 8: Check if Home security SSID's SSID3 and SSID4 are Disabled");
+                                    print("EXPECTED RESULT 8: SSID3 and SSID4 staus should be Disabled");
+                                    print("ACTUAL RESULT 8: Status is %s %s" %(newSSID3Status,newSSID4Status));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                     ssid5GetResult,newSSID5Status = wifi_SSID_Get_Call("Device.WiFi.SSID.5.Enable");
                                     ssid6GetResult,newSSID6Status = wifi_SSID_Get_Call("Device.WiFi.SSID.6.Enable");
 
                                     if expectedresult in ssid5GetResult and expectedresult in ssid6GetResult and "false" == newSSID5Status and  "false" == newSSID6Status:
-                                        print "TEST STEP 9: Check if Publi WiFi SSID's SSID5 and SSID6 are Disabled";
-                                        print "EXPECTED RESULT 9: SSID6 and SSID6 status should be Disabled";
-                                        print "ACTUAL RESULT 9: Status is %s %s" %(newSSID5Status,newSSID6Status);
+                                        print("TEST STEP 9: Check if Publi WiFi SSID's SSID5 and SSID6 are Disabled");
+                                        print("EXPECTED RESULT 9: SSID6 and SSID6 status should be Disabled");
+                                        print("ACTUAL RESULT 9: Status is %s %s" %(newSSID5Status,newSSID6Status));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
-                                        print "TEST STEP 9: Check if Public SSID's SSID5 and SSID6 are Disabled";
-                                        print "EXPECTED RESULT 9: SSID5 and SSID6 status should be Disabled";
-                                        print "ACTUAL RESULT 9: Status is %s %s" %(newSSID5Status,newSSID6Status);
+                                        print("TEST STEP 9: Check if Public SSID's SSID5 and SSID6 are Disabled");
+                                        print("EXPECTED RESULT 9: SSID5 and SSID6 status should be Disabled");
+                                        print("ACTUAL RESULT 9: Status is %s %s" %(newSSID5Status,newSSID6Status));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
-            	                else:
-                                    print "TEST STEP 8: Check if Home Security SSIDs SSID3 and SSID4 are Disabled";
-                                    print "EXPECTED RESULT 8: SSID3 and SSID4 status should be Disabled";
-                                    print "ACTUAL RESULT 8: Status is %s %s" %(newSSID3Status,newSSID4Status);
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                else:
+                                    print("TEST STEP 8: Check if Home Security SSIDs SSID3 and SSID4 are Disabled");
+                                    print("EXPECTED RESULT 8: SSID3 and SSID4 status should be Disabled");
+                                    print("ACTUAL RESULT 8: Status is %s %s" %(newSSID3Status,newSSID4Status));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
-                                print "TEST STEP 7: Check if SSID1 and SSID2 is Disabled";
-                                print "EXPECTED RESULT 7: SSID1 and SSID2 status should be Disabled";
-                                print "ACTUAL RESULT 7: Status is %s %s" %(newSSID1Status,newSSID2Status);
+                                print("TEST STEP 7: Check if SSID1 and SSID2 is Disabled");
+                                print("EXPECTED RESULT 7: SSID1 and SSID2 status should be Disabled");
+                                print("ACTUAL RESULT 7: Status is %s %s" %(newSSID1Status,newSSID2Status));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert the values of public wifi params
                             tdkTestObj, publicWiFirevertSetResult, details = setPublicWiFiParamValues(wifiobj,orgValue);
-		            if expectedresult in publicWiFirevertSetResult:
+                            if expectedresult in publicWiFirevertSetResult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 10:Revert the Public WiFi param values"
-           		        print "EXPECTED RESULT 10 : Should revert the PublicWiFi values"
-            		        print "ACTUAL RESULT 10 :%s" %details
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
-		            else:
-               		        tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 10 : Revert the PublicWiFi param values"
-                                print "TEST STEP 10 : Should revert the PublicWiFi param values"
-                	        print "ACTUAL RESULT 10 :%s" %details
-                	        print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("TEST STEP 10:Revert the Public WiFi param values")
+                                print("EXPECTED RESULT 10 : Should revert the PublicWiFi values")
+                                print("ACTUAL RESULT 10 :%s" %details)
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 10 : Revert the PublicWiFi param values")
+                                print("TEST STEP 10 : Should revert the PublicWiFi param values")
+                                print("ACTUAL RESULT 10 :%s" %details)
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Disable public wifi "
-                            print "TEST STEP 6 : Should disable PublicWiFi"
-                            print "ACTUAL RESULT 6 :%s" %details
+                            print("TEST STEP 6: Disable public wifi ")
+                            print("TEST STEP 6 : Should disable PublicWiFi")
+                            print("ACTUAL RESULT 6 :%s" %details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         ssid3RevertSetResult,ssid3RevertSetDetails = wifi_SSID_Set_Call("Device.WiFi.SSID.3.Enable",orgSSID3Status);
                         ssid4RevertSetResult,ssid4RevertSetDetails = wifi_SSID_Set_Call("Device.WiFi.SSID.4.Enable",orgSSID4Status);
                         if expectedresult in ssid3RevertSetResult and expectedresult in ssid4RevertSetResult:
-                            print "TEST STEP 11: Set the Home security WIFI SSID's Enable with Original value";
-                            print "EXPECTED RESULT 11: Should set the Home security WiFi SSID's Enable value";
-                            print "ACTUAL RESULT 11: Home security SSID Enable with original value - Success %s and %s"%(ssid3RevertSetDetails,ssid4RevertSetDetails);
+                            print("TEST STEP 11: Set the Home security WIFI SSID's Enable with Original value");
+                            print("EXPECTED RESULT 11: Should set the Home security WiFi SSID's Enable value");
+                            print("ACTUAL RESULT 11: Home security SSID Enable with original value - Success %s and %s"%(ssid3RevertSetDetails,ssid4RevertSetDetails));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
-                            print "TEST STEP 11: Set the Home security WIFI SSID's Enable with Original value";
-                            print "EXPECTED RESULT 11: Should set the Home security WiFi SSID's Enable value";
-                            print "ACTUAL RESULT 11: Home security SSID Enable with original value - Failure  %s and %s"%(ssid3RevertSetDetails,ssid4RevertSetDetails);
+                            print("TEST STEP 11: Set the Home security WIFI SSID's Enable with Original value");
+                            print("EXPECTED RESULT 11: Should set the Home security WiFi SSID's Enable value");
+                            print("ACTUAL RESULT 11: Home security SSID Enable with original value - Failure  %s and %s"%(ssid3RevertSetDetails,ssid4RevertSetDetails));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "TEST STEP 5: Disable Home Seurity WiFi SSID's";
-                        print "EXPECTED RESULT 5: Should disable WiFi";
-                        print "ACTUAL RESULT 5: SSID 3:%s and SSID 4:%s" %(newSSID3Status,newSSID4Status);
+                        print("TEST STEP 5: Disable Home Seurity WiFi SSID's");
+                        print("EXPECTED RESULT 5: Should disable WiFi");
+                        print("ACTUAL RESULT 5: SSID 3:%s and SSID 4:%s" %(newSSID3Status,newSSID4Status));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Revert the Private SSID values to original
                     ssid1RevertSetResult,ssid1RevertSetDetails = wifi_SSID_Set_Call("Device.WiFi.SSID.1.Enable",orgSSID1Status);
                     ssid2RevertSetResult,ssid2RevertSetDetails = wifi_SSID_Set_Call("Device.WiFi.SSID.2.Enable",orgSSID2Status);
 
                     if expectedresult in ssid1RevertSetResult and expectedresult in ssid2RevertSetResult:
-                        print "TEST STEP 12: Set the private SSID's Enable with Original value";
-                        print "EXPECTED RESULT 12: Should set the private SSID's Enable value";
-                        print "ACTUAL RESULT 12: Private SSID Enable with original value - Success %s and %s"%(ssid1RevertSetDetails,ssid2RevertSetDetails);
+                        print("TEST STEP 12: Set the private SSID's Enable with Original value");
+                        print("EXPECTED RESULT 12: Should set the private SSID's Enable value");
+                        print("ACTUAL RESULT 12: Private SSID Enable with original value - Success %s and %s"%(ssid1RevertSetDetails,ssid2RevertSetDetails));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
-                        print "TEST STEP 12: Set the private SSID's Enable with Original value";
-                        print "EXPECTED RESULT 12: Should set the private SSID's Enable value";
-                        print "ACTUAL RESULT 12: Private SSID Enable with original value - Failure  %s and %s"%(ssid1RevertSetDetails,ssid2RevertSetDetails);
+                        print("TEST STEP 12: Set the private SSID's Enable with Original value");
+                        print("EXPECTED RESULT 12: Should set the private SSID's Enable value");
+                        print("ACTUAL RESULT 12: Private SSID Enable with original value - Failure  %s and %s"%(ssid1RevertSetDetails,ssid2RevertSetDetails));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "TEST STEP 4: Disable Private WiFi SSID";
-                    print "EXPECTED RESULT 4: Should disable WiFi";
-                    print "ACTUAL RESULT 4: SSID 1:%s and SSID 2:%s" %(newSSID1Status,newSSID2Status);
+                    print("TEST STEP 4: Disable Private WiFi SSID");
+                    print("EXPECTED RESULT 4: Should disable WiFi");
+                    print("ACTUAL RESULT 4: SSID 1:%s and SSID 2:%s" %(newSSID1Status,newSSID2Status));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "TEST STEP 3: Get Xfinity WiFi SSID's Enable status";
-                print "EXPECTED RESULT 3: Should get Xfinity WiFi SSID's Enable status ";
-                print "ACTUAL RESULT 3: Get Xfinity WiFi SSID's Enable status : Failed %s" %orgValue;
+                print("TEST STEP 3: Get Xfinity WiFi SSID's Enable status");
+                print("EXPECTED RESULT 3: Should get Xfinity WiFi SSID's Enable status ");
+                print("ACTUAL RESULT 3: Get Xfinity WiFi SSID's Enable status : Failed %s" %orgValue);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "TEST STEP 2: Get Home Security SSID's Enable status";
-            print "EXPECTED RESULT 2: Should Get Home Security SSID's Enable status";
-            print "ACTUAL RESULT 2: Get Home Security SSID's Enable status Failed %s and %s"%(orgSSID3Status,orgSSID4Status);
+            print("TEST STEP 2: Get Home Security SSID's Enable status");
+            print("EXPECTED RESULT 2: Should Get Home Security SSID's Enable status");
+            print("ACTUAL RESULT 2: Get Home Security SSID's Enable status Failed %s and %s"%(orgSSID3Status,orgSSID4Status));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1 : Get Private SSID's Enable Status";
-        print "EXPECTED RESULT 1: Should Get the Private SSID's Enable status";
-        print "ACTUAL RESULT 1: Get Function for Private SSID's Enable status Failed %s and %s"%(orgSSID1Status,orgSSID2Status);
+        print("TEST STEP 1 : Get Private SSID's Enable Status");
+        print("EXPECTED RESULT 1: Should Get the Private SSID's Enable status");
+        print("ACTUAL RESULT 1: Get Function for Private SSID's Enable status Failed %s and %s"%(orgSSID1Status,orgSSID2Status));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifiagent module";
+    print("Failed to load wifiagent module");
     wifiobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

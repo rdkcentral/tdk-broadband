@@ -80,7 +80,7 @@
 </xml>
 '''
 #import statement
-import tdklib; 
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_GetEncryptionMethod');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -108,24 +108,24 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     value = tdkTestObj.getResultDetails();
     value = value.split("VALUE:")[1].split(' ')[0]
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the encryption method of 2.4GHZ WIFI";
-        print "EXPECTED RESULT 1: Should get the encryption method of 2.4GHZ WIFI";
-        print "ACTUAL RESULT 1: Encryption Method is %s" %value;
+        print("TEST STEP 1: Get the encryption method of 2.4GHZ WIFI");
+        print("EXPECTED RESULT 1: Should get the encryption method of 2.4GHZ WIFI");
+        print("ACTUAL RESULT 1: Encryption Method is %s" %value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-        tdkTestObj.setResultStatus("FAILURE");	
-        print "TEST STEP 1: Get the encryption method of 2.4GHZ WIFI";
-        print "EXPECTED RESULT 1: Should get the encryption method of 2.4GHZ WIFI";
-        print "ACTUAL RESULT 1: Encryption Method is %s" %value;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the encryption method of 2.4GHZ WIFI");
+        print("EXPECTED RESULT 1: Should get the encryption method of 2.4GHZ WIFI");
+        print("ACTUAL RESULT 1: Encryption Method is %s" %value);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
-   		 
-else:   
-        print "Failed to load wifiagent module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";				
+
+else:
+    print("Failed to load wifiagent module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

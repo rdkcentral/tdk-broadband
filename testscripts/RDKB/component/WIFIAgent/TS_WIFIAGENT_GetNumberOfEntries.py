@@ -55,7 +55,7 @@ Input
 ( eg: "Device.WiFi.AccessPoint.1.AssociatedDeviceNumberOfEntries" )
 ( eg: "Device.WiFi.AccessPointNumberOfEntries" )
 ( eg: "Device.WiFi.RadioNumberOfEntries" )</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIAgent_Get  - func name - "If not exists already"
  wifiagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -63,9 +63,9 @@ Input
 3.Execute the generated Script(TS_WIFIAGENT_GetNumberOfEntries.py) using excution page of  Test Manager GUI
 4.wifiagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named WIFIAgent_Get through registered TDK wifiagentstub function along with necessary Path Name as arguments
 5.WIFIAgent_Get function will call Ccsp Base Functions named "CcspBaseIf_getParameterValues", that inturn will execute get functionalities of readonly parameters below
-	Device.WiFi.AccessPoint.1.AssociatedDeviceNumberOfEntries
-	Device.WiFi.AccessPointNumberOfEntries
-	Device.WiFi.RadioNumberOfEntries
+        Device.WiFi.AccessPoint.1.AssociatedDeviceNumberOfEntries
+        Device.WiFi.AccessPointNumberOfEntries
+        Device.WiFi.RadioNumberOfEntries
 6.Response(s)(printf) from TDK Component,Ccsp Library function and wifiagentstub would be logged in Agent Console log based on the debug info redirected to agent console.
 7.wifiagentstub will validate the available result (from agent console log and Pointer to instance as updated) with expected result ("Values for Requested Param" ) and the same is updated to agent console log.
 8.TestManager will publish the result in GUI as PASS/FAILURE based on the response from wifiagentstub.</automation_approch>
@@ -97,11 +97,11 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_GetNumberOfEntries');
 
 #Get the result of connection with test component
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     ####Get Access Point Associated Device number of entries####
     tdkTestObj = obj.createTestStep("WIFIAgent_Get");
     tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.AssociatedDeviceNumberOfEntries");
@@ -112,12 +112,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         details = tdkTestObj.getResultDetails();
-        print "EXPECTED RESULT 1: Should get the WIFI Access point Associated Device Entry value Successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("EXPECTED RESULT 1: Should get the WIFI Access point Associated Device Entry value Successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        print "Get Number of Entries SUCCESS:: Associated Devices Number of Entries returns Value "
-        
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Get Number of Entries SUCCESS:: Associated Devices Number of Entries returns Value ")
+
         ####Get Access Point Number Of Entries####
         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPointNumberOfEntries");
@@ -128,11 +128,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             details = tdkTestObj.getResultDetails();
-            print "EXPECTED RESULT 2: Should get the WIFI Access point Entry value Successfully";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("EXPECTED RESULT 2: Should get the WIFI Access point Entry value Successfully");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "Get Number of Entries SUCCESS:: Associated Point Number of Entries returns Value "            
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Get Number of Entries SUCCESS:: Associated Point Number of Entries returns Value ")
 
             ####Get Radio Number Of Entries####
             tdkTestObj = obj.createTestStep("WIFIAgent_Get");
@@ -144,35 +144,35 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 details = tdkTestObj.getResultDetails();
-                print "EXPECTED RESULT 3: Should get the WIFI Radio Entry value Successfully";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("EXPECTED RESULT 3: Should get the WIFI Radio Entry value Successfully");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Get Number of Entries SUCCESS:: Radio Number of Entries returns Value"
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Get Number of Entries SUCCESS:: Radio Number of Entries returns Value")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "EXPECTED RESULT 3: Should get the WIFI Radio Entry value Successfully";
-                print "ACTUAL RESULT 3: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Get Number of Entries FAILURE:: Radio Number of Entries not returns Value"            
+                print("EXPECTED RESULT 3: Should get the WIFI Radio Entry value Successfully");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Get Number of Entries FAILURE:: Radio Number of Entries not returns Value")
         else:
             tdkTestObj.setResultStatus("FAILURE");
             details = tdkTestObj.getResultDetails();
-            print "EXPECTED RESULT 2: Should get the WIFI Access point Entry value Successfully";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            print "Get Number of Entries FAILURE:: Associated Point Number of Entries not returns Value "            
+            print("EXPECTED RESULT 2: Should get the WIFI Access point Entry value Successfully");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            print("Get Number of Entries FAILURE:: Associated Point Number of Entries not returns Value ")
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "EXPECTED RESULT 1: Should get the WIFI Access point Associated Device Entry value Successfully";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        print "Get Number of Entries FAILURE:: Associated Devices Number of Entries not returns Value "
-        
+        print("EXPECTED RESULT 1: Should get the WIFI Access point Associated Device Entry value Successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Get Number of Entries FAILURE:: Associated Devices Number of Entries not returns Value ")
+
     obj.unloadModule("wifiagent");
 else:
-        print "FAILURE to load wifiagent module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
+    print("FAILURE to load wifiagent module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

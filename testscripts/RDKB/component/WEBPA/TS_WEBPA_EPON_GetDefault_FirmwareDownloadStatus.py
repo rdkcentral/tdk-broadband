@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_EPON_GetDefault_FirmwareDownloadStatus')
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -96,27 +96,27 @@ if "SUCCESS" in result.upper() :
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             fwDwnldStatus = parsedResponse[1]
             if fwDwnldStatus == "Failed":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                print "Got Default FirmwareDownloadStatus as Failed"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("Got Default FirmwareDownloadStatus as Failed")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
-                print "Got Default FirmwareDownloadStatus as ", fwDwnldStatus
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("Got Default FirmwareDownloadStatus as ", fwDwnldStatus)
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

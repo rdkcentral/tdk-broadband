@@ -102,17 +102,17 @@ if "SUCCESS" in loadmodulestatus.upper():
     expectedresult="SUCCESS";
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile DNSMASQ_CONF_PATH" %TDK_PATH;
-    print cmd
+    print(cmd)
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     dnsmasqConfPath = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult and dnsmasqConfPath != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Should get the dnsmasq conf file path";
-        print "ACTUAL RESULT 1:dnsmasq conf file path:%s" %dnsmasqConfPath;
+        print("TEST STEP 1:Should get the dnsmasq conf file path");
+        print("ACTUAL RESULT 1:dnsmasq conf file path:%s" %dnsmasqConfPath);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         cmd = "[ -f %s ] && echo \"File exist\" || echo \"File does not exist\"" %dnsmasqConfPath;
         tdkTestObj.addParameter("command",cmd);
         tdkTestObj.executeTestCase(expectedresult);
@@ -120,13 +120,13 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if details == "File exist":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:dnsmasq conf file should be present";
-            print "ACTUAL RESULT 2:dnsmasq conf file is present";
+            print("TEST STEP 2:dnsmasq conf file should be present");
+            print("ACTUAL RESULT 2:dnsmasq conf file is present");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #check whether the process is running or not
             query="sh %s/tdk_platform_utility.sh checkProcess dnsmasq" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             tdkTestObj.executeTestCase("SUCCESS");
@@ -134,34 +134,31 @@ if "SUCCESS" in loadmodulestatus.upper():
             pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and pid:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:dnsmasq process should be running";
-                print "ACTUAL RESULT 3: PID of dnsmasq %s" %pid;
+                print("TEST STEP 3:dnsmasq process should be running");
+                print("ACTUAL RESULT 3: PID of dnsmasq %s" %pid);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:dnsmasq process should be running";
-                print "ACTUAL RESULT 3: dnsmasq is not running";
+                print("TEST STEP 3:dnsmasq process should be running");
+                print("ACTUAL RESULT 3: dnsmasq is not running");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:dnsmasq conf file should be present";
-            print "ACTUAL RESULT 2:dnsmasq conf file is not present";
+            print("TEST STEP 2:dnsmasq conf file should be present");
+            print("ACTUAL RESULT 2:dnsmasq conf file is not present");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Should get the dnsmasq conf file path";
-        print "ACTUAL RESULT 1:Failed to get dnsmasq conf file path";
+        print("TEST STEP 1:Should get the dnsmasq conf file path");
+        print("ACTUAL RESULT 1:Failed to get dnsmasq conf file path");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
-
-
-
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

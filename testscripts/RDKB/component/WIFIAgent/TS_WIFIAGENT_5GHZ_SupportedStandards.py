@@ -84,8 +84,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_SupportedStandards');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -117,30 +117,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     flag = 1;
 
     for index in range(len(band)):
-	if band[index] not in expectedBand:
-	    flag = 0;
+        if band[index] not in expectedBand:
+            flag = 0;
 
     if expectedresult in actualresult and flag == 1:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of supported standards"
-        print "EXPECTED RESULT 1: supported standards should be from the expected list of values"
-        print "ACTUAL RESULT 1: Std is %s " %details
-        print "ACTUAL RESULT 1: ", band
+        print("TEST STEP 1: Get the list of supported standards")
+        print("EXPECTED RESULT 1: supported standards should be from the expected list of values")
+        print("ACTUAL RESULT 1: Std is %s " %details)
+        print("ACTUAL RESULT 1: ", band)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of supported standards"
-        print "EXPECTED RESULT 1: supported standards should be from the expected list of values"
-        print "ACTUAL RESULT 1: Std is %s " %details
+        print("TEST STEP 1: Get the list of supported standards")
+        print("EXPECTED RESULT 1: supported standards should be from the expected list of values")
+        print("ACTUAL RESULT 1: Std is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

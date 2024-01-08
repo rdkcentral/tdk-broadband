@@ -101,7 +101,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_SetSSID_WithBothCases_SpecialChars')
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,19 +119,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current SSID name";
-        print "EXPECTED RESULT 1: Should get the current SSID name";
+        print("TEST STEP 1: Get the current SSID name");
+        print("EXPECTED RESULT 1: Should get the current SSID name");
         orgSSID = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: Current SSID is  %s" %orgSSID
+        print("ACTUAL RESULT 1: Current SSID is  %s" %orgSSID)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Change SSID name
         setSSID = "Test_SSID"
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.SSID.1.SSID")
-	tdkTestObj.addParameter("paramValue", setSSID)
-	tdkTestObj.addParameter("paramType","string")
+        tdkTestObj.addParameter("paramValue", setSSID)
+        tdkTestObj.addParameter("paramType","string")
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
@@ -139,37 +139,37 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set a SSID name having  alphabets in both Upper and lower cases along with special characters";
-            print "EXPECTED RESULT 2: Should  successfully set a SSID name having  alphabets in both Upper and lower cases along with special characters";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set a SSID name having  alphabets in both Upper and lower cases along with special characters");
+            print("EXPECTED RESULT 2: Should  successfully set a SSID name having  alphabets in both Upper and lower cases along with special characters");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             sleep(5);
-	    #check if SSID name is set
+            #check if SSID name is set
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.WiFi.SSID.1.SSID")
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-	    newSSID = details.split("VALUE:")[1].split('TYPE')[0].rstrip()
+            newSSID = details.split("VALUE:")[1].split('TYPE')[0].rstrip()
 
-	    if expectedresult in actualresult and newSSID == setSSID:
+            if expectedresult in actualresult and newSSID == setSSID:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if SSID name is set to new value"
-                print "EXPECTED RESULT 3: SSID name should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if SSID name is set to new value")
+                print("EXPECTED RESULT 3: SSID name should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if SSID name is set to new value"
-                print "EXPECTED RESULT 3: SSID name should be set as new value"
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Check if SSID name is set to new value")
+                print("EXPECTED RESULT 3: SSID name should be set as new value")
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	   #change ssid state to previous one
+           #change ssid state to previous one
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.SSID.1.SSID")
             tdkTestObj.addParameter("paramValue",orgSSID)
@@ -181,37 +181,37 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Restore initial SSID name";
-                print "EXPECTED RESULT 4: Should initial SSID name";
-                print "ACTUAL RESULT 4: Details is %s " %details;
+                print("TEST STEP 4: Restore initial SSID name");
+                print("EXPECTED RESULT 4: Should initial SSID name");
+                print("ACTUAL RESULT 4: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Restore initial SSID name";
-                print "EXPECTED RESULT 3: Should restore initial SSID name";
-                print "ACTUAL RESULT 3: Details is %s " %details;
+                print("TEST STEP 3: Restore initial SSID name");
+                print("EXPECTED RESULT 3: Should restore initial SSID name");
+                print("ACTUAL RESULT 3: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:   Set a SSID name having  alphabets in both Upper and lower cases along with special characters";
-            print "EXPECTED RESULT 2: Should  successfully set a SSID name having  alphabets in both Upper and lower cases along with special characters";
-            print "ACTUAL RESULT 2:  %s " %details;
+            print("TEST STEP 2:   Set a SSID name having  alphabets in both Upper and lower cases along with special characters");
+            print("EXPECTED RESULT 2: Should  successfully set a SSID name having  alphabets in both Upper and lower cases along with special characters");
+            print("ACTUAL RESULT 2:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current SSID name"
-        print "EXPECTED RESULT 1: Failure in getting the current SSID name"
-        print "ACTUAL RESULT 1: Details is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current SSID name")
+        print("EXPECTED RESULT 1: Failure in getting the current SSID name")
+        print("ACTUAL RESULT 1: Details is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

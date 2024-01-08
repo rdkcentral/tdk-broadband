@@ -102,21 +102,18 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:minidumps file should be present under arm console";
-        print "ACTUAL RESULT 1:minidumps file is present under arm console";
+        print("TEST STEP 1:minidumps file should be present under arm console");
+        print("ACTUAL RESULT 1:minidumps file is present under arm console");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:minidumps file should be present under arm console";
-        print "ACTUAL RESULT 1:minidumps file is not present under arm console";
+        print("TEST STEP 1:minidumps file should be present under arm console");
+        print("ACTUAL RESULT 1:minidumps file is not present under arm console");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
-
-
-
+    print("Module loading failed")

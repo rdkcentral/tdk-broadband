@@ -93,19 +93,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ManagementFrame PowerControl value";
-        print "EXPECTED RESULT 1: Should get  ManagementFrame PowerControl value";
-        print "ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %default;
+        print("TEST STEP 1: Get the ManagementFrame PowerControl value");
+        print("EXPECTED RESULT 1: Should get  ManagementFrame PowerControl value");
+        print("ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         framePower_list=[0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20];
         # getting length of list
         length = len(framePower_list)
-        print "Supported Values for  ManagementFrame PowerControl is ",framePower_list
+        print("Supported Values for  ManagementFrame PowerControl is ",framePower_list)
 
         for i in range(length):
-            print "Setting the ManagementFrame PowerControl to ",framePower_list[i]
+            print("Setting the ManagementFrame PowerControl to ",framePower_list[i])
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.2.X_RDKCENTRAL-COM_ManagementFramePowerControl");
@@ -119,29 +119,29 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             SetValue =framePower_list[i];
             if expectedresult in actualresult:
-               flag =0;
-               print " Value set successfully to ",framePower_list[i];
+                flag =0;
+                print(" Value set successfully to ",framePower_list[i]);
 
             else:
                 flag =1;
                 break;
 
         if flag == 0:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Set the ManagementFrame PowerControl to all supported Values";
-           print "EXPECTED RESULT 2: Should set  ManagementFrame PowerControl value to all supported Values";
-           print "ACTUAL RESULT 2: Successfully set the all the supported  ManagementFrame PowerControl value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the ManagementFrame PowerControl to all supported Values");
+            print("EXPECTED RESULT 2: Should set  ManagementFrame PowerControl value to all supported Values");
+            print("ACTUAL RESULT 2: Successfully set the all the supported  ManagementFrame PowerControl value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the ManagementFrame PowerControl to all supported Values";
-           print "EXPECTED RESULT 2: Should set  ManagementFrame PowerControl value to all supported Values";
-           print "ACTUAL RESULT 2: Failed to set the ",SetValue,"  ManagementFrame PowerControl value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the ManagementFrame PowerControl to all supported Values");
+            print("EXPECTED RESULT 2: Should set  ManagementFrame PowerControl value to all supported Values");
+            print("ACTUAL RESULT 2: Failed to set the ",SetValue,"  ManagementFrame PowerControl value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
         #Reverting to default
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
@@ -154,32 +154,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         result = tdkTestObj.getResultDetails();
 
         if expectedresult in  expectedresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: Revert the ManagementFrame PowerControl to its default";
-           print "EXPECTED RESULT 3: Revert   ManagementFrame PowerControl value to previous value";
-           print "ACTUAL RESULT 3: Revert Operation sucesss:",result ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Revert the ManagementFrame PowerControl to its default");
+            print("EXPECTED RESULT 3: Revert   ManagementFrame PowerControl value to previous value");
+            print("ACTUAL RESULT 3: Revert Operation sucesss:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 3: Revert the ManagementFrame PowerControl to its default";
-           print "EXPECTED RESULT 3: Revert   ManagementFrame PowerControl value to previous value";
-           print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 3: Revert the ManagementFrame PowerControl to its default");
+            print("EXPECTED RESULT 3: Revert   ManagementFrame PowerControl value to previous value");
+            print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ManagementFrame PowerControl value";
-        print "EXPECTED RESULT 1: Should get  ManagementFrame PowerControl value";
-        print "ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %default;
+        print("TEST STEP 1: Get the ManagementFrame PowerControl value");
+        print("EXPECTED RESULT 1: Should get  ManagementFrame PowerControl value");
+        print("ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

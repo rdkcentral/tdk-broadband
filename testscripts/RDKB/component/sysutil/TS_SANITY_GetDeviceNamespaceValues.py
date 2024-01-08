@@ -123,42 +123,42 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     NamespacesList = NamespacesList.split(",");
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Get the list of TR-181 parameters to be queried";
-        print "EXPECTED RESULT : Should get the list of TR-181 parameters to be queried";
-        print "ACTUAL RESULT : Got the list of TR-181 parameters to be queried as %s" %NamespacesList;
+        print("TEST STEP : Get the list of TR-181 parameters to be queried");
+        print("EXPECTED RESULT : Should get the list of TR-181 parameters to be queried");
+        print("ACTUAL RESULT : Got the list of TR-181 parameters to be queried as %s" %NamespacesList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
         error_list = ["Ccsp msg bus internal error 191","Ccsp msg bus internal error 190","Can't find destination component","Execution fail(error code:CCSP_ERR_NOT_SUPPORT(193))","Execution fail(error code:UNKNOWN MESSAGE TYPE(-47))"];
         for i in NamespacesList:
-             tdkTestObj.addParameter("paramName","Device.%s." %i);
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails();
-             expectedresult="SUCCESS";
-             if expectedresult in actualresult and details not in error_list:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP : Query the full list of namespace values under Device.%s." %i;
-                 print "EXPECTED RESULT : Should list the values of the namespace under Device.%s." %i;
-                 print "ACTUAL RESULT : Listed the values of the namespace under Device.%s. successfully" %i;
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-             else :
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP : Query the full list of namespace values under Device.%s." %i;
-                 print "EXPECTED RESULT : Should list the values of the namespace under Device.%s." %i;
-                 print "ACTUAL RESULT : Failed to list the values of the namespace under Device.%s." %i;
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.addParameter("paramName","Device.%s." %i);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            expectedresult="SUCCESS";
+            if expectedresult in actualresult and details not in error_list:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP : Query the full list of namespace values under Device.%s." %i);
+                print("EXPECTED RESULT : Should list the values of the namespace under Device.%s." %i);
+                print("ACTUAL RESULT : Listed the values of the namespace under Device.%s. successfully" %i);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else :
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : Query the full list of namespace values under Device.%s." %i);
+                print("EXPECTED RESULT : Should list the values of the namespace under Device.%s." %i);
+                print("ACTUAL RESULT : Failed to list the values of the namespace under Device.%s." %i);
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the list of TR-181 parameters to be queried";
-        print "EXPECTED RESULT : Should get the list of TR-181 parameters to be queried";
-        print "ACTUAL RESULT : Failed to get the list of TR-181 parameters to be queried";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP : Get the list of TR-181 parameters to be queried");
+        print("EXPECTED RESULT : Should get the list of TR-181 parameters to be queried");
+        print("ACTUAL RESULT : Failed to get the list of TR-181 parameters to be queried");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
     obj1.unloadModule("sysutil");
 
 else:
-    print "Failed to load wifiagent module";
+    print("Failed to load wifiagent module");
     obj.setLoadModuleStatus("FAILURE");

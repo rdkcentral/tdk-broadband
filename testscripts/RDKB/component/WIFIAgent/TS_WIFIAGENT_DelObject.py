@@ -68,7 +68,7 @@ Input
 1.Parameter Path (paramname)
 eg:Device.WiFi.SSID.2.
 2. apiTest</input_parameters>
-    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested  
+    <automation_approch>1.Configure the Function info in Test Manager GUI  which needs to be tested
 (WIFIAgent_DelObject  - func name - "If not exists already"
  wifiagent - module name
  Necessary I/P args as Mentioned in Input)
@@ -76,13 +76,13 @@ eg:Device.WiFi.SSID.2.
 3.Execute the generated Script(TS_WIFIAGENT_DelObject.py) using execution page of  Test Manager GUI
 4.wifiagentstub which is a part of TDK Agent process, will be in listening mode to execute TDK Component function named WIFIAgent_DelObject through registered TDK wifiagentstub function along with necessary Entry Values as arguments
 5.WIFIAgent_DelObject function will call CCSP Base Interface Function named CcspBaseIf_DeleteTblRow, that inturn will call "CcspCcMbi_DeleteTblRow" along with  provided input arguments(including instance number) to Delete Table row info from Dynamic Table List/ Data Model of WIFI Agent
-6.Responses(printf) from TDK Component,Ccsp Library function and wifiagentstub would be logged in Agent Console log based on the debug info redirected to agent console   
+6.Responses(printf) from TDK Component,Ccsp Library function and wifiagentstub would be logged in Agent Console log based on the debug info redirected to agent console
 7.wifiagentstub will validate the available result (from agent console log and Pointer to instance as non null ) with expected result (Eg:"Table deleted Succesfully") and the same is updated in agent console log
 8.Test Manager will publish the result in GUI as SUCCESS/FAILURE based on the response from wifiagentstub.</automation_approch>
     <except_output>CheckPoint 1:
 Table/Object deletion log from DUT should be available in Agent Console Log
 CheckPoint 2:
-TDK agent Test Function will log the test case result as PASS based on API response 
+TDK agent Test Function will log the test case result as PASS based on API response
 CheckPoint 3:
 Test Manager GUI will publish the result as SUCCESS in Execution page</except_output>
     <priority>High</priority>
@@ -95,9 +95,9 @@ Test Manager GUI will publish the result as SUCCESS in Execution page</except_ou
   <script_tags />
 </xml>
 '''
-										
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
@@ -110,14 +110,14 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_DelObject');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('WIFIAgent_DelObject');
@@ -135,19 +135,17 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-print "EXPECTED RESULT 1: Should Delete a wifi instance that holds client info from the table successfully ";
+print("EXPECTED RESULT 1: Should Delete a wifi instance that holds client info from the table successfully ");
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Deleted a row from a table object"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("Deleted a row from a table object")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failure:Cannot delete a row of a table object"	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("Failure:Cannot delete a row of a table object")
 
 obj.unloadModule("wifiagent");
-
-					

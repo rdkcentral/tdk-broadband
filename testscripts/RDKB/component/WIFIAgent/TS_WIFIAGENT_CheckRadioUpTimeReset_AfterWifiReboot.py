@@ -88,18 +88,18 @@ def getValues(obj, num_of_radios):
         if expectedresult in actualresult and details != "":
             details = details.split("VALUE:")[1].split(" ")[0].strip();
             Value.append(details);
-            print "\n%s : %s" %(param, Value[index-1]);
+            print("\n%s : %s" %(param, Value[index-1]));
 
             if Value[index-1].isdigit():
-                print "Radio Uptime retrieved is a valid integer";
+                print("Radio Uptime retrieved is a valid integer");
                 continue;
             else:
-                print "Radio Uptime retrieved is not a valid integer";
+                print("Radio Uptime retrieved is not a valid integer");
                 status = 1;
                 break;
         else :
             status = 1;
-            print "%s : %s" %(param, details);
+            print("%s : %s" %(param, details));
             break;
     return status, Value;
 
@@ -138,60 +138,60 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult and details != "":
-        print "\n6G applicable for the DUT...";
+        print("\n6G applicable for the DUT...");
         num_of_radios = 3;
     else:
-        print "\n6G not applicable for the DUT...";
+        print("\n6G not applicable for the DUT...");
         num_of_radios = 2;
 
     #Get the initial radio uptimes
     step = 1;
-    print "\nTEST STEP %d : Get the Initial Radio Uptime for all applicable radios" %step;
-    print "EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios" %step;
+    print("\nTEST STEP %d : Get the Initial Radio Uptime for all applicable radios" %step);
+    print("EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios" %step);
 
     status, initialValue = getValues(obj, num_of_radios);
 
     if status == 0 :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Initial Radio Uptimes are retrieved successfully" %step;
+        print("ACTUAL RESULT %d : Initial Radio Uptimes are retrieved successfully" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #If initial uptimes are less than 100s, sleep for 100s so that uptime increases
         sleep_flag = 0;
         proceed_flag = 0;
         if num_of_radios == 2:
             if int(initialValue[0]) < 100 or int(initialValue[1]) < 100 :
-                print "Sleeping 100s for increasing radio uptime";
+                print("Sleeping 100s for increasing radio uptime");
                 sleep(100);
                 sleep_flag = 1;
         else:
             if int(initialValue[0]) < 100 or int(initialValue[1]) < 100 or int(initialValue[2]) < 100:
-                print "Sleeping 100s for increasing radio uptime";
+                print("Sleeping 100s for increasing radio uptime");
                 sleep(100);
                 sleep_flag = 1;
 
         if sleep_flag == 1:
             step = step + 1;
             #Get the current radio uptimes
-            print "\nTEST STEP %d : Get the Radio Uptime for all applicable radios after 100s sleep" %step;
-            print "EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios" %step;
+            print("\nTEST STEP %d : Get the Radio Uptime for all applicable radios after 100s sleep" %step);
+            print("EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios" %step);
 
             status, initialValue = getValues(obj, num_of_radios);
 
             if status == 0 :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Current Radio Uptimes are retrieved successfully" %step;
+                print("ACTUAL RESULT %d : Current Radio Uptimes are retrieved successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else :
                 proceed_flag = 1;
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Current Radio Uptimes are NOT retrieved successfully" %step;
+                print("ACTUAL RESULT %d : Current Radio Uptimes are NOT retrieved successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Additional sleep time not required as initial radio uptimes are > 100s";
+            print("Additional sleep time not required as initial radio uptimes are > 100s");
 
         if proceed_flag == 0:
             #Wifi reboot
@@ -204,83 +204,83 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP %d : Initiate WiFi reboot using Device.X_CISCO_COM_DeviceControl.RebootDevice" %step;
-            print "EXPECTED RESULT %d : The WiFi reboot operation should be successful" %step;
+            print("\nTEST STEP %d : Initiate WiFi reboot using Device.X_CISCO_COM_DeviceControl.RebootDevice" %step);
+            print("EXPECTED RESULT %d : The WiFi reboot operation should be successful" %step);
 
             if expectedresult in actualresult and details != "" :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : WiFi reboot operation was success; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d : WiFi reboot operation was success; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Sleep for 90s for the WiFi reboot operation to take effect
-                print "Sleeping 90s for the WiFi reboot operation...";
+                print("Sleeping 90s for the WiFi reboot operation...");
                 sleep(90);
 
                 #Get the final radio uptimes
                 step = step + 1;
-                print "\nTEST STEP %d : Get the Radio Uptime for all applicable radios after WiFi reboot" %step;
-                print "EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios after WiFi reboot" %step;
+                print("\nTEST STEP %d : Get the Radio Uptime for all applicable radios after WiFi reboot" %step);
+                print("EXPECTED RESULT %d : Should get the Radio Uptime for all applicable radios after WiFi reboot" %step);
 
                 status, finalValue = getValues(obj, num_of_radios);
 
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Final Radio Uptimes are retrieved successfully" %step;
+                    print("ACTUAL RESULT %d : Final Radio Uptimes are retrieved successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the radio uptimes are reset
                     step = step + 1;
-                    print "\nTEST STEP %d : Check if the Radio Uptimes are reset" %step;
-                    print "EXPECTED RESULT %d : The Radio Reset counts should be reset" %step;
+                    print("\nTEST STEP %d : Check if the Radio Uptimes are reset" %step);
+                    print("EXPECTED RESULT %d : The Radio Reset counts should be reset" %step);
 
                     result = 0;
                     for index in range(1, num_of_radios+1):
                         param = "Device.WiFi.Radio." + str(index) + ".X_COMCAST_COM_RadioUpTime";
-                        print "\nFor %s, initial radio uptime : %s, final radio uptime : %s" %(param, initialValue[index-1], finalValue[index-1]);
+                        print("\nFor %s, initial radio uptime : %s, final radio uptime : %s" %(param, initialValue[index-1], finalValue[index-1]));
 
                         #After wifi reboot the radio uptime should be reset, the final uptime value should be less than the uptime before wifi reboot
                         if int(finalValue[index-1]) < int(initialValue[index-1]) :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "%s is reset" %param;
+                            print("%s is reset" %param);
                         else:
                             result = 1;
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "%s is NOT reset" %param;
+                            print("%s is NOT reset" %param);
 
                     if result == 0:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : The Radio Uptimes after wifi reboot are reset" %step;
+                        print("ACTUAL RESULT %d : The Radio Uptimes after wifi reboot are reset" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : The Radio Uptimes after wifi reboot are NOT reset" %step;
+                        print("ACTUAL RESULT %d : The Radio Uptimes after wifi reboot are NOT reset" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Final Radio Uptimes are NOT retrieved successfully" %step;
+                    print("ACTUAL RESULT %d : Final Radio Uptimes are NOT retrieved successfully" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : WiFi reboot operation failed; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d : WiFi reboot operation failed; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Current Uptime values not retrieved..."
+            print("Current Uptime values not retrieved...")
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1 : Initial Radio Uptimes are NOT retrieved successfully";
+        print("ACTUAL RESULT 1 : Initial Radio Uptimes are NOT retrieved successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

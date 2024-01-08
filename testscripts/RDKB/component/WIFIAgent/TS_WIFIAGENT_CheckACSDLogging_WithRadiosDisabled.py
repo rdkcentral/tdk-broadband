@@ -82,10 +82,10 @@ def getParam(wifiobj, paramName):
 
     if expectedresult in actualresult and details != "":
         value = details.split("VALUE:")[1].split(" ")[0].strip();
-        print "%s : %s" %(paramName, value);
+        print("%s : %s" %(paramName, value));
         tdkTestObj.setResultStatus("SUCCESS");
     else:
-        print "%s is not retrieved successfully" %paramName;
+        print("%s is not retrieved successfully" %paramName);
         tdkTestObj.setResultStatus("FAILURE");
     return actualresult, tdkTestObj, value;
 
@@ -103,7 +103,7 @@ def setParameter(obj, param, setValue, type):
 
     if expectedresult not in actualresult:
         status = 1;
-        print "%s SET operation failed" %param;
+        print("%s SET operation failed" %param);
     return status, tdkTestObj;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -126,8 +126,8 @@ sysobj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckACSDLogging_WithRadiosDisabl
 #Get the result of connection with test component and DUT
 wifiloadmodulestatus=wifiobj.getLoadModuleResult();
 sysloadmodulestatus=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %wifiloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.upper():
     #Set the result status of execution
@@ -139,42 +139,42 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
     paramList = ["Device.WiFi.Radio.1.Enable", "Device.WiFi.Radio.2.Enable"];
     radio_enable_initial = [0, 0];
 
-    print "\nTEST STEP 1 : Get the initial values of ", paramList;
-    print "EXPECTED RESULT 1 : The Radio enable values should be retrieved successfully";
+    print("\nTEST STEP 1 : Get the initial values of ", paramList);
+    print("EXPECTED RESULT 1 : The Radio enable values should be retrieved successfully");
     actualresult1, tdkTestObj, radio_enable_initial[0] = getParam(wifiobj, paramList[0]);
     actualresult2, tdkTestObj, radio_enable_initial[1] = getParam(wifiobj, paramList[1]);
 
     if actualresult1 in expectedresult and  actualresult2 in expectedresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: The radio enable values are retrieved successfully";
+        print("ACTUAL RESULT 1: The radio enable values are retrieved successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Disable the radio enable if not already in disabled state
         radio_disabled = [0, 0];
-        print "\nTEST STEP 2 : Disable the radios if not already in disabled state";
-        print "EXPECTED RESULT 2 : The Radios should be disabled successfully";
+        print("\nTEST STEP 2 : Disable the radios if not already in disabled state");
+        print("EXPECTED RESULT 2 : The Radios should be disabled successfully");
 
         for index in range(0,2):
             if radio_enable_initial[index] != "false":
                 status, tdkTestObj = setParameter(wifiobj, paramList[index], "false", "boolean");
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s disabled successfully" %paramList[index];
+                    print("%s disabled successfully" %paramList[index]);
                 else:
                     radio_disabled[index] = 1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s NOT disabled successfully" %paramList[index];
+                    print("%s NOT disabled successfully" %paramList[index]);
             else:
-                print "%s is already in disabled state...SET not required" %paramList[index];
+                print("%s is already in disabled state...SET not required" %paramList[index]);
 
         if radio_disabled[0] == 0 and radio_disabled[1] == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: The radios are disabled successfully";
+            print("ACTUAL RESULT 2: The radios are disabled successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if SelfHeal.txt.0 is present under /rdklogs/logs
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -184,27 +184,27 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "\nTEST STEP 3: Check for SelfHeal.txt.0 file presence";
-            print "EXPECTED RESULT 3: SelfHeal.txt.0 should be present";
+            print("\nTEST STEP 3: Check for SelfHeal.txt.0 file presence");
+            print("EXPECTED RESULT 3: SelfHeal.txt.0 should be present");
 
             if details == "File exist" :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3 : SelfHeal.txt.0  is present";
+                print("ACTUAL RESULT 3 : SelfHeal.txt.0  is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the log "Radio's disabled, Skipping ACSD check" is present in SelfHeal.txt.0 logs
                 #As the task health monitor script runs once in every 15mins, check for the logs with a gap of 60s for a 15mins duration
                 string_found = 0;
-                print "\nTEST STEP 4 : Check if the log \"Radio's disabled, Skipping ACSD check\" is found in SelfHeal.txt.0";
-                print "EXPECTED RESULT 4 : The log \"Radio's disabled, Skipping ACSD check\" should be found in SelfHeal.txt.0"
+                print("\nTEST STEP 4 : Check if the log \"Radio's disabled, Skipping ACSD check\" is found in SelfHeal.txt.0");
+                print("EXPECTED RESULT 4 : The log \"Radio's disabled, Skipping ACSD check\" should be found in SelfHeal.txt.0")
 
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 cmd = "cat /rdklogs/logs/SelfHeal.txt.0 | grep -i \"Radio's disabled, Skipping ACSD check\"";
                 tdkTestObj.addParameter("command",cmd);
 
                 for iteration in range(1, 16):
-                    print "Iteration %d..." %iteration;
+                    print("Iteration %d..." %iteration);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -218,67 +218,67 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatu
 
                 if string_found == 1:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4 : Log Details : %s" %details;
+                    print("ACTUAL RESULT 4 : Log Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4 : Required log not found";
+                    print("ACTUAL RESULT 4 : Required log not found");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3 : SelfHeal.txt.0  is NOT present";
+                print("ACTUAL RESULT 3 : SelfHeal.txt.0  is NOT present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: The radios are NOT disabled successfully";
+            print("ACTUAL RESULT 2: The radios are NOT disabled successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Revert operation
         radio_revert = [0, 0];
-        print "\nTEST STEP 5 : Revert the radio enable statuses if required";
-        print "EXPECTED RESULT 5 : Radio enable statuses should be reverted if required";
+        print("\nTEST STEP 5 : Revert the radio enable statuses if required");
+        print("EXPECTED RESULT 5 : Radio enable statuses should be reverted if required");
 
         for index in range(0,2):
             if radio_enable_initial[index] != "false":
                 status, tdkTestObj = setParameter(wifiobj, paramList[index], "true", "boolean");
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s reverted successfully" %paramList[index];
+                    print("%s reverted successfully" %paramList[index]);
                 else:
                     radio_revert[index] = 1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s NOT reverted successfully" %paramList[index];
+                    print("%s NOT reverted successfully" %paramList[index]);
             else:
-                print "%s revert not required" %paramList[index];
+                print("%s revert not required" %paramList[index]);
 
         if radio_revert[0] == 0 and radio_revert[1] == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 5: The radios are reverted successfully";
+            print("ACTUAL RESULT 5: The radios are reverted successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 5: The radios are NOT reverted successfully";
+            print("ACTUAL RESULT 5: The radios are NOT reverted successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: The radio enable values are NOT retrived successfully";
+        print("ACTUAL RESULT 1: The radio enable values are NOT retrived successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     wifiobj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     wifiobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from xfinityWiFiLib import *
 
 #Test component to be tested
@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_IsPublicWiFiSupported');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,23 +97,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and "true" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of xfinitywifiCapableCPE";
-        print "EXPECTED RESULT 1: Should get the value xfinitywifiCapableCPE"
+        print("TEST STEP 1: Get the value of xfinitywifiCapableCPE");
+        print("EXPECTED RESULT 1: Should get the value xfinitywifiCapableCPE")
         orgState = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1:  xfinitywifiCapableCPE value is : %s" %orgState;
+        print("ACTUAL RESULT 1:  xfinitywifiCapableCPE value is : %s" %orgState);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of xfinitywifiCapableCPE";
-        print "EXPECTED RESULT 1: Should get the value xfinitywifiCapableCPE"
-        print "ACTUAL RESULT 1:  xfinitywifiCapableCPE value is : %s" %details;
+        print("TEST STEP 1: Get the value of xfinitywifiCapableCPE");
+        print("EXPECTED RESULT 1: Should get the value xfinitywifiCapableCPE")
+        print("ACTUAL RESULT 1:  xfinitywifiCapableCPE value is : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

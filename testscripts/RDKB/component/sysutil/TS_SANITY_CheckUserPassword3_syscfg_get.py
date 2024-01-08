@@ -111,58 +111,57 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     default_password = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "Invoking function to get user_password_3 via syscfg get"
+    print("Invoking function to get user_password_3 via syscfg get")
     cmd= "syscfg get user_password_3";
     tdkTestObj,syscfg_password = getUserPassword(cmd);
     if expectedresult in actualresult and default_password == syscfg_password:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if user_password_3 via syscfg get returns default password";
-        print "EXPECTED RESULT 1: syscfg get should return default password";
-        print "ACTUAL RESULT 1: user_password_3 returned via syscfg get %s" %syscfg_password;
+        print("TEST STEP 1: Check if user_password_3 via syscfg get returns default password");
+        print("EXPECTED RESULT 1: syscfg get should return default password");
+        print("ACTUAL RESULT 1: user_password_3 returned via syscfg get %s" %syscfg_password);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         #Change the admin password
         password = "testPassword"
         tdkutility.changeAdminPassword(obj,password)
-        print "Invoking function to get user_password_3 via syscfg get"
+        print("Invoking function to get user_password_3 via syscfg get")
         cmd= "syscfg get user_password_3";
         tdkTestObj,password_details = getUserPassword(cmd);
         if expectedresult in actualresult and  password_details =="":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Check if  user_password_3 via syscfg returns empty string";
-             print "EXPECTED RESULT 3: user_password_3 via syscfg should return empty string ";
-             print "ACTUAL RESULT 3:user_password_3 via syscfg returned empty string";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS"
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Check if  user_password_3 via syscfg returns empty string");
+            print("EXPECTED RESULT 3: user_password_3 via syscfg should return empty string ");
+            print("ACTUAL RESULT 3:user_password_3 via syscfg returned empty string");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Check if  user_password_3 via syscfg returns empty string";
-             print "EXPECTED RESULT 3: user_password_3 via syscfg should return empty string ";
-             print "ACTUAL RESULT 3:user_password_3 via syscfg does not return empty string";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS"
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Check if  user_password_3 via syscfg returns empty string");
+            print("EXPECTED RESULT 3: user_password_3 via syscfg should return empty string ");
+            print("ACTUAL RESULT 3:user_password_3 via syscfg does not return empty string");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         #Revert the password to default password
         password = "password"
         tdkutility.changeAdminPassword(obj,password)
     elif syscfg_password == "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if  user_password_3 via syscfg returns empty string";
-        print "EXPECTED RESULT 1: Default password got changed and user_password_3 via syscfg should return empty string ";
-        print "ACTUAL RESULT 1:Default password got changed and user_password_3 via syscfg returned empty string";
+        print("TEST STEP 1: Check if  user_password_3 via syscfg returns empty string");
+        print("EXPECTED RESULT 1: Default password got changed and user_password_3 via syscfg should return empty string ");
+        print("ACTUAL RESULT 1:Default password got changed and user_password_3 via syscfg returned empty string");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
-         tdkTestObj.setResultStatus("FAILURE");
-         print "TEST STEP 1: Check if  user_password_3 via syscfg returns empty string or default password";
-         print "EXPECTED RESULT 1: user_password_3 via syscfg should return default password or empty string";
-         print "ACTUAL RESULT 1:user_password_3 returned via syscfg get :%s" %syscfg_password;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : FAILURE"
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Check if  user_password_3 via syscfg returns empty string or default password");
+        print("EXPECTED RESULT 1: user_password_3 via syscfg should return default password or empty string");
+        print("ACTUAL RESULT 1:user_password_3 returned via syscfg get :%s" %syscfg_password);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        sysobj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    sysobj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

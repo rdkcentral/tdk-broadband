@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -77,7 +77,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_AutoChannelSupported');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,23 +96,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and auto == "true":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the AutoChannelSupported status"
-        print "EXPECTED RESULT 1: Should get the AutoChannelSupported status as true"
-        print "ACTUAL RESULT 1: Status is %s " %details
+        print("TEST STEP 1: Get the AutoChannelSupported status")
+        print("EXPECTED RESULT 1: Should get the AutoChannelSupported status as true")
+        print("ACTUAL RESULT 1: Status is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the AutoChannelSupported status"
-        print "EXPECTED RESULT 1: Should get the AutoChannelSupported status as true"
-        print "ACTUAL RESULT 1: Status is %s " %details
+        print("TEST STEP 1: Get the AutoChannelSupported status")
+        print("EXPECTED RESULT 1: Should get the AutoChannelSupported status as true")
+        print("ACTUAL RESULT 1: Status is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");

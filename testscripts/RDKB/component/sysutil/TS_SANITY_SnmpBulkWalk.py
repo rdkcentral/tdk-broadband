@@ -111,19 +111,19 @@ def SnmpQuery (Oid,ipaddress,communityString):
     if "" in actResponse :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : snmpwalk request to get all the values";
-        print "EXPECTED RESULT : Command should return all values";
-        print "ACTUAL RESULT : snmpwalk was successfull";
+        print("TEST STEP : snmpwalk request to get all the values");
+        print("EXPECTED RESULT : Command should return all values");
+        print("ACTUAL RESULT : snmpwalk was successfull");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : snmpwalk request to get all the values";
-        print "EXPECTED RESULT : Command should return all values";
-        print "ACTUAL RESULT : snmpwalk failed";
+        print("TEST STEP : snmpwalk request to get all the values");
+        print("EXPECTED RESULT : Command should return all values");
+        print("ACTUAL RESULT : snmpwalk failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return actResponse;
 
 if "SUCCESS" in loadmodulestatus.upper() :
@@ -139,29 +139,29 @@ if "SUCCESS" in loadmodulestatus.upper() :
     length = len(oidlist);
     tdkTestObj.executeTestCase("SUCCESS");
     for i in range(length):
-        print "Doing a snmpwalk on :",oidlist[i];
+        print("Doing a snmpwalk on :",oidlist[i]);
         actResponse = SnmpQuery(oidlist[i],ipaddress,communityString);
         checklist = ["No Such Object available", "No Such Instance", "Timeout"];
 
-        print "Checking if No Such Object available, No Such Instance, Timeout are found on the snmpwalk";
+        print("Checking if No Such Object available, No Such Instance, Timeout are found on the snmpwalk");
 
         for list in checklist :
             result = actResponse.find(list);
             if result != -1:
-               flag =0
-               break;
+                flag =0
+                break;
             else:
                 flag =1;
         if flag == 1:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "The snmpwalk on the OID was Sucess no such instance of message was seen";
-           print "[TEST EXECUTION RESULT]:SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("The snmpwalk on the OID was Sucess no such instance of message was seen");
+            print("[TEST EXECUTION RESULT]:SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "The snmpwalk failed because :",list;
-            print "[TEST EXECUTION RESULT]:FAILURE";
+            print("The snmpwalk failed because :",list);
+            print("[TEST EXECUTION RESULT]:FAILURE");
 
     obj.unloadModule("sysutil");
 else:
-    print "FAILURE to load SNMP_PA module";
+    print("FAILURE to load SNMP_PA module");
     obj.setLoadModuleStatus("FAILURE");

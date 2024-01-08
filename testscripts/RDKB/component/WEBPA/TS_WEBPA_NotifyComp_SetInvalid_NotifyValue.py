@@ -67,7 +67,7 @@ parseWebpaResponse</input_parameters>
     <automation_approch>1. Load sysutil module
 2. Configure WEBPA server to set-attributes request with notify value other than 0 and 1 for Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client
 3. Parse the WEBPA response and get the response
-4.Check if it returns Invalid attributes" error message for notify value other than 0 and 1 
+4.Check if it returns Invalid attributes" error message for notify value other than 0 and 1
 5. Unload sysutil module</automation_approch>
     <except_output>set-attributes request with notify value  other than 0 and 1 should return "Invalid attributes" error message</except_output>
     <priority>High</priority>
@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_NotifyComp_SetInvalid_NotifyValue');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -103,27 +103,25 @@ if "SUCCESS" in result.upper() :
 
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
-         #set the attribute as 0
-         print "TEST STEP 1: Set the notify value as 2344"
-         queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 2344}}
-         queryResponse = webpaQuery(obj, queryParam, "set")
-         parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
-         tdkTestObj.executeTestCase("SUCCESS");
-         if "FAILURE" in parsedResponse[0] and "Invalid attributes" in queryResponse:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 1[TEST EXECUTION RESULT] : SUCCESS"
-         else:
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 1[TEST EXECUTION RESULT] : FAILURE"
+        #set the attribute as 0
+        print("TEST STEP 1: Set the notify value as 2344")
+        queryParam = {"name":"Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client","attributes": { "notify": 2344}}
+        queryResponse = webpaQuery(obj, queryParam, "set")
+        parsedResponse = parseWebpaResponse(queryResponse, 1, "setattribute")
+        tdkTestObj.executeTestCase("SUCCESS");
+        if "FAILURE" in parsedResponse[0] and "Invalid attributes" in queryResponse:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
-
-
+    print("Module loading FAILURE");

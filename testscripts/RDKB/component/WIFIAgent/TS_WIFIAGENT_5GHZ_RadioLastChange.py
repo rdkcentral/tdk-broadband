@@ -70,8 +70,8 @@ Device.WiFi.Radio.2.LastChange</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_RadioLastChange');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -102,12 +102,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the state of SSID2";
-        print "EXPECTED RESULT 1: Should get the state of SSID2"
+        print("TEST STEP 1: Get the state of SSID2");
+        print("EXPECTED RESULT 1: Should get the state of SSID2")
         orgState = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: State is %s %s" %(details,orgState);
+        print("ACTUAL RESULT 1: State is %s %s" %(details,orgState));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get and save the LastChange value
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -119,18 +119,18 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: get LastChange value"
-            print "EXPECTED RESULT 1: Should get LastChange value"
-	    lastChange = int(details.split("VALUE:")[1].split(' ')[0]);
-            print "ACTUAL RESULT 1: value is %s " %details;
+            print("TEST STEP 1: get LastChange value")
+            print("EXPECTED RESULT 1: Should get LastChange value")
+            lastChange = int(details.split("VALUE:")[1].split(' ')[0]);
+            print("ACTUAL RESULT 1: value is %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";  
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#toggle Device.WiFi.Radio.2.Enable value
-	    if orgState == "false":
-		toggle = "true"
-	    else:
-		toggle = "false"
+        #toggle Device.WiFi.Radio.2.Enable value
+            if orgState == "false":
+                toggle = "true"
+            else:
+                toggle = "false"
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Enable")
             tdkTestObj.addParameter("paramValue",toggle)
@@ -141,13 +141,13 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Toggle SSID2 state";
-                print "EXPECTED RESULT 1: SSID2 staus should be toggled";
-                print "ACTUAL RESULT 1: %s" %details;
+                print("TEST STEP 1: Toggle SSID2 state");
+                print("EXPECTED RESULT 1: SSID2 staus should be toggled");
+                print("ACTUAL RESULT 1: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		#check lastchange value after toggling
+                #check lastchange value after toggling
                 tdkTestObj = obj.createTestStep('WIFIAgent_Get');
                 tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.LastChange")
                 tdkTestObj.executeTestCase(expectedresult);
@@ -157,20 +157,20 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult and lastChange2 < lastChange:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Check lastchange value"
-                    print "EXPECTED RESULT 1: lastchange should be less than its previous value"
-                    print "ACTUAL RESULT 1: %s" %details;
+                    print("TEST STEP 1: Check lastchange value")
+                    print("EXPECTED RESULT 1: lastchange should be less than its previous value")
+                    print("ACTUAL RESULT 1: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Check lastchange value"
-                    print "EXPECTED RESULT 1: lastchange should be less than its previous value"
-                    print "ACTUAL RESULT 1: %s" %details;
+                    print("TEST STEP 1: Check lastchange value")
+                    print("EXPECTED RESULT 1: lastchange should be less than its previous value")
+                    print("ACTUAL RESULT 1: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-		#Change the Radio.2 state to its previous value
+                #Change the Radio.2 state to its previous value
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.WiFi.Radio.2.Enable")
                 tdkTestObj.addParameter("paramValue",orgState)
@@ -182,44 +182,44 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Restore Enable state of SSID2";
-                    print "EXPECTED RESULT 1: Should Restore Enable state of SSID2";
-                    print "ACTUAL RESULT 1: State is %s " %details;
+                    print("TEST STEP 1: Restore Enable state of SSID2");
+                    print("EXPECTED RESULT 1: Should Restore Enable state of SSID2");
+                    print("ACTUAL RESULT 1: State is %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                      #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Restore Enable state of SSID2";
-                    print "EXPECTED RESULT 1: Should Restore Enable state of SSID2";
-                    print "ACTUAL RESULT 1: State is %s " %details;
+                    print("TEST STEP 1: Restore Enable state of SSID2");
+                    print("EXPECTED RESULT 1: Should Restore Enable state of SSID2");
+                    print("ACTUAL RESULT 1: State is %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Toggle SSID2 state";
-                print "EXPECTED RESULT 1: SSID2 staus should be toggled";
-                print "ACTUAL RESULT 1: %s" %details;
+                print("TEST STEP 1: Toggle SSID2 state");
+                print("EXPECTED RESULT 1: SSID2 staus should be toggled");
+                print("ACTUAL RESULT 1: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: get LastChange value"
-            print "EXPECTED RESULT 1: Should get LastChange value"
-            print "ACTUAL RESULT 1: value is %s " %details;
+            print("TEST STEP 1: get LastChange value")
+            print("EXPECTED RESULT 1: Should get LastChange value")
+            print("ACTUAL RESULT 1: value is %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the state of SSID2"
-        print "EXPECTED RESULT 1: Failure in getting the state of SSID2"
-        print "ACTUAL RESULT 1: State is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the state of SSID2")
+        print("EXPECTED RESULT 1: Failure in getting the state of SSID2")
+        print("ACTUAL RESULT 1: State is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

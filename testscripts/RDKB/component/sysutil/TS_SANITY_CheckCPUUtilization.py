@@ -110,85 +110,85 @@ if "SUCCESS" in loadmodulestatus.upper():
     cpupathdetails = cpupathdetails.replace("\\n", "");
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the cpu utilization file path ";
-        print "EXPECTED RESULT 1: Should get the cpu utilization file path";
-        print "ACTUAL RESULT 1: Obtained  cpu utilization file path as %s" %cpupathdetails ;
+        print("TEST STEP 1: Get the cpu utilization file path ");
+        print("EXPECTED RESULT 1: Should get the cpu utilization file path");
+        print("ACTUAL RESULT 1: Obtained  cpu utilization file path as %s" %cpupathdetails) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         cmd = "top -n 1 | awk 'NR >4 {print  $7,$8}' > %s" %cpupathdetails;
-    	expectedresult="SUCCESS";
-    	tdkTestObj.addParameter("command", cmd);
-	tdkTestObj.executeTestCase(expectedresult);
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("command", cmd);
+        tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         cpupercentagedetails = tdkTestObj.getResultDetails().strip();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the list of processes with their respective cpu percentage ";
-            print "EXPECTED RESULT 2: Should get the list of processes with their respective cpu percentage";
-            print "ACTUAL RESULT 2: Obtained all the processes and the cpu details of the processes ";
+            print("TEST STEP 2: Get the list of processes with their respective cpu percentage ");
+            print("EXPECTED RESULT 2: Should get the list of processes with their respective cpu percentage");
+            print("ACTUAL RESULT 2: Obtained all the processes and the cpu details of the processes ");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #command to convert the lines in file to a single list
-	    filepath = tdkTestObj.transferLogs( cpupathdetails, "false" );
+            filepath = tdkTestObj.transferLogs( cpupathdetails, "false" );
             filelist = open(filepath,'r');
-	    List = filelist.read().replace('%',' ').split()
-    	    cpuList = List[0::2];
-	    print "cpu percentage list = %s" %cpuList;
-    	    processList = List[1::2];
-    	    Threshold = 30;
-	    checkFlag = 1;
-    	    for i in xrange(len(cpuList)):
+            List = filelist.read().replace('%',' ').split()
+            cpuList = List[0::2];
+            print("cpu percentage list = %s" %cpuList);
+            processList = List[1::2];
+            Threshold = 30;
+            checkFlag = 1;
+            for i in range(len(cpuList)):
                 if int(cpuList[i]) > Threshold :
-	            #Set the result status of execution
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-            	    print "TEST STEP 3: Check if cpu percentage is less then threshold"
-            	    print "EXPECTED RESULT 3: cpu percentage should be less then threshold";
-            	    print "ACTUAL RESULT 3: cpu percentage of the %s process is not less then threshold " %processList[i];
-            	    #Get the result of execution
-            	    print "[TEST EXECUTION RESULT] : FAILURE";
-		    checkFlag = 0;
+                    print("TEST STEP 3: Check if cpu percentage is less then threshold")
+                    print("EXPECTED RESULT 3: cpu percentage should be less then threshold");
+                    print("ACTUAL RESULT 3: cpu percentage of the %s process is not less then threshold " %processList[i]);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    checkFlag = 0;
 
-	    if checkFlag == 1 :
+            if checkFlag == 1 :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if cpu percentage is less then threshold"
-                print "EXPECTED RESULT 3: cpu percentage should be less then threshold";
-                print "ACTUAL RESULT 3: cpu percentage of all the processes is less then threshold ";
+                print("TEST STEP 3: Check if cpu percentage is less then threshold")
+                print("EXPECTED RESULT 3: cpu percentage should be less then threshold");
+                print("ACTUAL RESULT 3: cpu percentage of all the processes is less then threshold ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-    	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Get the list of processes with their respective cpu percentage ";
-	    print "EXPECTED RESULT 2: Should get the list of processes with their respective cpu percentage";
-	    print "ACTUAL RESULT 2:  Failed to obtained all the processes and the cpu details of the processes";
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the list of processes with their respective cpu percentage ");
+            print("EXPECTED RESULT 2: Should get the list of processes with their respective cpu percentage");
+            print("ACTUAL RESULT 2:  Failed to obtained all the processes and the cpu details of the processes");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the cpu utilization file path";
-        print "EXPECTED RESULT 1: Should get the  cpu utilization file path";
-        print "ACTUAL RESULT 1: failed to obtained the cpu utilization file path";
+        print("TEST STEP 1: Get the cpu utilization file path");
+        print("EXPECTED RESULT 1: Should get the  cpu utilization file path");
+        print("ACTUAL RESULT 1: failed to obtained the cpu utilization file path");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     tdkTestObj.addParameter("command", "rm %s" %cpupathdetails );
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip();
     if expectedresult in actualresult:
-    	tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 4: remove the file used for writing the command output ";
-        print "EXPECTED RESULT 4: Should remove the file used for writing the command output";
-        print "ACTUAL RESULT 4: removed the file sucessfully ";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 4: remove the file used for writing the command output ");
+        print("EXPECTED RESULT 4: Should remove the file used for writing the command output");
+        print("ACTUAL RESULT 4: removed the file sucessfully ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else :
-        print "TEST STEP 4: remove the file used for writing the command output ";
-        print "EXPECTED RESULT 4: Should remove the file used for writing the command output";
-        print "ACTUAL RESULT 4: failed to remove the file ";
-	#Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 4: remove the file used for writing the command output ");
+        print("EXPECTED RESULT 4: Should remove the file used for writing the command output");
+        print("ACTUAL RESULT 4: failed to remove the file ");
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

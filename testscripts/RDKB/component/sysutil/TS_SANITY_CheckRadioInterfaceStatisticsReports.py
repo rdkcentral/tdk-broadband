@@ -25,7 +25,7 @@
   <primitive_test_name>ExecuteCmd</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Check for the presence of RadoInterfaceStatistics report logs,  "event:raw.kestrel.reports.RadioInterfacesStatistics" in 	PARODUSlog.txt.0 when Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is in enabled state and "Sent message successfully to parodus" is populated under Harvesterlog.txt.0.</synopsis>
+  <synopsis>Check for the presence of RadoInterfaceStatistics report logs,  "event:raw.kestrel.reports.RadioInterfacesStatistics" in    PARODUSlog.txt.0 when Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is in enabled state and "Sent message successfully to parodus" is populated under Harvesterlog.txt.0.</synopsis>
   <groups_id/>
   <execution_time>20</execution_time>
   <long_duration>false</long_duration>
@@ -82,22 +82,22 @@ def set_Enable(pamobj, value, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -118,8 +118,8 @@ pamobj.configureTestCase(ip,port,'TS_SANITY_CheckRadioInterfaceStatisticsReports
 #Get the result of connection with test component and DUT
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
 pamloadmodulestatus=pamobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus)
 
 if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #Set the result status of execution
@@ -145,14 +145,14 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
     details1 = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     step = 1;
-    print "\nTEST STEP %d: Check for Harvesterlog.txt.0 and PARODUSlog.txt.0 file presence" %step;
-    print "EXPECTED RESULT %d: Files should be present" %step;
+    print("\nTEST STEP %d: Check for Harvesterlog.txt.0 and PARODUSlog.txt.0 file presence" %step);
+    print("EXPECTED RESULT %d: Files should be present" %step);
 
     if details == "File exist" and details1 == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d :  Harvesterlog.txt.0 and PARODUSlog.txt.0 file are present" %step;
+        print("ACTUAL RESULT %d :  Harvesterlog.txt.0 and PARODUSlog.txt.0 file are present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the enable status of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled
         step = step + 1;
@@ -163,16 +163,16 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d : Get the value of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled" %step;
+        print("\nTEST STEP %d : Get the value of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled" %step);
 
         if expectedresult in actualresult and details != "":
             enable = details.strip().replace("\\n", "");
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : Enable Status of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is : %s" %(step, enable);
+            print("ACTUAL RESULT %d : Enable Status of Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is : %s" %(step, enable));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #If initially disabled, then enable it
             revert_flag = 0;
@@ -184,14 +184,14 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
                 if status == 0 :
                     revert_flag = 1;
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "RadioInterfaceStatistics is now enabled";
+                    print("RadioInterfaceStatistics is now enabled");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "RadioInterfaceStatistics is not enabled";
+                    print("RadioInterfaceStatistics is not enabled");
             else:
                 status = 0;
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "RadioInterfaceStatistics is enabled";
+                print("RadioInterfaceStatistics is enabled");
 
             if status == 0:
                 #Check for the required log "Sent message successfully to parodus"
@@ -201,13 +201,13 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
                 tdkTestObj.addParameter("command",cmd);
                 str_1 = "Sent message successfully to parodus";
 
-                print "\nTEST STEP %d: Check for the presence of the string %s" %(step, str_1);
-                print "EXPECTED RESULT %d: %s string should be present" %(step, str_1);
+                print("\nTEST STEP %d: Check for the presence of the string %s" %(step, str_1));
+                print("EXPECTED RESULT %d: %s string should be present" %(step, str_1));
                 stringfound = 0;
 
                 #Giving 16 iterations of 60s as the logging 15 minutes
                 for iteration in range(1,17):
-                    print "Checking for the log in Harvesterlog.txt.0....\nIteration : %d" %iteration;
+                    print("Checking for the log in Harvesterlog.txt.0....\nIteration : %d" %iteration);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -221,9 +221,9 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
 
                 if stringfound == 1:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: %s string is found; Details : %s" %(step,str_1,details);
+                    print("ACTUAL RESULT %d: %s string is found; Details : %s" %(step,str_1,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the required log "event:raw.kestrel.reports.RadioInterfacesStatistics" is also logged in the same interval in PARODUSlog.txt.0
                     step = step + 1;
@@ -235,24 +235,24 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                    print "\nTEST STEP %d: Check for the presence of the string %s" %(step, str_2);
-                    print "EXPECTED RESULT %d: %s string should be present" %(step, str_2);
+                    print("\nTEST STEP %d: Check for the presence of the string %s" %(step, str_2));
+                    print("EXPECTED RESULT %d: %s string should be present" %(step, str_2));
 
                     if expectedresult in actualresult and str_2 in details:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: %s string is found; Details : %s" %(step,str_2,details);
+                        print("ACTUAL RESULT %d: %s string is found; Details : %s" %(step,str_2,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: %s string is not found; Details : %s" %(step,str_2,details);
+                        print("ACTUAL RESULT %d: %s string is not found; Details : %s" %(step,str_2,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: %s string is not found; Details : %s" %(step,str_1,details);
+                    print("ACTUAL RESULT %d: %s string is not found; Details : %s" %(step,str_1,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert operation
                 if revert_flag == 1:
@@ -262,31 +262,31 @@ if "SUCCESS" in sysutilloadmodulestatus.upper() and "SUCCESS" in pamloadmodulest
 
                     if status == 0 :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "RadioInterfaceStatistics parameter reverted";
+                        print("RadioInterfaceStatistics parameter reverted");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "RadioInterfaceStatistics parameter not reverted";
+                        print("RadioInterfaceStatistics parameter not reverted");
                 else:
-                    print "Revert operation not required";
+                    print("Revert operation not required");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Need not check for RadioInterfacesStatistics logs as the parameter itself could not be enabled";
+                print("Need not check for RadioInterfacesStatistics logs as the parameter itself could not be enabled");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : Parameter value not retrieved; Details : %s" %(step, details);
+            print("ACTUAL RESULT %d : Parameter value not retrieved; Details : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Harvesterlog.txt.0 : %s, PARODUSlog.txt.0 : %s" %(step, details, details1);
+        print("ACTUAL RESULT %d: Harvesterlog.txt.0 : %s, PARODUSlog.txt.0 : %s" %(step, details, details1));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysObj.setLoadModuleStatus("FAILURE");
     pamobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -106,40 +106,40 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the WifiClient SchemaID";
-        print "EXPECTED RESULT 1: Should get WifiClient SchemaID";
-        print "ACTUAL RESULT 1: WifiClient current SchemaID:%s" %details;
+        print("TEST STEP 1: Get the WifiClient SchemaID");
+        print("EXPECTED RESULT 1: Should get WifiClient SchemaID");
+        print("ACTUAL RESULT 1: WifiClient current SchemaID:%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         SchemaID = details.split("/")[1].strip();
 
         if len(SchemaID) == 32 :
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Check if SchemaID is of length 32";
-           print "EXPECTED RESULT 2: SchemaID is expected have a 32 length of character";
-           print "ACTUAL RESULT 2: Length of Schema ID is: ",len(SchemaID);
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if SchemaID is of length 32");
+            print("EXPECTED RESULT 2: SchemaID is expected have a 32 length of character");
+            print("ACTUAL RESULT 2: Length of Schema ID is: ",len(SchemaID));
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if SchemaID is of length 32";
-            print "EXPECTED RESULT 2: SchemaID is expected have a 32 length of character";
-            print "ACTUAL RESULT 2: Length of Schema ID is: ",len(SchemaID);
+            print("TEST STEP 2: Check if SchemaID is of length 32");
+            print("EXPECTED RESULT 2: SchemaID is expected have a 32 length of character");
+            print("ACTUAL RESULT 2: Length of Schema ID is: ",len(SchemaID));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the WifiClient SchemaID";
-        print "EXPECTED RESULT 1: Should get WifiClient SchemaID";
-        print "ACTUAL RESULT 1: WifiClient current SchemaID:%s" %details;
+        print("TEST STEP 1: Get the WifiClient SchemaID");
+        print("EXPECTED RESULT 1: Should get WifiClient SchemaID");
+        print("ACTUAL RESULT 1: WifiClient current SchemaID:%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

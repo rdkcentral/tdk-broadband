@@ -114,42 +114,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check for wifihealth log file presence";
-        print "EXPECTED RESULT 1:wifihealth log file should be present";
-        print "ACTUAL RESULT 1:wifihealth log file is present";
+        print("TEST STEP 1: Check for wifihealth log file presence");
+        print("EXPECTED RESULT 1:wifihealth log file should be present");
+        print("ACTUAL RESULT 1:wifihealth log file is present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         markerfound = 0;
         for i in range(1,15):
             if markerfound == 1:
                 break;
             else:
-	        #Query for the Telemetry Marker
-	        query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_MAC_2:\""
-	        print "query:%s" %query
-		tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-		tdkTestObj.addParameter("command", query)
-		expectedresult="SUCCESS";
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        	print "Marker Detail Found fromLog file is: %s "%details;
+                #Query for the Telemetry Marker
+                query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_MAC_2:\""
+                print("query:%s" %query)
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                tdkTestObj.addParameter("command", query)
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                print("Marker Detail Found fromLog file is: %s "%details);
 
- 	        if (len(details) == 0) or details.endswith(":") or "WIFI_MAC_2" not in details:
-		    markerfound = 0;
+                if (len(details) == 0) or details.endswith(":") or "WIFI_MAC_2" not in details:
+                    markerfound = 0;
                     sleep(60);
-		else:
-            	    telemetryMacaddress = details.split("WIFI_MAC_2:")[1].split(',')[0];
-	            markerfound = 1;
+                else:
+                    telemetryMacaddress = details.split("WIFI_MAC_2:")[1].split(',')[0];
+                    markerfound = 1;
 
-	if expectedresult in actualresult and markerfound == 1:
+        if expectedresult in actualresult and markerfound == 1:
             tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: WIFI_MAC_2 Marker should be present";
-	    print "EXPECTED RESULT 2: WIFI_MAC_2 Marker should be present";
-	    print "ACTUAL RESULT 2:WIFI_MAC_2 Marker is %s" %telemetryMacaddress
-	    #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: WIFI_MAC_2 Marker should be present");
+            print("EXPECTED RESULT 2: WIFI_MAC_2 Marker should be present");
+            print("ACTUAL RESULT 2:WIFI_MAC_2 Marker is %s" %telemetryMacaddress)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('LMLiteStub_Get');
             tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries");
             expectedresult="SUCCESS";
@@ -162,115 +162,115 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
             if expectedresult in actualresult and int(NoOfHosts)>0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the number of hosts";
-                print "EXPECTED RESULT 3: Should get the number of hosts";
-                print "ACTUAL RESULT31: Number of hosts :%s" %NoOfHosts;
+                print("TEST STEP 3: Get the number of hosts");
+                print("EXPECTED RESULT 3: Should get the number of hosts");
+                print("ACTUAL RESULT31: Number of hosts :%s" %NoOfHosts);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 #Find the active hosts amoung the listed Hosts. List will contains the ids of active hosts
                 List=[];
 
                 for i in range(1,int(NoOfHosts)+1):
                     if int(macaddressFound) == 1:
-			break;
-	            tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i);
-	            #Execute the test case in DUT
+                        break;
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i);
+                    #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
-	            Status = tdkTestObj.getResultDetails();
+                    Status = tdkTestObj.getResultDetails();
 
-	            if "true" in Status:
-	                List.extend(str(i));
-		        if expectedresult in actualresult:
-		            #Set the result status of execution
-		            tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 4: Get the active LAN clients";
-                            print "EXPECTED RESULT 4: Should get the active LAN clients";
-    	        	    print "ACTUAL RESULT 4: Active LAN clients are :",List;
-		            #Get the result of execution
-		            print "[TEST EXECUTION RESULT] : SUCCESS";
+                    if "true" in Status:
+                        List.extend(str(i));
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 4: Get the active LAN clients");
+                            print("EXPECTED RESULT 4: Should get the active LAN clients");
+                            print("ACTUAL RESULT 4: Active LAN clients are :",List);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             for i in range(0,len(List)):
-				if int(macaddressFound) == 1:
-				    break;
-			        n = int(List[i]);
-			        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.PhysAddress" %n);
-			        #Execute the test case in DUT
-			        tdkTestObj.executeTestCase(expectedresult);
-			        actualresult = tdkTestObj.getResult();
-			        hostMacAddress = tdkTestObj.getResultDetails();
-			        print "MAC address Found in host table: %s" %hostMacAddress;
+                                if int(macaddressFound) == 1:
+                                    break;
+                                n = int(List[i]);
+                                tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.PhysAddress" %n);
+                                #Execute the test case in DUT
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                hostMacAddress = tdkTestObj.getResultDetails();
+                                print("MAC address Found in host table: %s" %hostMacAddress);
 
-			        if expectedresult in actualresult:
-    			            #Set the result status of execution
-			            tdkTestObj.setResultStatus("SUCCESS");
-			            print "TEST STEP 5: Get the MAC address of the LAN Client	";
-			            print "EXPECTED RESULT 5: Get the MAC address of the device";
-			            print "ACTUAL RESULT 5: Get MAC address : Success";
-			            #Get the result of execution
-			            print "[TEST EXECUTION RESULT] : SUCCESS";
+                                if expectedresult in actualresult:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 5: Get the MAC address of the LAN Client   ");
+                                    print("EXPECTED RESULT 5: Get the MAC address of the device");
+                                    print("ACTUAL RESULT 5: Get MAC address : Success");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     if hostMacAddress.upper() == telemetryMacaddress.upper():
-				        print "MAC Address Matched successfully"
-				    	macaddressFound = 1;
-				    else:
-				        print "MAC Address Not Matched"
-			        else:
-			            #Set the result status of execution
-			            tdkTestObj.setResultStatus("FAILURE");
-			            print "TEST STEP 5: Get the MAC address of the LAN Client	";
-			            print "EXPECTED RESULT 5: Get the MAC address of the device";
-			            print "ACTUAL RESULT 5: Get MAC address : Failed"
-			            #Get the result of execution
-			            print "[TEST EXECUTION RESULT] : FAILURE";
-		        else:
-		            #Set the result status of execution
-		            tdkTestObj.setResultStatus("FAILURE");
-		            print "TEST STEP 4: Get the active LAN clients";
-	        	    print "EXPECTED RESULT 4: Should get the active cleints";
-		            print "ACTUAL RESULT 4: FAiled to get the active LAN clients";
-		            #Get the result of execution
-		            print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("MAC Address Matched successfully")
+                                        macaddressFound = 1;
+                                    else:
+                                        print("MAC Address Not Matched")
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 5: Get the MAC address of the LAN Client   ");
+                                    print("EXPECTED RESULT 5: Get the MAC address of the device");
+                                    print("ACTUAL RESULT 5: Get MAC address : Failed")
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Get the active LAN clients");
+                            print("EXPECTED RESULT 4: Should get the active cleints");
+                            print("ACTUAL RESULT 4: FAiled to get the active LAN clients");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the number of hosts";
-                print "EXPECTED RESULT 3: Should get the number of hosts";
-                print "ACTUAL RESULT31: Number of hosts :%s" %NoOfHosts;
+                print("TEST STEP 3: Get the number of hosts");
+                print("EXPECTED RESULT 3: Should get the number of hosts");
+                print("ACTUAL RESULT31: Number of hosts :%s" %NoOfHosts);
                 #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if macaddressFound == 1:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 6: Compare the Host table MAC address with Telemetry MAC address"
-                print "EXPECTED RESULT 6: Both MAC Addresses should match";
-                print "ACTUAL RESULT 6: Host table and Telemetry Marker MAC addresses are matching";
+                print("TEST STEP 6: Compare the Host table MAC address with Telemetry MAC address")
+                print("EXPECTED RESULT 6: Both MAC Addresses should match");
+                print("ACTUAL RESULT 6: Host table and Telemetry Marker MAC addresses are matching");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 6: Compare the MAC address with Telemetry MAC address";
-                print "EXPECTED RESULT 6: Both MAC Addresses should match";
-                print "ACTUAL RESULT 6: MAC Address Found in Telemetry Marker is not matching with Host Table MAC Address";
+                print("TEST STEP 6: Compare the MAC address with Telemetry MAC address");
+                print("EXPECTED RESULT 6: Both MAC Addresses should match");
+                print("ACTUAL RESULT 6: MAC Address Found in Telemetry Marker is not matching with Host Table MAC Address");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: WIFI_MAC_2 Marker should be present";
-	    print "EXPECTED RESULT 2: WIFI_MAC_2 Marker should be present";
-	    print "ACTUAL RESULT 2:WIFI_MAC_2 Marker is  Not Present";
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: WIFI_MAC_2 Marker should be present");
+            print("EXPECTED RESULT 2: WIFI_MAC_2 Marker should be present");
+            print("ACTUAL RESULT 2:WIFI_MAC_2 Marker is  Not Present");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check for wifihealth log file presence";
-        print "EXPECTED RESULT 1:wifihealth log file should be present";
-        print "ACTUAL RESULT 1:wifihealth log file is NOT present";
+        print("TEST STEP 1: Check for wifihealth log file presence");
+        print("EXPECTED RESULT 1:wifihealth log file should be present");
+        print("ACTUAL RESULT 1:wifihealth log file is NOT present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("lmlite")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load lmlite/sysutil module";
+    print("Failed to load lmlite/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

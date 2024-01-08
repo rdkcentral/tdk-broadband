@@ -98,7 +98,7 @@ def getValues(obj, paramList):
         if expectedresult in actualresult and details != "":
             val = details.split("VALUE:")[1].split(" ")[0].strip();
             Values.append(val);
-            print "\n%s : %s" %(param, val);
+            print("\n%s : %s" %(param, val));
 
             if val != "":
                 #Set the result status of execution
@@ -113,7 +113,7 @@ def getValues(obj, paramList):
             status = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "%s : %s" %(param, details);
+            print("%s : %s" %(param, details));
             break;
 
     return tdkTestObj, status, Values;
@@ -150,8 +150,8 @@ sysObj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckRadioInterfaceStatisticsRepo
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 sysutilloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatus.upper():
     #Set the result status of execution
@@ -169,14 +169,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check if Harvester process is running in the device" %step;
-    print "EXPECTED RESULT %d: Harvester process should be running in the device" %step;
+    print("\nTEST STEP %d: Check if Harvester process is running in the device" %step);
+    print("EXPECTED RESULT %d: Harvester process should be running in the device" %step);
 
     if expectedresult in actualresult and details.isdigit():
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: PID of Harvester : %s" %(step, details);
+        print("ACTUAL RESULT %d: PID of Harvester : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check whether the PARODUSlog.txt.0 file is present or not
         step = step + 1;
@@ -188,45 +188,45 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-        print "\nTEST STEP %d: Check for PARODUSlog.txt.0 log file presence under /rdklogs/logs" %step;
-        print "EXPECTED RESULT %d: PARODUSlog.txt.0 log file should be present under /rdklogs/logs" %step;
+        print("\nTEST STEP %d: Check for PARODUSlog.txt.0 log file presence under /rdklogs/logs" %step);
+        print("EXPECTED RESULT %d: PARODUSlog.txt.0 log file should be present under /rdklogs/logs" %step);
 
         if details == "File exist":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: PARODUSlog.txt.0 log file is present" %step;
+            print("ACTUAL RESULT %d: PARODUSlog.txt.0 log file is present" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the initial values of Polling Interval, Reporting Interval and Report Enable
             step = step + 1;
             paramList = ["Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod", "Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod", "Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled"];
-            print "\nTEST STEP %d : Get the initial Harvester Configuration for the RadioInterfaceStatistics Report" %step;
-            print "EXPECTED RESULT %d : The initial values should be retrieved successfully" %step;
+            print("\nTEST STEP %d : Get the initial Harvester Configuration for the RadioInterfaceStatistics Report" %step);
+            print("EXPECTED RESULT %d : The initial values should be retrieved successfully" %step);
 
             tdkTestObj, status, initial_values = getValues(obj, paramList);
 
             if status == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : The values retrieved are respectively : %s, %s, %s" %(step, initial_values[0], initial_values[1], initial_values[2]) ;
+                print("ACTUAL RESULT %d : The values retrieved are respectively : %s, %s, %s" %(step, initial_values[0], initial_values[1], initial_values[2])) ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nGet the number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in /rdklogs/logs/PARODUSlog.txt.0";
+                print("\nGet the number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in /rdklogs/logs/PARODUSlog.txt.0");
                 step = step + 1;
                 tdkTestObj1 = sysObj.createTestStep('ExecuteCmd');
                 log = "event:raw.kestrel.reports.RadioInterfacesStatistics";
                 file = "/rdklogs/logs/PARODUSlog.txt.0"
                 no_of_lines_initial = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                print "The initial number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in PARODUSlog.txt.0 is : %d" %no_of_lines_initial;
+                print("The initial number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in PARODUSlog.txt.0 is : %d" %no_of_lines_initial);
 
                 #Disable Report Enable before setting new values to Polling and Reporting Intervals
                 proceed_flag = 0;
                 report_disabled = 0;
                 if initial_values[2] != "false":
                     step = step + 1;
-                    print "\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before setting new Polling and Reporting Intervals" %(step);
-                    print "EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before setting new Polling and Reporting Intervals" %(step);
+                    print("\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before setting new Polling and Reporting Intervals" %(step));
+                    print("EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before setting new Polling and Reporting Intervals" %(step));
 
                     actualresult, details = setParameter(obj, paramList[2], "false", "boolean");
 
@@ -234,17 +234,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         proceed_flag = 1;
                         report_disabled = 1;
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports disabled; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports disabled; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     proceed_flag = 1;
-                    print "Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is already disabled";
+                    print("Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled is already disabled");
 
                 #Set to new Polling and Reporting Intervals
                 if proceed_flag == 1:
@@ -257,204 +257,204 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                         new_polling = 60;
 
                     step = step + 1;
-                    print "\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod to %d" %(step, new_polling);
-                    print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod should be set to %d successfully" %(step, new_polling);
+                    print("\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod to %d" %(step, new_polling));
+                    print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod should be set to %d successfully" %(step, new_polling));
 
                     actualresult, details = setParameter(obj, paramList[0], str(new_polling), "unsignedint");
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                        print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Set to new reporting interval if required
                         proceed_flag = 0;
                         if int(initial_values[1]) != new_reporting:
                             step = step + 1;
-                            print "\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod to %d" %(step, new_reporting);
-                            print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod should be set to %d successfully" %(step, new_reporting);
+                            print("\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod to %d" %(step, new_reporting));
+                            print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod should be set to %d successfully" %(step, new_reporting));
 
                             actualresult, details = setParameter(obj, paramList[1], str(new_reporting), "unsignedint");
 
                             if expectedresult in actualresult:
                                 proceed_flag = 1;
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Reporting Period: %s" %(step,details);
+                                print("ACTUAL RESULT %d: Reporting Period: %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Reporting Period: %s" %(step,details);
+                                print("ACTUAL RESULT %d: Reporting Period: %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             proceed_flag = 1;
-                            print "Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod already has the value %d" %new_reporting;
+                            print("Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod already has the value %d" %new_reporting);
 
                         #Start the Harvester Report generation
                         if proceed_flag == 1:
                             step = step + 1;
-                            print "\nTEST STEP %d: Enable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to start report generation" %(step);
-                            print "EXPECTED RESULT %d: Should enable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to start report generation" %(step);
+                            print("\nTEST STEP %d: Enable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to start report generation" %(step));
+                            print("EXPECTED RESULT %d: Should enable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to start report generation" %(step));
 
                             actualresult, details = setParameter(obj, paramList[2], "true", "boolean");
 
                             if expectedresult in actualresult and details != "":
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports enabled; Details : %s" %(step,details);
+                                print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports enabled; Details : %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Sleep for twice the reporting period duration
                                 sleep_time = 2 * new_reporting;
-                                print "Sleeping for twice the reporting period duration : %ds"%sleep_time;
+                                print("Sleeping for twice the reporting period duration : %ds"%sleep_time);
                                 sleep(sleep_time);
 
-                                print "\nGet the final number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in /rdklogs/logs/PARODUSlog.txt.0";
+                                print("\nGet the final number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in /rdklogs/logs/PARODUSlog.txt.0");
                                 step = step + 1;
                                 no_of_lines_final = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                                print "The final number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in PARODUSlog.txt.0 is : %d" %no_of_lines_final;
+                                print("The final number of log lines \"event:raw.kestrel.reports.RadioInterfacesStatistics\" in PARODUSlog.txt.0 is : %d" %no_of_lines_final);
 
                                 #Check if the difference between the final and initial number of reports should be >= 1
                                 step = step + 1;
                                 difference = no_of_lines_final - no_of_lines_initial;
-                                print "\nRadioInterfaceStatistics reports should be generated according to the reporting and polling interval configuration";
-                                print "TEST STEP %d: Number of RadioInterfaceStatistics reports generated should be >= 1" %step;
-                                print "EXPECTED RESULT %d: The number of RadioInterfaceStatistics reports generated should be >= 1" %step;
+                                print("\nRadioInterfaceStatistics reports should be generated according to the reporting and polling interval configuration");
+                                print("TEST STEP %d: Number of RadioInterfaceStatistics reports generated should be >= 1" %step);
+                                print("EXPECTED RESULT %d: The number of RadioInterfaceStatistics reports generated should be >= 1" %step);
 
                                 if difference >= 1:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Number of RadioInterfaceStatistics reports generated : %d" %(step, difference);
+                                    print("ACTUAL RESULT %d: Number of RadioInterfaceStatistics reports generated : %d" %(step, difference));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Number of RadioInterfaceStatistics reports generated : %d" %(step, difference);
+                                    print("ACTUAL RESULT %d: Number of RadioInterfaceStatistics reports generated : %d" %(step, difference));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details);
+                                print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert operation
                             #Before reverting the intervals set, disable the report generation
                             report_disabled = 0;
                             step = step + 1;
-                            print "\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before reverting Intervals set" %(step);
-                            print "EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before reverting Intervals set" %(step);
+                            print("\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before reverting Intervals set" %(step));
+                            print("EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled before reverting Intervals set" %(step));
 
                             actualresult, details = setParameter(obj, paramList[2], "false", "boolean");
 
                             if expectedresult in actualresult and details != "":
                                 report_disabled = 1;
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports disabled; Details : %s" %(step,details);
+                                print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports disabled; Details : %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Revert reporting period to initial value if required
                                 if int(initial_values[0]) != new_polling:
                                     step = step + 1;
-                                    print "\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod to %s" %(step, initial_values[1]);
-                                    print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod should be reverted to %s successfully" %(step, initial_values[1]);
+                                    print("\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod to %s" %(step, initial_values[1]));
+                                    print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.ReportingPeriod should be reverted to %s successfully" %(step, initial_values[1]));
 
                                     actualresult, details = setParameter(obj, paramList[1], initial_values[1], "unsignedint");
 
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d: Reporting Period: %s" %(step,details);
+                                        print("ACTUAL RESULT %d: Reporting Period: %s" %(step,details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d: Reporting Period: %s" %(step,details);
+                                        print("ACTUAL RESULT %d: Reporting Period: %s" %(step,details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
-                                    print "Reverting Reporting Period not required";
+                                    print("Reverting Reporting Period not required");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details);
+                                print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Unable to set the Reporting Period to new value, cannot proceed further...";
+                            print("Unable to set the Reporting Period to new value, cannot proceed further...");
 
                         #Revert polling period after ensuring that report is disabled
                         if report_disabled == 1:
                             step = step + 1;
-                            print "\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod to %s" %(step, initial_values[0]);
-                            print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod should be reverted to %s successfully" %(step, initial_values[0]);
+                            print("\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod to %s" %(step, initial_values[0]));
+                            print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.PollingPeriod should be reverted to %s successfully" %(step, initial_values[0]));
 
                             actualresult, details = setParameter(obj, paramList[0], initial_values[0], "unsignedint");
 
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                                print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                                print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Cannot revert polling period as reports are not disabled";
+                            print("Cannot revert polling period as reports are not disabled");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                        print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to disable RadioInterfaceStatistics Reports, cannot proceed further...";
+                    print("Unable to disable RadioInterfaceStatistics Reports, cannot proceed further...");
 
                 #Revert the reports enable if required
                 if initial_values[2] == "true":
                     step = step + 1;
-                    print "\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to true" %(step);
-                    print "EXPECTED RESULT %d: Should revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to true" %(step);
+                    print("\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to true" %(step));
+                    print("EXPECTED RESULT %d: Should revert Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.Enabled to true" %(step));
 
                     actualresult, details = setParameter(obj, paramList[2], "true", "boolean");
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports reverted; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports reverted; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details);
+                        print("ACTUAL RESULT %d: RadioInterfaceStatistics Reports; Details : %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Report Enable state need not be reverted";
+                    print("Report Enable state need not be reverted");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : The initial report configuration values are not retrieved successfully" %step;
+                print("ACTUAL RESULT %d : The initial report configuration values are not retrieved successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: PARODUSlog.txt.0 log file is NOT present" %step;
+            print("ACTUAL RESULT %d: PARODUSlog.txt.0 log file is NOT present" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Harvester not running in device" %(step);
+        print("ACTUAL RESULT %d: Harvester not running in device" %(step));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent")
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

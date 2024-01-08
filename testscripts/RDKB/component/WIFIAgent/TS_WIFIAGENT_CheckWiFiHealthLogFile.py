@@ -115,15 +115,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
-        print "Wait till box comes up - 10 Min"
+        print("Wait till box comes up - 10 Min")
         sleep(600);
         tdkTestObj = obj1.createTestStep('ExecuteCmd');
         cmd = "[ -f /rdklogs/logs/wifihealth.txt ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -132,31 +132,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if details == "File exist":
-                tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Check for wifihealth log file presence";
-                print "EXPECTED RESULT 2:wifihealth log file should be present";
-                print "ACTUAL RESULT 2:wifihealth log file is present";
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check for wifihealth log file presence");
+            print("EXPECTED RESULT 2:wifihealth log file should be present");
+            print("ACTUAL RESULT 2:wifihealth log file is present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Check for wifihealth log file presence";
-                print "EXPECTED RESULT 2:wifihealth log file should be present";
-                print "ACTUAL RESULT 2:wifihealth log file is not present";
-                #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for wifihealth log file presence");
+            print("EXPECTED RESULT 2:wifihealth log file should be present");
+            print("ACTUAL RESULT 2:wifihealth log file is not present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     obj1.unloadModule("sysutil");
 else:
-    print "FAILURE to load wifiagent module";
+    print("FAILURE to load wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

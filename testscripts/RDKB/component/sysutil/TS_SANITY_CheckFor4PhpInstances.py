@@ -73,40 +73,40 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_CheckFor4PhpInstances');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-   #Set the result status of execution
-   obj.setLoadModuleStatus("SUCCESS");
+    #Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
 
-   query="ps | grep -i \"php.ini\" | grep -v \"grep\" | wc -l";
-   print "query:%s" %query
-   tdkTestObj = obj.createTestStep('ExecuteCmd');
-   tdkTestObj.addParameter("command", query)
-   expectedresult="SUCCESS";
-   tdkTestObj.executeTestCase(expectedresult);
-   actualresult = tdkTestObj.getResult();
-   details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-   if expectedresult in actualresult and details =="":
-      tdkTestObj.setResultStatus("FAILURE");
-      print "TEST STEP 1 : Check if php.ini has 4 instances running";
-      print "EXPECTED RESULT 1 : 4 instances of php.ini should be running";
-      print "ACTUAL RESULT 1 :Search Result :%s "%details;
-      print "[TEST EXECUTION RESULT] : FAILURE";
-   else:
-       if int(details) == 4:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 1 : Check if php.ini has 4 instances running";
-          print "EXPECTED RESULT 1 : 4 instances of php.ini should be running";
-          print "ACTUAL RESULT 1 :Search Result :%s "%details;
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 1 : Check if php.ini has 4 instances running";
-           print "EXPECTED RESULT 1 : 4 instances of php.ini should be running";
-           print "ACTUAL RESULT 1 :Search Result :%s "%details;
-           print "[TEST EXECUTION RESULT] : FAILURE";
-   obj.unloadModule("sysutil");
+    query="ps | grep -i \"php.ini\" | grep -v \"grep\" | wc -l";
+    print("query:%s" %query)
+    tdkTestObj = obj.createTestStep('ExecuteCmd');
+    tdkTestObj.addParameter("command", query)
+    expectedresult="SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+    if expectedresult in actualresult and details =="":
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1 : Check if php.ini has 4 instances running");
+        print("EXPECTED RESULT 1 : 4 instances of php.ini should be running");
+        print("ACTUAL RESULT 1 :Search Result :%s "%details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    else:
+        if int(details) == 4:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1 : Check if php.ini has 4 instances running");
+            print("EXPECTED RESULT 1 : 4 instances of php.ini should be running");
+            print("ACTUAL RESULT 1 :Search Result :%s "%details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1 : Check if php.ini has 4 instances running");
+            print("EXPECTED RESULT 1 : 4 instances of php.ini should be running");
+            print("ACTUAL RESULT 1 :Search Result :%s "%details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

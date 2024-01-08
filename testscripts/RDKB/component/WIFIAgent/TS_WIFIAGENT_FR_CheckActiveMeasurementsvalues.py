@@ -112,23 +112,23 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.FactoryReset");
     tdkTestObj.addParameter("paramValue","Router,Wifi,VoIP,Dect,MoCA");
     tdkTestObj.addParameter("paramType","string");
-    print "TEST STEP 1: Initiate factory reset ";
-    print "EXPECTED RESULT 1: Should initiate factory reset";
+    print("TEST STEP 1: Initiate factory reset ");
+    print("EXPECTED RESULT 1: Should initiate factory reset");
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: %s" %details;
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         time.sleep(180);
 
-        print "TEST STEP 2: Get the ActiveMeasurement parameters value after factory reset";
-        print "EXPECTED RESULT 2: Should get the ActiveMeasurement parameters value after factory reset";
+        print("TEST STEP 2: Get the ActiveMeasurement parameters value after factory reset");
+        print("EXPECTED RESULT 2: Should get the ActiveMeasurement parameters value after factory reset");
         paramList=["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable", "Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.PacketSize", "Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.SampleDuration","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.NumberOfSamples"]
         tdkTestObj = obj1.createTestStep('TADstub_Get');
         tdkTestObj,status,orgValue = getMultipleParameterValues(obj1,paramList)
@@ -138,12 +138,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         ActiveMeasurementsNumberOfSamples = orgValue[3]
         if expectedresult in status and ActiveMeasurementsEnable != "" and ActiveMeasurementsPacketSize != "" and ActiveMeasurementsSampleDuration != "" and ActiveMeasurementsNumberOfSamples != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: ActiveMeasurements Enable status: %s, ActiveMeasurementsPacketSize : %s ,ActiveMeasurementsSampleDuration :  %s ,ActiveMeasurementsNumberOfSamples :%s" %(ActiveMeasurementsEnable,ActiveMeasurementsPacketSize,ActiveMeasurementsSampleDuration,ActiveMeasurementsNumberOfSamples);
+            print("ACTUAL RESULT 2: ActiveMeasurements Enable status: %s, ActiveMeasurementsPacketSize : %s ,ActiveMeasurementsSampleDuration :  %s ,ActiveMeasurementsNumberOfSamples :%s" %(ActiveMeasurementsEnable,ActiveMeasurementsPacketSize,ActiveMeasurementsSampleDuration,ActiveMeasurementsNumberOfSamples));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "TEST STEP 3: Get the expected ActiveMeasurementsValues from the properties file"
-            print "EXPECTED RESULT 3: Should be able to retrieve expected ActiveMeasurementsValues from the properties file"
+            print("TEST STEP 3: Get the expected ActiveMeasurementsValues from the properties file")
+            print("EXPECTED RESULT 3: Should be able to retrieve expected ActiveMeasurementsValues from the properties file")
             tdkTestObj = obj2.createTestStep('ExecuteCmd');
             ActiveMeasurementsValues= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_ActiveMeasurements_VALUES" %TDK_PATH;
             tdkTestObj.addParameter("command", ActiveMeasurementsValues);
@@ -152,9 +152,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             ActiveMeasurementsValuesList = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3:Active Measurements value from properties file:%s" %ActiveMeasurementsValuesList;
+                print("ACTUAL RESULT 3:Active Measurements value from properties file:%s" %ActiveMeasurementsValuesList);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 details=[]
                 def Convert(string):
                     li = list(string.split("],"))
@@ -168,41 +168,41 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             details.append(e.strip(']'))
                         else:
                             details.append(c[x].strip('['))
-                print "TEST RESULT 4: Check if the default ActiveMeasurements values are restored after factory reset";
-                print "EXPECTED RESULT 4: Should match the default ActiveMeasurements values after factory reset";
+                print("TEST RESULT 4: Check if the default ActiveMeasurements values are restored after factory reset");
+                print("EXPECTED RESULT 4: Should match the default ActiveMeasurements values after factory reset");
 
                 if orgValue == details:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4:Restored to default ActiveMeasurements values after factory reset";
+                    print("ACTUAL RESULT 4:Restored to default ActiveMeasurements values after factory reset");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4:Failed to restore to default ActiveMeasurements values after factory reset";
+                    print("ACTUAL RESULT 4:Failed to restore to default ActiveMeasurements values after factory reset");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3:Failed to get value from properties file ";
+                print("ACTUAL RESULT 3:Failed to get value from properties file ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2:Failed to get ActiveMeasurements values after factory reset";
+            print("ACTUAL RESULT 2:Failed to get ActiveMeasurements values after factory reset");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: %s" %details;
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
     obj1.unloadModule("tad");
     obj2.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

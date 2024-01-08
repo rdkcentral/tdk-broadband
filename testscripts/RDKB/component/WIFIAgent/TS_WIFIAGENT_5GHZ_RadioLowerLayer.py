@@ -64,8 +64,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
@@ -78,7 +78,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_5GHZ_RadioLowerLayer');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -96,23 +96,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult and "Not Applicable" in lower:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the LowerLayers value of Radio.2"
-        print "EXPECTED RESULT 1: LowerLayers value should be returned as Not Applicable";
-        print "ACTUAL RESULT 1:  %s " %details
+        print("TEST STEP 1: Get the LowerLayers value of Radio.2")
+        print("EXPECTED RESULT 1: LowerLayers value should be returned as Not Applicable");
+        print("ACTUAL RESULT 1:  %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the LowerLayers value of Radio.2"
-        print "EXPECTED RESULT 1: LowerLayers value should be returned as Not Applicable";
-        print "ACTUAL RESULT 1:  %s " %details
+        print("TEST STEP 1: Get the LowerLayers value of Radio.2")
+        print("EXPECTED RESULT 1: LowerLayers value should be returned as Not Applicable");
+        print("ACTUAL RESULT 1:  %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

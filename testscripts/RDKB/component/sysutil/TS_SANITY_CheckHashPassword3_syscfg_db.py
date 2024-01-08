@@ -97,16 +97,16 @@ def getHashPassword(cmd):
 def checkHashPassword(hash_password_3, default_password):
     if hash_password_3 != default_password :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP :Check hash_password_3 from syscfg.db in /tmp is hashed";
-        print "EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp should be hashed: %s" %hash_password_3;
-        print "ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp is hashed";
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("TEST STEP :Check hash_password_3 from syscfg.db in /tmp is hashed");
+        print("EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp should be hashed: %s" %hash_password_3);
+        print("ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp is hashed");
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP :Check hash_password_3 from syscfg.db in /tmp is hashed";
-        print "EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp should be hashed: %s" %hash_password_3;
-        print "ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp is not hashed";
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP :Check hash_password_3 from syscfg.db in /tmp is hashed");
+        print("EXPECTED RESULT : hash_password_3 from syscfg.db in /tmp should be hashed: %s" %hash_password_3);
+        print("ACTUAL RESULT :hash_password_3 from syscfg.db in /tmp is not hashed");
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
 #Get the result of connection with test component and DUT
 pamloadmodulestatus=pamobj.getLoadModuleResult();
@@ -124,54 +124,54 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     actualresult = tdkTestObj.getResult();
     default_password = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "Invoking function to get hash password"
+    print("Invoking function to get hash password")
     cmd= "cat /tmp/syscfg.db  | grep -i hash_password_3";
     tdkTestObj,hash_password_3_details = getHashPassword(cmd);
 
     if hash_password_3_details != "" :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-        print "EXPECTED RESULT 1: hash_password_3 entry is present in syscfg.db in /tmp";
-        print "ACTUAL RESULT 1: hash_password_3 present in syscfg.db in /tmp are : %s" %(hash_password_3_details);
+        print("TEST STEP 1: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+        print("EXPECTED RESULT 1: hash_password_3 entry is present in syscfg.db in /tmp");
+        print("ACTUAL RESULT 1: hash_password_3 present in syscfg.db in /tmp are : %s" %(hash_password_3_details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         hash_password=(hash_password_3_details.split('='))
         hash_password_3 = hash_password[1]
-        print "Invoking function to check hash password"
+        print("Invoking function to check hash password")
         checkHashPassword(hash_password_3, default_password);
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if user_password_3 entry is present in syscfg.db in /tmp";
-        print "EXPECTED RESULT 1: user_password_3 entry is present in syscfg.db in /tmp";
-        print "ACTUAL RESULT 1: user_password_3 present in syscfg.db in /tmp";
+        print("TEST STEP 1: Check if user_password_3 entry is present in syscfg.db in /tmp");
+        print("EXPECTED RESULT 1: user_password_3 entry is present in syscfg.db in /tmp");
+        print("ACTUAL RESULT 1: user_password_3 present in syscfg.db in /tmp");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         #Change the admin password
         password = "testPassword"
         tdkutility.changeAdminPassword(pamobj,password);
 
-        print "Invoking function to get hash password"
+        print("Invoking function to get hash password")
         cmd= "cat /tmp/syscfg.db  | grep -i hash_password_3";
         tdkTestObj,hash_password_3_details = getHashPassword(cmd);
 
         if hash_password_3_details != "" :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-            print "EXPECTED RESULT 4: hash_password_3 entry should be present in syscfg.db in /tmp";
-            print "ACTUAL RESULT 4: hash_password_3 entry is present in syscfg.db in /tmp";
+            print("TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+            print("EXPECTED RESULT 4: hash_password_3 entry should be present in syscfg.db in /tmp");
+            print("ACTUAL RESULT 4: hash_password_3 entry is present in syscfg.db in /tmp");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             hash_password=(hash_password_3_details.split('='))
             hash_password_3 = hash_password[1]
-            print "Invoking function to check hash password"
+            print("Invoking function to check hash password")
             checkHashPassword(hash_password_3, default_password);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp";
-            print "EXPECTED RESULT 4: hash_password_3 entry should be present in syscfg.db in /tmp";
-            print "ACTUAL RESULT 4: hash_password_3 entry is not present in syscfg.db in /tmp";
+            print("TEST STEP 4: Check if hash_password_3 entry is present in syscfg.db in /tmp");
+            print("EXPECTED RESULT 4: hash_password_3 entry should be present in syscfg.db in /tmp");
+            print("ACTUAL RESULT 4: hash_password_3 entry is not present in syscfg.db in /tmp");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
         #Change the admin password
         password = "password"
@@ -180,7 +180,7 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

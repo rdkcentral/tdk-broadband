@@ -65,8 +65,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -94,14 +94,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : %s" %actualresult);
         temp = details.split(':');
         instance1 = temp[1];
-        if (instance1 > 0):
-            print "INSTANCE VALUE: %s" %instance1
+        if (int(instance1) > 0):
+            print("INSTANCE VALUE: %s" %instance1)
 
             #Set dummy values to each namespace in the table
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -111,80 +111,80 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
-		#Adding one more row
-		tdkTestObj = obj.createTestStep("TDKB_TR181Stub_AddObject");
-    		tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.");
-    		tdkTestObj.executeTestCase(expectedresult);
-    		actualresult = tdkTestObj.getResult();
-    		details = tdkTestObj.getResultDetails();
-    		if expectedresult in actualresult:
-    		    #Set the result status of execution
-    		    tdkTestObj.setResultStatus("SUCCESS");
-    		    print "TEST STEP 3: Adding new rule for XDNS";
-    		    print "EXPECTED RESULT 3: Should add new rule";
-    		    print "ACTUAL RESULT 3: added new rule %s" %details;
-    		    print "TEST EXECUTION RESULT : %s" %actualresult;
-    		    temp = details.split(':');
-    		    instance2 = temp[1];
-    		    if (instance2 > 0):
-    		        print "INSTANCE VALUE: %s" %instance2
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
+                #Adding one more row
+                tdkTestObj = obj.createTestStep("TDKB_TR181Stub_AddObject");
+                tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.");
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Adding new rule for XDNS");
+                    print("EXPECTED RESULT 3: Should add new rule");
+                    print("ACTUAL RESULT 3: added new rule %s" %details);
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
+                    temp = details.split(':');
+                    instance2 = temp[1];
+                    if (int(instance2) > 0):
+                        print("INSTANCE VALUE: %s" %instance2)
 
-    		        #Set dummy values to each namespace in the table
-    		        tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
-    		        tdkTestObj.addParameter("paramList","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.MacAddress|A:B:C:D|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.DnsIPv4|x.y.z.a|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.DnsIPv6|p:q:r:s|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.Tag|Default|string" %(instance2, instance2, instance2, instance2));
-    		        tdkTestObj.executeTestCase(expectedresult);
-    		        actualresult = tdkTestObj.getResult();
-    		        details = tdkTestObj.getResultDetails();
-    		        if expectedresult not in actualresult:
-    		            tdkTestObj.setResultStatus("SUCCESS");
-    		            print "TEST STEP 4: Set all the values of the added row"
-    		            print "EXPECTED RESULT 4: Should not set the duplicate values"
-    		            print "ACTUAL RESULT 4: %s" %details;
-    		            print "TEST EXECUTION RESULT :SUCCESS";
-    		        else:
-    		            tdkTestObj.setResultStatus("FAILURE");
-    		            print "TEST STEP 4: Set all the values of the added row"
-    		            print "EXPECTED RESULT 4: Should not set the duplicate values"
-    		            print "ACTUAL RESULT 4: %s" %details;
-    		            print "TEST EXECUTION RESULT :FAILURE";
-			#Delete the added rule
-			tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
-            		tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %instance2);
-            		expectedresult = "SUCCESS";
-            		tdkTestObj.executeTestCase(expectedresult);
-            		actualresult = tdkTestObj.getResult();
-            		details = tdkTestObj.getResultDetails();
-            		if expectedresult in actualresult:
-            		    #Set the result status of execution
-            		    tdkTestObj.setResultStatus("SUCCESS");
-            		    print "[TEST STEP ]: Deleting the added rule";
-            		    print "[EXPECTED RESULT ]: Should delete the added rule";
-            		    print "[ACTUAL RESULT]: %s" %details;
-            		    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            		    print "Added table is deleted successfully\n"
-            		else:
-            		    tdkTestObj.setResultStatus("FAILURE");
-            		    print "[TEST STEP ]: Deleting the added rule";
-            		    print "[EXPECTED RESULT ]: Should delete the added rule";
-            		    print "[ACTUAL RESULT]: %s" %details;
-            		    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-            		    print "Added table could not be deleted\n"	
-		else:
-		    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Adding new rule for XDNS";
-                    print "EXPECTED RESULT 3: Should add new rule";
-                    print "ACTUAL RESULT 3: added new rule %s" %details;
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                        #Set dummy values to each namespace in the table
+                        tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
+                        tdkTestObj.addParameter("paramList","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.MacAddress|A:B:C:D|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.DnsIPv4|x.y.z.a|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.DnsIPv6|p:q:r:s|string|Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s.Tag|Default|string" %(instance2, instance2, instance2, instance2));
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult not in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 4: Set all the values of the added row")
+                            print("EXPECTED RESULT 4: Should not set the duplicate values")
+                            print("ACTUAL RESULT 4: %s" %details);
+                            print("TEST EXECUTION RESULT :SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 4: Set all the values of the added row")
+                            print("EXPECTED RESULT 4: Should not set the duplicate values")
+                            print("ACTUAL RESULT 4: %s" %details);
+                            print("TEST EXECUTION RESULT :FAILURE");
+                        #Delete the added rule
+                        tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
+                        tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %instance2);
+                        expectedresult = "SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST STEP ]: Deleting the added rule");
+                            print("[EXPECTED RESULT ]: Should delete the added rule");
+                            print("[ACTUAL RESULT]: %s" %details);
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                            print("Added table is deleted successfully\n")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST STEP ]: Deleting the added rule");
+                            print("[EXPECTED RESULT ]: Should delete the added rule");
+                            print("[ACTUAL RESULT]: %s" %details);
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                            print("Added table could not be deleted\n")
+                else:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Adding new rule for XDNS");
+                    print("EXPECTED RESULT 3: Should add new rule");
+                    print("ACTUAL RESULT 3: added new rule %s" %details);
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set all the values of the added row"
-                print "EXPECTED RESULT 2: Should set all the values"
-                print "ACTUAL RESULT 2: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 2: Set all the values of the added row")
+                print("EXPECTED RESULT 2: Should set all the values")
+                print("ACTUAL RESULT 2: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
             #Delete the added row
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_DelObject");
             tdkTestObj.addParameter("paramName","Device.X_RDKCENTRAL-COM_XDNS.DNSMappingTable.%s." %instance1);
@@ -195,27 +195,27 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table is deleted successfully\n"
+                print("[TEST STEP ]: Deleting the added rule");
+                print("[EXPECTED RESULT ]: Should delete the added rule");
+                print("[ACTUAL RESULT]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table is deleted successfully\n")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST STEP ]: Deleting the added rule";
-                print "[EXPECTED RESULT ]: Should delete the added rule";
-                print "[ACTUAL RESULT]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added table could not be deleted\n"
+                print("[TEST STEP ]: Deleting the added rule");
+                print("[EXPECTED RESULT ]: Should delete the added rule");
+                print("[ACTUAL RESULT]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added table could not be deleted\n")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Adding new rule for XDNS";
-        print "EXPECTED RESULT 1: Should add new rule";
-        print "ACTUAL RESULT 1: added new rule %s" %details;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("TEST STEP 1: Adding new rule for XDNS");
+        print("EXPECTED RESULT 1: Should add new rule");
+        print("ACTUAL RESULT 1: added new rule %s" %details);
+        print("TEST EXECUTION RESULT : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

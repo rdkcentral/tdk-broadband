@@ -110,155 +110,155 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult  and details != "":
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Check if dibbler-server process is running";
-       print "EXPECTED RESULT 1 :dibbler-server process should be running";
-       print "ACTUAL RESULT 1: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Check if dibbler-server process is running");
+        print("EXPECTED RESULT 1 :dibbler-server process should be running");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-       cmd = "[ -f /etc/dibbler/server.conf ] && echo \"File exist\" || echo \"File does not exist\"";
-       tdkTestObj.addParameter("command",cmd);
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-       if details == "File exist":
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Check for server.conf file presence";
-          print "EXPECTED RESULT 2:server.conf file should be present";
-          print "ACTUAL RESULT 2:server.conf file is present";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        cmd = "[ -f /etc/dibbler/server.conf ] && echo \"File exist\" || echo \"File does not exist\"";
+        tdkTestObj.addParameter("command",cmd);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+        if details == "File exist":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check for server.conf file presence");
+            print("EXPECTED RESULT 2:server.conf file should be present");
+            print("ACTUAL RESULT 2:server.conf file is present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-          cmd = "[ -f /etc/dibbler/server.pid ] && echo \"File exist\" || echo \"File does not exist\"";
-          tdkTestObj.addParameter("command",cmd);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-          if details == "File exist":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Check for server.pid file presence";
-             print "EXPECTED RESULT 3:server.pid file should be present";
-             print "ACTUAL RESULT 3:server.pid file is present";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             cmd = "rm -rf /etc/dibbler/server.conf /etc/dibbler/server.pid";
-             tdkTestObj.addParameter("command",cmd);
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-             if expectedresult in actualresult:
-                #Set the result status of execution
+            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+            cmd = "[ -f /etc/dibbler/server.pid ] && echo \"File exist\" || echo \"File does not exist\"";
+            tdkTestObj.addParameter("command",cmd);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Delete the server.conf and server.pid files";
-                print "EXPECTED RESULT 4 : Should delete server.conf and server.pid files";
-                print "ACTUAL RESULT 4: File deletion was successfull";
+                print("TEST STEP 3: Check for server.pid file presence");
+                print("EXPECTED RESULT 3:server.pid file should be present");
+                print("ACTUAL RESULT 3:server.pid file is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-                #rebooting the device
-                sysObj.initiateReboot();
-                sleep(300);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                cmd = "[ -f /etc/dibbler/server.conf ] && echo \"File exist\" || echo \"File does not exist\"";
+                cmd = "rm -rf /etc/dibbler/server.conf /etc/dibbler/server.pid";
                 tdkTestObj.addParameter("command",cmd);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                if details == "File exist":
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 5: Check for existence of server.conf file";
-                   print "EXPECTED RESULT 5:server.conf file should be present";
-                   print "ACTUAL RESULT 5:server.conf file is present";
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                   cmd = "[ -f /etc/dibbler/server.pid ] && echo \"File exist\" || echo \"File does not exist\"";
-                   tdkTestObj.addParameter("command",cmd);
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                   if details == "File exist":
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 6: Check for existence of server.pid file";
-                      print "EXPECTED RESULT 6:server.pid file should be present";
-                      print "ACTUAL RESULT 6:server.pid file is present";
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                      cmd = "grep -rin  \"Server Config is empty\" /rdklogs/logs/";
-                      tdkTestObj.addParameter("command",cmd);
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                      if expectedresult in actualresult and details  == "":
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 7: Check if any log messages like Server Config is empty is present";
-                         print "EXPECTED RESULT 7: Should not include and log messages like Server Config is empty";
-                         print "ACTUAL RESULT 7:No such Log mesages are present";
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 7: Check if any log messages like Server Config is empty is present";
-                          print "EXPECTED RESULT 7: Should not include and log messages like Server Config is empty";
-                          print "ACTUAL RESULT 7:",details;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] :FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 6: Check for existence of server.pid file";
-                       print "EXPECTED RESULT 6:server.pid file should be present";
-                       print "ACTUAL RESULT 6:server.pid file is not present";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Check for existence of server.conf file";
-                    print "EXPECTED RESULT 5:server.conf file should be present";
-                    print "ACTUAL RESULT 5:server.conf file is not present";
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Delete the server.conf and server.pid files");
+                    print("EXPECTED RESULT 4 : Should delete server.conf and server.pid files");
+                    print("ACTUAL RESULT 4: File deletion was successfull");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 4: Delete the server.conf and server.pid files";
-                 print "EXPECTED RESULT 4 : Should delete server.conf and server.pid files";
-                 print "ACTUAL RESULT 4: File deletion failed";
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Check for server.pid file presence";
-              print "EXPECTED RESULT 3:server.pid file should be present";
-              print "ACTUAL RESULT 3:server.pid file is not present";
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check for server.conf file presence";
-           print "EXPECTED RESULT 2:server.conf file should be present";
-           print "ACTUAL RESULT 2:server.conf file is not present";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    #rebooting the device
+                    sysObj.initiateReboot();
+                    sleep(300);
+
+                    cmd = "[ -f /etc/dibbler/server.conf ] && echo \"File exist\" || echo \"File does not exist\"";
+                    tdkTestObj.addParameter("command",cmd);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                    if details == "File exist":
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Check for existence of server.conf file");
+                        print("EXPECTED RESULT 5:server.conf file should be present");
+                        print("ACTUAL RESULT 5:server.conf file is present");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        cmd = "[ -f /etc/dibbler/server.pid ] && echo \"File exist\" || echo \"File does not exist\"";
+                        tdkTestObj.addParameter("command",cmd);
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                        if details == "File exist":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 6: Check for existence of server.pid file");
+                            print("EXPECTED RESULT 6:server.pid file should be present");
+                            print("ACTUAL RESULT 6:server.pid file is present");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            cmd = "grep -rin  \"Server Config is empty\" /rdklogs/logs/";
+                            tdkTestObj.addParameter("command",cmd);
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                            if expectedresult in actualresult and details  == "":
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Check if any log messages like Server Config is empty is present");
+                                print("EXPECTED RESULT 7: Should not include and log messages like Server Config is empty");
+                                print("ACTUAL RESULT 7:No such Log mesages are present");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Check if any log messages like Server Config is empty is present");
+                                print("EXPECTED RESULT 7: Should not include and log messages like Server Config is empty");
+                                print("ACTUAL RESULT 7:",details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] :FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 6: Check for existence of server.pid file");
+                            print("EXPECTED RESULT 6:server.pid file should be present");
+                            print("ACTUAL RESULT 6:server.pid file is not present");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Check for existence of server.conf file");
+                        print("EXPECTED RESULT 5:server.conf file should be present");
+                        print("ACTUAL RESULT 5:server.conf file is not present");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Delete the server.conf and server.pid files");
+                    print("EXPECTED RESULT 4 : Should delete server.conf and server.pid files");
+                    print("ACTUAL RESULT 4: File deletion failed");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Check for server.pid file presence");
+                print("EXPECTED RESULT 3:server.pid file should be present");
+                print("ACTUAL RESULT 3:server.pid file is not present");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for server.conf file presence");
+            print("EXPECTED RESULT 2:server.conf file should be present");
+            print("ACTUAL RESULT 2:server.conf file is not present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check if dibbler-server process is running";
-        print "EXPECTED RESULT 1 :dibbler-server process should be running";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Check if dibbler-server process is running");
+        print("EXPECTED RESULT 1 :dibbler-server process should be running");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");

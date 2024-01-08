@@ -117,9 +117,9 @@ revertflag = 0;
 def verify_logMsgs(tdkTestObj):
     ParoduslogMsgs_list = ["reboot-pending","PARODUS: SIGTERM received","PARODUS: cloud_status set as offline after connection close","PARODUS: SIGTERM received"]
     ConsolelogMsgs_list = ["Shutdown parodus"]
-    print"The following logs should be present when undergoing webpa reboot";
-    print ParoduslogMsgs_list;
-    print ConsolelogMsgs_list;
+    print("The following logs should be present when undergoing webpa reboot");
+    print(ParoduslogMsgs_list);
+    print(ConsolelogMsgs_list);
 
     for list in ParoduslogMsgs_list:
         cmd = "cat /nvram/tdk_PARODUStail | grep -ire \"%s\"" %list;
@@ -127,12 +127,12 @@ def verify_logMsgs(tdkTestObj):
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-        print "LogMsg is :",details
+        print("LogMsg is :",details)
         if expectedresult in actualresult and details != "" and list in details:
-           Pmsgpresent = 1;
+            Pmsgpresent = 1;
         else:
             Pmsgpresent = 0;
-            print "Log Mesage %s is NOT present"%list
+            print("Log Mesage %s is NOT present"%list)
             break;
 
     for list in ConsolelogMsgs_list:
@@ -141,12 +141,12 @@ def verify_logMsgs(tdkTestObj):
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-        print "LogMsg is :",details
+        print("LogMsg is :",details)
         if expectedresult in actualresult and details !="" and list in details:
-           Cmsgpresent = 1;
+            Cmsgpresent = 1;
         else:
             Cmsgpresent = 0;
-            print "Log Mesage %s is NOT present"%list
+            print("Log Mesage %s is NOT present"%list)
             break;
 
     return Pmsgpresent,Cmsgpresent;
@@ -165,336 +165,336 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     default = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult :
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the status  of Manageable Notification";
-       print "EXPECTED RESULT 1: Should get the status of Manageable Notification";
-       print "ACTUAL RESULT 1:  Manageable Notification status is :%s" %default;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the status  of Manageable Notification");
+        print("EXPECTED RESULT 1: Should get the status of Manageable Notification");
+        print("ACTUAL RESULT 1:  Manageable Notification status is :%s" %default);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       if default != "true":
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ManageableNotification.Enable");
-          tdkTestObj.addParameter("ParamValue","true");
-          tdkTestObj.addParameter("Type","bool");
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
+        if default != "true":
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ManageableNotification.Enable");
+            tdkTestObj.addParameter("ParamValue","true");
+            tdkTestObj.addParameter("Type","bool");
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult :
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Set the status  of Manageable Notification to true";
-             print "EXPECTED RESULT 2: Should set the status of Manageable Notification to true";
-             print "ACTUAL RESULT 2:  Manageable Notification status is :%s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             revertflag = 1;
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 2: Set the status  of Manageable Notification to true";
-              print "EXPECTED RESULT 2: Should set the status of Manageable Notification to true";
-              print "ACTUAL RESULT 2:  Manageable Notification status is :%s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-              setflag = 0;
-
-       if setflag ==1 :
-          tdkTestObj = obj2.createTestStep('ExecuteCmd');
-          cmd = "[ -f /rdklogs/logs/PARODUSlog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
-          tdkTestObj.addParameter("command",cmd);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
-          if details == "File exist":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Check for PARODUSlog.txt.0 log file presence";
-             print "EXPECTED RESULT 2:PARODUSlog.txt.0 log file should be present";
-             print "ACTUAL RESULT 2:PARODUSlog.txt.0 file is present";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             tdkTestObj = obj2.createTestStep('ExecuteCmd');
-             cmd = "[ -f /rdklogs/logs/Consolelog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
-             tdkTestObj.addParameter("command",cmd);
-             expectedresult="SUCCESS";
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
-             if details == "File exist":
+            if expectedresult in actualresult :
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check for Consolelog.txt.0 log file presence";
-                print "EXPECTED RESULT 3:Consolelog.txt.0 log file should be present";
-                print "ACTUAL RESULT 3:Consolelog.txt.0 file is present";
+                print("TEST STEP 2: Set the status  of Manageable Notification to true");
+                print("EXPECTED RESULT 2: Should set the status of Manageable Notification to true");
+                print("ACTUAL RESULT 2:  Manageable Notification status is :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                revertflag = 1;
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Set the status  of Manageable Notification to true");
+                print("EXPECTED RESULT 2: Should set the status of Manageable Notification to true");
+                print("ACTUAL RESULT 2:  Manageable Notification status is :%s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                setflag = 0;
 
-                query="echo > /nvram/tdk_PARODUStail"
-                print "query:%s" %query
+        if setflag ==1 :
+            tdkTestObj = obj2.createTestStep('ExecuteCmd');
+            cmd = "[ -f /rdklogs/logs/PARODUSlog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
+            tdkTestObj.addParameter("command",cmd);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+
+            if details == "File exist":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Check for PARODUSlog.txt.0 log file presence");
+                print("EXPECTED RESULT 2:PARODUSlog.txt.0 log file should be present");
+                print("ACTUAL RESULT 2:PARODUSlog.txt.0 file is present");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
                 tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                tdkTestObj.addParameter("command", query)
+                cmd = "[ -f /rdklogs/logs/Consolelog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
+                tdkTestObj.addParameter("command",cmd);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                if expectedresult in actualresult :
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 4: Create a file in nvram to copy the tail -f of PARODUSlog.txt.0";
-                   print "EXPECTED RESULT 4: Should create a file in nvram  to copy the tail -f of PARODUSlog.txt.0";
-                   print "ACTUAL RESULT 4: File creation was successful";
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                if details == "File exist":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Check for Consolelog.txt.0 log file presence");
+                    print("EXPECTED RESULT 3:Consolelog.txt.0 log file should be present");
+                    print("ACTUAL RESULT 3:Consolelog.txt.0 file is present");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                   query="echo > /nvram/tdk_Consoletail"
-                   print "query:%s" %query
-                   tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                   tdkTestObj.addParameter("command", query)
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                    query="echo > /nvram/tdk_PARODUStail"
+                    print("query:%s" %query)
+                    tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                    tdkTestObj.addParameter("command", query)
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-                   if expectedresult in actualresult :
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 5: Create a file in nvram  to copy the tail -f of Consolelog.txt.0";
-                      print "EXPECTED RESULT 5: Should create a file in nvram to copy the tail -f of Consolelog.txt.0";
-                      print "ACTUAL RESULT 5: File creation was successful";
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
+                    if expectedresult in actualresult :
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Create a file in nvram to copy the tail -f of PARODUSlog.txt.0");
+                        print("EXPECTED RESULT 4: Should create a file in nvram  to copy the tail -f of PARODUSlog.txt.0");
+                        print("ACTUAL RESULT 4: File creation was successful");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                      query="tail -f /rdklogs/logs/PARODUSlog.txt.0 > /nvram/tdk_PARODUStail &"
-                      print "query:%s" %query
-                      tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                      tdkTestObj.addParameter("command", query)
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                        query="echo > /nvram/tdk_Consoletail"
+                        print("query:%s" %query)
+                        tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", query)
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-                      if expectedresult in actualresult :
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 6: Tail the Parodus Logs to the file created in nvram and add  the process to background";
-                         print "EXPECTED RESULT 6: Should tail the Parodus Logs to the file created in nvram and add  the process to background";
-                         print "ACTUAL RESULT 6: Tail the Parodus Logs to the file created in nvram and add  the process to background was successfull";
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                         query="tail -f /rdklogs/logs/Consolelog.txt.0 > /nvram/tdk_Consoletail &"
-                         print "query:%s" %query
-                         tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                         tdkTestObj.addParameter("command", query)
-                         expectedresult="SUCCESS";
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-
-                         if expectedresult in actualresult :
+                        if expectedresult in actualresult :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 7: Tail the Console Logs to the file created in nvram and add  the process to background";
-                            print "EXPECTED RESULT 7: Should tail the Console Logs to the file created in nvram and add  the process to background";
-                            print "ACTUAL RESULT 7: Tail the Console Logs to the file created in nvram and add  the process to background was successfull";
+                            print("TEST STEP 5: Create a file in nvram  to copy the tail -f of Consolelog.txt.0");
+                            print("EXPECTED RESULT 5: Should create a file in nvram to copy the tail -f of Consolelog.txt.0");
+                            print("ACTUAL RESULT 5: File creation was successful");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj2);
-                            #Saving Current state before reboot
-                            obj2.saveCurrentState();
+                            query="tail -f /rdklogs/logs/PARODUSlog.txt.0 > /nvram/tdk_PARODUStail &"
+                            print("query:%s" %query)
+                            tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", query)
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-                            if "SUCCESS" in preRequisiteStatus:
-                               queryParam = {"name":"Device.X_CISCO_COM_DeviceControl.RebootDevice","value":"Device","dataType":0}
-                               queryResponse = webpaQuery(obj2, queryParam,"set")
-                               parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
-                               print "parsedResponse : %s" %parsedResponse;
-                               tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                               tdkTestObj.executeTestCase("SUCCESS");
+                            if expectedresult in actualresult :
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 6: Tail the Parodus Logs to the file created in nvram and add  the process to background");
+                                print("EXPECTED RESULT 6: Should tail the Parodus Logs to the file created in nvram and add  the process to background");
+                                print("ACTUAL RESULT 6: Tail the Parodus Logs to the file created in nvram and add  the process to background was successfull");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                               if "SUCCESS" in parsedResponse[0]:
-                                  tdkTestObj.setResultStatus("SUCCESS");
-                                  print "TEST STEP 8: Call for Device Reboot via WEBPA";
-                                  print "EXPECTED RESULT 8: Device Reboot via WEBPA should be successfull"
-                                  print "ACTUAL RESULT 8:  Device Reboot via WEBPA was successfull";
-                                  #Get the result of execution
-                                  print "[TEST EXECUTION RESULT] : SUCCESS";
-                                  #Restore the device state saved before reboot
-                                  obj2.restorePreviousStateAfterReboot();
+                                query="tail -f /rdklogs/logs/Consolelog.txt.0 > /nvram/tdk_Consoletail &"
+                                print("query:%s" %query)
+                                tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                                tdkTestObj.addParameter("command", query)
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-                                  tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                                  Presult,Cresult = verify_logMsgs(tdkTestObj);
+                                if expectedresult in actualresult :
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 7: Tail the Console Logs to the file created in nvram and add  the process to background");
+                                    print("EXPECTED RESULT 7: Should tail the Console Logs to the file created in nvram and add  the process to background");
+                                    print("ACTUAL RESULT 7: Tail the Console Logs to the file created in nvram and add  the process to background was successfull");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                  if Presult  == 1 and Cresult == 1:
-                                     tdkTestObj.setResultStatus("SUCCESS");
-                                     print "TEST STEP 9: Check if the above mentioned LogMsgs are present in PARODUSlog.txt.0 and Consolelog.txt.0";
-                                     print "EXPECTED RESULT 9: The above mentioned LogMsgs Should be present in PARODUSlog.txt.0 and Consolelog.txt.0"
-                                     print "ACTUAL RESULT 9: The expected LogMsgs were populated successfully in PARODUSlog.txt.0 and Consolelog.txt.0";
-                                     #Get the result of execution
-                                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                                  else:
-                                      tdkTestObj.setResultStatus("FAILURE");
-                                      print "TEST STEP 9: Check if the above mentioned LogMsgs are presnt in PARODUSlog.txt.0 and Consolelog.txt.0";
-                                      print "EXPECTED RESULT 9: The above mentioned LogMsgs Should be present in PARODUSlog.txt.0 and Consolelog.txt.0"
-                                      print "ACTUAL RESULT 9:  The expected LogMsgs failed to  populate in PARODUSlog.txt.0 or Consolelog.txt.0";
-                                      #Get the result of execution
-                                      print "[TEST EXECUTION RESULT] : FAILURE";
-                               else:
-                                   tdkTestObj.setResultStatus("FAILURE");
-                                   print "TEST STEP 8: Call for Device Reboot via WEBPA";
-                                   print "EXPECTED RESULT 8: Device Reboot via WEBPA should be successfull"
-                                   print "ACTUAL RESULT 8: Device Reboot via WEBPA was successfull";
-                                   #Get the result of execution
-                                   print "[TEST EXECUTION RESULT] :FAILURE";
+                                    tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj2);
+                                    #Saving Current state before reboot
+                                    obj2.saveCurrentState();
+
+                                    if "SUCCESS" in preRequisiteStatus:
+                                        queryParam = {"name":"Device.X_CISCO_COM_DeviceControl.RebootDevice","value":"Device","dataType":0}
+                                        queryResponse = webpaQuery(obj2, queryParam,"set")
+                                        parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
+                                        print("parsedResponse : %s" %parsedResponse);
+                                        tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                                        tdkTestObj.executeTestCase("SUCCESS");
+
+                                        if "SUCCESS" in parsedResponse[0]:
+                                            tdkTestObj.setResultStatus("SUCCESS");
+                                            print("TEST STEP 8: Call for Device Reboot via WEBPA");
+                                            print("EXPECTED RESULT 8: Device Reboot via WEBPA should be successfull")
+                                            print("ACTUAL RESULT 8:  Device Reboot via WEBPA was successfull");
+                                            #Get the result of execution
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                                            #Restore the device state saved before reboot
+                                            obj2.restorePreviousStateAfterReboot();
+
+                                            tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                                            Presult,Cresult = verify_logMsgs(tdkTestObj);
+
+                                            if Presult  == 1 and Cresult == 1:
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("TEST STEP 9: Check if the above mentioned LogMsgs are present in PARODUSlog.txt.0 and Consolelog.txt.0");
+                                                print("EXPECTED RESULT 9: The above mentioned LogMsgs Should be present in PARODUSlog.txt.0 and Consolelog.txt.0")
+                                                print("ACTUAL RESULT 9: The expected LogMsgs were populated successfully in PARODUSlog.txt.0 and Consolelog.txt.0");
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                            else:
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                                print("TEST STEP 9: Check if the above mentioned LogMsgs are presnt in PARODUSlog.txt.0 and Consolelog.txt.0");
+                                                print("EXPECTED RESULT 9: The above mentioned LogMsgs Should be present in PARODUSlog.txt.0 and Consolelog.txt.0")
+                                                print("ACTUAL RESULT 9:  The expected LogMsgs failed to  populate in PARODUSlog.txt.0 or Consolelog.txt.0");
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : FAILURE");
+                                        else:
+                                            tdkTestObj.setResultStatus("FAILURE");
+                                            print("TEST STEP 8: Call for Device Reboot via WEBPA");
+                                            print("EXPECTED RESULT 8: Device Reboot via WEBPA should be successfull")
+                                            print("ACTUAL RESULT 8: Device Reboot via WEBPA was successfull");
+                                            #Get the result of execution
+                                            print("[TEST EXECUTION RESULT] :FAILURE");
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 7: Tail the Console Logs to the file created in nvram and add  the process to background");
+                                    print("EXPECTED RESULT 7: Should tail the Console Logs to the file created in nvram and add  the process to background");
+                                    print("ACTUAL RESULT 7: Tail the Console Logs to the file created in nvram and add  the process to background failed");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] :FAILURE");
                             else:
+                                #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
-                         else:
-                             #Set the result status of execution
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "TEST STEP 7: Tail the Console Logs to the file created in nvram and add  the process to background";
-                             print "EXPECTED RESULT 7: Should tail the Console Logs to the file created in nvram and add  the process to background";
-                             print "ACTUAL RESULT 7: Tail the Console Logs to the file created in nvram and add  the process to background failed";
-                             #Get the result of execution
-                             print "[TEST EXECUTION RESULT] :FAILURE";
-                      else:
-                          #Set the result status of execution
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 6: Tail the Parodus Logs to the file created in nvram and add  the process to background";
-                          print "EXPECTED RESULT 6: Should tail the Parodus Logs to the file created in nvram and add  the process to background";
-                          print "ACTUAL RESULT 6: Tail the Parodus Logs to the file created in nvram and add  the process to background failed";
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                      #Delete the file created under nvram
-                      query="rm -rf /nvram/tdk_Consoletail"
-                      print "query:%s" %query
-                      tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                      tdkTestObj.addParameter("command", query)
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                      if expectedresult in actualresult :
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 10: Delete the tdk_Consoletail file created under nvram";
-                         print "EXPECTED RESULT 10: Should Delete the tdk_Consoletail file created under nvram";
-                         print "ACTUAL RESULT 10: File Deletion was successfull";
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] :SUCCESS";
-                      else:
-                          #Set the result status of execution
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 10: Delete the tdk_Consoletail file created under nvram";
-                          print "EXPECTED RESULT 10: Should Delete the tdk_Consoletail file created under nvram";
-                          print "ACTUAL RESULT 10: File Deletion Failed";
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] :FAILURE";
-                   else:
-                       #Set the result status of execution
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 5: Create a file in nvram to copy the tail -f of Consolelog.txt.0";
-                       print "EXPECTED RESULT 5: Should create a file in nvram to copy the tail -f of Consolelog.txt.0";
-                       print "ACTUAL RESULT 5: File creation was successful";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("TEST STEP 6: Tail the Parodus Logs to the file created in nvram and add  the process to background");
+                                print("EXPECTED RESULT 6: Should tail the Parodus Logs to the file created in nvram and add  the process to background");
+                                print("ACTUAL RESULT 6: Tail the Parodus Logs to the file created in nvram and add  the process to background failed");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                            #Delete the file created under nvram
+                            query="rm -rf /nvram/tdk_Consoletail"
+                            print("query:%s" %query)
+                            tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", query)
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                            if expectedresult in actualresult :
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 10: Delete the tdk_Consoletail file created under nvram");
+                                print("EXPECTED RESULT 10: Should Delete the tdk_Consoletail file created under nvram");
+                                print("ACTUAL RESULT 10: File Deletion was successfull");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] :SUCCESS");
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 10: Delete the tdk_Consoletail file created under nvram");
+                                print("EXPECTED RESULT 10: Should Delete the tdk_Consoletail file created under nvram");
+                                print("ACTUAL RESULT 10: File Deletion Failed");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] :FAILURE");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Create a file in nvram to copy the tail -f of Consolelog.txt.0");
+                            print("EXPECTED RESULT 5: Should create a file in nvram to copy the tail -f of Consolelog.txt.0");
+                            print("ACTUAL RESULT 5: File creation was successful");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
-                   #Delete the file created under nvram
-                   query="rm -rf /nvram/tdk_PARODUStail"
-                   print "query:%s" %query
-                   tdkTestObj = obj2.createTestStep('ExecuteCmd');
-                   tdkTestObj.addParameter("command", query)
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                        #Delete the file created under nvram
+                        query="rm -rf /nvram/tdk_PARODUStail"
+                        print("query:%s" %query)
+                        tdkTestObj = obj2.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", query)
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-                   if expectedresult in actualresult :
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 11: Delete the tdk_PARODUSTail file created under nvram";
-                      print "EXPECTED RESULT 11: Should Delete tdk_ParodusTail file created under nvram";
-                      print "ACTUAL RESULT 11: File Deletion was successfull";
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] :SUCCESS";
-                   else:
-                       #Set the result status of execution
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 11: Delete the tdk_PARODUSTail file created under nvram";
-                       print "EXPECTED RESULT 11: Should Delete the tdk_PARODUSTail file created under nvram";
-                       print "ACTUAL RESULT 11: File Deletion Failed";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] :FAILURE";
+                        if expectedresult in actualresult :
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 11: Delete the tdk_PARODUSTail file created under nvram");
+                            print("EXPECTED RESULT 11: Should Delete tdk_ParodusTail file created under nvram");
+                            print("ACTUAL RESULT 11: File Deletion was successfull");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :SUCCESS");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 11: Delete the tdk_PARODUSTail file created under nvram");
+                            print("EXPECTED RESULT 11: Should Delete the tdk_PARODUSTail file created under nvram");
+                            print("ACTUAL RESULT 11: File Deletion Failed");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :FAILURE");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Create a file in nvram to copy the tail -f of PARODUSlog.txt.0");
+                        print("EXPECTED RESULT 4: Should create a file in nvram to copy the tail -f of PARODUSlog.txt.0");
+                        print("ACTUAL RESULT 4: File creation failed");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Create a file in nvram to copy the tail -f of PARODUSlog.txt.0";
-                    print "EXPECTED RESULT 4: Should create a file in nvram to copy the tail -f of PARODUSlog.txt.0";
-                    print "ACTUAL RESULT 4: File creation failed";
+                    print("TEST STEP 3: Check for Consolelog.txt.0 log file presence");
+                    print("EXPECTED RESULT 3:Consolelog.txt.0 log file should be present");
+                    print("ACTUAL RESULT 3:Consolelog.txt.0 file is not present");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 3: Check for Consolelog.txt.0 log file presence";
-                 print "EXPECTED RESULT 3:Consolelog.txt.0 log file should be present";
-                 print "ACTUAL RESULT 3:Consolelog.txt.0 file is not present";
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 2: Check for PARODUSlog.txt.0 log file presence";
-              print "EXPECTED RESULT 2:PARODUSlog.txt.0 log file should be present";
-              print "ACTUAL RESULT 2:PARODUSlog.txt.0 file is not present";
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print " Manageable Notification was disabled and failed on enabling" ;
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Check for PARODUSlog.txt.0 log file presence");
+                print("EXPECTED RESULT 2:PARODUSlog.txt.0 log file should be present");
+                print("ACTUAL RESULT 2:PARODUSlog.txt.0 file is not present");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print(" Manageable Notification was disabled and failed on enabling") ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the status  of Manageable Notification";
-        print "EXPECTED RESULT 1: Should get the status of Manageable Notification";
-        print "ACTUAL RESULT 1:  Manageable Notification status is :%s" %default;
+        print("TEST STEP 1: Get the status  of Manageable Notification");
+        print("EXPECTED RESULT 1: Should get the status of Manageable Notification");
+        print("ACTUAL RESULT 1:  Manageable Notification status is :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     if revertflag ==1:
-       tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ManageableNotification.Enable");
-       tdkTestObj.addParameter("ParamValue",default);
-       tdkTestObj.addParameter("Type","bool");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.ManageableNotification.Enable");
+        tdkTestObj.addParameter("ParamValue",default);
+        tdkTestObj.addParameter("Type","bool");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult :
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 12: Revert the Manageable Notification to previous value";
-          print "EXPECTED RESULT 12:Should Revert the Manageable Notification to previous value"
-          print "ACTUAL RESULT 12:Revert was successfull";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] :SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 12: Revert the Manageable Notification to previous value";
-           print "EXPECTED RESULT 12:Should Revert the Manageable Notification to previous value"
-           print "ACTUAL RESULT 12:Revertion failed";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+        if expectedresult in actualresult :
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 12: Revert the Manageable Notification to previous value");
+            print("EXPECTED RESULT 12:Should Revert the Manageable Notification to previous value")
+            print("ACTUAL RESULT 12:Revert was successfull");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 12: Revert the Manageable Notification to previous value");
+            print("EXPECTED RESULT 12:Should Revert the Manageable Notification to previous value")
+            print("ACTUAL RESULT 12:Revertion failed");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
     obj1.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");

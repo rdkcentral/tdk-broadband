@@ -123,8 +123,8 @@ sysobj.configureTestCase(ip,port,'TS_SANITY_CheckLighttpdProcess_OnLanModeTransi
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -135,28 +135,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
     actualresult, lanmodeInitial = getLanMode(tdkTestObj);
 
-    print "\nTEST STEP 1: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode";
-    print "EXPECTED RESULT 1: Should get the initial Lan Mode successfully";
+    print("\nTEST STEP 1: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+    print("EXPECTED RESULT 1: Should get the initial Lan Mode successfully");
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: GET operation success; Lanmode is : ",lanmodeInitial;
+        print("ACTUAL RESULT 1: GET operation success; Lanmode is : ",lanmodeInitial);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the PID of lighttpd process
         tdkTestObj_Sys_ExeCmd = sysobj.createTestStep('ExecuteCmd');
         actualresult, details = getPID(tdkTestObj_Sys_ExeCmd,"lighttpd");
 
-        print "\nTEST STEP 2 : Check if lighttpd process is running in %s mode" %lanmodeInitial;
-        print "EXPECTED RESULT 2 : lighttpd  process should be running in %s mode" %lanmodeInitial;
+        print("\nTEST STEP 2 : Check if lighttpd process is running in %s mode" %lanmodeInitial);
+        print("EXPECTED RESULT 2 : lighttpd  process should be running in %s mode" %lanmodeInitial);
 
         if expectedresult in actualresult and details.isdigit():
             pid_initial = int(details);
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : pid of lighttpd : %s" %(pid_initial);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT 2 : pid of lighttpd : %s" %(pid_initial));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if lanmodeInitial == "bridge-static":
                 setValue = "router";
@@ -167,103 +167,103 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             actualresult, details = setLanMode(tdkTestObj, setValue);
 
-            print "\nTEST STEP 3: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %setValue;
-            print "EXPECTED RESULT 3: Should set the Lan Mode to %s successfully" %setValue;
+            print("\nTEST STEP 3: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %setValue);
+            print("EXPECTED RESULT 3: Should set the Lan Mode to %s successfully" %setValue);
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: Lan Mode set successfully; Details : %s" %details;
+                print("ACTUAL RESULT 3: Lan Mode set successfully; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the Lan Mode is set properly
                 sleep(20);
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                 actualresult, currLanMode = getLanMode(tdkTestObj)
 
-                print "\nTEST STEP 4: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode";
-                print "EXPECTED RESULT 4: Should get the current Lan Mode as %s" %setValue;
+                print("\nTEST STEP 4: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+                print("EXPECTED RESULT 4: Should get the current Lan Mode as %s" %setValue);
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: GET operation success; Lanmode is : ",currLanMode;
+                    print("ACTUAL RESULT 4: GET operation success; Lanmode is : ",currLanMode);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if currLanMode == setValue :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "SET reflects in GET";
+                        print("SET reflects in GET");
 
                         #Verify if lighttpd is running in the current Lan Mode
                         tdkTestObj_Sys_ExeCmd = sysobj.createTestStep('ExecuteCmd');
                         actualresult, details = getPID(tdkTestObj_Sys_ExeCmd,"lighttpd");
 
-                        print "\nTEST STEP 5 : Check if lighttpd process is running in %s mode" %(setValue);
-                        print "EXPECTED RESULT 5 : lighttpd  process should be running in %s mode" %(setValue);
+                        print("\nTEST STEP 5 : Check if lighttpd process is running in %s mode" %(setValue));
+                        print("EXPECTED RESULT 5 : lighttpd  process should be running in %s mode" %(setValue));
 
                         if expectedresult in actualresult and details.isdigit():
                             pid_curr = int(details);
                             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 5 : pid of lighttpd : %s" %(pid_curr);
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("ACTUAL RESULT 5 : pid of lighttpd : %s" %(pid_curr));
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 5 : pid of lighttpd : %s" %(details);
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("ACTUAL RESULT 5 : pid of lighttpd : %s" %(details));
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Revert to initial state
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                         actualresult, details = setLanMode(tdkTestObj, lanmodeInitial);
 
-                        print "\nTEST STEP 6 : Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(lanmodeInitial);
-                        print "EXPECTED RESULT 6: Should revert the Lan Mode to %s successfully" %(lanmodeInitial);
+                        print("\nTEST STEP 6 : Revert the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(lanmodeInitial));
+                        print("EXPECTED RESULT 6: Should revert the Lan Mode to %s successfully" %(lanmodeInitial));
 
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6: Lan Mode reverted successfully; Details : %s" %(details);
+                            print("ACTUAL RESULT 6: Lan Mode reverted successfully; Details : %s" %(details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6: Lan Mode not reverted successfully; Details : %s" %(details);
+                            print("ACTUAL RESULT 6: Lan Mode not reverted successfully; Details : %s" %(details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "SET does not reflect in GET";
+                        print("SET does not reflect in GET");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: GET operation failed; Lanmode is : ",currLanMode;
+                    print("ACTUAL RESULT 4: GET operation failed; Lanmode is : ",currLanMode);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Lan Mode not set successfully; Details : %s" %details;
+                print("ACTUAL RESULT 3: Lan Mode not set successfully; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2 : pid of lighttpd : %s" %(details);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT 2 : pid of lighttpd : %s" %(details));
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: GET operation failed; Lanmode is : ",lanmodeInitial;
+        print("ACTUAL RESULT 1: GET operation failed; Lanmode is : ",lanmodeInitial);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

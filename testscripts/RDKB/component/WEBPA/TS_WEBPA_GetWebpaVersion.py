@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_GetWebpaVersion');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -87,27 +87,27 @@ if "SUCCESS" in result.upper() :
 
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
-	#get the current Webpa Version
-	print "TEST STEP 1: Get and save the current Webpa Version "
-	queryParam = {"name":"Device.X_RDKCENTRAL-COM_Webpa.Version"}
-	queryResponse = webpaQuery(obj, queryParam)
-	parsedResponse = parseWebpaResponse(queryResponse, 1)
-	print "parsedResponse : %s" %parsedResponse;
-	tdkTestObj = obj.createTestStep('ExecuteCmd');
-	tdkTestObj.executeTestCase("SUCCESS");
+        #get the current Webpa Version
+        print("TEST STEP 1: Get and save the current Webpa Version ")
+        queryParam = {"name":"Device.X_RDKCENTRAL-COM_Webpa.Version"}
+        queryResponse = webpaQuery(obj, queryParam)
+        parsedResponse = parseWebpaResponse(queryResponse, 1)
+        print("parsedResponse : %s" %parsedResponse);
+        tdkTestObj = obj.createTestStep('ExecuteCmd');
+        tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "" :
             tdkTestObj.setResultStatus("SUCCESS");
-	    print "[TEST EXECUTION RESULT] : SUCCESS"
-	    Value = parsedResponse[1];
-	    print "Webpa Version: ",Value;
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            Value = parsedResponse[1];
+            print("Webpa Version: ",Value);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

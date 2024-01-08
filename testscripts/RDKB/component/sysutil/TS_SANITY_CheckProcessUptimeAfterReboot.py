@@ -115,139 +115,139 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     actualresult = tdkTestObj.getResult();
     WaitTime  = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult and WaitTime!="":
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Wait time to Check if the processes are up";
-       print "EXPECTED RESULT 1: Should get the Wait time to Check if the processes are up";
-       print "ACTUAL RESULT 1: ",WaitTime;
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       print "****DUT is going for a reboot and will be up after 300 seconds*****";
-       obj.initiateReboot();
-       sleep(300);
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Wait time to Check if the processes are up");
+        print("EXPECTED RESULT 1: Should get the Wait time to Check if the processes are up");
+        print("ACTUAL RESULT 1: ",WaitTime);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("****DUT is going for a reboot and will be up after 300 seconds*****");
+        obj.initiateReboot();
+        sleep(300);
 
-       tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.UpTime");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       upTime = tdkTestObj.getResultDetails();
+        tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.UpTime");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        upTime = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Uptime of the DUT";
-          print "EXPECTED RESULT 2: Should get the Uptime of the DUT";
-          print "ACTUAL RESULT 2: Uptime of the DUT is :",upTime;
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Uptime of the DUT");
+            print("EXPECTED RESULT 2: Should get the Uptime of the DUT");
+            print("ACTUAL RESULT 2: Uptime of the DUT is :",upTime);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          if int(upTime) < int(WaitTime):
-             sleepTime = (int(WaitTime) -int(upTime));
-             print " *********Sleeping for %s sec to check if the processes are up to reach a wait time of %s sec ****" %(sleepTime,WaitTime);
-             sleep(sleepTime);
+            if int(upTime) < int(WaitTime):
+                sleepTime = (int(WaitTime) -int(upTime));
+                print(" *********Sleeping for %s sec to check if the processes are up to reach a wait time of %s sec ****" %(sleepTime,WaitTime));
+                sleep(sleepTime);
 
-          tdkTestObj = obj.createTestStep('ExecuteCmd');
-          List = ["CCSP_PROCESS","SNMP_PROCESS","WEBPA_PROCESS","LIGHTTPD_PROCESS","DROPBEAR_PROCESS"];
-          process_List = [];
-          for item in List :
-              Process= "sh %s/tdk_utility.sh parseConfigFile %s" %(TDK_PATH,item);
-              print Process;
-              expectedresult="SUCCESS";
-              tdkTestObj.addParameter("command",Process);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              getProcess = tdkTestObj.getResultDetails().strip();
-              getProcess = getProcess.replace("\\n", "");
-              if getProcess !="":
-                 getProcess=getProcess.split(",")
-                 process_List.append(getProcess);
+            tdkTestObj = obj.createTestStep('ExecuteCmd');
+            List = ["CCSP_PROCESS","SNMP_PROCESS","WEBPA_PROCESS","LIGHTTPD_PROCESS","DROPBEAR_PROCESS"];
+            process_List = [];
+            for item in List :
+                Process= "sh %s/tdk_utility.sh parseConfigFile %s" %(TDK_PATH,item);
+                print(Process);
+                expectedresult="SUCCESS";
+                tdkTestObj.addParameter("command",Process);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                getProcess = tdkTestObj.getResultDetails().strip();
+                getProcess = getProcess.replace("\\n", "");
+                if getProcess !="":
+                    getProcess=getProcess.split(",")
+                    process_List.append(getProcess);
 
-          processList = [] ;
-          #converting nested list to flat list
-          processList = [ item for elem in process_List for item in elem]
-          if "Invalid Argument passed" not in processList and processList != "":
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the list of processes ";
-             print "EXPECTED RESULT 3: Should get the list of processes";
-             print "ACTUAL RESULT 3: %s" %processList;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS"
+            processList = [] ;
+            #converting nested list to flat list
+            processList = [ item for elem in process_List for item in elem]
+            if "Invalid Argument passed" not in processList and processList != "":
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the list of processes ");
+                print("EXPECTED RESULT 3: Should get the list of processes");
+                print("ACTUAL RESULT 3: %s" %processList);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
-             for item in processList:
-                 if item == "CcspHotspot":
-                    #Get current values of public wifi params
-                    tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
-                    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST_COM_xfinitywifiEnable");
-                    expectedresult="SUCCESS";
-                    #Execute the test case in DUT
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails();
+                for item in processList:
+                    if item == "CcspHotspot":
+                        #Get current values of public wifi params
+                        tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
+                        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST_COM_xfinitywifiEnable");
+                        expectedresult="SUCCESS";
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
 
-                    if expectedresult in  actualresult and details == "true":
-                       command1 = "pidof %s" %item
-                       tdkTestObj = obj.createTestStep('ExecuteCmd');
-                       tdkTestObj.addParameter("command", command1);
-                       tdkTestObj.executeTestCase(expectedresult);
-                       actualresult = tdkTestObj.getResult();
-                       details = tdkTestObj.getResultDetails().strip();
-                       details = details.replace("\\n", "");
-                       if expectedresult in actualresult and "" != details:
-                          tdkTestObj.setResultStatus("SUCCESS");
-                          print "Process Name : %s" %item;
-                          print "PID : %s" %details;
-                          print "%s with process ID %s is running" %(item,details)
-                          print "[TEST EXECUTION RESULT] : SUCCESS"
-                       else:
-                           tdkTestObj.setResultStatus("FAILURE");
-                           print "Process Name : %s" %item
-                           print "%s is not running" %item
-                           print "[TEST EXECUTION RESULT] : FAILURE"
+                        if expectedresult in  actualresult and details == "true":
+                            command1 = "pidof %s" %item
+                            tdkTestObj = obj.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", command1);
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip();
+                            details = details.replace("\\n", "");
+                            if expectedresult in actualresult and "" != details:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("Process Name : %s" %item);
+                                print("PID : %s" %details);
+                                print("%s with process ID %s is running" %(item,details))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("Process Name : %s" %item)
+                                print("%s is not running" %item)
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+                        else:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Since xfinitywifi is disabled CcspHotspot is not running")
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+
                     else:
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print "Since xfinitywifi is disabled CcspHotspot is not running"
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
-
-                 else:
-                     command1 = "pidof %s" %item
-                     tdkTestObj = obj.createTestStep('ExecuteCmd');
-                     tdkTestObj.addParameter("command", command1);
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     details = tdkTestObj.getResultDetails().strip();
-                     details = details.replace("\\n", "");
-                     if expectedresult in actualresult and "" != details:
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print "Process Name : %s" %item;
-                        print "PID : %s" %details;
-                        print "%s with process ID %s is running" %(item,details)
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
-                     else:
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "Process Name : %s" %item
-                         print "%s is not running" %item
-                         print "[TEST EXECUTION RESULT] : FAILURE"
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the list of processes ";
-              print "EXPECTED RESULT 3: Should get the list of processes";
-              print "ACTUAL RESULT 3: %s" %processList;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE"
-       else:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 2: Get the Uptime of the DUT";
-          print "EXPECTED RESULT 2: Should get the Uptime of the DUT";
-          print "ACTUAL RESULT 2: Uptime of the DUT is :",upTime;
-          print "[TEST EXECUTION RESULT] : FAILURE";
+                        command1 = "pidof %s" %item
+                        tdkTestObj = obj.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", command1);
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip();
+                        details = details.replace("\\n", "");
+                        if expectedresult in actualresult and "" != details:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("Process Name : %s" %item);
+                            print("PID : %s" %details);
+                            print("%s with process ID %s is running" %(item,details))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Process Name : %s" %item)
+                            print("%s is not running" %item)
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the list of processes ");
+                print("EXPECTED RESULT 3: Should get the list of processes");
+                print("ACTUAL RESULT 3: %s" %processList);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Uptime of the DUT");
+            print("EXPECTED RESULT 2: Should get the Uptime of the DUT");
+            print("ACTUAL RESULT 2: Uptime of the DUT is :",upTime);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1: Get the Wait time to Check if the processed are up";
-       print "EXPECTED RESULT 1: Should get the Wait time to Check if the processed are up";
-       print "ACTUAL RESULT 1: ",WaitTime;
-       print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the Wait time to Check if the processed are up");
+        print("EXPECTED RESULT 1: Should get the Wait time to Check if the processed are up");
+        print("ACTUAL RESULT 1: ",WaitTime);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-     print "Failed to load sysutil module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

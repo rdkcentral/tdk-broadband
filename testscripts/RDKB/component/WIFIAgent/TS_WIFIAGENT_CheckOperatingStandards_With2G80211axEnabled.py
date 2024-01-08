@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WIFIAGENT_CheckOperatingStandards_With2G80211a
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -97,15 +97,15 @@ if "SUCCESS" in loadmodulestatus.upper():
     initial_enable = tdkTestObj.getResultDetails().strip();
     initial_enable = initial_enable.split("VALUE:")[1].split(" ")[0].strip();
 
-    print "\nTEST STEP %d: Get the initial value of Device.WiFi.2G80211axEnable" %step;
-    print "EXPECTED RESULT %d: Should get the initial Device.WiFi.2G80211axEnable successfully" %step;
+    print("\nTEST STEP %d: Get the initial value of Device.WiFi.2G80211axEnable" %step);
+    print("EXPECTED RESULT %d: Should get the initial Device.WiFi.2G80211axEnable successfully" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: GET operation success; 2G80211axEnable is : %s" %(step, initial_enable);
+        print("ACTUAL RESULT %d: GET operation success; 2G80211axEnable is : %s" %(step, initial_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set to false if initially the enable status is not true
         revert_flag = 0;
@@ -125,28 +125,28 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Toggle the enable mode of Device.WiFi.2G80211axEnable to %s" %(step, setValue);
-            print "EXPECTED RESULT %d: Should set the Device.WiFi.2G80211axEnable to %s successfully" %(step, setValue);
+            print("\nTEST STEP %d: Toggle the enable mode of Device.WiFi.2G80211axEnable to %s" %(step, setValue));
+            print("EXPECTED RESULT %d: Should set the Device.WiFi.2G80211axEnable to %s successfully" %(step, setValue));
 
             if expectedresult in actualresult:
                 revert_flag = 1;
                 proceed_flag = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.WiFi.2G80211axEnable set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Device.WiFi.2G80211axEnable set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.WiFi.2G80211axEnable not set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Device.WiFi.2G80211axEnable not set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             proceed_flag = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Device.WiFi.2G80211axEnable is in enabled state initially";
+            print("Device.WiFi.2G80211axEnable is in enabled state initially");
 
         if proceed_flag == 1:
             #Check the Operating Standards
@@ -159,46 +159,46 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails().strip();
             operating_standards = details.split("VALUE:")[1].split(" ")[0].strip();
 
-            print "\nTEST STEP %d: Get the Operating Standards using Device.WiFi.Radio.1.OperatingStandards" %step;
-            print "EXPECTED RESULT %d: Should get the Device.WiFi.Radio.1.OperatingStandards successfully" %(step);
+            print("\nTEST STEP %d: Get the Operating Standards using Device.WiFi.Radio.1.OperatingStandards" %step);
+            print("EXPECTED RESULT %d: Should get the Device.WiFi.Radio.1.OperatingStandards successfully" %(step));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: GET operation success; Operating Standards are : %s" %(step, operating_standards);
+                print("ACTUAL RESULT %d: GET operation success; Operating Standards are : %s" %(step, operating_standards));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the operating standards are "g,n,ax" when 2G80211axEnable is in enabled state
                 step = step + 1;
 
-                print "\nTEST STEP %d: Check if the Device.WiFi.Radio.1.OperatingStandards gives g,n,ax as operating standards when 2G80211axEnable is in disabled state" %step;
-                print "EXPECTED RESULT %d: Device.WiFi.Radio.1.OperatingStandards should give g,n,ax as operating standards when 2G80211axEnable is in disabled state" %(step);
-                print "Expected Operating Standards : g,n,ax";
-                print "Actual Operating Standards : %s" %operating_standards;
+                print("\nTEST STEP %d: Check if the Device.WiFi.Radio.1.OperatingStandards gives g,n,ax as operating standards when 2G80211axEnable is in disabled state" %step);
+                print("EXPECTED RESULT %d: Device.WiFi.Radio.1.OperatingStandards should give g,n,ax as operating standards when 2G80211axEnable is in disabled state" %(step));
+                print("Expected Operating Standards : g,n,ax");
+                print("Actual Operating Standards : %s" %operating_standards);
 
                 if "g,n,ax" == operating_standards:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: The operating standards are as expected" %step;
+                    print("ACTUAL RESULT %d: The operating standards are as expected" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: The operating standards are NOT as expected" %step;
+                    print("ACTUAL RESULT %d: The operating standards are NOT as expected" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Details : %s" %(step, operating_standards);
+                print("ACTUAL RESULT %d: Details : %s" %(step, operating_standards));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Device.WiFi.2G80211axEnable could not be enabled";
+            print("Device.WiFi.2G80211axEnable could not be enabled");
 
         #Revert operation
         if revert_flag == 1:
@@ -212,32 +212,32 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Revert Device.WiFi.2G80211axEnable to %s" %(step, initial_enable);
-            print "EXPECTED RESULT %d: Should set the Device.WiFi.2G80211axEnable to %s successfully" %(step, initial_enable);
+            print("\nTEST STEP %d: Revert Device.WiFi.2G80211axEnable to %s" %(step, initial_enable));
+            print("EXPECTED RESULT %d: Should set the Device.WiFi.2G80211axEnable to %s successfully" %(step, initial_enable));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: 2G80211axEnable set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: 2G80211axEnable set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: 2G80211axEnable not set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: 2G80211axEnable not set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Revert operation not required";
+            print("Revert operation not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Details : %s" %(step, initial_enable);
+        print("ACTUAL RESULT %d: Details : %s" %(step, initial_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

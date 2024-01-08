@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_GetBridgeStandard');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -110,7 +110,7 @@ if "SUCCESS" in result.upper() :
     if "SUCCESS" in preRequisiteStatus:
 
         bridgeStd =  {"802.1D-2004" ,"802.1Q-2005", "802.1Q-2011"}
-        print "Expected bridge std : ", bridgeStd
+        print("Expected bridge std : ", bridgeStd)
         queryParam = {"name":"Device.Bridging.Bridge.1.Standard"}
         queryResponse = webpaQuery(obj, queryParam)
 
@@ -121,20 +121,20 @@ if "SUCCESS" in result.upper() :
             getStandard = parsedResponse[1];
             if getStandard in bridgeStd:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Device Bridge Standard:",getStandard
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("Device Bridge Standard:",getStandard)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE, invalid std received"
+                print("[TEST EXECUTION RESULT] : FAILURE, invalid std received")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

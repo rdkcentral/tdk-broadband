@@ -36,7 +36,7 @@
   <box_types>
     <box_type>Broadband</box_type>
     <box_type>Emulator</box_type>
-    
+
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
@@ -68,8 +68,8 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 
 #Test component to be tested
@@ -103,17 +103,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
     lanMode = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult and lanMode:
-	tdkTestObj.setResultStatus("SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
         #Set the result status of execution
-        print "TEST STEP 2: Get the current lanMode"
-        print "EXPECTED RESULT 2: Should get the current lanMode"
-        print "ACTUAL RESULT 2: Current lanMode is %s" %lanMode;
-	print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 2: Get the current lanMode")
+        print("EXPECTED RESULT 2: Should get the current lanMode")
+        print("ACTUAL RESULT 2: Current lanMode is %s" %lanMode);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#Set the lanMode to bridge-static
-	tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+        #Set the lanMode to bridge-static
+        tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-	tdkTestObj.addParameter("ParamValue","bridge-static");
+        tdkTestObj.addParameter("ParamValue","bridge-static");
         tdkTestObj.addParameter("Type","string");
         expectedresult="SUCCESS";
 
@@ -122,44 +122,44 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Set the lanMode to bridge-static";
-            print "EXPECTED RESULT 1: Should set the lanMode to bridge-static";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS" ;
+            print("TEST STEP 1: Set the lanMode to bridge-static");
+            print("EXPECTED RESULT 1: Should set the lanMode to bridge-static");
+            print("ACTUAL RESULT 1: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
-	    #rebooting the device
+            #rebooting the device
             obj.initiateReboot();
             sleep(300);
 
-	    #Check if the lanMode persists
-	    tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-    	    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-    	    expectedresult="SUCCESS";
+            #Check if the lanMode persists
+            tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
+            expectedresult="SUCCESS";
 
-    	    #Execute the test case in STB
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    lanMode1 = tdkTestObj.getResultDetails().strip();
+            #Execute the test case in STB
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            lanMode1 = tdkTestObj.getResultDetails().strip();
 
-    	    if expectedresult in actualresult and lanMode1 == "bridge-static":
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        #Set the result status of execution
-    	        print "TEST STEP 2: Get the current lanMode"
-    	        print "EXPECTED RESULT 2: Should get the current lanMode as bridge-static"
-    	        print "ACTUAL RESULT 2: Current lanMode is %s" %lanMode1;
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
+            if expectedresult in actualresult and lanMode1 == "bridge-static":
+                tdkTestObj.setResultStatus("SUCCESS");
                 #Set the result status of execution
-                print "TEST STEP 2: Get the current lanMode"
-                print "EXPECTED RESULT 2: Should get the current lanMode as bridge-static"
-                print "ACTUAL RESULT 2: Current lanMode is %s" %lanMode1;
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	    #Revert the value of lanMode
-	    tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+                print("TEST STEP 2: Get the current lanMode")
+                print("EXPECTED RESULT 2: Should get the current lanMode as bridge-static")
+                print("ACTUAL RESULT 2: Current lanMode is %s" %lanMode1);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                #Set the result status of execution
+                print("TEST STEP 2: Get the current lanMode")
+                print("EXPECTED RESULT 2: Should get the current lanMode as bridge-static")
+                print("ACTUAL RESULT 2: Current lanMode is %s" %lanMode1);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+            #Revert the value of lanMode
+            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
             tdkTestObj.addParameter("ParamValue",lanMode);
             tdkTestObj.addParameter("Type","string");
@@ -173,35 +173,35 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1:Revert the value of lanMode";
-                print "EXPECTED RESULT 1: Should revert the lanMode";
-                print "ACTUAL RESULT 1: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
-	    else:
-		#Set the result status of execution
+                print("TEST STEP 1:Revert the value of lanMode");
+                print("EXPECTED RESULT 1: Should revert the lanMode");
+                print("ACTUAL RESULT 1: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1:Revert the value of lanMode";
-                print "EXPECTED RESULT 1: Should revert the lanMode";
-                print "ACTUAL RESULT 1: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
-	else:
-	    #Set the result status of execution
+                print("TEST STEP 1:Revert the value of lanMode");
+                print("EXPECTED RESULT 1: Should revert the lanMode");
+                print("ACTUAL RESULT 1: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE") ;
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set the lanMode to bridge-static";
-            print "EXPECTED RESULT 1: Should set the lanMode to bridge-static";
-            print "ACTUAL RESULT 1: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("TEST STEP 1: Set the lanMode to bridge-static");
+            print("EXPECTED RESULT 1: Should set the lanMode to bridge-static");
+            print("ACTUAL RESULT 1: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
     else:
-	tdkTestObj.setResultStatus("FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
         #Set the result status of execution
-        print "TEST STEP 2: Get the current lanMode"
-        print "EXPECTED RESULT 2: Should get the current lanMode"
-        print "ACTUAL RESULT 2: Current lanMode is %s" %lanMode;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 2: Get the current lanMode")
+        print("EXPECTED RESULT 2: Should get the current lanMode")
+        print("ACTUAL RESULT 2: Current lanMode is %s" %lanMode);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load sysutil module";
-        sysObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load sysutil module");
+    sysObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

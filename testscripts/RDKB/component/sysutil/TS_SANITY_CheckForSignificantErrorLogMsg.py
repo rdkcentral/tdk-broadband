@@ -110,36 +110,36 @@ if "SUCCESS" in loadmodulestatus.upper():
     logFile = "/rdklogs/logs/";
     logMsg = ["command not found" ,"No such file or directory","syscfg_get failed" ,"404 Not Found" ,"syntax error","System Not Ready","Unknown Msg" ,"Invalid argument" ,"unary operator expected","nonexistent directory" ,"not found","Failed to get parameter value","received message error","Event length more than expected","violation","integer expression expected","No Matching Profiles"];
 
-    print "***************************************************";
-    print "TEST STEP 1: Checking if the following Log Messages are present in /rdklogs/logs/";
-    print "%s" %logMsg;
+    print("***************************************************");
+    print("TEST STEP 1: Checking if the following Log Messages are present in /rdklogs/logs/");
+    print("%s" %logMsg);
     markerfound =0;
     result = [];
     for item in logMsg:
-        print "\n*** Checking if %s  message is present in Log Files***" %item;
+        print("\n*** Checking if %s  message is present in Log Files***" %item);
         query="grep -rin \"%s\" \"%s\"" %(item,logFile);
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query)
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        print "Search Result :%s "%details;
+        print("Search Result :%s "%details);
         if (len(details) != 0)  and  item in details:
-           result.append(details);
-           markerfound =1;
+            result.append(details);
+            markerfound =1;
 
     if markerfound == 0:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "ACTUAL RESULT : The Above listed Log Messgaes were not present in /rdklogs/logs/";
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("ACTUAL RESULT : The Above listed Log Messgaes were not present in /rdklogs/logs/");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT : The following Log Messages were present :%s" %result;
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************";
+        print("ACTUAL RESULT : The following Log Messages were present :%s" %result);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

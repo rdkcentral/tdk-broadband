@@ -100,7 +100,7 @@ obj.configureTestCase(ip,port,'TS_WEBPA_EPON_DPoE_ClearOnuLinkStatistics');
 
 #Get the result of connection with test component and STB
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper() :
     #Set the module loading status
@@ -117,14 +117,14 @@ if "SUCCESS" in result.upper() :
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-	    entryCount = parsedResponse[1]
-	    entryCount = int(entryCount)
+            entryCount = parsedResponse[1]
+            entryCount = int(entryCount)
 
-	    print "OnuLinkStatisticsNumberOfEntries: ",entryCount
+            print("OnuLinkStatisticsNumberOfEntries: ",entryCount)
 
-	    if entryCount > 6:
+            if entryCount > 6:
                 flag = "true"
                 rxUnicastFrameOrg = " "
                 for i in range(1, 6):
@@ -139,76 +139,76 @@ if "SUCCESS" in result.upper() :
 
                 if flag == "true" :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
-                    print "Got all the rxUnicastFrames entries"
-		    rxUnicastFrameOrg = rxUnicastFrameOrg.lstrip(" ").rstrip(" ").split(" ");
-                    print "rxUnicastFrames: ",rxUnicastFrameOrg
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    print("Got all the rxUnicastFrames entries")
+                    rxUnicastFrameOrg = rxUnicastFrameOrg.lstrip(" ").rstrip(" ").split(" ");
+                    print("rxUnicastFrames: ",rxUnicastFrameOrg)
 
-      	            #clear the OnuLinkStatistics
-	            print "TEST STEP 2: Clear the OnuLinkStatistics"
-	            queryParam = {"name":"Device.DPoE.ClearOnuLinkStatistics","value":"true","dataType":3}
-	            queryResponse = webpaQuery(obj, queryParam, "set")
-	            parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
-	            tdkTestObj.executeTestCase("SUCCESS");
+                    #clear the OnuLinkStatistics
+                    print("TEST STEP 2: Clear the OnuLinkStatistics")
+                    queryParam = {"name":"Device.DPoE.ClearOnuLinkStatistics","value":"true","dataType":3}
+                    queryResponse = webpaQuery(obj, queryParam, "set")
+                    parsedResponse = parseWebpaResponse(queryResponse, 1, "set")
+                    tdkTestObj.executeTestCase("SUCCESS");
                     if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS"
-	                print "Reset success"
+                        print("TEST STEP 2[TEST EXECUTION RESULT] : SUCCESS")
+                        print("Reset success")
 
-	                flag = "true"
+                        flag = "true"
                         rxUnicastFrame = " "
-	                for i in range(1, 6):
-	                    queryParam = {"name":"Device.DPoE.DPoE_OnuLinkStatistics.%s.rxUnicastFrames" %i}
-	                    queryResponse = webpaQuery(obj, queryParam)
-	                    parsedResponse = parseWebpaResponse(queryResponse, 1)
-	                    if "SUCCESS" not in parsedResponse[0]:
-	            	        flag = "false"
-    	            	        break;
-	                    else:
-	            	        rxUnicastFrame = rxUnicastFrame + parsedResponse[1] + " "
-	                if flag == "true" :
+                        for i in range(1, 6):
+                            queryParam = {"name":"Device.DPoE.DPoE_OnuLinkStatistics.%s.rxUnicastFrames" %i}
+                            queryResponse = webpaQuery(obj, queryParam)
+                            parsedResponse = parseWebpaResponse(queryResponse, 1)
+                            if "SUCCESS" not in parsedResponse[0]:
+                                flag = "false"
+                                break;
+                            else:
+                                rxUnicastFrame = rxUnicastFrame + parsedResponse[1] + " "
+                        if flag == "true" :
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "[TEST EXECUTION RESULT] : SUCCESS"
-                            print "Got all the rxUnicastFrames entries after reset"
-			    rxUnicastFrame = rxUnicastFrame.lstrip(" ").rstrip(" ").split(" ");
-                            print "rxUnicastFrames after reset: ",rxUnicastFrame
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                            print("Got all the rxUnicastFrames entries after reset")
+                            rxUnicastFrame = rxUnicastFrame.lstrip(" ").rstrip(" ").split(" ");
+                            print("rxUnicastFrames after reset: ",rxUnicastFrame)
 
-			    resetOk = "true"
-			    for i in range(5):
-			        if int(rxUnicastFrame[i]) > int(rxUnicastFrameOrg[i]) :
-				    resetOk = "false"
-				    break;
-			    if flag == "true" :
+                            resetOk = "true"
+                            for i in range(5):
+                                if int(rxUnicastFrame[i]) > int(rxUnicastFrameOrg[i]) :
+                                    resetOk = "false"
+                                    break;
+                            if flag == "true" :
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "[TEST EXECUTION RESULT] : SUCCESS"
-                                print "OnuLinkStatistics successfully cleared"
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                                print("OnuLinkStatistics successfully cleared")
                             if flag == "false" :
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "[TEST EXECUTION RESULT] : FAILURE"
-                                print "Failed to clear OnuLinkStatistics"
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                print("Failed to clear OnuLinkStatistics")
 
-	                else:
+                        else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "[TEST EXECUTION RESULT] : FAILURE"
-                            print "Failed to get all the rxUnicastFrames entries after reset"
-	            else:
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print("Failed to get all the rxUnicastFrames entries after reset")
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 2[TEST EXECUTION RESULT] : FAILURE"
-                        print "Reset failed"
+                        print("TEST STEP 2[TEST EXECUTION RESULT] : FAILURE")
+                        print("Reset failed")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE"
-                    print "Failed to get all the rxUnicastFrames entries"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    print("Failed to get all the rxUnicastFrames entries")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("sysutil");
 
 else:
-    print "FAILURE to load module";
+    print("FAILURE to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

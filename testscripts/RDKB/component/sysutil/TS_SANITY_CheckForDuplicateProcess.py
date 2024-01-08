@@ -97,7 +97,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     step = 1;
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     process= "sh %s/tdk_utility.sh parseConfigFile LIST_OF_PROCESSES" %TDK_PATH;
-    print process;
+    print(process);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", process);
     tdkTestObj.executeTestCase(expectedresult);
@@ -107,11 +107,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     if "Invalid Argument passed" not in ProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of processes ";
-        print "EXPECTED RESULT 1: Should get the list of processes";
-        print "ACTUAL RESULT 1: %s" %ProcessList;
+        print("TEST STEP 1: Get the list of processes ");
+        print("EXPECTED RESULT 1: Should get the list of processes");
+        print("ACTUAL RESULT 1: %s" %ProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         ProcessList = ProcessList.split(",");
 
         #If CcspTr069PaSsp in ProcessList, check if the TR069 RFC is enabled
@@ -122,15 +122,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_Get');
             actualresult,enable = getTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable");
 
-            print "\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
-            print "EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
+            print("\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
+            print("EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
 
             if expectedresult in actualresult and enable != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %(step, enable);
+                print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %(step, enable));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if enable != "true":
                     #Set TR69 RFC to true
@@ -138,15 +138,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_SetOnly');
                     actualresult, details = setTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable", "true", "boolean");
 
-                    print "\nTEST STEP %d : Set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to true" %step;
-                    print "EXPECTED RESULT %d : Should set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to true" %step;
+                    print("\nTEST STEP %d : Set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to true" %step);
+                    print("EXPECTED RESULT %d : Should set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to true" %step);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable enabled successfully" %step;
+                        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable enabled successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check with GET
                         time.sleep(10);
@@ -157,25 +157,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             revert_flag = 1;
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TR069 RFC enabled successfully";
+                            print("TR069 RFC enabled successfully");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TR069 RFC NOT enabled successfully";
+                            print("TR069 RFC NOT enabled successfully");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable NOT enabled successfully" %step;
+                        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable NOT enabled successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "TR69 RFC is enabled already...SET operation not required";
+                    print("TR69 RFC is enabled already...SET operation not required");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved" %step;
+                print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         for item in ProcessList:
             if item == "CcspHotspot":
@@ -198,21 +198,21 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     details = tdkTestObj.getResultDetails().strip();
                     details = details.replace("\\n", "");
 
-                    print "\nTEST STEP %d: Check if two instances of %s process is running " %(step, item);
-                    print "EXPECTED RESULT %d: %s process is expected to have a single instances" %(step, item);
+                    print("\nTEST STEP %d: Check if two instances of %s process is running " %(step, item));
+                    print("EXPECTED RESULT %d: %s process is expected to have a single instances" %(step, item));
 
                     if expectedresult in actualresult and int(details) == 1:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: %s is having %s instance" %(step,item,details);
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                        print("ACTUAL RESULT %d: %s is having %s instance" %(step,item,details));
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: %s is having %s instance" %(step,item,details);
-                        print "[TEST EXECUTION RESULT] : FAILURE"
+                        print("ACTUAL RESULT %d: %s is having %s instance" %(step,item,details));
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Since xfinitywifi is disabled CcspHotspot is not running"
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("Since xfinitywifi is disabled CcspHotspot is not running")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 step = step + 1;
                 command1 =  "ps  | grep  %s  | grep -v \"grep\"| wc -l" %item
@@ -223,17 +223,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 details = tdkTestObj.getResultDetails().strip();
                 details = details.replace("\\n", "");
 
-                print "\nTEST STEP %d: Check if two instances of %s process is running " %(step,item);
-                print "EXPECTED RESULT %d: %s process is expected to have a single instances" %(step,item);
+                print("\nTEST STEP %d: Check if two instances of %s process is running " %(step,item));
+                print("EXPECTED RESULT %d: %s process is expected to have a single instances" %(step,item));
 
                 if expectedresult in actualresult and int(details) == 1:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: %s is having %s instance" %(step,item,details);
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("ACTUAL RESULT %d: %s is having %s instance" %(step,item,details));
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: %s is having %s instance" %(step,item,details);
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("ACTUAL RESULT %d: %s is having %s instance" %(step,item,details));
+                    print("[TEST EXECUTION RESULT] : FAILURE")
 
         #Revert operation
         if revert_flag == 1:
@@ -241,32 +241,32 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj= obj1.createTestStep('TDKB_TR181Stub_SetOnly');
             actualresult, details = setTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable", enable, "boolean");
 
-            print "\nTEST STEP %d : Revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
-            print "EXPECTED RESULT %d : Should revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
+            print("\nTEST STEP %d : Revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
+            print("EXPECTED RESULT %d : Should revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
 
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable reverted successfully" %step;
+                print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable reverted successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable NOT reverted successfully" %step;
+                print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable NOT reverted successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of processes ";
-        print "EXPECTED RESULT 1: Should get the list of processes";
-        print "ACTUAL RESULT 1: %s" %ProcessList;
+        print("TEST STEP 1: Get the list of processes ");
+        print("EXPECTED RESULT 1: Should get the list of processes");
+        print("ACTUAL RESULT 1: %s" %ProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-     print "Failed to load sysutil module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

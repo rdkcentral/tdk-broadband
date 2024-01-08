@@ -82,28 +82,28 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
     query="crontab -l | grep -i \"dca_utility\"";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print "Search Result :%s "%details;
+    print("Search Result :%s "%details);
 
     if expectedresult in actualresult and details =="":
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1: Checking if dca_utility.sh is scheduled in cron tab";
-       print "EXPECTED RESULT 1: dca_utility.sh is expected to be scheduled in cron tab";
-       print "ACTUAL RESULT 1:",details;
-       print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Checking if dca_utility.sh is scheduled in cron tab");
+        print("EXPECTED RESULT 1: dca_utility.sh is expected to be scheduled in cron tab");
+        print("ACTUAL RESULT 1:",details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Checking if dca_utility.sh is scheduled in cron tab";
-        print "EXPECTED RESULT 1: dca_utility.sh is expected to be scheduled in cron tab";
-        print "ACTUAL RESULT 1:",details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Checking if dca_utility.sh is scheduled in cron tab");
+        print("EXPECTED RESULT 1: dca_utility.sh is expected to be scheduled in cron tab");
+        print("ACTUAL RESULT 1:",details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

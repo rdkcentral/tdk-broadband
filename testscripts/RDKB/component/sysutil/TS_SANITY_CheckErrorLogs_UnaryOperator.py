@@ -109,55 +109,55 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check for SelfHeal.txt.0 log file presence";
-        print "EXPECTED RESULT 1: SelfHeal.txt.0 log file should be present";
-        print "ACTUAL RESULT 1: SelfHeal.txt.0 log file is present";
+        print("TEST STEP 1: Check for SelfHeal.txt.0 log file presence");
+        print("EXPECTED RESULT 1: SelfHeal.txt.0 log file should be present");
+        print("ACTUAL RESULT 1: SelfHeal.txt.0 log file is present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         logfile = "/rdklogs/logs/SelfHeal.txt.0";
         logMsg = ["-eq: unary operator expected"];
         markerfound = 0;
         for list in logMsg:
             for i in range(1,6):
                 if markerfound == 1:
-                   break;
+                    break;
                 else:
                     query="%s | grep -i \"%s\"" %(logfile,list)
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj = obj.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", query)
                     expectedresult="SUCCESS";
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                    print "Marker Detail Found fromLog file is: %s "%details;
+                    print("Marker Detail Found fromLog file is: %s "%details);
                     if (len(details) == 0)  or list not in details:
                         markerfound = 0;
                         sleep(60);
                     else:
                         markerfound = 1;
         if expectedresult in actualresult and markerfound == 1:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Check for syntax error like \-eq: unary operator expected \ present in SelfHeal.txt.0";
-           print "EXPECTED RESULT 2:syntax error like \-eq: unary operator expected \  should not be present in SelfHeal.txt.0";
-           print "ACTUAL RESULT 2: ",details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for syntax error like \-eq: unary operator expected \ present in SelfHeal.txt.0");
+            print("EXPECTED RESULT 2:syntax error like \-eq: unary operator expected \  should not be present in SelfHeal.txt.0");
+            print("ACTUAL RESULT 2: ",details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2:Check for syntax error like \-eq: unary operator expected \ present in SelfHeal.txt.0";
-           print "EXPECTED RESULT 2: syntax error like \-eq: unary operator expected \  should not be present in SelfHeal.txt.0";
-           print "ACTUAL RESULT 2: Log Message not found";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2:Check for syntax error like \-eq: unary operator expected \ present in SelfHeal.txt.0");
+            print("EXPECTED RESULT 2: syntax error like \-eq: unary operator expected \  should not be present in SelfHeal.txt.0");
+            print("ACTUAL RESULT 2: Log Message not found");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check for SelfHeal.txt.0 log file presence";
-        print "EXPECTED RESULT 1:SelfHeal.txt.0 log file should be present";
-        print "ACTUAL RESULT 1:SelfHeal.txt.0 log file is not present";
+        print("TEST STEP 1: Check for SelfHeal.txt.0 log file presence");
+        print("EXPECTED RESULT 1:SelfHeal.txt.0 log file should be present");
+        print("ACTUAL RESULT 1:SelfHeal.txt.0 log file is not present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
