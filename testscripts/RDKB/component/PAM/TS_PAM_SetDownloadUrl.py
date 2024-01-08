@@ -100,7 +100,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-												#use tdklib library,which provides a wrapper for tdk testcase script
+                                                                                                #use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
 #Test component to be tested
@@ -114,7 +114,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetDownloadUrl');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -137,12 +137,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-   	tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DownloadURL");
-    	tdkTestObj.addParameter("ParamValue"," ");
-    	tdkTestObj.addParameter("Type","string");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DownloadURL");
+        tdkTestObj.addParameter("ParamValue"," ");
+        tdkTestObj.addParameter("Type","string");
 
         expectedresult="SUCCESS";
 
@@ -153,33 +153,23 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-    	        #Set the result status of execution
-        	tdkTestObj.setResultStatus("SUCCESS");
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
 
-	        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-		print "%s" %details;
-	else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-      	  	print "%s" %details;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "%s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
 
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -109,8 +109,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_DisableRFC_AdvSecOTMEnable');
 #Get the result of connection with test component and DUT
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -122,14 +122,14 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
     tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
     initial_value, actualresult = get_parameter(tdkTestObj, paramName, expectedresult);
 
-    print "\nTEST STEP 1: Get the initial value of RFC Advanced Security OTM Enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedSecurityOTM.Enable"
-    print "EXPECTED RESULT 1: Should successfully get the initial value of RFC Advanced Security OTM Enable"
+    print("\nTEST STEP 1: Get the initial value of RFC Advanced Security OTM Enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedSecurityOTM.Enable")
+    print("EXPECTED RESULT 1: Should successfully get the initial value of RFC Advanced Security OTM Enable")
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Initial value is : %s" %initial_value;
+        print("ACTUAL RESULT 1: Initial value is : %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if the RFC is enabled, if not enable it
         flag = 0;
@@ -140,22 +140,22 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
             result, actualresult = set_parameter(tdkTestObj, paramName, setValue, expectedresult);
 
-            print "\nTEST STEP %d: Set RFC Advanced Security OTM Enable to %s before disabling the RFC again" %(step, setValue);
-            print "EXPECTED RESULT %d: Should successfully set RFC Advanced Security Enable status to %s before disabled the RFC again" %(step, setValue);
+            print("\nTEST STEP %d: Set RFC Advanced Security OTM Enable to %s before disabling the RFC again" %(step, setValue));
+            print("EXPECTED RESULT %d: Should successfully set RFC Advanced Security Enable status to %s before disabled the RFC again" %(step, setValue));
 
             if expectedresult in actualresult :
                 flag = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The RFC value set successfully; Details : %s" %(step, result);
+                print("ACTUAL RESULT %d: The RFC value set successfully; Details : %s" %(step, result));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: The RFC value not set successfully; Details : %s" %(step, result);
+                print("ACTUAL RESULT %d: The RFC value not set successfully; Details : %s" %(step, result));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             step = step + 1;
         else:
             flag = 1;
@@ -163,7 +163,7 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
         if flag == 1:
             #Get the initial line count of "ADVANCE_SECURITY_OTM_DISABLED"
             sysTestObj = sysobj.createTestStep('ExecuteCmd');
-            print "\nGet the current number of log lines of \"ADVANCE_SECURITY_OTM_DISABLED\"";
+            print("\nGet the current number of log lines of \"ADVANCE_SECURITY_OTM_DISABLED\"");
             file = "/rdklogs/logs/agent.txt"
             search_string = "ADVANCE_SECURITY_OTM_DISABLED";
             count_initial = getLogFileTotalLinesCount(sysTestObj, file, search_string, step);
@@ -174,15 +174,15 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
             result, actualresult = set_parameter(tdkTestObj, paramName, setValue, expectedresult);
 
-            print "\nTEST STEP %d: Set RFC Adcanced Security OTM Enable to %s" %(step, setValue);
-            print "EXPECTED RESULT %d: Should successfully set RFC Advanced Security Enable status to %s" %(step, setValue);
+            print("\nTEST STEP %d: Set RFC Adcanced Security OTM Enable to %s" %(step, setValue));
+            print("EXPECTED RESULT %d: Should successfully set RFC Advanced Security Enable status to %s" %(step, setValue));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The RFC value set successfully; Details : %s" %(step, result);
+                print("ACTUAL RESULT %d: The RFC value set successfully; Details : %s" %(step, result));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Cross check the set operation with syscfg_get and TR181 Get
                 step = step + 1;
@@ -193,32 +193,32 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 actualresult = tdkTestObj.getResult();
                 curr_value = tdkTestObj.getResultDetails().strip();
 
-                print "\nTEST STEP %d: Get the current value of RFC Advanced Security OTM Enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedSecurityOTM.Enable" %step;
-                print "EXPECTED RESULT %d: Should successfully get the current value of RFC Advanced Security OTM Enable" %step;
+                print("\nTEST STEP %d: Get the current value of RFC Advanced Security OTM Enable using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedSecurityOTM.Enable" %step);
+                print("EXPECTED RESULT %d: Should successfully get the current value of RFC Advanced Security OTM Enable" %step);
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Current TR181 value is : %s" %(step, curr_value);
+                    print("ACTUAL RESULT %d: Current TR181 value is : %s" %(step, curr_value));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     step = step + 1;
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     cmd= "syscfg get Adv_AdvSecOTMRFCEnable";
-                    print "\nCommand : ", cmd;
+                    print("\nCommand : ", cmd);
                     tdkTestObj.addParameter("command", cmd);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult1 = tdkTestObj.getResult();
                     syscfgGet = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                    print "TEST STEP %d : Get the Adv_AdvSecOTMRFCEnable from syscfg.db" %step;
-                    print "EXPECTED RESULT %d : Should get the Adv_AdvSecOTMRFCEnable value from syscfg.db successfully" %step;
+                    print("TEST STEP %d : Get the Adv_AdvSecOTMRFCEnable from syscfg.db" %step);
+                    print("EXPECTED RESULT %d : Should get the Adv_AdvSecOTMRFCEnable value from syscfg.db successfully" %step);
 
                     if expectedresult in actualresult and syscfgGet != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Current syscfg get value is : %s" %(step, syscfgGet);
+                        print("ACTUAL RESULT %d: Current syscfg get value is : %s" %(step, syscfgGet));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Need to convert syscfg get value  0/1 to false/true
                         enable = syscfgGet;
@@ -228,60 +228,60 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                             enable = "false";
 
                         step = step + 1;
-                        print "\nTEST STEP %d : Cross check the RFC Advanced Security OTM Enable via syscfg and TR181 with the set value" %step;
-                        print "EXPECTED RESULT %d: RFC Advanced Security OTM Enable status should be equal to that of set value" %step;
-                        print "TR181 get value : %s" %curr_value;
-                        print "syscfg get value : %s" %syscfgGet;
-                        print "RFC value set : %s" %setValue
+                        print("\nTEST STEP %d : Cross check the RFC Advanced Security OTM Enable via syscfg and TR181 with the set value" %step);
+                        print("EXPECTED RESULT %d: RFC Advanced Security OTM Enable status should be equal to that of set value" %step);
+                        print("TR181 get value : %s" %curr_value);
+                        print("syscfg get value : %s" %syscfgGet);
+                        print("RFC value set : %s" %setValue)
 
                         if enable == setValue and curr_value == setValue :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: The value set is reflected in TR181 and syscfg get" %step;
+                            print("ACTUAL RESULT %d: The value set is reflected in TR181 and syscfg get" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if the required logging pattern is seen in agent.txt when RFC is disabled
                             sleep(10);
                             #Get the final line count of "ADVANCE_SECURITY_OTM_DISABLED"
-                            print "\nGet the current number of log lines of \"ADVANCE_SECURITY_OTM_DISABLED\"";
+                            print("\nGet the current number of log lines of \"ADVANCE_SECURITY_OTM_DISABLED\"");
                             step = step + 1;
                             count_final = getLogFileTotalLinesCount(sysTestObj, file, search_string, step);
 
                             step = step + 1;
-                            print "\nTEST STEP %d: Check if the expected log line is incremented by 1 after the RFC disable" %step;
-                            print "EXPECTED RESULT %d: The expected log line should be incremented by 1 after the RFC disable" %step;
+                            print("\nTEST STEP %d: Check if the expected log line is incremented by 1 after the RFC disable" %step);
+                            print("EXPECTED RESULT %d: The expected log line should be incremented by 1 after the RFC disable" %step);
 
                             if (count_final - count_initial) == 1:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print"ACTUAL RESULT %d: The required logging pattern in found in agent.txt after RFC change" %step;
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("ACTUAL RESULT %d: The required logging pattern in found in agent.txt after RFC change" %step);
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print"ACTUAL RESULT %d:The required logging pattern in not found in agent.txt after RFC change" %step;
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("ACTUAL RESULT %d:The required logging pattern in not found in agent.txt after RFC change" %step);
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: The value set is not reflected in get" %step;
+                            print("ACTUAL RESULT %d: The value set is not reflected in get" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Current syscfg get value is : %s" %(step, syscfgGet);
+                        print("ACTUAL RESULT %d: Current syscfg get value is : %s" %(step, syscfgGet));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Get operation failed after set; Details : %s" %(step, curr_value);
+                    print("ACTUAL RESULT %d: Get operation failed after set; Details : %s" %(step, curr_value));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: The RFC value not set successfully; Details : %s" %(step, result);
+                print("ACTUAL RESULT %d: The RFC value not set successfully; Details : %s" %(step, result));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if initial_value != setValue:
                 tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');
@@ -289,25 +289,25 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Revert operation is success";
+                    print("Revert operation is success");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Revert operation failed";
+                    print("Revert operation failed");
             else :
-               print "Revert operation not required";
+                print("Revert operation not required");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "Unable to enable RFC Advanced Security OTM Enable initially";
+            print("Unable to enable RFC Advanced Security OTM Enable initially");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Get operation failed; Details : %s" %initial_value;
+        print("ACTUAL RESULT 1: Get operation failed; Details : %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

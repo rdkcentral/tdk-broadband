@@ -114,64 +114,64 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         default = default.split("VALUE:")[1].split(" ")[0].strip();
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current WiFi Force Disable state";
-        print "EXPECTED RESULT 1: Should get current WiFi Force Disable state";
-        print "ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current WiFi Force Disable state");
+        print("EXPECTED RESULT 1: Should get current WiFi Force Disable state");
+        print("ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if "false" in default:
-           tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-           tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
-           tdkTestObj.addParameter("paramValue", "true");
-           tdkTestObj.addParameter("paramType","boolean")
-           tdkTestObj.executeTestCase("expectedresult");
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+            tdkTestObj.addParameter("paramName","Device.WiFi.X_RDK-CENTRAL_COM_ForceDisable")
+            tdkTestObj.addParameter("paramValue", "true");
+            tdkTestObj.addParameter("paramType","boolean")
+            tdkTestObj.executeTestCase("expectedresult");
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 2: Enable the WiFi Force Disable";
-              print "EXPECTED RESULT 2: Should enable Force Disable state";
-              print "ACTUAL RESULT 2: %s" %details;
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Enable the WiFi Force Disable");
+                print("EXPECTED RESULT 2: Should enable Force Disable state");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-              print "Check if the device is dual core or not since WiFi logging takes place on arm side"
-              tdkTestObj = obj1.createTestStep('ExecuteCmd');
-              RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
-              tdkTestObj.addParameter("command", RPCCmd);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              RPC_CMD = tdkTestObj.getResultDetails().strip();
-              RPC_CMD = RPC_CMD.replace("\\n", "");
-              if RPC_CMD:
-                 print "The device needs rpc command";
-                 cmd = RPC_CMD + " 'tail -l  /rdklogs/logs/WiFilog.txt.0' | grep -rn \'WIFI_FORCE_DISABLE_CHANGED_TO_TRUE\' ";
-              else:
-                  print "The device doesn't need rpc command"
-                  cmd = "tail -1 /rdklogs/logs//WiFilog.txt.0 | grep -rn \"WIFI_FORCE_DISABLE_CHANGED_TO_TRUE\" ";
+                print("Check if the device is dual core or not since WiFi logging takes place on arm side")
+                tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
+                tdkTestObj.addParameter("command", RPCCmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                RPC_CMD = tdkTestObj.getResultDetails().strip();
+                RPC_CMD = RPC_CMD.replace("\\n", "");
+                if RPC_CMD:
+                    print("The device needs rpc command");
+                    cmd = RPC_CMD + " 'tail -l  /rdklogs/logs/WiFilog.txt.0' | grep -rn \'WIFI_FORCE_DISABLE_CHANGED_TO_TRUE\' ";
+                else:
+                    print("The device doesn't need rpc command")
+                    cmd = "tail -1 /rdklogs/logs//WiFilog.txt.0 | grep -rn \"WIFI_FORCE_DISABLE_CHANGED_TO_TRUE\" ";
 
-              tdkTestObj.addParameter("command", cmd);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              if expectedresult in actualresult and "WIFI_FORCE_DISABLE_CHANGED_TO_TRUE"  in details:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_TRUE is present in WiFilog.txt.0";
-                 print "EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_TRUE should be present in WiFilog.txt.0 ";
-                 print "ACTUAL RESULT 3: %s" %details;
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_TRUE is present in WiFilog.txt.0";
-                  print "EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_TRUE should be present in WiFilog.txt.0 ";
-                  print "ACTUAL RESULT 3: %s" %details;
-                  print "[TEST EXECUTION RESULT] :FAILURE";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 2: Enable the WiFi Force Disable";
-               print "EXPECTED RESULT 2: Should enable Force Disable state";
-               print "ACTUAL RESULT 2: %s" %details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.addParameter("command", cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult and "WIFI_FORCE_DISABLE_CHANGED_TO_TRUE"  in details:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_TRUE is present in WiFilog.txt.0");
+                    print("EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_TRUE should be present in WiFilog.txt.0 ");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_TRUE is present in WiFilog.txt.0");
+                    print("EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_TRUE should be present in WiFilog.txt.0 ");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] :FAILURE");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Enable the WiFi Force Disable");
+                print("EXPECTED RESULT 2: Should enable Force Disable state");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
@@ -183,49 +183,49 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails();
 
             if expectedresult in actualresult:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 2: Disable the WiFi Force Disable";
-               print "EXPECTED RESULT 2: Should Disable Force Disable state";
-               print "ACTUAL RESULT 2: %s" %details;
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Disable the WiFi Force Disable");
+                print("EXPECTED RESULT 2: Should Disable Force Disable state");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               print "Check if the device is dual core or not since WiFi logging takes place on arm side"
-               tdkTestObj = obj1.createTestStep('ExecuteCmd');
-               RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
-               tdkTestObj.addParameter("command", RPCCmd);
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               RPC_CMD = tdkTestObj.getResultDetails().strip();
-               RPC_CMD = RPC_CMD.replace("\\n", "");
-               if RPC_CMD:
-                  print "The device needs rpc command";
-                  cmd = RPC_CMD + " 'tail -1 /rdklogs/logs/WiFilog.txt.0' | grep -rn \'WIFI_FORCE_DISABLE_CHANGED_TO_FALSE\' ";
-               else:
-                   print "The device doesn't need rpc command"
-                   cmd = "tail -1 /rdklogs/logs//WiFilog.txt.0 | grep -rn \"WIFI_FORCE_DISABLE_CHANGED_TO_FALSE\" ";
+                print("Check if the device is dual core or not since WiFi logging takes place on arm side")
+                tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
+                tdkTestObj.addParameter("command", RPCCmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                RPC_CMD = tdkTestObj.getResultDetails().strip();
+                RPC_CMD = RPC_CMD.replace("\\n", "");
+                if RPC_CMD:
+                    print("The device needs rpc command");
+                    cmd = RPC_CMD + " 'tail -1 /rdklogs/logs/WiFilog.txt.0' | grep -rn \'WIFI_FORCE_DISABLE_CHANGED_TO_FALSE\' ";
+                else:
+                    print("The device doesn't need rpc command")
+                    cmd = "tail -1 /rdklogs/logs//WiFilog.txt.0 | grep -rn \"WIFI_FORCE_DISABLE_CHANGED_TO_FALSE\" ";
 
-               tdkTestObj.addParameter("command", cmd);
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-               if expectedresult in actualresult and "WIFI_FORCE_DISABLE_CHANGED_TO_FALSE" in details:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_FALSE is present in WiFilog.txt.0";
-                  print "EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_FALSE should be present in WiFilog.txt.0 ";
-                  print "ACTUAL RESULT 3: %s" %details;
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_FALSE is present in WiFilog.txt.0";
-                   print "EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_FALSE should be present in WiFilog.txt.0 ";
-                   print "ACTUAL RESULT 3: %s" %details;
-                   print "[TEST EXECUTION RESULT] :FAILURE";
+                tdkTestObj.addParameter("command", cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult and "WIFI_FORCE_DISABLE_CHANGED_TO_FALSE" in details:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_FALSE is present in WiFilog.txt.0");
+                    print("EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_FALSE should be present in WiFilog.txt.0 ");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Check if WIFI_FORCE_DISABLE_CHANGED_TO_FALSE is present in WiFilog.txt.0");
+                    print("EXPECTED RESULT 3: WIFI_FORCE_DISABLE_CHANGED_TO_FALSE should be present in WiFilog.txt.0 ");
+                    print("ACTUAL RESULT 3: %s" %details);
+                    print("[TEST EXECUTION RESULT] :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Disable the WiFi Force Disable";
-                print "EXPECTED RESULT 2: Should Disable Force Disable state";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2: Disable the WiFi Force Disable");
+                print("EXPECTED RESULT 2: Should Disable Force Disable state");
+                print("ACTUAL RESULT 2: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         #revert operation
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
@@ -237,26 +237,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 4: Revert the WiFi Force Disable to previous";
-           print "EXPECTED RESULT 4: Should revert  Force Disable state to %s" %default;
-           print "ACTUAL RESULT 4: %s" %details;
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 4: Revert the WiFi Force Disable to previous");
+            print("EXPECTED RESULT 4: Should revert  Force Disable state to %s" %default);
+            print("ACTUAL RESULT 4: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Revert the WiFi Force Disable to previous";
-            print "EXPECTED RESULT 4: Should revert  Force Disable state to %s" %default;
-            print "ACTUAL RESULT 4: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 4: Revert the WiFi Force Disable to previous");
+            print("EXPECTED RESULT 4: Should revert  Force Disable state to %s" %default);
+            print("ACTUAL RESULT 4: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current WiFi Force Disable state";
-        print "EXPECTED RESULT 1: Should get current WiFi Force Disable state";
-        print "ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current WiFi Force Disable state");
+        print("EXPECTED RESULT 1: Should get current WiFi Force Disable state");
+        print("ACTUAL RESULT 1: current WiFi Force Disable state is %s" %default);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent")
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load wifiagent/sysutil module";
+    print("Failed to load wifiagent/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

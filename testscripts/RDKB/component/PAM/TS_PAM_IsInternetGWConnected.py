@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_PAM_IsInternetGWConnected');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -112,28 +112,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Manufacturer OUI";
-        print "EXPECTED RESULT 1: Manufacturer OUI should not be empty";
-        print "ACTUAL RESULT 1: Manufacturer OUI is %s" %details;
-	print "Internet Gateway is connected";
+        print("TEST STEP 1: Get the Manufacturer OUI");
+        print("EXPECTED RESULT 1: Manufacturer OUI should not be empty");
+        print("ACTUAL RESULT 1: Manufacturer OUI is %s" %details);
+        print("Internet Gateway is connected");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Manufacturer OUI";
-        print "EXPECTED RESULT 1: Manufacturer OUI should not be empty";
-        print "ACTUAL RESULT 1: Manufacturer OUI is empty,%s" %details;
-	print "Internet Gateway is not connected";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Manufacturer OUI");
+        print("EXPECTED RESULT 1: Manufacturer OUI should not be empty");
+        print("ACTUAL RESULT 1: Manufacturer OUI is empty,%s" %details);
+        print("Internet Gateway is not connected");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

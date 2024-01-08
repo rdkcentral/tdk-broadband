@@ -96,123 +96,123 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
     default = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Rabid Framework Memory Limit"
-       print "EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit";
-       print "ACTUAL RESULT 1:Rabid Framework Memory Limit:",default;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Rabid Framework Memory Limit")
+        print("EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit");
+        print("ACTUAL RESULT 1:Rabid Framework Memory Limit:",default);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       MemLimit =[6,10,15,20];
-       # getting length of list
-       length = len(MemLimit);
-       flag = 0;
-       equalflag = 0;
-       print "Trying to Set the Rabid Framework Memory Limit to the following:",MemLimit;
+        MemLimit =[6,10,15,20];
+        # getting length of list
+        length = len(MemLimit);
+        flag = 0;
+        equalflag = 0;
+        print("Trying to Set the Rabid Framework Memory Limit to the following:",MemLimit);
 
-       for i in range(length):
-           print "Setting Rabid Framework Memory Limit to ",MemLimit[i];
+        for i in range(length):
+            print("Setting Rabid Framework Memory Limit to ",MemLimit[i]);
 
-           tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-           tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit")
-           tdkTestObj.addParameter("ParamValue",str(MemLimit[i]));
-           tdkTestObj.addParameter("Type","unsignedint");
-           expectedresult="SUCCESS";
+            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit")
+            tdkTestObj.addParameter("ParamValue",str(MemLimit[i]));
+            tdkTestObj.addParameter("Type","unsignedint");
+            expectedresult="SUCCESS";
 
-           #Execute testcase on DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           Setresult = tdkTestObj.getResultDetails();
+            #Execute testcase on DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            Setresult = tdkTestObj.getResultDetails();
 
-           flag = 0;
-           equalflag = 0;
-           SetValue = MemLimit[i];
+            flag = 0;
+            equalflag = 0;
+            SetValue = MemLimit[i];
 
-           if expectedresult in actualresult:
-              flag =0;
-              print " Value set successfully to ",SetValue;
+            if expectedresult in actualresult:
+                flag =0;
+                print(" Value set successfully to ",SetValue);
 
-              tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-              cmd= "syscfg show | grep Advsecurity_RabidMemoryLimit";
-              expectedresult="SUCCESS";
-              tdkTestObj.addParameter("command",cmd);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              syscfgGet = details.split('=')[1].strip().replace("\\n", "");
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                cmd= "syscfg show | grep Advsecurity_RabidMemoryLimit";
+                expectedresult="SUCCESS";
+                tdkTestObj.addParameter("command",cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                syscfgGet = details.split('=')[1].strip().replace("\\n", "");
 
-              print "Memory Limit via Syscfg is:",syscfgGet
-              print "Memory Limit set using tr-181 parameter :",SetValue
+                print("Memory Limit via Syscfg is:",syscfgGet)
+                print("Memory Limit set using tr-181 parameter :",SetValue)
 
-              if expectedresult in actualresult and int(syscfgGet) == int(SetValue):
-                 equalflag =0;
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "[TEST EXECUTION RESULT] : SUCCESS, Set memory limit  and syscfg  O/P are same";
-              else:
-                  equalflag =1
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "[TEST EXECUTION RESULT] : FAILURE, Set memory limit  and syscfg  O/P not same";
-                  break;
-           else:
+                if expectedresult in actualresult and int(syscfgGet) == int(SetValue):
+                    equalflag =0;
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("[TEST EXECUTION RESULT] : SUCCESS, Set memory limit  and syscfg  O/P are same");
+                else:
+                    equalflag =1
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE, Set memory limit  and syscfg  O/P not same");
+                    break;
+            else:
                 flag =1;
                 break;
 
-       if flag == 0 and equalflag == 0:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Set the Rabid Framework Memory Limit to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ";
-          print "EXPECTED RESULT 2: Should set the Lan IP Address to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same "
-          print "ACTUAL RESULT 2: Rabid Framework Memory Limit set successfully";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
+        if flag == 0 and equalflag == 0:
             #Set the result status of execution
-            print "TEST STEP 2: Set the Rabid Framework Memory Limit to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ";
-            print "EXPECTED RESULT 2: Should set the Lan IP Address to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same "
-            print "ACTUAL RESULT 2: Rabid Framework Memory Limit set failed for",SetValue;
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the Rabid Framework Memory Limit to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ");
+            print("EXPECTED RESULT 2: Should set the Lan IP Address to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ")
+            print("ACTUAL RESULT 2: Rabid Framework Memory Limit set successfully");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            print("TEST STEP 2: Set the Rabid Framework Memory Limit to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ");
+            print("EXPECTED RESULT 2: Should set the Lan IP Address to:",MemLimit,"and check if the value set via tr181 and syscfg show | grep Advsecurity_RabidMemoryLimit are same ")
+            print("ACTUAL RESULT 2: Rabid Framework Memory Limit set failed for",SetValue);
             tdkTestObj.setResultStatus("FAILURE");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-       #Revert the value
-       tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit");
-       tdkTestObj.addParameter("ParamValue",default);
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="SUCCESS";
-       #Execute testcase on DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       result = tdkTestObj.getResultDetails();
+        #Revert the value
+        tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit");
+        tdkTestObj.addParameter("ParamValue",default);
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="SUCCESS";
+        #Execute testcase on DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        result = tdkTestObj.getResultDetails();
 
-       if expectedresult in  expectedresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 3: Revert Rabid Framework Memory Limit to its default";
-          print "EXPECTED RESULT 3: Revert Rabid Framework Memory Limit to previous value";
-          print "ACTUAL RESULT 3: Revert Operation sucesss:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 3: Revert Rabid Framework Memory Limit to its default";
-          print "EXPECTED RESULT 3: Revert Rabid Framework Memory Limit to previous value";
-          print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in  expectedresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Revert Rabid Framework Memory Limit to its default");
+            print("EXPECTED RESULT 3: Revert Rabid Framework Memory Limit to previous value");
+            print("ACTUAL RESULT 3: Revert Operation sucesss:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 3: Revert Rabid Framework Memory Limit to its default");
+            print("EXPECTED RESULT 3: Revert Rabid Framework Memory Limit to previous value");
+            print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Rabid Framework Memory Limit";
-        print "EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit";
-        print "ACTUAL RESULT 1:Rabid Framework Memory Limit",default;
+        print("TEST STEP 1: Get the Rabid Framework Memory Limit");
+        print("EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit");
+        print("ACTUAL RESULT 1:Rabid Framework Memory Limit",default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-    print "Failed to load sysutil/pam  module";
+    print("Failed to load sysutil/pam  module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -90,7 +90,7 @@ Stub function result should be success and should see corresponding log in the a
   <script_tags />
 </xml>
 '''
-						#import statement
+                                                #import statement
 import tdklib;
 
 #Test component to be tested
@@ -104,7 +104,7 @@ obj.configureTestCase(ip,port,'TS_COSAPAM_DhcpcGetInstanceNumber');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -121,21 +121,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the InstanceNumber of dhcp client";
-        print "EXPECTED RESULT 1: Should get the InstanceNumber of dhcp client";
-        print "ACTUAL RESULT 1: InstanceNumber of dhcp client: %s" %details;
+        print("TEST STEP 1: Get the InstanceNumber of dhcp client");
+        print("EXPECTED RESULT 1: Should get the InstanceNumber of dhcp client");
+        print("ACTUAL RESULT 1: InstanceNumber of dhcp client: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the InstanceNumber of dhcp client";
-        print "EXPECTED RESULT 1: Should get the InstanceNumber of dhcp client";
-        print "ACTUAL RESULT 1: Failure in getting the InstanceNumber of dhcp client. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the InstanceNumber of dhcp client");
+        print("EXPECTED RESULT 1: Should get the InstanceNumber of dhcp client");
+        print("ACTUAL RESULT 1: Failure in getting the InstanceNumber of dhcp client. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

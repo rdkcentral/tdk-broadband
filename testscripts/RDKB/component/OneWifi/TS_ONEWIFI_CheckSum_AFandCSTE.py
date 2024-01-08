@@ -87,8 +87,8 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     step = 1;
     for index in range(1,3):
-        print "\n***************For radio index : %d*********************" %index;
-        print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was transmitting or receiving Wi-Fi packets" %index;
+        print("\n***************For radio index : %d*********************" %index);
+        print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was transmitting or receiving Wi-Fi packets" %index);
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_AF";
         tdkTestObj.addParameter("ParamName",param);
@@ -97,20 +97,20 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Get the Activity Factor from %s" %(step,param);
-        print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-        print "Details : %s" %details;
+        print("\nTEST STEP %d: Get the Activity Factor from %s" %(step,param));
+        print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+        print("Details : %s" %details);
 
         if expectedresult in actualresult and details != "":
             ActivityFactor = int(details);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor);
+            print("ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             step = step + 1;
-            print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_CSTE - Percentage of time that the radio was unable to transmit or receive Wi-Fi packets" %index;
+            print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_CSTE - Percentage of time that the radio was unable to transmit or receive Wi-Fi packets" %index);
             param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_CSTE";
             tdkTestObj.addParameter("ParamName",param);
             expectedresult="SUCCESS";
@@ -118,56 +118,55 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Get the Carrier Sense Threshold Exceeded from %s" %(step,param);
-            print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-            print "Details : %s" %details;
+            print("\nTEST STEP %d: Get the Carrier Sense Threshold Exceeded from %s" %(step,param));
+            print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+            print("Details : %s" %details);
 
             if expectedresult in actualresult and details != "":
                 CarrierSenseThresholdExceeded = int(details);
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The value is : %d" %(step,CarrierSenseThresholdExceeded);
+                print("ACTUAL RESULT %d: The value is : %d" %(step,CarrierSenseThresholdExceeded));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 step = step + 1;
                 #Check if the sum of AF and CSTE is less than or equal to 100
                 calculated_sum = ActivityFactor + CarrierSenseThresholdExceeded;
-                print "\nTEST STEP %d: Check if the sum of Activity Factor and Carrier Sense Threshold Exceeded is less than 100" %(step);
-                print "EXPECTED RESULT %d: The sum of Activity Factor and Carrier Sense Threshold Exceeded should be less than 100" %(step);
-                print "AF retrieved from TR181 parameter : %d" %ActivityFactor;
-                print "CSTE retrieved from TR181 parameter: %d" %CarrierSenseThresholdExceeded;
-                print "Sum : %d" %calculated_sum;
+                print("\nTEST STEP %d: Check if the sum of Activity Factor and Carrier Sense Threshold Exceeded is less than 100" %(step));
+                print("EXPECTED RESULT %d: The sum of Activity Factor and Carrier Sense Threshold Exceeded should be less than 100" %(step));
+                print("AF retrieved from TR181 parameter : %d" %ActivityFactor);
+                print("CSTE retrieved from TR181 parameter: %d" %CarrierSenseThresholdExceeded);
+                print("Sum : %d" %calculated_sum);
 
                 if calculated_sum <= 100:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: The sum is less than 100" %step;
+                    print("ACTUAL RESULT %d: The sum is less than 100" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: The sum is not less than 100" %step;
+                    print("ACTUAL RESULT %d: The sum is not less than 100" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Failed to get the value" %step;
+                print("ACTUAL RESULT %d: Failed to get the value" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Failed to get the value" %step;
+            print("ACTUAL RESULT %d: Failed to get the value" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         step = step + 1;
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -89,23 +89,23 @@ def get_EnableFWUpgraderRFC(tdkTestObj, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable" %step;
-    print "EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable" %step;
+    print("\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable" %step);
+    print("EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable" %step);
 
     if expectedresult in actualresult and details != "":
         status = 0;
         enable = details.strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is : %s" %(step,enable);
+        print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is : %s" %(step,enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved" %step;
+        print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not retrieved" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return enable, status;
 
 def set_EnableFWUpgraderRFC(pamobj, value, step):
@@ -119,22 +119,22 @@ def set_EnableFWUpgraderRFC(pamobj, value, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RDKFirmwareUpgrader.Enable is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 
@@ -171,20 +171,20 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     enable, status = get_EnableFWUpgraderRFC(tdkTestObj, step);
 
     if enable == "true" and status == 0:
-        print "\nInitial Enable Status : %s" %enable;
+        print("\nInitial Enable Status : %s" %enable);
         step = step + 1;
         #If RFC Enable is true, then the service should be in running state
         command = "systemctl status rdkfwupgrader.service | grep -i running";
-        print "\nTEST STEP %d: Check if rdkfwupgrader.service is running in the device" %step;
-        print "EXPECTED RESULT %d : rdkfwupgrader.service should be running in the device" %step;
+        print("\nTEST STEP %d: Check if rdkfwupgrader.service is running in the device" %step);
+        print("EXPECTED RESULT %d : rdkfwupgrader.service should be running in the device" %step);
         tdkTestObj, actualresult, details = check_FwupgraderService(sysobj, command);
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : rdkfwupgrader.service is running in the device : %s" %(step, details);
+            print("ACTUAL RESULT %d : rdkfwupgrader.service is running in the device : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Toggle the enable to false
             step = step + 1;
@@ -192,8 +192,8 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             status = set_EnableFWUpgraderRFC(pamobj, value, step);
 
             if status == 0:
-                print "\nReboot the device, the RFC value should persist on reboot";
-                print "Rebooting the device......";
+                print("\nReboot the device, the RFC value should persist on reboot");
+                print("Rebooting the device......");
                 sysobj.initiateReboot();
                 sleep(300);
 
@@ -203,70 +203,70 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 enable, status = get_EnableFWUpgraderRFC(tdkTestObj, step);
 
                 if enable == "false" and status == 0:
-                    print "\nCurrent Enable Status : %s" %enable;
+                    print("\nCurrent Enable Status : %s" %enable);
                     step = step + 1;
                     #If RFC Enable is false, then the service should be in dead state
                     command = "systemctl status rdkfwupgrader.service | grep -i dead";
-                    print "\nTEST STEP %d: Check if rdkfwupgrader.service is in dead state in the device" %step;
-                    print "EXPECTED RESULT %d : rdkfwupgrader.service should be in dead state in the device" %step;
+                    print("\nTEST STEP %d: Check if rdkfwupgrader.service is in dead state in the device" %step);
+                    print("EXPECTED RESULT %d : rdkfwupgrader.service should be in dead state in the device" %step);
                     tdkTestObj, actualresult, details = check_FwupgraderService(sysobj, command);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : rdkfwupgrader.service is in dead state in the device : %s" %(step, details);
+                        print("ACTUAL RESULT %d : rdkfwupgrader.service is in dead state in the device : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Revert the RFC to initiable Enable status
-                        print "Reverting to initial RFC enable state";
+                        print("Reverting to initial RFC enable state");
                         step = step + 1;
                         value = "true";
                         status = set_EnableFWUpgraderRFC(pamobj, value, step);
 
                         if status == 0:
-                            print "\nReboot the device, the RFC value should persist on reboot";
-                            print "Rebooting the device......";
+                            print("\nReboot the device, the RFC value should persist on reboot");
+                            print("Rebooting the device......");
                             sysobj.initiateReboot();
                             sleep(300);
-                            print "Revert operation completed";
+                            print("Revert operation completed");
                         else:
-                            print "Set operation failed";
+                            print("Set operation failed");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : rdkfwupgrader.service is not in dead state in the device : %s" %(step, details);
+                        print("ACTUAL RESULT %d : rdkfwupgrader.service is not in dead state in the device : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Get operation failed";
+                    print("Get operation failed");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "Set operation failed";
+                print("Set operation failed");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : rdkfwupgrader.service is not running in the device : %s" %(step, details);
+            print("ACTUAL RESULT %d : rdkfwupgrader.service is not running in the device : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     elif enable == "false" and status == 0:
-        print "\nInitial Enable State : %s" %enable;
+        print("\nInitial Enable State : %s" %enable);
         step = step + 1;
         #If RFC Enable is false, then the service should be in dead state
         command = "systemctl status rdkfwupgrader.service | grep -i dead";
-        print "\nTEST STEP %d: Check if rdkfwupgrader.service is in dead state in the device" %step;
-        print "EXPECTED RESULT %d : rdkfwupgrader.service should be in dead state in the device" %step;
+        print("\nTEST STEP %d: Check if rdkfwupgrader.service is in dead state in the device" %step);
+        print("EXPECTED RESULT %d : rdkfwupgrader.service should be in dead state in the device" %step);
         tdkTestObj, actualresult, details = check_FwupgraderService(sysobj, command);
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : rdkfwupgrader.service is in dead state in the device : %s" %(step, details);
+            print("ACTUAL RESULT %d : rdkfwupgrader.service is in dead state in the device : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Toggle the enable to true
             step = step + 1;
@@ -274,8 +274,8 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             status = set_EnableFWUpgraderRFC(pamobj, value, step);
 
             if status == 0:
-                print "\nReboot the device, the RFC value should persist on reboot";
-                print "Rebooting the device......";
+                print("\nReboot the device, the RFC value should persist on reboot");
+                print("Rebooting the device......");
                 sysobj.initiateReboot();
                 sleep(300);
 
@@ -285,62 +285,61 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 enable, status = get_EnableFWUpgraderRFC(tdkTestObj, step);
 
                 if enable == "true" and status == 0:
-                    print "\nCurrent Enable State : %s" %enable;
+                    print("\nCurrent Enable State : %s" %enable);
                     step = step + 1;
                     #If RFC Enable is true, then the service should be in running state
                     command = "systemctl status rdkfwupgrader.service | grep -i running";
-                    print "\nTEST STEP %d: Check if rdkfwupgrader.service is in running state in the device" %step;
-                    print "EXPECTED RESULT %d : rdkfwupgrader.service should be in running state in the device" %step;
+                    print("\nTEST STEP %d: Check if rdkfwupgrader.service is in running state in the device" %step);
+                    print("EXPECTED RESULT %d : rdkfwupgrader.service should be in running state in the device" %step);
                     tdkTestObj, actualresult, details = check_FwupgraderService(sysobj, command);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : rdkfwupgrader.service is in running state in the device : %s" %(step, details);
+                        print("ACTUAL RESULT %d : rdkfwupgrader.service is in running state in the device : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Revert the RFC to initiable Enable status
-                        print "Reverting to initial RFC enable state";
+                        print("Reverting to initial RFC enable state");
                         step = step + 1;
                         value = "false";
                         status = set_EnableFWUpgraderRFC(pamobj, value, step);
 
                         if status == 0:
-                            print "\nReboot the device, the RFC value should persist on reboot";
-                            print "Rebooting the device......";
+                            print("\nReboot the device, the RFC value should persist on reboot");
+                            print("Rebooting the device......");
                             sysobj.initiateReboot();
                             sleep(300);
-                            print "Revert operation completed";
+                            print("Revert operation completed");
                         else:
-                            print "Set operation failed";
+                            print("Set operation failed");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : rdkfwupgrader.service is not in running state in the device : %s" %(step, details);
+                        print("ACTUAL RESULT %d : rdkfwupgrader.service is not in running state in the device : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Get operation failed";
+                    print("Get operation failed");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "Set operation failed";
+                print("Set operation failed");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : rdkfwupgrader.service is not in dead state in the device : %s" %(step, details);
+            print("ACTUAL RESULT %d : rdkfwupgrader.service is not in dead state in the device : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "Get operation failed";
+        print("Get operation failed");
         tdkTestObj.setResultStatus("FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-

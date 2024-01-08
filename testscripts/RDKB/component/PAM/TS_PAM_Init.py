@@ -90,14 +90,14 @@ obj.configureTestCase(ip,port,'TS_PAM_Init');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load PAM Stub from env TDK_PATH]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load PAM Stub from env TDK_PATH]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('pam_Init');
@@ -107,18 +107,18 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult;
+print("[TEST EXECUTION RESULT] : %s" %actualresult);
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "\nPAM Initialization is SUCCESS"
+    #Set the result status of execution
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("\nPAM Initialization is SUCCESS")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-        print "\nPAM Initialization is FAILURE"
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("\nPAM Initialization is FAILURE")
 
-print "\n[TEST EXECUTION RESULT] : %s\n" %resultDetails ;
+print("\n[TEST EXECUTION RESULT] : %s\n" %resultDetails) ;
 #Unloading the module
 obj.unloadModule("pam");

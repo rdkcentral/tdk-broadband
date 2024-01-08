@@ -113,7 +113,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetDiagnosticState');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -127,10 +127,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and not details:
-        print "TEST STEP 1: Get the Diagnostic state download URL";
-        print "EXPECTED RESULT 1: Should Get the Diagnostic state download URL";
-        print "ACTUAL RESULT 1: Diagnostic state download URL is empty";
-        print "URL RETURNED IS:",details;
+        print("TEST STEP 1: Get the Diagnostic state download URL");
+        print("EXPECTED RESULT 1: Should Get the Diagnostic state download URL");
+        print("ACTUAL RESULT 1: Diagnostic state download URL is empty");
+        print("URL RETURNED IS:",details);
         #set the download URL
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DownloadURL");
@@ -151,11 +151,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Set the Diagnostic state download URL";
-            print "EXPECTED RESULT 1: Should set the Diagnostic state download  URL";
-            print "ACTUAL RESULT 1: Returned Diagnostic state download URL";
-            print "URL RETURNED IS:",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1: Set the Diagnostic state download URL");
+            print("EXPECTED RESULT 1: Should set the Diagnostic state download  URL");
+            print("ACTUAL RESULT 1: Returned Diagnostic state download URL");
+            print("URL RETURNED IS:",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #set Diagnosticstate as "Requested"
             tdkTestObj = obj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DiagnosticsState");
@@ -176,23 +176,23 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP 2: Set the diagnostic state";
-                print "EXPECTED RESULT 2: Should set the diagnostic state";
-                print "ACTUAL RESULT 2: Diagnostic state is",details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 2: Set the diagnostic state");
+                print("EXPECTED RESULT 2: Should set the diagnostic state");
+                print("ACTUAL RESULT 2: Diagnostic state is",details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the diagnostic state";
-                print "EXPECTED RESULT 2: Should set the diagnostic state";
-                print "ACTUAL RESULT 2: Diagnostic state is",details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2: Set the diagnostic state");
+                print("EXPECTED RESULT 2: Should set the diagnostic state");
+                print("ACTUAL RESULT 2: Diagnostic state is",details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set the Diagnostic state download URL";
-            print "EXPECTED RESULT 1: Should set the Diagnostic state download  URL";
-            print "ACTUAL RESULT 1: Failed to set Diagnostic state download URL";
-            print "URL RETURNED IS:",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Set the Diagnostic state download URL");
+            print("EXPECTED RESULT 1: Should set the Diagnostic state download  URL");
+            print("ACTUAL RESULT 1: Failed to set Diagnostic state download URL");
+            print("URL RETURNED IS:",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the diagnosticstate as 'Requested'
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
@@ -214,19 +214,18 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Set the diagnostic state";
-            print "EXPECTED RESULT 1: Should set the diagnostic state";
-            print "ACTUAL RESULT 1: Diagnostic state is",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 1: Set the diagnostic state");
+            print("EXPECTED RESULT 1: Should set the diagnostic state");
+            print("ACTUAL RESULT 1: Diagnostic state is",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set the diagnostic state";
-            print "EXPECTED RESULT 1: Should set the diagnostic state";
-            print "ACTUAL RESULT 1: Diagnostic state is",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Set the diagnostic state");
+            print("EXPECTED RESULT 1: Should set the diagnostic state");
+            print("ACTUAL RESULT 1: Diagnostic state is",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

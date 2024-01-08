@@ -56,8 +56,8 @@
   <script_tags />
 </xml>
 '''
-												# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+                                                                                                # use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -70,14 +70,14 @@ obj.configureTestCase(ip,port,'TS_MTAAGENT_GetEntireParamListWithValues');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-	
-    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterValues');  
-    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.");	
+
+    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterValues');
+    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.");
     expectedresult="SUCCESS";
 
     #Execute the test case in Gateway
@@ -85,35 +85,29 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-            
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Retrieve the entire parameter list with values";
-        print "EXPECTED RESULT 1: Should Successfully retrieve values";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "%s" %details;
+        print("TEST STEP 1:Retrieve the entire parameter list with values");
+        print("EXPECTED RESULT 1: Should Successfully retrieve values");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
 
-    else:   
+    else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Retrieve the entire parameter list with values";
-        print "EXPECTED RESULT 1: Should Successfully retrieve values";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
-	 
+        print("TEST STEP 1:Retrieve the entire parameter list with values");
+        print("EXPECTED RESULT 1: Should Successfully retrieve values");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
     obj.unloadModule("Mta_agent");
-   		 
-else:   
-        print "Failed to load MTA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";				
-				
-				
 
-					
-
-					
+else:
+    print("Failed to load MTA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

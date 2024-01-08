@@ -81,8 +81,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("mtahal","1");
@@ -92,9 +92,9 @@ obj = tdklib.TDKScriptingLibrary("mtahal","1");
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_MTAHAL_SetDSXLogEnableOn');
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -110,11 +110,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Script to load the configuration file of the component
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current value of DSXLogEnable";
-        print "EXPECTED RESULT 1: Should get the DSXLogEnable successfully";
-        print "ACTUAL RESULT 1: The current value of DSXLogEnable is %s" %currValue;
+        print("TEST STEP 1: Get the current value of DSXLogEnable");
+        print("EXPECTED RESULT 1: Should get the DSXLogEnable successfully");
+        print("ACTUAL RESULT 1: The current value of DSXLogEnable is %s" %currValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep("MTAHAL_SetParamUlongValue");
         tdkTestObj.addParameter("paramName","DSXLogEnable");
@@ -123,15 +123,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         resultDetails = tdkTestObj.getResultDetails();
-        
+
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the DSXLogEnable";
-            print "EXPECTED RESULT 2: Should set the DSXLogEnable successfully";
-            print "ACTUAL RESULT 2: The DSXLogEnable is %s (1)" %resultDetails;
+            print("TEST STEP 2: Set the DSXLogEnable");
+            print("EXPECTED RESULT 2: Should set the DSXLogEnable successfully");
+            print("ACTUAL RESULT 2: The DSXLogEnable is %s (1)" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             # Get the value of DSXLogEnable
             tdkTestObj = obj.createTestStep("MTAHAL_GetParamUlongValue");
@@ -140,47 +140,47 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             DSXLogEnable  = tdkTestObj.getResultDetails();
-            print "DSXLogEnable before converting to little endian:",DSXLogEnable
-  
+            print("DSXLogEnable before converting to little endian:",DSXLogEnable)
+
             #if the received value is not 1
             #Doing a conversion from Bigendian to little endian
             if DSXLogEnable != 1:
-               num = int(DSXLogEnable)
-               #converting to binary value
-               binarynum  = bin(num)[2:]
-               #removing the appened character b
-               reversenum =  binarynum[::-1]
-               #reversing the number to get a decimal value
-               DSXLogEnable = int(reversenum,2)
-               print"DSXLogEnable after converting to little endian:",DSXLogEnable
-              
+                num = int(DSXLogEnable)
+                #converting to binary value
+                binarynum  = bin(num)[2:]
+                #removing the appened character b
+                reversenum =  binarynum[::-1]
+                #reversing the number to get a decimal value
+                DSXLogEnable = int(reversenum,2)
+                print("DSXLogEnable after converting to little endian:",DSXLogEnable)
+
 
             if expectedresult in actualresult and DSXLogEnable  == 1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the value of DSXLogEnable";
-                print "EXPECTED RESULT 3: Should get the DSXLogEnable successfully";
-                print "ACTUAL RESULT 3: The current value of DSXLogEnable is %s" %DSXLogEnable;
+                print("TEST STEP 3: Get the value of DSXLogEnable");
+                print("EXPECTED RESULT 3: Should get the DSXLogEnable successfully");
+                print("ACTUAL RESULT 3: The current value of DSXLogEnable is %s" %DSXLogEnable);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the value of DSXLogEnable";
-                print "EXPECTED RESULT 3: Should get the DSXLogEnable successfully";
-                print "ACTUAL RESULT 3: Failed to get the DSXLogEnable, Details : %s" %DSXLogEnable;
-                print "[TEST EXECUTION RESULT] : FAILURE";            
+                print("TEST STEP 3: Get the value of DSXLogEnable");
+                print("EXPECTED RESULT 3: Should get the DSXLogEnable successfully");
+                print("ACTUAL RESULT 3: Failed to get the DSXLogEnable, Details : %s" %DSXLogEnable);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the DSXLogEnable";
-            print "EXPECTED RESULT 2: Should set the DSXLogEnable successfully";
-            print "ACTUAL RESULT 2: Failed to set the DSXLogEnable, Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set the DSXLogEnable");
+            print("EXPECTED RESULT 2: Should set the DSXLogEnable successfully");
+            print("ACTUAL RESULT 2: Failed to set the DSXLogEnable, Details : %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current value of DSXLogEnable";
-        print "EXPECTED RESULT 1: Should get the DSXLogEnable successfully";
-        print "ACTUAL RESULT 1: Failed to get the DSXLogEnable, Details : %s" %currValue;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current value of DSXLogEnable");
+        print("EXPECTED RESULT 1: Should get the DSXLogEnable successfully");
+        print("ACTUAL RESULT 1: Failed to get the DSXLogEnable, Details : %s" %currValue);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     # Revert the value (currValue) of DSXLogEnable
     tdkTestObj = obj.createTestStep("MTAHAL_SetParamUlongValue");
@@ -194,23 +194,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 4: Revert the previous value of DSXLogEnable";
-        print "EXPECTED RESULT 4: Should set the DSXLogEnable successfully";
-        print "ACTUAL RESULT 4: The DSXLogEnable is %s (%s)" %(resultDetails, currValue);
+        print("TEST STEP 4: Revert the previous value of DSXLogEnable");
+        print("EXPECTED RESULT 4: Should set the DSXLogEnable successfully");
+        print("ACTUAL RESULT 4: The DSXLogEnable is %s (%s)" %(resultDetails, currValue));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 4: Revert the previous value of DSXLogEnable";
-        print "EXPECTED RESULT 4: Should set the DSXLogEnable successfully";
-        print "ACTUAL RESULT 4: Failed to set the DSXLogEnable, Details : %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 4: Revert the previous value of DSXLogEnable");
+        print("EXPECTED RESULT 4: Should set the DSXLogEnable successfully");
+        print("ACTUAL RESULT 4: Failed to set the DSXLogEnable, Details : %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mtahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
+    print("Module loading failed");

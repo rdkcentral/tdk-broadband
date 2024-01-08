@@ -50,7 +50,7 @@
 paramType</input_parameters>
     <automation_approch>1. Load mocahal module
 2. Invoke the HAL api moca_IfGetExtCounter() by passing a null buffer
-3. HAL API is expected to return failure status and the value should not be retreived because null buffer was passed as an argument 
+3. HAL API is expected to return failure status and the value should not be retreived because null buffer was passed as an argument
 4. UnLoad mocahal module</automation_approch>
     <expected_output>Call to  moca_IfGetExtCounter() should fail</expected_output>
     <priority>High</priority>
@@ -75,7 +75,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MoCAHAL_IfGetExtCounterNullBuffer');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     #Script to load the configuration file of the component
@@ -89,21 +89,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the the Statistics on the Interface at MoCA MAC Layer by passing null buffer"
-        print "EXPECTED RESULT 1: Should not get the Statistics on the Interface at MoCA MAC Layer by passing null buffer";
-        print "ACTUAL RESULT 1: The static Information is %s" %statics;
+        print("TEST STEP 1: Get the the Statistics on the Interface at MoCA MAC Layer by passing null buffer")
+        print("EXPECTED RESULT 1: Should not get the Statistics on the Interface at MoCA MAC Layer by passing null buffer");
+        print("ACTUAL RESULT 1: The static Information is %s" %statics);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Statistics on the Interface at MoCA MAC Layer by passing null buffer"
-        print "EXPECTED RESULT 1: Should not get the Statistics on the Interface at MoCA MAC Layer by passing null buffer";
-        print "ACTUAL RESULT 1: %s" %statics;
+        print("TEST STEP 1: Get the Statistics on the Interface at MoCA MAC Layer by passing null buffer")
+        print("EXPECTED RESULT 1: Should not get the Statistics on the Interface at MoCA MAC Layer by passing null buffer");
+        print("ACTUAL RESULT 1: %s" %statics);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

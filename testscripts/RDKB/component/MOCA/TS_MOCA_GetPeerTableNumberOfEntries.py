@@ -74,8 +74,8 @@
   </test_cases>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -87,7 +87,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MOCA_GetPeerTableNumberOfEntries');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -104,21 +104,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of peer table entries";
-        print "EXPECTED RESULT 1: Should get the number of perr table entries";
-        print "ACTUAL RESULT 1: Number of peer table entries is :%s" %details;
+        print("TEST STEP 1: Get the number of peer table entries");
+        print("EXPECTED RESULT 1: Should get the number of perr table entries");
+        print("ACTUAL RESULT 1: Number of peer table entries is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of peer table entries";
-        print "EXPECTED RESULT 1: Should get the number of peer table entries";
-        print "ACTUAL RESULT 1: Number of peer table entries is :%s" %details;
+        print("TEST STEP 1: Get the number of peer table entries");
+        print("EXPECTED RESULT 1: Should get the number of peer table entries");
+        print("ACTUAL RESULT 1: Number of peer table entries is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

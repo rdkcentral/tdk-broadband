@@ -99,8 +99,8 @@ loadmodulestatus1 =pamobj.getLoadModuleResult();
 loadmodulestatus2 =obj1.getLoadModuleResult();
 
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 
 
@@ -121,10 +121,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         pamobj.restorePreviousStateAfterReboot();
         tdkTestObj = obj1.createTestStep('ExecuteCmd');
@@ -137,28 +137,27 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult and details == "1":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4:Check if Advance security RabidEnable is 1";
-            print "ACTUAL RESULT 4:Advance security RabidEnable is 1";
+            print("TEST STEP 4:Check if Advance security RabidEnable is 1");
+            print("ACTUAL RESULT 4:Advance security RabidEnable is 1");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4:Check if Advance security RabidEnable is 1";
-            print "ACTUAL RESULT 4:Advance security RabidEnable is not 1";
+            print("TEST STEP 4:Check if Advance security RabidEnable is 1");
+            print("ACTUAL RESULT 4:Advance security RabidEnable is not 1");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     obj1.unloadModule("sysutil");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     pamobj.setLoadModuleStatus("FAILURE");
-

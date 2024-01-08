@@ -89,8 +89,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_CheckFirmwareUpgradeStartAndEndTime');
 pamloadmodulestatus=pamobj.getLoadModuleResult();
 sysloadmodulestatus=sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #Set the result status of execution
@@ -108,19 +108,19 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Initiate a factory reset";
-    print "EXPECTED RESULT 1: Factory reset should be initiated successfully";
+    print("\nTEST STEP 1: Initiate a factory reset");
+    print("EXPECTED RESULT 1: Factory reset should be initiated successfully");
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Factory reset is initiated successfully";
+        print("ACTUAL RESULT 1: Factory reset is initiated successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Restore the device state saved before reboot after a 600s wait time for RFC update
         sleep(600);
-        print "Sleeping for 600s";
+        print("Sleeping for 600s");
         pamobj.restorePreviousStateAfterReboot();
 
         #After the device comes up check the start and end times of firmware upgrade
@@ -142,18 +142,18 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 status = 1;
                 break;
 
-        print "\nTEST STEP 2: Get the Firmware Upgrade Start time and End time; Get the Values of the parameters : ", paramList;
-        print "EXPECTED RESULT 2: The Firmware Upgrade Start time and End time should be obtained successfully";
+        print("\nTEST STEP 2: Get the Firmware Upgrade Start time and End time; Get the Values of the parameters : ", paramList);
+        print("EXPECTED RESULT 2: The Firmware Upgrade Start time and End time should be obtained successfully");
 
         if status == 0 :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : The values of the parameters are : %s - %s and %s - %s" %(paramList[0], orgValue[0], paramList[1], orgValue[1]);
+            print("ACTUAL RESULT 2 : The values of the parameters are : %s - %s and %s - %s" %(paramList[0], orgValue[0], paramList[1], orgValue[1]));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if orgValue[0].isdigit() and orgValue[1].isdigit() :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "\nThe Firmware Upgrade Start time and End time are valid numerical values";
+                print("\nThe Firmware Upgrade Start time and End time are valid numerical values");
 
                 #Check for the presense of SelfHeal.txt.0
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -164,14 +164,14 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP 3: Check for SelfHeal.txt.0 file presence";
-                print "EXPECTED RESULT 3: SelfHeal.txt.0 should be present";
+                print("\nTEST STEP 3: Check for SelfHeal.txt.0 file presence");
+                print("EXPECTED RESULT 3: SelfHeal.txt.0 should be present");
 
                 if details == "File exist" :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3 : SelfHeal.txt.0  is present";
+                    print("ACTUAL RESULT 3 : SelfHeal.txt.0  is present");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the "Firmware upgrade start time : " and "Firmware upgrade end time : " logs are found in SelfHeal.txt.0 are present in SelfHeal
                     step = 3;
@@ -184,12 +184,12 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                         cmd = "grep -ire \"" + search_strings[iteration] +  "\" /rdklogs/logs/SelfHeal.txt.0";
                         tdkTestObj.addParameter("command",cmd);
 
-                        print "\nTEST STEP %d: Check if the log line \"%s\" is present in SelfHeal.txt.0" %(step, search_strings[iteration]);
-                        print "EXPECTED RESULT %d: The required log line should be present in SelfHeal.txt.0" %step;
+                        print("\nTEST STEP %d: Check if the log line \"%s\" is present in SelfHeal.txt.0" %(step, search_strings[iteration]));
+                        print("EXPECTED RESULT %d: The required log line should be present in SelfHeal.txt.0" %step);
 
                         #Checking every 60s for 10 mins
                         for sub_iteration in range(1,11):
-                            print "Waiting for the string to get populated in SelfHeal.txt.0....\nIteration : %d" %sub_iteration;
+                            print("Waiting for the string to get populated in SelfHeal.txt.0....\nIteration : %d" %sub_iteration);
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -204,56 +204,56 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                         if stringfound == 1:
                             details = details.split(search_strings[iteration])[1];
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Required log line is present, Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d: Required log line is present, Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Cross check the value obtained from SelfHeal.txt.0 with the TR181 parameter value
                             step = step + 1;
-                            print "\nTEST STEP %d : Cross check the value of %s with the value from SelfHeal.txt.0" %(step, paramList[iteration]);
-                            print "EXPECTED RESULT %d : Both the values should match" %(step);
-                            print "%s : %s" %(paramList[iteration], orgValue[iteration]);
-                            print "%s %s" %(search_strings[iteration], details);
+                            print("\nTEST STEP %d : Cross check the value of %s with the value from SelfHeal.txt.0" %(step, paramList[iteration]));
+                            print("EXPECTED RESULT %d : Both the values should match" %(step));
+                            print("%s : %s" %(paramList[iteration], orgValue[iteration]));
+                            print("%s %s" %(search_strings[iteration], details));
 
                             if orgValue[iteration] == details :
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: The values match" %step;
+                                print("ACTUAL RESULT %d: The values match" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else :
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: The values DO NOT match" %step;
+                                print("ACTUAL RESULT %d: The values DO NOT match" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Required log line is not present, Details : %s" %(step, details);
+                            print("ACTUAL RESULT %d: Required log line is not present, Details : %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3 : SelfHeal.txt.0 is NOT present";
+                    print("ACTUAL RESULT 3 : SelfHeal.txt.0 is NOT present");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "\nThe Firmware Upgrade Start time and End time are NOT valid numerical values";
+                print("\nThe Firmware Upgrade Start time and End time are NOT valid numerical values");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: Get operation failed : ", orgValue;
+            print("ACTUAL RESULT 2: Get operation failed : ", orgValue);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Details : %s" %details;
+        print("ACTUAL RESULT 1: Details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

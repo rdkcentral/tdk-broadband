@@ -97,65 +97,65 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper:
     MemLimit = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Rabid Framework Memory Limit"
-       print "EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit";
-       print "ACTUAL RESULT 1:Rabid Framework Memory Limit:",MemLimit;
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Rabid Framework Memory Limit")
+        print("EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit");
+        print("ACTUAL RESULT 1:Rabid Framework Memory Limit:",MemLimit);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-       cmd= "sysevent set firewall-restart";
-       expectedresult="SUCCESS";
-       tdkTestObj.addParameter("command",cmd);
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
+        tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+        cmd= "sysevent set firewall-restart";
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("command",cmd);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
 
-       if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Do a firewall-restart";
-           print "EXPECTED RESULT 2: Should do a firewall restart";
-           print "ACTUAL RESULT 2:Firewall restarted successfully";
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Do a firewall-restart");
+            print("EXPECTED RESULT 2: Should do a firewall restart");
+            print("ACTUAL RESULT 2:Firewall restarted successfully");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-           tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit")
-           expectedresult="SUCCESS";
+            tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MemoryLimit")
+            expectedresult="SUCCESS";
 
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           AfterFRMemLimit = tdkTestObj.getResultDetails().strip();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            AfterFRMemLimit = tdkTestObj.getResultDetails().strip();
 
-           print "Rabid Framework Memory Limit after Firewall-reset",AfterFRMemLimit;
-           print "Rabid Framework Memory Limit before Firewall-reset",MemLimit;
+            print("Rabid Framework Memory Limit after Firewall-reset",AfterFRMemLimit);
+            print("Rabid Framework Memory Limit before Firewall-reset",MemLimit);
 
-           if expectedresult in actualresult and AfterFRMemLimit == MemLimit:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Get the Rabid Framework Memory Limit after Firewall-reset";
-               print "EXPECTED RESULT 3: Should get the Rabid Framework Memory Limit before and after firewall-restart equal";
-               print "ACTUAL RESULT 3:Rabid Framework Memory Limit before and after Firewall-reset are equal";
-               print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Get the Rabid Framework Memory Limit after Firewall-reset";
-               print "EXPECTED RESULT 3: Should get the Rabid Framework Memory Limit before and after firewall-restart equal";
-               print "ACTUAL RESULT 3:Rabid Framework Memory Limit before and after Firewall-reset are not equal";
-               print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Do a firewall-restart";
-           print "EXPECTED RESULT 2: Should do a firewall restart";
-           print "ACTUAL RESULT 2:Firewall restart failed";
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            if expectedresult in actualresult and AfterFRMemLimit == MemLimit:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the Rabid Framework Memory Limit after Firewall-reset");
+                print("EXPECTED RESULT 3: Should get the Rabid Framework Memory Limit before and after firewall-restart equal");
+                print("ACTUAL RESULT 3:Rabid Framework Memory Limit before and after Firewall-reset are equal");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the Rabid Framework Memory Limit after Firewall-reset");
+                print("EXPECTED RESULT 3: Should get the Rabid Framework Memory Limit before and after firewall-restart equal");
+                print("ACTUAL RESULT 3:Rabid Framework Memory Limit before and after Firewall-reset are not equal");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Do a firewall-restart");
+            print("EXPECTED RESULT 2: Should do a firewall restart");
+            print("ACTUAL RESULT 2:Firewall restart failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Rabid Framework Memory Limit"
-        print "EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit";
-        print "ACTUAL RESULT 1:Rabid Framework Memory Limit:",MemLimit;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Rabid Framework Memory Limit")
+        print("EXPECTED RESULT 1: Should get the Rabid Framework Memory Limit");
+        print("ACTUAL RESULT 1:Rabid Framework Memory Limit:",MemLimit);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 else:
-    print "Failed to load sysutil/pam  module";
+    print("Failed to load sysutil/pam  module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

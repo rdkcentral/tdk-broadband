@@ -91,7 +91,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-						# use tdklib library,which provides a wrapper for tdk testcase script
+                                                # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 #Test component to be tested
 pamObj = tdklib.TDKScriptingLibrary("pam","RDKB");
@@ -107,7 +107,7 @@ pamObj.configureTestCase(ip,port,'TS_ParentalCtrl_ManagedServicesDisabled_AddRul
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 pamloadmodulestatus =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #get the orinal status and store it
@@ -123,11 +123,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
         org_status = details;
-        print "TEST STEP 1: Get ManagedServices Enable status";
-        print "EXPECTED RESULT 1: Should get the Enable status";
-        print "ACTUAL RESULT 1: ManagedServices Enable status is %s" %details;
+        print("TEST STEP 1: Get ManagedServices Enable status");
+        print("EXPECTED RESULT 1: Should get the Enable status");
+        print("ACTUAL RESULT 1: ManagedServices Enable status is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #set enable as true
         tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
         tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedServices.Enable");
@@ -136,14 +136,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set ManagedServices Enable status as false";
-            print "EXPECTED RESULT 2: Should set the Enable status as false";
-            print "ACTUAL RESULT 2: ManagedServices Enable status is %s" %details;
+            print("TEST STEP 2: Set ManagedServices Enable status as false");
+            print("EXPECTED RESULT 2: Should set the Enable status as false");
+            print("ACTUAL RESULT 2: ManagedServices Enable status is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep("AdvancedConfig_AddObject");
             tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedServices.Service.");
             expectedresult="SUCCESS";
@@ -153,14 +153,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST STEP 3]: Adding new rule for service blocking";
-                print "[EXPECTED RESULT 3]: Should add new rule";
-                print "[ACTUAL RESULT 3]:  %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-		temp = details.split(':');
+                print("[TEST STEP 3]: Adding new rule for service blocking");
+                print("[EXPECTED RESULT 3]: Should add new rule");
+                print("[ACTUAL RESULT 3]:  %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                temp = details.split(':');
                 instance = temp[1];
                 if (instance > 0):
-                    print "INSTANCE VALUE: %s" %instance
+                    print("INSTANCE VALUE: %s" %instance)
                     tdkTestObj = obj.createTestStep("AdvancedConfig_SetMultiple");
                     tdkTestObj.addParameter("paramList","Device.X_Comcast_com_ParentalControl.ManagedServices.Service.%s.Description|ftp|string|Device.X_Comcast_com_ParentalControl.ManagedServices.Service.%s.Protocol|BOTH|string|Device.X_Comcast_com_ParentalControl.ManagedServices.Service.%s.StartPort|21|unsignedint|Device.X_Comcast_com_ParentalControl.ManagedServices.Service.%s.EndPort|21|unsignedint|Device.X_Comcast_com_ParentalControl.ManagedServices.Service.%s.AlwaysBlock|false|bool" %(instance, instance, instance, instance, instance));
                     expectedresult="FAILURE";
@@ -169,16 +169,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                     details = tdkTestObj.getResultDetails();
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "[TEST STEP 4]: Setting values for managed services"
-                        print "[EXPECTED RESULT 4]: Should fail in setting values"
-                        print "[ACTUAL RESULT 4]:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-		    else:
+                        print("[TEST STEP 4]: Setting values for managed services")
+                        print("[EXPECTED RESULT 4]: Should fail in setting values")
+                        print("[ACTUAL RESULT 4]:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST STEP 4]: Setting values for managed services"
-                        print "[EXPECTED RESULT 4]: Should fail in setting values"
-                        print "[ACTUAL RESULT 4]:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST STEP 4]: Setting values for managed services")
+                        print("[EXPECTED RESULT 4]: Should fail in setting values")
+                        print("[ACTUAL RESULT 4]:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                     #Delete the created table entry
                     tdkTestObj = obj.createTestStep("AdvancedConfig_DelObject");
@@ -186,30 +186,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                     expectedresult = "SUCCESS";
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     details = tdkTestObj.getResultDetails();
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "[TEST STEP ]: Deleting the added rule";
-                        print "[EXPECTED RESULT ]: Should delete the added rule";
-                        print "[ACTUAL RESULT]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Added table is deleted successfully\n"
+                        print("[TEST STEP ]: Deleting the added rule");
+                        print("[EXPECTED RESULT ]: Should delete the added rule");
+                        print("[ACTUAL RESULT]: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                        print("Added table is deleted successfully\n")
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST STEP ]: Deleting the added rule";
-                        print "[EXPECTED RESULT ]: Should delete the added rule";
-                        print "[ACTUAL RESULT]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Added table could not be deleted\n"
-	    else:
+                        print("[TEST STEP ]: Deleting the added rule");
+                        print("[EXPECTED RESULT ]: Should delete the added rule");
+                        print("[ACTUAL RESULT]: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                        print("Added table could not be deleted\n")
+            else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST STEP 3]: Adding new rule for service blocking";
-                print "[EXPECTED RESULT 3]: Should not add new rule";
-                print "[ACTUAL RESULT 3]: %s" %details;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("[TEST STEP 3]: Adding new rule for service blocking");
+                print("[EXPECTED RESULT 3]: Should not add new rule");
+                print("[ACTUAL RESULT 3]: %s" %details);
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
             #set enable status to its original value
             tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
             tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedServices.Enable");
@@ -218,40 +218,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP : Set ManagedService Enable status as its initial value";
-                print "EXPECTED RESULT : Should set the Enable status as its initial value";
-                print "ACTUAL RESULT : ManagedService Enable status set success"
+                print("TEST STEP : Set ManagedService Enable status as its initial value");
+                print("EXPECTED RESULT : Should set the Enable status as its initial value");
+                print("ACTUAL RESULT : ManagedService Enable status set success")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP : Set ManagedService Enable status as its initial value";
-                print "EXPECTED RESULT : Should set the Enable status as its initial value";
-                print "ACTUAL RESULT : ManagedService Enable status set failed";
+                print("TEST STEP : Set ManagedService Enable status as its initial value");
+                print("EXPECTED RESULT : Should set the Enable status as its initial value");
+                print("ACTUAL RESULT : ManagedService Enable status set failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set ManagedService Enable status as true";
-            print "EXPECTED RESULT 2: Should set the Enable status as true";
-            print "ACTUAL RESULT 2: ManagedService Enable status set failed";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set ManagedService Enable status as true");
+            print("EXPECTED RESULT 2: Should set the Enable status as true");
+            print("ACTUAL RESULT 2: ManagedService Enable status set failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get ManagedService Enable status";
-        print "EXPECTED RESULT 1: Should get the status";
-        print "ACTUAL RESULT 1: Manageddevice Enable status is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get ManagedService Enable status");
+        print("EXPECTED RESULT 1: Should get the status");
+        print("ACTUAL RESULT 1: Manageddevice Enable status is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("advancedconfig");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

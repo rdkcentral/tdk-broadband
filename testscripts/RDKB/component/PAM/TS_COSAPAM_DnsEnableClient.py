@@ -91,7 +91,7 @@ Stub function result should be success and should see corresponding log in the a
   <script_tags />
 </xml>
 '''
-						#import statement
+                                                #import statement
 import tdklib;
 
 #Test component to be tested
@@ -105,7 +105,7 @@ obj.configureTestCase(ip,port,'TS_COSAPAM_DnsEnableClient');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -118,12 +118,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
     if "0" in details:
         org_value=1;
     else:
         org_value=0;
-    print org_value;
+    print(org_value);
     #setting the enable value
     tdkTestObj = obj.createTestStep('COSAPAM_DnsEnable');
     tdkTestObj.addParameter("MethodName","DnsClient");
@@ -138,19 +138,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if "enable" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-	details = tdkTestObj.getResultDetails();
-	print "TEST STEP 1: Should set the Dns client enable";
-        print "EXPECTED RESULT 1: Should set the Dns Client enable successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        details = tdkTestObj.getResultDetails();
+        print("TEST STEP 1: Should set the Dns client enable");
+        print("EXPECTED RESULT 1: Should set the Dns Client enable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1: Should set the Dns client enable";
-        print "EXPECTED RESULT 1: Should set the Dns client enable successfully";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("TEST STEP 1: Should set the Dns client enable");
+        print("EXPECTED RESULT 1: Should set the Dns client enable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     #setting the default value
     tdkTestObj = obj.createTestStep('COSAPAM_DnsEnable');
     tdkTestObj.addParameter("MethodName","DnsClient");
@@ -161,36 +161,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print details;
+    print(details);
     if org_value==1 and "enable" in details:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should set the DNS client enable";
-        print "EXPECTED RESULT 1: Should set the DNS client enable successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Should set the DNS client enable");
+        print("EXPECTED RESULT 1: Should set the DNS client enable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     elif org_value==0 and "disable" in details:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Should set the DNS client disable";
-        print "EXPECTED RESULT 1: Should set the DNS client disable successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Should set the DNS client disable");
+        print("EXPECTED RESULT 1: Should set the DNS client disable successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Should set the DNS client to default value";
-        print "EXPECTED RESULT 1: Should set the DNS client to default value successfully";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("TEST STEP 1: Should set the DNS client to default value");
+        print("EXPECTED RESULT 1: Should set the DNS client to default value successfully");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

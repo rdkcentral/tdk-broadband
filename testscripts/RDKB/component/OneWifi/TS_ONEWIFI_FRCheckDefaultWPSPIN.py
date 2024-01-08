@@ -99,8 +99,8 @@ sysobj.configureTestCase(ip,port,'TS_ONEWIFI_FRCheckDefaultSecurityPassword');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -121,11 +121,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
@@ -138,15 +138,15 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             #Set the result status of execution
             details = tdkTestObj.getResultDetails();
             pin = details.split("VALUE:")[1].split(' ')[0];
-            print "TEST STEP 2: Get the WPS PIN ";
-            print "EXPECTED RESULT 2: Should get the WPS Pin value successfully";
-            print "ACTUAL RESULT 2: %s" %pin;
+            print("TEST STEP 2: Get the WPS PIN ");
+            print("EXPECTED RESULT 2: Should get the WPS Pin value successfully");
+            print("ACTUAL RESULT 2: %s" %pin);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             path= "sh %s/tdk_utility.sh parseConfigFile PATH_FACTORY_DEFAULTS" %TDK_PATH;
-            print path;
+            print(path);
             expectedresult="SUCCESS";
             tdkTestObj.addParameter("command", path);
             tdkTestObj.executeTestCase(expectedresult);
@@ -154,14 +154,14 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             path_to_defaults = tdkTestObj.getResultDetails().strip().replace("\\n","")
             if expectedresult in actualresult and path_to_defaults !="":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the path to default value";
-                print "EXPECTED RESULT 3: Should Get the path to default";
-                print "ACTUAL RESULT 3: Default value path : %s" %path_to_defaults;
+                print("TEST STEP 3: Get the path to default value");
+                print("EXPECTED RESULT 3: Should Get the path to default");
+                print("ACTUAL RESULT 3: Default value path : %s" %path_to_defaults);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 query="cat %s | grep -i \"Default WPS Pin\""%path_to_defaults;
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
@@ -171,58 +171,58 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
                 if expectedresult in actualresult and details !="":
                     defaults= details.split(":")[1].strip().replace("\\n","");
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the factory default value stored";
-                    print "EXPECTED RESULT 4: Should Get the factory default value stored";
-                    print "ACTUAL RESULT 4: Default value is : %s" %defaults;
+                    print("TEST STEP 4: Get the factory default value stored");
+                    print("EXPECTED RESULT 4: Should Get the factory default value stored");
+                    print("ACTUAL RESULT 4: Default value is : %s" %defaults);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     if pin == defaults:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Compare the WPS PIN  and the one configured in factory defaults file";
-                        print "EXPECTED RESULT 5: Should get WPS PIN and the one configured in factory defaults file equal";
-                        print "ACTUAL RESULT 5:Values are equal: Validated %s" %defaults;
+                        print("TEST STEP 5: Compare the WPS PIN  and the one configured in factory defaults file");
+                        print("EXPECTED RESULT 5: Should get WPS PIN and the one configured in factory defaults file equal");
+                        print("ACTUAL RESULT 5:Values are equal: Validated %s" %defaults);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Compare the WPS PIN  and the one configured in factory defaults file";
-                        print "EXPECTED RESULT 5: Should get WPS PIN and the one configured in factory defaults file equal";
-                        print "ACTUAL RESULT 5:Values are equal: Validated %s" %defaults;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 5: Compare the WPS PIN  and the one configured in factory defaults file");
+                        print("EXPECTED RESULT 5: Should get WPS PIN and the one configured in factory defaults file equal");
+                        print("ACTUAL RESULT 5:Values are equal: Validated %s" %defaults);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the factory default value stored";
-                    print "EXPECTED RESULT 4: Should Get the factory default value stored";
-                    print "ACTUAL RESULT 4: Default value is : %s" %details;
+                    print("TEST STEP 4: Get the factory default value stored");
+                    print("EXPECTED RESULT 4: Should Get the factory default value stored");
+                    print("ACTUAL RESULT 4: Default value is : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the path to default value";
-                print "EXPECTED RESULT 3: Should Get the path to default";
-                print "ACTUAL RESULT 3: Default value path : %s" %path_to_defaults;
+                print("TEST STEP 3: Get the path to default value");
+                print("EXPECTED RESULT 3: Should Get the path to default");
+                print("ACTUAL RESULT 3: Default value path : %s" %path_to_defaults);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 2: Get the WPS PIN ";
-            print "EXPECTED RESULT 2: Should get the WPS Pin value successfully";
-            print "ACTUAL RESULT 2: %s" %pin;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult;
+            print("TEST STEP 2: Get the WPS PIN ");
+            print("EXPECTED RESULT 2: Should get the WPS Pin value successfully");
+            print("ACTUAL RESULT 2: %s" %pin);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "FAILURE to load wifiagent module";
+    print("FAILURE to load wifiagent module");
     sysobj.setLoadModuleStatus("FAILURE");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

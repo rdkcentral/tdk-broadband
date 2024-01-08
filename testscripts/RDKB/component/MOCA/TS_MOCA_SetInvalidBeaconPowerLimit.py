@@ -70,8 +70,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_SetInvalidBeaconPowerLimit');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -101,11 +101,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current beacon power limit";
-        print "EXPECTED RESULT 1: Should get the current beacon power limit";
-        print "ACTUAL RESULT 1: The Beacon power limit is :%s" %Beaconpowerlimit;
+        print("TEST STEP 1: Get the current beacon power limit");
+        print("EXPECTED RESULT 1: Should get the current beacon power limit");
+        print("ACTUAL RESULT 1: The Beacon power limit is :%s" %Beaconpowerlimit);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_Set');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.BeaconPowerLimit");
         tdkTestObj.addParameter("ParamValue","12345678910");
@@ -119,19 +119,19 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the BeaconPowerLimit";
-            print "EXPECTED RESULT 2: Should not set an invalid BeaconPowerLimit";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the BeaconPowerLimit");
+            print("EXPECTED RESULT 2: Should not set an invalid BeaconPowerLimit");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the BeaconPowerLimit";
-            print "EXPECTED RESULT 2: Should not set an invalid BeaconPowerLimit";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the BeaconPowerLimit");
+            print("EXPECTED RESULT 2: Should not set an invalid BeaconPowerLimit");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
         #setting the default password
         tdkTestObj = obj.createTestStep('Mocastub_Set');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.BeaconPowerLimit");
@@ -145,29 +145,29 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Set the BeaconPowerLimit";
-            print "EXPECTED RESULT : Should set the default BeaconPowerLimit";
-            print "ACTUAL RESULT : %s" %details;
+            print("TEST STEP : Set the BeaconPowerLimit");
+            print("EXPECTED RESULT : Should set the default BeaconPowerLimit");
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Set the BeaconPowerLimit";
-            print "EXPECTED RESULT : Should set the default BeaconPowerLimit";
-            print "ACTUAL RESULT : %s" %details;
+            print("TEST STEP : Set the BeaconPowerLimit");
+            print("EXPECTED RESULT : Should set the default BeaconPowerLimit");
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the BeaconPowerLimit";
-        print "EXPECTED RESULT 1: Should get the BeaconPowerLimit";
-        print "ACTUAL RESULT 1: The KeyPassphrase is :%s" %Beaconpowerlimit;
+        print("TEST STEP 1: Get the BeaconPowerLimit");
+        print("EXPECTED RESULT 1: Should get the BeaconPowerLimit");
+        print("ACTUAL RESULT 1: The KeyPassphrase is :%s" %Beaconpowerlimit);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -99,147 +99,147 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     default = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Finger Print Log Level"
-       print "EXPECTED RESULT 1: Should get the Finger Print Log Level";
-       print "ACTUAL RESULT 1:Finger Print Log Level:",default;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Finger Print Log Level")
+        print("EXPECTED RESULT 1: Should get the Finger Print Log Level");
+        print("ACTUAL RESULT 1:Finger Print Log Level:",default);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       print "TEST STEP 2: Setting Finger print log level to Error";
-       tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.LogLevel")
-       tdkTestObj.addParameter("ParamValue","1");
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="SUCCESS";
-       #Execute testcase on DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details= tdkTestObj.getResultDetails();
-       if expectedresult in actualresult:
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "EXPECTED RESULT 2 :  Set operation for log level is expected to be success";
-           print "ACTUAL RESULT 2 : %s " %details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 2: Setting Finger print log level to Error");
+        tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.LogLevel")
+        tdkTestObj.addParameter("ParamValue","1");
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="SUCCESS";
+        #Execute testcase on DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details= tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("EXPECTED RESULT 2 :  Set operation for log level is expected to be success");
+            print("ACTUAL RESULT 2 : %s " %details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           sleep(10);
-           tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-           expectedresult="SUCCESS";
-           cmd= "cat /rdklogs/logs/agent.txt | grep -i \"to LogLevel-1\""
-           tdkTestObj.addParameter("command",cmd);
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           if expectedresult in actualresult  and "LogLevel-1" in details:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 3 : Check for log level change in agent log file";
-               print "EXPECTED RESULT 3 : should log change in log file";
-               print "ACTUAL RESULT :%s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+            sleep(10);
+            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+            expectedresult="SUCCESS";
+            cmd= "cat /rdklogs/logs/agent.txt | grep -i \"to LogLevel-1\""
+            tdkTestObj.addParameter("command",cmd);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details=tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if expectedresult in actualresult  and "LogLevel-1" in details:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3 : Check for log level change in agent log file");
+                print("EXPECTED RESULT 3 : should log change in log file");
+                print("ACTUAL RESULT :%s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-               path= "sh %s/tdk_utility.sh parseConfigFile CUJO_GET" %TDK_PATH;
-               print path;
-               expectedresult="SUCCESS";
-               tdkTestObj.addParameter("command", path);
-               tdkTestObj.executeTestCase(expectedresult);
-               actualresult = tdkTestObj.getResult();
-               CUJO_GET = tdkTestObj.getResultDetails().strip().replace("\\n","")
-               if expectedresult in actualresult and CUJO_GET!="":
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 4: Get the cujo get api ";
-                   print "EXPECTED RESULT 4: Should Get the cujo get api ";
-                   print "ACTUAL RESULT 4: get api is  : %s" %CUJO_GET;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS"
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                path= "sh %s/tdk_utility.sh parseConfigFile CUJO_GET" %TDK_PATH;
+                print(path);
+                expectedresult="SUCCESS";
+                tdkTestObj.addParameter("command", path);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                CUJO_GET = tdkTestObj.getResultDetails().strip().replace("\\n","")
+                if expectedresult in actualresult and CUJO_GET!="":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the cujo get api ");
+                    print("EXPECTED RESULT 4: Should Get the cujo get api ");
+                    print("ACTUAL RESULT 4: get api is  : %s" %CUJO_GET);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                   tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-                   cmd= "%s" %CUJO_GET;
-                   expectedresult="SUCCESS";
-                   tdkTestObj.addParameter("command",cmd);
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                   if expectedresult in actualresult and details  == "1":
-                       #Set the result status of execution
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "TEST STEP 5 : Get the log level set with cujo api";
-                       print "EXPECTED RESULT 5: should get log level as 1 for Error log level";
-                       print "ACTUAL RESULT 5:%s" %details;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
-                   else:
-                       #Set the result status of execution
-                        tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5 : Get the log level set with cujo api";
-                        print "EXPECTED RESULT 5 : should get log level as 1 for Error log level";
-                        print "ACTUAL RESULT 5 :%s" %details;
+                    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                    cmd= "%s" %CUJO_GET;
+                    expectedresult="SUCCESS";
+                    tdkTestObj.addParameter("command",cmd);
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                    if expectedresult in actualresult and details  == "1":
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5 : Get the log level set with cujo api");
+                        print("EXPECTED RESULT 5: should get log level as 1 for Error log level");
+                        print("ACTUAL RESULT 5:%s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 4: Get the cujo get api ";
-                   print "EXPECTED RESULT 4: Should Get the cujo get api ";
-                   print "ACTUAL RESULT 4: get api is  : %s" %CUJO_GET;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT]: FAILURE"
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3 : Check for log level change in agent log file";
-               print "EXPECTED RESULT 3 : should log change in log file";
-               print "ACTUAL RESULT :%s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "EXPECTED RESULT 2 :  Set operation for log level is expected to be success";
-           print "ACTUAL RESULT 2 : %s " %details
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5 : Get the log level set with cujo api");
+                        print("EXPECTED RESULT 5 : should get log level as 1 for Error log level");
+                        print("ACTUAL RESULT 5 :%s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Get the cujo get api ");
+                    print("EXPECTED RESULT 4: Should Get the cujo get api ");
+                    print("ACTUAL RESULT 4: get api is  : %s" %CUJO_GET);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT]: FAILURE")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3 : Check for log level change in agent log file");
+                print("EXPECTED RESULT 3 : should log change in log file");
+                print("ACTUAL RESULT :%s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("EXPECTED RESULT 2 :  Set operation for log level is expected to be success");
+            print("ACTUAL RESULT 2 : %s " %details)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-       #Revert the value
-       tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.LogLevel");
-       tdkTestObj.addParameter("ParamValue",default);
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="SUCCESS";
-       #Execute testcase on DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       result = tdkTestObj.getResultDetails();
+        #Revert the value
+        tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.LogLevel");
+        tdkTestObj.addParameter("ParamValue",default);
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="SUCCESS";
+        #Execute testcase on DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        result = tdkTestObj.getResultDetails();
 
-       if expectedresult in  expectedresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 6: Revert Finger Print Log Level to its default";
-          print "EXPECTED RESULT 6: Revert Finger Print Log Level to previous value";
-          print "ACTUAL RESULT 6: Revert Operation success:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 6: Revert Finger Print Log Level to its default";
-          print "EXPECTED RESULT 6: Revert Finger Print Log Level to previous value";
-          print "ACTUAL RESULT 6: Revert Operation failed:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in  expectedresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 6: Revert Finger Print Log Level to its default");
+            print("EXPECTED RESULT 6: Revert Finger Print Log Level to previous value");
+            print("ACTUAL RESULT 6: Revert Operation success:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 6: Revert Finger Print Log Level to its default");
+            print("EXPECTED RESULT 6: Revert Finger Print Log Level to previous value");
+            print("ACTUAL RESULT 6: Revert Operation failed:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Finger Print Log Level";
-        print "EXPECTED RESULT 1: Should get the Finger Print Log Level";
-        print "ACTUAL RESULT 1:Finger Print Log Level",default;
+        print("TEST STEP 1: Get the Finger Print Log Level");
+        print("EXPECTED RESULT 1: Should get the Finger Print Log Level");
+        print("ACTUAL RESULT 1:Finger Print Log Level",default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-    print "Failed to load sysutil/pam  module";
+    print("Failed to load sysutil/pam  module");
     sysObj.setLoadModuleStatus("FAILURE");
     pamObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

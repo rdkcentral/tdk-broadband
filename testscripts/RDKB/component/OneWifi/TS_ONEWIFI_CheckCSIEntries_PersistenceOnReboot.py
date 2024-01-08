@@ -92,8 +92,8 @@ obj1.configureTestCase(ip,port,'TS_ONEWIFI_CheckCSIEntries_PersistenceOnReboot')
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -105,7 +105,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     pre_req_set, tdkTestObj, step, revert_flag, initial_val = CheckPreReqForCSI(obj1, obj);
 
     if pre_req_set == 1:
-        print "\n*************All pre-requisites set for the DUT*****************";
+        print("\n*************All pre-requisites set for the DUT*****************");
 
         #Get the initial CSINumberOfEntries
         step = step + 1;
@@ -113,15 +113,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         csi_entries_param = "Device.WiFi.X_RDK_CSINumberOfEntries";
         actualresult, initial_entries = getTR181Value(tdkTestObj, csi_entries_param);
 
-        print "\nTEST STEP %d: Get the initial value of Device.WiFi.X_RDK_CSINumberOfEntries" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step;
+        print("\nTEST STEP %d: Get the initial value of Device.WiFi.X_RDK_CSINumberOfEntries" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step);
 
         if expectedresult in actualresult and initial_entries.isdigit():
             initial_entries = int(initial_entries);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Initial CSI Number of Entries retrieved; Details : %d" %(step, initial_entries);
-            print "TEST EXECUTION RESULT : %s" %actualresult;
+            print("ACTUAL RESULT %d: Initial CSI Number of Entries retrieved; Details : %d" %(step, initial_entries));
+            print("TEST EXECUTION RESULT : %s" %actualresult);
 
             #Store the initial CSI values if number of Entries > 0
             copy_csi = 0;
@@ -132,11 +132,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 csi_values_maclist = [];
                 step = step + 1;
                 count = 0;
-                print "\nTEST STEP %d: Get the initial CSI values and store them" %step;
-                print "EXPECTED RESULT %d: Should get the initial CSI values and store them" %step;
+                print("\nTEST STEP %d: Get the initial CSI values and store them" %step);
+                print("EXPECTED RESULT %d: Should get the initial CSI values and store them" %step);
 
                 for entry in range(1, initial_entries + 1):
-                    print "Storing initial CSI values of instance %d" %entry;
+                    print("Storing initial CSI values of instance %d" %entry);
                     enable_param = "Device.WiFi.X_RDK_CSI." + str(entry) + ".Enable";
                     ClientMaclist_param = "Device.WiFi.X_RDK_CSI." + str(entry) + ".ClientMaclist";
                     tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get");
@@ -146,24 +146,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     if expectedresult in actualresult1 and expectedresult in actualresult2:
                         tdkTestObj.setResultStatus("SUCCESS");
                         count = count + 1;
-                        print "Entry %d : %s : %s and %s : %s" %(entry, enable_param, details1, ClientMaclist_param, details2);
+                        print("Entry %d : %s : %s and %s : %s" %(entry, enable_param, details1, ClientMaclist_param, details2));
                         csi_values_enable.append(details1);
                         csi_values_maclist.append(details2);
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Entry %d : %s : %s and %s : %s" %(entry, enable_param, details1, ClientMaclist_param, details2);
+                        print("Entry %d : %s : %s and %s : %s" %(entry, enable_param, details1, ClientMaclist_param, details2));
 
                 if count == initial_entries:
                     reboot_ready = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: All CSI initial values of instances retrieved" %step;
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("ACTUAL RESULT %d: All CSI initial values of instances retrieved" %step);
+                    print("TEST EXECUTION RESULT : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: All CSI initial values of instances NOT retrieved" %step;
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d: All CSI initial values of instances NOT retrieved" %step);
+                    print("TEST EXECUTION RESULT : FAILURE");
             else:
                 #Add a new CSI table instance
                 step = step + 1;
@@ -174,70 +174,70 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP %d: Add a new CSI Table instance" %step;
-                print "EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step;
+                print("\nTEST STEP %d: Add a new CSI Table instance" %step);
+                print("EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step);
 
                 if expectedresult in actualresult and details != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
                     instance = details.split(':')[1];
 
                     if instance.isdigit() and int(instance) > 0:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "INSTANCE VALUE : %s" %instance;
+                        print("INSTANCE VALUE : %s" %instance);
 
                         #Check CSINumberOfEntries after adding a new CSI instance
                         step = step + 1;
                         tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get");
                         actualresult, current_entries = getTR181Value(tdkTestObj, csi_entries_param);
 
-                        print "\nTEST STEP %d: Get the current value of Device.WiFi.X_RDK_CSINumberOfEntries" %step;
-                        print "EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step;
+                        print("\nTEST STEP %d: Get the current value of Device.WiFi.X_RDK_CSINumberOfEntries" %step);
+                        print("EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step);
 
                         if expectedresult in actualresult and current_entries.isdigit():
                             current_entries = int(current_entries);
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Current CSI Number of Entries retrieved; Details : %d" %(step, current_entries);
-                            print "TEST EXECUTION RESULT : SUCCESS";
+                            print("ACTUAL RESULT %d: Current CSI Number of Entries retrieved; Details : %d" %(step, current_entries));
+                            print("TEST EXECUTION RESULT : SUCCESS");
 
                             #Check if CSINumberOfEntries is incremented by 1
                             step = step + 1;
-                            print "\nTEST STEP %d: Check if the current Device.WiFi.X_RDK_CSINumberOfEntries is incremented by 1" %step;
-                            print "EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries incremented by 1" %step;
-                            print "Initial CSI Number of Entries : %d" %initial_entries;
-                            print "Current CSI Number of Entries : %d" %current_entries;
+                            print("\nTEST STEP %d: Check if the current Device.WiFi.X_RDK_CSINumberOfEntries is incremented by 1" %step);
+                            print("EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries incremented by 1" %step);
+                            print("Initial CSI Number of Entries : %d" %initial_entries);
+                            print("Current CSI Number of Entries : %d" %current_entries);
 
                             if current_entries == (initial_entries + 1):
                                 reboot_ready = 1;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Current CSI Number of Entries retrieved is incremented by 1" %step;
-                                print "TEST EXECUTION RESULT : SUCCESS";
+                                print("ACTUAL RESULT %d: Current CSI Number of Entries retrieved is incremented by 1" %step);
+                                print("TEST EXECUTION RESULT : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Current CSI Number of Entries retrieved is NOT incremented by 1" %step;
-                                print "TEST EXECUTION RESULT : FAILURE";
+                                print("ACTUAL RESULT %d: Current CSI Number of Entries retrieved is NOT incremented by 1" %step);
+                                print("TEST EXECUTION RESULT : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Current CSI Number of Entries not retrieved successfully; Details : %s" %(step, current_entries);
-                            print "TEST EXECUTION RESULT : FAILURE";
+                            print("ACTUAL RESULT %d: Current CSI Number of Entries not retrieved successfully; Details : %s" %(step, current_entries));
+                            print("TEST EXECUTION RESULT : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "INSTANCE VALUE : %s is not a valid value" %instance;
+                        print("INSTANCE VALUE : %s is not a valid value" %instance);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Unable to add a new CSI Table instance successfully; Details : %s" %(step, details);
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("ACTUAL RESULT %d: Unable to add a new CSI Table instance successfully; Details : %s" %(step, details));
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
 
             #Reboot the DUT
             if reboot_ready == 1:
-                print "****DUT is going for a reboot and will be up after 300 seconds*****";
+                print("****DUT is going for a reboot and will be up after 300 seconds*****");
                 obj.initiateReboot();
                 sleep(300);
 
@@ -246,32 +246,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_Get");
                 actualresult, final_entries = getTR181Value(tdkTestObj, csi_entries_param);
 
-                print "\nTEST STEP %d: Get the value of Device.WiFi.X_RDK_CSINumberOfEntries after reboot" %step;
-                print "EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step;
+                print("\nTEST STEP %d: Get the value of Device.WiFi.X_RDK_CSINumberOfEntries after reboot" %step);
+                print("EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries successfully" %step);
 
                 if expectedresult in actualresult and final_entries.isdigit():
                     final_entries = int(final_entries);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: CSI Number of Entries retrieved; Details : %d" %(step, final_entries);
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("ACTUAL RESULT %d: CSI Number of Entries retrieved; Details : %d" %(step, final_entries));
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
 
                     step = step + 1;
-                    print "\nTEST STEP %d: Check if the current Device.WiFi.X_RDK_CSINumberOfEntries is 0" %step;
-                    print "EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries as 0" %step;
+                    print("\nTEST STEP %d: Check if the current Device.WiFi.X_RDK_CSINumberOfEntries is 0" %step);
+                    print("EXPECTED RESULT %d: Should get the value of Device.WiFi.X_RDK_CSINumberOfEntries as 0" %step);
 
                     if final_entries == 0:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: CSI Number of Entries retrieved is 0 after reboot" %step;
-                        print "TEST EXECUTION RESULT : SUCCESS";
+                        print("ACTUAL RESULT %d: CSI Number of Entries retrieved is 0 after reboot" %step);
+                        print("TEST EXECUTION RESULT : SUCCESS");
 
                         #Revert to initial state if required
                         if copy_csi == 1:
                             count = 0;
                             step = step + 1;
-                            print "\nTEST STEP %d : Restore the CSI Table with initial values" %step;
-                            print "EXPECTED RESULT %d : Should successfully restore the CSI Table with initial values" %step;
+                            print("\nTEST STEP %d : Restore the CSI Table with initial values" %step);
+                            print("EXPECTED RESULT %d : Should successfully restore the CSI Table with initial values" %step);
 
                             for entry in range(1, initial_entries + 1):
                                 #Add a new CSI table instance
@@ -291,63 +291,63 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                                     if expectedresult in actualresult1 and expectedresult in actualresult2:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "Instance %d added successfully" %entry;
+                                        print("Instance %d added successfully" %entry);
                                         count = count + 1;
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "Instance %d NOT added successfully" %entry;
+                                        print("Instance %d NOT added successfully" %entry);
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "Unable to add CSI row";
+                                    print("Unable to add CSI row");
                         else:
-                            print "Restoring CSI Table not required";
+                            print("Restoring CSI Table not required");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: CSI Number of Entries retrieved is NOT 0 after reboot" %step;
-                        print "TEST EXECUTION RESULT : FAILURE";
+                        print("ACTUAL RESULT %d: CSI Number of Entries retrieved is NOT 0 after reboot" %step);
+                        print("TEST EXECUTION RESULT : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: CSI Number of Entries retrieved; Details : %s" %(step, final_entries);
-                    print "TEST EXECUTION RESULT : %s" %actualresult;
+                    print("ACTUAL RESULT %d: CSI Number of Entries retrieved; Details : %s" %(step, final_entries));
+                    print("TEST EXECUTION RESULT : %s" %actualresult);
             else:
-                print "Cannot Reboot the DUT as the previous steps failed";
+                print("Cannot Reboot the DUT as the previous steps failed");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Initial CSI Number of Entries NOT retrieved; Details : %s" %(step, initial_entries);
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d: Initial CSI Number of Entries NOT retrieved; Details : %s" %(step, initial_entries));
+            print("TEST EXECUTION RESULT : FAILURE");
 
         #Revert the pre-requisites set
         if revert_flag == 1:
             step = step + 1;
             status = RevertCSIPreReq(obj, initial_val);
-            print "\nTEST STEP %d : Revert the pre-requisites set to initial values" %step;
-            print "\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+            print("\nTEST STEP %d : Revert the pre-requisites set to initial values" %step);
+            print("\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
             if status == 1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Revert operation was success" %step;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d : Revert operation was success" %step);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Revert operation failed" %step;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d : Revert operation failed" %step);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Revert operations not required";
+            print("Revert operations not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

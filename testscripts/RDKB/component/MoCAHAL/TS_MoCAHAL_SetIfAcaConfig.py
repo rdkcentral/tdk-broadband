@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_SetIfAcaConfig');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,115 +119,115 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and conf:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get MoCA interface ACA config using moca_getIfAcaConfig()"
-        print "EXPECTED RESULT 1: Should Get MoCA interface ACA config"
-        print "ACTUAL RESULT 1:  %s" %conf;
+        print("TEST STEP 1: Get MoCA interface ACA config using moca_getIfAcaConfig()")
+        print("EXPECTED RESULT 1: Should Get MoCA interface ACA config")
+        print("ACTUAL RESULT 1:  %s" %conf);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#store the current ACA config values
-	nodeId= conf.split("NodeID=")[1].split(",")[0]
+        #store the current ACA config values
+        nodeId= conf.split("NodeID=")[1].split(",")[0]
         probeType = conf.split("ProbeType=")[1].split(",")[0]
         channel = conf.split("Channel=")[1].split(",")[0]
         reportNodes = conf.split("ReportNodes=")[1].split(",")[0]
         ACAStart = conf.split("ACAStart=")[1].split(",")[0]
 
         #Set ACA config
-	tdkTestObj = obj.createTestStep("MoCAHAL_SetIfAcaConfig");
-	tdkTestObj.addParameter("nodeId",1);
-	tdkTestObj.addParameter("channel",1);
-	tdkTestObj.addParameter("probeType",0);
-	tdkTestObj.addParameter("reportNodes",5);
+        tdkTestObj = obj.createTestStep("MoCAHAL_SetIfAcaConfig");
+        tdkTestObj.addParameter("nodeId",1);
+        tdkTestObj.addParameter("channel",1);
+        tdkTestObj.addParameter("probeType",0);
+        tdkTestObj.addParameter("reportNodes",5);
         tdkTestObj.addParameter("ACAStart",1);
-	tdkTestObj.addParameter("ifIndex",1);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
+        tdkTestObj.addParameter("ifIndex",1);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: Set the MoCA interface ACA config using moca_setIfAcaConfig()"
-	    print "EXPECTED RESULT 2: Should set the MoCA interface ACA config values as NodeID=1, ProbeType=0, Channel=1, ReportNodes=5, ACAStart=1";
-            print "ACTUAL RESULT 2: The MoCA set configuration was success "
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the MoCA interface ACA config using moca_setIfAcaConfig()")
+            print("EXPECTED RESULT 2: Should set the MoCA interface ACA config values as NodeID=1, ProbeType=0, Channel=1, ReportNodes=5, ACAStart=1");
+            print("ACTUAL RESULT 2: The MoCA set configuration was success ")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #MoCAHAL_SetIfAcaConfig() will do a get internally after doing set and return the get values
-	    conf_afterset = details;
+            conf_afterset = details;
 
-	    #store the ACA config values after set
-	    nodeId_new= conf_afterset.split("NodeID=")[1].split(",")[0]
+            #store the ACA config values after set
+            nodeId_new= conf_afterset.split("NodeID=")[1].split(",")[0]
             probeType_new = conf_afterset.split("ProbeType=")[1].split(",")[0]
             channel_new = conf_afterset.split("Channel=")[1].split(",")[0]
             reportNodes_new = conf_afterset.split("ReportNodes=")[1].split(",")[0]
             ACAStart_new = conf_afterset.split("ACAStart=")[1].split(",")[0]
 
             if expectedresult in actualresult and int(nodeId_new) == 1 and int(probeType_new) == 0 and int(channel_new) == 1 and int(reportNodes_new) == 5 and int(ACAStart_new) == 1:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 3: Compare the configuration parameters with set values"
-		print "EXPECTED RESULT 3: Configuration parameters should match with set values";
-		print "ACTUAL RESULT 3: Configurations are matching. %s" %conf_afterset;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 3: Compare the configuration parameters with set values"
-		print "EXPECTED RESULT 3: Configuration parameters should match with set values";
-		print "ACTUAL RESULT 3: Configurations are NOT matching %s" %conf_afterset;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-
-            #Revert the ACA config
-	    tdkTestObj = obj.createTestStep("MoCAHAL_SetIfAcaConfig");
-	    tdkTestObj.addParameter("nodeId",int(nodeId));
-	    tdkTestObj.addParameter("channel",int(channel));
-	    tdkTestObj.addParameter("probeType",int(probeType));
-	    tdkTestObj.addParameter("reportNodes",int(reportNodes));
-            tdkTestObj.addParameter("ACAStart",int(ACAStart));
-	    tdkTestObj.addParameter("ifIndex",1);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-
-	    if expectedresult in actualresult:
                 #Set the result status of execution
-	        tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP 4: Revert the MoCA interface ACA config using moca_setIfAcaConfig()"
-	        print "EXPECTED RESULT 4: Should revert the MoCA interface ACA config";
-                print "ACTUAL RESULT 4: The MoCA ACA revert configuration was success %s" %details;
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Compare the configuration parameters with set values")
+                print("EXPECTED RESULT 3: Configuration parameters should match with set values");
+                print("ACTUAL RESULT 3: Configurations are matching. %s" %conf_afterset);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP 4: Revert the MoCA interface ACA config using moca_setIfAcaConfig()"
-	        print "EXPECTED RESULT 4: Should revert the MoCA interface ACA config";
-                print "ACTUAL RESULT 4: The MoCA ACA revert configuration failed";
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : FAILURE"
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Compare the configuration parameters with set values")
+                print("EXPECTED RESULT 3: Configuration parameters should match with set values");
+                print("ACTUAL RESULT 3: Configurations are NOT matching %s" %conf_afterset);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+            #Revert the ACA config
+            tdkTestObj = obj.createTestStep("MoCAHAL_SetIfAcaConfig");
+            tdkTestObj.addParameter("nodeId",int(nodeId));
+            tdkTestObj.addParameter("channel",int(channel));
+            tdkTestObj.addParameter("probeType",int(probeType));
+            tdkTestObj.addParameter("reportNodes",int(reportNodes));
+            tdkTestObj.addParameter("ACAStart",int(ACAStart));
+            tdkTestObj.addParameter("ifIndex",1);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4: Revert the MoCA interface ACA config using moca_setIfAcaConfig()")
+                print("EXPECTED RESULT 4: Should revert the MoCA interface ACA config");
+                print("ACTUAL RESULT 4: The MoCA ACA revert configuration was success %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4: Revert the MoCA interface ACA config using moca_setIfAcaConfig()")
+                print("EXPECTED RESULT 4: Should revert the MoCA interface ACA config");
+                print("ACTUAL RESULT 4: The MoCA ACA revert configuration failed");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Set the MoCA interface ACA config using moca_setIfAcaConfig()"
-	    print "EXPECTED RESULT 2: Should set the MoCA interface ACA config";
-            print "ACTUAL RESULT 2: The MoCA set configuration failed, details: %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the MoCA interface ACA config using moca_setIfAcaConfig()")
+            print("EXPECTED RESULT 2: Should set the MoCA interface ACA config");
+            print("ACTUAL RESULT 2: The MoCA set configuration failed, details: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get MoCA interface ACA config using moca_getIfAcaConfig()"
-        print "EXPECTED RESULT 1: Should Get MoCA interface ACA config"
-        print "ACTUAL RESULT 1: %s" %conf;
+        print("TEST STEP 1: Get MoCA interface ACA config using moca_getIfAcaConfig()")
+        print("EXPECTED RESULT 1: Should Get MoCA interface ACA config")
+        print("ACTUAL RESULT 1: %s" %conf);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

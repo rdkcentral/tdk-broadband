@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_WiFiMesh_CheckDisableStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,12 +99,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Mesh enable state";
-        print "EXPECTED RESULT 1: Should get the Mesh enable state";
+        print("TEST STEP 1: Get the Mesh enable state");
+        print("EXPECTED RESULT 1: Should get the Mesh enable state");
         orgState = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: Initial mesh state is %s" %orgState;
+        print("ACTUAL RESULT 1: Initial mesh state is %s" %orgState);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if orgState == "true":
             #Disable Mesh and check its status
@@ -119,21 +119,21 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Disable Mesh";
-                print "EXPECTED RESULT 2: Should disable Mesh"
-                print "ACTUAL RESULT 2: Mesh state is %s " %details;
+                print("TEST STEP 2: Disable Mesh");
+                print("EXPECTED RESULT 2: Should disable Mesh")
+                print("ACTUAL RESULT 2: Mesh state is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-		sleep(30)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                sleep(30)
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Disable Mesh";
-                print "EXPECTED RESULT 2: Should disable Mesh"
-                print "ACTUAL RESULT 2: Mesh state is %s " %details;
+                print("TEST STEP 2: Disable Mesh");
+                print("EXPECTED RESULT 2: Should disable Mesh")
+                print("ACTUAL RESULT 2: Mesh state is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-		obj.unloadModule("wifiagent");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                obj.unloadModule("wifiagent");
                 exit()
 
         #check if Mesh status is Off
@@ -146,18 +146,18 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if expectedresult in actualresult and "Off" in status:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Check if Mesh status is Off";
-            print "EXPECTED RESULT 3: Mesh status should be Off";
-            print "ACTUAL RESULT 3: Mesh Status is %s " %status;
+            print("TEST STEP 3: Check if Mesh status is Off");
+            print("EXPECTED RESULT 3: Mesh status should be Off");
+            print("ACTUAL RESULT 3: Mesh Status is %s " %status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Check if Mesh status is Off";
-            print "EXPECTED RESULT 3: Mesh status should be Off";
-            print "ACTUAL RESULT 3: Status is %s " %details;
+            print("TEST STEP 3: Check if Mesh status is Off");
+            print("EXPECTED RESULT 3: Mesh status should be Off");
+            print("ACTUAL RESULT 3: Status is %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if orgState == "true":
             #change mesh state to previous one
@@ -172,28 +172,28 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Restore Enable state of Mesh";
-                print "EXPECTED RESULT 4: Should Restore Enable state of Mesh";
-                print "ACTUAL RESULT 4: Detail: %s " %details;
+                print("TEST STEP 4: Restore Enable state of Mesh");
+                print("EXPECTED RESULT 4: Should Restore Enable state of Mesh");
+                print("ACTUAL RESULT 4: Detail: %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Restore Enable state of Mesh";
-                print "EXPECTED RESULT 4: Should Restore Enable state of Mesh";
-                print "ACTUAL RESULT 4: Details: %s " %details;
+                print("TEST STEP 4: Restore Enable state of Mesh");
+                print("EXPECTED RESULT 4: Should Restore Enable state of Mesh");
+                print("ACTUAL RESULT 4: Details: %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the state of Mesh"
-        print "EXPECTED RESULT 1: Failure in getting the state of Mesh"
-        print "ACTUAL RESULT 1: Initial mesh state is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the state of Mesh")
+        print("EXPECTED RESULT 1: Failure in getting the state of Mesh")
+        print("ACTUAL RESULT 1: Initial mesh state is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

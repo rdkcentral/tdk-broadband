@@ -121,15 +121,15 @@ if "SUCCESS" in loadmodulestatus1.upper():
     RFC_param = "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable";
     initial_enable, actualresult = getValues(RFC_param, tdkTestObj);
 
-    print "\nTEST STEP %d : Get the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step;
-    print "EXPECTED RESULT %d : The RFC value should be retrieved successfully" %step;
+    print("\nTEST STEP %d : Get the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step);
+    print("EXPECTED RESULT %d : The RFC value should be retrieved successfully" %step);
 
     if expectedresult in actualresult and initial_enable != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, initial_enable) ;
+        print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, initial_enable)) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check the GET value, if it is not true, set to true and reboot
         revert_flag = 0;
@@ -139,17 +139,17 @@ if "SUCCESS" in loadmodulestatus1.upper():
             tdkTestObj = obj1.createTestStep('pam_Setparams');
             details, actualresult = setValues(RFC_param, "true", "boolean", tdkTestObj);
 
-            print "\nTEST STEP %d : Set the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable to true" %step;
-            print "EXPECTED RESULT %d : The RFC value should be enabled successfully" %step;
+            print("\nTEST STEP %d : Set the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable to true" %step);
+            print("EXPECTED RESULT %d : The RFC value should be enabled successfully" %step);
 
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is set successfully" %step;
+                print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "****DUT is going for a reboot for RFC to take effect and will be up after 360 seconds*****";
+                print("****DUT is going for a reboot for RFC to take effect and will be up after 360 seconds*****");
                 obj1.initiateReboot();
                 sleep(360);
 
@@ -158,41 +158,41 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 tdkTestObj = obj1.createTestStep('pam_GetParameterValues');
                 curr_enable, actualresult = getValues(RFC_param, tdkTestObj);
 
-                print "\nTEST STEP %d : Get the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step;
-                print "EXPECTED RESULT %d : The RFC value should be retrieved successfully" %step;
+                print("\nTEST STEP %d : Get the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step);
+                print("EXPECTED RESULT %d : The RFC value should be retrieved successfully" %step);
 
                 if expectedresult in actualresult and curr_enable != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, curr_enable) ;
+                    print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, curr_enable)) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if curr_enable == "true":
                         revert_flag = 1;
                         rfc_set = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Hardware Health Test RFC is enabled successfully";
+                        print("Hardware Health Test RFC is enabled successfully");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Hardware Health Test RFC is NOT enabled successfully";
+                        print("Hardware Health Test RFC is NOT enabled successfully");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, curr_enable) ;
+                    print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, curr_enable)) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is NOT set successfully" %step;
+                print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is NOT set successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             rfc_set = 1;
-            print "Hardware Health Test RFC is in enabled state, SET operation not required";
+            print("Hardware Health Test RFC is in enabled state, SET operation not required");
 
         if rfc_set == 1:
             #Get initial value of Device.X_RDK_hwHealthTest.executeTest
@@ -201,15 +201,15 @@ if "SUCCESS" in loadmodulestatus1.upper():
             test_param = "Device.X_RDK_hwHealthTest.executeTest";
             initial_test, actualresult = getValues(test_param, tdkTestObj);
 
-            print "\nTEST STEP %d : Get the enable status of Device.X_RDK_hwHealthTest.executeTest" %step;
-            print "EXPECTED RESULT %d : The parameter value should be retrieved successfully" %step;
+            print("\nTEST STEP %d : Get the enable status of Device.X_RDK_hwHealthTest.executeTest" %step);
+            print("EXPECTED RESULT %d : The parameter value should be retrieved successfully" %step);
 
             if expectedresult in actualresult and initial_test != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, initial_test) ;
+                print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, initial_test)) ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Set Device.X_RDK_hwHealthTest.executeTest to true if not already enabled
                 test_set = 0;
@@ -219,56 +219,56 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     tdkTestObj = obj1.createTestStep('pam_Setparams');
                     details, actualresult = setValues(test_param, "true", "boolean", tdkTestObj);
 
-                    print "\nTEST STEP %d : Set the enable status of Device.X_RDK_hwHealthTest.executeTest to true" %step;
-                    print "EXPECTED RESULT %d : The parameter should be enabled successfully" %step;
+                    print("\nTEST STEP %d : Set the enable status of Device.X_RDK_hwHealthTest.executeTest to true" %step);
+                    print("EXPECTED RESULT %d : The parameter should be enabled successfully" %step);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is set successfully" %step;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check with GET
                         step = step + 1;
                         tdkTestObj = obj1.createTestStep('pam_GetParameterValues');
                         curr_test, actualresult = getValues(test_param, tdkTestObj);
 
-                        print "\nTEST STEP %d : Get the enable status of Device.X_RDK_hwHealthTest.executeTest" %step;
-                        print "EXPECTED RESULT %d : The parameter value should be retrieved successfully" %step;
+                        print("\nTEST STEP %d : Get the enable status of Device.X_RDK_hwHealthTest.executeTest" %step);
+                        print("EXPECTED RESULT %d : The parameter value should be retrieved successfully" %step);
 
                         if expectedresult in actualresult and curr_test != "":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, curr_test) ;
+                            print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, curr_test)) ;
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if curr_test == "true":
                                 test_set = 1;
                                 test_revert = 1;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ExecuteTest is enabled successfully";
+                                print("ExecuteTest is enabled successfully");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ExecuteTest is NOT enabled successfully";
+                                print("ExecuteTest is NOT enabled successfully");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, curr_test) ;
+                            print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, curr_test)) ;
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is NOT set successfully" %step;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is NOT set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     test_set = 1;
-                    print "Execute Test is in enabled state, SET operation not required";
+                    print("Execute Test is in enabled state, SET operation not required");
 
                 if test_set == 1:
                     #Check if Hardware Health Test Results are populated
@@ -278,25 +278,25 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     hw_results_param = "Device.X_RDK_hwHealthTest.Results";
                     hw_results, actualresult = getValues(hw_results_param, tdkTestObj);
 
-                    print "\nTEST STEP %d : Get the Hardware Health Test Results using Device.X_RDK_hwHealthTest.Results" %step;
-                    print "EXPECTED RESULT %d : The Hardware Health Test Results should be retrieved successfully" %step;
+                    print("\nTEST STEP %d : Get the Hardware Health Test Results using Device.X_RDK_hwHealthTest.Results" %step);
+                    print("EXPECTED RESULT %d : The Hardware Health Test Results should be retrieved successfully" %step);
 
                     if expectedresult in actualresult and hw_results != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.Results is : %s" %(step, hw_results) ;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.Results is : %s" %(step, hw_results)) ;
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.Results is : %s" %(step, hw_results) ;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.Results is : %s" %(step, hw_results)) ;
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Cannot proceed with the next step as Execute Test is not enabled...";
+                    print("Cannot proceed with the next step as Execute Test is not enabled...");
 
                 #Revert operation of Execute Test
                 if test_revert == 1:
@@ -304,33 +304,33 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     tdkTestObj = obj1.createTestStep('pam_Setparams');
                     details, actualresult = setValues(test_param, initial_enable, "boolean", tdkTestObj);
 
-                    print "\nTEST STEP %d : Revert the enable status of Device.X_RDK_hwHealthTest.executeTest" %step;
-                    print "EXPECTED RESULT %d : The parameter should be reverted successfully" %step;
+                    print("\nTEST STEP %d : Revert the enable status of Device.X_RDK_hwHealthTest.executeTest" %step);
+                    print("EXPECTED RESULT %d : The parameter should be reverted successfully" %step);
 
                     if expectedresult in actualresult and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is reverted successfully" %step;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is reverted successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is NOT reverted successfully" %step;
+                        print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is NOT reverted successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Execute Test revert not required...";
+                    print("Execute Test revert not required...");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, initial_test) ;
+                print("ACTUAL RESULT %d: Device.X_RDK_hwHealthTest.executeTest is : %s" %(step, initial_test)) ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Cannot proceed with the next steps as Hardware Health Test RFC is not enabled...";
+            print("Cannot proceed with the next steps as Hardware Health Test RFC is not enabled...");
 
         #Revert operation of RFC
         if revert_flag == 1:
@@ -338,36 +338,36 @@ if "SUCCESS" in loadmodulestatus1.upper():
             tdkTestObj = obj1.createTestStep('pam_Setparams');
             details, actualresult = setValues(RFC_param, initial_enable, "boolean", tdkTestObj);
 
-            print "\nTEST STEP %d : Revert the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step;
-            print "EXPECTED RESULT %d : The RFC value should be reverted successfully" %step;
+            print("\nTEST STEP %d : Revert the enable status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable" %step);
+            print("EXPECTED RESULT %d : The RFC value should be reverted successfully" %step);
 
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is reverted successfully" %step;
+                print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is reverted successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "****DUT is going for a reboot for RFC to take effect and will be up after 360 seconds*****";
+                print("****DUT is going for a reboot for RFC to take effect and will be up after 360 seconds*****");
                 obj1.initiateReboot();
                 sleep(360);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is NOT reverted successfully" %step;
+                print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is NOT reverted successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "RFC revert not required...";
+            print("RFC revert not required...");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, initial_enable) ;
+        print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable is : %s" %(step, initial_enable)) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj1.unloadModule("pam");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -103,151 +103,151 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Initiate factory reset ";
-       print "EXPECTED RESULT 1: Should initiate factory reset";
-       print "ACTUAL RESULT 1: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       #Restore the device state saved before reboot
-       obj.restorePreviousStateAfterReboot();
+        #Restore the device state saved before reboot
+        obj.restorePreviousStateAfterReboot();
 
-       tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.Enable");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.Enable");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult  and details == "true":
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Auto Reboot Status";
-          print "EXPECTED RESULT 2: Should Get the Auto Reboot Status as enabled";
-          print "ACTUAL RESULT 2: %s" %details;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult  and details == "true":
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Auto Reboot Status");
+            print("EXPECTED RESULT 2: Should Get the Auto Reboot Status as enabled");
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime");
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          defaultUptime = tdkTestObj.getResultDetails();
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime");
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            defaultUptime = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult  and int(defaultUptime)== 120:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the AutoReboot UpTime";
-             print "EXPECTED RESULT 3: Should Get the Auto Reboot Uptime as 120";
-             print "ACTUAL RESULT 3: %s" %defaultUptime;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             #The valid range is 1-365
-             InvalidValue = [-1,0,366,367]
-             # getting length of list
-             length = len(InvalidValue);
-
-             for i in range(length):
-                 print "Setting Auto Reboot Uptime to ",InvalidValue[i];
-
-                 tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime")
-                 tdkTestObj.addParameter("ParamValue",str(InvalidValue[i]));
-                 tdkTestObj.addParameter("Type","int");
-                 expectedresult= "FAILURE";
-
-                 #Execute testcase on DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 Setresult = tdkTestObj.getResultDetails();
-
-                 SetValue = InvalidValue[i];
-
-                 if expectedresult in actualresult:
-                    flag =0;
-                    print "The Invalid value %d  failed to set " %SetValue;
-                 else:
-                     flag =1;
-                     print"The Invalid value %d  did not failed to set " %SetValue;
-                     break;
-
-             if flag ==0:
+            if expectedresult in actualresult  and int(defaultUptime)== 120:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Set the AutoReboot UpTime to a Invalid range";
-                print "EXPECTED RESULT 4: Should not Set the Auto Reboot Uptime to a Invalid range";
-                print "ACTUAL RESULT 4: Auto Reboot Uptime failed to set the Invalid Range";
+                print("TEST STEP 3: Get the AutoReboot UpTime");
+                print("EXPECTED RESULT 3: Should Get the Auto Reboot Uptime as 120");
+                print("ACTUAL RESULT 3: %s" %defaultUptime);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-             else:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 4: Set the AutoReboot UpTime to a Invalid range";
-                 print "EXPECTED RESULT 4: Should not Set the Auto Reboot Uptime to a Invalid range";
-                 print "ACTUAL RESULT 4: Auto Reboot Uptime was set to Invalid Range";
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                 #Reverting the value
-                 tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime")
-                 tdkTestObj.addParameter("ParamValue",defaultUptime);
-                 tdkTestObj.addParameter("Type","int");
-                 expectedresult= "SUCCESS";
-                 #Execute testcase on DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 Setresult = tdkTestObj.getResultDetails();
+                #The valid range is 1-365
+                InvalidValue = [-1,0,366,367]
+                # getting length of list
+                length = len(InvalidValue);
 
-                 if expectedresult in actualresult:
+                for i in range(length):
+                    print("Setting Auto Reboot Uptime to ",InvalidValue[i]);
+
+                    tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime")
+                    tdkTestObj.addParameter("ParamValue",str(InvalidValue[i]));
+                    tdkTestObj.addParameter("Type","int");
+                    expectedresult= "FAILURE";
+
+                    #Execute testcase on DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    Setresult = tdkTestObj.getResultDetails();
+
+                    SetValue = InvalidValue[i];
+
+                    if expectedresult in actualresult:
+                        flag =0;
+                        print("The Invalid value %d  failed to set " %SetValue);
+                    else:
+                        flag =1;
+                        print("The Invalid value %d  did not failed to set " %SetValue);
+                        break;
+
+                if flag ==0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Set the AutoReboot UpTime to its default value";
-                    print "EXPECTED RESULT 5: Should Set the Auto Reboot Uptime to its default value";
-                    print "ACTUAL RESULT 5: Revert was success";
+                    print("TEST STEP 4: Set the AutoReboot UpTime to a Invalid range");
+                    print("EXPECTED RESULT 4: Should not Set the Auto Reboot Uptime to a Invalid range");
+                    print("ACTUAL RESULT 4: Auto Reboot Uptime failed to set the Invalid Range");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
-                 else:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Set the AutoReboot UpTime to its default value";
-                     print "EXPECTED RESULT 5: Should Set the Auto Reboot Uptime to its default value";
-                     print "ACTUAL RESULT 5: Revert failed";
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] :FAILURE"
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the AutoReboot UpTime";
-              print "EXPECTED RESULT 3: Should Get the Auto Reboot Uptime as 10";
-              print "ACTUAL RESULT 3: %s" %defaultUptime;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] :FAILURE";
-       else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the Auto Reboot Status";
-           print "EXPECTED RESULT 2: Should Get the Auto Reboot Status as disabled";
-           print "ACTUAL RESULT 2: %s" %details;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Set the AutoReboot UpTime to a Invalid range");
+                    print("EXPECTED RESULT 4: Should not Set the Auto Reboot Uptime to a Invalid range");
+                    print("ACTUAL RESULT 4: Auto Reboot Uptime was set to Invalid Range");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    #Reverting the value
+                    tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AutoReboot.UpTime")
+                    tdkTestObj.addParameter("ParamValue",defaultUptime);
+                    tdkTestObj.addParameter("Type","int");
+                    expectedresult= "SUCCESS";
+                    #Execute testcase on DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    Setresult = tdkTestObj.getResultDetails();
+
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Set the AutoReboot UpTime to its default value");
+                        print("EXPECTED RESULT 5: Should Set the Auto Reboot Uptime to its default value");
+                        print("ACTUAL RESULT 5: Revert was success");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Set the AutoReboot UpTime to its default value");
+                        print("EXPECTED RESULT 5: Should Set the Auto Reboot Uptime to its default value");
+                        print("ACTUAL RESULT 5: Revert failed");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] :FAILURE")
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the AutoReboot UpTime");
+                print("EXPECTED RESULT 3: Should Get the Auto Reboot Uptime as 10");
+                print("ACTUAL RESULT 3: %s" %defaultUptime);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] :FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Auto Reboot Status");
+            print("EXPECTED RESULT 2: Should Get the Auto Reboot Status as disabled");
+            print("ACTUAL RESULT 2: %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
     obj1.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

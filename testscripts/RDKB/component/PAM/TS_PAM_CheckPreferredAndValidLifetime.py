@@ -40,7 +40,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_PAM_222</test_case_id>
-    <test_objective>To check if the TR181 values 	of Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime and Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime match with the values of preferred-lifetime and valid-lifetime from dibbler server.conf file.</test_objective>
+    <test_objective>To check if the TR181 values        of Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime and Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime match with the values of preferred-lifetime and valid-lifetime from dibbler server.conf file.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
@@ -52,7 +52,7 @@ ParamName : Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime</input_
 2. Get the TR181 values of Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime and Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime.
 3. Cross check if the lifetime values retrieved are the same as the values stored in dibbler server.conf file.
 4. Unload the modules</automation_approch>
-    <expected_output>The TR181 values 	of Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime and Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime should match with the values of preferred-lifetime and valid-lifetime from dibbler server.conf file.</expected_output>
+    <expected_output>The TR181 values   of Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime and Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime should match with the values of preferred-lifetime and valid-lifetime from dibbler server.conf file.</expected_output>
     <priority>High</priority>
     <test_stub_interface>pam</test_stub_interface>
     <test_script>TS_PAM_CheckPreferredAndValidLifetime</test_script>
@@ -93,21 +93,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     step = 1;
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     cmd = "[ -f /etc/dibbler/server.conf ] && echo \"File exist\" || echo \"File does not exist\"";
-    print "Command : ",cmd;
+    print("Command : ",cmd);
     tdkTestObj.addParameter("command",cmd);
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP 1: Check for /etc/dibbler/server.conf file presence";
-    print "EXPECTED RESULT 1: /etc/dibbler/server.conf file should be present";
+    print("\nTEST STEP 1: Check for /etc/dibbler/server.conf file presence");
+    print("EXPECTED RESULT 1: /etc/dibbler/server.conf file should be present");
 
     if expectedresult in actualresult and details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: /etc/dibbler/server.conf file is present";
+        print("ACTUAL RESULT 1: /etc/dibbler/server.conf file is present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the TR181 value of Preferred Lifetime and Valid Lifetime
         Params = ["Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_PreferredLifetime", "Device.IP.Interface.1.IPv6Prefix.1.X_CISCO_COM_ValidLifetime"];
@@ -121,30 +121,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Get the value of %s" %(step, Params[index]);
-            print "EXPECTED RESULT %d: Should successfully get the value of %s" %(step, Params[index]);
+            print("\nTEST STEP %d: Get the value of %s" %(step, Params[index]));
+            print("EXPECTED RESULT %d: Should successfully get the value of %s" %(step, Params[index]));
 
             if expectedresult in actualresult:
                 tr181_value = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Parameter value retrieved successfully; Details : %s" %(step, tr181_value);
+                print("ACTUAL RESULT %d: Parameter value retrieved successfully; Details : %s" %(step, tr181_value));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the parameter value is non-empty and valid
                 if tr181_value != "" and tr181_value.isdigit():
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The parameter value is non-empty and valid";
+                    print("The parameter value is non-empty and valid");
 
                     #Verify the TR181 value with the value in /etc/dibbler/server.conf file
                     step = step + 1;
-                    print "\nTEST STEP %d: Get the value of %s from /etc/dibbler/server.conf" %(step, search_words[index]);
-                    print "EXPECTED RESULT %d: The value of %s should be retrieved from /etc/dibbler/server.conf" %(step, search_words[index]);
+                    print("\nTEST STEP %d: Get the value of %s from /etc/dibbler/server.conf" %(step, search_words[index]));
+                    print("EXPECTED RESULT %d: The value of %s should be retrieved from /etc/dibbler/server.conf" %(step, search_words[index]));
 
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     cmd = "cat /etc/dibbler/server.conf | grep " + search_words[index];
-                    print "Command : ", cmd;
+                    print("Command : ", cmd);
                     tdkTestObj.addParameter("command",cmd);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
@@ -156,59 +156,59 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         if value.isdigit():
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], value);
+                            print("ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], value));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             step = step + 1;
-                            print "\nTEST STEP %d: Check if the TR181 value matches with the value in /etc/dibbler/server.conf" %step;
-                            print "EXPECTED RESULT %d: The TR181 value should match with the value in /etc/dibbler/server.conf" %step;
-                            print "TR181 value : %s"%tr181_value;
-                            print "Value from /etc/dibbler/server.conf : %s"%value;
+                            print("\nTEST STEP %d: Check if the TR181 value matches with the value in /etc/dibbler/server.conf" %step);
+                            print("EXPECTED RESULT %d: The TR181 value should match with the value in /etc/dibbler/server.conf" %step);
+                            print("TR181 value : %s"%tr181_value);
+                            print("Value from /etc/dibbler/server.conf : %s"%value);
 
                             if value == tr181_value:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Both the values match" %step;
+                                print("ACTUAL RESULT %d: Both the values match" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Both the values do not match" %step;
+                                print("ACTUAL RESULT %d: Both the values do not match" %step);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], value);
+                            print("ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], value));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], details);
+                        print("ACTUAL RESULT %d: Value of %s from /etc/dibbler/server.conf is %s" %(step, search_words[index], details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The parameter value is invalid";
+                    print("The parameter value is invalid");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Parameter value not retrieved successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Parameter value not retrieved successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: /etc/dibbler/server.conf file is not present";
+        print("ACTUAL RESULT 1: /etc/dibbler/server.conf file is not present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

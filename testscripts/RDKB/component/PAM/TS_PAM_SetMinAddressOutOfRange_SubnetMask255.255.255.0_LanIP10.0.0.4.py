@@ -96,18 +96,18 @@ def setMinAddr(obj1, step, addr):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print"\nSetting Min Address to an out of range value %s with respect to the current Subnet Mask and the Lan IP" %addr;
-    print "TEST STEP %d : Set Device.DHCPv4.Server.Pool.1.MinAddress to an out of range value : %s" %(step, addr);
-    print "EXPECTED RESULT %d : SET operations should Fail as the Min Address is out of range" %step;
+    print("\nSetting Min Address to an out of range value %s with respect to the current Subnet Mask and the Lan IP" %addr);
+    print("TEST STEP %d : Set Device.DHCPv4.Server.Pool.1.MinAddress to an out of range value : %s" %(step, addr));
+    print("EXPECTED RESULT %d : SET operations should Fail as the Min Address is out of range" %step);
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Set operation failed as expected; Details : %s" %(step, details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Set operation failed as expected; Details : %s" %(step, details));
+        print("TEST EXECUTION RESULT :SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Set operation is success; Details : %s" %(step, details);
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("ACTUAL RESULT %d: Set operation is success; Details : %s" %(step, details));
+        print("TEST EXECUTION RESULT : FAILURE");
     return;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -130,8 +130,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_SetMinAddressOutOfRange_SubnetMask255.255
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 #Out of Range Min Address
 min_addr = "10.0.0.3";
@@ -143,18 +143,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj = obj.createTestStep('TADstub_Get');
     paramList=["Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask", "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress", "Device.DHCPv4.Server.Pool.1.MinAddress", "Device.DHCPv4.Server.Pool.1.MaxAddress"]
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-    print "\nTEST STEP 1: Get the initial values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress, Device.DHCPv4.Server.Pool.1.MinAddress and Device.DHCPv4.Server.Pool.1.MaxAddress";
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the initial values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress, Device.DHCPv4.Server.Pool.1.MinAddress and Device.DHCPv4.Server.Pool.1.MaxAddress");
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "" and orgValue[3] != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: Lan Subnet Mask is : %s, Lan IP Address is : %s, Min Address is : %s, Max Address is : %s" %(orgValue[0],orgValue[1], orgValue[2], orgValue[3]) ;
+        print("ACTUAL RESULT 1: Lan Subnet Mask is : %s, Lan IP Address is : %s, Min Address is : %s, Max Address is : %s" %(orgValue[0],orgValue[1], orgValue[2], orgValue[3])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if orgValue[0] == "255.255.255.0" and orgValue[1] == "10.0.0.4" and orgValue[3] == "10.0.0.253":
-            print "Set operation not required as Lan Subnet Mask, Lan IP Address and Max Address have expected values initially";
+            print("Set operation not required as Lan Subnet Mask, Lan IP Address and Max Address have expected values initially");
             #Set the Min Address out of range
             step = 2;
             setMinAddr(obj1, step, min_addr);
@@ -171,34 +171,34 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails();
             sleep(30);
 
-            print "\nTEST STEP 2 : Set Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to %s, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress to %s and Device.DHCPv4.Server.Pool.1.MaxAddress to %s" %(subnet_mask,lanip_addr,max_addr);
-            print "EXPECTED RESULT 2 : SET operations should be success";
+            print("\nTEST STEP 2 : Set Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to %s, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress to %s and Device.DHCPv4.Server.Pool.1.MaxAddress to %s" %(subnet_mask,lanip_addr,max_addr));
+            print("EXPECTED RESULT 2 : SET operations should be success");
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Set operation success; Details : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 2: Set operation success; Details : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Validate the SET with GET
                 paramList=["Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask", "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress", "Device.DHCPv4.Server.Pool.1.MaxAddress"];
                 tdkTestObj,status,setValue = getMultipleParameterValues(obj,paramList)
 
-                print "\nTEST STEP 3: Get the values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress and Device.DHCPv4.Server.Pool.1.MaxAddress";
-                print "EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values";
+                print("\nTEST STEP 3: Get the values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress and Device.DHCPv4.Server.Pool.1.MaxAddress");
+                print("EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values");
 
                 if expectedresult in status and setValue[0] == subnet_mask and setValue[1] == lanip_addr and setValue[2] == max_addr:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Values after the GET are same as the SET values : %s, %s, %s" %(setValue[0],setValue[1],setValue[2]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are same as the SET values : %s, %s, %s" %(setValue[0],setValue[1],setValue[2])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Set the Min Address out of range
                     step = 4;
                     setMinAddr(obj1, step, min_addr);
 
                     #Revert to initial values
-                    print "\nReverting to initial state...";
+                    print("\nReverting to initial state...");
                     tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                     tdkTestObj.addParameter("paramList", "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask|%s|string|Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress|%s|string|Device.DHCPv4.Server.Pool.1.MinAddress|%s|string|Device.DHCPv4.Server.Pool.1.MaxAddress|%s|string"%(orgValue[0], orgValue[1], orgValue[2], orgValue[3]));
                     tdkTestObj.executeTestCase(expectedresult);
@@ -206,37 +206,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     details = tdkTestObj.getResultDetails();
                     sleep(30);
 
-                    print "\nTEST STEP 5 : Set Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to %s, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress to %s, Device.DHCPv4.Server.Pool.1.MinAddress to %s and Device.DHCPv4.Server.Pool.1.MaxAddress to %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]);
-                    print "EXPECTED RESULT 5 : SET operations should be success";
+                    print("\nTEST STEP 5 : Set Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to %s, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress to %s, Device.DHCPv4.Server.Pool.1.MinAddress to %s and Device.DHCPv4.Server.Pool.1.MaxAddress to %s" %(orgValue[0],orgValue[1],orgValue[2],orgValue[3]));
+                    print("EXPECTED RESULT 5 : SET operations should be success");
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5: Set operation success; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT 5: Set operation success; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5:Set operation failed; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT 5:Set operation failed; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s, %s, %s" %(setValue[0],setValue[1],setValue[2],setValue[3]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s, %s, %s" %(setValue[0],setValue[1],setValue[2],setValue[3])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:Set operation failed; Details : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT 2:Set operation failed; Details : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: GET operation failed";
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT 1: GET operation failed");
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

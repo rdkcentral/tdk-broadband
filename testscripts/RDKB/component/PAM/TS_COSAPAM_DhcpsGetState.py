@@ -103,7 +103,7 @@ obj.configureTestCase(ip,port,'TS_COSAPAM_DhcpsGetState');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -118,27 +118,25 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the state of DHCP server";
-       print "EXPECTED RESULT 1: Should get the state of DHCP Server";
-       if "0" in details:
-	   print "ACTUAL RESULT 1:DHCP server is enabled"
-       else:
-	   print "ACTUAL RESULT 1:DHCP server is disabled"
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the state of DHCP server");
+        print("EXPECTED RESULT 1: Should get the state of DHCP Server");
+        if "0" in details:
+            print("ACTUAL RESULT 1:DHCP server is enabled")
+        else:
+            print("ACTUAL RESULT 1:DHCP server is disabled")
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
     else:
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1: Get the state of DHCP server";
-       print "EXPECTED RESULT 1: Failure in getting the state of DHCP server";
-       print "ACTUAL RESULT 1:  %s" %details;
-       print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the state of DHCP server");
+        print("EXPECTED RESULT 1: Failure in getting the state of DHCP server");
+        print("ACTUAL RESULT 1:  %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

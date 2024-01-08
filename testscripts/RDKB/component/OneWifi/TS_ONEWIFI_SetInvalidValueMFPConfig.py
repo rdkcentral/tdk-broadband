@@ -92,11 +92,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Security Access Point for MFP Config";
-        print "EXPECTED RESULT 1: Should get Security Access Point for MFP Config";
-        print "ACTUAL RESULT 1:Security Access Point for MFP Config value is:%s" %default;
+        print("TEST STEP 1: Get the Security Access Point for MFP Config");
+        print("EXPECTED RESULT 1: Should get Security Access Point for MFP Config");
+        print("ACTUAL RESULT 1:Security Access Point for MFP Config value is:%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.1.Security.MFPConfig");
@@ -107,59 +107,59 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         Setresult = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Set the Security Access Point for MFP Config  to a invalid value: unknown";
-           print "EXPECTED RESULT 2: Should not set Security Access Point for MFP Config to a invalid value";
-           print "ACTUAL RESULT 2: set operation failed for the Security Access Point ,MFP Config with a invalid value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the Security Access Point for MFP Config  to a invalid value: unknown");
+            print("EXPECTED RESULT 2: Should not set Security Access Point for MFP Config to a invalid value");
+            print("ACTUAL RESULT 2: set operation failed for the Security Access Point ,MFP Config with a invalid value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the Security Access Point for MFP Config to a invalid value :unknown";
-           print "EXPECTED RESULT 2: Should not set Security Access Point for MFP Config to a invalid value";
-           print "ACTUAL RESULT 2: set operation was success for Security Access Point ,MFP Config with a invalid value" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the Security Access Point for MFP Config to a invalid value :unknown");
+            print("EXPECTED RESULT 2: Should not set Security Access Point for MFP Config to a invalid value");
+            print("ACTUAL RESULT 2: set operation was success for Security Access Point ,MFP Config with a invalid value") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
-           #Reverting to default in case set operation was success
-           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-           tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.1.Security.MFPConfig");
-           expectedresult="SUCCESS";
-           tdkTestObj.addParameter("ParamValue",default);
-           tdkTestObj.addParameter("Type","string");
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           result = tdkTestObj.getResultDetails();
+            #Reverting to default in case set operation was success
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.1.Security.MFPConfig");
+            expectedresult="SUCCESS";
+            tdkTestObj.addParameter("ParamValue",default);
+            tdkTestObj.addParameter("Type","string");
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            result = tdkTestObj.getResultDetails();
 
-           if expectedresult in  expectedresult:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Revert the Security Access Point for MFP Config to its default:",default;
-              print "EXPECTED RESULT 3: Revert  Security Access Point for MFP Config to previous value";
-              print "ACTUAL RESULT 3: Revert Operation success:",result ;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Revert the Security Access Point for MFP Config to its default:",default;
-               print "EXPECTED RESULT 3: Revert  Security Access Point for MFP Config to previous value";
-               print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE"
+            if expectedresult in  expectedresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Revert the Security Access Point for MFP Config to its default:",default);
+                print("EXPECTED RESULT 3: Revert  Security Access Point for MFP Config to previous value");
+                print("ACTUAL RESULT 3: Revert Operation success:",result) ;
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Revert the Security Access Point for MFP Config to its default:",default);
+                print("EXPECTED RESULT 3: Revert  Security Access Point for MFP Config to previous value");
+                print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Security Access Point for MFP Config";
-        print "EXPECTED RESULT 1: Should get Security Access Point for MFP Config";
-        print "ACTUAL RESULT 1:Security Access Point for MFP Config value is  :%s" %default;
+        print("TEST STEP 1: Get the Security Access Point for MFP Config");
+        print("EXPECTED RESULT 1: Should get Security Access Point for MFP Config");
+        print("ACTUAL RESULT 1:Security Access Point for MFP Config value is  :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

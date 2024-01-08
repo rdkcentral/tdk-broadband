@@ -114,11 +114,11 @@ def setLanMode(mode, obj):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Change lanmode to %s" %mode
-        print "EXPECTED RESULT : Should change lanmode to %s" %mode
-        print "ACTUAL RESULT : Details: %s " %details;
+        print("TEST STEP : Change lanmode to %s" %mode)
+        print("EXPECTED RESULT : Should change lanmode to %s" %mode)
+        print("ACTUAL RESULT : Details: %s " %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         sleep(90)
 
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -130,31 +130,31 @@ def setLanMode(mode, obj):
 
         if expectedresult in actualresult and newValue==mode:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Get the current lanMode"
-            print "EXPECTED RESULT : Should retrieve the current lanMode"
-            print "ACTUAL RESULT : Lanmode is %s" %newValue;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    return "SUCCESS"
+            print("TEST STEP : Get the current lanMode")
+            print("EXPECTED RESULT : Should retrieve the current lanMode")
+            print("ACTUAL RESULT : Lanmode is %s" %newValue);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            return "SUCCESS"
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Get the current lanMode"
-            print "EXPECTED RESULT : Should retrieve the current lanMode"
-            print "ACTUAL RESULT : Lanmode is %s" %newValue;
-            print "[TEST EXECUTION RESULT] : FAILURE";
-	    return "FAILURE"
+            print("TEST STEP : Get the current lanMode")
+            print("EXPECTED RESULT : Should retrieve the current lanMode")
+            print("ACTUAL RESULT : Lanmode is %s" %newValue);
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            return "FAILURE"
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Change lanmode to %s" %mode
-        print "EXPECTED RESULT : Should change lanmode to %s" %mode
-        print "ACTUAL RESULT : Details: %s " %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
-	return "FAILURE"
+        print("TEST STEP : Change lanmode to %s" %mode)
+        print("EXPECTED RESULT : Should change lanmode to %s" %mode)
+        print("ACTUAL RESULT : Details: %s " %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        return "FAILURE"
 
 
 obj.configureTestCase(ip,port,'TS_WiFiMesh_CheckEnableStatus');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 MAX_RETRY = 4;
 if "SUCCESS" in loadmodulestatus.upper():
@@ -170,16 +170,16 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current lanMode"
-        print "EXPECTED RESULT 1: Should retrieve the current lanMode"
-        print "ACTUAL RESULT 1: Lanmode is %s" %orgLanMode;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current lanMode")
+        print("EXPECTED RESULT 1: Should retrieve the current lanMode")
+        print("ACTUAL RESULT 1: Lanmode is %s" %orgLanMode);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#if bridge mode is enabled, disable it before trying to enable mesh
-	if "bridge-static" == orgLanMode:
-	    actualresult = setLanMode("router", obj)
+        #if bridge mode is enabled, disable it before trying to enable mesh
+        if "bridge-static" == orgLanMode:
+            actualresult = setLanMode("router", obj)
             if expectedresult not in actualresult:
-                print "Failed to disable bridge mode, cannot enable mesh in bridge mode, exiting script..."
+                print("Failed to disable bridge mode, cannot enable mesh in bridge mode, exiting script...")
                 obj.unloadModule("wifiagent");
                 exit()
 
@@ -193,12 +193,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the Mesh enable state";
-            print "EXPECTED RESULT 2: Should get the Mesh enable state";
+            print("TEST STEP 2: Get the Mesh enable state");
+            print("EXPECTED RESULT 2: Should get the Mesh enable state");
             orgState = details.split("VALUE:")[1].split(' ')[0];
-            print "ACTUAL RESULT 2: Initial mesh state is %s" %orgState;
+            print("ACTUAL RESULT 2: Initial mesh state is %s" %orgState);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if orgState == "false":
                 #Enable Mesh and check its status
@@ -213,52 +213,52 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Enable Mesh";
-                    print "EXPECTED RESULT 3: Should enable Mesh"
-                    print "ACTUAL RESULT 3: Mesh state is %s " %details;
+                    print("TEST STEP 3: Enable Mesh");
+                    print("EXPECTED RESULT 3: Should enable Mesh")
+                    print("ACTUAL RESULT 3: Mesh state is %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                    print "Check for every 5 secs whether the mesh status became Init"
-		    sleep(5);
+                    print("Check for every 5 secs whether the mesh status became Init")
+                    sleep(5);
                     retryCount = 1;
                     tdkTestObj = obj.createTestStep('WIFIAgent_Get');
                     tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Status")
                     while retryCount < MAX_RETRY:
-                	#check if Mesh status becomes Init immediately after enabling mesh
+                        #check if Mesh status becomes Init immediately after enabling mesh
                         tdkTestObj.executeTestCase("expectedresult");
-	                actualresult = tdkTestObj.getResult();
-        	        details = tdkTestObj.getResultDetails();
-                	status = details.split("VALUE:")[1].split(' ')[0];
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        status = details.split("VALUE:")[1].split(' ')[0];
 
-	                if expectedresult in actualresult and "Init" in status:
-			    break;
-			else:
-			    sleep(5)
-			    retryCount = retryCount + 1;
+                        if expectedresult in actualresult and "Init" in status:
+                            break;
+                        else:
+                            sleep(5)
+                            retryCount = retryCount + 1;
 
-		    if expectedresult in actualresult and "Init" in status:
+                    if expectedresult in actualresult and "Init" in status:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Check if Mesh status is Init";
-                        print "EXPECTED RESULT 4: Mesh status should be Init";
-                        print "ACTUAL RESULT 4: Status is %s" %status;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-			#wait for some time for the status to change from Init to Full
+                        print("TEST STEP 4: Check if Mesh status is Init");
+                        print("EXPECTED RESULT 4: Mesh status should be Init");
+                        print("ACTUAL RESULT 4: Status is %s" %status);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        #wait for some time for the status to change from Init to Full
                         sleep(25)
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Check if Mesh status is Init";
-                        print "EXPECTED RESULT 4: Mesh status should be Init";
-                        print "ACTUAL RESULT 4: Status is %s " %status;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 4: Check if Mesh status is Init");
+                        print("EXPECTED RESULT 4: Mesh status should be Init");
+                        print("ACTUAL RESULT 4: Status is %s " %status);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Enable Mesh";
-                    print "EXPECTED RESULT 3: Should enable Mesh"
-                    print "ACTUAL RESULT 3: Mesh state is %s " %details;
+                    print("TEST STEP 3: Enable Mesh");
+                    print("EXPECTED RESULT 3: Should enable Mesh")
+                    print("ACTUAL RESULT 3: Mesh state is %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-            	    obj.unloadModule("wifiagent");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    obj.unloadModule("wifiagent");
                     exit()
 
             #check if Mesh status is Full
@@ -271,18 +271,18 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult and "Full" in status:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Check if Mesh status is Full";
-                print "EXPECTED RESULT 5: Mesh status should be Full";
-                print "ACTUAL RESULT 5: Mesh Status is %s " %status;
+                print("TEST STEP 5: Check if Mesh status is Full");
+                print("EXPECTED RESULT 5: Mesh status should be Full");
+                print("ACTUAL RESULT 5: Mesh Status is %s " %status);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5: Check if Mesh status is Full";
-                print "EXPECTED RESULT 5: Mesh status should be Full";
-                print "ACTUAL RESULT 5: Status is %s " %details;
+                print("TEST STEP 5: Check if Mesh status is Full");
+                print("EXPECTED RESULT 5: Mesh status should be Full");
+                print("ACTUAL RESULT 5: Status is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if orgState == "false":
                 #change mesh state to previous one
@@ -297,38 +297,38 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 6: Restore Enable state of Mesh";
-                    print "EXPECTED RESULT 6: Should Restore Enable state of Mesh";
-                    print "ACTUAL RESULT 6: Details: %s " %details;
+                    print("TEST STEP 6: Restore Enable state of Mesh");
+                    print("EXPECTED RESULT 6: Should Restore Enable state of Mesh");
+                    print("ACTUAL RESULT 6: Details: %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 6: Restore Enable state of Mesh";
-                    print "EXPECTED RESULT 6: Should Restore Enable state of Mesh";
-                    print "ACTUAL RESULT 6: Details: %s " %details;
+                    print("TEST STEP 6: Restore Enable state of Mesh");
+                    print("EXPECTED RESULT 6: Should Restore Enable state of Mesh");
+                    print("ACTUAL RESULT 6: Details: %s " %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the state of Mesh"
-            print "EXPECTED RESULT 2: Failure in getting the state of Mesh"
-            print "ACTUAL RESULT 2: Initial mesh state is %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the state of Mesh")
+            print("EXPECTED RESULT 2: Failure in getting the state of Mesh")
+            print("ACTUAL RESULT 2: Initial mesh state is %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if orgLanMode == "bridge-static":
-            print "Revert LanMode to original value"
+            print("Revert LanMode to original value")
             status = setLanMode('bridge-static', obj)
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current lanMode"
-        print "EXPECTED RESULT 1: Should retrieve the current lanMode"
-        print "ACTUAL RESULT 1: Lanmode is %s" %orgLanMode;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current lanMode")
+        print("EXPECTED RESULT 1: Should retrieve the current lanMode")
+        print("ACTUAL RESULT 1: Lanmode is %s" %orgLanMode);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

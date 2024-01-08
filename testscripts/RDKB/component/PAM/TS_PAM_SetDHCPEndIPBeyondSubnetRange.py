@@ -68,7 +68,7 @@ pam_GetParameterValues</test_stub_interface>
 </xml>
 
 '''
-						# import statements
+                                                # import statements
 import tdklib;
 
 #Test component to be tested
@@ -82,89 +82,87 @@ obj.configureTestCase(ip,port,'TS_PAM_SetDHCPEndIPBeyondSubnetRange');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 if "SUCCESS" in loadModuleresult.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        tdkTestObj = obj.createTestStep("pam_GetParameterValues");
-        tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress");
+    tdkTestObj = obj.createTestStep("pam_GetParameterValues");
+    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress");
+    expectedresult = "SUCCESS";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        ipaddress = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Retrieve the current LAN IP address");
+        print("[EXPECTED RESULT 1]: Should Retrieve the current LAN IP address");
+        print("[ACTUAL RESULT 1]: %s" %ipaddress);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+
+        tdkTestObj = obj.createTestStep("pam_SetParameterValues");
+        tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask");
+        tdkTestObj.addParameter("Type","string");
+        tdkTestObj.addParameter("ParamValue","255.255.255.0");
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-
         if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 2]: Set the subnet mask of the DHCP server");
+            print("[EXPECTED RESULT 2]: Should set the subnet mask of the DHCP server");
+            print("[ACTUAL RESULT 2]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+
+            #DHCP END IP beyond subnet mask range
+            iplist = ipaddress.split('.')
+            iplist[3]="255"
+            maxaddress=".".join(iplist)
+            print(maxaddress)
+
+            tdkTestObj = obj.createTestStep("pam_SetParameterValues");
+            tdkTestObj.addParameter("ParamName","Device.DHCPv4.Server.Pool.1.MaxAddress");
+            tdkTestObj.addParameter("Type","string");
+            tdkTestObj.addParameter("ParamValue",maxaddress);
+            expectedresult = "FAILURE";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                ipaddress = tdkTestObj.getResultDetails();
-		print "[TEST STEP 1]: Retrieve the current LAN IP address";
-                print "[EXPECTED RESULT 1]: Should Retrieve the current LAN IP address";
-                print "[ACTUAL RESULT 1]: %s" %ipaddress;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-                tdkTestObj = obj.createTestStep("pam_SetParameterValues");
-                tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask");
-                tdkTestObj.addParameter("Type","string");
-                tdkTestObj.addParameter("ParamValue","255.255.255.0");
-                expectedresult = "SUCCESS";
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                if expectedresult in actualresult:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 2]: Set the subnet mask of the DHCP server";
-                    print "[EXPECTED RESULT 2]: Should set the subnet mask of the DHCP server";
-                    print "[ACTUAL RESULT 2]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-
-                    #DHCP END IP beyond subnet mask range
-                    iplist = ipaddress.split('.')
-                    iplist[3]="255"
-                    maxaddress=".".join(iplist)
-                    print maxaddress
-
-                    tdkTestObj = obj.createTestStep("pam_SetParameterValues");
-                    tdkTestObj.addParameter("ParamName","Device.DHCPv4.Server.Pool.1.MaxAddress");
-                    tdkTestObj.addParameter("Type","string");
-                    tdkTestObj.addParameter("ParamValue",maxaddress);
-                    expectedresult = "FAILURE";
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    if expectedresult in actualresult:
-                        #Set the result status of execution
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        details = tdkTestObj.getResultDetails();
-                        print "[TEST STEP 3]: Set the DHCP End IP beyond the subnet mask range";
-                        print "[EXPECTED RESULT 3]: Should fail to set DHCP End IP beyond the subnet mask range";
-                        print "[ACTUAL RESULT 3]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE");
-                        details = tdkTestObj.getResultDetails();
-                        print "[TEST STEP 3]: Set the DHCP End IP beyond the subnet mask range";
-                        print "[EXPECTED RESULT 3]: Should fail to set DHCP End IP beyond the subnet mask range";
-                        print "[ACTUAL RESULT 3]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 2]: Set the subnet mask of the DHCP server";
-                    print "[EXPECTED RESULT 2]: Should set the subnet mask of the DHCP server";
-                    print "[ACTUAL RESULT 2]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        else:
+                details = tdkTestObj.getResultDetails();
+                print("[TEST STEP 3]: Set the DHCP End IP beyond the subnet mask range");
+                print("[EXPECTED RESULT 3]: Should fail to set DHCP End IP beyond the subnet mask range");
+                print("[ACTUAL RESULT 3]: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "[TEST STEP 1]: Retrieve the current LAN IP address";
-                print "[EXPECTED RESULT 1]: Should Retrieve the current LAN IP address";
-                print "[ACTUAL RESULT 1]: %s" %ipaddress;
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                print("[TEST STEP 3]: Set the DHCP End IP beyond the subnet mask range");
+                print("[EXPECTED RESULT 3]: Should fail to set DHCP End IP beyond the subnet mask range");
+                print("[ACTUAL RESULT 3]: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            details = tdkTestObj.getResultDetails();
+            print("[TEST STEP 2]: Set the subnet mask of the DHCP server");
+            print("[EXPECTED RESULT 2]: Should set the subnet mask of the DHCP server");
+            print("[ACTUAL RESULT 2]: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Retrieve the current LAN IP address");
+        print("[EXPECTED RESULT 1]: Should Retrieve the current LAN IP address");
+        print("[ACTUAL RESULT 1]: %s" %ipaddress);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
-        obj.unloadModule("pam");
+    obj.unloadModule("pam");
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

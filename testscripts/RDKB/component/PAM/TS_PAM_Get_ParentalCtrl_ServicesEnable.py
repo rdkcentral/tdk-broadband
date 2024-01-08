@@ -89,7 +89,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-																								# use tdklib library,which provides a wrapper for tdk testcase script
+                                                                                                                                                                                                # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -108,7 +108,7 @@ obj.configureTestCase(ip,port,'TS_PAM_Get_ParentalCtrl_ServicesEnable');
 #Get the result of connection with test component and STB
 pamloadmodulestatus =pamObj.getLoadModuleResult();
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #Set the result status of execution
@@ -123,14 +123,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: set the Factory Reset value to true";
-        print "EXPECTED RESULT 2: Should set the Factory Reset value to true";
-        print "ACTUAL RESULT 2: %s" %details;
+        print("TEST STEP 2: set the Factory Reset value to true");
+        print("EXPECTED RESULT 2: Should set the Factory Reset value to true");
+        print("ACTUAL RESULT 2: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         pamObj.initiateReboot()
         obj.resetConnectionAfterReboot();
 
@@ -145,36 +145,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
         if expectedresult in actualresult and "false" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get ManagedServices Enable status";
-            print "EXPECTED RESULT 1: Should get the status as disabled";
-            print "ACTUAL RESULT 1: ManagedServices Enable status is %s" %details;
+            print("TEST STEP 1: Get ManagedServices Enable status");
+            print("EXPECTED RESULT 1: Should get the status as disabled");
+            print("ACTUAL RESULT 1: ManagedServices Enable status is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get ManagedServices Enable status";
-            print "EXPECTED RESULT 1: Should get the status as disabled";
-            print "ACTUAL RESULT 1: ManagedServices Enable status is %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get ManagedServices Enable status");
+            print("EXPECTED RESULT 1: Should get the status as disabled");
+            print("ACTUAL RESULT 1: ManagedServices Enable status is %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "EXPECTED RESULT 4: Should set the Factory Reset value to true";
-        print "ACTUAL RESULT 4: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-        print "Factory Reset Function is FAILURE: Value is not set to true"
+        print("EXPECTED RESULT 4: Should set the Factory Reset value to true");
+        print("ACTUAL RESULT 4: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+        print("Factory Reset Function is FAILURE: Value is not set to true")
     pamObj.unloadModule("pam");
     obj.unloadModule("advancedconfig");
 
 else:
-        print "Failed to load pam module";
-        pamObj.setLoadModuleStatus("FAILURE");
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
-
-
+    print("Failed to load pam module");
+    pamObj.setLoadModuleStatus("FAILURE");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

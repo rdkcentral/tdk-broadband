@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_MTAAGENT_2</test_case_id>
-    <test_objective>To Validate 
-Set Param Attribute API for 
+    <test_objective>To Validate
+Set Param Attribute API for
 MTA Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -52,18 +52,18 @@ API Name
 MTA_agent_SetParameterAttr
 Input
 1.PathName ( eg: "Device." )
-2.Notification type 
-("notification") 
+2.Notification type
+("notification")
 (eg:pasive)
-3.Access Control Change type ("accessControlChanged") 
+3.Access Control Change type ("accessControlChanged")
 (eg:anybody)</input_parameters>
     <automation_approch>1.Create a function named MTA_agent_SetParameterAttr in Test Manager GUI.
 2.Configure the info of the  function under test in function  and create a python script
-3.Execute the generated Script(TS_MTAAGENT_SetParamAttr.py) using execution page of  Test Manager GUI 
-4.This script will in turn call mta_agent stub in TDK Agent 
+3.Execute the generated Script(TS_MTAAGENT_SetParamAttr.py) using execution page of  Test Manager GUI
+4.This script will in turn call mta_agent stub in TDK Agent
 5.MTA_agent_SetParameterAttr function will call CCSP Base Interface Function named "CcspBaseIf_setParameterAttributes" , that inturn will call MTA Agent Library Function "CcspCcMbi_SetParameterAttributes" along with provided path name and Value
 6.MTA_agent_SetParameterAttr  function will call CCSP Base Interface Function named "CcspBaseIf_getParameterAttributes" for the same inputs to check whether the attributes have been updated .
-7.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+7.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 8.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Attributes of Requested Path is compared with the the given input values
@@ -82,8 +82,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -96,18 +96,18 @@ obj.configureTestCase(ip,port,'TS_MTAAgent_SetParamAttr');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-		
-    tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');  
+
+    tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');
     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.Dect.Enable");
     tdkTestObj.addParameter("AccessControl","unchange");
     tdkTestObj.addParameter("Notify","active");
 
-		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -115,24 +115,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	
-    else:   
-        tdkTestObj.setResultStatus("FAILURE"); 
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
-	
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
     obj.unloadModule("Mta_agent");
-   		 
-else:   
-    print "Failed to load MTA module";
+
+else:
+    print("Failed to load MTA module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";				
-				
-				
+    print("Module loading failed");

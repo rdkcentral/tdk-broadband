@@ -103,7 +103,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetInvalidPosValueMacCacheSize');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,77 +118,77 @@ if "SUCCESS" in loadmodulestatus.upper():
     InitialMacCacheSize = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Initial Mac Cache Size";
-       print "EXPECTED RESULT 1: Should get the Initial Mac Cache Size";
-       print "ACTUAL RESULT 1: Got the Initial Mac Cache Size as",InitialMacCacheSize;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Initial Mac Cache Size");
+        print("EXPECTED RESULT 1: Should get the Initial Mac Cache Size");
+        print("ACTUAL RESULT 1: Got the Initial Mac Cache Size as",InitialMacCacheSize);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       SetValue = random.randint(32768,40000);
+        SetValue = random.randint(32768,40000);
 
-       tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MacCacheSize");
-       tdkTestObj.addParameter("ParamValue",str(SetValue));
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="FAILURE";
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MacCacheSize");
+        tdkTestObj.addParameter("ParamValue",str(SetValue));
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="FAILURE";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Set the Mac Cache Size to a invalid positive value";
-          print "EXPECTED RESULT 2: Should not set the Mac Cache Size to a invalid positive value";
-          print "ACTUAL RESULT 2: Value to be set was",SetValue;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the Mac Cache Size to a invalid positive value";
-           print "EXPECTED RESULT 2: Should not set the Mac Cache Size to a invalid positive value";
-           print "ACTUAL RESULT 2: Value to be set was",SetValue;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the Mac Cache Size to a invalid positive value");
+            print("EXPECTED RESULT 2: Should not set the Mac Cache Size to a invalid positive value");
+            print("ACTUAL RESULT 2: Value to be set was",SetValue);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the Mac Cache Size to a invalid positive value");
+            print("EXPECTED RESULT 2: Should not set the Mac Cache Size to a invalid positive value");
+            print("ACTUAL RESULT 2: Value to be set was",SetValue);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
-           #Revert the value
+            #Revert the value
 
-           tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-           tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MacCacheSize");
-           tdkTestObj.addParameter("ParamValue",InitialMacCacheSize);
-           tdkTestObj.addParameter("Type","unsignedint");
-           expectedresult="SUCCESS";
+            tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.MacCacheSize");
+            tdkTestObj.addParameter("ParamValue",InitialMacCacheSize);
+            tdkTestObj.addParameter("Type","unsignedint");
+            expectedresult="SUCCESS";
 
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Revert the value to initial ";
-              print "EXPECTED RESULT 3: Should revert the value to initial";
-              print "ACTUAL RESULT 3: Value to be reverted",InitialMacCacheSize;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Revert the value to initial ";
-               print "EXPECTED RESULT 3: Should revert the value to initial";
-               print "ACTUAL RESULT 3: Value to be reverted",InitialMacCacheSize;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Revert the value to initial ");
+                print("EXPECTED RESULT 3: Should revert the value to initial");
+                print("ACTUAL RESULT 3: Value to be reverted",InitialMacCacheSize);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Revert the value to initial ");
+                print("EXPECTED RESULT 3: Should revert the value to initial");
+                print("ACTUAL RESULT 3: Value to be reverted",InitialMacCacheSize);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Initial Mac Cache Size";
-        print "EXPECTED RESULT 1: Should get the Initial Mac Cache Size";
-        print "ACTUAL RESULT 1: Got the Initial Mac Cache Size as",InitialMacCacheSize;
+        print("TEST STEP 1: Get the Initial Mac Cache Size");
+        print("EXPECTED RESULT 1: Should get the Initial Mac Cache Size");
+        print("ACTUAL RESULT 1: Got the Initial Mac Cache Size as",InitialMacCacheSize);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam  module";
+    print("Failed to load pam  module");
     obj.setLoadModuleStatus("FAILURE");

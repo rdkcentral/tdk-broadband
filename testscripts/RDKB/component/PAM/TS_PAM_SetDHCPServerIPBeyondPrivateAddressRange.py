@@ -63,7 +63,7 @@
 </xml>
 
 '''
-						# import statements
+                                                # import statements
 import tdklib;
 
 #Test component to be tested
@@ -77,37 +77,35 @@ obj.configureTestCase(ip,port,'TS_PAM_SetDHCPServerIPBeyondPrivateAddressRange')
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 if "SUCCESS" in loadModuleresult.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
 
-        tdkTestObj = obj.createTestStep("pam_SetParameterValues");
-        tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress");
-        tdkTestObj.addParameter("Type","string");
-        tdkTestObj.addParameter("ParamValue","172.10.0.1");
-        expectedresult = "FAILURE";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            details = tdkTestObj.getResultDetails();
-            print "[TEST STEP 1]: Set the DHCP Server IP beyond allowed private address range";
-            print "[EXPECTED RESULT 1]: Should fail to set DHCP Server IP beyond allowed private address range";
-            print "[ACTUAL RESULT 1]: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            details = tdkTestObj.getResultDetails();
-            print "[TEST STEP 1]: Set the DHCP Server IP beyond allowed private address range";
-            print "[EXPECTED RESULT 1]: Should fail to set DHCP Server IP beyond allowed private address range";
-            print "[ACTUAL RESULT 1]: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
-        obj.unloadModule("pam");
+    tdkTestObj = obj.createTestStep("pam_SetParameterValues");
+    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress");
+    tdkTestObj.addParameter("Type","string");
+    tdkTestObj.addParameter("ParamValue","172.10.0.1");
+    expectedresult = "FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Set the DHCP Server IP beyond allowed private address range");
+        print("[EXPECTED RESULT 1]: Should fail to set DHCP Server IP beyond allowed private address range");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        details = tdkTestObj.getResultDetails();
+        print("[TEST STEP 1]: Set the DHCP Server IP beyond allowed private address range");
+        print("[EXPECTED RESULT 1]: Should fail to set DHCP Server IP beyond allowed private address range");
+        print("[ACTUAL RESULT 1]: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("pam");
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

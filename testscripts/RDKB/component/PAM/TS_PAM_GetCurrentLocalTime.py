@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetCurrentLocalTime');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -113,56 +113,56 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current local time";
-        print "EXPECTED RESULT 1: Should get the current local time";
-        print "ACTUAL RESULT 1: The current local time is :%s" %TimeBeforeSleep;
+        print("TEST STEP 1: Get the current local time");
+        print("EXPECTED RESULT 1: Should get the current local time");
+        print("ACTUAL RESULT 1: The current local time is :%s" %TimeBeforeSleep);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
-	#sleeping for 10 seconds
-	print "sleeping for 10 seconds";
-	sleep (10);
-	tdkTestObj = obj.createTestStep('pam_GetParameterValues');
-	tdkTestObj.addParameter("ParamName","Device.Time.CurrentLocalTime");
-	#Execute the test case in STB
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	TimeAfterSleep = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    if TimeBeforeSleep != TimeAfterSleep:
-  	        #Set the result status of execution
-	        tdkTestObj.setResultStatus("SUCCESS");
-       	        print "TEST STEP 2: Compare the current local time before and after sleep";
-	        print "EXPECTED RESULT 2: The current local time before and after sleep should not be equal";
-	        print "ACTUAL RESULT 2: The current local time after sleep is :%s" %TimeAfterSleep;
-		print "The local time is updated succesfully";
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : SUCCESS"
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 2: Compare the current local time before and after sleep";
-		print "EXPECTED RESULT 2: The current local time before and after sleep should not be equal";
-		print "ACTUAL RESULT 2: The current local time after sleep is :%s" %TimeAfterSleep;
-		print "Failed to update the current local time";
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE"
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 1: Get the current local time after sleep";
-	    print "EXPECTED RESULT 1: Should get the current local time after sleep";
-	    print "ACTUAL RESULT 1: Failure in getting the current local time after sleep. Details : %s" %TimeAfterSleep;
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+        #sleeping for 10 seconds
+        print("sleeping for 10 seconds");
+        sleep (10);
+        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.Time.CurrentLocalTime");
+        #Execute the test case in STB
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        TimeAfterSleep = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            if TimeBeforeSleep != TimeAfterSleep:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Compare the current local time before and after sleep");
+                print("EXPECTED RESULT 2: The current local time before and after sleep should not be equal");
+                print("ACTUAL RESULT 2: The current local time after sleep is :%s" %TimeAfterSleep);
+                print("The local time is updated succesfully");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2: Compare the current local time before and after sleep");
+                print("EXPECTED RESULT 2: The current local time before and after sleep should not be equal");
+                print("ACTUAL RESULT 2: The current local time after sleep is :%s" %TimeAfterSleep);
+                print("Failed to update the current local time");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the current local time after sleep");
+            print("EXPECTED RESULT 1: Should get the current local time after sleep");
+            print("ACTUAL RESULT 1: Failure in getting the current local time after sleep. Details : %s" %TimeAfterSleep);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current local time";
-        print "EXPECTED RESULT 1: Should get the current local time";
-        print "ACTUAL RESULT 1: Failure in getting the current local time. Details : %s" %TimeBeforeSleep;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current local time");
+        print("EXPECTED RESULT 1: Should get the current local time");
+        print("ACTUAL RESULT 1: Failure in getting the current local time. Details : %s" %TimeBeforeSleep);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

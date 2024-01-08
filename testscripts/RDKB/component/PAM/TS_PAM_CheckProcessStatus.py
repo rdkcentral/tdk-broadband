@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckProcessStatus');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -106,10 +106,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     imagename = obj.getDeviceBoxType()
     pattern = "Emulator"
     if pattern in imagename:
-	print "Box Type is Emulator"
-	prefix = "simu"
+        print("Box Type is Emulator")
+        prefix = "simu"
     else:
-	prefix = "eRT"
+        prefix = "eRT"
 
     #getting process status od tdk process
     tdkTestObj = obj.createTestStep('ExecuteCmd');
@@ -122,24 +122,24 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult and "Sleeping" in details or "Running" in details:
-	pid = details;
+        pid = details;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get status of tdk agent process"
-        print "EXPECTED RESULT 1: Should get status of tdk agent process"
-        print "ACTUAL RESULT 1: Status is %s" %details;
+        print("TEST STEP 1: Get status of tdk agent process")
+        print("EXPECTED RESULT 1: Should get status of tdk agent process")
+        print("ACTUAL RESULT 1: Status is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get status of tdk agent process"
-        print "EXPECTED RESULT 1: Should get status of tdk agent process"
-        print "ACTUAL RESULT 1: status is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get status of tdk agent process")
+        print("EXPECTED RESULT 1: Should get status of tdk agent process")
+        print("ACTUAL RESULT 1: status is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -128,9 +128,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(obj);
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj3.createTestStep('TADstub_Get');
 
         paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable", "Device.WiFi.SSID.1.SSID", "Device.WiFi.SSID.2.SSID","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.IdleInactiveTime","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.OverloadInactiveTime"]
@@ -139,19 +139,19 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         if ((expectedresult in status) and (currValue[0] and currValue[1] and currValue[2] and currValue[3] and currValue[4]) != ""):
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the bandsteering enable status,SSID names ,IdleInActiveTime and OverloadInactiveTime";
-            print "ACTUAL RESULT 2:Enable status:%s 2.4GHZ SSID:%s 5GHZ SSID:%s IdleInactiveTime:%s OverloadInactiveTime:%s" %(currValue[0],currValue[1],currValue[2],currValue[3],currValue[4]) ;
+            print("TEST STEP 2: Get the bandsteering enable status,SSID names ,IdleInActiveTime and OverloadInactiveTime");
+            print("ACTUAL RESULT 2:Enable status:%s 2.4GHZ SSID:%s 5GHZ SSID:%s IdleInactiveTime:%s OverloadInactiveTime:%s" %(currValue[0],currValue[1],currValue[2],currValue[3],currValue[4])) ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Set values to enable public wifi
             setvalues = ["44","68.86.15.199","68.86.15.171","true","true","true"];
             tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,setvalues);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Enable public wifi"
-                print "ACTUAL RESULT 3:%s" %details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3: Enable public wifi")
+                print("ACTUAL RESULT 3:%s" %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                 tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable|true|bool|Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.IdleInactiveTime|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.OverloadInactiveTime|%s|int|Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting|true|bool|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool" %(SSID1,SSID1,idleInactveTime,overloadInactiveTime));
                 tdkTestObj.executeTestCase(expectedresult);
@@ -159,9 +159,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime"
-                    print "ACTUAL RESULT 4 : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP 4: Set Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime")
+                    print("ACTUAL RESULT 4 : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                     tdkTestObj = obj2.createTestStep('ExecuteCmd');
                     cmd = "[ -f /tmp/lbd.conf ] && echo \"File exist\" || echo \"File does not exist\"";
                     tdkTestObj.addParameter("command",cmd);
@@ -170,10 +170,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                     if details == "File exist":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5:lbd conf file should be present";
-                        print "ACTUAL RESULT 5:lbd conf file is present";
+                        print("TEST STEP 5:lbd conf file should be present");
+                        print("ACTUAL RESULT 5:lbd conf file is present");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         cmd = "cat /tmp/lbd.conf | grep InactIdleThreshold -i";
                         tdkTestObj.addParameter("command",cmd);
                         tdkTestObj.executeTestCase(expectedresult);
@@ -181,10 +181,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                         if expectedresult in actualresult and "11" in details:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6:Check if InactIdleThreshold is updated in conf file";
-                            print "ACTUAL RESULT 6:IdleInactiveTime is updated in conf file :%s" %details;
+                            print("TEST STEP 6:Check if InactIdleThreshold is updated in conf file");
+                            print("ACTUAL RESULT 6:IdleInactiveTime is updated in conf file :%s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                             cmd = "cat /tmp/lbd.conf | grep InactOverloadThreshold -i";
                             tdkTestObj.addParameter("command",cmd);
                             tdkTestObj.executeTestCase(expectedresult);
@@ -192,25 +192,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                             if expectedresult in actualresult and "13" in details:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 7:Check if InactOverloadThreshold is updated in conf file ";
-                                print "ACTUAL RESULT 7:InactOverloadThreshold is updated in conf file :%s" %details;
+                                print("TEST STEP 7:Check if InactOverloadThreshold is updated in conf file ");
+                                print("ACTUAL RESULT 7:InactOverloadThreshold is updated in conf file :%s" %details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 7:Check if InactOverloadThreshold is updated in conf file ";
-                                print "ACTUAL RESULT 7:InactOverloadThreshold is not updated in conf file ";
+                                print("TEST STEP 7:Check if InactOverloadThreshold is updated in conf file ");
+                                print("ACTUAL RESULT 7:InactOverloadThreshold is not updated in conf file ");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6:Check if InactIdleThreshold is updated in conf file";
-                            print "ACTUAL RESULT 6:InactIdleThreshold is not updated in conf file :%s" %details;
+                            print("TEST STEP 6:Check if InactIdleThreshold is updated in conf file");
+                            print("ACTUAL RESULT 6:InactIdleThreshold is not updated in conf file :%s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Check if qualcomm bandsteering file is present";
+                        print("TEST STEP 5: Check if qualcomm bandsteering file is present");
                         tdkTestObj = obj2.createTestStep('ExecuteCmd');
                         cmd = "[ -f /rdklogs/logs/qtn_bsa.log ] && echo \"File exist\" || echo \"File does not exist\"";
                         tdkTestObj.addParameter("command",cmd);
@@ -219,14 +219,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                         if details == "File exist":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6:qualcomm bandsteering is present";
+                            print("ACTUAL RESULT 6:qualcomm bandsteering is present");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6:qualcomm bandsteering and lbd.conf file is not present";
+                            print("ACTUAL RESULT 6:qualcomm bandsteering and lbd.conf file is not present");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                     tdkTestObj.addParameter("paramList","Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable|%s|bool|Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.IdleInactiveTime|%s|int|Device.WiFi.X_RDKCENTRAL-COM_BandSteering.BandSetting.1.OverloadInactiveTime|%s|int|Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting|true|bool|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool" %(currValue[0],currValue[1],currValue[2],currValue[3],currValue[4]));
                     tdkTestObj.executeTestCase(expectedresult);
@@ -234,52 +234,52 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     details = tdkTestObj.getResultDetails();
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Revert Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime"
-                        print "ACTUAL RESULT  : %s" %details;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("TEST STEP : Revert Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime")
+                        print("ACTUAL RESULT  : %s" %details);
+                        print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Revert Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime"
-                        print "ACTUAL RESULT  : %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("TEST STEP : Revert Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime")
+                        print("ACTUAL RESULT  : %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime"
-                    print "ACTUAL RESULT 4 : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("TEST STEP 4: Set Bandsteering enable status,WIFI 2.4GHZ and 5GHZ SSID, IdleInactiveTime and OverloadInactiveTime")
+                    print("ACTUAL RESULT 4 : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
                 #Revert the values of public wifi params
                 tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj,orgValue);
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP :Revert the PublicWiFi param values"
-                    print "TEST STEP  : Should revert the PublicWiFi values"
-                    print "ACTUAL RESULT 4:%s" %details
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP :Revert the PublicWiFi param values")
+                    print("TEST STEP  : Should revert the PublicWiFi values")
+                    print("ACTUAL RESULT 4:%s" %details)
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP :Revert the PublicWiFi param values"
-                    print "TEST STEP : Should revert the PublicWiFi param values"
-                    print "ACTUAL RESULT 4:%s" %details
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP :Revert the PublicWiFi param values")
+                    print("TEST STEP : Should revert the PublicWiFi param values")
+                    print("ACTUAL RESULT 4:%s" %details)
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Enable public wifi"
-                print "ACTUAL RESULT 3:%s" %details
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Enable public wifi")
+                print("ACTUAL RESULT 3:%s" %details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the bandsteering enable status,SSID names ,IdleInActiveTime and OverloadInactiveTime";
-            print "ACTUAL RESULT 2:Failed to get Enable status,2.4GHZ SSID,5GHZ SSID, IdleInactiveTime,OverloadInactiveTime";
+            print("TEST STEP 2: Get the bandsteering enable status,SSID names ,IdleInActiveTime and OverloadInactiveTime");
+            print("ACTUAL RESULT 2:Failed to get Enable status,2.4GHZ SSID,5GHZ SSID, IdleInactiveTime,OverloadInactiveTime");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     obj1.unloadModule("tdkbtr181");
@@ -287,9 +287,6 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     obj3.unloadModule("tad");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

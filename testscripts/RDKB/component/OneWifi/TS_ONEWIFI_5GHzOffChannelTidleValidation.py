@@ -110,7 +110,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_5GHzOffChannelTidleValidation');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -119,115 +119,115 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Set the pre-requisites
     step = 1;
-    print "\n*************Set Pre-requisite Start*****************";
+    print("\n*************Set Pre-requisite Start*****************");
     tdkTestObj, pre_req_set, revert_flag, step = WiFiOffChannelScanEnable_PreReq(obj, step);
 
     if pre_req_set == 0:
-        print "\n*************Set Pre-requisite Complete*****************";
+        print("\n*************Set Pre-requisite Complete*****************");
         #Get the initial T idle value
         step = step + 1;
         param = "Device.WiFi.Radio.2.X_RDK_OffChannelTidle"
 
-        print "\nTEST STEP %d: Get the initial value of minimum network idle time for scheduling off channel scan using Device.WiFi.Radio.2.X_RDK_OffChannelTidle" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelTidle successfully" %step;
+        print("\nTEST STEP %d: Get the initial value of minimum network idle time for scheduling off channel scan using Device.WiFi.Radio.2.X_RDK_OffChannelTidle" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.WiFi.Radio.2.X_RDK_OffChannelTidle successfully" %step);
         actualresult, details = getParameter(obj, param, expectedresult);
 
         if expectedresult in actualresult and details != "":
             tidle_initial = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Off channel T idle : %s" %(step, tidle_initial);
+            print("ACTUAL RESULT %d: Off channel T idle : %s" %(step, tidle_initial));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the T idle is in the valid range of 0 to 63 msec
             step = step + 1;
-            print "\nTEST STEP %d: Check if the value retrieved for Device.WiFi.Radio.2.X_RDK_OffChannelTidle is within the valid range of 0 to 63" %step;
-            print "EXPECTED RESULT %d: The value of Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be within the valid range of 0 to 63" %step;
+            print("\nTEST STEP %d: Check if the value retrieved for Device.WiFi.Radio.2.X_RDK_OffChannelTidle is within the valid range of 0 to 63" %step);
+            print("EXPECTED RESULT %d: The value of Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be within the valid range of 0 to 63" %step);
 
             if tidle_initial.isdigit() and (int(tidle_initial) >= 0) and (int(tidle_initial) <= 63):
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Off Channel T idle is within the valid range of [0, 63]" %step;
+                print("ACTUAL RESULT %d: Off Channel T idle is within the valid range of [0, 63]" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to a valid value within the range and validate the set
                 step = step + 1;
                 paramName = "Device.WiFi.Radio.2.X_RDK_OffChannelTidle";
                 set_val = str(choice([val for val in range(1,64) if val not in [int(tidle_initial)]]))
-                print "\nTEST STEP %d: Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %s within the valid range" %(step, set_val);
-                print "EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be set successfully" %step;
+                print("\nTEST STEP %d: Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %s within the valid range" %(step, set_val));
+                print("EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be set successfully" %step);
                 actualresult, details = setParameter(obj, paramName, set_val, "unsignedint", expectedresult);
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: T idle set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: T idle set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to out of range value and check if set operation fails
                     step = step + 1;
                     set_val = randint(64,100);
                     expectedresult = "FAILURE";
-                    print "\nTEST STEP %d: Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %d to out of range value" %(step, set_val);
-                    print "EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be set successfully" %step;
+                    print("\nTEST STEP %d: Set Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %d to out of range value" %(step, set_val));
+                    print("EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be set successfully" %step);
                     actualresult, details = setParameter(obj, paramName, str(set_val), "unsignedint", expectedresult);
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: T idle set failed for out of range value; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: T idle set failed for out of range value; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: T idle set success for out of range value; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: T idle set success for out of range value; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Revert T idle to initial value
                     expectedresult = "SUCCESS";
                     step = step + 1;
                     set_val = tidle_initial;
-                    print "\nTEST STEP %d: Revert Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %s" %(step, set_val);
-                    print "EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be reverted successfully" %step;
+                    print("\nTEST STEP %d: Revert Device.WiFi.Radio.2.X_RDK_OffChannelTidle to %s" %(step, set_val));
+                    print("EXPECTED RESULT %d: Device.WiFi.Radio.2.X_RDK_OffChannelTidle should be reverted successfully" %step);
                     actualresult, details = setParameter(obj, paramName, set_val, "unsignedint", expectedresult);
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: T idle revert is success; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: T idle revert is success; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: T idle revert failed; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: T idle revert failed; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: T idle NOT set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: T idle NOT set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Off Channel T idle is NOT within the valid range of [0, 63]" %step;
+                print("ACTUAL RESULT %d: Off Channel T idle is NOT within the valid range of [0, 63]" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Off channel T idle : %s" %(step, details);
+            print("ACTUAL RESULT %d: Off channel T idle : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Revert the pre-requisites
         step = step + 1;
-        print "\n*************Revert Pre-requisite Start*****************";
+        print("\n*************Revert Pre-requisite Start*****************");
         WiFiOffChannelScanEnable_Revert(obj, revert_flag, step);
-        print "\n*************Revert Pre-requisite Complete*****************";
+        print("\n*************Revert Pre-requisite Complete*****************");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Unable to enable the pre-requisites, cannot proceed..";
+        print("Unable to enable the pre-requisites, cannot proceed..");
 
     obj.unloadModule("wifiagent")
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

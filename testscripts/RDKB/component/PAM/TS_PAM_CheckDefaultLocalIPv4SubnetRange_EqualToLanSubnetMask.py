@@ -86,8 +86,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_CheckDefaultLocalIPv4SubnetRange_EqualToL
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -105,11 +105,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of Default Local IPv4 Subnet Range";
-        print "EXPECTED RESULT 1: Should get the Default Local IPv4 Subnet Range";
-        print "ACTUAL RESULT 1: Default Local IPv4 Subnet Range :%s" %subnetRange;
+        print("TEST STEP 1: Get the value of Default Local IPv4 Subnet Range");
+        print("EXPECTED RESULT 1: Should get the Default Local IPv4 Subnet Range");
+        print("ACTUAL RESULT 1: Default Local IPv4 Subnet Range :%s" %subnetRange);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask");
@@ -121,48 +121,48 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the value of LanSubnetMask";
-            print "EXPECTED RESULT 2: Should get the LanSubnetMask";
-            print "ACTUAL RESULT 2: LanSubnetMask is :%s" %LanSubnetMask;
+            print("TEST STEP 2: Get the value of LanSubnetMask");
+            print("EXPECTED RESULT 2: Should get the LanSubnetMask");
+            print("ACTUAL RESULT 2: LanSubnetMask is :%s" %LanSubnetMask);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if subnetRange == LanSubnetMask:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if LanSubnetMask and Default Local IPv4 Subnet Range are equal";
-                print "EXPECTED RESULT 3: Should get the LanSubnetMask and Default Local IPv4 Subnet Range equal";
-                print "ACTUAL RESULT 3: LanSubnetMask is :%s and Default Local IPv4 Subnet Range is %s" %(LanSubnetMask,subnetRange);
+                print("TEST STEP 3: Check if LanSubnetMask and Default Local IPv4 Subnet Range are equal");
+                print("EXPECTED RESULT 3: Should get the LanSubnetMask and Default Local IPv4 Subnet Range equal");
+                print("ACTUAL RESULT 3: LanSubnetMask is :%s and Default Local IPv4 Subnet Range is %s" %(LanSubnetMask,subnetRange));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if LanSubnetMask and Default Local IPv4 Subnet Range are equal";
-                print "EXPECTED RESULT 3: Should get the LanSubnetMask and Default Local IPv4 Subnet Range equal";
-                print "ACTUAL RESULT 3: LanSubnetMask is :%s and Default Local IPv4 Subnet Range is %s" %(LanSubnetMask,subnetRange);
+                print("TEST STEP 3: Check if LanSubnetMask and Default Local IPv4 Subnet Range are equal");
+                print("EXPECTED RESULT 3: Should get the LanSubnetMask and Default Local IPv4 Subnet Range equal");
+                print("ACTUAL RESULT 3: LanSubnetMask is :%s and Default Local IPv4 Subnet Range is %s" %(LanSubnetMask,subnetRange));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the value of LanSubnetMask";
-            print "EXPECTED RESULT 2: Should get the LanSubnetMask";
-            print "ACTUAL RESULT 2: LanSubnetMask is :%s" %LanSubnetMask;
+            print("TEST STEP 2: Get the value of LanSubnetMask");
+            print("EXPECTED RESULT 2: Should get the LanSubnetMask");
+            print("ACTUAL RESULT 2: LanSubnetMask is :%s" %LanSubnetMask);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of Default Local IPv4 Subnet Range";
-        print "EXPECTED RESULT 1: Should get the Default Local IPv4 Subnet Range";
-        print "ACTUAL RESULT 1: Default Local IPv4 Subnet Range :%s" %subnetRange;
+        print("TEST STEP 1: Get the value of Default Local IPv4 Subnet Range");
+        print("EXPECTED RESULT 1: Should get the Default Local IPv4 Subnet Range");
+        print("ACTUAL RESULT 1: Default Local IPv4 Subnet Range :%s" %subnetRange);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

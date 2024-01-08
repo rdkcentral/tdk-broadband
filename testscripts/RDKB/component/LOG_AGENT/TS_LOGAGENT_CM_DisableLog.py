@@ -65,8 +65,8 @@ Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable : False</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 from tdkbVariables import *;
 
@@ -104,14 +104,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	tdkTestObj.addParameter("ParamName","Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable");
-	#Execute the test case in DUT
+        tdkTestObj.addParameter("ParamName","Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable");
+        #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         CMLogStatus = tdkTestObj.getResultDetails();
@@ -119,32 +119,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the enable status of CM Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of CM logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %CMLogStatus;
+            print("TEST STEP 2: Get the enable status of CM Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of CM logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %CMLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #Set true to both namespaces
-	    tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
-	    tdkTestObj.addParameter("paramList","Device.LogAgent.X_RDKCENTRAL-COM_LoggerEnable|true|bool|Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable|false|bool");
-	    tdkTestObj.executeTestCase(expectedresult);
+            #Set true to both namespaces
+            tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
+            tdkTestObj.addParameter("paramList","Device.LogAgent.X_RDKCENTRAL-COM_LoggerEnable|true|bool|Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable|false|bool");
+            tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Disable logging of CM module"
-                print "EXPECTED RESULT 3: Should disable CM logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
-		#check whether the process is restarted automatically
+                print("TEST STEP 3: Disable logging of CM module")
+                print("EXPECTED RESULT 3: Should disable CM logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
+                #check whether the process is restarted automatically
                 query="sh %s/tdk_platform_utility.sh checkProcess CcspCMAgentSsp" %TDK_PATH
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
 
-                print "Check for every 10 secs whether the process is up"
+                print("Check for every 10 secs whether the process is up")
                 retryCount = 0;
                 while retryCount < MAX_RETRY:
                     tdkTestObj.executeTestCase("SUCCESS");
@@ -157,7 +157,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                         retryCount = retryCount + 1;
 
                 if not pid:
-                    print "Retry Again: Check for every 5 mins whether the process is up"
+                    print("Retry Again: Check for every 5 mins whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -168,8 +168,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                         else:
                             sleep(300);
                             retryCount = retryCount + 1;
-		sleep(30)
-		#Check the timestamp of CMlog.txt.0
+                sleep(30)
+                #Check the timestamp of CMlog.txt.0
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 cmd = "tail -1 /rdklogs/logs/CMlog.txt.0"
                 tdkTestObj.addParameter("command", cmd);
@@ -178,55 +178,55 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 lastLineofLog = tdkTestObj.getResultDetails().strip();
                 if lastLineofLog:
                     oldTimeStamp = lastLineofLog.split(" ")[0]
-                    print "Current timestamp in CMlog.txt.0 is %s" %oldTimeStamp
+                    print("Current timestamp in CMlog.txt.0 is %s" %oldTimeStamp)
                 #If log file is empty
                 else:
                     oldTimeStamp = " "
-                    print "Currently the log file of CM is empty";
+                    print("Currently the log file of CM is empty");
 
-		#Get the values of CM parameters
-		tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    		tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.UpstreamChannel.");
-    		expectedresult="SUCCESS";
+                #Get the values of CM parameters
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_CableModem.UpstreamChannel.");
+                expectedresult="SUCCESS";
 
-    		#Execute the test case in DUT
-    		tdkTestObj.executeTestCase(expectedresult);
-    		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails()
-    		if expectedresult in actualresult:
-    		    #Set the result status of execution
-    		    tdkTestObj.setResultStatus("SUCCESS");
-    		    print "TEST STEP 4: Get the value of CM parameters";
-    		    print "EXPECTED RESULT 4: Should get the value of CM parameters";
-    		    #Get the result of execution
-    		    print "[TEST EXECUTION RESULT] : SUCCESS";
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails()
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the value of CM parameters");
+                    print("EXPECTED RESULT 4: Should get the value of CM parameters");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-		    #Get and compare the new timestamp of CMlog.txt.0
-		    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                    #Get and compare the new timestamp of CMlog.txt.0
+                    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", cmd);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     lastLineofLog = tdkTestObj.getResultDetails().strip();
-		    if lastLineofLog:
+                    if lastLineofLog:
                         newTimeStamp = lastLineofLog.split(" ")[0]
-                        print "New timestamp in CMlog.txt.0 is %s" %newTimeStamp
+                        print("New timestamp in CMlog.txt.0 is %s" %newTimeStamp)
                     else:
                         newTimeStamp = " ";
-                        print "CMlog.txt.0 is empty"
+                        print("CMlog.txt.0 is empty")
                     if newTimeStamp == oldTimeStamp:
-                        print "SUCCESS:The logs are not updated in the log file"
+                        print("SUCCESS:The logs are not updated in the log file")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "FAILURE:The logs are updated in log file even after disabling logging feature"
+                        print("FAILURE:The logs are updated in log file even after disabling logging feature")
                         tdkTestObj.setResultStatus("FAILURE");
-		else:
-		    #Set the result status of execution
+                else:
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the value of CM parameters";
-                    print "EXPECTED RESULT 4: Should get the value of CM parameters";
+                    print("TEST STEP 4: Get the value of CM parameters");
+                    print("EXPECTED RESULT 4: Should get the value of CM parameters");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-		#Revert the log enable status
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                #Revert the log enable status
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
                 tdkTestObj.addParameter("paramList","Device.LogAgent.X_RDKCENTRAL-COM_LoggerEnable|%s|bool|Device.LogAgent.X_RDKCENTRAL-COM_CM_LoggerEnable|%s|bool" %(LogStatus,CMLogStatus));
                 tdkTestObj.executeTestCase(expectedresult);
@@ -234,43 +234,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
 
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: disable logging of CM module"
-                print "EXPECTED RESULT 3: Should disable CM logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
-	else:
-	    #Set the result status of execution
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: disable logging of CM module")
+                print("EXPECTED RESULT 3: Should disable CM logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the enable status of CM Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of CM logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %CMLogStatus;
+            print("TEST STEP 2: Get the enable status of CM Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of CM logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %CMLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_PAM_DeviceUsers_EnableCusAdminRemoteAccess');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -111,69 +111,65 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         #Get the result of execution
-	print "STEP 1: Get the boolean value whether remote access of CusAdmin is enabled or disabled";
-        print "EXPECTED RESULT : Should get the boolean value whether remote access of CusAdmin is enabled or disabled";
-        print "ACTUAL RESULT: Successfully get the boolean value, %s" %details;
-        print "[TEST EXECUTION RESULT] :%s" %actualresult;
-	tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        print("STEP 1: Get the boolean value whether remote access of CusAdmin is enabled or disabled");
+        print("EXPECTED RESULT : Should get the boolean value whether remote access of CusAdmin is enabled or disabled");
+        print("ACTUAL RESULT: Successfully get the boolean value, %s" %details);
+        print("[TEST EXECUTION RESULT] :%s" %actualresult);
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.Users.User.2.RemoteAccessCapable");
-	tdkTestObj.addParameter("Type","boolean");
-	if "true" in details:
-	    tdkTestObj.addParameter("ParamValue","false");
-	    org_value = "true"
-	else:
+        tdkTestObj.addParameter("Type","boolean");
+        if "true" in details:
+            tdkTestObj.addParameter("ParamValue","false");
+            org_value = "true"
+        else:
             tdkTestObj.addParameter("ParamValue","true");
             org_value = "false"
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-	if expectedresult in actualresult:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "STEP 2: Set the boolean value to true if remote access of CusAdmin is disabled or viceversa";
-            print "EXPECTED RESLUT: Should set the boolean value to true if remote access of CusAdmin is disabled or viceversa";
-            print "ACTUAL RESULT: Successfully set the boolean value, %s" %details;
-            print "[TEST EXECUTION RESULT] :%s" %actualresult;
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("STEP 2: Set the boolean value to true if remote access of CusAdmin is disabled or viceversa");
+            print("EXPECTED RESLUT: Should set the boolean value to true if remote access of CusAdmin is disabled or viceversa");
+            print("ACTUAL RESULT: Successfully set the boolean value, %s" %details);
+            print("[TEST EXECUTION RESULT] :%s" %actualresult);
 
             tdkTestObj = obj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.Users.User.2.RemoteAccessCapable");
             tdkTestObj.addParameter("Type","boolean");
-    	    tdkTestObj.addParameter("ParamValue",org_value);
+            tdkTestObj.addParameter("ParamValue",org_value);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-	    if expectedresult in actualresult:
+            if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-		print "STEP 3: Set the boolean value to default value";
-                print "EXPECTED RESLUT: Should set the boolean value to default value";
-                print "ACTUAL RESULT:Successfully set the boolean value to default value, %s" %details;
-                print "[TEST EXECUTION RESULT] :%s" %actualresult;
-	    else:
+                print("STEP 3: Set the boolean value to default value");
+                print("EXPECTED RESLUT: Should set the boolean value to default value");
+                print("ACTUAL RESULT:Successfully set the boolean value to default value, %s" %details);
+                print("[TEST EXECUTION RESULT] :%s" %actualresult);
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-		print "STEP 3: Set the boolean value to default value";
-                print "EXPECTED RESLUT: Should set the boolean value to default value";
-                print "ACTUAL RESULT:Failed to set the boolean value to default value, %s" %details;
-                print "[TEST EXECUTION RESULT] :%s" %actualresult;
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "STEP 2: Set the boolean value to true if remote access of CusAdmin is disabled or viceversa";
-            print "EXPECTED RESLUT: Should set the boolean value to true if remote access of CusAdmin is disabled or viceversa";
-            print "ACTUAL RESULT: Failed to set the boolean value, %s" %details;
-            print "[TEST EXECUTION RESULT] :%s" %actualresult;
+                print("STEP 3: Set the boolean value to default value");
+                print("EXPECTED RESLUT: Should set the boolean value to default value");
+                print("ACTUAL RESULT:Failed to set the boolean value to default value, %s" %details);
+                print("[TEST EXECUTION RESULT] :%s" %actualresult);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("STEP 2: Set the boolean value to true if remote access of CusAdmin is disabled or viceversa");
+            print("EXPECTED RESLUT: Should set the boolean value to true if remote access of CusAdmin is disabled or viceversa");
+            print("ACTUAL RESULT: Failed to set the boolean value, %s" %details);
+            print("[TEST EXECUTION RESULT] :%s" %actualresult);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "STEP 1: Get the boolean value whether remote access is enabled or disabled";
-        print "EXPECTED RESULT : Should get the boolean value whether remote access is enabled or disabled";
-        print "ACTUAL RESULT: Failed to get the boolean value, %s" %details;
-        print "[TEST EXECUTION RESULT] :%s" %actualresult;
+        print("STEP 1: Get the boolean value whether remote access is enabled or disabled");
+        print("EXPECTED RESULT : Should get the boolean value whether remote access is enabled or disabled");
+        print("ACTUAL RESULT: Failed to get the boolean value, %s" %details);
+        print("[TEST EXECUTION RESULT] :%s" %actualresult);
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

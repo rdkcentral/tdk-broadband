@@ -93,7 +93,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_5GHZ_CheckRadioChannel_WithinNonOverla
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,59 +111,59 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current Channel"
-        print "EXPECTED RESULT 1: Should get the current Channel"
-        print "ACTUAL RESULT 1: Current Channel is %s " %details
+        print("TEST STEP 1: Get the current Channel")
+        print("EXPECTED RESULT 1: Should get the current Channel")
+        print("ACTUAL RESULT 1: Current Channel is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        print "*****Checking if the current Channel is Non-Overlapping or a Non-DFS Channel****";
+        print("*****Checking if the current Channel is Non-Overlapping or a Non-DFS Channel****");
         nonOverlappingChannelsList = [36,40,44,48,149,153,157,161,165];
         NOcheckStatus = 0;
         NDcheckStatus = 0;
 
         for channel in nonOverlappingChannelsList:
             if int (details) == channel :
-               NOcheckStatus =1;
+                NOcheckStatus =1;
 
         if int(details) in range (52,64):
-           NDcheckStatus =1;
+            NDcheckStatus =1;
         elif int(details) in range (100,140):
-             NDcheckStatus =1;
+            NDcheckStatus =1;
 
         if NOcheckStatus == 1:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Check if the Current Channel has one of %s non-overlapping Channel" %nonOverlappingChannelsList;
-           print "EXPECTED RESULT 2: Should have one of the non-overlapping Channels";
-           print "ACTUAL RESULT 2: The current Channel for 5GHz WiFi is a non-overlapping channel";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if the Current Channel has one of %s non-overlapping Channel" %nonOverlappingChannelsList);
+            print("EXPECTED RESULT 2: Should have one of the non-overlapping Channels");
+            print("ACTUAL RESULT 2: The current Channel for 5GHz WiFi is a non-overlapping channel");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         elif NDcheckStatus == 1:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Check if the Current Channel is in the range of Non-DFS Channel's 52-64 ,100-140";
-             print "EXPECTED RESULT 2: Should have one of the Non-DFS Channels";
-             print "ACTUAL RESULT 2: The current Channel for 5GHz WiFi is a Non-DFS channel";
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if the Current Channel is in the range of Non-DFS Channel's 52-64 ,100-140");
+            print("EXPECTED RESULT 2: Should have one of the Non-DFS Channels");
+            print("ACTUAL RESULT 2: The current Channel for 5GHz WiFi is a Non-DFS channel");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the Current Channel has one of %s  non-overlapping Channel or Non-DFS Channel's 52-64 ,100-140" %nonOverlappingChannelsList;
-            print "EXPECTED RESULT 2: Should have one of the non-overlapping Channels or Non-DFS Channel";
-            print "ACTUAL RESULT 2: The current Channel for 5GHz WiFi is neither a non-overlapping channel nor Non-DFS Channel";
+            print("TEST STEP 2: Check if the Current Channel has one of %s  non-overlapping Channel or Non-DFS Channel's 52-64 ,100-140" %nonOverlappingChannelsList);
+            print("EXPECTED RESULT 2: Should have one of the non-overlapping Channels or Non-DFS Channel");
+            print("ACTUAL RESULT 2: The current Channel for 5GHz WiFi is neither a non-overlapping channel nor Non-DFS Channel");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current Channel"
-        print "EXPECTED RESULT 1: Should get the current Channel"
-        print "ACTUAL RESULT 1: Current Channel is %s " %details
+        print("TEST STEP 1: Get the current Channel")
+        print("EXPECTED RESULT 1: Should get the current Channel")
+        print("ACTUAL RESULT 1: Current Channel is %s " %details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load tdkbtr181 module";
+    print("Failed to load tdkbtr181 module");
     obj.setLoadModuleStatus("FAILURE");

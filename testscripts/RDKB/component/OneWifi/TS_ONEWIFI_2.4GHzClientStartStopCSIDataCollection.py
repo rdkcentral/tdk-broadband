@@ -83,13 +83,13 @@ paramName : Device.Hosts.Host.[i].PhysAddress</input_parameters>
 def StartStopCSI(sysobj, step):
     #Get the WiFi_CSI_SubscriptionStarted log line count
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-    print "\nGet the initial number of log lines of \"WiFi_CSI_SubscriptionStarted\"";
+    print("\nGet the initial number of log lines of \"WiFi_CSI_SubscriptionStarted\"");
     file = "/rdklogs/logs/WiFilog.txt.0";
     search_string_csistart = "WiFi_CSI_SubscriptionStarted"
     count_csistart_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_csistart, step);
 
     #Get the WiFi_CSI_SubscriptionCancelled log line count
-    print "\nGet the initial number of log lines of \"WiFi_CSI_SubscriptionCancelled\"";
+    print("\nGet the initial number of log lines of \"WiFi_CSI_SubscriptionCancelled\"");
     step = step + 1;
     search_string_csiend = "WiFi_CSI_SubscriptionCancelled"
     count_csiend_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_csiend, step);
@@ -97,35 +97,35 @@ def StartStopCSI(sysobj, step):
     #Start and cancel the CSI data collection within 10s
     step = step + 1;
     query="wifi_events_consumer -e 7 & sleep 10 & pkill wifi_events_consumer";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj.addParameter("command", query)
     tdkTestObj.executeTestCase("SUCCESS");
     actualresult = tdkTestObj.getResult();
     result = tdkTestObj.getResultDetails().strip("\\n");
 
-    print "\nTEST STEP %d : Start the CSI data collection for the CSI sessions that are enabled with a valid client MAC and cancel the CSI data collection in 10s" %step;
-    print "EXPECTED RESULT %d : Should start the CSI data collection for the CSI sessions that are enabled with a valid client MAC and cancel the CSI data collection in 10s " %step;
+    print("\nTEST STEP %d : Start the CSI data collection for the CSI sessions that are enabled with a valid client MAC and cancel the CSI data collection in 10s" %step);
+    print("EXPECTED RESULT %d : Should start the CSI data collection for the CSI sessions that are enabled with a valid client MAC and cancel the CSI data collection in 10s " %step);
 
     if expectedresult in actualresult :
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: CSI data collection for the CSI sessions that are enabled with a valid client MAC is started successfully and cancelled the CSI data collection in 10s " %step;
+        print("ACTUAL RESULT %d: CSI data collection for the CSI sessions that are enabled with a valid client MAC is started successfully and cancelled the CSI data collection in 10s " %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the WiFi_CSI_SubscriptionStarted log line count
-        print "\nGet the final number of log lines of \"WiFi_CSI_SubscriptionStarted\"";
+        print("\nGet the final number of log lines of \"WiFi_CSI_SubscriptionStarted\"");
         step = step + 1;
         count_csistart_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_csistart, step);
 
         #Get the WiFi_CSI_SubscriptionCancelled log line count
-        print "\nGet the final number of log lines of \"WiFi_CSI_SubscriptionCancelled\"";
+        print("\nGet the final number of log lines of \"WiFi_CSI_SubscriptionCancelled\"");
         step = step + 1;
         count_csiend_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_csiend, step);
     else :
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: CSI data collection for the CSI sessions that are enabled with a valid client MAC is not started" %step;
+        print("ACTUAL RESULT %d: CSI data collection for the CSI sessions that are enabled with a valid client MAC is not started" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return count_csistart_initial, count_csistart_final, count_csiend_initial, count_csiend_final, step;
 
 def GetClientMAC(tr181_obj, step):
@@ -135,15 +135,15 @@ def GetClientMAC(tr181_obj, step):
     macaddressFound = 0;
     hostMacAddress = "";
 
-    print "\nTEST STEP %d: Get the number of hosts" %step;
-    print "EXPECTED RESULT %d: Should get the number of hosts" %step;
+    print("\nTEST STEP %d: Get the number of hosts" %step);
+    print("EXPECTED RESULT %d: Should get the number of hosts" %step);
 
     if expectedresult in actualresult and int(NoOfHosts)>0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Number of hosts :%s" %(step, NoOfHosts);
+        print("ACTUAL RESULT %d: Number of hosts :%s" %(step, NoOfHosts));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Find the active hosts amoung the listed Hosts. List will contains the ids of active hosts
         List=[];
@@ -158,57 +158,57 @@ def GetClientMAC(tr181_obj, step):
             actualresult, status = getTR181Value(tdkTestObj, paramName);
 
             if "true" in status:
-                 List.extend(str(i));
+                List.extend(str(i));
 
-                 step = step + 1;
-                 print "\nTEST STEP %d: Get the active clients" %step;
-                 print "EXPECTED RESULT %d: Should get the active clients" %step;
+                step = step + 1;
+                print("\nTEST STEP %d: Get the active clients" %step);
+                print("EXPECTED RESULT %d: Should get the active clients" %step);
 
-                 if expectedresult in actualresult:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "ACTUAL RESULT %d: Active clients are obtained" %step;
-                     print "Active client list : ", List;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("ACTUAL RESULT %d: Active clients are obtained" %step);
+                    print("Active client list : ", List);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                     for i in range(1,len(List)):
-                         if int(macaddressFound) == 1:
-                             break;
+                    for i in range(1,len(List)):
+                        if int(macaddressFound) == 1:
+                            break;
 
-                         step = step + 1;
-                         paramName = "Device.Hosts.Host." + str(i) + ".PhysAddress";
-                         actualresult, hostMacAddress = getTR181Value(tdkTestObj, paramName);
-                         print "\nTEST STEP %d: Get the MAC address of the Client" %step;
-                         print "EXPECTED RESULT %d: Get the MAC address of the device" %step;
+                        step = step + 1;
+                        paramName = "Device.Hosts.Host." + str(i) + ".PhysAddress";
+                        actualresult, hostMacAddress = getTR181Value(tdkTestObj, paramName);
+                        print("\nTEST STEP %d: Get the MAC address of the Client" %step);
+                        print("EXPECTED RESULT %d: Get the MAC address of the device" %step);
 
-                         if expectedresult in actualresult:
-                             macaddressFound = 1;
-                             #Set the result status of execution
-                             tdkTestObj.setResultStatus("SUCCESS");
-                             print "ACTUAL RESULT %d: MAC address Found in host table: %s" %(step, hostMacAddress);
-                             #Get the result of execution
-                             print "[TEST EXECUTION RESULT] : SUCCESS";
-                         else:
-                             #Set the result status of execution
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "ACTUAL RESULT %d: MAC address NOT Found in host table: %s" %(step, hostMacAddress);
-                             #Get the result of execution
-                             print "[TEST EXECUTION RESULT] : FAILURE";
-                 else:
-                     #Set the result status of execution
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "ACTUAL RESULT %d: Active clients are NOT obtained" %step;
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : FAILURE";
+                        if expectedresult in actualresult:
+                            macaddressFound = 1;
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ACTUAL RESULT %d: MAC address Found in host table: %s" %(step, hostMacAddress));
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("ACTUAL RESULT %d: MAC address NOT Found in host table: %s" %(step, hostMacAddress));
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT %d: Active clients are NOT obtained" %step);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                 continue;
+                continue;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Number of hosts :%s" %(step, NoOfHosts);
+        print("ACTUAL RESULT %d: Number of hosts :%s" %(step, NoOfHosts));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return hostMacAddress, step;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -234,9 +234,9 @@ sysobj.configureTestCase(ip,port,'TS_ONEWIFI_2.4GHzClientStartStopCSIDataCollect
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=obj1.getLoadModuleResult();
 loadmodulestatus2=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
@@ -249,7 +249,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     pre_req_set, tdkTestObj, step, revert_flag, initial_val = CheckPreReqForCSI(obj1, obj);
 
     if pre_req_set == 1:
-        print "\n*************All pre-requisites set for the DUT*****************";
+        print("\n*************All pre-requisites set for the DUT*****************");
         #Get the connected client MAC Address
         step = step + 1;
         hostMacAddress, step = GetClientMAC(obj, step);
@@ -265,19 +265,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Add a new CSI Table instance" %step;
-            print "EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step;
+            print("\nTEST STEP %d: Add a new CSI Table instance" %step);
+            print("EXPECTED RESULT %d: Should add a new CSI Table instance successfully" %step);
 
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : %s" %actualresult;
+                print("ACTUAL RESULT %d: Added a new CSI Table instance successfully; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : %s" %actualresult);
                 instance = details.split(':')[1];
 
                 if instance.isdigit() and int(instance) > 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "INSTANCE VALUE : %s" %instance;
+                    print("INSTANCE VALUE : %s" %instance);
 
                     #Set values for the CSI Enable and ClientMaclist after instance is created
                     step = step + 1;
@@ -288,15 +288,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult1, details1 = setTR181Value(tdkTestObj, enable_param, "true", "boolean");
                     actualresult2, details2 = setTR181Value(tdkTestObj, ClientMaclist_param, hostMacAddress, "string");
 
-                    print "\nTEST STEP %d : Set values for %s and %s to true and %s respectively" %(step, enable_param, ClientMaclist_param, hostMacAddress);
-                    print "EXPECTED RESULT %d : The values should be set successfully" %step;
+                    print("\nTEST STEP %d : Set values for %s and %s to true and %s respectively" %(step, enable_param, ClientMaclist_param, hostMacAddress));
+                    print("EXPECTED RESULT %d : The values should be set successfully" %step);
 
                     if expectedresult in actualresult1 and expectedresult in actualresult2:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance set successfully" %step;
+                        print("ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check the SET values with GET
                         step = step + 1;
@@ -304,60 +304,60 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult1, details1 = getTR181Value(tdkTestObj, enable_param);
                         actualresult2, details2 = getTR181Value(tdkTestObj, ClientMaclist_param);
 
-                        print "\nTEST STEP %d : Get the values of %s and %s and check if it is same as set values" %(step, enable_param, ClientMaclist_param);
-                        print "EXPECTED RESULT %d : The values should be retrieved successfully and it should be the same as set values" %step;
+                        print("\nTEST STEP %d : Get the values of %s and %s and check if it is same as set values" %(step, enable_param, ClientMaclist_param));
+                        print("EXPECTED RESULT %d : The values should be retrieved successfully and it should be the same as set values" %step);
 
                         if expectedresult in actualresult1 and expectedresult in actualresult2:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : The values of the newly added instance retrieved successfully" %step;
-                            print "%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2);
+                            print("ACTUAL RESULT %d : The values of the newly added instance retrieved successfully" %step);
+                            print("%s : %s, %s : %s" %(enable_param, details1, ClientMaclist_param, details2));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if details1 == "true" and details2 == hostMacAddress:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "The values of the new CSI Table instance - %s is true and %s is %s as expected" %(enable_param, ClientMaclist_param, hostMacAddress);
+                                print("The values of the new CSI Table instance - %s is true and %s is %s as expected" %(enable_param, ClientMaclist_param, hostMacAddress));
 
                                 #Start CSI data collection, kill the process later and then check for the required subscription log lines
                                 step = step + 1;
                                 count_csistart_initial, count_csistart_final, count_csiend_initial, count_csiend_final, step = StartStopCSI(sysobj, step);
                                 step = step + 1;
 
-                                print "\nTEST STEP %d : Check if the CSI start data collection log - \"WiFi_CSI_SubscriptionStarted\" and stop CSI data collection log - \"WiFi_CSI_SubscriptionCancelled\" are populated under WiFilog.txt.0" %step;
-                                print "EXPECTED RESULT %d : The CSI start - stop data collection logs should be present under the WiFilog.txt.0" %step;
-                                print "Number of initial log lines of \"WiFi_CSI_SubscriptionStarted\" : ", count_csistart_initial;
-                                print "Number of final log lines of \"WiFi_CSI_SubscriptionStarted\" : ", count_csistart_final;
-                                print "Number of initial log lines of \"WiFi_CSI_SubscriptionCancelled\" : ", count_csiend_initial;
-                                print "Number of final log lines of \"WiFi_CSI_SubscriptionCancelled\" : ", count_csiend_final;
+                                print("\nTEST STEP %d : Check if the CSI start data collection log - \"WiFi_CSI_SubscriptionStarted\" and stop CSI data collection log - \"WiFi_CSI_SubscriptionCancelled\" are populated under WiFilog.txt.0" %step);
+                                print("EXPECTED RESULT %d : The CSI start - stop data collection logs should be present under the WiFilog.txt.0" %step);
+                                print("Number of initial log lines of \"WiFi_CSI_SubscriptionStarted\" : ", count_csistart_initial);
+                                print("Number of final log lines of \"WiFi_CSI_SubscriptionStarted\" : ", count_csistart_final);
+                                print("Number of initial log lines of \"WiFi_CSI_SubscriptionCancelled\" : ", count_csiend_initial);
+                                print("Number of final log lines of \"WiFi_CSI_SubscriptionCancelled\" : ", count_csiend_final);
 
                                 if (count_csistart_final == (count_csistart_initial + 1)) and (count_csiend_final == (count_csiend_initial + 1)):
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d : The required subsription log lines are found in WiFilog.txt.0 on starting and cancelling CSI data collection" %step;
+                                    print("ACTUAL RESULT %d : The required subsription log lines are found in WiFilog.txt.0 on starting and cancelling CSI data collection" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d : The required subsription log lines are NOT found in WiFilog.txt.0 on starting and cancelling CSI data collection" %step;
+                                    print("ACTUAL RESULT %d : The required subsription log lines are NOT found in WiFilog.txt.0 on starting and cancelling CSI data collection" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "The GET values of the new CSI Table instance are not as expected";
+                                print("The GET values of the new CSI Table instance are not as expected");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step;
+                            print("ACTUAL RESULT %d : Failed to retrieve the new CSI Table instance values" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance NOT set successfully" %step;
+                        print("ACTUAL RESULT %d : The Enable and ClientMAC values of the newly added instance NOT set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Delete the added instance from the CSI Table
                     step = step + 1;
@@ -367,62 +367,62 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP %d : Delete the newly added CSI Table instance" %step;
-                    print "EXPECTED RESULT %d: Should delete the newly added CSI Table instance successfully" %step;
+                    print("\nTEST STEP %d : Delete the newly added CSI Table instance" %step);
+                    print("EXPECTED RESULT %d: Should delete the newly added CSI Table instance successfully" %step);
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details);
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Added instance is deleted successfully";
+                        print("ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details));
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                        print("Added instance is deleted successfully");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details);
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                        print "Added instance could not be deleted";
+                        print("ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details));
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                        print("Added instance could not be deleted");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "INSTANCE VALUE : %s is not a valid value" %instance
+                    print("INSTANCE VALUE : %s is not a valid value" %instance)
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Unable to add a new instance to CSI Table; Details : %s" %(step, details);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d: Unable to add a new instance to CSI Table; Details : %s" %(step, details));
+                print("TEST EXECUTION RESULT : FAILURE");
         else :
-            print "No active clients connected...";
+            print("No active clients connected...");
             tdkTestObj.setResultStatus("FAILURE");
 
         #Revert the pre-requisites set
         if revert_flag == 1:
             step = step + 1;
             status = RevertCSIPreReq(obj, initial_val);
-            print "\nTEST STEP %d : Revert the pre-requisites set to initial values" %step;
-            print "\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+            print("\nTEST STEP %d : Revert the pre-requisites set to initial values" %step);
+            print("\nEXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
             if status == 1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : Revert operation was success" %step;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d : Revert operation was success" %step);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Revert operation failed" %step;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d : Revert operation failed" %step);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Revert operations not required";
+            print("Revert operations not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

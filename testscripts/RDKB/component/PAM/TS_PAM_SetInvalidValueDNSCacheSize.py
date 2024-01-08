@@ -104,7 +104,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetInvalidValueDNSCacheSize');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 #variable used to know if the value was set
 flag = 0
 if "SUCCESS" in loadmodulestatus.upper():
@@ -120,107 +120,107 @@ if "SUCCESS" in loadmodulestatus.upper():
     InitialDNSCacheSize = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Initial DNS Cache Size";
-       print "EXPECTED RESULT 1: Should get the Initial DNS Cache Size";
-       print "ACTUAL RESULT 1: Got the Initial DNS Cache Size as",InitialDNSCacheSize;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Initial DNS Cache Size");
+        print("EXPECTED RESULT 1: Should get the Initial DNS Cache Size");
+        print("ACTUAL RESULT 1: Got the Initial DNS Cache Size as",InitialDNSCacheSize);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       SetValue = random.randint(32768,40000);
+        SetValue = random.randint(32768,40000);
 
-       tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
-       tdkTestObj.addParameter("ParamValue",str(SetValue));
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="FAILURE";
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
+        tdkTestObj.addParameter("ParamValue",str(SetValue));
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="FAILURE";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Set the DNS Cache Size to a invalid positive value";
-          print "EXPECTED RESULT 2: Should not set the DNS Cache Size to a invalid positive value";
-          print "ACTUAL RESULT 2: Value to be set was",SetValue;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the DNS Cache Size to a invalid positive value");
+            print("EXPECTED RESULT 2: Should not set the DNS Cache Size to a invalid positive value");
+            print("ACTUAL RESULT 2: Value to be set was",SetValue);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          SetValue = SetValue * -1;
+            SetValue = SetValue * -1;
 
-          tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
-          tdkTestObj.addParameter("ParamValue",str(SetValue));
-          tdkTestObj.addParameter("Type","unsignedint");
-          expectedresult="FAILURE";
+            tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
+            tdkTestObj.addParameter("ParamValue",str(SetValue));
+            tdkTestObj.addParameter("Type","unsignedint");
+            expectedresult="FAILURE";
 
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Set the DNS Cache Size to a invalid negative value";
-             print "EXPECTED RESULT 3: Should not set the DNS Cache Size to a invalid negative value";
-             print "ACTUAL RESULT 3: Value to be set was",SetValue;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              flag = 1;
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Set the DNS Cache Size to a invalid negative value";
-              print "EXPECTED RESULT 3: Should not set the DNS Cache Size to a invalid negative value";
-              print "ACTUAL RESULT 3: Value to be set was",SetValue;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           flag =1;
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the DNS Cache Size to a invalid positive value";
-           print "EXPECTED RESULT 2: Should not set the DNS Cache Size to a invalid positive value";
-           print "ACTUAL RESULT 2: Value to be set was",SetValue;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Set the DNS Cache Size to a invalid negative value");
+                print("EXPECTED RESULT 3: Should not set the DNS Cache Size to a invalid negative value");
+                print("ACTUAL RESULT 3: Value to be set was",SetValue);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                flag = 1;
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Set the DNS Cache Size to a invalid negative value");
+                print("EXPECTED RESULT 3: Should not set the DNS Cache Size to a invalid negative value");
+                print("ACTUAL RESULT 3: Value to be set was",SetValue);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            flag =1;
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the DNS Cache Size to a invalid positive value");
+            print("EXPECTED RESULT 2: Should not set the DNS Cache Size to a invalid positive value");
+            print("ACTUAL RESULT 2: Value to be set was",SetValue);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Initial DNS Cache Size";
-        print "EXPECTED RESULT 1: Should get the Initial DNS Cache Size";
-        print "ACTUAL RESULT 1: Got the Initial DNS Cache Size as",InitialDNSCacheSize;
+        print("TEST STEP 1: Get the Initial DNS Cache Size");
+        print("EXPECTED RESULT 1: Should get the Initial DNS Cache Size");
+        print("ACTUAL RESULT 1: Got the Initial DNS Cache Size as",InitialDNSCacheSize);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     #Revert the value if any invalid value was set
     if flag == 1:
-       tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
-       tdkTestObj.addParameter("ParamValue",InitialDNSCacheSize);
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult="SUCCESS";
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.DNSCacheSize");
+        tdkTestObj.addParameter("ParamValue",InitialDNSCacheSize);
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult="SUCCESS";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 4: Revert the value to initial ";
-          print "EXPECTED RESULT 4: Should revert the value to initial";
-          print "ACTUAL RESULT 4: Value to be reverted",InitialDNSCacheSize;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 4: Revert the value to initial ";
-           print "EXPECTED RESULT 4: Should revert the value to initial";
-           print "ACTUAL RESULT 4: Value to be reverted",InitialDNSCacheSize;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 4: Revert the value to initial ");
+            print("EXPECTED RESULT 4: Should revert the value to initial");
+            print("ACTUAL RESULT 4: Value to be reverted",InitialDNSCacheSize);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 4: Revert the value to initial ");
+            print("EXPECTED RESULT 4: Should revert the value to initial");
+            print("ACTUAL RESULT 4: Value to be reverted",InitialDNSCacheSize);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam  module";
+    print("Failed to load pam  module");
     obj.setLoadModuleStatus("FAILURE");

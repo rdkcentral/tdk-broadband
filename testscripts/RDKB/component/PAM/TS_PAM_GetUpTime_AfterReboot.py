@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetUpTime_AfterReboot');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -111,53 +111,53 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-	print "STEP 1 :Get the uptime";
-	print "EXPECTED RESULT : Should return the uptime successfully";
-        print "ACTUAL RESULT :UpTime before reboot is %s" %details;
+        print("STEP 1 :Get the uptime");
+        print("EXPECTED RESULT : Should return the uptime successfully");
+        print("ACTUAL RESULT :UpTime before reboot is %s" %details);
         #rebooting the device
-	obj.initiateReboot();
-	sleep(300)
-	#checking the uptime after reboot
-	tdkTestObj = obj.createTestStep('pam_GetParameterValues');
-	tdkTestObj.addParameter("ParamName","Device.DeviceInfo.UpTime");
-	#Execute the test case in STB
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	afterdetails = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    if int(details)>=int(afterdetails):
-		print "STEP 2: compare the uptime before and after reboot";
-		print "EXPECTED RESULT :Uptime before reboot should be greater than uptime after reboot";
-		print "UpTime after reboot is %s" %afterdetails;
-		print "Successfully updated the uptime after reboot";
+        obj.initiateReboot();
+        sleep(300)
+        #checking the uptime after reboot
+        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.UpTime");
+        #Execute the test case in STB
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        afterdetails = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            if int(details)>=int(afterdetails):
+                print("STEP 2: compare the uptime before and after reboot");
+                print("EXPECTED RESULT :Uptime before reboot should be greater than uptime after reboot");
+                print("UpTime after reboot is %s" %afterdetails);
+                print("Successfully updated the uptime after reboot");
 
-		#Set the result status of execution
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : %s" %actualresult;
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "STEP 2: compare the uptime before and after reboot";
-                print "EXPECTED RESULT :Uptime before reboot should be greater than uptime after reboot";
-                print "UpTime after reboot is %s" %afterdetails;
-		print "Failed to update the uptime after reboot"
-		print "[TEST EXECUTION RESULT] :%s" %actualresult;
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "STEP 1 :Get the uptime";
-            print "EXPECTED RESULT : Should return the uptime successfully";
-            print "ACTUAL RESULT :Failed to get the uptime after reboot %s" %details;
-	    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("STEP 2: compare the uptime before and after reboot");
+                print("EXPECTED RESULT :Uptime before reboot should be greater than uptime after reboot");
+                print("UpTime after reboot is %s" %afterdetails);
+                print("Failed to update the uptime after reboot")
+                print("[TEST EXECUTION RESULT] :%s" %actualresult);
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("STEP 1 :Get the uptime");
+            print("EXPECTED RESULT : Should return the uptime successfully");
+            print("ACTUAL RESULT :Failed to get the uptime after reboot %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the UpTime";
-        print "EXPECTED RESULT 1: Should return the uptime successfully";
-        print "ACTUAL RESULT 1: Failed to get the uptime before reboot %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+        print("TEST STEP 1: Get the UpTime");
+        print("EXPECTED RESULT 1: Should return the uptime successfully");
+        print("ACTUAL RESULT 1: Failed to get the uptime before reboot %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult);
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

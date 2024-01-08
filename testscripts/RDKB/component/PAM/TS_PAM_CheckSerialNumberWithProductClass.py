@@ -113,7 +113,7 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckSerialNumberWithProductClass');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -129,11 +129,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ProductClass";
-        print "EXPECTED RESULT 1: Should get the ProductClass";
-        print "ACTUAL RESULT 1: ProductClass is %s" %details;
+        print("TEST STEP 1: Get the ProductClass");
+        print("EXPECTED RESULT 1: Should get the ProductClass");
+        print("ACTUAL RESULT 1: ProductClass is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.SerialNumber");
@@ -141,7 +141,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         SerialNo = tdkTestObj.getResultDetails();
-        print "Serial number obtained by deviceinfo :%s" %SerialNo;
+        print("Serial number obtained by deviceinfo :%s" %SerialNo);
 
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.GatewayInfo.SerialNumber");
@@ -149,28 +149,28 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         GWSerialNo = tdkTestObj.getResultDetails();
-        print "Serial number obtained by gateway info : %s" %GWSerialNo;
+        print("Serial number obtained by gateway info : %s" %GWSerialNo);
 
         #check if serial number is correct or not
         if SerialNo == GWSerialNo:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Checking whether the serial number is correct or not";
-            print "EXPECTED RESULT 2: Serial number obtained by deviceinfo and gateway info should be same";
-            print "ACTUAL RESULT 2:Serial number obtained is correct";
+            print("TEST STEP 2: Checking whether the serial number is correct or not");
+            print("EXPECTED RESULT 2: Serial number obtained by deviceinfo and gateway info should be same");
+            print("ACTUAL RESULT 2:Serial number obtained is correct");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Checking whether the serial number is correct or not";
-            print "EXPECTED RESULT 2: Serial number obtained by deviceinfo and gateway info should be same";
-            print "ACTUAL RESULT 2:Serial number obtained are not same";
+            print("TEST STEP 2: Checking whether the serial number is correct or not");
+            print("EXPECTED RESULT 2: Serial number obtained by deviceinfo and gateway info should be same");
+            print("ACTUAL RESULT 2:Serial number obtained are not same");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ProductClass";
-        print "EXPECTED RESULT 1: Should get the ProductClass";
-        print "ACTUAL RESULT 1: Failure in getting the ProductClass. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the ProductClass");
+        print("EXPECTED RESULT 1: Should get the ProductClass");
+        print("ACTUAL RESULT 1: Failure in getting the ProductClass. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

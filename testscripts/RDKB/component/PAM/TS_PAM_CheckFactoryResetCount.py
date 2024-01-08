@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckFactoryResetCount');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -112,10 +112,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Factory reset count";
-        print "ACTUAL RESULT 1:Factory reset count is %s" %detailsBeforeReset;
+        print("TEST STEP 1: Get the Factory reset count");
+        print("ACTUAL RESULT 1:Factory reset count is %s" %detailsBeforeReset);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         obj.saveCurrentState();
         #Initiate Factory reset before checking the default value
         tdkTestObj = obj.createTestStep('pam_Setparams');
@@ -130,10 +130,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Initiate factory reset ";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Initiate factory reset ");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
 
@@ -148,49 +148,47 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the Factory reset count after factory reset";
-                print "ACTUAL RESULT 3: Factory reset count after factory reset is %s" %detailsAfterReset;
+                print("TEST STEP 3: Get the Factory reset count after factory reset");
+                print("ACTUAL RESULT 3: Factory reset count after factory reset is %s" %detailsAfterReset);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 if int(detailsAfterReset) == int(detailsBeforeReset) + 1:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4:Check if factory reset count is incremented after factory reset";
-                    print "ACTUAL RESULT 4:factory reset count is incremented after factory reset ";
+                    print("TEST STEP 4:Check if factory reset count is incremented after factory reset");
+                    print("ACTUAL RESULT 4:factory reset count is incremented after factory reset ");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Check if factory reset count is incremented after factory reset";
-                    print "ACTUAL RESULT 4:factory reset count is incremented after factory reset ";
+                    print("TEST STEP 4:Check if factory reset count is incremented after factory reset");
+                    print("ACTUAL RESULT 4:factory reset count is incremented after factory reset ");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the Factory reset count after factory reset";
-                print "ACTUAL RESULT 3: Failed to get Factory reset count after factory reset ";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Get the Factory reset count after factory reset");
+                print("ACTUAL RESULT 3: Failed to get Factory reset count after factory reset ");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Initiate factory reset"
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Initiate factory reset")
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Factory reset count";
-        print "ACTUAL RESULT 1:Failed to get Factory reset count";
+        print("TEST STEP 1: Get the Factory reset count");
+        print("ACTUAL RESULT 1:Failed to get Factory reset count");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

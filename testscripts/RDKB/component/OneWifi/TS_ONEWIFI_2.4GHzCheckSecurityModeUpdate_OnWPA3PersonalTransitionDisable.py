@@ -123,7 +123,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_2.4GHzCheckSecurityModeUpdate_OnWPA3Pe
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -137,215 +137,215 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step;
+    print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled" %step);
 
     if expectedresult in actualresult:
         initial_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, initial_mode));
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         #Check the Pre-requisites - WPA3_Personal_Transition RFC should be enabled
         step = step + 1;
         pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
 
         if pre_req_set == 1:
-            print "\n*************RFC Pre-requisite set for the DUT*****************";
+            print("\n*************RFC Pre-requisite set for the DUT*****************");
             #Set Security Mode to WPA3 modes
             wpa3_modes = ["WPA3-Personal", "WPA3-Personal-Transition"]
             for mode in wpa3_modes:
-                print "\n****************For Mode %s*******************" %mode;
+                print("\n****************For Mode %s*******************" %mode);
                 #Set the security mode
                 step = step + 1;
                 tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                 actualresult, details = SetParameterValue(tdkTestObj, "Device.WiFi.AccessPoint.1.Security.ModeEnabled", mode, "string");
 
-                print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode);
-                print "EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode);
+                print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step, mode));
+                print("EXPECTED RESULT %d : Should successfully set Device.WiFi.AccessPoint.1.Security.ModeEnabled to %s" %(step,mode));
 
                 if expectedresult in actualresult :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                    print("TEST EXECUTION RESULT :SUCCESS");
 
                     #Verify the SET with GET
                     step = step + 1;
                     tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                     actualresult, details = GetParameterValue(tdkTestObj, "Device.WiFi.AccessPoint.1.Security.ModeEnabled");
 
-                    print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step;
-                    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step;
+                    print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if SET operation was success" %step);
+                    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should reflect the SET Mode" %step);
 
                     if expectedresult in actualresult:
                         final_mode = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode);
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, final_mode));
+                        print("TEST EXECUTION RESULT :SUCCESS");
 
-                        print "Set Mode : ", mode;
-                        print "Get Mode : ", final_mode;
+                        print("Set Mode : ", mode);
+                        print("Get Mode : ", final_mode);
 
                         if final_mode == mode:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "SET is reflected in GET";
+                            print("SET is reflected in GET");
 
                             #Disable the WPA3 RFC
                             step = step + 1;
                             tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                             actualresult, details = SetParameterValue(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable", "false", "boolean");
 
-                            print "\nTEST STEP %d : Disable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step);
-                            print "EXPECTED RESULT %d : Should successfully disable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step);
+                            print("\nTEST STEP %d : Disable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step));
+                            print("EXPECTED RESULT %d : Should successfully disable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step));
 
                             if expectedresult in actualresult :
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                                print "TEST EXECUTION RESULT :SUCCESS";
+                                print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                                print("TEST EXECUTION RESULT :SUCCESS");
 
                                 #Verify the SET with GET
                                 step = step + 1;
                                 tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                                 actualresult, details = GetParameterValue(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable");
 
-                                print "\nTEST STEP %d : Get the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and check if SET operation was success" %step;
-                                print "EXPECTED RESULT %d : Should successfully get Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and should reflect the enable SET" %step;
+                                print("\nTEST STEP %d : Get the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and check if SET operation was success" %step);
+                                print("EXPECTED RESULT %d : Should successfully get Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and should reflect the enable SET" %step);
 
                                 if expectedresult in actualresult:
                                     rfc_enable = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, rfc_enable);
-                                    print "TEST EXECUTION RESULT :SUCCESS";
+                                    print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, rfc_enable));
+                                    print("TEST EXECUTION RESULT :SUCCESS");
 
-                                    print "Set RFC Enable : false";
-                                    print "Get RFC Enable : ", rfc_enable;
+                                    print("Set RFC Enable : false");
+                                    print("Get RFC Enable : ", rfc_enable);
 
                                     if rfc_enable == "false" :
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "WPA3 RFC is disabled successfully";
+                                        print("WPA3 RFC is disabled successfully");
 
                                         #Check if the security mode changes to WPA2-Personal
                                         step = step + 1;
                                         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                                         actualresult, details = GetParameterValue(tdkTestObj, "Device.WiFi.AccessPoint.1.Security.ModeEnabled");
 
-                                        print "\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if the mode is changes to WPA2-Personal after WPA3 RDC Disable" %step;
-                                        print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should be WPA2-Personal after WPA3 RFC Disable" %step;
+                                        print("\nTEST STEP %d : Get the Security Mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and check if the mode is changes to WPA2-Personal after WPA3 RDC Disable" %step);
+                                        print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.1.Security.ModeEnabled and should be WPA2-Personal after WPA3 RFC Disable" %step);
 
                                         if expectedresult in actualresult:
                                             security_mode_rfcdisabled = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, security_mode_rfcdisabled);
-                                            print "TEST EXECUTION RESULT :SUCCESS";
+                                            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, security_mode_rfcdisabled));
+                                            print("TEST EXECUTION RESULT :SUCCESS");
 
-                                            print "\nExpected Security Mode after WPA3 RFC Disable : WPA2-Personal";
-                                            print "Actual Security Mode after WPA3 RFC Disable : ", security_mode_rfcdisabled;
+                                            print("\nExpected Security Mode after WPA3 RFC Disable : WPA2-Personal");
+                                            print("Actual Security Mode after WPA3 RFC Disable : ", security_mode_rfcdisabled);
 
                                             if security_mode_rfcdisabled == "WPA2-Personal" :
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print "Security Mode has been updated as expected after disabling the WPA3 RFC";
+                                                print("Security Mode has been updated as expected after disabling the WPA3 RFC");
                                             else :
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "Security Mode has NOT been updated as expected after disabling the WPA3 RFC";
+                                                print("Security Mode has NOT been updated as expected after disabling the WPA3 RFC");
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                                            print "TEST EXECUTION RESULT :FAILURE";
+                                            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                                            print("TEST EXECUTION RESULT :FAILURE");
 
                                         #Enable WPA3 RFC
                                         step = step + 1;
                                         tdkTestObj = obj.createTestStep("WIFIAgent_Set");
                                         actualresult, details = SetParameterValue(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable", "true", "boolean");
 
-                                        print "\nTEST STEP %d : Enable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step);
-                                        print "EXPECTED RESULT %d : Should successfully enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step);
+                                        print("\nTEST STEP %d : Enable the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step));
+                                        print("EXPECTED RESULT %d : Should successfully enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable" %(step));
 
                                         if expectedresult in actualresult :
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details);
-                                            print "TEST EXECUTION RESULT :SUCCESS";
+                                            print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step,details));
+                                            print("TEST EXECUTION RESULT :SUCCESS");
 
                                             #Verify the SET with GET
                                             step = step + 1;
                                             tdkTestObj = obj.createTestStep("WIFIAgent_Get");
                                             actualresult, details = GetParameterValue(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable");
 
-                                            print "\nTEST STEP %d : Get the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and check if SET operation was success" %step;
-                                            print "EXPECTED RESULT %d : Should successfully get Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and should reflect the enable SET" %step;
+                                            print("\nTEST STEP %d : Get the RFC Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and check if SET operation was success" %step);
+                                            print("EXPECTED RESULT %d : Should successfully get Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable and should reflect the enable SET" %step);
 
                                             if expectedresult in actualresult:
                                                 rfc_enable = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, rfc_enable);
-                                                print "TEST EXECUTION RESULT :SUCCESS";
+                                                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, rfc_enable));
+                                                print("TEST EXECUTION RESULT :SUCCESS");
 
-                                                print "Set RFC Enable : true";
-                                                print "Get RFC Enable : ", rfc_enable;
+                                                print("Set RFC Enable : true");
+                                                print("Get RFC Enable : ", rfc_enable);
 
                                                 if rfc_enable == "true" :
                                                     tdkTestObj.setResultStatus("SUCCESS");
-                                                    print "WPA3 RFC is enabled successfully";
+                                                    print("WPA3 RFC is enabled successfully");
                                                 else :
                                                     tdkTestObj.setResultStatus("FAILURE");
-                                                    print "WPA3 RFC is NOT enabled successfully";
+                                                    print("WPA3 RFC is NOT enabled successfully");
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                                                print "TEST EXECUTION RESULT :FAILURE";
+                                                print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                                                print("TEST EXECUTION RESULT :FAILURE");
                                         else :
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                                            print "TEST EXECUTION RESULT :FAILURE";
+                                            print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                                            print("TEST EXECUTION RESULT :FAILURE");
                                     else :
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "WPA3 RFC is NOT disabled successfully";
+                                        print("WPA3 RFC is NOT disabled successfully");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                                    print "TEST EXECUTION RESULT :FAILURE";
+                                    print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                                    print("TEST EXECUTION RESULT :FAILURE");
                             else :
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                                print "TEST EXECUTION RESULT :FAILURE";
+                                print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                                print("TEST EXECUTION RESULT :FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "SET is NOT reflected in GET";
+                            print("SET is NOT reflected in GET");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details);
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step,details));
+                    print("TEST EXECUTION RESULT :FAILURE");
 
             #Revert the pre-requisites set
             if revert_flag == 1:
                 step = step + 1;
                 status = RevertWPA3Pre_requisite(obj, initial_value);
 
-                print "\nTEST STEP %d : Revert the pre-requisite to initial value" %step;
-                print "EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step;
+                print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
+                print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
 
                 if status == 1:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Revert operation was success" %step;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d : Revert operation was success" %step);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Revert operation failed" %step;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d : Revert operation failed" %step);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Reverting pre-requisites not required";
+                print("Reverting pre-requisites not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Pre-Requisite is not set successfully";
+            print("Pre-Requisite is not set successfully");
 
         #Revert operation of security mode
-        print "Reverting to initial Security Mode..."
+        print("Reverting to initial Security Mode...")
         step = step + 1;
         tdkTestObj = obj.createTestStep("WIFIAgent_Set");
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.ModeEnabled");
@@ -355,24 +355,24 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode);
-        print "EXPECTED RESULT %d : Reverting to initial security mode should be success" %step;
+        print("\nTEST STEP %d : Revert Device.WiFi.AccessPoint.1.Security.ModeEnabled to initial mode : %s" %(step, initial_mode));
+        print("EXPECTED RESULT %d : Reverting to initial security mode should be success" %step);
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("ACTUAL RESULT %d : Reverting Mode to initial value was successful; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : SUCCESS");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details);
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful; Details : %s" %(step, details));
+            print("TEST EXECUTION RESULT : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

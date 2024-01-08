@@ -101,27 +101,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     result,default = ovs_PreRequisite(tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
 
     if expectedresult in result:
-        print "TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "ACTUAL RESULT 1 : The Code Big and Mesh status are as expected";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("ACTUAL RESULT 1 : The Code Big and Mesh status are as expected");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
-        print "\n\n";
-        print "TEST STEP 2: Get the OVS status"
-        print "EXPECTED RESULT 2: OVS Status should enabled else enable it "
+        print("\n\n");
+        print("TEST STEP 2: Get the OVS status")
+        print("EXPECTED RESULT 2: OVS Status should enabled else enable it ")
 
         ovs_set,revert_flag = doEnableDisableOVS("true",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if ovs_set == 1:
             ovs_enabled = 1;
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: OVS Enable status set to true"
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("ACTUAL RESULT 2: OVS Enable status set to true")
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
 
             tdkTestObj = tdkTestObj_Sys_ExeCmd;
             cmd = "sh %s/tdk_utility.sh parseConfigFile OVS_BrList" %TDK_PATH;
-            print cmd;
+            print(cmd);
             expectedresult="SUCCESS";
             tdkTestObj.addParameter("command", cmd);
             tdkTestObj.executeTestCase(expectedresult);
@@ -130,76 +130,76 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult  and details!= "":
                 details = details.split(",");
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Execute the command";
-                print "EXPECTED RESULT 2: Should execute the command successfully";
-                print "ACTUAL RESULT 2: Details: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 2: Execute the command");
+                print("EXPECTED RESULT 2: Should execute the command successfully");
+                print("ACTUAL RESULT 2: Details: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "TEST STEP 3: Get the Ovs vsctl br list";
-                print "EXPECTED RESULT 3:  Should get the expected br lists";
+                print("TEST STEP 3: Get the Ovs vsctl br list");
+                print("EXPECTED RESULT 3:  Should get the expected br lists");
 
                 for item in details:
                     query="ovs-vsctl list-br | grep \"%s\""%item;
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj.addParameter("command", query)
                     expectedresult="SUCCESS";
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n","");
                     if (len(details) != 0)  and  item in details:
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "%s is present "%item;
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("%s is present "%item);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
-                        print "%s is not present " %item;
+                        print("%s is not present " %item);
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         break;
         else:
-             ovs_enabled = 0
-             print "ACTUAL RESULT 2: OVS status enable operation failed";
-             print "[TEST EXECUTION RESULT] 2: FAILURE";
-             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
+            ovs_enabled = 0
+            print("ACTUAL RESULT 2: OVS status enable operation failed");
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
+            tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
         actualresult = ovs_PostProcess(tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,default);
         if expectedresult in actualresult:
-            print "TEST STEP 4: Set Code Big and Mesh Enable Status value to initial value",;
-            print "EXPECTED RESULT 4: Revert operation should be success";
-            print "ACTUAL RESULT 4: REvert operation was success";
-            print "[TEST EXECUTION RESULT] 7: SUCCESS";
+            print("TEST STEP 4: Set Code Big and Mesh Enable Status value to initial value", end=' ');
+            print("EXPECTED RESULT 4: Revert operation should be success");
+            print("ACTUAL RESULT 4: REvert operation was success");
+            print("[TEST EXECUTION RESULT] 7: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 4: Set Code Big and Mesh Enable Status value to initial value",;
-            print "EXPECTED RESULT 4: Revert operation should be success";
-            print "ACTUAL RESULT 4: REvert operation was Failed";
-            print "[TEST EXECUTION RESULT] 5: FAILURE";
+            print("TEST STEP 4: Set Code Big and Mesh Enable Status value to initial value", end=' ');
+            print("EXPECTED RESULT 4: Revert operation should be success");
+            print("ACTUAL RESULT 4: REvert operation was Failed");
+            print("[TEST EXECUTION RESULT] 5: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "ACTUAL RESULT 1 : The Code Big and Mesh status are as expected";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("ACTUAL RESULT 1 : The Code Big and Mesh status are as expected");
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     #Revert Flag will set to 1 only when initial value was false, so disable the OVS using doEnableDisableOVS function
     if revert_flag == 1:
         ovs_set,revert_flag = doEnableDisableOVS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if ovs_set == 1:
-            print "TEST STEP 5: Set the OVS enable status to False"
-            print "EXPECTED RESULT 5: Should Set the OVS Enable Status of False"
-            print "ACTUAL RESULT 5: OVS Enable Status set to False"
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 5: Set the OVS enable status to False")
+            print("EXPECTED RESULT 5: Should Set the OVS Enable Status of False")
+            print("ACTUAL RESULT 5: OVS Enable Status set to False")
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 5: Set the OVS enable status to False"
-            print "EXPECTED RESULT 5: Should Set the OVS Enable Status of False"
-            print "ACTUAL RESULT 5: Failed to set OVS Enable Status to False"
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("TEST STEP 5: Set the OVS enable status to False")
+            print("EXPECTED RESULT 5: Should Set the OVS Enable Status of False")
+            print("ACTUAL RESULT 5: Failed to set OVS Enable Status to False")
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

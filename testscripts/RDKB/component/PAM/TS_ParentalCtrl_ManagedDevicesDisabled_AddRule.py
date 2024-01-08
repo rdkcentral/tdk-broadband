@@ -92,7 +92,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-						# use tdklib library,which provides a wrapper for tdk testcase script
+                                                # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 #Test component to be tested
 pamObj = tdklib.TDKScriptingLibrary("pam","RDKB");
@@ -108,7 +108,7 @@ pamObj.configureTestCase(ip,port,'TS_ParentalCtrl_ManagedDevicesDisabled_AddRule
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 pamloadmodulestatus =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #get the orinal status and store it
@@ -124,11 +124,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
         org_status = details;
-        print "TEST STEP 1: Get ManagedDevice Enable status";
-        print "EXPECTED RESULT 1: Should get the Enable status";
-        print "ACTUAL RESULT 1: ManagedDevice Enable status is %s" %details;
+        print("TEST STEP 1: Get ManagedDevice Enable status");
+        print("EXPECTED RESULT 1: Should get the Enable status");
+        print("ACTUAL RESULT 1: ManagedDevice Enable status is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_Comcast_com_ParentalControl.ManagedDevices.AllowAll");
         expectedresult="SUCCESS";
@@ -139,11 +139,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
             org_access = details;
-            print "TEST STEP 2: Get ManagedDevice Access type";
-            print "EXPECTED RESULT 2: Should get the Access type";
-            print "ACTUAL RESULT 2: ManagedDevice Access type is %s" %details;
+            print("TEST STEP 2: Get ManagedDevice Access type");
+            print("EXPECTED RESULT 2: Should get the Access type");
+            print("ACTUAL RESULT 2: ManagedDevice Access type is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #set enable as true
             tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
             tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedDevices.Enable");
@@ -152,14 +152,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set ManagedDevices Enable status as false";
-                print "EXPECTED RESULT 3: Should set the Enable status as false";
-                print "ACTUAL RESULT 3: ManagedDevices Enable status is %s" %details;
+                print("TEST STEP 3: Set ManagedDevices Enable status as false");
+                print("EXPECTED RESULT 3: Should set the Enable status as false");
+                print("ACTUAL RESULT 3: ManagedDevices Enable status is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
                 tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedDevices.AllowAll");
                 tdkTestObj.addParameter("paramValue","true");
@@ -167,50 +167,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set Access Type to AllowAll";
-                    print "EXPECTED RESULT 4: Should set Access Type to AllowAll";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Set Access Type to AllowAll");
+                    print("EXPECTED RESULT 4: Should set Access Type to AllowAll");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     #add a new device to be blocked
                     tdkTestObj = obj.createTestStep("AdvancedConfig_AddObject");
                     tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedDevices.Device.");
-		    expectedresult="SUCCESS";
+                    expectedresult="SUCCESS";
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "[TEST STEP 5]: Adding new rule for device blocking";
-                        print "[EXPECTED RESULT 5]: Should add new rule";
-                        print "[ACTUAL RESULT 5]:  %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST STEP 5]: Adding new rule for device blocking");
+                        print("[EXPECTED RESULT 5]: Should add new rule");
+                        print("[ACTUAL RESULT 5]:  %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
                         temp = details.split(':');
                         instance1 = temp[1];
                         if (instance1 > 0):
-                            print "INSTANCE VALUE: %s" %instance1
-			    tdkTestObj = obj.createTestStep("AdvancedConfig_SetMultiple");
+                            print("INSTANCE VALUE: %s" %instance1)
+                            tdkTestObj = obj.createTestStep("AdvancedConfig_SetMultiple");
                             tdkTestObj.addParameter("paramList","Device.X_Comcast_com_ParentalControl.ManagedDevices.Device.%s.Type|Allow|string|Device.X_Comcast_com_ParentalControl.ManagedDevices.Device.%s.Description|Comcast|string|Device.X_Comcast_com_ParentalControl.ManagedDevices.Device.%s.MACAddress|BC:30:5B:BF:98:23|string|Device.X_Comcast_com_ParentalControl.ManagedDevices.Device.%s.AlwaysBlock|false|bool" %(instance1, instance1, instance1, instance1));
-			    expectedresult="FAILURE";
+                            expectedresult="FAILURE";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "[TEST STEP 6]: Setting a valid device as device to be blocked"
-                                print "[EXPECTED RESULT 6]: Should not set the device"
-                                print "[ACTUAL RESULT 6]: SUCCESS: %s" %details;
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-			    else:
+                                print("[TEST STEP 6]: Setting a valid device as device to be blocked")
+                                print("[EXPECTED RESULT 6]: Should not set the device")
+                                print("[ACTUAL RESULT 6]: SUCCESS: %s" %details);
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                            else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "[TEST STEP 6]: Setting a valid device as device to be blocked"
-                                print "[EXPECTED RESULT 6]: Should not set the device"
-                                print "[ACTUAL RESULT 6]: SUCCESS: %s" %details;
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                                print("[TEST STEP 6]: Setting a valid device as device to be blocked")
+                                print("[EXPECTED RESULT 6]: Should not set the device")
+                                print("[ACTUAL RESULT 6]: SUCCESS: %s" %details);
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                             #Delete the created table entry
                             tdkTestObj = obj.createTestStep("AdvancedConfig_DelObject");
@@ -218,32 +218,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                             expectedresult = "SUCCESS";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                             details = tdkTestObj.getResultDetails();
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "[TEST STEP ]: Deleting the added rule";
-                                print "[EXPECTED RESULT ]: Should delete the added rule";
-                                print "[ACTUAL RESULT]: %s" %details;
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                                print "Added table is deleted successfully\n"
+                                print("[TEST STEP ]: Deleting the added rule");
+                                print("[EXPECTED RESULT ]: Should delete the added rule");
+                                print("[ACTUAL RESULT]: %s" %details);
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                                print("Added table is deleted successfully\n")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "[TEST STEP ]: Deleting the added rule";
-                                print "[EXPECTED RESULT ]: Should delete the added rule";
-                                print "[ACTUAL RESULT]: %s" %details;
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                                print "Added table could not be deleted\n"
-			else:
-                            print "Wrong instance number";
+                                print("[TEST STEP ]: Deleting the added rule");
+                                print("[EXPECTED RESULT ]: Should delete the added rule");
+                                print("[ACTUAL RESULT]: %s" %details);
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                                print("Added table could not be deleted\n")
+                        else:
+                            print("Wrong instance number");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST STEP 5]: Adding new rule for site blocking";
-                        print "[EXPECTED RESULT 5]: Should add new rule";
-                        print "[ACTUAL RESULT 5]: %s" %details;
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                        print("[TEST STEP 5]: Adding new rule for site blocking");
+                        print("[EXPECTED RESULT 5]: Should add new rule");
+                        print("[ACTUAL RESULT 5]: %s" %details);
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
 
                     #set enable status to its original value
@@ -254,27 +254,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Set ManagedDevices access type as its initial value";
-                        print "EXPECTED RESULT : Should set the access type as its initial value";
-                        print "ACTUAL RESULT : ManagedDevice access type set success"
+                        print("TEST STEP : Set ManagedDevices access type as its initial value");
+                        print("EXPECTED RESULT : Should set the access type as its initial value");
+                        print("ACTUAL RESULT : ManagedDevice access type set success")
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Set ManagedDevices access type as its initial value";
-                        print "EXPECTED RESULT : Should set the access type as its initial value";
-                        print "ACTUAL RESULT : ManagedDevice access type set failed";
+                        print("TEST STEP : Set ManagedDevices access type as its initial value");
+                        print("EXPECTED RESULT : Should set the access type as its initial value");
+                        print("ACTUAL RESULT : ManagedDevice access type set failed");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set ManagedDevices access type as AllowAll";
-                    print "EXPECTED RESULT 4: Should set the access type as AllowAll ";
-                    print "ACTUAL RESULT 4: ManagedDevices access type set failed";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: Set ManagedDevices access type as AllowAll");
+                    print("EXPECTED RESULT 4: Should set the access type as AllowAll ");
+                    print("ACTUAL RESULT 4: ManagedDevices access type set failed");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #set enable status to its original value
                 tdkTestObj = obj.createTestStep('AdvancedConfig_Set');
                 tdkTestObj.addParameter("paramName","Device.X_Comcast_com_ParentalControl.ManagedDevices.Enable");
@@ -283,46 +283,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Set ManagedDevice Enable status as its initial value";
-                    print "EXPECTED RESULT : Should set the Enable status as its initial value";
-                    print "ACTUAL RESULT : ManagedDevice Enable status set success"
+                    print("TEST STEP : Set ManagedDevice Enable status as its initial value");
+                    print("EXPECTED RESULT : Should set the Enable status as its initial value");
+                    print("ACTUAL RESULT : ManagedDevice Enable status set success")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Set ManagedDevice Enable status as its initial value";
-                    print "EXPECTED RESULT : Should set the Enable status as its initial value";
-                    print "ACTUAL RESULT : ManagedDevice Enable status set failed";
+                    print("TEST STEP : Set ManagedDevice Enable status as its initial value");
+                    print("EXPECTED RESULT : Should set the Enable status as its initial value");
+                    print("ACTUAL RESULT : ManagedDevice Enable status set failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set Manageddevice Enable status as true";
-                print "EXPECTED RESULT 3: Should set the Enable status as true";
-                print "ACTUAL RESULT 3: ManagedDevice Enable status set failed";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Set Manageddevice Enable status as true");
+                print("EXPECTED RESULT 3: Should set the Enable status as true");
+                print("ACTUAL RESULT 3: ManagedDevice Enable status set failed");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get ManagedDevice access type";
-            print "EXPECTED RESULT 2: Should get the access type";
-            print "ACTUAL RESULT 2: ManagedDevice access type is %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get ManagedDevice access type");
+            print("EXPECTED RESULT 2: Should get the access type");
+            print("ACTUAL RESULT 2: ManagedDevice access type is %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get ManagedDevice Enable status";
-        print "EXPECTED RESULT 1: Should get the status";
-        print "ACTUAL RESULT 1: Manageddevice Enable status is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get ManagedDevice Enable status");
+        print("EXPECTED RESULT 1: Should get the status");
+        print("ACTUAL RESULT 1: Manageddevice Enable status is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("advancedconfig");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

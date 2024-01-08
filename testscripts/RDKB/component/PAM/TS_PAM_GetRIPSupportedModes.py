@@ -61,7 +61,7 @@
 </xml>
 
 '''
-						#import statement
+                                                #import statement
 import tdklib;
 
 #Test component to be tested
@@ -75,7 +75,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetRIPSupportedModes');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -90,33 +90,29 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-	if ("Send" or "Receive" or "Both" in details) and details:
+        if ("Send" or "Receive" or "Both" in details) and details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the RIP Supported Modes";
-            print "EXPECTED RESULT 1:RIP Supported Modes should be a subset of [Send, Receive, Both]";
-            print "ACTUAL RESULT 1: RIP Supported Modes:%s" %details;
+            print("TEST STEP 1: Retrieve the RIP Supported Modes");
+            print("EXPECTED RESULT 1:RIP Supported Modes should be a subset of [Send, Receive, Both]");
+            print("ACTUAL RESULT 1: RIP Supported Modes:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the RIP Supported Modes";
-            print "EXPECTED RESULT 1:RIP Supported Modes should be a subset of [Send, Receive, Both]";
-            print "ACTUAL RESULT 1: RIP Supported Modes:%s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Retrieve the RIP Supported Modes");
+            print("EXPECTED RESULT 1:RIP Supported Modes should be a subset of [Send, Receive, Both]");
+            print("ACTUAL RESULT 1: RIP Supported Modes:%s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Retrieve the RIP Supported Modes";
-	print "EXPECTED RESULT 1: Should retrieve the RIP Supported Modes";
-	print "ACTUAL RESULT 1: Failed to retrieve the RIP Supported Modes: %s" %details;
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Retrieve the RIP Supported Modes");
+        print("EXPECTED RESULT 1: Should retrieve the RIP Supported Modes");
+        print("ACTUAL RESULT 1: Failed to retrieve the RIP Supported Modes: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

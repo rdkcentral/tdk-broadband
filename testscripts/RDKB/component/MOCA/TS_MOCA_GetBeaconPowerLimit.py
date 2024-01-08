@@ -70,8 +70,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_GetBeaconPowerLimit');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -101,21 +101,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details in List:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the BeaconPowerLimit";
-        print "EXPECTED RESULT 1: Should get the BeaconPowerLimit";
-        print "ACTUAL RESULT 1: BeaconPowerLimit is :%s" %details;
+        print("TEST STEP 1: Get the BeaconPowerLimit");
+        print("EXPECTED RESULT 1: Should get the BeaconPowerLimit");
+        print("ACTUAL RESULT 1: BeaconPowerLimit is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the BeaconPowerLimit";
-        print "EXPECTED RESULT 1: Should get the BeaconPowerLimit";
-        print "ACTUAL RESULT 1: BeaconPowerLimit is :%s" %details;
+        print("TEST STEP 1: Get the BeaconPowerLimit");
+        print("EXPECTED RESULT 1: Should get the BeaconPowerLimit");
+        print("ACTUAL RESULT 1: BeaconPowerLimit is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

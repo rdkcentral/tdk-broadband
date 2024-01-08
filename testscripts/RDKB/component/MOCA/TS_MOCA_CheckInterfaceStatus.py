@@ -73,8 +73,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -87,7 +87,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_CheckInterfaceStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -102,99 +102,99 @@ if "SUCCESS" in loadmodulestatus.upper():
     NoOfClients= tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of connected clients";
-        print "EXPECTED RESULT 1: Should get the number of connected clients";
-        print "ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected clients");
+        print("EXPECTED RESULT 1: Should get the number of connected clients");
+        print("ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_Set');
-	tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
-	tdkTestObj.addParameter("ParamValue","true");
-	tdkTestObj.addParameter("Type","bool");
+        tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
+        tdkTestObj.addParameter("ParamValue","true");
+        tdkTestObj.addParameter("Type","bool");
         expectedresult="SUCCESS";
 
         #Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details= tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable Moca Interface";
-            print "EXPECTED RESULT 2: Should enable Moca Interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Moca Interface");
+            print("EXPECTED RESULT 2: Should enable Moca Interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    tdkTestObj = obj.createTestStep('Mocastub_Get');
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj = obj.createTestStep('Mocastub_Get');
             tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.Status");
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             Status = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
-   	        if int(NoOfClients) == 0:
-		    if "Down" in Status:
-			#Set the result status of execution
-                	tdkTestObj.setResultStatus("SUCCESS");
-                	print "TEST STEP 3: Check if status is Down for standalone setup";
-                	print "EXPECTED RESULT 3:Status should be Down for standalone setup";
-                	print "ACTUAL RESULT 3: %s" %Status;
-                	#Get the result of execution
-                	print "[TEST EXECUTION RESULT] : SUCCESS";
-		    else:
-			#Set the result status of execution
-                        tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3: Check if status is Down for standalone setup";
-                        print "EXPECTED RESULT 3:Status should be Down for standalone setup";
-                        print "ACTUAL RESULT 3: %s" %Status;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-		else:
-		    if "Up" in Status:
+                if int(NoOfClients) == 0:
+                    if "Down" in Status:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 3: Check if status is Up if clients are connected";
-                        print "EXPECTED RESULT 3:Status should be Up if clients are connected";
-                        print "ACTUAL RESULT 3: %s" %Status;
+                        print("TEST STEP 3: Check if status is Down for standalone setup");
+                        print("EXPECTED RESULT 3:Status should be Down for standalone setup");
+                        print("ACTUAL RESULT 3: %s" %Status);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 3: Check if status is Up if clients are connected";
-                        print "EXPECTED RESULT 3:Status should be Up if clients are connected";
-                        print "ACTUAL RESULT 3: %s" %Status;
+                        print("TEST STEP 3: Check if status is Down for standalone setup");
+                        print("EXPECTED RESULT 3:Status should be Down for standalone setup");
+                        print("ACTUAL RESULT 3: %s" %Status);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		#Set the result status of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    if "Up" in Status:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 3: Check if status is Up if clients are connected");
+                        print("EXPECTED RESULT 3:Status should be Up if clients are connected");
+                        print("ACTUAL RESULT 3: %s" %Status);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 3: Check if status is Up if clients are connected");
+                        print("EXPECTED RESULT 3:Status should be Up if clients are connected");
+                        print("ACTUAL RESULT 3: %s" %Status);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the Moca Interface Status";
-                print "EXPECTED RESULT 3:Should get the Moca Interface Status";
-                print "ACTUAL RESULT 3: %s" %Status;
+                print("TEST STEP 3: Get the Moca Interface Status");
+                print("EXPECTED RESULT 3:Should get the Moca Interface Status");
+                print("ACTUAL RESULT 3: %s" %Status);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable Moca Interface";
-            print "EXPECTED RESULT 2: Should enable Moca Interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Moca Interface");
+            print("EXPECTED RESULT 2: Should enable Moca Interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of connected clients";
-        print "EXPECTED RESULT 1: Should get the number of connected clients";
-        print "ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected clients");
+        print("EXPECTED RESULT 1: Should get the number of connected clients");
+        print("ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -87,7 +87,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_GetLastOperFreq');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -104,11 +104,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the channel selection mode";
-        print "EXPECTED RESULT 1: Should get the channel selection mode";
-        print "ACTUAL RESULT 1: The channel selection mode is :%s" %ScanMode;
+        print("TEST STEP 1: Get the channel selection mode");
+        print("EXPECTED RESULT 1: Should get the channel selection mode");
+        print("ACTUAL RESULT 1: The channel selection mode is :%s" %ScanMode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_Get');
         tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.CurrentOperFreq");
         expectedresult="SUCCESS";
@@ -121,11 +121,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the current operating frequency";
-            print "EXPECTED RESULT 2: Should get the current operating frequency";
-            print "ACTUAL RESULT 2: The current operating frequency is :%s" %Curr_Freq;
+            print("TEST STEP 2: Get the current operating frequency");
+            print("EXPECTED RESULT 2: Should get the current operating frequency");
+            print("ACTUAL RESULT 2: The current operating frequency is :%s" %Curr_Freq);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('Mocastub_Get');
             tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.FreqCurrentMaskSetting");
             expectedresult="SUCCESS";
@@ -138,11 +138,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the current frequency mask";
-                print "EXPECTED RESULT 3: Should get the current frequency mask";
-                print "ACTUAL RESULT 3: The current operating frequency is :%s" %Freq_Mask;
+                print("TEST STEP 3: Get the current frequency mask");
+                print("EXPECTED RESULT 3: Should get the current frequency mask");
+                print("ACTUAL RESULT 3: The current operating frequency is :%s" %Freq_Mask);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj.createTestStep('Mocastub_Set');
                 tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.X_CISCO_COM_ChannelScanning");
                 tdkTestObj.addParameter("ParamValue","false");
@@ -156,11 +156,11 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set the channel selection mode";
-                    print "EXPECTED RESULT 4: Should set channel selection mode as false";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Set the channel selection mode");
+                    print("EXPECTED RESULT 4: Should set channel selection mode as false");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     tdkTestObj = obj.createTestStep('Mocastub_Set');
                     tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.FreqCurrentMaskSetting");
                     if "0000000000010000" in Freq_Mask:
@@ -178,11 +178,11 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Set the current frequency mask";
-                        print "EXPECTED RESULT 5: Should set current frequency mask";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Set the current frequency mask");
+                        print("EXPECTED RESULT 5: Should set current frequency mask");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         tdkTestObj = obj.createTestStep('Mocastub_Get');
                         tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.LastOperFreq");
                         expectedresult="SUCCESS";
@@ -195,27 +195,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                         if expectedresult in actualresult and int(Curr_Freq) == int(Last_Freq):
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Get the last operating frequency and check with previous frequency";
-                            print "EXPECTED RESULT 6: Last operating frequency must be previous operating frequency";
-                            print "ACTUAL RESULT 6: The previous operating frequency and last operating frequency are :%s and %s" %(Curr_Freq,Last_Freq);
+                            print("TEST STEP 6: Get the last operating frequency and check with previous frequency");
+                            print("EXPECTED RESULT 6: Last operating frequency must be previous operating frequency");
+                            print("ACTUAL RESULT 6: The previous operating frequency and last operating frequency are :%s and %s" %(Curr_Freq,Last_Freq));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Get the last operating frequency and check with previous frequency";
-                            print "EXPECTED RESULT 6: Last operating frequency must be previous operating frequency";
-                            print "ACTUAL RESULT 6: The previous operating frequency and last operating frequency are :%s and %s" %(Curr_Freq,Last_Freq);
+                            print("TEST STEP 6: Get the last operating frequency and check with previous frequency");
+                            print("EXPECTED RESULT 6: Last operating frequency must be previous operating frequency");
+                            print("ACTUAL RESULT 6: The previous operating frequency and last operating frequency are :%s and %s" %(Curr_Freq,Last_Freq));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Set the current frequency mask";
-                        print "EXPECTED RESULT 5: Should set current frequency mask";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Set the current frequency mask");
+                        print("EXPECTED RESULT 5: Should set current frequency mask");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                     #set default frequency mask
                     tdkTestObj = obj.createTestStep('Mocastub_Set');
                     tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.FreqCurrentMaskSetting");
@@ -230,27 +230,27 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Set the current frequency mask";
-                        print "EXPECTED RESULT : Should set current frequency mask";
-                        print "ACTUAL RESULT : %s" %details;
+                        print("TEST STEP : Set the current frequency mask");
+                        print("EXPECTED RESULT : Should set current frequency mask");
+                        print("ACTUAL RESULT : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Set the current frequency mask";
-                        print "EXPECTED RESULT : Should set current frequency mask";
-                        print "ACTUAL RESULT : %s" %details;
+                        print("TEST STEP : Set the current frequency mask");
+                        print("EXPECTED RESULT : Should set current frequency mask");
+                        print("ACTUAL RESULT : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set the channel selection mode";
-                    print "EXPECTED RESULT 4: Should set channel selection mode as false";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Set the channel selection mode");
+                    print("EXPECTED RESULT 4: Should set channel selection mode as false");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #set default channel selection mode
                 tdkTestObj = obj.createTestStep('Mocastub_Set');
                 tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.X_CISCO_COM_ChannelScanning");
@@ -265,46 +265,45 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Set the channel selection mode";
-                    print "EXPECTED RESULT : Should set channel selection mode as false";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP : Set the channel selection mode");
+                    print("EXPECTED RESULT : Should set channel selection mode as false");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Set the channel selection mode";
-                    print "EXPECTED RESULT : Should set channel selection mode as false";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP : Set the channel selection mode");
+                    print("EXPECTED RESULT : Should set channel selection mode as false");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the current frequency mask";
-                print "EXPECTED RESULT 3: Should get the current frequency mask";
-                print "ACTUAL RESULT 3: The current operating frequency is :%s" %_Freq_Mask;
+                print("TEST STEP 3: Get the current frequency mask");
+                print("EXPECTED RESULT 3: Should get the current frequency mask");
+                print("ACTUAL RESULT 3: The current operating frequency is :%s" %_Freq_Mask);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the current operating frequency";
-            print "EXPECTED RESULT 2: Should get the current operating frequency";
-            print "ACTUAL RESULT 2: The current operating frequency is :%s" %Curr_Freq;
+            print("TEST STEP 2: Get the current operating frequency");
+            print("EXPECTED RESULT 2: Should get the current operating frequency");
+            print("ACTUAL RESULT 2: The current operating frequency is :%s" %Curr_Freq);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the channel selection mode";
-        print "EXPECTED RESULT 1: Should get the channel selection mode";
-        print "ACTUAL RESULT 1: The channel selection mode is :%s" %ScanMode;
+        print("TEST STEP 1: Get the channel selection mode");
+        print("EXPECTED RESULT 1: Should get the channel selection mode");
+        print("ACTUAL RESULT 1: The channel selection mode is :%s" %ScanMode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("moca");
 else:
-    print "Failed to load moca module";
+    print("Failed to load moca module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

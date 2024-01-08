@@ -85,8 +85,8 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     step = 1;
     for index in range(1,3):
-        print "\n***************For radio index : %d*********************" %index;
-        print "\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was able to transmit or receive Wi-Fi packets" %index;
+        print("\n***************For radio index : %d*********************" %index);
+        print("\nGet the value of Device.WiFi.Radio.%d.Stats.X_RDKCENTRAL-COM_AF - Percentage of time that the radio was able to transmit or receive Wi-Fi packets" %index);
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         param = "Device.WiFi.Radio." + str(index) + ".Stats.X_RDKCENTRAL-COM_AF";
         tdkTestObj.addParameter("ParamName",param);
@@ -95,46 +95,45 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Get the Activity Factor from %s" %(step,param);
-        print "EXPECTED RESULT %d: Should get the value of %s" %(step,param);
-        print "Details : %s" %details;
+        print("\nTEST STEP %d: Get the Activity Factor from %s" %(step,param));
+        print("EXPECTED RESULT %d: Should get the value of %s" %(step,param));
+        print("Details : %s" %details);
 
         if expectedresult in actualresult and details != "":
             ActivityFactor = int(details);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor);
+            print("ACTUAL RESULT %d: The value is : %d" %(step,ActivityFactor));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             step = step + 1;
             #Check if the AF is in the range 0 to 100
-            print "\nTEST STEP %d: Check if the Activity Factor is in the range [0,100]" %step;
-            print "EXPECTED RESULT %d: Should get Activity Factor in the range [0,100]" %step;
+            print("\nTEST STEP %d: Check if the Activity Factor is in the range [0,100]" %step);
+            print("EXPECTED RESULT %d: Should get Activity Factor in the range [0,100]" %step);
 
             if ActivityFactor >= 0 and ActivityFactor <= 100:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The value is within the expected range" %step;
+                print("ACTUAL RESULT %d: The value is within the expected range" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: The value is not within the expected range" %step;
+                print("ACTUAL RESULT %d: The value is not within the expected range" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Failed to get the value" %step;
+            print("ACTUAL RESULT %d: Failed to get the value" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         step = step + 1;
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

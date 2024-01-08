@@ -86,8 +86,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_ToggleRabidCheckErrorOn_AdvSec.py');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -104,15 +104,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DeviceFingerPrint Enable status";
-        print "EXPECTED RESULT 1: Should get the  DeviceFingerPrint Enable status"
-        print "ACTUAL RESULT 1: DeviceFingerPrint Enable status :%s" %orgValue;
+        print("TEST STEP 1: Get the DeviceFingerPrint Enable status");
+        print("EXPECTED RESULT 1: Should get the  DeviceFingerPrint Enable status")
+        print("ACTUAL RESULT 1: DeviceFingerPrint Enable status :%s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         if orgValue == "true":
             #check whether the process is running or not
             query="sh %s/tdk_platform_utility.sh checkProcess cujo-agent" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -121,11 +121,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and pid:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Check if cujo-agent process is running";
-                print "EXPECTED RESUT 2: Should get the PID of cujo-agent if process is running";
-                print "ACTUAL RESULT 2: PID of cujo-agent process %s" %pid;
+                print("TEST STEP 2:Check if cujo-agent process is running");
+                print("EXPECTED RESUT 2: Should get the PID of cujo-agent if process is running");
+                print("ACTUAL RESULT 2: PID of cujo-agent process %s" %pid);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj1.createTestStep('ExecuteCmd');
                 cmd = "grep -rin \"can't remove '/tmp/advsec_cloud_ipv4':\" /rdklogs/logs/";
@@ -136,30 +136,30 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and details =="":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3 : Check if log message regarding advsec_cloud is logged";
-                    print "EXPECTED RESULT 3:log meessage regarding advsec_cloud should not be logged";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3 : Check if log message regarding advsec_cloud is logged");
+                    print("EXPECTED RESULT 3:log meessage regarding advsec_cloud should not be logged");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3 : Check if log message regarding advsec_cloud is logged";
-                    print "EXPECTED RESULT 3:log meessage regarding advsec_cloud should not be logged";
-                    print "ACTUAL RESULT 3: %s" %details;
+                    print("TEST STEP 3 : Check if log message regarding advsec_cloud is logged");
+                    print("EXPECTED RESULT 3:log meessage regarding advsec_cloud should not be logged");
+                    print("ACTUAL RESULT 3: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Check if cujo-agent process is running";
-                print "EXPECTED RESULT 2: cujo-agent process should be running";
-                print "ACTUAL RESULT 2: cujo-agent process is not running";
+                print("TEST STEP 2:Check if cujo-agent process is running");
+                print("EXPECTED RESULT 2: cujo-agent process should be running");
+                print("ACTUAL RESULT 2: cujo-agent process is not running");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #check whether the process is running or not
             query="sh %s/tdk_platform_utility.sh checkProcess cujo-agent" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -168,11 +168,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and pid == "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Check if cujo-agent process is not running";
-                print "EXPECTED RESULT 2: cujo-agent process should not be running";
-                print "ACTUAL RESULT 2: cujo-agent process is not running";
+                print("TEST STEP 2:Check if cujo-agent process is not running");
+                print("EXPECTED RESULT 2: cujo-agent process should not be running");
+                print("ACTUAL RESULT 2: cujo-agent process is not running");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj.createTestStep('pam_SetParameterValues');
                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable");
                 tdkTestObj.addParameter("ParamValue","true");
@@ -184,22 +184,22 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Enable the DeviceFingerPrint";
-                    print "EXPECTED RESULT 3: Should Enable the DeviceFingerPrint";
-                    print "ACTUAL RESULT 3:%s" %details;
+                    print("TEST STEP 3: Enable the DeviceFingerPrint");
+                    print("EXPECTED RESULT 3: Should Enable the DeviceFingerPrint");
+                    print("ACTUAL RESULT 3:%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     #check whether the process is running or not
                     query="sh %s/tdk_platform_utility.sh checkProcess cujo-agent" %TDK_PATH
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj = obj1.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", query)
                     expectedresult="SUCCESS";
                     tdkTestObj.executeTestCase("SUCCESS");
                     actualresult = tdkTestObj.getResult();
                     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                    print "Check for every 10 secs whether the process is up"
+                    print("Check for every 10 secs whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -212,11 +212,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             retryCount = retryCount + 1;
                     if expectedresult in actualresult and pid:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4:Check if cujo-agent process is running";
-                        print "EXPECTED RESULT 4: cujo-agent process should be running";
-                        print "ACTUAL RESULT4: cujo-agent process is running with PID:%s" %pid;
+                        print("TEST STEP 4:Check if cujo-agent process is running");
+                        print("EXPECTED RESULT 4: cujo-agent process should be running");
+                        print("ACTUAL RESULT4: cujo-agent process is running with PID:%s" %pid);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         tdkTestObj = obj1.createTestStep('ExecuteCmd');
                         cmd = "grep -rin \"can't remove '/tmp/advsec_cloud_ipv4':\" /rdklogs/logs/";
@@ -227,39 +227,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                         if expectedresult in actualresult and details =="":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5 : Check if log message regarding advsec_cloud is logged";
-                            print "EXPECTED RESULT 5:log meessage regarding advsec_cloud should not be logged";
-                            print "ACTUAL RESULT 5: %s" %details;
+                            print("TEST STEP 5 : Check if log message regarding advsec_cloud is logged");
+                            print("EXPECTED RESULT 5:log meessage regarding advsec_cloud should not be logged");
+                            print("ACTUAL RESULT 5: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5 : Check if log message regarding advsec_cloud is logged";
-                            print "EXPECTED RESULT 5:log meessage regarding advsec_cloud should not be logged";
-                            print "ACTUAL RESULT 5: %s" %details;
+                            print("TEST STEP 5 : Check if log message regarding advsec_cloud is logged");
+                            print("EXPECTED RESULT 5:log meessage regarding advsec_cloud should not be logged");
+                            print("ACTUAL RESULT 5: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4:Check if cujo-agent process is running";
-                        print "EXPECTED RESULT 4: cujo-agent process should be running";
-                        print "ACTUAL RESULT 4: cujo-agent process is not running";
+                        print("TEST STEP 4:Check if cujo-agent process is running");
+                        print("EXPECTED RESULT 4: cujo-agent process should be running");
+                        print("ACTUAL RESULT 4: cujo-agent process is not running");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Enable the DeviceFingerPrint";
-                    print "EXPECTED RESULT 3:Should Enable the Device Finger Print ";
-                    print "ACTUAL RESULT 3:%s" %details;
+                    print("TEST STEP 3: Enable the DeviceFingerPrint");
+                    print("EXPECTED RESULT 3:Should Enable the Device Finger Print ");
+                    print("ACTUAL RESULT 3:%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Check if cujo-agent process is not running";
-                print "EXPECTED RESULT 2: cujo-agent process shoul not be running";
-                print "ACTUAL RESULT 2: cujo-agent process is running";
+                print("TEST STEP 2:Check if cujo-agent process is not running");
+                print("EXPECTED RESULT 2: cujo-agent process shoul not be running");
+                print("ACTUAL RESULT 2: cujo-agent process is running");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable");
@@ -272,29 +272,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 6:Revert the DeviceFingerPrint enable status";
-            print "EXPECTED RESULT 6: Revert operation should be suceess";
-            print "ACTUAL RESULT 6:%s" %details;
+            print("TEST STEP 6:Revert the DeviceFingerPrint enable status");
+            print("EXPECTED RESULT 6: Revert operation should be suceess");
+            print("ACTUAL RESULT 6:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 6:Revert the DeviceFingerPrint enable status";
-            print "EXPECTED RESULT 6: Revert operation should be suceess";
-            print "ACTUAL RESULT8 6:%s" %details;
+            print("TEST STEP 6:Revert the DeviceFingerPrint enable status");
+            print("EXPECTED RESULT 6: Revert operation should be suceess");
+            print("ACTUAL RESULT8 6:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DeviceFingerPrint Enable status";
-        print "EXPECTEE RESULT 1: Should get the DeviceFingerPrint Enable status";
-        print "ACTUAL RESULT 1: Failed to get DeviceFingerPrint Enable status";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the DeviceFingerPrint Enable status");
+        print("EXPECTEE RESULT 1: Should get the DeviceFingerPrint Enable status");
+        print("ACTUAL RESULT 1: Failed to get DeviceFingerPrint Enable status");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
     obj1.unloadModule("sysutil");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

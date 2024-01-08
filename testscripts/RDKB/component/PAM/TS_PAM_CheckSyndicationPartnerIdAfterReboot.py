@@ -101,7 +101,7 @@ setValue = "unknown"
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 
 if "SUCCESS" in loadmodulestatus.upper():
@@ -119,10 +119,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of Syndication PartnerId";
-        print "ACTUAL RESULT 1: Syndication PartnerId :%s" %orgValue;
+        print("TEST STEP 1: Get the value of Syndication PartnerId");
+        print("ACTUAL RESULT 1: Syndication PartnerId :%s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         tdkTestObj = obj.createTestStep("pam_Setparams");
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId");
         tdkTestObj.addParameter("ParamValue",setValue);
@@ -134,10 +134,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the value for Syndication PartnerId";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value for Syndication PartnerId");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             #save device's current state before it goes for reboot
             obj.saveCurrentState();
             tdkTestObj = obj.createTestStep("pam_Setparams");
@@ -150,10 +150,10 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Activate the Syndication PartnerId";
-                print "ACTUAL RESULT 3:%s" %details;
+                print("TEST STEP 3: Activate the Syndication PartnerId");
+                print("ACTUAL RESULT 3:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
                 #Restore the device state saved before reboot
                 obj.restorePreviousStateAfterReboot();
                 time.sleep(60);
@@ -169,10 +169,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult and setValue in details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the value of Syndication PartnerId after activating partner ID";
-                    print "ACTUAL RESULT 4: Syndication PartnerId :%s" %details;
+                    print("TEST STEP 4: Get the value of Syndication PartnerId after activating partner ID");
+                    print("ACTUAL RESULT 4: Syndication PartnerId :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                     #rebooting the device
                     obj.initiateReboot();
                     time.sleep(300)
@@ -187,30 +187,30 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult and setValue in details:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Get the value of Syndication PartnerId after reboot";
-                        print "ACTUAL RESULT 5: Syndication PartnerId persists on reboot";
+                        print("TEST STEP 5: Get the value of Syndication PartnerId after reboot");
+                        print("ACTUAL RESULT 5: Syndication PartnerId persists on reboot");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Get the value of Syndication PartnerId after reboot";
-                        print "ACTUAL RESULT 5: Syndication PartnerId does not persist on reboot";
+                        print("TEST STEP 5: Get the value of Syndication PartnerId after reboot");
+                        print("ACTUAL RESULT 5: Syndication PartnerId does not persist on reboot");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE"
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the value of Syndication PartnerId after activating partner ID";
-                    print "ACTUAL RESULT 4: Syndication PartnerId :%s" %details;
+                    print("TEST STEP 4: Get the value of Syndication PartnerId after activating partner ID");
+                    print("ACTUAL RESULT 4: Syndication PartnerId :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Activate the Syndication PartnerId";
-                print "ACTUAL RESULT 3:%s" %details;
+                print("TEST STEP 3: Activate the Syndication PartnerId");
+                print("ACTUAL RESULT 3:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
             tdkTestObj = obj.createTestStep("pam_Setparams");
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId");
             tdkTestObj.addParameter("ParamValue",orgValue);
@@ -222,10 +222,10 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP :Revert value for Syndication PartnerId";
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP :Revert value for Syndication PartnerId");
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
                 #save device's current state before it goes for reboot
                 obj.saveCurrentState();
                 tdkTestObj = obj.createTestStep("pam_Setparams");
@@ -239,37 +239,36 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Activate the Syndication PartnerId";
-                    print "ACTUAL RESULT :%s" %details;
+                    print("TEST STEP : Activate the Syndication PartnerId");
+                    print("ACTUAL RESULT :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Activate the Syndication PartnerId";
-                    print "ACTUAL RESULT :%s" %details;
+                    print("TEST STEP : Activate the Syndication PartnerId");
+                    print("ACTUAL RESULT :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP :Revert value for Syndication PartnerId";
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP :Revert value for Syndication PartnerId");
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the value for Syndication PartnerId";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value for Syndication PartnerId");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of Syndication PartnerId";
-        print "ACTUAL RESULT 1: Failed to get Syndication PartnerId";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the value of Syndication PartnerId");
+        print("ACTUAL RESULT 1: Failed to get Syndication PartnerId");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

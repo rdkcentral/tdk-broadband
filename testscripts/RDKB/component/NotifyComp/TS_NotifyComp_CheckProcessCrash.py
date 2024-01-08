@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     #check whether the process is running or not
     query="sh %s/tdk_platform_utility.sh checkProcess notify_comp" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -101,11 +101,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
     if expectedresult in actualresult and pid:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Check notify_comp process";
-        print "EXPECTED RESULT 1: notify_comp process should be running";
-        print "ACTUAL RESULT 1: PID of notify_comp %s" %pid;
+        print("TEST STEP 1:Check notify_comp process");
+        print("EXPECTED RESULT 1: notify_comp process should be running");
+        print("ACTUAL RESULT 1: PID of notify_comp %s" %pid);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
         tdkTestObj.addParameter("ParamName","Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client");
@@ -118,7 +118,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         #check whether the process is running or not
         query="sh %s/tdk_platform_utility.sh checkProcess notify_comp" %TDK_PATH
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query)
         tdkTestObj.executeTestCase("SUCCESS");
@@ -126,43 +126,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult2 = tdkTestObj.getResult();
         if expectedresult in actualresult2 and newpid:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Check notify_comp process after setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false";
-            print "EXPECTED RESULT 2: notify_comp process should be running";
-            print "ACTUAL RESULT 2: PID of notify_comp %s" %newpid;
+            print("TEST STEP 2:Check notify_comp process after setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false");
+            print("EXPECTED RESULT 2: notify_comp process should be running");
+            print("ACTUAL RESULT 2: PID of notify_comp %s" %newpid);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             if expectedresult not in actualresult1:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false returns failure";
-                print "EXPECTED RESULT 3: setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false should return failure";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3:Check if setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false returns failure");
+                print("EXPECTED RESULT 3: setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false should return failure");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check if setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false returns failure";
-                print "EXPECTED RESULT 3: setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false should return failure";
-                print "ACTUAL RESULT 3: Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client is set to false ";
+                print("TEST STEP 3:Check if setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false returns failure");
+                print("EXPECTED RESULT 3: setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false should return failure");
+                print("ACTUAL RESULT 3: Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client is set to false ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Check notify_comp process after setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false";
-            print "EXPECTED RESULT 2: notify_comp process should be running";
-            print "ACTUAL RESULT 2:notify_comp is not running" ;
+            print("TEST STEP 2:Check notify_comp process after setting Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to false");
+            print("EXPECTED RESULT 2: notify_comp process should be running");
+            print("ACTUAL RESULT 2:notify_comp is not running") ;
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Check notify_comp process";
-        print "EXPECTED RESULT 1: notify_comp process should be running";
-        print "ACTUAL RESULT 1: notify_comp process is not running";
+        print("TEST STEP 1:Check notify_comp process");
+        print("EXPECTED RESULT 1: notify_comp process should be running");
+        print("ACTUAL RESULT 1: notify_comp process is not running");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

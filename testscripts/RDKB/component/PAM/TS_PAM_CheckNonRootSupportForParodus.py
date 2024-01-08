@@ -113,99 +113,99 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     details  = tdkTestObj_Tr181_Get.getResultDetails();
 
     if expectedresult  in actualresult :
-       print "TEST STEP 1: Get NonRootSupport enabled  Status";
-       print "EXPECTED RESULT 1:Should get the NonRootSupport enabled Status";
-       print "ACTUAL RESULT 1: %s" %details;
-       print "[TEST EXECUTION RESULT] :SUCCESS";
-       tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-       if details == "true":
-          print "TEST STEP 2: Check  if NonRootSupport is enabled ";
-          print "EXPECTED RESULT 2:NonRootSupport should be enabled ";
-          print "ACTUAL RESULT 2: %s" %details;
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get NonRootSupport enabled  Status");
+        print("EXPECTED RESULT 1:Should get the NonRootSupport enabled Status");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] :SUCCESS");
+        tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+        if details == "true":
+            print("TEST STEP 2: Check  if NonRootSupport is enabled ");
+            print("EXPECTED RESULT 2:NonRootSupport should be enabled ");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
-          cmd = "ps  | grep -i \"parodus\" | grep -v \"grep\"";
-          tdkTestObj_Sys_ExeCmd.addParameter("command",cmd);
-          tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
-          actualresult = tdkTestObj_Sys_ExeCmd.getResult();
-          details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
+            cmd = "ps  | grep -i \"parodus\" | grep -v \"grep\"";
+            tdkTestObj_Sys_ExeCmd.addParameter("command",cmd);
+            tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
+            actualresult = tdkTestObj_Sys_ExeCmd.getResult();
+            details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
 
-          if expectedresult  in actualresult and details!= "" and "parodus" in details:
-             print "TEST STEP 3: Get the parodus proccess details";
-             print "EXPECTED RESULT 3:  Should get the parodus proccess details";
-             print "ACTUAL RESULT 3: %s" %details;
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-
-             userType =  details.split(" ")[1].strip().replace("\\n","");
-             if userType == "non-root":
-                print "TEST STEP 4: Check if the user-type is non-root";
-                print "EXPECTED RESULT 4: Should get the user type as non-root";
-                print "ACTUAL RESULT 4: %s" %userType;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult  in actualresult and details!= "" and "parodus" in details:
+                print("TEST STEP 3: Get the parodus proccess details");
+                print("EXPECTED RESULT 3:  Should get the parodus proccess details");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-             else:
-                 print "TEST STEP 4: Check if the user-type is non-root";
-                 print "EXPECTED RESULT 4: Should get the user type as non-root";
-                 print "ACTUAL RESULT 4: %s" %userType;
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-          else:
-              print "TEST STEP 3: Get the parodus proccess details ";
-              print "EXPECTED RESULT 3:  Should get the parodus proccess details";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : FAILURE";
-              tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-       else:
-           print "TEST STEP 2: Check  if NonRootSupport is diabled ";
-           print "EXPECTED RESULT 2:NonRootSupport should be disabled ";
-           print "ACTUAL RESULT 2: %s" %details;
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-           tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
-           cmd = "ps  | grep -i \"parodus\" | grep -v \"grep\"";
-           tdkTestObj_Sys_ExeCmd.addParameter("command",cmd);
-           tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
-           actualresult = tdkTestObj_Sys_ExeCmd.getResult();
-           details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
+                userType =  details.split(" ")[1].strip().replace("\\n","");
+                if userType == "non-root":
+                    print("TEST STEP 4: Check if the user-type is non-root");
+                    print("EXPECTED RESULT 4: Should get the user type as non-root");
+                    print("ACTUAL RESULT 4: %s" %userType);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+                else:
+                    print("TEST STEP 4: Check if the user-type is non-root");
+                    print("EXPECTED RESULT 4: Should get the user type as non-root");
+                    print("ACTUAL RESULT 4: %s" %userType);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 3: Get the parodus proccess details ");
+                print("EXPECTED RESULT 3:  Should get the parodus proccess details");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 2: Check  if NonRootSupport is diabled ");
+            print("EXPECTED RESULT 2:NonRootSupport should be disabled ");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
-           if expectedresult  in actualresult and details!= "" and "parodus" in details:
-              print "TEST STEP 3: Get the parodus proccess details";
-              print "EXPECTED RESULT 3:  Should get the parodus proccess details";
-              print "ACTUAL RESULT 3: %s" %details;
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-              tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+            cmd = "ps  | grep -i \"parodus\" | grep -v \"grep\"";
+            tdkTestObj_Sys_ExeCmd.addParameter("command",cmd);
+            tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
+            actualresult = tdkTestObj_Sys_ExeCmd.getResult();
+            details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
 
-              userType =  details.split(" ")[1].strip().replace("\\n","");
-              if userType == "root":
-                 print "TEST STEP 4: Check if the user-type is root";
-                 print "EXPECTED RESULT 4: Should get the user type as root";
-                 print "ACTUAL RESULT 4: %s" %userType;
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-              else:
-                  print "TEST STEP 4: Check if the user-type is root";
-                  print "EXPECTED RESULT 4: Should get the user type as root";
-                  print "ACTUAL RESULT 4: %s" %userType;
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-                  tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-           else:
-               print "TEST STEP 3: Get the parodus proccess details ";
-               print "EXPECTED RESULT 3:  Should get the parodus proccess details";
-               print "ACTUAL RESULT 3: %s" %details;
-               print "[TEST EXECUTION RESULT] : FAILURE";
-               tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
+            if expectedresult  in actualresult and details!= "" and "parodus" in details:
+                print("TEST STEP 3: Get the parodus proccess details");
+                print("EXPECTED RESULT 3:  Should get the parodus proccess details");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+
+                userType =  details.split(" ")[1].strip().replace("\\n","");
+                if userType == "root":
+                    print("TEST STEP 4: Check if the user-type is root");
+                    print("EXPECTED RESULT 4: Should get the user type as root");
+                    print("ACTUAL RESULT 4: %s" %userType);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+                else:
+                    print("TEST STEP 4: Check if the user-type is root");
+                    print("EXPECTED RESULT 4: Should get the user type as root");
+                    print("ACTUAL RESULT 4: %s" %userType);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 3: Get the parodus proccess details ");
+                print("EXPECTED RESULT 3:  Should get the parodus proccess details");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1: Get NonRootSupport enabled  Status";
-        print "EXPECTED RESULT 1:Should get the NonRootSupport enabled Status";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get NonRootSupport enabled  Status");
+        print("EXPECTED RESULT 1:Should get the NonRootSupport enabled Status");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

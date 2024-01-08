@@ -93,7 +93,7 @@ setValue = "test-partner"
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     #Set the result status of execution
@@ -108,15 +108,15 @@ if "SUCCESS" in loadmodulestatus.upper() :
     actualresult = tdkTestObj.getResult();
     orgValue = tdkTestObj.getResultDetails().strip();
 
-    print "\nTEST STEP 1 : Get the value of Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId";
-    print "EXPECTED RESULT 1 : Syndication Partner ID should be retrieved successfully";
+    print("\nTEST STEP 1 : Get the value of Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId");
+    print("EXPECTED RESULT 1 : Syndication Partner ID should be retrieved successfully");
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1 : GET operation success; Syndication Partner ID : %s" %orgValue;
+        print("ACTUAL RESULT 1 : GET operation success; Syndication Partner ID : %s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #Set to new Partner ID
         tdkTestObj = obj.createTestStep('pam_Setparams');
@@ -128,14 +128,14 @@ if "SUCCESS" in loadmodulestatus.upper() :
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
 
-        print "\nTEST STEP 2 : Set the value for Syndication PartnerId to %s using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId" %setValue;
-        print "EXPECTED RESULT 2 : New syndication Partner ID should be set successfully";
+        print("\nTEST STEP 2 : Set the value for Syndication PartnerId to %s using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId" %setValue);
+        print("EXPECTED RESULT 2 : New syndication Partner ID should be set successfully");
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2 : SET operation success; Details : %s" %details;
+            print("ACTUAL RESULT 2 : SET operation success; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             #save device's current state before it goes for reboot when Partner ID is activated
             obj.saveCurrentState();
@@ -148,15 +148,15 @@ if "SUCCESS" in loadmodulestatus.upper() :
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
 
-            print "\nTEST STEP 3 : Activate the Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ActivatePartnerId";
-            print "EXPECTED RESULT 3 : New Syndication Partner ID should be activated successfully"
+            print("\nTEST STEP 3 : Activate the Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ActivatePartnerId");
+            print("EXPECTED RESULT 3 : New Syndication Partner ID should be activated successfully")
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3 : SET operation success; Details : %s" %details;
+                print("ACTUAL RESULT 3 : SET operation success; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
-                print "Device going for a reboot....";
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("Device going for a reboot....");
                 obj.restorePreviousStateAfterReboot();
 
                 #Check the new syndication Partner ID
@@ -168,17 +168,17 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip();
 
-                print "\nTEST STEP 4: Get the set value of Syndication Partner ID after activating the partner ID";
-                print "EXPECTED RESULT 4 : The syndication Partner ID should be the same as the set value after activation";
-                print "Syndication Partner ID set : %s" %setValue;
-                print "Syndication Partner ID after activation : %s" %details;
+                print("\nTEST STEP 4: Get the set value of Syndication Partner ID after activating the partner ID");
+                print("EXPECTED RESULT 4 : The syndication Partner ID should be the same as the set value after activation");
+                print("Syndication Partner ID set : %s" %setValue);
+                print("Syndication Partner ID after activation : %s" %details);
 
                 if expectedresult in actualresult and setValue == details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: GET operation success; Syndication PartnerId :%s" %details;
+                    print("ACTUAL RESULT 4: GET operation success; Syndication PartnerId :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     #Restore the device state saved before reboot
                     obj.saveCurrentState();
@@ -192,15 +192,15 @@ if "SUCCESS" in loadmodulestatus.upper() :
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 5: Initiate factory reset";
-                    print "EXPECTED RESULT 5 : DUT should be factory resetted successfully";
+                    print("\nTEST STEP 5: Initiate factory reset");
+                    print("EXPECTED RESULT 5 : DUT should be factory resetted successfully");
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5: Details : %s" %details;
+                        print("ACTUAL RESULT 5: Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         #Restore the device state saved before reboot
                         obj.restorePreviousStateAfterReboot();
 
@@ -213,27 +213,27 @@ if "SUCCESS" in loadmodulestatus.upper() :
                         actualresult = tdkTestObj.getResult();
                         new_partner = tdkTestObj.getResultDetails().strip();
 
-                        print "\nTEST STEP 6: Get the value of Syndication Partner ID after factory reset";
-                        print "EXPECTED RESULT 6 : The Syndication Partner ID should be retrived after factory reset";
+                        print("\nTEST STEP 6: Get the value of Syndication Partner ID after factory reset");
+                        print("EXPECTED RESULT 6 : The Syndication Partner ID should be retrived after factory reset");
 
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6: GET operation success; Syndication PartnerId :%s" %new_partner;
+                            print("ACTUAL RESULT 6: GET operation success; Syndication PartnerId :%s" %new_partner);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            print "\nTEST STEP 7 : Check if the current Syndication Partner ID is the same as the test partner ID set";
-                            print "EXPECTED RESULT 7 : The current Syndication Partner ID should be the same as the test partner ID set";
-                            print "Test Partner ID Set : %s" %setValue;
-                            print "Current Syndication Partner ID : %s" %new_partner;
+                            print("\nTEST STEP 7 : Check if the current Syndication Partner ID is the same as the test partner ID set");
+                            print("EXPECTED RESULT 7 : The current Syndication Partner ID should be the same as the test partner ID set");
+                            print("Test Partner ID Set : %s" %setValue);
+                            print("Current Syndication Partner ID : %s" %new_partner);
 
                             if new_partner == setValue:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 7: The Syndication Test Partner ID set is reflected in get";
+                                print("ACTUAL RESULT 7: The Syndication Test Partner ID set is reflected in get");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS"
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                 #Revert operation
                                 tdkTestObj = obj.createTestStep("pam_Setparams");
@@ -245,14 +245,14 @@ if "SUCCESS" in loadmodulestatus.upper() :
                                 actualresult = tdkTestObj.getResult();
                                 details = tdkTestObj.getResultDetails();
 
-                                print "\nTEST STEP 8 : Revert the Syndication Partner ID to initial value : %s" %orgValue;
-                                print "EXPECTED RESULT 8 : Should revert the Syndication partner ID to %s successfully" %orgValue;
+                                print("\nTEST STEP 8 : Revert the Syndication Partner ID to initial value : %s" %orgValue);
+                                print("EXPECTED RESULT 8 : Should revert the Syndication partner ID to %s successfully" %orgValue);
 
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT 8 : SET operation success; Details : %s" %details;
+                                    print("ACTUAL RESULT 8 : SET operation success; Details : %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                     #save device's current state before it goes for reboot
                                     obj.saveCurrentState();
@@ -265,67 +265,67 @@ if "SUCCESS" in loadmodulestatus.upper() :
                                     actualresult = tdkTestObj.getResult();
                                     details = tdkTestObj.getResultDetails();
 
-                                    print "\nTEST STEP 9 : Activate the Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ActivatePartnerId";
-                                    print "EXPECTED RESULT 9 : Should activate the initial Syndication Partner ID successfully";
+                                    print("\nTEST STEP 9 : Activate the Syndication Partner ID using Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ActivatePartnerId");
+                                    print("EXPECTED RESULT 9 : Should activate the initial Syndication Partner ID successfully");
 
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT 9: Activation success; Details : %s" %details;
+                                        print("ACTUAL RESULT 9: Activation success; Details : %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS"
-                                        print "Device going for a reboot....";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                                        print("Device going for a reboot....");
                                         obj.restorePreviousStateAfterReboot();
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT 9 :Activation failed; Details : %s" %details;
+                                        print("ACTUAL RESULT 9 :Activation failed; Details : %s" %details);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE"
+                                        print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT 8: SET operation failed; Details : %s" %details;
+                                    print("ACTUAL RESULT 8: SET operation failed; Details : %s" %details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE"
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 7: Test Syndication Partner ID set is not reflected in get after factory reset";
+                                print("ACTUAL RESULT 7: Test Syndication Partner ID set is not reflected in get after factory reset");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6: GET operation failed; Syndication Partner ID :%s" %new_partner;
+                            print("ACTUAL RESULT 6: GET operation failed; Syndication Partner ID :%s" %new_partner);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE"
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5: Factory Reset failed; Details : %s" %details;
+                        print("ACTUAL RESULT 5: Factory Reset failed; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: Syndication PartnerId :%s" %details;
+                    print("ACTUAL RESULT 4: Syndication PartnerId :%s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Partner ID activation failed; Details : %s" %details;
+                print("ACTUAL RESULT 3: Partner ID activation failed; Details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: SET operation failed; Details : %s" %details;
+            print("ACTUAL RESULT 2: SET operation failed; Details : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: GET operation failed; Details : %s" %orgValue;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 1: GET operation failed; Details : %s" %orgValue);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

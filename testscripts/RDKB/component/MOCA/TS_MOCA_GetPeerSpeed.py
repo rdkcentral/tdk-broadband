@@ -71,8 +71,8 @@
   </test_cases>
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -84,7 +84,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MOCA_GetPeerSpeed');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -102,50 +102,50 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of peer table entries";
-        print "EXPECTED RESULT 1: Should get the number of perr table entries";
-        print "ACTUAL RESULT 1: Number of peer table entries is :%s" %details;
+        print("TEST STEP 1: Get the number of peer table entries");
+        print("EXPECTED RESULT 1: Should get the number of perr table entries");
+        print("ACTUAL RESULT 1: Number of peer table entries is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-	tdkTestObj = obj.createTestStep('Mocastub_Get');
-	if int(numofpeers)>0:
-	    for peerEntry in range(1,int(numofpeers)+1):
-        	tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.X_CISCO_COM_PeerTable.%d.PeerSpeed" %peerEntry);
-        	expectedresult="SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj = obj.createTestStep('Mocastub_Get');
+        if int(numofpeers)>0:
+            for peerEntry in range(1,int(numofpeers)+1):
+                tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.X_CISCO_COM_PeerTable.%d.PeerSpeed" %peerEntry);
+                expectedresult="SUCCESS";
 
-        	#Execute the test case in DUT
-        	tdkTestObj.executeTestCase(expectedresult);
-        	actualresult = tdkTestObj.getResult();
-        	details= tdkTestObj.getResultDetails();
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details= tdkTestObj.getResultDetails();
 
-        	if expectedresult in actualresult:
-        	    #Set the result status of execution
-        	    tdkTestObj.setResultStatus("SUCCESS");
-        	    print "TEST STEP 2: Get the peer speed";
-        	    print "EXPECTED RESULT 2: Should get the peer speed";
-        	    print "ACTUAL RESULT 2: Peer speed of %d is :%s" %(peerEntry,details);
-        	    #Get the result of execution
-        	    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    #Set the result status of execution
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 2: Get the peer speed";
-                    print "EXPECTED RESULT 2: Should get the peer speed";
-                    print "ACTUAL RESULT 2: Peer speed of %d is :%s" %(peerEntry,details);
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 2: Get the peer speed");
+                    print("EXPECTED RESULT 2: Should get the peer speed");
+                    print("ACTUAL RESULT 2: Peer speed of %d is :%s" %(peerEntry,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    print "No peer table entries"
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 2: Get the peer speed");
+                    print("EXPECTED RESULT 2: Should get the peer speed");
+                    print("ACTUAL RESULT 2: Peer speed of %d is :%s" %(peerEntry,details));
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            print("No peer table entries")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of peer table entries";
-        print "EXPECTED RESULT 1: Should get the number of peer table entries";
-        print "ACTUAL RESULT 1: Number of peer table entries is :%s" %details;
+        print("TEST STEP 1: Get the number of peer table entries");
+        print("EXPECTED RESULT 1: Should get the number of peer table entries");
+        print("ACTUAL RESULT 1: Number of peer table entries is :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

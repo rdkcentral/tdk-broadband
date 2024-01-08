@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetModelName');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -111,20 +111,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ModelName";
-        print "EXPECTED RESULT 1: Should get the ModelName";
-        print "ACTUAL RESULT 1: ModelName is %s" %details;
+        print("TEST STEP 1: Get the ModelName");
+        print("EXPECTED RESULT 1: Should get the ModelName");
+        print("ACTUAL RESULT 1: ModelName is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details;
+        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ModelName";
-        print "EXPECTED RESULT 1: Should get the ModelName";
-        print "ACTUAL RESULT 1: Failure in getting the ModelName. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the ModelName");
+        print("EXPECTED RESULT 1: Should get the ModelName");
+        print("ACTUAL RESULT 1: Failure in getting the ModelName. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

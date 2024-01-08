@@ -92,7 +92,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_Blaster_PacketSize');
 #Get the result of connection with test component
 loadmodulestatus = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     #### Set and Get Values ####
@@ -105,14 +105,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
     initial_enable = initial_enable.split("VALUE:")[1].split(" ")[0].strip();
     step = 1;
-    print "\nTEST STEP %d: Get the initial value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable" %step;
-    print "EXPECTED RESULT %d: Should get the initial Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable value successfuly" %step;
+    print("\nTEST STEP %d: Get the initial value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable" %step);
+    print("EXPECTED RESULT %d: Should get the initial Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable value successfuly" %step);
     if expectedresult in actualresult and details!="":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: GET operation success; ActiveMeasurements Enable is : %s" %(step, initial_enable);
+        print("ACTUAL RESULT %d: GET operation success; ActiveMeasurements Enable is : %s" %(step, initial_enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Set to false if initially the enable status is not false
         revert_flag = 0;
         if initial_enable == "false":
@@ -124,8 +124,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.addParameter("paramValue",setValue);
             tdkTestObj.addParameter("paramType","boolean");
             #Execute the test case in DUT
-            print "\nTEST STEP %d: Set ActiveMeasurements Enable to true" %step;
-            print "EXPECTED RESULT %d: Should set ActiveMeasurements Enable to true" %step;
+            print("\nTEST STEP %d: Set ActiveMeasurements Enable to true" %step);
+            print("EXPECTED RESULT %d: Should set ActiveMeasurements Enable to true" %step);
             expectedresult = "SUCCESS"
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
@@ -135,21 +135,21 @@ if "SUCCESS" in loadmodulestatus.upper():
                 proceed_flag = 1;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 proceed_flag = 0;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable set failed; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable set failed; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             #Set the result status of execution
             proceed_flag = 1;
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ActiveMeasurements Enable is already true initially";
+            print("ActiveMeasurements Enable is already true initially");
 
         if proceed_flag == 1:
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -159,19 +159,19 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             initial_PacketSize = tdkTestObj.getResultDetails();
             step = step + 1;
-            print "TEST STEP %d: Get the current PacketSize value" %step;
-            print "EXPECTED RESULT %d: Should get current PacketSize value" %step;
+            print("TEST STEP %d: Get the current PacketSize value" %step);
+            print("EXPECTED RESULT %d: Should get current PacketSize value" %step);
             if expectedresult in actualresult:
                 initial_PacketSize = initial_PacketSize.split("VALUE:")[1].split(" ")[0].strip();
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: current PacketSize value is %s" %(step, initial_PacketSize);
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d: current PacketSize value is %s" %(step, initial_PacketSize));
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 valid_list = ["64", "1100", "1470"];
                 all_success  = [1, 1, 1]
                 set_success = [];
                 step = step + 1;
-                print "TEST STEP %d: Set the PacketSize to each of the values in the valid list" %step;
-                print "EXPECTED RESULT %d: Should Set the PacketSize to each of the values in the valid list" %step;
+                print("TEST STEP %d: Set the PacketSize to each of the values in the valid list" %step);
+                print("EXPECTED RESULT %d: Should Set the PacketSize to each of the values in the valid list" %step);
                 for sample in valid_list:
                     #### Set and Get Values ####
                     tdkTestObj = obj.createTestStep("WIFIAgent_Set_Get");
@@ -184,29 +184,29 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     if expectedresult in actualresult:
                         set_success.append(1);
-                        print "PacketSize successfully set to %s" %sample;
+                        print("PacketSize successfully set to %s" %sample);
                     else:
                         set_success.append(0);
-                        print "PacketSize failed to set %s" %sample;
-                print "set_success is %s" %set_success;
+                        print("PacketSize failed to set %s" %sample);
+                print("set_success is %s" %set_success);
                 if all_success == set_success:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: PacketSize successfully set for all the valid values" %step;
+                    print("ACTUAL RESULT %d: PacketSize successfully set for all the valid values" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: PacketSize set failed for some of the valid values" %step;
+                    print("ACTUAL RESULT %d: PacketSize set failed for some of the valid values" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 all_failure = [1,1]
                 invalid_list = ["63", "1471"]
                 set_failure = [];
                 step = step + 1;
-                print "TEST STEP %d: Set the PacketSize to each of the values in the invalid list" %step;
-                print "EXPECTED RESULT %d: Should Fail to set the PacketSize in the invalid list" %step;
+                print("TEST STEP %d: Set the PacketSize to each of the values in the invalid list" %step);
+                print("EXPECTED RESULT %d: Should Fail to set the PacketSize in the invalid list" %step);
                 for invalid_sample in invalid_list:
                     #### Set and Get Values ####
                     tdkTestObj = obj.createTestStep("WIFIAgent_Set_Get");
@@ -219,23 +219,23 @@ if "SUCCESS" in loadmodulestatus.upper():
                     actualresult = tdkTestObj.getResult();
                     if expectedresult in actualresult:
                         set_failure.append(1);
-                        print "PacketSize failed to set  %s" %invalid_sample;
+                        print("PacketSize failed to set  %s" %invalid_sample);
                     else:
                         set_failure.append(0);
-                        print "PacketSize successfully set for some invalid values %s" %invalid_sample;
-                print "set_failure is %s" %set_failure;
+                        print("PacketSize successfully set for some invalid values %s" %invalid_sample);
+                print("set_failure is %s" %set_failure);
                 if all_failure == set_failure:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: PacketSize failed to set all the invalid values" %step;
+                    print("ACTUAL RESULT %d: PacketSize failed to set all the invalid values" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: PacketSize set was successful for some of the invalid values" %step;
+                    print("ACTUAL RESULT %d: PacketSize set was successful for some of the invalid values" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
 
                 if revert_flag == 1:
                     step = step + 1;
@@ -245,8 +245,8 @@ if "SUCCESS" in loadmodulestatus.upper():
                     tdkTestObj.addParameter("paramValue",initial_enable);
                     tdkTestObj.addParameter("paramType","boolean");
                     #Execute the test case in DUT
-                    print "\nTEST STEP %d: Revert ActiveMeasurements Enable to initial value" %step;
-                    print "EXPECTED RESULT %d: Should revert ActiveMeasurements Enable to initial value" %step
+                    print("\nTEST STEP %d: Revert ActiveMeasurements Enable to initial value" %step);
+                    print("EXPECTED RESULT %d: Should revert ActiveMeasurements Enable to initial value" %step)
                     expectedresult = "SUCCESS"
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
@@ -254,25 +254,25 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable reverted successfully; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable reverted successfully; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable revert failed; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable revert failed; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Revert operation not required for Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable";
+                    print("Revert operation not required for Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable");
 
                 tdkTestObj = obj.createTestStep("WIFIAgent_Set_Get");
                 tdkTestObj.addParameter("paramName","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ActiveMeasurements.PacketSize");
                 tdkTestObj.addParameter("paramValue",str(initial_PacketSize));
                 tdkTestObj.addParameter("paramType","unsignedint");
                 step = step + 1;
-                print "TEST STEP %d: Revert PacketSize value to the initial value" %step;
-                print "EXPECTED RESULT %d: Should revert the PacketSize value to the initial value" %step;
+                print("TEST STEP %d: Revert PacketSize value to the initial value" %step);
+                print("EXPECTED RESULT %d: Should revert the PacketSize value to the initial value" %step);
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
@@ -280,23 +280,23 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: %s" %(step,details);
+                    print("ACTUAL RESULT %d: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: %s" %(step,details);
+                    print("ACTUAL RESULT %d: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult);
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Device.Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable could not be enabled";
+            print("Device.Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Enable could not be enabled");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: GET operation failed; ActiveMeasurements Enable is : %s" %(step, details);
+        print("ACTUAL RESULT %d: GET operation failed; ActiveMeasurements Enable is : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");

@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_GetDefaultSecurityModesEnabled');
 
 #Get the result of connection with test component
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -103,11 +103,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %Mode;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %Mode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
@@ -115,7 +115,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         found, tdkTestObj = wait_for_namespace(obj, 6, 30, "Device.WiFi.", expectedresult);
 
         if found == 1:
-            print "TEST STEP 2 : Check if the default security modes are enabled";
+            print("TEST STEP 2 : Check if the default security modes are enabled");
             i =1;
             while i<=16:
                 tdkTestObj = obj.createTestStep("WIFIAgent_Get");
@@ -135,34 +135,34 @@ if "SUCCESS" in loadmodulestatus.upper():
                 supportedModes=supportedModes.split("VALUE:")[1].split(' ')[0];
                 if expectedresult in (actualresult and actualresult1) and Mode!= "" and supportedModes!="":
                     if  Mode in  supportedModes:
-                        print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  has %s expected value"%(i,Mode);
+                        print("RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  has %s expected value"%(i,Mode));
                         i=i+1;
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
-                        print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
+                        print("RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode));
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         break;
                 else:
-                    print "RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode);
+                    print("RESULT : Device.WiFi.AccessPoint.%d.Security.ModeEnabled  have  %s which is not expected value"%(i,Mode));
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     break;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Device.WiFi. namespace not available after Factory Reset";
+            print("Device.WiFi. namespace not available after Factory Reset");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should initiate factory reset";
-        print "ACTUAL RESULT 1: %s" %Mode;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %Mode);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "FAILURE to load wifiagent module";
+    print("FAILURE to load wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

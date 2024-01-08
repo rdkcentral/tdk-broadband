@@ -113,7 +113,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetCloudUIEnable');
 
 #Get the result of connection with test component and Gateway
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -131,9 +131,9 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1: Enable the Cloud UI";
-        print "EXPECTED RESULT 1: Should enable the Cloud UI successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Enable the Cloud UI");
+        print("EXPECTED RESULT 1: Should enable the Cloud UI successfully");
+        print("ACTUAL RESULT 1: %s" %details);
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_CloudUIEnable");
         tdkTestObj.addParameter("ParamValue","false");
@@ -147,47 +147,25 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 2: Disable the Cloud UI";
-            print "EXPECTED RESULT 2: Should disable the Cloud UI successfully";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Disable the Cloud UI");
+            print("EXPECTED RESULT 2: Should disable the Cloud UI successfully");
+            print("ACTUAL RESULT 2: %s" %details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 2: Disable the Cloud UI";
-            print "EXPECTED RESULT 2: Should disable the Cloud UI successfully";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Disable the Cloud UI");
+            print("EXPECTED RESULT 2: Should disable the Cloud UI successfully");
+            print("ACTUAL RESULT 2: %s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1: Enable the Cloud UI";
-        print "EXPECTED RESULT 1: Should enable the Cloud UI successfully";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Enable the Cloud UI");
+        print("EXPECTED RESULT 1: Should enable the Cloud UI successfully");
+        print("ACTUAL RESULT 1: %s" %details);
 
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -94,32 +94,32 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get an IP Interface"
-        print "EXPECTED RESULT 1: Should get an IP Interface"
-        print "ACTUAL RESULT 1: Interface is %s" %interface;
+        print("TEST STEP 1: Get an IP Interface")
+        print("EXPECTED RESULT 1: Should get an IP Interface")
+        print("ACTUAL RESULT 1: Interface is %s" %interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %interface;
+        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %interface);
 
         tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","%sType" %interface);
-        print "Parameter Name: %s" %interface
+        print("Parameter Name: %s" %interface)
         tdkTestObj.executeTestCase("expectedresult");
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
 
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Retrieve the Server Type of the DNS client"
-            print "EXPECTED RESULT 1: Should Retrieve the Server Type of the DNS client"
-            print "ACTUAL RESULT 1: DNS Client Server Type is %s" %details;
+            print("TEST STEP 1: Retrieve the Server Type of the DNS client")
+            print("EXPECTED RESULT 1: Should Retrieve the Server Type of the DNS client")
+            print("ACTUAL RESULT 1: DNS Client Server Type is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details
+            print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details)
 
             #Set the DNS Server IP when Server Type is not static
             if 'Static' not in details:
                 tdkTestObj = pamObj.createTestStep("pam_SetParameterValues");
                 tdkTestObj.addParameter("ParamName","%sDNSServer" %interface);
-                print "Parameter Name: %s" %interface
+                print("Parameter Name: %s" %interface)
                 tdkTestObj.addParameter("Type","string");
                 tdkTestObj.addParameter("ParamValue","60.252.50.50");
                 expectedresult = "FAILURE";
@@ -129,41 +129,35 @@ if "SUCCESS" in loadmodulestatus.upper():
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
                     details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 2]: Set the DNS Server IP when server type is not static";
-                    print "[EXPECTED RESULT 2]: Should fail to set DNS Server IP when server type is not static";
-                    print "[ACTUAL RESULT 2]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST STEP 2]: Set the DNS Server IP when server type is not static");
+                    print("[EXPECTED RESULT 2]: Should fail to set DNS Server IP when server type is not static");
+                    print("[ACTUAL RESULT 2]: %s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
                     details = tdkTestObj.getResultDetails();
-                    print "[TEST STEP 2]: Set the DNS Server IP when server type is not static";
-                    print "[EXPECTED RESULT 2]: Should fail to set DNS Server IP when server type is not static";
-                    print "[ACTUAL RESULT 2]: %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST STEP 2]: Set the DNS Server IP when server type is not static");
+                    print("[EXPECTED RESULT 2]: Should fail to set DNS Server IP when server type is not static");
+                    print("[ACTUAL RESULT 2]: %s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "DNS Client Server Type is Static"
+                print("DNS Client Server Type is Static")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Retrieve the Server Type of the DNS client"
-            print "EXPECTED RESULT 1: Should Retrieve the Server Type of the DNS client"
-            print "ACTUAL RESULT 1: DNS Client Server Type is %s" %details;
+            print("TEST STEP 1: Retrieve the Server Type of the DNS client")
+            print("EXPECTED RESULT 1: Should Retrieve the Server Type of the DNS client")
+            print("ACTUAL RESULT 1: DNS Client Server Type is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE, %s" %details
+            print("[TEST EXECUTION RESULT] : FAILURE, %s" %details)
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get an IP Interface"
-        print "EXPECTED RESULT 1: Should get an IP Interface"
-        print "ACTUAL RESULT 1: Failure in getting the Interface. Details : %s" %interface;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get an IP Interface")
+        print("EXPECTED RESULT 1: Should get an IP Interface")
+        print("ACTUAL RESULT 1: Failure in getting the Interface. Details : %s" %interface);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
+    print("Failed to load pam module");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

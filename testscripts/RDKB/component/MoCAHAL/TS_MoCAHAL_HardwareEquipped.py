@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_HardwareEquipped');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,22 +108,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check whether the MoCA Hardware is Equipped or Not"
-        print "EXPECTED RESULT 1: Should Check whether the MoCA Hardware is Equipped or Not"
-        print "ACTUAL RESULT 1: Hardware Equipped status is %s" %hw;
+        print("TEST STEP 1: Check whether the MoCA Hardware is Equipped or Not")
+        print("EXPECTED RESULT 1: Should Check whether the MoCA Hardware is Equipped or Not")
+        print("ACTUAL RESULT 1: Hardware Equipped status is %s" %hw);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check whether the MoCA Hardware is Equipped or Not"
-        print "EXPECTED RESULT 1: Should Check whether the MoCA Hardware is Equipped or Not"
-        print "ACTUAL RESULT 1: %s" %hw;
+        print("TEST STEP 1: Check whether the MoCA Hardware is Equipped or Not")
+        print("EXPECTED RESULT 1: Should Check whether the MoCA Hardware is Equipped or Not")
+        print("ACTUAL RESULT 1: %s" %hw);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

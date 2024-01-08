@@ -117,46 +117,46 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     paramList=["Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable", "Device.WiFi.SSID.1.SSID", "Device.WiFi.SSID.2.SSID"]
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
 
-    print "\nTEST STEP 1: Get the values of Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable, Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID";
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the values of Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable, Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID");
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: BandStering enable status and SSID names are respectively : %s, %s, %s" %(orgValue[0],orgValue[1],orgValue[2]) ;
+        print("ACTUAL RESULT 1: BandStering enable status and SSID names are respectively : %s, %s, %s" %(orgValue[0],orgValue[1],orgValue[2])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if the SSID names are same
         if orgValue[1] == orgValue[2]:
-            print "As SSID names are same, changing to Split SSID";
+            print("As SSID names are same, changing to Split SSID");
             tdkTestObj = obj1.createTestStep("WIFIAgent_SetMultiple");
             tdkTestObj.addParameter("paramList","Device.WiFi.SSID.1.SSID|%s|string|Device.WiFi.SSID.2.SSID|%s|string" %(SSID1,SSID2));
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP 2 : Set Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID to different values";
-            print "EXPECTED RESULT 2 : Should successfully set Device.WiFi.SSID.1.SSID to %s and Device.WiFi.SSID.2.SSID to %s" %(SSID1, SSID2);
+            print("\nTEST STEP 2 : Set Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID to different values");
+            print("EXPECTED RESULT 2 : Should successfully set Device.WiFi.SSID.1.SSID to %s and Device.WiFi.SSID.2.SSID to %s" %(SSID1, SSID2));
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Set operation success; Details : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 2: Set operation success; Details : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Validate the SET with GET
                 paramList=["Device.WiFi.SSID.1.SSID", "Device.WiFi.SSID.2.SSID"]
                 tdkTestObj,status,setValue = getMultipleParameterValues(obj,paramList)
 
-                print "\nTEST STEP 3: Get the values of Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID";
-                print "EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values";
+                print("\nTEST STEP 3: Get the values of Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID");
+                print("EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values");
 
                 if expectedresult in status and setValue[0] == SSID1 and setValue[1] == SSID2 :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: SSID values after the GET are same as the SET values : %s, %s" %(setValue[0],setValue[1]) ;
+                    print("ACTUAL RESULT 3: SSID values after the GET are same as the SET values : %s, %s" %(setValue[0],setValue[1])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Set Band Steering Enable to true, the set should fail
                     expectedresult = "FAILURE"
@@ -166,19 +166,19 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 4 : Set Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable to true after Split SSID";
-                    print "EXPECTED RESULT 4 : Setting Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable to true after Split SSID should return failure";
+                    print("\nTEST STEP 4 : Set Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable to true after Split SSID");
+                    print("EXPECTED RESULT 4 : Setting Device.WiFi.X_RDKCENTRAL-COM_BandSteering.Enable to true after Split SSID should return failure");
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 4: Set operation failed; Details : %s" %details;
+                        print("ACTUAL RESULT 4: Set operation failed; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 4: Set operation success; Details : %s" %details;
+                        print("ACTUAL RESULT 4: Set operation success; Details : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                     #Revert to initial SSID values
                     expectedresult = "SUCCESS"
@@ -188,46 +188,45 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP 5 : Set Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID to initial values";
-                    print "EXPECTED RESULT 5 : Should successfully set Device.WiFi.SSID.1.SSID to %s and Device.WiFi.SSID.2.SSID to %s" %(orgValue[1], orgValue[2]);
+                    print("\nTEST STEP 5 : Set Device.WiFi.SSID.1.SSID and Device.WiFi.SSID.2.SSID to initial values");
+                    print("EXPECTED RESULT 5 : Should successfully set Device.WiFi.SSID.1.SSID to %s and Device.WiFi.SSID.2.SSID to %s" %(orgValue[1], orgValue[2]));
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5 : Set operation success; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT 5 : Set operation success; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5 : Set operation failed; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT 5 : Set operation failed; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: SSID values after the GET are not same as the SET values : %s, %s" %(setValue[0],setValue[1]) ;
+                    print("ACTUAL RESULT 3: SSID values after the GET are not same as the SET values : %s, %s" %(setValue[0],setValue[1])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:Set operation failed; Details : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT 2:Set operation failed; Details : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
-            print "As the SSIDs are split, the Band Steering Enable should return false";
+            print("As the SSIDs are split, the Band Steering Enable should return false");
             if orgValue[0] == "false":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "As the SSIDs are split, the Band Steering Enable return false";
+                print("As the SSIDs are split, the Band Steering Enable return false");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "The Band Steering Enable does not return false even when the SSID is split";
+                print("The Band Steering Enable does not return false even when the SSID is split");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Failed to get BandSteering enable status and SSID names; Details : %s" %details;
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT 1: Failed to get BandSteering enable status and SSID names; Details : %s" %details);
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -108,14 +108,14 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_AddObject');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load WIFI Agent Stub or its supporting libraries probably from /usr/lib/]")
+    print("[Exiting the Script]")
+    exit();
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('WIFIAgent_AddObject');
@@ -131,19 +131,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
-print "EXPECTED RESULT 1: Should add a wifi instance that holds client info to the table successfully ";
+print("EXPECTED RESULT 1: Should add a wifi instance that holds client info to the table successfully ");
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
 
-print "[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT DETAILS] : %s" %resultDetails) ;
 
 obj.unloadModule("wifiagent");

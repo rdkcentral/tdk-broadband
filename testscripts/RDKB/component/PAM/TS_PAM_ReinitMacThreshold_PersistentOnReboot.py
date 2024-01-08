@@ -81,20 +81,20 @@ def get_ReinitMacThreshold(tdkTestObj, step):
         initial_value = int(tdkTestObj.getResultDetails());
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP %d: Get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step;
-        print "ACTUAL RESULT %d: %d"%(step, initial_value);
+        print("TEST STEP %d: Get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step);
+        print("ACTUAL RESULT %d: %d"%(step, initial_value));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         return_val = initial_value;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP %d: Get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step;
-        print "EXPECTED RESULT %d: Should get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step;
-        print "ACTUAL RESULT %d: Get operation failed"%step;
+        print("TEST STEP %d: Get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step);
+        print("EXPECTED RESULT %d: Should get the value of Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold" %step);
+        print("ACTUAL RESULT %d: Get operation failed"%step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return return_val;
 
 def set_ReinitMacThreshold(tdkTestObj, setValue, step):
@@ -110,20 +110,20 @@ def set_ReinitMacThreshold(tdkTestObj, setValue, step):
         details = tdkTestObj.getResultDetails();
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP %d Set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step;
-        print "EXPECTED RESULT %d: Should set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step;
-        print "ACTUAL RESULT %d:  %s" %(step, details);
+        print("TEST STEP %d Set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step);
+        print("EXPECTED RESULT %d: Should set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step);
+        print("ACTUAL RESULT %d:  %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         return_val = 0;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP %d: Set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step;
-        print "EXPECTED RESULT %d: Should set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step;
-        print "ACTUAL RESULT %d:  Set Operation failed" %step;
+        print("TEST STEP %d: Set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step);
+        print("EXPECTED RESULT %d: Should set Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold to the new ReinitMacThreshold" %step);
+        print("ACTUAL RESULT %d:  Set Operation failed" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return return_val;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -141,7 +141,7 @@ obj.configureTestCase(ip,port,'TS_PAM_ReinitMacThreshold_PersistentOnReboot');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -154,7 +154,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     if initial != -1:
         #Set ReinitMacThreshold to 5
         setValue = '5';
-        print "The ReinitMacThreshold to set is %d" %int(setValue);
+        print("The ReinitMacThreshold to set is %d" %int(setValue));
         tdkTestObj = obj.createTestStep("pam_Setparams");
         step = step + 1;
         status = set_ReinitMacThreshold(tdkTestObj, setValue, step);
@@ -167,7 +167,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if get_value == int(setValue) :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "The Get value and Set value are the same";
+                print("The Get value and Set value are the same");
                 #Check persistence on reboot
                 #rebooting the device
                 obj.initiateReboot();
@@ -177,27 +177,26 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if value_reboot == int(setValue) :
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold is persistent on reboot";
+                    print("Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold is persistent on reboot");
                     #Revert Operation
-                    print "Reverting to initial value";
+                    print("Reverting to initial value");
                     step = step + 1;
                     tdkTestObj = obj.createTestStep("pam_Setparams");
                     initial_value = str(initial);
                     status = set_ReinitMacThreshold(tdkTestObj, initial_value, step);
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold is not persistent on reboot";
+                    print("Device.X_CISCO_COM_DeviceControl.ReinitMacThreshold is not persistent on reboot");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "The Get value and Set value are not the same";
+                print("The Get value and Set value are not the same");
         else:
-            print "Set Operation Failed";
+            print("Set Operation Failed");
     else:
-        print "The Get Operation did not retrieve the value"
+        print("The Get Operation did not retrieve the value")
 
     obj.unloadModule("pam");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

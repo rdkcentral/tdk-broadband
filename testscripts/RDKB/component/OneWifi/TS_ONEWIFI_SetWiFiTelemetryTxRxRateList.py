@@ -96,7 +96,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_SetWiFiTelemetryTxRxRateList');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -113,11 +113,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current TxRxRateList value";
-        print "EXPECTED RESULT 1: Should get the current TxRxRateList value";
-        print "ACTUAL RESULT 1: Current TxRxRateList value is  %s" %orgTxRxvalue
+        print("TEST STEP 1: Get the current TxRxRateList value");
+        print("EXPECTED RESULT 1: Should get the current TxRxRateList value");
+        print("ACTUAL RESULT 1: Current TxRxRateList value is  %s" %orgTxRxvalue)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         newTxRxRateListTobeset = "1,2"
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
@@ -131,11 +131,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set TxRxRateList as Private WiFi AP List (1,2)";
-            print "EXPECTED RESULT 2: Should  set a value as Prviate WiFi AP's (1,2)";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set TxRxRateList as Private WiFi AP List (1,2)");
+            print("EXPECTED RESULT 2: Should  set a value as Prviate WiFi AP's (1,2)");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             sleep(5);
             tdkTestObj = obj.createTestStep('WIFIAgent_Get');
             tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
@@ -148,17 +148,17 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and newTxRxvalue == newTxRxRateListTobeset:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the TxRxRateList value after set";
-                print "ACTUAL RESULT 3: TxRxRateList value after set is %s" %details;
+                print("TEST STEP 3: Get the TxRxRateList value after set");
+                print("ACTUAL RESULT 3: TxRxRateList value after set is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the TxRxRateList value after set";
-                print "ACTUAL RESULT 3: Failed to get TxRxRateList value after set";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Get the TxRxRateList value after set");
+                print("ACTUAL RESULT 3: Failed to get TxRxRateList value after set");
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #change TxRxValue state to previous one
+            #change TxRxValue state to previous one
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
             tdkTestObj.addParameter("paramValue",orgTxRxvalue);
@@ -171,34 +171,34 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Restore initial TxRxRateList value";
-                print "EXPECTED RESULT 4: Should Set initial TxRxRateList value";
-                print "ACTUAL RESULT 4: Details is %s " %details;
+                print("TEST STEP 4: Restore initial TxRxRateList value");
+                print("EXPECTED RESULT 4: Should Set initial TxRxRateList value");
+                print("ACTUAL RESULT 4: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Restore initial TxRxRateList value";
-                print "EXPECTED RESULT 4: Should Set initial TxRxRateList value";
-                print "ACTUAL RESULT 4: Details is %s " %details;
+                print("TEST STEP 4: Restore initial TxRxRateList value");
+                print("EXPECTED RESULT 4: Should Set initial TxRxRateList value");
+                print("ACTUAL RESULT 4: Details is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set TxRxRateList value as Private WiFi AP's (1,2)";
-            print "EXPECTED RESULT 2: Should  set a value as private WiFi AP's (1,2)";
-            print "ACTUAL RESULT 2: Details:  %s " %details;
+            print("TEST STEP 2: Set TxRxRateList value as Private WiFi AP's (1,2)");
+            print("EXPECTED RESULT 2: Should  set a value as private WiFi AP's (1,2)");
+            print("ACTUAL RESULT 2: Details:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current TxRxRateList Value"
-        print "EXPECTED RESULT 1: Failure in getting the current TxRxRateList value"
-        print "ACTUAL RESULT 1: Details is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current TxRxRateList Value")
+        print("EXPECTED RESULT 1: Failure in getting the current TxRxRateList value")
+        print("ACTUAL RESULT 1: Details is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifiagent module";
+    print("Failed to load wifiagent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

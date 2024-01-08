@@ -89,8 +89,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("moca","1");
@@ -102,7 +102,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MOCA_GetLastChange');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of connected clients";
-        print "EXPECTED RESULT 1: Should get the number of connected clients";
-        print "ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected clients");
+        print("EXPECTED RESULT 1: Should get the number of connected clients");
+        print("ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_Set');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
         tdkTestObj.addParameter("ParamValue","true");
@@ -137,71 +137,71 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable Moca Interface";
-            print "EXPECTED RESULT 2: Should enable Moca Interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Moca Interface");
+            print("EXPECTED RESULT 2: Should enable Moca Interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    tdkTestObj = obj.createTestStep('Mocastub_Get');
-    	    tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.LastChange");
-    	    expectedresult="SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj = obj.createTestStep('Mocastub_Get');
+            tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.LastChange");
+            expectedresult="SUCCESS";
 
-    	    #Execute the test case in DUT
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    LastChange= tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            LastChange= tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 3: Get the LastChange";
-    	        print "EXPECTED RESULT 3: Should get the LastChange";
-    	        print "ACTUAL RESULT 3: The LastChange in seconds is :%s" %LastChange;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-		if ( NoOfClients ==0 and LastChange ==0 ) or (NoOfClients >0 and LastChange >0):
-		    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the LastChange";
-                    print "EXPECTED RESULT 4: Should get the LastChange as zero in standalone setup and greater than zero otherwise";
-                    print "ACTUAL RESULT 4: The LastChange in seconds is :%s" %LastChange;
-                    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-		else:
-		    #Set the result status of execution
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the LastChange";
-                    print "EXPECTED RESULT 4: Should get the LastChange as zero in standalone setup and greater than zero otherwise";
-                    print "ACTUAL RESULT 4: The LastChange in seconds is :%s" %LastChange;
-                    #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-	    else:
-		#Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the LastChange";
-                print "EXPECTED RESULT 3: Should get the LastChange";
-                print "ACTUAL RESULT 3: The LastChange in seconds is :%s" %LastChange;
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the LastChange");
+                print("EXPECTED RESULT 3: Should get the LastChange");
+                print("ACTUAL RESULT 3: The LastChange in seconds is :%s" %LastChange);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                if ( int(NoOfClients) ==0 and int(LastChange) ==0 ) or (int(NoOfClients) >0 and int(LastChange) >0):
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the LastChange");
+                    print("EXPECTED RESULT 4: Should get the LastChange as zero in standalone setup and greater than zero otherwise");
+                    print("ACTUAL RESULT 4: The LastChange in seconds is :%s" %LastChange);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Get the LastChange");
+                    print("EXPECTED RESULT 4: Should get the LastChange as zero in standalone setup and greater than zero otherwise");
+                    print("ACTUAL RESULT 4: The LastChange in seconds is :%s" %LastChange);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the LastChange");
+                print("EXPECTED RESULT 3: Should get the LastChange");
+                print("ACTUAL RESULT 3: The LastChange in seconds is :%s" %LastChange);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable Moca Interface";
-            print "EXPECTED RESULT 2: Should enable Moca Interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Moca Interface");
+            print("EXPECTED RESULT 2: Should enable Moca Interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of connected clients";
-        print "EXPECTED RESULT 1: Should get the number of connected clients";
-        print "ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected clients");
+        print("EXPECTED RESULT 1: Should get the number of connected clients");
+        print("ACTUAL RESULT 1: Number of connected clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

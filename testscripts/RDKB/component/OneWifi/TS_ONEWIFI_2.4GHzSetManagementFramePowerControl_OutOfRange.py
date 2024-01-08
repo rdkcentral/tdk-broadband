@@ -160,7 +160,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_2.4GHzSetManagementFramePowerControl_O
 
 #Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -174,23 +174,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP 1: Get the initial ManagementFrame PowerControl value using Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl";
-    print "EXPECTED RESULT 1: Should get the initial ManagementFrame PowerControl value successfully";
+    print("\nTEST STEP 1: Get the initial ManagementFrame PowerControl value using Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl");
+    print("EXPECTED RESULT 1: Should get the initial ManagementFrame PowerControl value successfully");
 
     if expectedresult in actualresult and details != "":
         initial_mfpc = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %initial_mfpc;
+        print("ACTUAL RESULT 1: ManagementFrame PowerControl :%s" %initial_mfpc);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check if the initial value is in the range -20 to 0 db
         if initial_mfpc.strip("-").isdigit() and int(initial_mfpc) <= 0 and int(initial_mfpc) >= -20:
             curr_mfpc = initial_mfpc;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "The initial MFPC is in the acceptable range of -20db to 0db";
+            print("The initial MFPC is in the acceptable range of -20db to 0db");
 
             #Set MFPC to values > 0db and check if the get value is the upper limit 0db
             flag = 0;
@@ -198,11 +198,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             #All MFPC values set above the upper limit of 0db should be converted to 0db
             upper_OutofBound = ["1", "10", "23", "50", "100", "257", "1000"];
 
-            print "\nTEST STEP 2: Set Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to values > 0db and check if the get operation gives the value 0db";
-            print "EXPECTED RESULT 2: The set operation should be success and the get operation should give 0db as all values > 0db should be converted to the upper limit 0db";
+            print("\nTEST STEP 2: Set Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to values > 0db and check if the get operation gives the value 0db");
+            print("EXPECTED RESULT 2: The set operation should be success and the get operation should give 0db as all values > 0db should be converted to the upper limit 0db");
 
             for mfpc in upper_OutofBound:
-                print "\n-----For Management Frame Power Control : %s-----" %mfpc
+                print("\n-----For Management Frame Power Control : %s-----" %mfpc)
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl");
                 tdkTestObj.addParameter("paramValue",mfpc);
@@ -212,7 +212,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
 
                 if expectedresult in actualresult:
-                    print "MFPC Set operation success";
+                    print("MFPC Set operation success");
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
 
@@ -226,24 +226,24 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult and details != "":
                         curr_mfpc = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                         if curr_mfpc.strip("-").isdigit() and curr_mfpc == upper_bound:
-                            print "MFPC Get operation returns : %s" %curr_mfpc;
+                            print("MFPC Get operation returns : %s" %curr_mfpc);
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
                             flag = 1;
-                            print "MFPC Get operation returns : %s" %curr_mfpc;
+                            print("MFPC Get operation returns : %s" %curr_mfpc);
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
                             break;
                     else:
                         flag = 1;
-                        print "MFPC Get operation failed; Details : %s" %details;
+                        print("MFPC Get operation failed; Details : %s" %details);
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
                         break;
                 else:
                     flag = 1;
-                    print "MFPC Set operation failed; Details : %s" %details;
+                    print("MFPC Set operation failed; Details : %s" %details);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
                     break;
@@ -251,15 +251,15 @@ if "SUCCESS" in loadmodulestatus.upper():
             if flag == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: The MFPC set operations with values > 0db is success and the get operations returned the upper bound value of 0db";
+                print("ACTUAL RESULT 2: The MFPC set operations with values > 0db is success and the get operations returned the upper bound value of 0db");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: The MFPC conditions for values > 0db is not validated successfully";
+                print("ACTUAL RESULT 2: The MFPC conditions for values > 0db is not validated successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Set MFPC to values < -20db and check if the get value is the lower limit -20db
             flag = 0;
@@ -267,11 +267,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             #All MFPC values set above the upper limit of 0db should be converted to 0db
             lower_OutofBound = ["-21", "-30", "-53", "-80", "-100", "-257", "-1000"];
 
-            print "\nTEST STEP 3: Set Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to values < -20db and check if the get operation gives the value -20db";
-            print "EXPECTED RESULT 3: The set operation should be success and the get operation should give -20db as all values < -20db should be converted to the lower limit -20db";
+            print("\nTEST STEP 3: Set Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to values < -20db and check if the get operation gives the value -20db");
+            print("EXPECTED RESULT 3: The set operation should be success and the get operation should give -20db as all values < -20db should be converted to the lower limit -20db");
 
             for mfpc in lower_OutofBound:
-                print "\n-----For Management Frame Power Control : %s-----" %mfpc
+                print("\n-----For Management Frame Power Control : %s-----" %mfpc)
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl");
                 tdkTestObj.addParameter("paramValue",mfpc);
@@ -281,7 +281,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 details = tdkTestObj.getResultDetails();
 
                 if expectedresult in actualresult:
-                    print "MFPC Set operation success";
+                    print("MFPC Set operation success");
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
 
@@ -295,24 +295,24 @@ if "SUCCESS" in loadmodulestatus.upper():
                     if expectedresult in actualresult and details != "":
                         curr_mfpc = details.split("VALUE:")[1].split(' ')[0].split(',')[0];
                         if curr_mfpc.strip("-").isdigit() and curr_mfpc == lower_bound:
-                            print "MFPC Get operation returns : %s" %curr_mfpc;
+                            print("MFPC Get operation returns : %s" %curr_mfpc);
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
                             flag = 1;
-                            print "MFPC Get operation returns : %s" %curr_mfpc;
+                            print("MFPC Get operation returns : %s" %curr_mfpc);
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
                             break;
                     else:
                         flag = 1;
-                        print "MFPC Get operation failed; Details : %s" %details;
+                        print("MFPC Get operation failed; Details : %s" %details);
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
                         break;
                 else:
                     flag = 1;
-                    print "MFPC Set operation failed; Details : %s" %details;
+                    print("MFPC Set operation failed; Details : %s" %details);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
                     break;
@@ -320,15 +320,15 @@ if "SUCCESS" in loadmodulestatus.upper():
             if flag == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: The MFPC set operations with values < -20db is success and the get operations returned the lower bound value of -20db";
+                print("ACTUAL RESULT 2: The MFPC set operations with values < -20db is success and the get operations returned the lower bound value of -20db");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2: The MFPC conditions for values < -20db is not validated successfully";
+                print("ACTUAL RESULT 2: The MFPC conditions for values < -20db is not validated successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
 
             #Reverting to initial MFPC
@@ -341,36 +341,36 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP 4: Revert Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to the initial value";
-                print "EXPECTED RESULT 4: Revert of Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl should be success";
+                print("\nTEST STEP 4: Revert Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl to the initial value");
+                print("EXPECTED RESULT 4: Revert of Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl should be success");
 
                 if expectedresult in  expectedresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: Revert operation is success; Details : %s" %details;
+                    print("ACTUAL RESULT 4: Revert operation is success; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: Revert operation failed; Details : %s" %details;
+                    print("ACTUAL RESULT 4: Revert operation failed; Details : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                print "Revert operation of Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl not required";
+                print("Revert operation of Device.WiFi.AccessPoint.1.X_RDKCENTRAL-COM_ManagementFramePowerControl not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "The initial MFPC is NOT in the acceptable range of -20db to 0db";
+            print("The initial MFPC is NOT in the acceptable range of -20db to 0db");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Get operation failed";
+        print("ACTUAL RESULT 1: Get operation failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -98,131 +98,131 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     default = tdkTestObj.getResultDetails().strip();
 
     if expectedresult in actualresult:
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the  WEBUI tr181 configuration"
-       print "EXPECTED RESULT 1: Should get the  WEBUI tr181 configuration";
-       print "ACTUAL RESULT 1: WEBUI tr181 configuration:",default;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the  WEBUI tr181 configuration")
+        print("EXPECTED RESULT 1: Should get the  WEBUI tr181 configuration");
+        print("ACTUAL RESULT 1: WEBUI tr181 configuration:",default);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       ConfigValues =["Enable","Disable","MSOonly"];
-       # getting length of list
-       length = len(ConfigValues);
-       flag = 0;
-       equalflag = 0;
-       print "Trying to Set the  WEBUI tr181 configuration to the following:",ConfigValues;
+        ConfigValues =["Enable","Disable","MSOonly"];
+        # getting length of list
+        length = len(ConfigValues);
+        flag = 0;
+        equalflag = 0;
+        print("Trying to Set the  WEBUI tr181 configuration to the following:",ConfigValues);
 
-       for i in range(length):
-           print "Setting  WEBUI tr181 configuration to ",ConfigValues[i];
+        for i in range(length):
+            print("Setting  WEBUI tr181 configuration to ",ConfigValues[i]);
 
-           tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-           tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable")
-           tdkTestObj.addParameter("ParamValue",str(ConfigValues[i]));
-           tdkTestObj.addParameter("Type","string");
-           expectedresult="SUCCESS";
+            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable")
+            tdkTestObj.addParameter("ParamValue",str(ConfigValues[i]));
+            tdkTestObj.addParameter("Type","string");
+            expectedresult="SUCCESS";
 
-           #Execute testcase on DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           Setresult = tdkTestObj.getResultDetails();
+            #Execute testcase on DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            Setresult = tdkTestObj.getResultDetails();
 
-           flag = 0;
-           equalflag = 0;
-           SetValue = ConfigValues[i];
+            flag = 0;
+            equalflag = 0;
+            SetValue = ConfigValues[i];
 
-           if expectedresult in actualresult:
-              flag =0;
-              print " Value set successfully to ",SetValue;
+            if expectedresult in actualresult:
+                flag =0;
+                print(" Value set successfully to ",SetValue);
 
-              tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-              cmd= "syscfg get WebUIEnable";
-              expectedresult="SUCCESS";
-              tdkTestObj.addParameter("command",cmd);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              syscfgGet = details.strip().replace("\\n", "");
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                cmd= "syscfg get WebUIEnable";
+                expectedresult="SUCCESS";
+                tdkTestObj.addParameter("command",cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                syscfgGet = details.strip().replace("\\n", "");
 
-              print "Value configured for WEBUI param via Syscfg is:",syscfgGet
-              print "Value configured for WEBUI param set using tr-181 parameter :",SetValue
+                print("Value configured for WEBUI param via Syscfg is:",syscfgGet)
+                print("Value configured for WEBUI param set using tr-181 parameter :",SetValue)
 
-              if syscfgGet == "0":
-                  checkValue = "Disable";
-              elif syscfgGet == "1":
+                if syscfgGet == "0":
+                    checkValue = "Disable";
+                elif syscfgGet == "1":
                     checkValue = "Enable";
-              else:
-                  checkValue ="MSOonly";
+                else:
+                    checkValue ="MSOonly";
 
-              if expectedresult in actualresult and checkValue  == SetValue:
-                 equalflag =0;
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "[TEST EXECUTION RESULT] : SUCCESS, Set and syscfg  O/P are same";
-              else:
-                  equalflag =1
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "[TEST EXECUTION RESULT] : FAILURE, Set and syscfg  O/P not same";
-                  break;
-           else:
+                if expectedresult in actualresult and checkValue  == SetValue:
+                    equalflag =0;
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("[TEST EXECUTION RESULT] : SUCCESS, Set and syscfg  O/P are same");
+                else:
+                    equalflag =1
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE, Set and syscfg  O/P not same");
+                    break;
+            else:
                 flag =1;
                 break;
 
-       if flag == 0 and equalflag == 0:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Set the  WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ";
-          print "EXPECTED RESULT 2: Should set the WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same "
-          print "ACTUAL RESULT 2:  WEBUI tr181 configuration set successfully";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
+        if flag == 0 and equalflag == 0:
             #Set the result status of execution
-            print "TEST STEP 2: Set the  WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ";
-            print "EXPECTED RESULT 2: Should set the WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same "
-            print "ACTUAL RESULT 2:  WEBUI tr181 configuration set failed for",SetValue;
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the  WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ");
+            print("EXPECTED RESULT 2: Should set the WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ")
+            print("ACTUAL RESULT 2:  WEBUI tr181 configuration set successfully");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            print("TEST STEP 2: Set the  WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ");
+            print("EXPECTED RESULT 2: Should set the WEBUI tr181 configuration to:",ConfigValues,"and check if the value set via tr181 and syscfg get WebUIEnable are same ")
+            print("ACTUAL RESULT 2:  WEBUI tr181 configuration set failed for",SetValue);
             tdkTestObj.setResultStatus("FAILURE");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-       #Revert the value
-       tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable");
-       tdkTestObj.addParameter("ParamValue",default);
-       tdkTestObj.addParameter("Type","string");
-       expectedresult="SUCCESS";
-       #Execute testcase on DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       result = tdkTestObj.getResultDetails();
+        #Revert the value
+        tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable");
+        tdkTestObj.addParameter("ParamValue",default);
+        tdkTestObj.addParameter("Type","string");
+        expectedresult="SUCCESS";
+        #Execute testcase on DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        result = tdkTestObj.getResultDetails();
 
-       if expectedresult in  expectedresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 3: Revert  WEBUI tr181 configuration to its default";
-          print "EXPECTED RESULT 3: Revert  WEBUI tr181 configuration to previous value";
-          print "ACTUAL RESULT 3: Revert Operation sucesss:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 3: Revert  WEBUI tr181 configuration to its default";
-          print "EXPECTED RESULT 3: Revert  WEBUI tr181 configuration to previous value";
-          print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in  expectedresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Revert  WEBUI tr181 configuration to its default");
+            print("EXPECTED RESULT 3: Revert  WEBUI tr181 configuration to previous value");
+            print("ACTUAL RESULT 3: Revert Operation sucesss:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 3: Revert  WEBUI tr181 configuration to its default");
+            print("EXPECTED RESULT 3: Revert  WEBUI tr181 configuration to previous value");
+            print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the  WEBUI tr181 configuration";
-        print "EXPECTED RESULT 1: Should get the  WEBUI tr181 configuration";
-        print "ACTUAL RESULT 1: WEBUI tr181 configuration",default;
+        print("TEST STEP 1: Get the  WEBUI tr181 configuration");
+        print("EXPECTED RESULT 1: Should get the  WEBUI tr181 configuration");
+        print("ACTUAL RESULT 1: WEBUI tr181 configuration",default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-    print "Failed to load sysutil/pam  module";
+    print("Failed to load sysutil/pam  module");
     sysObj.setLoadModuleStatus("FAILURE");
     pamObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

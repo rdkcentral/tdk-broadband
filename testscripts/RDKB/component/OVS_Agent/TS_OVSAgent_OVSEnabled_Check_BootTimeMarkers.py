@@ -103,15 +103,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     result,default = ovs_PreRequisite(tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
 
     if expectedresult in result:
-        print "TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "ACTUAL RESULT 1 : The Code Big and Mesh status are as expected";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("ACTUAL RESULT 1 : The Code Big and Mesh status are as expected");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
         tdkTestObj = tdkTestObj_Sys_ExeCmd;
         cmd = "sh %s/tdk_utility.sh parseConfigFile BOOTTIME_LOG_MARKERS" %TDK_PATH;
-        print cmd;
+        print(cmd);
         expectedresult="SUCCESS";
         tdkTestObj.addParameter("command", cmd);
         tdkTestObj.executeTestCase(expectedresult);
@@ -120,146 +120,146 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult  and details!= "":
             markerList = details.split(",");
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Execute the command";
-            print "EXPECTED RESULT 2: Should execute the command successfully";
-            print "ACTUAL RESULT 2: Details: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Execute the command");
+            print("EXPECTED RESULT 2: Should execute the command successfully");
+            print("ACTUAL RESULT 2: Details: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "TEST STEP : Check if OVS is disabled to capture disabled BootTime markers";
+            print("TEST STEP : Check if OVS is disabled to capture disabled BootTime markers");
             ovs_set,revert_flag = doEnableDisableOVS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
             if ovs_set == 1:
-               ovs_enabled = 1;
-               tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-               print "ACTUAL RESULT : OVS is in disabled state now";
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                ovs_enabled = 1;
+                tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT : OVS is in disabled state now");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               logFile = "/rdklogs/logs/BootTime.log";
-               disableMarkers = [];
-               flag = 0;
-               for item in markerList:
-                   query="grep -rin \"%s\" \"%s\"" %(item,logFile);
-                   print "query:%s" %query
-                   tdkTestObj.addParameter("command", query)
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                   if (len(details) != 0)  and  item in details:
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      details=details.split("=")[1].strip().replace("\\n","");
-                      disableMarkers.append(details);
-                   else:
-                       flag = 1;
-                       tdkTestObj.setResultStatus("FAILURE");
-                       break;
-               print "The BootTime markers value with ovs disabled :",disableMarkers;
+                logFile = "/rdklogs/logs/BootTime.log";
+                disableMarkers = [];
+                flag = 0;
+                for item in markerList:
+                    query="grep -rin \"%s\" \"%s\"" %(item,logFile);
+                    print("query:%s" %query)
+                    tdkTestObj.addParameter("command", query)
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                    if (len(details) != 0)  and  item in details:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        details=details.split("=")[1].strip().replace("\\n","");
+                        disableMarkers.append(details);
+                    else:
+                        flag = 1;
+                        tdkTestObj.setResultStatus("FAILURE");
+                        break;
+                print("The BootTime markers value with ovs disabled :",disableMarkers);
 
             if expectedresult in actualresult and flag != 1 and ovs_set == 1:
-                print "\n\n";
-                print "TEST STEP 3: Get the OVS status"
-                print "EXPECTED RESULT 3: OVS Status should enable else enable it "
+                print("\n\n");
+                print("TEST STEP 3: Get the OVS status")
+                print("EXPECTED RESULT 3: OVS Status should enable else enable it ")
 
                 ovs_set,revert_flag = doEnableDisableOVS("true",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
                 if ovs_set == 1:
-                   ovs_enabled = 1;
-                   tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                   print "ACTUAL RESULT 3: OVS Enable status set to true"
-                   print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    ovs_enabled = 1;
+                    tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+                    print("ACTUAL RESULT 3: OVS Enable status set to true")
+                    print("[TEST EXECUTION RESULT] 3: SUCCESS");
 
-                   enableMarkers = [];
-                   for item in markerList:
-                       query="grep -rin \"%s\" \"%s\"" %(item,logFile);
-                       print "query:%s" %query
-                       tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                       tdkTestObj.addParameter("command", query)
-                       expectedresult="SUCCESS";
-                       tdkTestObj.executeTestCase(expectedresult);
-                       actualresult = tdkTestObj.getResult();
-                       details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                       if (len(details) != 0)  and  item in details:
-                          details=details.split("=")[1].strip().replace("\\n","");
-                          enableMarkers.append(details);
-                       else:
-                           break;
-                   print "The marker values after ovs enable :",enableMarkers;
+                    enableMarkers = [];
+                    for item in markerList:
+                        query="grep -rin \"%s\" \"%s\"" %(item,logFile);
+                        print("query:%s" %query)
+                        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", query)
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                        if (len(details) != 0)  and  item in details:
+                            details=details.split("=")[1].strip().replace("\\n","");
+                            enableMarkers.append(details);
+                        else:
+                            break;
+                    print("The marker values after ovs enable :",enableMarkers);
 
 
-                   if expectedresult in actualresult:
-                       failure = 0;
-                       num = int(len(enableMarkers));
-                       i = 0;
-                       print "\n\n";
-                       print "TEST STEP 4: check whether the marker value before and after enabling is less than 5% "
-                       print "EXPECTED RESULT 4: Marker value before and after enabling should be less than 5% "
-                       while i < num:
-                             result = ((int(disableMarkers[i]))*6)/100;
-                             if int(enableMarkers[i]) <= (int(disableMarkers[i]) + result):
-                                print "ACTUAL RESULT: The %s difference value is less than 5perct\n"%markerList[i];
-                             else:
-                                 failure = 1;
-                                 print "ACTUAL RESULT: The marker difference value is not less than 5perct the result is %s : %d" %(markerList[i],result);
-                             i= i+1;
-                       if  failure == 0:
+                    if expectedresult in actualresult:
+                        failure = 0;
+                        num = int(len(enableMarkers));
+                        i = 0;
+                        print("\n\n");
+                        print("TEST STEP 4: check whether the marker value before and after enabling is less than 5% ")
+                        print("EXPECTED RESULT 4: Marker value before and after enabling should be less than 5% ")
+                        while i < num:
+                            result = ((int(disableMarkers[i]))*6)/100;
+                            if int(enableMarkers[i]) <= (int(disableMarkers[i]) + result):
+                                print("ACTUAL RESULT: The %s difference value is less than 5perct\n"%markerList[i]);
+                            else:
+                                failure = 1;
+                                print("ACTUAL RESULT: The marker difference value is not less than 5perct the result is %s : %d" %(markerList[i],result));
+                            i= i+1;
+                        if  failure == 0:
                             tdkTestObj.setResultStatus("SUCCESS");
-                       else:
-                           tdkTestObj.setResultStatus("FAILURE");
-                   else:
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Failed to fetch boot time markers value after enabling ovs";
+                        print("Failed to fetch boot time markers value after enabling ovs");
                 else:
                     ovs_enabled = 0
-                    print "ACTUAL RESULT 3: OVS status enable operation failed";
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
+                    print("ACTUAL RESULT 3: OVS status enable operation failed");
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Failed to fetch boot time markers value before enabling ovs";
+                print("Failed to fetch boot time markers value before enabling ovs");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Execute the command";
-            print "EXPECTED RESULT 2: Should execute the command successfully";
-            print "ACTUAL RESULT 2: Details: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Execute the command");
+            print("EXPECTED RESULT 2: Should execute the command successfully");
+            print("ACTUAL RESULT 2: Details: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value";
-        print "ACTUAL RESULT 1 : The Code Big and Mesh status are as expected";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:  Get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("EXPECTED RESULT 1: Should get the Code Big and Mesh status as disabled and enabled respectively else set it to expected value");
+        print("ACTUAL RESULT 1 : The Code Big and Mesh status are as expected");
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     actualresult = ovs_PostProcess(tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,default);
     if expectedresult in actualresult:
-       print "TEST STEP 5: Set Code Big and Mesh Enable Status value to initial value",;
-       print "EXPECTED RESULT 5: Revert operation should be success";
-       print "ACTUAL RESULT 5: REvert operation was success";
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+        print("TEST STEP 5: Set Code Big and Mesh Enable Status value to initial value", end=' ');
+        print("EXPECTED RESULT 5: Revert operation should be success");
+        print("ACTUAL RESULT 5: REvert operation was success");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
     else:
-        print "TEST STEP 5: Set Code Big and Mesh Enable Status value to initial value",;
-        print "EXPECTED RESULT 5: Revert operation should be success";
-        print "ACTUAL RESULT 5: REvert operation was Failed";
-        print "[TEST EXECUTION RESULT] 5: FAILURE";
+        print("TEST STEP 5: Set Code Big and Mesh Enable Status value to initial value", end=' ');
+        print("EXPECTED RESULT 5: Revert operation should be success");
+        print("ACTUAL RESULT 5: REvert operation was Failed");
+        print("[TEST EXECUTION RESULT] 5: FAILURE");
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     #Revert Flag will set to 1 only when initial value was false, so disable the OVS using doEnableDisableOVS function
     if revert_flag == 1:
         ovs_set,revert_flag = doEnableDisableOVS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if ovs_set == 1:
-            print "TEST STEP 6: Set the OVS enable status to False"
-            print "EXPECTED RESULT 6: Should Set the OVS Enable Status of False"
-            print "ACTUAL RESULT 5: OVS Enable Status set to False"
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 6: Set the OVS enable status to False")
+            print("EXPECTED RESULT 6: Should Set the OVS Enable Status of False")
+            print("ACTUAL RESULT 5: OVS Enable Status set to False")
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 6: Set the OVS enable status to False"
-            print "EXPECTED RESULT 6: Should Set the OVS Enable Status of False"
-            print "ACTUAL RESULT 6: Failed to set OVS Enable Status to False"
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("TEST STEP 6: Set the OVS enable status to False")
+            print("EXPECTED RESULT 6: Should Set the OVS Enable Status of False")
+            print("ACTUAL RESULT 6: Failed to set OVS Enable Status to False")
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

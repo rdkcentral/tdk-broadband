@@ -53,15 +53,15 @@ Input
     <automation_approch>In MTA component, none of the instances of a parameter are writable. We are trying to delete table for a read-only table
 1.Create a fucntion named MTA_agent_DelTble in Test Manager GUI.
 2.Configure the info of the  function under test in function MTA_agent_DelTble and create a python script
-3.Execute the generated Script(TS_MTAAGENT_DelObj_ReadOnlyTbl.py) using execution page of  Test Manager GUI 
-4.This script will in turn call mta_agent stub in TDK Agent 
+3.Execute the generated Script(TS_MTAAGENT_DelObj_ReadOnlyTbl.py) using execution page of  Test Manager GUI
+4.This script will in turn call mta_agent stub in TDK Agent
 5. MTA_agent_DelTble function will call CCSP Base Interface Function named CcspBaseIf_DeleteTblRow, that inturn will call "CcspCcMbi_DeleteTblRow" along with  provided input arguments(including Write ID) to Delete Table row info from Dynamic Table List/ Data Model of MTA Agent
-6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 7.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 As the parameter is a read-only table,delete table function will fail.
 CheckPoint 2:
-TDK agent Test Function will log the test case result as PASS 
+TDK agent Test Function will log the test case result as PASS
 CheckPoint 3:
 TestManager GUI will publish the result as PASS in Execution page</except_output>
     <priority>High</priority>
@@ -75,8 +75,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -89,15 +89,15 @@ obj.configureTestCase(ip,port,'TS_MTAAGENT_DelObj_ReadOnlyTbl');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-		
-    tdkTestObj = obj.createTestStep('MTA_agent_DelTble');  
+
+    tdkTestObj = obj.createTestStep('MTA_agent_DelTble');
     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.LineTable.1.VQM.Calls.1.");
-		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -105,24 +105,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	 
-    else:   
-        tdkTestObj.setResultStatus("FAILURE"); 
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
-	
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
     obj.unloadModule("Mta_agent");
-   		 
-else:   
-    print "Failed to load MTA module";
+
+else:
+    print("Failed to load MTA module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";				
-				
-				
+    print("Module loading failed");

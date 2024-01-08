@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetLanSubnetMask');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -118,14 +118,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-	print "TEST STEP 1: Set the subnetmask";
-        print "EXPECTED RESULT 1: Should set the subnet mask";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : SUCCESS" ;
-	tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-   	tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask");
-    	tdkTestObj.addParameter("ParamValue","255.255.255.0");
-    	tdkTestObj.addParameter("Type","string");
+        print("TEST STEP 1: Set the subnetmask");
+        print("EXPECTED RESULT 1: Should set the subnet mask");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask");
+        tdkTestObj.addParameter("ParamValue","255.255.255.0");
+        tdkTestObj.addParameter("Type","string");
 
         expectedresult="SUCCESS";
 
@@ -136,34 +136,28 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
 
         if expectedresult in actualresult:
-    	        #Set the result status of execution
-        	tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 2: Set the subnetmask";
-                print "EXPECTED RESULT 2: Should set the subnet mask";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
-	else:
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 2: Set the subnetmask";
-                print "EXPECTED RESULT 2: Should set the subnet mask";
-                print "ACTUAL RESULT 2: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the subnetmask");
+            print("EXPECTED RESULT 2: Should set the subnet mask");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS") ;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the subnetmask");
+            print("EXPECTED RESULT 2: Should set the subnet mask");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Set the subnetmask";
-        print "EXPECTED RESULT 1: Should set the subnet mask";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
+        print("TEST STEP 1: Set the subnetmask");
+        print("EXPECTED RESULT 1: Should set the subnet mask");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

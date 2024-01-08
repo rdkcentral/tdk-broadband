@@ -100,7 +100,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MOCA_SetKeyPassphrase_GreaterThan_17Chars');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -124,11 +124,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in (actualresult1,actualresult2):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the status of privacy settings and moca interface";
-        print "EXPECTED RESULT 1: Should get the status of privacy settings and moca interface";
-        print "ACTUAL RESULT 1: The status of privacy settings and moca interface are %s and %s" %(privacy_setting_status,Moca_interface_status);
+        print("TEST STEP 1: Get the status of privacy settings and moca interface");
+        print("EXPECTED RESULT 1: Should get the status of privacy settings and moca interface");
+        print("ACTUAL RESULT 1: The status of privacy settings and moca interface are %s and %s" %(privacy_setting_status,Moca_interface_status));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('Mocastub_Set');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
@@ -143,11 +143,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable the moca interface";
-            print "EXPECTED RESULT 2: Should enable the moca interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable the moca interface");
+            print("EXPECTED RESULT 2: Should enable the moca interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.PrivacyEnabledSetting");
             tdkTestObj.addParameter("ParamValue","true")
@@ -161,11 +161,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Enable the privacy settings";
-                print "EXPECTED RESULT 3: Should enable the privacy settings";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Enable the privacy settings");
+                print("EXPECTED RESULT 3: Should enable the privacy settings");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('Mocastub_SetKeypassphrase');
                 tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.KeyPassphrase");
@@ -180,19 +180,19 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Set the KeyPassphrase";
-                    print "EXPECTED RESULT 5: Should not set a KeyPassphrase greater than 17 character long";
-                    print "ACTUAL RESULT 5: %s" %details;
+                    print("TEST STEP 5: Set the KeyPassphrase");
+                    print("EXPECTED RESULT 5: Should not set a KeyPassphrase greater than 17 character long");
+                    print("ACTUAL RESULT 5: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Set the KeyPassphrase";
-                    print "EXPECTED RESULT 5: Should not set a KeyPassphrase greater than 17 character long";
-                    print "ACTUAL RESULT 5: %s" %details;
+                    print("TEST STEP 5: Set the KeyPassphrase");
+                    print("EXPECTED RESULT 5: Should not set a KeyPassphrase greater than 17 character long");
+                    print("ACTUAL RESULT 5: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #setting the default password
                 tdkTestObj = obj.createTestStep('Mocastub_SetKeypassphrase');
                 tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.KeyPassphrase");
@@ -206,35 +206,35 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Set the KeyPassphrase";
-                    print "EXPECTED RESULT : Should set the default KeyPassphrase";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP : Set the KeyPassphrase");
+                    print("EXPECTED RESULT : Should set the default KeyPassphrase");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Set the KeyPassphrase";
-                    print "EXPECTED RESULT : Should set the default KeyPassphrase";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP : Set the KeyPassphrase");
+                    print("EXPECTED RESULT : Should set the default KeyPassphrase");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Enable the privacy settings";
-                print "EXPECTED RESULT 3: Should enable the privacy settings";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Enable the privacy settings");
+                print("EXPECTED RESULT 3: Should enable the privacy settings");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable the moca interface";
-            print "EXPECTED RESULT 2: Should enable the moca interface";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable the moca interface");
+            print("EXPECTED RESULT 2: Should enable the moca interface");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
         #Set default values
         tdkTestObj = obj.createTestStep('Mocastub_Set');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.Enable");
@@ -247,15 +247,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult1 = tdkTestObj.getResult();
         details= tdkTestObj.getResultDetails();
 
-        print "TEST STEP : Revert Device.MoCA.Interface.1.Enable to initial value";
-        print "EXPECTED RESULT : Should successfully revert Device.MoCA.Interface.1.Enable";
+        print("TEST STEP : Revert Device.MoCA.Interface.1.Enable to initial value");
+        print("EXPECTED RESULT : Should successfully revert Device.MoCA.Interface.1.Enable");
 
         if expectedresult in actualresult1:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT : %s" %details;
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.PrivacyEnabledSetting");
             tdkTestObj.addParameter("ParamValue",privacy_setting_status)
@@ -266,39 +266,38 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult2 = tdkTestObj.getResult();
             details= tdkTestObj.getResultDetails();
 
-            print "TEST STEP : Revert Device.MoCA.Interface.1.PrivacyEnabledSetting to initial value";
-            print "EXPECTED RESULT : Should successfully revert Device.MoCA.Interface.1.PrivacyEnabledSetting";
+            print("TEST STEP : Revert Device.MoCA.Interface.1.PrivacyEnabledSetting to initial value");
+            print("EXPECTED RESULT : Should successfully revert Device.MoCA.Interface.1.PrivacyEnabledSetting");
 
             if expectedresult in actualresult2:
                     #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT : %s" %details;
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT : %s" %details;
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT : %s" %details;
+            print("ACTUAL RESULT : %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the status of privacy settings and moca interface";
-        print "EXPECTED RESULT 1: Should get the status of privacy settings and moca interface";
-        print "ACTUAL RESULT 1: The status of privacy settings and moca interface are %s and %s" %(privacy_setting_status,Moca_interface_status);
+        print("TEST STEP 1: Get the status of privacy settings and moca interface");
+        print("EXPECTED RESULT 1: Should get the status of privacy settings and moca interface");
+        print("ACTUAL RESULT 1: The status of privacy settings and moca interface are %s and %s" %(privacy_setting_status,Moca_interface_status));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("moca");
 else:
-    print "Failed to load moca module";
+    print("Failed to load moca module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

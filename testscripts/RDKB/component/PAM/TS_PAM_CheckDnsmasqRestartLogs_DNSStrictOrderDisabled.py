@@ -80,22 +80,22 @@ def getDNSStrict(pamobj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable" %(step);
-    print "EXPECTED RESULT %d: Should successfully get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable" %(step);
+    print("\nTEST STEP %d: Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable" %(step));
+    print("EXPECTED RESULT %d: Should successfully get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable" %(step));
 
     if expectedresult in actualresult:
         DNSStrict = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Parameter value retrieved successfully; Details : %s" %(step, DNSStrict);
+        print("ACTUAL RESULT %d: Parameter value retrieved successfully; Details : %s" %(step, DNSStrict));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Parameter value not retrieved successfully; Details : %s" %(step, details);
+        print("ACTUAL RESULT %d: Parameter value not retrieved successfully; Details : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return actualresult,tdkTestObj,DNSStrict;
 
 def setDNSStrict(pamobj, setValue, step):
@@ -107,21 +107,21 @@ def setDNSStrict(pamobj, setValue, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable to %s" %(step, setValue);
-    print "EXPECTED RESULT %d: Should successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable to %s" %(step, setValue);
+    print("\nTEST STEP %d: Set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable to %s" %(step, setValue));
+    print("EXPECTED RESULT %d: Should successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable to %s" %(step, setValue));
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Parameter value set successfully; Details : %s" %(step, details);
+        print("ACTUAL RESULT %d: Parameter value set successfully; Details : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Parameter value not set successfully; Details : %s" %(step, details);
+        print("ACTUAL RESULT %d: Parameter value not set successfully; Details : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return actualresult,tdkTestObj;
 
 def getLogFileTotalLinesCount(obj, step):
@@ -135,26 +135,26 @@ def getLogFileTotalLinesCount(obj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "TEST STEP %d : Get the number of log lines currently present" %step;
-    print "EXPECTED RESULT %d : Should get the number of log lines currently present" %step;
-    print "Query : %s" %cmd;
+    print("TEST STEP %d : Get the number of log lines currently present" %step);
+    print("EXPECTED RESULT %d : Should get the number of log lines currently present" %step);
+    print("Query : %s" %cmd);
     count = 0;
 
     if expectedresult in actualresult:
         count = int(tdkTestObj.getResultDetails().strip().replace("\\n", ""));
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Successfully captured the number of log lines present : %d" %(step, count);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: Successfully captured the number of log lines present : %d" %(step, count));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Failed to  capture the number of log lines present : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: Failed to  capture the number of log lines present : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return count;
 
 def checkDnsmasqPID(obj):
     #Get whether dnsmasq process is running, if so get the PID
     query="sh %s/tdk_platform_utility.sh checkProcess dnsmasq" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     tdkTestObj.executeTestCase("SUCCESS");
@@ -164,49 +164,49 @@ def checkDnsmasqPID(obj):
 
 def killDnsmasq_CheckLogs(obj, step):
     expectedresult = "SUCCESS";
-    print "\nTEST STEP %d : Check if the DNSMASQ process is running and get the PID" %step;
-    print "EXPECTED RESULT %d : DNSMASQ process should be running and PID retrieved" %step;
+    print("\nTEST STEP %d : Check if the DNSMASQ process is running and get the PID" %step);
+    print("EXPECTED RESULT %d : DNSMASQ process should be running and PID retrieved" %step);
 
     initial_pid, actualresult, tdkTestObj = checkDnsmasqPID(obj);
 
     if expectedresult in actualresult and initial_pid.isdigit():
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: DNSMASQ process is running; PID of dnsmasq %s" %(step, initial_pid);
+        print("ACTUAL RESULT %d: DNSMASQ process is running; PID of dnsmasq %s" %(step, initial_pid));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        print "\nGet the current number of log lines of \"RFC DNSTRICT ORDER is not defined or Enabled\"";
+        print("\nGet the current number of log lines of \"RFC DNSTRICT ORDER is not defined or Enabled\"");
         step = step + 1;
         count = getLogFileTotalLinesCount(obj, step);
 
         #Kill DNSMASQ process
         step = step + 1;
         query="kill -9 " + initial_pid;
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query)
         tdkTestObj.executeTestCase("SUCCESS");
         actualresult = tdkTestObj.getResult();
         result = tdkTestObj.getResultDetails()
 
-        print "\nTEST STEP %d : Kill the DNSMASQ process" %step;
-        print "EXPECTED RESULT %d : Should kill the DNSMASQ process successfully" %step;
+        print("\nTEST STEP %d : Kill the DNSMASQ process" %step);
+        print("EXPECTED RESULT %d : Should kill the DNSMASQ process successfully" %step);
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: DNSMASQ process killed successfully" %step;
+            print("ACTUAL RESULT %d: DNSMASQ process killed successfully" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if the dnsmasq process is restarted every in 60s for 900s(as task_health_monitor.sh runs once in 15mins)
             step = step + 1;
             processfound = 0;
 
-            print "\nTEST STEP %d : Check if the DNSMASQ process is restarted" %step;
-            print "EXPECTED RESULT %d : DNSMASQ process should be restarted" %step;
+            print("\nTEST STEP %d : Check if the DNSMASQ process is restarted" %step);
+            print("EXPECTED RESULT %d : DNSMASQ process should be restarted" %step);
 
             for iteration in range(1,16):
-                print "Waiting for the DNSMASQ process to be restrated....\nIteration : %d" %iteration;
+                print("Waiting for the DNSMASQ process to be restrated....\nIteration : %d" %iteration);
                 new_pid, actualresult, tdkTestObj = checkDnsmasqPID(obj);
 
                 if expectedresult in actualresult and new_pid.isdigit():
@@ -218,45 +218,45 @@ def killDnsmasq_CheckLogs(obj, step):
 
             if processfound == 1 and new_pid != initial_pid:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: DNSMASQ process restarted with PID : %s" %(step,new_pid);
+                print("ACTUAL RESULT %d: DNSMASQ process restarted with PID : %s" %(step,new_pid));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nGet the current number of log lines of \"RFC DNSTRICT ORDER is not defined or Enabled\"";
+                print("\nGet the current number of log lines of \"RFC DNSTRICT ORDER is not defined or Enabled\"");
                 step = step + 1;
                 final_count = getLogFileTotalLinesCount(obj, step);
 
                 step = step + 1;
-                print "\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step;
-                print "EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step;
-                print "Initial Count : %d" %count;
-                print "Final Count : %d" %final_count;
+                print("\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step);
+                print("EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step);
+                print("Initial Count : %d" %count);
+                print("Final Count : %d" %final_count);
 
                 if final_count == (count + 1):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step;
+                    print("ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step;
+                    print("ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: DNSMASQ process is not restarted" %step;
+                print("ACTUAL RESULT %d: DNSMASQ process is not restarted" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: DNSMASQ process is not killed successfully" %step;
+            print("ACTUAL RESULT %d: DNSMASQ process is not killed successfully" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: DNSMASQ is not running" %step;
+        print("ACTUAL RESULT %d: DNSMASQ is not running" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return step;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -279,8 +279,8 @@ pamobj.configureTestCase(ip,port,'TS_PAM_CheckDnsmasqRestartLogs_DNSStrictOrderD
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =pamobj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -293,64 +293,64 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in actualresult and initial_DNSStrict != " ":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "GET operation is success";
+        print("GET operation is success");
 
         if initial_DNSStrict == "false":
-            print "The Initial value of DNSStrict ORDER is false, Toggle not required";
+            print("The Initial value of DNSStrict ORDER is false, Toggle not required");
             #Kill the dnsmasq process if found running and check the logs on dnsmasq restart
             step = step + 1;
             step = killDnsmasq_CheckLogs(obj, step);
         else:
-            print "The Initial value of DNSStrict ORDER is true, Toggle required";
+            print("The Initial value of DNSStrict ORDER is true, Toggle required");
             step = step + 1;
             setValue = "false";
             actualresult,tdkTestObj = setDNSStrict(pamobj, setValue, step);
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Set operation is success";
+                print("Set operation is success");
                 step = step + 1;
                 actualresult,tdkTestObj,final_DNSStrict = getDNSStrict(pamobj, step);
 
                 if expectedresult in actualresult and final_DNSStrict != " ":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Successfully fetched the DNSSStrict value after SET";
+                    print("Successfully fetched the DNSSStrict value after SET");
 
                     if final_DNSStrict == "false":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Set operation of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable is reflected in Get";
+                        print("Set operation of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable is reflected in Get");
                         #Kill the dnsmasq process if found running and check the logs on dnsmasq restart
                         step = step + 1;
                         step = killDnsmasq_CheckLogs(obj, step);
 
-                        print "\nReverting to initial state....";
+                        print("\nReverting to initial state....");
                         step = step + 1;
                         setValue = "true";
                         actualresult,tdkTestObj = setDNSStrict(pamobj, setValue, step);
 
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Revert operation is success";
+                            print("Revert operation is success");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Revert operation failed";
+                            print("Revert operation failed");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Set operation of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable is not reflected in Get";
+                        print("Set operation of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DNSStrictOrder.Enable is not reflected in Get");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Unable to fetch the DNSSStrict value after SET";
+                    print("Unable to fetch the DNSSStrict value after SET");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Set operation failed";
+                print("Set operation failed");
     else:
         tdkTestObj.setResultStatus("FAILED");
-        print "GET operation failed";
+        print("GET operation failed");
 
     obj.unloadModule("sysutil");
     pamobj.unloadModule("pam");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     pamobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

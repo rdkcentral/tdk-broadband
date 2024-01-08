@@ -95,8 +95,8 @@ obj1.configureTestCase(ip,port,'TS_MTAAGENT_SetAttr_RootDevice');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 obj1loadmodulestatus =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %obj1loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %obj1loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper() and obj1loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,56 +109,45 @@ if "SUCCESS" in loadmodulestatus.upper() and obj1loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "details: ",details
+    print("details: ",details)
     numEntries = int(details);
     if expectedresult in actualresult and numEntries  > 0:
-       tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');
-       tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.DSXLog.");
-       tdkTestObj.addParameter("AccessControl","anybody");
-       tdkTestObj.addParameter("Notify","active");
-       expectedresult="SUCCESS";
+        tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');
+        tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.DSXLog.");
+        tdkTestObj.addParameter("AccessControl","anybody");
+        tdkTestObj.addParameter("Notify","active");
+        expectedresult="SUCCESS";
 
-       #Execute the test case in STB
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          details = tdkTestObj.getResultDetails();
-          print "TEST STEP 1:Set the notification attribute of DSX Log parameters to Anybody";
-          print "EXPECTED RESULT 1: Should Successfully set the attributes";
-          print "ACTUAL RESULT 1: %s" %details;
-          print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	  print "%s" %details;
+        #Execute the test case in STB
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            details = tdkTestObj.getResultDetails();
+            print("TEST STEP 1:Set the notification attribute of DSX Log parameters to Anybody");
+            print("EXPECTED RESULT 1: Should Successfully set the attributes");
+            print("ACTUAL RESULT 1: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
 
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           details = tdkTestObj.getResultDetails();
-           print "TEST STEP 1:Set the notification attribute of DSX Log parameters to Anybody";
-           print "EXPECTED RESULT 1: Should Successfully set the attributes";
-           print "ACTUAL RESULT 1: %s" %details;
-           print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-           print "%s" %details;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            details = tdkTestObj.getResultDetails();
+            print("TEST STEP 1:Set the notification attribute of DSX Log parameters to Anybody");
+            print("EXPECTED RESULT 1: Should Successfully set the attributes");
+            print("ACTUAL RESULT 1: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "Since DSXLog Number Of Entries is %s need not query Device.X_CISCO_COM_MTA.DSXLog. " %details
-        print "[TEST EXECUTION RESULT] : SUCCESS" ;
+        print("Since DSXLog Number Of Entries is %s need not query Device.X_CISCO_COM_MTA.DSXLog. " %details)
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
     obj.unloadModule("Mta_agent");
     obj1.unloadModule("tdkbtr181");
 
 else:
-    print "Failed to load MTA module";
+    print("Failed to load MTA module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
-
-
-
-
-
-
-
-
-
+    print("Module loading failed");

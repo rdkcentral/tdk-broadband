@@ -25,7 +25,7 @@
   <primitive_test_name>MTA_agent_SetParameterValues</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>TC_MTAAGENT_8 - To Validate Set Param Values functionality with Set Parameter Attribute for 
+  <synopsis>TC_MTAAGENT_8 - To Validate Set Param Values functionality with Set Parameter Attribute for
 MTA Agent</synopsis>
   <groups_id/>
   <execution_time>5</execution_time>
@@ -40,8 +40,8 @@ MTA Agent</synopsis>
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_MTAAGENT_7</test_case_id>
-    <test_objective>To Validate 
-Set Param Values functionality with Set Parameter Attribute for 
+    <test_objective>To Validate
+Set Param Values functionality with Set Parameter Attribute for
 MTA Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -53,30 +53,30 @@ API Name
 MTA_agent_SetParameterValues
 Input
 1.PathName ("paramName")( eg: "Device." )
-2.Parameter Value 
+2.Parameter Value
  ("paramValue")
 3.Parameter Type ("paramType") (eg:string)
 
 MTA_agent_SetParameterAttr
 Input
 1.PathName ( eg: "Device." )
-2.Notification type 
-("notification") 
+2.Notification type
+("notification")
 (eg:pasive)
-3.Access Control Change type ("accessControlChanged") 
+3.Access Control Change type ("accessControlChanged")
 (eg:anybody)</input_parameters>
     <automation_approch>(During boot up, Attributes of parameters are:
 AccessControl: ANYBODY
 Notification : OFF)
 1.Create a function named MTA_agent_SetParameterValues in Test Manager GUI.
 2.Configure the info of the  function under test in function  and create a python script
-3.Execute the generated Script(TS_MTAAGENT_SetValues_with_SetAttr.py) using execution page of  Test Manager GUI 
-4.This script will in turn call mta_agent stub in TDK Agent 
+3.Execute the generated Script(TS_MTAAGENT_SetValues_with_SetAttr.py) using execution page of  Test Manager GUI
+4.This script will in turn call mta_agent stub in TDK Agent
 5.MTA_agent_SetParameterValues function will call CCSP Base Interface Function named "CcspBaseIf_setParameterValues" , that inturn will call MTA Agent Library Function "CcspCcMbi_SetParameterValues" along with provided path name and Value
 6.MTA_agent_SetParameterValues function will call CCSP Base Interface Function named "CcspBaseIf_getParameterValues" for the same inputs to check whether the values have been updated .
 7.Now change the attributes of the parameter by calling CcspBaseIf_setParameterAttributes , change the access control to "WebGui".Again repeat step 5
 8.Perform the same functionality by setting attributes again to "ANYBODY" and repeat step 5.
-9.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+9.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 10.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Values of Requested Path should be set  when access control is set "ANYBODY".
@@ -99,8 +99,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-						# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+                                                # use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -113,18 +113,18 @@ obj.configureTestCase(ip,port,'TS_MTAAGENT_SetValues_with_SetAttr');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-		
-    tdkTestObj = obj.createTestStep('MTA_agent_SetParameterValues');  
+
+    tdkTestObj = obj.createTestStep('MTA_agent_SetParameterValues');
     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.EnableMTALog");
 
     tdkTestObj.addParameter("ParamValue","true");
     tdkTestObj.addParameter("Type","boolean");
-		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -132,56 +132,53 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Enable the MTA Log";
-        print "EXPECTED RESULT 1: Should Successfully enable the MTA Log";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	
-	tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');
+        print("TEST STEP 1:Enable the MTA Log");
+        print("EXPECTED RESULT 1: Should Successfully enable the MTA Log");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+        tdkTestObj = obj.createTestStep('MTA_agent_SetParameterAttr');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.EnableMTALog");
-	tdkTestObj.addParameter("AccessControl","anybody");
+        tdkTestObj.addParameter("AccessControl","anybody");
         tdkTestObj.addParameter("Notify","active");
-	
-	expectedresult="SUCCESS";
-	    		
-	#Execute the test case in STB
+
+        expectedresult="SUCCESS";
+
+        #Execute the test case in STB
         tdkTestObj.executeTestCase(expectedresult);
 
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-		
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Set the access attribute as Anybody for MTA Log parameter";
-            print "EXPECTED RESULT 2: Should Successfully set the access attribute";
-            print "ACTUAL RESULT 2: %s" %details;
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        else:   
-            tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Set the access attribute as Anybody for MTA Log parameter";
-            print "EXPECTED RESULT 2: Should Successfully set the access attribute";
-            print "ACTUAL RESULT 2: %s" %details;
-	    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-    else:
-	
-        tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Enable the MTA Log";
-        print "EXPECTED RESULT 1: Should Successfully enable the MTA Log";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-    
-    obj.unloadModule("Mta_agent");
-   		 
-else:   
-    print "Failed to load MTA module";
-    obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";	
-				
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-					
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2:Set the access attribute as Anybody for MTA Log parameter");
+            print("EXPECTED RESULT 2: Should Successfully set the access attribute");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2:Set the access attribute as Anybody for MTA Log parameter");
+            print("EXPECTED RESULT 2: Should Successfully set the access attribute");
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    else:
+
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1:Enable the MTA Log");
+        print("EXPECTED RESULT 1: Should Successfully enable the MTA Log");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+
+    obj.unloadModule("Mta_agent");
+
+else:
+    print("Failed to load MTA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

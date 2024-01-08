@@ -118,109 +118,109 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Initiate factory reset ";
-       print "EXPECTED RESULT 1: Should inititate factory reset";
-       print "ACTUAL RESULT 1: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       #Restore the device state saved before reboot
-       obj.restorePreviousStateAfterReboot();
+        #Restore the device state saved before reboot
+        obj.restorePreviousStateAfterReboot();
 
-       tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-       tdkTestObj.addParameter("paramName","Device.WiFi.X_RDKCENTRAL-COM_GASConfiguration");
-       expectedresult="SUCCESS";
+        tdkTestObj = obj.createTestStep('WIFIAgent_Get');
+        tdkTestObj.addParameter("paramName","Device.WiFi.X_RDKCENTRAL-COM_GASConfiguration");
+        expectedresult="SUCCESS";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult and details:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the GAS Configuration";
-          print "EXPECTED RESULT 2: Should get GAS Configuration";
-          print "ACTUAL RESULT 2: GAS Configuration retreived successful";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult and details:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the GAS Configuration");
+            print("EXPECTED RESULT 2: Should get GAS Configuration");
+            print("ACTUAL RESULT 2: GAS Configuration retreived successful");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          advertId = int(details.split("AdvertisementId")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
-          print "advertId:",advertId;
-          pauseForServerResp = details.split("PauseForServerResp")[1].split(":")[1].split(",")[0].strip().replace("\\n", "");
-          print "pauseForServerResp:",pauseForServerResp;
-          respTimeout = int(details.split("RespTimeout")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
-          print "respTimeout:",respTimeout
-          comebackDelay = int(details.split("ComebackDelay")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
-          print "comebackDelay:" ,comebackDelay
-          respBufferTime = int(details.split("RespBufferTime")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
-          print "respBufferTime:",respBufferTime;
-          queryRespLengthLimit=int(details.split("QueryRespLengthLimit")[1].split(":")[1].split("}")[0].strip().replace("\\n", ""));
-          print "queryRespLengthLimit:",queryRespLengthLimit;
+            advertId = int(details.split("AdvertisementId")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
+            print("advertId:",advertId);
+            pauseForServerResp = details.split("PauseForServerResp")[1].split(":")[1].split(",")[0].strip().replace("\\n", "");
+            print("pauseForServerResp:",pauseForServerResp);
+            respTimeout = int(details.split("RespTimeout")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
+            print("respTimeout:",respTimeout)
+            comebackDelay = int(details.split("ComebackDelay")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
+            print("comebackDelay:" ,comebackDelay)
+            respBufferTime = int(details.split("RespBufferTime")[1].split(":")[1].split(",")[0].strip().replace("\\n", ""));
+            print("respBufferTime:",respBufferTime);
+            queryRespLengthLimit=int(details.split("QueryRespLengthLimit")[1].split(":")[1].split("}")[0].strip().replace("\\n", ""));
+            print("queryRespLengthLimit:",queryRespLengthLimit);
 
-          print "*** Checking if the GAS Configurations have default Value***";
-          if advertId == 0:
-             print "advertId has a default value as 0";
-          else:
-              flag = 0;
-              print "advertId doesnot have a default value";
+            print("*** Checking if the GAS Configurations have default Value***");
+            if advertId == 0:
+                print("advertId has a default value as 0");
+            else:
+                flag = 0;
+                print("advertId doesnot have a default value");
 
-          if pauseForServerResp == "true":
-             print "pauseForServerResp should have a default value as true";
-          else:
-              flag = 0;
-              print "pauseForServerResp doesnot hold a default value";
+            if pauseForServerResp == "true":
+                print("pauseForServerResp should have a default value as true");
+            else:
+                flag = 0;
+                print("pauseForServerResp doesnot hold a default value");
 
-          if respTimeout == 5000:
-             print "respTimeout has a default value as 5000";
-          else:
-              flag = 0;
-              print "respTimeout doesnot have a default value";
+            if respTimeout == 5000:
+                print("respTimeout has a default value as 5000");
+            else:
+                flag = 0;
+                print("respTimeout doesnot have a default value");
 
-          if comebackDelay ==1000:
-             print "comebackDelay has a default value as 1000";
-          else:
-              flag = 0;
-              print "comebackDelay doesnot have a default value";
+            if comebackDelay ==1000:
+                print("comebackDelay has a default value as 1000");
+            else:
+                flag = 0;
+                print("comebackDelay doesnot have a default value");
 
-          if respBufferTime == 1000 :
-             print"respBufferTime has a default value as 1000";
-          else:
-              flag = 0;
-              print "respBufferTime doesnot have a default value";
+            if respBufferTime == 1000 :
+                print("respBufferTime has a default value as 1000");
+            else:
+                flag = 0;
+                print("respBufferTime doesnot have a default value");
 
-          if queryRespLengthLimit == 127:
-             print "queryRespLengthLimit has a default value as 127";
-          else:
-              flag = 0;
-              print "queryRespLengthLimit doesnot have a default value";
+            if queryRespLengthLimit == 127:
+                print("queryRespLengthLimit has a default value as 127");
+            else:
+                flag = 0;
+                print("queryRespLengthLimit doesnot have a default value");
 
-          if flag == 1:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "****The GAS configs have the default value on factory reset****";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "*****The GAS configs donot have the default value on factory reset****";
-       else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the GAS Configuration";
-           print "EXPECTED RESULT 2: Should get GAS Configuration";
-           print "ACTUAL RESULT 2: Failed to retrieve GAS Configuration";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+            if flag == 1:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("****The GAS configs have the default value on factory reset****");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("*****The GAS configs donot have the default value on factory reset****");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the GAS Configuration");
+            print("EXPECTED RESULT 2: Should get GAS Configuration");
+            print("ACTUAL RESULT 2: Failed to retrieve GAS Configuration");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

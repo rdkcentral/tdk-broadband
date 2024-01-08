@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_NTPTimeClientEnable');
 
 #Get the result of connection with test component and Gateway
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -110,7 +110,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     org_value=details;
-    print "Initial value is %s" %org_value;
+    print("Initial value is %s" %org_value);
     if expectedresult in actualresult:
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.Time.Enable");
@@ -125,9 +125,9 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Enable the NTP Time";
-            print "EXPECTED RESULT 1: Should enable the NTP Time successfully";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Enable the NTP Time");
+            print("EXPECTED RESULT 1: Should enable the NTP Time successfully");
+            print("ACTUAL RESULT 1: %s" %details);
             tdkTestObj = obj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.Time.Enable");
             tdkTestObj.addParameter("ParamValue",org_value);
@@ -141,49 +141,31 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP 2: Set the NTP Time to initial value";
-                print "EXPECTED RESULT 2: Should Set the NTP Time to initial value successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the NTP Time to initial value");
+                print("EXPECTED RESULT 2: Should Set the NTP Time to initial value successfully");
+                print("ACTUAL RESULT 2: %s" %details);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP 2: Set the NTP Time to initial value";
-                print "EXPECTED RESULT 2: Should Set the NTP Time to initial value successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the NTP Time to initial value");
+                print("EXPECTED RESULT 2: Should Set the NTP Time to initial value successfully");
+                print("ACTUAL RESULT 2: %s" %details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP 1: Enable the NTP Time";
-            print "EXPECTED RESULT 1: Should enable the NTP Time successfully";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Enable the NTP Time");
+            print("EXPECTED RESULT 1: Should enable the NTP Time successfully");
+            print("ACTUAL RESULT 1: %s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Get the initial boolean value";
-        print "EXPECTED RESULT 1: Should get the initial boolean value";
-        print "ACTUAL RESULT 1: Failure in getting the initial boolean value. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP : Get the initial boolean value");
+        print("EXPECTED RESULT 1: Should get the initial boolean value");
+        print("ACTUAL RESULT 1: Failure in getting the initial boolean value. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

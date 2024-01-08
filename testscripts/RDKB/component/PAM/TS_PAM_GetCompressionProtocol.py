@@ -112,7 +112,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetCompressionProtocol');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -127,30 +127,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-	print details;
-	if "None" or "Van Jacobson" or "STAC LZS" in details:
+        print(details);
+        if "None" or "Van Jacobson" or "STAC LZS" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the CompressionProtocol";
-            print "EXPECTED RESULT 1:CompressionProtocol should be a subset of [None,Van Jacobson, STAC LZS]";
-            print "ACTUAL RESULT 1: CompressionProtocol:%s" %details;
+            print("TEST STEP 1: Get the CompressionProtocol");
+            print("EXPECTED RESULT 1:CompressionProtocol should be a subset of [None,Van Jacobson, STAC LZS]");
+            print("ACTUAL RESULT 1: CompressionProtocol:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the CompressionProtocol";
-            print "EXPECTED RESULT 1: CompressionProtocol should be a subset of [None,Van Jacobson, STAC LZS]";
-            print "ACTUAL RESULT 1: CompressionProtocol is not a subset of [None, Van Jacobson, STAC LZS]: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the CompressionProtocol");
+            print("EXPECTED RESULT 1: CompressionProtocol should be a subset of [None,Van Jacobson, STAC LZS]");
+            print("ACTUAL RESULT 1: CompressionProtocol is not a subset of [None, Van Jacobson, STAC LZS]: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the CompressionProtocol";
-	print "EXPECTED RESULT 1: Should get the CompressionProtocol";
-	print "ACTUAL RESULT 1: Failed to get the CompressionProtocol: %s" %details;
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the CompressionProtocol");
+        print("EXPECTED RESULT 1: Should get the CompressionProtocol");
+        print("ACTUAL RESULT 1: Failed to get the CompressionProtocol: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

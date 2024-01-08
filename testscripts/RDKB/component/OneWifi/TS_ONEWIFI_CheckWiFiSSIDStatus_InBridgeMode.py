@@ -110,8 +110,8 @@ sysobj.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiSSIDStatus_InBridgeMode');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -124,15 +124,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     param = "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode";
     actualresult, lanmodeInitial = getParameter(tdkTestObj, param);
 
-    print "\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-    print "EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step;
+    print("\nTEST STEP %d: Get the initial Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+    print("EXPECTED RESULT %d: Should get the initial Lan Mode successfully" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial);
+        print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, lanmodeInitial));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Set to bridge mode if not already in bridge mode
         revert_flag = 0;
@@ -144,15 +144,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
             actualresult, details = setLanMode(tdkTestObj, setValue);
 
-            print "\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-            print "EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue);
+            print("\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+            print("EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue));
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the Lan Mode is set properly
                 sleep(20);
@@ -161,15 +161,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 param = "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode";
                 actualresult, currLanMode = getParameter(tdkTestObj, param);
 
-                print "\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-                print "EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue);
+                print("\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+                print("EXPECTED RESULT %d: Should get the current Lan Mode as %s" %(step, setValue));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation success; Lanmode is : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if currLanMode == setValue :
                         revert_flag = 1;
@@ -178,51 +178,51 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "SET does not reflects in GET";
+                        print("SET does not reflects in GET");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode);
+                    print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, currLanMode));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details);
+                print("ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Lanmode already is bridge-static";
+            print("Lanmode already is bridge-static");
 
         if lanmodeInitial == "bridge-static" or currLanMode == "bridge-static":
             step = step + 1;
-            print "\nTEST STEP %d: Check the WiFi SSID status corresponding to the all the applicable radios in bridge mode" %step;
-            print "EXPECTED RESULT %d: The WiFi SSID status corresponding to all the appliacable radios should be down in bridge mode" %step;
+            print("\nTEST STEP %d: Check the WiFi SSID status corresponding to the all the applicable radios in bridge mode" %step);
+            print("EXPECTED RESULT %d: The WiFi SSID status corresponding to all the appliacable radios should be down in bridge mode" %step);
 
             #Get 2.4G WiFi SSID Status
-            print "\nFetching the WiFi SSID Status for 2.4G...";
+            print("\nFetching the WiFi SSID Status for 2.4G...");
             param = "Device.WiFi.SSID.1.Status";
             actualresult1, ssid_1_status = getParameter(tdkTestObj, param);
 
             if expectedresult in actualresult1:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Device.WiFi.SSID.1.Status : %s" %ssid_1_status;
+                print("Device.WiFi.SSID.1.Status : %s" %ssid_1_status);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Device.WiFi.SSID.1.Status not retrieved";
+                print("Device.WiFi.SSID.1.Status not retrieved");
 
             #Get 5G WiFi SSID Status
-            print "\nFetching the WiFi SSID Status for 5G...";
+            print("\nFetching the WiFi SSID Status for 5G...");
             param = "Device.WiFi.SSID.2.Status";
             actualresult2, ssid_2_status = getParameter(tdkTestObj, param);
 
             if expectedresult in actualresult2:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Device.WiFi.SSID.2.Status : %s" %ssid_2_status;
+                print("Device.WiFi.SSID.2.Status : %s" %ssid_2_status);
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Device.WiFi.SSID.2.Status not retrieved";
+                print("Device.WiFi.SSID.2.Status not retrieved");
 
             #Check if 6G is applicable
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -236,46 +236,46 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult and details != "":
                 #Get 6G WiFi SSID Status
                 applicable_6G = 1;
-                print "\nFetching the WiFi SSID Status for 6G...";
+                print("\nFetching the WiFi SSID Status for 6G...");
                 param = "Device.WiFi.SSID.17.Status";
                 actualresult3, ssid_17_status = getParameter(tdkTestObj, param);
 
                 if expectedresult in actualresult3:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Device.WiFi.SSID.17.Status : %s" %ssid_17_status;
+                    print("Device.WiFi.SSID.17.Status : %s" %ssid_17_status);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Device.WiFi.SSID.17.Status not retrieved";
+                    print("Device.WiFi.SSID.17.Status not retrieved");
             else:
-                print "\n6G not applicable...";
+                print("\n6G not applicable...");
                 applicable_6G = 0;
 
             if applicable_6G == 1:
                 if ssid_1_status == "Down" and ssid_2_status == "Down" and ssid_17_status == "Down":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: All WiFi SSID statuses are down in bridge-mode" %step;
+                    print("ACTUAL RESULT %d: All WiFi SSID statuses are down in bridge-mode" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: All WiFi SSID statuses are not down in bridge-mode" %step;
+                    print("ACTUAL RESULT %d: All WiFi SSID statuses are not down in bridge-mode" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 if ssid_1_status == "Down" and ssid_2_status == "Down" :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: All WiFi SSID statuses are down in bridge-mode" %step;
+                    print("ACTUAL RESULT %d: All WiFi SSID statuses are down in bridge-mode" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: All WiFi SSID statuses are not down in bridge-mode" %step;
+                    print("ACTUAL RESULT %d: All WiFi SSID statuses are not down in bridge-mode" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert operation
             if revert_flag == 1:
@@ -284,37 +284,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 actualresult, details = setLanMode(tdkTestObj, setValue);
 
-                print "\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue);
-                print "EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue);
+                print("\nTEST STEP %d: Transition the lanmode to %s using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %(step, setValue));
+                print("EXPECTED RESULT %d: Should set the Lan Mode to %s successfully" %(step, setValue));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Lan Mode not set successfully; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Revert operation not required";
+                print("Revert operation not required");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Lanmode could not be set to bridge-static";
+            print("Lanmode could not be set to bridge-static");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, lanmodeInitial);
+        print("ACTUAL RESULT %d: GET operation failed; Lanmode is : %s" %(step, lanmodeInitial));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysobj.unloadModule("sysutil");
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-

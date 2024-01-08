@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_PAM_EnableIPv6onLnFAndReboot');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 
 if "SUCCESS" in loadmodulestatus.upper():
@@ -98,11 +98,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value ofIPv6onLnF Enable";
-        print "EXPECTED RESULT 1: Should get the value of IPv6onLnF";
-        print "ACTUAL RESULT 1:IPv6onLnF Enable :%s" %orgValue;
+        print("TEST STEP 1: Get the value ofIPv6onLnF Enable");
+        print("EXPECTED RESULT 1: Should get the value of IPv6onLnF");
+        print("ACTUAL RESULT 1:IPv6onLnF Enable :%s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         tdkTestObj = obj.createTestStep("pam_Setparams");
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.IPv6onLnF.Enable");
         tdkTestObj.addParameter("ParamValue","true");
@@ -114,11 +114,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the value forIPv6onLnF Enable";
-            print "EXPECTED RESULT 2: Should set the value of IPv6onLnF";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value forIPv6onLnF Enable");
+            print("EXPECTED RESULT 2: Should set the value of IPv6onLnF");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             #rebooting the device
             obj.initiateReboot();
             time.sleep(300);
@@ -132,19 +132,19 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and "rfc_reboot" not  in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the reboot reason after IPv6onLnF is enabled ";
-                print "EXPECTED RESULT 3:IPv6onLnF Enable should not cause reboot";
-                print "ACTUAL RESULT 3: result :",details;
+                print("TEST STEP 3: Get the reboot reason after IPv6onLnF is enabled ");
+                print("EXPECTED RESULT 3:IPv6onLnF Enable should not cause reboot");
+                print("ACTUAL RESULT 3: result :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the reboot reason after IPv6onLnF is enabled ";
-                print "EXPECTED RESULT 3:IPv6onLnF Enable should not cause reboot";
-                print "ACTUAL RESULT 3: result :",details
+                print("TEST STEP 3: Get the reboot reason after IPv6onLnF is enabled ");
+                print("EXPECTED RESULT 3:IPv6onLnF Enable should not cause reboot");
+                print("ACTUAL RESULT 3: result :",details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
 
             #Revert the value
             tdkTestObj = obj.createTestStep("pam_Setparams");
@@ -158,34 +158,34 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4:Revert value forIPv6onLnF Enable";
-                print "EXPECTED RESULT 4: Should revert the value of IPv6onLnF";
-                print "ACTUAL RESULT 4:%s" %details;
+                print("TEST STEP 4:Revert value forIPv6onLnF Enable");
+                print("EXPECTED RESULT 4: Should revert the value of IPv6onLnF");
+                print("ACTUAL RESULT 4:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4:Revert value forIPv6onLnF Enable";
-                print "EXPECTED RESULT 4: Should set the value of IPv6onLnF";
-                print "ACTUAL RESULT 4:%s" %details;
+                print("TEST STEP 4:Revert value forIPv6onLnF Enable");
+                print("EXPECTED RESULT 4: Should set the value of IPv6onLnF");
+                print("ACTUAL RESULT 4:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the value forIPv6onLnF Enable";
-            print "EXPECTED RESULT 2: Should set the value of IPv6onLnF";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value forIPv6onLnF Enable");
+            print("EXPECTED RESULT 2: Should set the value of IPv6onLnF");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value ofIPv6onLnF Enable";
-        print "EXPECTED RESULT 1: Should get the value of IPv6onLnF";
-        print "ACTUAL RESULT 1: Failed to getIPv6onLnF Enable";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the value ofIPv6onLnF Enable");
+        print("EXPECTED RESULT 1: Should get the value of IPv6onLnF");
+        print("ACTUAL RESULT 1: Failed to getIPv6onLnF Enable");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -90,8 +90,8 @@ sysobj.configureTestCase(ip,port,'TS_WiFiMesh_CheckmeshapcfgErrors');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 def setLanMode(mode, obj, step):
     expectedresult = "SUCCESS";
@@ -104,15 +104,15 @@ def setLanMode(mode, obj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Change Lan Mode to %s" %(step, mode);
-    print "EXPECTED RESULT %d: Should change Lan Mode to %s" %(step, mode);
+    print("\nTEST STEP %d: Change Lan Mode to %s" %(step, mode));
+    print("EXPECTED RESULT %d: Should change Lan Mode to %s" %(step, mode));
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Set operation success; Details: %s " %(step, details);
+        print("ACTUAL RESULT %d: Set operation success; Details: %s " %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Sleeping for the Lan Mode change to take effect
         sleep(120);
 
@@ -125,22 +125,22 @@ def setLanMode(mode, obj, step):
         details = tdkTestObj.getResultDetails();
         newValue = details.split("VALUE:")[1].split(' ')[0];
 
-        print "\nTEST STEP %d: Check if the Lan Mode is set successfully" %step;
-        print "EXPECTED RESULT %d: The Lan Mode should be set successfully " %step;
+        print("\nTEST STEP %d: Check if the Lan Mode is set successfully" %step);
+        print("EXPECTED RESULT %d: The Lan Mode should be set successfully " %step);
 
         if expectedresult in actualresult and newValue == mode:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Lanmode is set successfully, current Lan Mode is : %s" %(step, newValue);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: Lanmode is set successfully, current Lan Mode is : %s" %(step, newValue));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             status = 0;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Lanmode is not set successfully, current Lan Mode is : %s" %(step, newValue);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT %d: Lanmode is not set successfully, current Lan Mode is : %s" %(step, newValue));
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT : Set operation failed; Details: %s " %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT : Set operation failed; Details: %s " %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status, newValue, step;
 
 def setMeshEnable(enable, obj, step):
@@ -154,15 +154,15 @@ def setMeshEnable(enable, obj, step):
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Enable to %s" %(step, enable);
-    print "EXPECTED RESULT %d: Should set the mesh enable successfully" %step;
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Enable to %s" %(step, enable));
+    print("EXPECTED RESULT %d: Should set the mesh enable successfully" %step);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Set operation success; Mesh state is %s " %(step, details);
+        print("ACTUAL RESULT %d: Set operation success; Mesh state is %s " %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Cross check SET with GET
         sleep(10);
@@ -174,22 +174,22 @@ def setMeshEnable(enable, obj, step):
         details = tdkTestObj.getResultDetails();
         newValue = details.split("VALUE:")[1].split(' ')[0];
 
-        print "\nTEST STEP %d: Check if the Mesh Enable is set successfully" %step;
-        print "EXPECTED RESULT %d: The Mesh Enable should be set successfully " %step;
+        print("\nTEST STEP %d: Check if the Mesh Enable is set successfully" %step);
+        print("EXPECTED RESULT %d: The Mesh Enable should be set successfully " %step);
 
         if expectedresult in actualresult and newValue == enable:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Mesh Enable is set successfully, current enable status is : %s" %(step, newValue);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: Mesh Enable is set successfully, current enable status is : %s" %(step, newValue));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             status = 0;
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Mesh Enable is not set successfully, current enable status is : %s" %(step, newValue);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT %d: Mesh Enable is not set successfully, current enable status is : %s" %(step, newValue));
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT : Set operation failed; Details: %s " %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT : Set operation failed; Details: %s " %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status, newValue, step;
 
 def checkFileExists(sysobj, file, step):
@@ -197,26 +197,26 @@ def checkFileExists(sysobj, file, step):
     status = 1;
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     cmd = "[ -f " + file + " ] && echo \"File exist\" || echo \"File does not exist\"";
-    print "\nCommand : ", cmd;
+    print("\nCommand : ", cmd);
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for %s file presence" %(step, file);
-    print "EXPECTED RESULT %d: %s file should be present" %(step, file);
+    print("\nTEST STEP %d: Check for %s file presence" %(step, file));
+    print("EXPECTED RESULT %d: %s file should be present" %(step, file));
 
     if expectedresult in actualresult and details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s file is present" %(step, file);
+        print("ACTUAL RESULT %d: %s file is present" %(step, file));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         status = 0;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s file is not present" %(step, file);
+        print("ACTUAL RESULT %d: %s file is not present" %(step, file));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 def executeScript(sysobj, file, step):
@@ -224,27 +224,27 @@ def executeScript(sysobj, file, step):
     status = 1;
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     cmd = "sh " + file;
-    print "\nCommand : ", cmd;
+    print("\nCommand : ", cmd);
     tdkTestObj.addParameter("command",cmd);
     tdkTestObj.executeTestCase(expectedresult);
     sleep(10);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Run the shell script %s" %(step, file);
-    print "EXPECTED RESULT %d: Should run the shell script successfully" %step;
+    print("\nTEST STEP %d: Run the shell script %s" %(step, file));
+    print("EXPECTED RESULT %d: Should run the shell script successfully" %step);
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: The shell script is executed successfully" %step;
+        print("ACTUAL RESULT %d: The shell script is executed successfully" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         status = 0;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: The shell script is not executed successfully" %step;
+        print("ACTUAL RESULT %d: The shell script is not executed successfully" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 
@@ -264,13 +264,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     details = tdkTestObj.getResultDetails();
     orgLanMode = details.split("VALUE:")[1].split(' ')[0];
 
-    print "\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step;
-    print "EXPECTED RESULT %d: Should retrieve the current Lan Mode successfully" %step;
+    print("\nTEST STEP %d: Get the current Lan Mode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode" %step);
+    print("EXPECTED RESULT %d: Should retrieve the current Lan Mode successfully" %step);
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Lanmode is %s" %(step, orgLanMode);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: Lanmode is %s" %(step, orgLanMode));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #if bridge mode is enabled, disable it before trying to enable mesh
         newMode = "";
@@ -280,7 +280,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             status, newMode, step = setLanMode(mode, obj, step);
 
             if status == 1:
-                print "Failed to disable bridge mode, cannot enable mesh in bridge mode, exiting script...";
+                print("Failed to disable bridge mode, cannot enable mesh in bridge mode, exiting script...");
                 tdkTestObj.setResultStatus("FAILURE");
             else:
                 revert_lanmode = 1;
@@ -294,16 +294,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d: Get the Mesh enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Enable" %step;
-            print "EXPECTED RESULT %d: Should get the Mesh enable state successfully" %step;
+            print("\nTEST STEP %d: Get the Mesh enable state using Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Mesh.Enable" %step);
+            print("EXPECTED RESULT %d: Should get the Mesh enable state successfully" %step);
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 orgState = details.split("VALUE:")[1].split(' ')[0];
-                print "ACTUAL RESULT %d: Initial mesh state is %s" %(step, orgState);
+                print("ACTUAL RESULT %d: Initial mesh state is %s" %(step, orgState));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Enable Mesh is not in enabled state initially
                 newState = "";
@@ -314,7 +314,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     revert_mesh = 1;
 
                     if status == 1:
-                        print "Failed to enable Mesh, exiting script...";
+                        print("Failed to enable Mesh, exiting script...");
                         tdkTestObj.setResultStatus("FAILURE");
                     else :
                         revert_mesh = 1;
@@ -327,7 +327,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                     if status == 0:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "File is present";
+                        print("File is present");
 
                         #Execute /usr/ccsp/wifi/mesh_status.sh
                         step = step + 1;
@@ -335,7 +335,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         if status == 0:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Shell script executed";
+                            print("Shell script executed");
 
                             #Check if the file /usr/ccsp/wifi/meshapcfg.sh exists
                             step = step + 1;
@@ -344,7 +344,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                             if status == 0:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "File is present";
+                                print("File is present");
 
                                 #Execute /usr/ccsp/wifi/meshapcfg.sh
                                 step = step + 1;
@@ -352,44 +352,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                                 if status == 0:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "Shell script executed";
+                                    print("Shell script executed");
 
                                     #Check for the presence of error logs "cfg: command not found" due to execution of /usr/ccsp/wifi/meshapcfg.sh
                                     step = step + 1;
                                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                     cmd = "grep -i \"cfg: command not found\" /rdklogs/logs/*";
-                                    print "\nCommand : ", cmd;
+                                    print("\nCommand : ", cmd);
                                     tdkTestObj.addParameter("command",cmd);
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
                                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                                    print "\nTEST STEP %d: Check if there is any instance of \"cfg: command not found\" under /rdklogs/logs/ due to execution of /usr/ccsp/wifi/meshapcfg.sh" %step;
-                                    print "EXPECTED RESULT %d: There should not be any instance of \"cfg: command not found\" under /rdklogs/logs/ due to execution of /usr/ccsp/wifi/meshapcfg.sh" %step;
+                                    print("\nTEST STEP %d: Check if there is any instance of \"cfg: command not found\" under /rdklogs/logs/ due to execution of /usr/ccsp/wifi/meshapcfg.sh" %step);
+                                    print("EXPECTED RESULT %d: There should not be any instance of \"cfg: command not found\" under /rdklogs/logs/ due to execution of /usr/ccsp/wifi/meshapcfg.sh" %step);
 
                                     #To ensure that only those log lines are captured which are due to execution of /usr/ccsp/wifi/meshapcfg.sh
                                     if expectedresult in actualresult and "/usr/ccsp/wifi/meshapcfg.sh" not in details:
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d: No instances found; Details : %s" %(step, details);
+                                        print("ACTUAL RESULT %d: No instances found; Details : %s" %(step, details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d: Details : %s" %(step, details);
+                                        print("ACTUAL RESULT %d: Details : %s" %(step, details));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "Shell script not executed";
+                                    print("Shell script not executed");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "File is not present";
+                                print("File is not present");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Shell script not executed";
+                            print("Shell script not executed");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "File is not present";
+                        print("File is not present");
 
                     #Revert operation
                     if revert_mesh == 1:
@@ -397,20 +397,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         status, newState, step = setMeshEnable(orgState, obj, step);
 
                         if status == 0:
-                            print "Revert operation of Mesh Enable is success";
+                            print("Revert operation of Mesh Enable is success");
                             tdkTestObj.setResultStatus("SUCCESS");
                         else :
-                            print "Revert operation of Mesh Enable failed";
+                            print("Revert operation of Mesh Enable failed");
                             tdkTestObj.setResultStatus("FAILURE");
                     else:
-                        print "Revert operation of Mesh Enable not required";
+                        print("Revert operation of Mesh Enable not required");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Mesh not enabled";
+                    print("Mesh not enabled");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Initial mesh state is not retrieved; Details : %s" %(step, details);
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d: Initial mesh state is not retrieved; Details : %s" %(step, details));
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert operation
             if revert_lanmode == 1:
@@ -418,24 +418,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 status, newMode, step = setLanMode(orgLanMode, obj, step);
 
                 if status == 1:
-                    print "Revert operation of Lan Mode is success";
+                    print("Revert operation of Lan Mode is success");
                     tdkTestObj.setResultStatus("SUCCESS");
                 else:
-                    print "Revert operation of Lan Mode failed";
+                    print("Revert operation of Lan Mode failed");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
-                print "Revert operation of Lan Mode is not required";
+                print("Revert operation of Lan Mode is not required");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "Lan Mode is not router";
+            print("Lan Mode is not router");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Initial Lan Mode is not retrieved; Details : %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: Initial Lan Mode is not retrieved; Details : %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

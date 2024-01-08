@@ -86,8 +86,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_EnableRFC_DLCaStoreEnable');
 #Get the result of connection with test component and DUT
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -106,11 +106,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get current value of RFC DLCaStore Enable"
-        print "EXPECTED RESULT 1: Should get current value of RFC DLCaStore Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of RFC DLCaStore Enable")
+        print("EXPECTED RESULT 1: Should get current value of RFC DLCaStore Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         setValue ="true";
         revertflag =0;
@@ -127,11 +127,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             revertflag = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set  RFC DLCaStore Enable status to %s"%setValue;
-            print "EXPECTED RESULT 2: Should set  RFC DLCaStore Enable status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set  RFC DLCaStore Enable status to %s"%setValue);
+            print("EXPECTED RESULT 2: Should set  RFC DLCaStore Enable status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
             tdkTestObj.addParameter("ParamName",paramName);
@@ -144,7 +144,7 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             expectedresult="SUCCESS";
             cmd= "syscfg get DLCaStoreEnabled";
-            print cmd;
+            print(cmd);
             expectedresult="SUCCESS";
             tdkTestObj.addParameter("command", cmd);
             tdkTestObj.executeTestCase(expectedresult);
@@ -154,17 +154,17 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
             if expectedresult in (actualresult and actualresult1)and  syscfGet == details and details == setValue:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 : Get the RFC DLCaStore Enable status via syscfg and tr181, check if its equal to set value";
-                print "EXPECTED RESULT 3: RFC DLCaStore Enable status should be equal to that of set value";
-                print "ACTUAL RESULT 3: getValue :%s ,setvalue:%s,syscfg get value %s"%(details,setValue,syscfGet);
+                print("TEST STEP 3 : Get the RFC DLCaStore Enable status via syscfg and tr181, check if its equal to set value");
+                print("EXPECTED RESULT 3: RFC DLCaStore Enable status should be equal to that of set value");
+                print("ACTUAL RESULT 3: getValue :%s ,setvalue:%s,syscfg get value %s"%(details,setValue,syscfGet));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 sleep(3);
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 expectedresult="SUCCESS";
                 cmd= "cat /rdklogs/logs/PAMlog.txt.0 |  grep -rn \"ProcessRfcSet : paramFullName=Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DLCaStore.Enable, value=true, clearDB=0\"";
-                print cmd;
+                print(cmd);
                 expectedresult="SUCCESS";
                 tdkTestObj.addParameter("command", cmd);
                 tdkTestObj.executeTestCase(expectedresult);
@@ -172,24 +172,24 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and details:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 : Check if set operation is logged in PAM log file";
-                    print "EXPECTED RESULT 4 : The log message for RFC set should be logged in log file ";
-                    print"ACTUAL RESULT 4 :%s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 4 : Check if set operation is logged in PAM log file");
+                    print("EXPECTED RESULT 4 : The log message for RFC set should be logged in log file ");
+                    print("ACTUAL RESULT 4 :%s" %details);
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4 : Check if set operation is logged in PAM log file";
-                    print "EXPECTED RESULT 4 : The log message for RFC set should be logged in log file ";
-                    print"ACTUAL RESULT 4 :%s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4 : Check if set operation is logged in PAM log file");
+                    print("EXPECTED RESULT 4 : The log message for RFC set should be logged in log file ");
+                    print("ACTUAL RESULT 4 :%s" %details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 : Get the RFC DLCaStore Enable status via syscfg and tr181, check if its equal to set value";
-                print "EXPECTED RESULT 3: RFC DLCaStore Enable status should be equal to that of set value";
-                print "ACTUAL RESULT 3: getValue :%s ,setvalue:%s,syscfg get value %s"%(details,setValue,syscfGet);
+                print("TEST STEP 3 : Get the RFC DLCaStore Enable status via syscfg and tr181, check if its equal to set value");
+                print("EXPECTED RESULT 3: RFC DLCaStore Enable status should be equal to that of set value");
+                print("ACTUAL RESULT 3: getValue :%s ,setvalue:%s,syscfg get value %s"%(details,setValue,syscfGet));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if setValue != initial_value:
                 #Revert to previous value
@@ -205,39 +205,39 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Revert the RFC DLCaStoreEnable status to previous"
-                    print "EXPECTED RESULT 5: Should revert RFC DLCaStore status to previous"
-                    print "ACTUAL RESULT 5: %s" %result;
+                    print("TEST STEP 5: Revert the RFC DLCaStoreEnable status to previous")
+                    print("EXPECTED RESULT 5: Should revert RFC DLCaStore status to previous")
+                    print("ACTUAL RESULT 5: %s" %result);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Revert RFC DLCaStore Enable status to previous"
-                    print "EXPECTED RESULT 5: Should revert RFC DLCaStore Enable status to previous"
-                    print "ACTUAL RESULT 5: %s" %result;
+                    print("TEST STEP 5: Revert RFC DLCaStore Enable status to previous")
+                    print("EXPECTED RESULT 5: Should revert RFC DLCaStore Enable status to previous")
+                    print("ACTUAL RESULT 5: %s" %result);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set  RFC DLCaStore Enable status to %s"%setValue;
-            print "EXPECTED RESULT 2: Should set RFC DLCaStore Enable status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Set  RFC DLCaStore Enable status to %s"%setValue);
+            print("EXPECTED RESULT 2: Should set RFC DLCaStore Enable status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get current value of RFC DLCaStore Enable"
-        print "EXPECTED RESULT 1: Should get current value of RFC DLCaStore Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of RFC DLCaStore Enable")
+        print("EXPECTED RESULT 1: Should get current value of RFC DLCaStore Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

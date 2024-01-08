@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetAuthenticationProtocol');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -109,30 +109,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-	print details;
-	if ("PAP" or "CHAP" or "MS-CHAP" in details) and details:
+        print(details);
+        if ("PAP" or "CHAP" or "MS-CHAP" in details) and details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the AuthenticationProtocol";
-            print "EXPECTED RESULT 1:AuthenticationProtocol should be a subset of [PAP, CHAP, MS-CHAP]";
-            print "ACTUAL RESULT 1: AuthenticationProtocol:%s" %details;
+            print("TEST STEP 1: Get the AuthenticationProtocol");
+            print("EXPECTED RESULT 1:AuthenticationProtocol should be a subset of [PAP, CHAP, MS-CHAP]");
+            print("ACTUAL RESULT 1: AuthenticationProtocol:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the AuthenticationProtocol";
-            print "EXPECTED RESULT 1: AuthenticationProtocol should be a subset of [PAP, CHAP, MS-CHAP]";
-            print "ACTUAL RESULT 1: AuthenticationProtocol is not a subset of [PAP, CHAP, MS-CHAP]: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the AuthenticationProtocol");
+            print("EXPECTED RESULT 1: AuthenticationProtocol should be a subset of [PAP, CHAP, MS-CHAP]");
+            print("ACTUAL RESULT 1: AuthenticationProtocol is not a subset of [PAP, CHAP, MS-CHAP]: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the AuthenticationProtocol";
-	print "EXPECTED RESULT 1: Should get the AuthenticationProtocol";
-	print "ACTUAL RESULT 1: Failed to get the AuthenticationProtocol: %s" %details;
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the AuthenticationProtocol");
+        print("EXPECTED RESULT 1: Should get the AuthenticationProtocol");
+        print("ACTUAL RESULT 1: Failed to get the AuthenticationProtocol: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

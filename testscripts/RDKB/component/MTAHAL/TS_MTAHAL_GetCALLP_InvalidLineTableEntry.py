@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_MTAHAL_GetCALLP_InvalidLineTableEntry')
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -111,11 +111,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and int(NumOfEntries) > 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %NumOfEntries
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %NumOfEntries)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         y = int(NumOfEntries) + 2
 
@@ -130,27 +130,26 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS")
-            print "TEST STEP 2: Get the CALLP status for invalid line %s" %y
-            print "EXPECTED RESULT 2: Should not get the CALLP status  for invalid line %s " %y
-            print "ACTUAL RESULT 2: %s " %resultDetails
+            print("TEST STEP 2: Get the CALLP status for invalid line %s" %y)
+            print("EXPECTED RESULT 2: Should not get the CALLP status  for invalid line %s " %y)
+            print("ACTUAL RESULT 2: %s " %resultDetails)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print "TEST STEP 2: Get the CALLP status for line %s" %y
-            print "EXPECTED RESULT 2: Should not get the CALLP status for invalid line %s" %y
-            print "ACTUAL RESULT 2:  %s " %resultDetails
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 2: Get the CALLP status for line %s" %y)
+            print("EXPECTED RESULT 2: Should not get the CALLP status for invalid line %s" %y)
+            print("ACTUAL RESULT 2:  %s " %resultDetails)
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %NumOfEntries
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %NumOfEntries)
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
-
+    print("Module loading failed")

@@ -93,16 +93,16 @@ if ("SUCCESS" in loadmodulestatus.upper()) and ("SUCCESS" in sysloadmodulestatus
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-    print "details:",details
+    print("details:",details)
 
     if expectedresult in actualresult and details != "":
         enable = details.split("#~")[1].split(' ')[0].rstrip(" ");
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt";
-        print "EXPECTED RESULT 1: the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt";
-        print "ACTUAL RESULT 1: Successfully retrieved the value as: %s" %enable;
+        print("TEST STEP 1: Get the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt");
+        print("EXPECTED RESULT 1: the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt");
+        print("ACTUAL RESULT 1: Successfully retrieved the value as: %s" %enable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Get the TR181 param value
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
         tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable");
@@ -114,39 +114,38 @@ if ("SUCCESS" in loadmodulestatus.upper()) and ("SUCCESS" in sysloadmodulestatus
             value = details.split("VALUE:")[1].split(' ')[0];
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable";
-            print "EXPECTED RESULT 2: Should get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable";
-            print "ACTUAL RESULT 2: The TR181 value is fetched successfully : %s"%value;
+            print("TEST STEP 2: Get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable");
+            print("EXPECTED RESULT 2: Should get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable");
+            print("ACTUAL RESULT 2: The TR181 value is fetched successfully : %s"%value);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if value == enable :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "The TR181 value is the same as the RFC value from /tmp/rfc_configdata.txt"
+                print("The TR181 value is the same as the RFC value from /tmp/rfc_configdata.txt")
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "The TR181 value is not the same as the RFC value from /tmp/rfc_configdata.txt"
+                print("The TR181 value is not the same as the RFC value from /tmp/rfc_configdata.txt")
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable";
-            print "EXPECTED RESULT 2: Should get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable";
-            print "ACTUAL RESULT 2: The TR181 value is not fetched successfully";
+            print("TEST STEP 2: Get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable");
+            print("EXPECTED RESULT 2: Should get the TR181 value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable");
+            print("ACTUAL RESULT 2: The TR181 value is not fetched successfully");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt";
-        print "EXPECTED RESULT 1: the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt";
-        print "ACTUAL RESULT 1: Value not retrieved : %s" %details;
+        print("TEST STEP 1: Get the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt");
+        print("EXPECTED RESULT 1: the RFC value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WiFi-Interworking.Enable from /tmp/rfc_configdata.txt");
+        print("ACTUAL RESULT 1: Value not retrieved : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

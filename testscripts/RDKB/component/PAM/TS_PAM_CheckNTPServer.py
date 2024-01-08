@@ -82,23 +82,23 @@ def get_NTPEnable(tdkTestObj, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable" %step;
-    print "EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable" %step;
+    print("\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable" %step);
+    print("EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable" %step);
 
     if expectedresult in actualresult and details != "":
         status = 0;
         enable = details.strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is : %s" %(step,enable);
+        print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is : %s" %(step,enable));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is not retrieved" %step;
+        print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is not retrieved" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return enable, status;
 
 def set_NTPEnable(pamobj, value, step):
@@ -112,28 +112,28 @@ def set_NTPEnable(pamobj, value, step):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 def get_NTPServer(sysobj, step, index):
     #Getting NTPServer value from tdk_platform_properties"
     cmd= "sh %s/tdk_utility.sh parseConfigFile NTPServer" %TDK_PATH + str(index);
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command",cmd);
@@ -142,39 +142,39 @@ def get_NTPServer(sysobj, step, index):
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
     if expectedresult in actualresult :
-        print "\nTEST STEP %d: Get NTPServer from property file for index : %d" %(step, index);
-        print "EXPECTED RESULT %d: Should  get NTPServer from property file" %step;
-        print "ACTUAL RESULT %d: NTPServer from property file : %s" %(step, details);
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("\nTEST STEP %d: Get NTPServer from property file for index : %d" %(step, index));
+        print("EXPECTED RESULT %d: Should  get NTPServer from property file" %step);
+        print("ACTUAL RESULT %d: NTPServer from property file : %s" %(step, details));
+        print("TEST EXECUTION RESULT :SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
     else :
-        print "\nTEST STEP %d: Get NTPServer from property file for index : %d" %(step, index);
-        print "EXPECTED RESULT %d: Should  get NTPServer from property file" %step;
-        print "ACTUAL RESULT %d: NTPServer from property file : %s" %(step, details);
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("\nTEST STEP %d: Get NTPServer from property file for index : %d" %(step, index));
+        print("EXPECTED RESULT %d: Should  get NTPServer from property file" %step);
+        print("ACTUAL RESULT %d: NTPServer from property file : %s" %(step, details));
+        print("TEST EXECUTION RESULT : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
     return details;
 
 def cross_check(ntp_server, ntp_server_TR181, step):
     status = 1;
-    print "\nTEST STEP %d : Cross verify the NTPServer value" %step;
-    print "EXPECTED RESULT %d : The NTPServer values should be the same" %step;
-    print "TR181 Value : %s" %ntp_server_TR181;
-    print "Value from Platform Property file : %s" %ntp_server;
+    print("\nTEST STEP %d : Cross verify the NTPServer value" %step);
+    print("EXPECTED RESULT %d : The NTPServer values should be the same" %step);
+    print("TR181 Value : %s" %ntp_server_TR181);
+    print("Value from Platform Property file : %s" %ntp_server);
 
     if ntp_server == ntp_server_TR181 :
         status = 0;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : NTPServer values are the same" %step;
+        print("ACTUAL RESULT %d : NTPServer values are the same" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : NTPServer values are not the same" %step;
+        print("ACTUAL RESULT %d : NTPServer values are not the same" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return status;
 
 def get_NTPServerTR181(pamobj, step, index):
@@ -187,22 +187,22 @@ def get_NTPServerTR181(pamobj, step, index):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d : Get the value of %s" %(step, param);
-    print "EXPECTED RESULT %d : Should get the value of %s" %(step, param);
+    print("\nTEST STEP %d : Get the value of %s" %(step, param));
+    print("EXPECTED RESULT %d : Should get the value of %s" %(step, param));
 
     if expectedresult in actualresult :
         value = details.strip().replace("\\n", "");
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Value of %s is : %s" %(step, param, value);
+        print("ACTUAL RESULT %d : Value of %s is : %s" %(step, param, value));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Value of %s is not retrieved" %(step, param);
+        print("ACTUAL RESULT %d : Value of %s is not retrieved" %(step, param));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return value;
 
 
@@ -233,13 +233,13 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult="SUCCESS";
 
-    print "\nGet the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable";
+    print("\nGet the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.newNTP.Enable");
     step = 1;
     tdkTestObj = pamobj.createTestStep('pam_GetParameterValues');
     init_enable, status = get_NTPEnable(tdkTestObj, step);
     enable = init_enable;
 
-    print "\nIf NTP Enable initially is false, set it to true";
+    print("\nIf NTP Enable initially is false, set it to true");
     if enable == "false" and status == 0:
         step = step + 1;
         value = "true";
@@ -249,10 +249,10 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             step = step + 1;
             enable, status = get_NTPEnable(tdkTestObj, step);
         else:
-            print "Set operation failed";
+            print("Set operation failed");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "Get operation failed";
+        print("Get operation failed");
         tdkTestObj.setResultStatus("FAILURE");
 
     if enable == "true" and status == 0:
@@ -265,34 +265,33 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
             step = step + 1;
 
             if status == 0:
-                print "Values are equal";
+                print("Values are equal");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "Values are not equal";
+                print("Values are not equal");
                 tdkTestObj.setResultStatus("FAILURE");
 
         if init_enable != enable:
             #Revert NTP Server enable to initial value
-            print "\nReverting to initial state";
+            print("\nReverting to initial state");
             value = "false";
             status = set_NTPEnable(pamobj, value, step);
 
             if status == 0:
-                print "Revert operation successful";
+                print("Revert operation successful");
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "Revert operation not successful";
+                print("Revert operation not successful");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "Revert operation is not required";
+            print("Revert operation is not required");
     else:
-        print "Get operation failed";
+        print("Get operation failed");
         tdkTestObj.setResultStatus("FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-

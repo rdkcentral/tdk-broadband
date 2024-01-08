@@ -102,11 +102,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Health Test Enable status";
-        print "EXPECTED RESULT 1: Should Get the Health Test Enable status";
-        print "ACTUAL RESULT 1: %s" %defEnable;
+        print("TEST STEP 1: Get the Health Test Enable status");
+        print("EXPECTED RESULT 1: Should Get the Health Test Enable status");
+        print("ACTUAL RESULT 1: %s" %defEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.X_RDK_hwHealthTest.executeTest");
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the Health Test ExecuteTest status";
-            print "EXPECTED RESULT 2: Should Get the Health Test ExecuteTest status";
-            print "ACTUAL RESULT 2: %s" %defExecTest;
+            print("TEST STEP 2: Get the Health Test ExecuteTest status");
+            print("EXPECTED RESULT 2: Should Get the Health Test ExecuteTest status");
+            print("ACTUAL RESULT 2: %s" %defExecTest);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable");
@@ -136,11 +136,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Enabling the  Health Test Enable";
-                print "EXPECTED RESULT 3: Should Enable the Health Test Enable";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Enabling the  Health Test Enable");
+                print("EXPECTED RESULT 3: Should Enable the Health Test Enable");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                 tdkTestObj.addParameter("ParamName","Device.X_RDK_hwHealthTest.executeTest");
@@ -153,11 +153,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Executing the  Hw Health Test by enabling Device.X_RDK_hwHealthTest.executeTest";
-                    print "EXPECTED RESULT 4: Should execute the  Hw Health Test";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Executing the  Hw Health Test by enabling Device.X_RDK_hwHealthTest.executeTest");
+                    print("EXPECTED RESULT 4: Should execute the  Hw Health Test");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj2.createTestStep('ExecuteCmd');
                     cmd = "[ -f /rdklogs/logs/HWSTLog.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -168,11 +168,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                     if details == "File exist":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Check for HWSTLog.txt.0 log file presence";
-                        print "EXPECTED RESULT 5:HWSTLog.txt.0 log file should be present";
-                        print "ACTUAL RESULT 5: HWSTLog.txt.0 log file is present";
+                        print("TEST STEP 5: Check for HWSTLog.txt.0 log file presence");
+                        print("EXPECTED RESULT 5:HWSTLog.txt.0 log file should be present");
+                        print("ACTUAL RESULT 5: HWSTLog.txt.0 log file is present");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         markerfound = 0;
                         for i in range(1,6):
@@ -187,7 +187,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 actualresult = tdkTestObj.getResult();
                                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                                print "Marker Detail Found fromLog file is: %s "%details;
+                                print("Marker Detail Found fromLog file is: %s "%details);
 
                                 if (len(details) == 0) or "HwTestResult2:" not in details:
                                     markerfound = 0;
@@ -197,25 +197,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                     break;
                         if expectedresult in actualresult and markerfound ==1:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Check for HwTestResult2  logged in log file";
-                            print "EXPECTED RESULT 6:HwTestResult2 should be logged in log file";
-                            print "ACTUAL RESULT 6: %s" %details;
+                            print("TEST STEP 6: Check for HwTestResult2  logged in log file");
+                            print("EXPECTED RESULT 6:HwTestResult2 should be logged in log file");
+                            print("ACTUAL RESULT 6: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FALIURE");
-                            print "TEST STEP 6: Check for HwTestResult2  logged in log file";
-                            print "EXPECTED RESULT 6:HwTestResult2 should be logged in log file";
-                            print "ACTUAL RESULT 6: %s" %details;
+                            print("TEST STEP 6: Check for HwTestResult2  logged in log file");
+                            print("EXPECTED RESULT 6:HwTestResult2 should be logged in log file");
+                            print("ACTUAL RESULT 6: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Check for HWSTLog.txt.0 log file presence";
-                        print "EXPECTED RESULT 5:HWSTLog.txt.0 log file should be present";
-                        print "ACTUAL RESULT 5: HWSTLog.txt.0 log file is present";
+                        print("TEST STEP 5: Check for HWSTLog.txt.0 log file presence");
+                        print("EXPECTED RESULT 5:HWSTLog.txt.0 log file should be present");
+                        print("ACTUAL RESULT 5: HWSTLog.txt.0 log file is present");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                     #Revert the value
                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                     tdkTestObj.addParameter("ParamName","Device.X_RDK_hwHealthTest.executeTest");
@@ -228,27 +228,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 7: Reverting the  Hw Health Test execute parameter";
-                        print "EXPECTED RESULT 7: Should revert the Hw Health Test execute parameter";
-                        print "ACTUAL RESULT 7: %s" %details;
+                        print("TEST STEP 7: Reverting the  Hw Health Test execute parameter");
+                        print("EXPECTED RESULT 7: Should revert the Hw Health Test execute parameter");
+                        print("ACTUAL RESULT 7: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 7: Reverting the  Hw Health Test execute parameter";
-                        print "EXPECTED RESULT 7: Should revert the Hw Health Test execute parameter";
-                        print "ACTUAL RESULT 7: %s" %details;
+                        print("TEST STEP 7: Reverting the  Hw Health Test execute parameter");
+                        print("EXPECTED RESULT 7: Should revert the Hw Health Test execute parameter");
+                        print("ACTUAL RESULT 7: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Executing the  Hw Health Test by enabling Device.X_RDK_hwHealthTest.executeTest";
-                    print "EXPECTED RESULT 4: Should execute the  Hw Health Test";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Executing the  Hw Health Test by enabling Device.X_RDK_hwHealthTest.executeTest");
+                    print("EXPECTED RESULT 4: Should execute the  Hw Health Test");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                 #Reverting the value
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.hwHealthTest.Enable");
@@ -261,46 +261,46 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 8: Reverting the  Health Test Enable";
-                    print "EXPECTED RESULT 8: Should revert the Health Test Enable";
-                    print "ACTUAL RESULT 8: %s" %details;
+                    print("TEST STEP 8: Reverting the  Health Test Enable");
+                    print("EXPECTED RESULT 8: Should revert the Health Test Enable");
+                    print("ACTUAL RESULT 8: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 8: Reverting the  Health Test Enable";
-                   print "EXPECTED RESULT 8: Should revert the Health Test Enable";
-                   print "ACTUAL RESULT 8: %s" %details;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 8: Reverting the  Health Test Enable");
+                    print("EXPECTED RESULT 8: Should revert the Health Test Enable");
+                    print("ACTUAL RESULT 8: %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Enabling the  Health Test Enable";
-                print "EXPECTED RESULT 3: Should Enable the Health Test Enable";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Enabling the  Health Test Enable");
+                print("EXPECTED RESULT 3: Should Enable the Health Test Enable");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the Health Test ExecuteTest status";
-            print "EXPECTED RESULT 2: Should Get the Health Test ExecuteTest status";
-            print "ACTUAL RESULT 2: %s" %defExecTest;
+            print("TEST STEP 2: Get the Health Test ExecuteTest status");
+            print("EXPECTED RESULT 2: Should Get the Health Test ExecuteTest status");
+            print("ACTUAL RESULT 2: %s" %defExecTest);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Health Test Enable status";
-        print "EXPECTED RESULT 1: Should Get the Health Test Enable status";
-        print "ACTUAL RESULT 1: %s" %defEnable;
+        print("TEST STEP 1: Get the Health Test Enable status");
+        print("EXPECTED RESULT 1: Should Get the Health Test Enable status");
+        print("ACTUAL RESULT 1: %s" %defEnable);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj2.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");

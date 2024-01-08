@@ -110,90 +110,90 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check for wifihealth log file presence";
-        print "EXPECTED RESULT 1:wifihealth log file should be present";
-        print "ACTUAL RESULT 1:wifihealth log file is present";
+        print("TEST STEP 1: Check for wifihealth log file presence");
+        print("EXPECTED RESULT 1:wifihealth log file should be present");
+        print("ACTUAL RESULT 1:wifihealth log file is present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	markerfound = 0;
+        markerfound = 0;
         for i in range(1,15):
             if markerfound == 1:
                 break;
             else:
-		query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_RXCLIENTS_1:\""
-		print "query:%s" %query
-		tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-		tdkTestObj.addParameter("command", query)
-		expectedresult="SUCCESS";
-		tdkTestObj.executeTestCase(expectedresult);
-		actualresult = tdkTestObj.getResult();
-		details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        	print "Marker Detail Found fromLog file is: %s "%details;
-       	        if (len(details) == 0) or details.endswith(":") or "WIFI_RXCLIENTS_1" not in details:
-	    	    markerfound = 0;
+                query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_RXCLIENTS_1:\""
+                print("query:%s" %query)
+                tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+                tdkTestObj.addParameter("command", query)
+                expectedresult="SUCCESS";
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                print("Marker Detail Found fromLog file is: %s "%details);
+                if (len(details) == 0) or details.endswith(":") or "WIFI_RXCLIENTS_1" not in details:
+                    markerfound = 0;
                     sleep(60);
-		else:
-        	    telemetryRXClientValue = details.split("WIFI_RXCLIENTS_1:")[1].split(',')[0];
-	    	    markerfound = 1;
+                else:
+                    telemetryRXClientValue = details.split("WIFI_RXCLIENTS_1:")[1].split(',')[0];
+                    markerfound = 1;
 
-	if expectedresult in actualresult and markerfound == 1:
+        if expectedresult in actualresult and markerfound == 1:
             tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: WIFI_RXCLIENTS_1 Marker should be present";
-	    print "EXPECTED RESULT 2: WIFI_RXCLIENTS_1 Marker should be present";
-	    print "ACTUAL RESULT 2:WIFI_RXCLIENTS_1 Marker is %s" %telemetryRXClientValue
-	    #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: WIFI_RXCLIENTS_1 Marker should be present");
+            print("EXPECTED RESULT 2: WIFI_RXCLIENTS_1 Marker should be present");
+            print("ACTUAL RESULT 2:WIFI_RXCLIENTS_1 Marker is %s" %telemetryRXClientValue)
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_TXCLIENTS_1:\""
-	    print "query:%s" %query
-    	    tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-    	    tdkTestObj.addParameter("command", query)
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-            print "Marker Detail Found fromLog file is: %s "%details;
+            query="cat /rdklogs/logs/wifihealth.txt | grep -i \"WIFI_TXCLIENTS_1:\""
+            print("query:%s" %query)
+            tdkTestObj = sysObj.createTestStep('ExecuteCmd');
+            tdkTestObj.addParameter("command", query)
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+            print("Marker Detail Found fromLog file is: %s "%details);
 
             if (len(details) == 0) or details.endswith(":") or "WIFI_TXCLIENTS_1" not in details:
-	        markerfound = 0;
-	    else:
+                markerfound = 0;
+            else:
                 telemetryTXClientValue = details.split("WIFI_TXCLIENTS_1:")[1].split(',')[0];
-	        markerfound = 1;
+                markerfound = 1;
 
-	    if expectedresult in actualresult and markerfound == 1:
+            if expectedresult in actualresult and markerfound == 1:
                 tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP 3: WIFI_TXCLIENTS_1 Marker should be present";
-	        print "EXPECTED RESULT 3: WIFI_TXCLIENTS_1 Marker should be present";
-	        print "ACTUAL RESULT 3:WIFI_TXCLIENTS_1 Marker is %s" %telemetryTXClientValue
-	        #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-
-	    else:
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP 3: WIFI_TXCLIENTS_1 Marker should be present";
-	        print "EXPECTED RESULT 3: WIFI_TXCLIENTS_1 Marker should be present";
-	        print "ACTUAL RESULT 3:WIFI_TXCLIENTS_1 Marker is  Not Present";
+                print("TEST STEP 3: WIFI_TXCLIENTS_1 Marker should be present");
+                print("EXPECTED RESULT 3: WIFI_TXCLIENTS_1 Marker should be present");
+                print("ACTUAL RESULT 3:WIFI_TXCLIENTS_1 Marker is %s" %telemetryTXClientValue)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: WIFI_RXCLIENTS_1 Marker should be present";
-	    print "EXPECTED RESULT 2: WIFI_RXCLIENTS_1 Marker should be present";
-	    print "ACTUAL RESULT 2:WIFI_RXCLIENTS_1 Marker is  Not Present";
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: WIFI_TXCLIENTS_1 Marker should be present");
+                print("EXPECTED RESULT 3: WIFI_TXCLIENTS_1 Marker should be present");
+                print("ACTUAL RESULT 3:WIFI_TXCLIENTS_1 Marker is  Not Present");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: WIFI_RXCLIENTS_1 Marker should be present");
+            print("EXPECTED RESULT 2: WIFI_RXCLIENTS_1 Marker should be present");
+            print("ACTUAL RESULT 2:WIFI_RXCLIENTS_1 Marker is  Not Present");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check for wifihealth log file presence";
-        print "EXPECTED RESULT 1:wifihealth log file should be present";
-        print "ACTUAL RESULT 1:wifihealth log file is NOT present";
+        print("TEST STEP 1: Check for wifihealth log file presence");
+        print("EXPECTED RESULT 1:wifihealth log file should be present");
+        print("ACTUAL RESULT 1:wifihealth log file is NOT present");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load lmlite module";
+    print("Failed to load lmlite module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

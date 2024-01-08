@@ -124,42 +124,42 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get an IP Interface"
-        print "EXPECTED RESULT 1: Should get an IP Interface"
-        print "ACTUAL RESULT 1: Interface is %s" %interface;
+        print("TEST STEP 1: Get an IP Interface")
+        print("EXPECTED RESULT 1: Should get an IP Interface")
+        print("ACTUAL RESULT 1: Interface is %s" %interface);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %interface;
+        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %interface);
 
-	tdkTestObj = pamObj.createTestStep('pam_GetParameterNames');
-	tdkTestObj.addParameter("ParamName","%sIPv4Address." %interface);
-	tdkTestObj.addParameter("ParamList","%sIPv4Address." %interface);
+        tdkTestObj = pamObj.createTestStep('pam_GetParameterNames');
+        tdkTestObj.addParameter("ParamName","%sIPv4Address." %interface);
+        tdkTestObj.addParameter("ParamList","%sIPv4Address." %interface);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         addrInstance = tdkTestObj.getResultDetails().strip();
 
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get an IPv4Address instance"
-            print "EXPECTED RESULT 1: Should get an IPv4Address instance"
-            print "ACTUAL RESULT 1: Instance is %s" %addrInstance;
+            print("TEST STEP 1: Get an IPv4Address instance")
+            print("EXPECTED RESULT 1: Should get an IPv4Address instance")
+            print("ACTUAL RESULT 1: Instance is %s" %addrInstance);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS, %s" %addrInstance
+            print("[TEST EXECUTION RESULT] : SUCCESS, %s" %addrInstance)
 
-	    tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
+            tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
             tdkTestObj.addParameter("ParamName","%sEnable" %addrInstance);
-	    print "Parameter Name: %sEnable" %addrInstance
+            print("Parameter Name: %sEnable" %addrInstance)
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
 
-	    if expectedresult in actualresult:
+            if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get IPv4Address status"
-                print "EXPECTED RESULT 1: Should get IPv4Address status"
-                print "ACTUAL RESULT 1: IPv4Address status is %s" %details;
+                print("TEST STEP 1: Get IPv4Address status")
+                print("EXPECTED RESULT 1: Should get IPv4Address status")
+                print("ACTUAL RESULT 1: IPv4Address status is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details
+                print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details)
                 tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
                 tdkTestObj.addParameter("ParamName","%sEnable" %addrInstance);
                 tdkTestObj.addParameter("Type","boolean");
@@ -169,76 +169,72 @@ if "SUCCESS" in loadmodulestatus.upper():
                 else:
                     tdkTestObj.addParameter("ParamValue","true");
                     org_value = "false"
-                print "Parameter Name: %sEnable" %addrInstance
+                print("Parameter Name: %sEnable" %addrInstance)
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip();
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Set IPv4Address status"
-                    print "EXPECTED RESULT 1: Should set IPv4Address status"
-                    print "ACTUAL RESULT 1: IPv6address is %s" %details;
+                    print("TEST STEP 1: Set IPv4Address status")
+                    print("EXPECTED RESULT 1: Should set IPv4Address status")
+                    print("ACTUAL RESULT 1: IPv6address is %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details
+                    print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details)
                     tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
                     tdkTestObj.addParameter("ParamName","%sEnable" %addrInstance);
                     tdkTestObj.addParameter("Type","boolean");
                     tdkTestObj.addParameter("ParamValue",org_value);
-                    print "Parameter Name: %sEnable" %addrInstance
+                    print("Parameter Name: %sEnable" %addrInstance)
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip();
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 1: Set IPv4Address status to original"
-                        print "EXPECTED RESULT 1: Should set IPv4Address status to original"
-                        print "ACTUAL RESULT 1: IPv6address is %s" %details;
+                        print("TEST STEP 1: Set IPv4Address status to original")
+                        print("EXPECTED RESULT 1: Should set IPv4Address status to original")
+                        print("ACTUAL RESULT 1: IPv6address is %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details
+                        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details)
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 1: Set IPv4Address status value to original"
-                        print "EXPECTED RESULT 1: Should set IPv4Address status to original"
-                        print "ACTUAL RESULT 1: IPv6address is %s" %details;
+                        print("TEST STEP 1: Set IPv4Address status value to original")
+                        print("EXPECTED RESULT 1: Should set IPv4Address status to original")
+                        print("ACTUAL RESULT 1: IPv6address is %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE, %s" %details
+                        print("[TEST EXECUTION RESULT] : FAILURE, %s" %details)
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Set IPv4Address status"
-                    print "EXPECTED RESULT 1: Should set IPv4Address status"
-                    print "ACTUAL RESULT 1: IPv6address is %s" %details;
+                    print("TEST STEP 1: Set IPv4Address status")
+                    print("EXPECTED RESULT 1: Should set IPv4Address status")
+                    print("ACTUAL RESULT 1: IPv6address is %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE, %s" %details
-	    else:
+                    print("[TEST EXECUTION RESULT] : FAILURE, %s" %details)
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get IPv4Address status"
-                print "EXPECTED RESULT 1: Should get IPv4Address status"
-                print "ACTUAL RESULT 1: IPv6address is %s" %details;
+                print("TEST STEP 1: Get IPv4Address status")
+                print("EXPECTED RESULT 1: Should get IPv4Address status")
+                print("ACTUAL RESULT 1: IPv6address is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE, %s" %details
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE, %s" %details)
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get an IPv4Address instance"
-            print "EXPECTED RESULT 1: Should get an IPv4Address instance"
-            print "ACTUAL RESULT 1: Instance is %s" %addrInstancee;
+            print("TEST STEP 1: Get an IPv4Address instance")
+            print("EXPECTED RESULT 1: Should get an IPv4Address instance")
+            print("ACTUAL RESULT 1: Instance is %s" %addrInstancee);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE, %s" %addrInstance
+            print("[TEST EXECUTION RESULT] : FAILURE, %s" %addrInstance)
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get an IP Interface"
-        print "EXPECTED RESULT 1: Should get an IP Interface"
-        print "ACTUAL RESULT 1: Failure in getting the Interface. Details : %s" %interface;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get an IP Interface")
+        print("EXPECTED RESULT 1: Should get an IP Interface")
+        print("ACTUAL RESULT 1: Failure in getting the Interface. Details : %s" %interface);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
+    print("Failed to load pam module");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

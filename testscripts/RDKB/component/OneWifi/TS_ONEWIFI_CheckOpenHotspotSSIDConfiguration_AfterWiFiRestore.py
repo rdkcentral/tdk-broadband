@@ -99,7 +99,7 @@ def setParameter(obj1, param, setValue, type):
 
     if expectedresult not in actualresult:
         status = 1;
-        print "%s SET operation failed" %param;
+        print("%s SET operation failed" %param);
     return status;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -131,20 +131,20 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     paramList_enable=["Device.WiFi.SSID.5.Enable", "Device.WiFi.SSID.6.Enable"];
     tdkTestObj,status,enableValue = getMultipleParameterValues(obj,paramList_enable);
 
-    print "\nTEST STEP 1: Get the values of OpenHotspot SSID enable status - ", paramList_enable;
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the values of OpenHotspot SSID enable status - ", paramList_enable);
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     if expectedresult in status and enableValue[0] != "" and enableValue[1] != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: OpenHotspot SSID enable statuses are respectively : %s, %s" %(enableValue[0],enableValue[1]) ;
+        print("ACTUAL RESULT 1: OpenHotspot SSID enable statuses are respectively : %s, %s" %(enableValue[0],enableValue[1])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Enable the SSIDs if not enabled already
         step = 2;
-        print "\nTEST STEP 2 : Check if the SSIDs are enabled and enable them if required";
-        print "EXPECTED RESULT 2 : The SSIDs should be enabled";
+        print("\nTEST STEP 2 : Check if the SSIDs are enabled and enable them if required");
+        print("EXPECTED RESULT 2 : The SSIDs should be enabled");
         ssid_enable_flag = 0;
         revert_flag = [0, 0];
 
@@ -155,36 +155,36 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     revert_flag[index] = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s is enabled successfully" %paramList_enable[index];
+                    print("%s is enabled successfully" %paramList_enable[index]);
                 else:
                     ssid_enable_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s is NOT enabled successfully" %paramList_enable[index];
+                    print("%s is NOT enabled successfully" %paramList_enable[index]);
             else :
-                print "%s is enabled, SET operation not required" %paramList_enable[index];
+                print("%s is enabled, SET operation not required" %paramList_enable[index]);
 
         if ssid_enable_flag == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: SSIDs are enabled";
+            print("ACTUAL RESULT 2: SSIDs are enabled");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the initial OpenHotspot SSID
             step = 3;
             paramList_ssid_config = ["Device.WiFi.SSID.5.SSID", "Device.WiFi.SSID.6.SSID"];
             tdkTestObj,status,orgSSIDConfig = getMultipleParameterValues(obj,paramList_ssid_config)
 
-            print "\nTEST STEP 3: Get the OpenHotspot SSID configuration parameter values - ", paramList_ssid_config;
-            print "EXPECTED RESULT 3 : The values should be retrieved successfully";
+            print("\nTEST STEP 3: Get the OpenHotspot SSID configuration parameter values - ", paramList_ssid_config);
+            print("EXPECTED RESULT 3 : The values should be retrieved successfully");
 
             if expectedresult in status and orgSSIDConfig[0] != "" and orgSSIDConfig[1] != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: OpenHotspot SSID Configuration are respectively : %s, %s" %(orgSSIDConfig[0],orgSSIDConfig[1]) ;
+                print("ACTUAL RESULT 3: OpenHotspot SSID Configuration are respectively : %s, %s" %(orgSSIDConfig[0],orgSSIDConfig[1])) ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Set to new configuration
                 step = 4;
@@ -192,8 +192,8 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 ssid2 = "OpenHotspot-SSID-" + str(randint(100, 199));
                 setvalues = [ssid1, ssid2];
 
-                print "\nTEST STEP 4 : Set new OpenHotspot SSID Configuration using : ", paramList_ssid_config;
-                print "EXPECTED RESULT 4 : New OpenHotspot SSID Configuration should be set successfully";
+                print("\nTEST STEP 4 : Set new OpenHotspot SSID Configuration using : ", paramList_ssid_config);
+                print("EXPECTED RESULT 4 : New OpenHotspot SSID Configuration should be set successfully");
                 ssid_config_flag = 0;
 
                 for index in range(0, 2):
@@ -201,19 +201,19 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if status == 0:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "%s is set successfully to %s" %(paramList_ssid_config[index], setvalues[index]);
+                        print("%s is set successfully to %s" %(paramList_ssid_config[index], setvalues[index]));
                     else:
                         ssid_config_flag = 1;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "%s is NOT set successfully to %s" %(paramList_ssid_config[index], setvalues[index]);
+                        print("%s is NOT set successfully to %s" %(paramList_ssid_config[index], setvalues[index]));
 
                 if ssid_config_flag == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: New OpenHotspot SSID Configuration is set successfully" ;
+                    print("ACTUAL RESULT 4: New OpenHotspot SSID Configuration is set successfully") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Perform WiFi restore if the SSID configuration is set properly
                     step = 5;
@@ -225,41 +225,41 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                    print "\nTEST STEP 5 : Perform WiFi Restore operation using Device.WiFi.X_CISCO_COM_FactoryResetRadioAndAp";
-                    print "EXPECTED RESULT 5 : The WiFi restore operation should be successful";
+                    print("\nTEST STEP 5 : Perform WiFi Restore operation using Device.WiFi.X_CISCO_COM_FactoryResetRadioAndAp");
+                    print("EXPECTED RESULT 5 : The WiFi restore operation should be successful");
 
                     if expectedresult in actualresult and details != "" :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5 : WiFi radio reset operation was success; Details : %s" %(details);
+                        print("ACTUAL RESULT 5 : WiFi radio reset operation was success; Details : %s" %(details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Sleep for 100s for restore settings to take effect
-                        print "Sleeping 100s for WiFi restore settings to take effect";
+                        print("Sleeping 100s for WiFi restore settings to take effect");
                         sleep(100);
 
                         #Check if the OpenHotspot SSID configuration is changed to default values
                         step = 6;
                         tdkTestObj,status,finalSSIDConfig = getMultipleParameterValues(obj,paramList_ssid_config)
 
-                        print "\nTEST STEP 6: Get the OpenHotspot SSID configuration parameter values - ", paramList_ssid_config;
-                        print "EXPECTED RESULT 6 : The values should be retrieved successfully";
+                        print("\nTEST STEP 6: Get the OpenHotspot SSID configuration parameter values - ", paramList_ssid_config);
+                        print("EXPECTED RESULT 6 : The values should be retrieved successfully");
 
                         if expectedresult in status and finalSSIDConfig[0] != "" and finalSSIDConfig[1] != "":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6: OpenHotspot SSID Configuration are respectively : %s, %s" %(finalSSIDConfig[0],finalSSIDConfig[1]) ;
+                            print("ACTUAL RESULT 6: OpenHotspot SSID Configuration are respectively : %s, %s" %(finalSSIDConfig[0],finalSSIDConfig[1])) ;
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if the final SSID config value is different from the setvalues
                             step = 7;
-                            print "\nTEST STEP 7: Check if the SSID configuration after WiFi Restore is different from values set";
-                            print "EXPECTED RESULT 7 : The SSID configuration after WiFi Restore should be different from values set";
+                            print("\nTEST STEP 7: Check if the SSID configuration after WiFi Restore is different from values set");
+                            print("EXPECTED RESULT 7 : The SSID configuration after WiFi Restore should be different from values set");
 
                             restore_check = 0;
                             for index in range(0, 2):
-                                print "%s before restore : %s, after restore : %s" %(paramList_ssid_config[index], setvalues[index], finalSSIDConfig[index]);
+                                print("%s before restore : %s, after restore : %s" %(paramList_ssid_config[index], setvalues[index], finalSSIDConfig[index]));
                                 if finalSSIDConfig[index] == setvalues[index]:
                                     restore_check = 1;
                                 else:
@@ -268,23 +268,23 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             if restore_check == 0:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT 7: The SSID configuration after WiFi Restore is different from values set" ;
+                                print("ACTUAL RESULT 7: The SSID configuration after WiFi Restore is different from values set") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT 7: The SSID configuration after WiFi Restore is NOT different from values set" ;
+                                print("ACTUAL RESULT 7: The SSID configuration after WiFi Restore is NOT different from values set") ;
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
 
                             #Revert to initial SSID configuration
                             if finalSSIDConfig[0] == orgSSIDConfig[0] and finalSSIDConfig[1] == orgSSIDConfig[1]:
-                                print "Reverting the SSID configuration not required...";
+                                print("Reverting the SSID configuration not required...");
                             else :
                                 step = 8;
-                                print "\nTEST STEP 8 : Revert to initial OpenHotspot SSID Configuration";
-                                print "EXPECTED RESULT 8 : Revert to initial OpenHotspot SSID Configuration should be successful";
+                                print("\nTEST STEP 8 : Revert to initial OpenHotspot SSID Configuration");
+                                print("EXPECTED RESULT 8 : Revert to initial OpenHotspot SSID Configuration should be successful");
 
                                 status1 = 0;
                                 status2 = 0;
@@ -297,14 +297,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                     if status1 == 0:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "%s is enabled successfully" %paramList_enable[0];
+                                        print("%s is enabled successfully" %paramList_enable[0]);
 
                                         #Revert SSID
                                         status2 = setParameter(obj1, paramList_ssid_config[0], orgSSIDConfig[0], "string");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "%s is NOT enabled successfully" %paramList_enable[0];
+                                        print("%s is NOT enabled successfully" %paramList_enable[0]);
 
                                 if finalSSIDConfig[1] != orgSSIDConfig[1]:
                                     #Enable the SSID
@@ -313,62 +313,62 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                     if status3 == 0:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "%s is enabled successfully" %paramList_enable[1];
+                                        print("%s is enabled successfully" %paramList_enable[1]);
 
                                         #Revert SSID
                                         status4 = setParameter(obj1, paramList_ssid_config[1], orgSSIDConfig[1], "string");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "%s is NOT enabled successfully" %paramList_enable[0];
+                                        print("%s is NOT enabled successfully" %paramList_enable[0]);
 
                                 #Check the status of revert operation
                                 if status1 == 0 and status2 == 0 and status3 == 0 and status4 == 0:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT 8: The revert operation was success" ;
+                                    print("ACTUAL RESULT 8: The revert operation was success") ;
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT 8: The revert operation was failed" ;
+                                    print("ACTUAL RESULT 8: The revert operation was failed") ;
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6: OpenHotspot SSID Configuration is NOT retrieved";
+                            print("ACTUAL RESULT 6: OpenHotspot SSID Configuration is NOT retrieved");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5 : WiFi radio reset operation was failed; Details : %s" %(details);
+                        print("ACTUAL RESULT 5 : WiFi radio reset operation was failed; Details : %s" %(details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: New OpenHotspot SSID Configuration is NOT set successfully" ;
+                    print("ACTUAL RESULT 4: New OpenHotspot SSID Configuration is NOT set successfully") ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: OpenHotspot SSID Configuration is NOT retrieved";
+                print("ACTUAL RESULT 3: OpenHotspot SSID Configuration is NOT retrieved");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: SSIDs are NOT enabled";
+            print("ACTUAL RESULT 2: SSIDs are NOT enabled");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Revert the SSID enable status
         step = step + 1;
-        print "\nTEST STEP %d : Revert the SSID Enable Status if required" %step;
-        print "EXPECTED RESULT %d : The revert operation if required should be success" %step;
+        print("\nTEST STEP %d : Revert the SSID Enable Status if required" %step);
+        print("EXPECTED RESULT %d : The revert operation if required should be success" %step);
         revert_success = 0;
 
         for index in range(0, 2):
@@ -377,37 +377,37 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 if status == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "%s is reverted successfully" %paramList_enable[index];
+                    print("%s is reverted successfully" %paramList_enable[index]);
                 else:
                     revert_success = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "%s is NOT reverted successfully" %paramList_enable[index];
+                    print("%s is NOT reverted successfully" %paramList_enable[index]);
             else :
-                print "%s revert operation not required" %paramList_enable[index];
+                print("%s revert operation not required" %paramList_enable[index]);
 
         if revert_success == 0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Checked if SSID Enable revert is required; Revert operation is success in required cases" %step;
+            print("ACTUAL RESULT %d: Checked if SSID Enable revert is required; Revert operation is success in required cases" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Checked if SSID Enable revert is required; Revert operation is failed in required cases" %step;
+            print("ACTUAL RESULT %d: Checked if SSID Enable revert is required; Revert operation is failed in required cases" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: OpenHotspot SSID enable statuses are NOT retrieved";
+        print("ACTUAL RESULT 1: OpenHotspot SSID enable statuses are NOT retrieved");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("wifiagent");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

@@ -87,7 +87,7 @@ def getValues(obj, paramList):
         if expectedresult in actualresult and details != "":
             val = details.split("VALUE:")[1].split(" ")[0].strip();
             Values.append(val);
-            print "\n%s : %s" %(param, val);
+            print("\n%s : %s" %(param, val));
 
             if val != "":
                 #Set the result status of execution
@@ -102,7 +102,7 @@ def getValues(obj, paramList):
             status = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "%s : %s" %(param, details);
+            print("%s : %s" %(param, details));
             break;
 
     return tdkTestObj, status, Values;
@@ -136,7 +136,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_SetInterfaceDevicesWifiPollingPeriod_H
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -146,27 +146,27 @@ if "SUCCESS" in loadmodulestatus.upper():
     #Get the initial values of Polling Interval and Report enable
     step = 1;
     paramList = ["Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod", "Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled"];
-    print "\nTEST STEP %d : Get the initial values of polling interval and report enable for the InterfaceDevicesWifi Report" %step;
-    print "EXPECTED RESULT %d : The initial values should be retrieved successfully" %step;
+    print("\nTEST STEP %d : Get the initial values of polling interval and report enable for the InterfaceDevicesWifi Report" %step);
+    print("EXPECTED RESULT %d : The initial values should be retrieved successfully" %step);
 
     tdkTestObj, status, initial_values = getValues(obj, paramList);
 
     if status == 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : The values retrieved are respectively : %s, %s" %(step, initial_values[0], initial_values[1]) ;
+        print("ACTUAL RESULT %d : The values retrieved are respectively : %s, %s" %(step, initial_values[0], initial_values[1])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Polling value list
         valid_intervals = ["1","5","15","30","60","300","900","1800","3600","10800","21600","43200","86400"];
-        print "\nThe Polling Interval should be from the list: ", valid_intervals;
+        print("\nThe Polling Interval should be from the list: ", valid_intervals);
 
         #Check if the Polling is from the expected value list
         if initial_values[0] in valid_intervals:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Polling interval is from the expected list of values";
+            print("Polling interval is from the expected list of values");
             polling_index_initial = valid_intervals.index(initial_values[0]);
             #Higher polling value to be set
             polling_index_final = polling_index_initial + 1;
@@ -177,8 +177,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             if initial_values[0] == valid_intervals[-1]:
                 new_polling = valid_intervals[0];
                 step = step + 1;
-                print "\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to %s (lowest value) as initially it had the highest value" %(step, new_polling);
-                print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should be set to %s successfully" %(step, new_polling);
+                print("\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to %s (lowest value) as initially it had the highest value" %(step, new_polling));
+                print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should be set to %s successfully" %(step, new_polling));
 
                 actualresult, details = setParameter(obj, paramList[0], new_polling, "unsignedint");
 
@@ -188,25 +188,25 @@ if "SUCCESS" in loadmodulestatus.upper():
                     #Higher polling value to be set (initial_index 0 + 1)
                     polling_index_final = 1;
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                    print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                    print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 proceed_flag = 1;
-                print "Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod does not initially have the highest value"
+                print("Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod does not initially have the highest value")
 
             #Check if Reports are enabled if not enable it
             proceed_flag = 0;
             report_disabled = 0;
             if initial_values[1] != "true":
                 step = step + 1;
-                print "\nTEST STEP %d: Enable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled" %(step);
-                print "EXPECTED RESULT %d: Should enable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled successfully" %(step);
+                print("\nTEST STEP %d: Enable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled" %(step));
+                print("EXPECTED RESULT %d: Should enable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled successfully" %(step));
 
                 actualresult, details = setParameter(obj, paramList[1], "true", "boolean");
 
@@ -214,116 +214,116 @@ if "SUCCESS" in loadmodulestatus.upper():
                     proceed_flag = 1;
                     report_disabled = 1;
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports enabled; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports enabled; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 proceed_flag = 1;
-                print "Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled is already enabled";
+                print("Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled is already enabled");
 
             if proceed_flag == 1:
                 #Set the polling interval to higher value
                 step = step + 1;
                 new_polling = valid_intervals[polling_index_final];
-                print "\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to a higher value %s" %(step, new_polling);
-                print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should NOT be set to %s" %(step, new_polling);
+                print("\nTEST STEP %d: Set Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to a higher value %s" %(step, new_polling));
+                print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should NOT be set to %s" %(step, new_polling));
                 actualresult, details = setParameter(obj, paramList[0], new_polling, "unsignedint");
                 expectedresult = "FAILURE";
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                    print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     polling_revert = 1;
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                    print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled could not be enabled, cannot proceed...";
+                print("Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled could not be enabled, cannot proceed...");
 
             #Disable report enable before reverting the polling period if required
             if polling_revert == 1:
                 step = step + 1;
-                print "\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled" %(step);
-                print "EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled successfully" %(step);
+                print("\nTEST STEP %d: Disable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled" %(step));
+                print("EXPECTED RESULT %d: Should disable Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled successfully" %(step));
 
                 actualresult, details = setParameter(obj, paramList[1], "false", "boolean");
                 expectedresult = "SUCCESS";
 
                 if expectedresult in actualresult and details != "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports disabled; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports disabled; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Revert to initial polling period
                     step = step + 1;
-                    print "\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to %s" %(step, initial_values[0]);
-                    print "EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should be reverted to %s" %(step, initial_values[0]);
+                    print("\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod to %s" %(step, initial_values[0]));
+                    print("EXPECTED RESULT %d : Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.PollingPeriod should be reverted to %s" %(step, initial_values[0]));
                     actualresult, details = setParameter(obj, paramList[0], initial_values[0], "unsignedint");
                     expectedresult = "SUCCESS";
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                        print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Polling Period: %s" %(step,details);
+                        print("ACTUAL RESULT %d: Polling Period: %s" %(step,details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details);
+                    print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Polling Period need not be reverted";
+                print("Polling Period need not be reverted");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Polling interval is NOT from the expected list of values";
+            print("Polling interval is NOT from the expected list of values");
 
         #Revert Report enable if required
         if initial_values[1] == "false":
             step = step + 1;
-            print "\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled to false" %(step);
-            print "EXPECTED RESULT %d: Should revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled to false" %(step);
+            print("\nTEST STEP %d: Revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled to false" %(step));
+            print("EXPECTED RESULT %d: Should revert Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.Enabled to false" %(step));
 
             actualresult, details = setParameter(obj, paramList[1], "false", "boolean");
             expectedresult = "SUCCESS";
 
             if expectedresult in actualresult and details != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports reverted; Details : %s" %(step,details);
+                print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports reverted; Details : %s" %(step,details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details);
+                print("ACTUAL RESULT %d: InterfaceDevicesWifi Reports; Details : %s" %(step,details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-            print "Report Enable state need not be reverted";
+            print("Report Enable state need not be reverted");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : The initial values are not retrieved successfully" %step;
+        print("ACTUAL RESULT %d : The initial values are not retrieved successfully" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent")
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

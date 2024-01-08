@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_COSAPAM_MlanHomeSecurityBridge');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -113,21 +113,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the HomeSecurityBridge object";
-        print "EXPECTED RESULT 1: Should get the HomeSecurityBridge object";
-        print "ACTUAL RESULT 1: HomeSecurityBridge object is %s" %details;
+        print("TEST STEP 1: Get the HomeSecurityBridge object");
+        print("EXPECTED RESULT 1: Should get the HomeSecurityBridge object");
+        print("ACTUAL RESULT 1: HomeSecurityBridge object is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details;
+        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details);
 
-#	param = details.split(':')[2].split(' ')[0];
+#       param = details.split(':')[2].split(' ')[0];
 #        print param
-#	param = param.split(' ').[0];
-	param = details+'.';
-#	print param
-#	tdkTestObj.addParameter("ParamName","Device.Bridging.Bridge.2");
-	#tdkTestObj = obj.createTestStep('pam_GetParameterValues');
-	tdkTestObj.addParameter("ParamName", param);
-	tdkTestObj.executeTestCase(expectedresult);
+#       param = param.split(' ').[0];
+        param = details+'.';
+#       print param
+#       tdkTestObj.addParameter("ParamName","Device.Bridging.Bridge.2");
+        #tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+        tdkTestObj.addParameter("ParamName", param);
+        tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
@@ -135,26 +135,26 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the HomeSecurityBridge";
-            print "EXPECTED RESULT 1: Should get the HomeSecurityBridge";
-            print "ACTUAL RESULT 1: HomeSecurityBridge is %s" %details;
+            print("TEST STEP 1: Get the HomeSecurityBridge");
+            print("EXPECTED RESULT 1: Should get the HomeSecurityBridge");
+            print("ACTUAL RESULT 1: HomeSecurityBridge is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details;
+            print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the HomeSecurityBridge";
-            print "EXPECTED RESULT 1: Should get the HomeSecurityBridge";
-            print "ACTUAL RESULT 1: Failure in getting the HomeSecurityBridge. Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the HomeSecurityBridge");
+            print("EXPECTED RESULT 1: Should get the HomeSecurityBridge");
+            print("ACTUAL RESULT 1: Failure in getting the HomeSecurityBridge. Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the HomeSecurityBridge object";
-        print "EXPECTED RESULT 1: Should get the HomeSecurityBridge object";
-        print "ACTUAL RESULT 1: Failure in getting the HomeSecurityBridge object. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the HomeSecurityBridge object");
+        print("EXPECTED RESULT 1: Should get the HomeSecurityBridge object");
+        print("ACTUAL RESULT 1: Failure in getting the HomeSecurityBridge object. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -80,8 +80,8 @@ pamobj.configureTestCase(ip,port,'TS_MTAHAL_GetMtaProvisioningStatus')
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
 loadmodulestatus1 =pamobj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS")
@@ -97,20 +97,20 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Invoke the MTAHAL API mta_hal_getMtaProvisioningStatus()"
-        print "EXPECTED RESULT 1: Should invoke mta_hal_getMtaProvisioningStatus() successfully"
-        print "ACTUAL RESULT 1:  mta_hal_getMtaProvisioningStatus() API invoked successfully";
+        print("TEST STEP 1: Invoke the MTAHAL API mta_hal_getMtaProvisioningStatus()")
+        print("EXPECTED RESULT 1: Should invoke mta_hal_getMtaProvisioningStatus() successfully")
+        print("ACTUAL RESULT 1:  mta_hal_getMtaProvisioningStatus() API invoked successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         if resultDetails != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS")
-            print "TEST STEP 2: Get MTA Provisioning Status"
-            print "EXPECTED RESULT 2: Should get MTA Provisioning status successfully"
-            print "ACTUAL RESULT 2:  %s" %resultDetails;
+            print("TEST STEP 2: Get MTA Provisioning Status")
+            print("EXPECTED RESULT 2: Should get MTA Provisioning status successfully")
+            print("ACTUAL RESULT 2:  %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             status = resultDetails.split(":")[1].split(' ')[1];
 
             pamtdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST-COM_MTA_IP");
@@ -122,74 +122,73 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
                 mta_ip = pamtdkTestObj.getResultDetails();
                 #Set the result status of execution
                 pamtdkTestObj.setResultStatus("SUCCESS")
-                print "TEST STEP 3: Get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP"
-                print "EXPECTED RESULT 3: Should get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP"
-                print "ACTUAL RESULT 3:  Device.DeviceInfo.X_COMCAST-COM_MTA_IP is : %s" %mta_ip;
+                print("TEST STEP 3: Get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP")
+                print("EXPECTED RESULT 3: Should get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP")
+                print("ACTUAL RESULT 3:  Device.DeviceInfo.X_COMCAST-COM_MTA_IP is : %s" %mta_ip);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
                 non_prov_ip = "0.0.0.0"
 
                 if status == "MTA_NON_PROVISIONED":
                     if mta_ip in non_prov_ip :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print "TEST STEP 4: Check if the MTA IP is %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip;
-                        print "EXPECTED RESULT 4: The MTA IP should be %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip;
-                        print "ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_NON_PROVISIONED" %mta_ip;
+                        print("TEST STEP 4: Check if the MTA IP is %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip);
+                        print("EXPECTED RESULT 4: The MTA IP should be %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip);
+                        print("ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_NON_PROVISIONED" %mta_ip);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE")
-                        print "TEST STEP 4: Check if the MTA IP is %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip;
-                        print "EXPECTED RESULT 4: The MTA IP should be %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip;
-                        print "ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_NON_PROVISIONED" %mta_ip;
+                        print("TEST STEP 4: Check if the MTA IP is %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip);
+                        print("EXPECTED RESULT 4: The MTA IP should be %s as the Provisioning status is MTA_NON_PROVISIONED" %non_prov_ip);
+                        print("ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_NON_PROVISIONED" %mta_ip);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE"
+                        print("[TEST EXECUTION RESULT] : FAILURE")
 
                 else:
                     if mta_ip not in non_prov_ip :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print "TEST STEP 4: Check if the MTA IP is not %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip;
-                        print "EXPECTED RESULT 4: The MTA IP should not be %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip;
-                        print "ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_PROVISIONED" %mta_ip;
+                        print("TEST STEP 4: Check if the MTA IP is not %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip);
+                        print("EXPECTED RESULT 4: The MTA IP should not be %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip);
+                        print("ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_PROVISIONED" %mta_ip);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS"
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
                     else :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE")
-                        print "TEST STEP 4: Check if the MTA IP is not %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip;
-                        print "EXPECTED RESULT 4: The MTA IP should not be %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip;
-                        print "ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_PROVISIONED" %mta_ip;
+                        print("TEST STEP 4: Check if the MTA IP is not %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip);
+                        print("EXPECTED RESULT 4: The MTA IP should not be %s as the Provisioning status is MTA_PROVISIONED" %non_prov_ip);
+                        print("ACTUAL RESULT 4:  The MTA IP is %s as the the Provisioning status is MTA_PROVISIONED" %mta_ip);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE"
+                        print("[TEST EXECUTION RESULT] : FAILURE")
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE")
-                print "TEST STEP 3: Get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP"
-                print "EXPECTED RESULT 3: Should get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP"
-                print "ACTUAL RESULT 3:  Device.DeviceInfo.X_COMCAST-COM_MTA_IP is not retrieved"
+                print("TEST STEP 3: Get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP")
+                print("EXPECTED RESULT 3: Should get MTA IP from Device.DeviceInfo.X_COMCAST-COM_MTA_IP")
+                print("ACTUAL RESULT 3:  Device.DeviceInfo.X_COMCAST-COM_MTA_IP is not retrieved")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print "TEST STEP 2: Get MTA Provisioning Status"
-            print "EXPECTED RESULT 2: Should get MTA Provisioning status successfully"
-            print "ACTUAL RESULT 2: Failed to get MTA Provisioning status, Details: %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("TEST STEP 2: Get MTA Provisioning Status")
+            print("EXPECTED RESULT 2: Should get MTA Provisioning status successfully")
+            print("ACTUAL RESULT 2: Failed to get MTA Provisioning status, Details: %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Invoke the MTAHAL API mta_hal_getMtaProvisioningStatus()"
-        print "EXPECTED RESULT 1: Should invoke mta_hal_getMtaProvisioningStatus() successfully"
-        print "ACTUAL RESULT 1:  mta_hal_getMtaProvisioningStatus() API not invoked successfully";
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Invoke the MTAHAL API mta_hal_getMtaProvisioningStatus()")
+        print("EXPECTED RESULT 1: Should invoke mta_hal_getMtaProvisioningStatus() successfully")
+        print("ACTUAL RESULT 1:  mta_hal_getMtaProvisioningStatus() API not invoked successfully");
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
     pamobj.unloadModule("pam")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
     pamobj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
-
+    print("Module loading failed")

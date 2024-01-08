@@ -104,11 +104,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj.addParameter("ParamName","Device.LogAgent.X_RDKCENTRAL-COM_PAM_LoggerEnable");
         #Execute the test case in DUT
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the enable status of PAM Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of PAM logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %PamLogStatus;
+            print("TEST STEP 2: Get the enable status of PAM Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of PAM logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %PamLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Set true to both namespaces
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -133,10 +133,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Enable logging of PAM module"
-                print "EXPECTED RESULT 3: Should enable PAM logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 3: Enable logging of PAM module")
+                print("EXPECTED RESULT 3: Should enable PAM logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
                 #Check the timestamp of PAMlog.txt.0
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 cmd = "tail -1 /rdklogs/logs/PAMlog.txt.0"
@@ -146,19 +146,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 lastLineofLog = tdkTestObj.getResultDetails().strip();
                 if lastLineofLog:
                     oldTimeStamp = lastLineofLog.split(" ")[0]
-                    print "Current timestamp in PAMlog.txt.0 is %s" %oldTimeStamp
+                    print("Current timestamp in PAMlog.txt.0 is %s" %oldTimeStamp)
                 #If log file is empty
                 else:
                     oldTimeStamp = " "
 
                 #check whether the process is restarted automatically
                 query="sh %s/tdk_platform_utility.sh checkProcess CcspPandMSsp" %TDK_PATH
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
 
-                print "Check for every 10 secs whether the process is up"
+                print("Check for every 10 secs whether the process is up")
                 retryCount = 0;
                 while retryCount < MAX_RETRY:
                     tdkTestObj.executeTestCase("SUCCESS");
@@ -171,7 +171,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                         retryCount = retryCount + 1;
 
                 if not pid:
-                    print "Retry Again: Check for every 5 mins whether the process is up"
+                    print("Retry Again: Check for every 5 mins whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -195,10 +195,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the value of PAM parameters";
-                    print "EXPECTED RESULT 4: Should get the value of PAM parameters";
+                    print("TEST STEP 4: Get the value of PAM parameters");
+                    print("EXPECTED RESULT 4: Should get the value of PAM parameters");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Get and compare the new timestamp of PAMlog.txt.0
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -208,25 +208,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                     lastLineofLog = tdkTestObj.getResultDetails().strip();
                     if lastLineofLog:
                         newTimeStamp = lastLineofLog.split(" ")[0]
-                        print "New timestamp in PAMlog.txt.0 is %s" %newTimeStamp
+                        print("New timestamp in PAMlog.txt.0 is %s" %newTimeStamp)
                         if newTimeStamp == oldTimeStamp:
-                            print "FAILURE:The logs are not updated in the log file"
+                            print("FAILURE:The logs are not updated in the log file")
                             tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "SUCCESS:The logs are updated in log file"
+                            print("SUCCESS:The logs are updated in log file")
                             tdkTestObj.setResultStatus("SUCCESS");
                     #If log file is empty
                     else:
                         newTimeStamp = " "
-                        print "FAILURE:The Logs are not updated in the file"
-			tdkTestObj.setResultStatus("FAILURE");
+                        print("FAILURE:The Logs are not updated in the file")
+                        tdkTestObj.setResultStatus("FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the value of PAM parameters";
-                    print "EXPECTED RESULT 4: Should get the value of PAM parameters";
+                    print("TEST STEP 4: Get the value of PAM parameters");
+                    print("EXPECTED RESULT 4: Should get the value of PAM parameters");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert the log enable status
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -236,42 +236,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Enable logging of PAM module"
-                print "EXPECTED RESULT 3: Should enable PAM logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 3: Enable logging of PAM module")
+                print("EXPECTED RESULT 3: Should enable PAM logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the enable status of PAM Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of PAM logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %PamLogStatus;
+            print("TEST STEP 2: Get the enable status of PAM Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of PAM logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %PamLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

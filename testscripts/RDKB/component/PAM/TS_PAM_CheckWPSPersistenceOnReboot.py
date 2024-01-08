@@ -100,7 +100,7 @@ wifiObj.configureTestCase(ip,port,'TS_PAM_CheckWPSPersistenceOnReboot');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =wifiObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s %s" %(loadmodulestatus,loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s %s" %(loadmodulestatus,loadmodulestatus1)) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     #Set the result status of execution
@@ -117,15 +117,15 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the WPS Enable status";
-        print "ACTUAL RESULT 1:WPS Enable status is %s" %orgValue;
+        print("TEST STEP 1: Get the WPS Enable status");
+        print("ACTUAL RESULT 1:WPS Enable status is %s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if orgValue == "true":
-            print "Disable WPS Enable status"
+            print("Disable WPS Enable status")
             setValue = "false"
         else:
-            print "Enable WPS Enable status"
+            print("Enable WPS Enable status")
             setValue = "true"
         tdkTestObj = wifiObj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.WPS.Enable");
@@ -139,10 +139,10 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Toggle WPS status";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle WPS status");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #rebooting the device
             obj.initiateReboot();
             time.sleep(300)
@@ -157,17 +157,17 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
             if expectedresult in actualresult and setValue in enabledetails:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if WPS status persists on reboot";
-                print "ACTUAL RESULT 3:WPS status persists on reboot";
+                print("TEST STEP 3:Check if WPS status persists on reboot");
+                print("ACTUAL RESULT 3:WPS status persists on reboot");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check if WPS status persists on reboot";
-                print "ACTUAL RESULT 3:WPS status does not persist on reboot";
+                print("TEST STEP 3:Check if WPS status persists on reboot");
+                print("ACTUAL RESULT 3:WPS status does not persist on reboot");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj = wifiObj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.WPS.Enable");
             tdkTestObj.addParameter("paramValue",orgValue);
@@ -179,37 +179,36 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP :Revert WPS status";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP :Revert WPS status");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP :Revert WPS status";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP :Revert WPS status");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle WPS status";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle WPS status");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the WPS Enable status";
-        print "ACTUAL RESULT 1:Failed to get WPS Enable status";
+        print("TEST STEP 1: Get the WPS Enable status");
+        print("ACTUAL RESULT 1:Failed to get WPS Enable status");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
     wifiObj.unloadModule("wifiagent");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

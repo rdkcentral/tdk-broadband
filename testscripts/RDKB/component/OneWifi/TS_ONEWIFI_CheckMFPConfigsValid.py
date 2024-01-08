@@ -77,44 +77,44 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckMFPConfigsValid');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
     statusFlag = 0;
     noOfEntries = 16;
-    print "TEST STEP 1:Checking if CPE MFP Configs Access Points has acceptable values";
+    print("TEST STEP 1:Checking if CPE MFP Configs Access Points has acceptable values");
     acceptableValues = ["Disabled", "Optional", "Required"];
     while noOfEntries > 0:
-          expectedresult="SUCCESS";
-          tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.%i.Security.MFPConfig" %noOfEntries);
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
-          if expectedresult in actualresult  and details in acceptableValues:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print"Device.WiFi.AccessPoint.%i.Security.MFPConfig is %s" %(noOfEntries,details);
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              statusFlag = 1;
-              tdkTestObj.setResultStatus("FAILURE");
-              print"Device.WiFi.AccessPoint.%i.Security.MFPConfig is %s" %(noOfEntries,details);
-              print "[TEST EXECUTION RESULT] :FAILURE";
-          noOfEntries = noOfEntries -1;
+        expectedresult="SUCCESS";
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.WiFi.AccessPoint.%i.Security.MFPConfig" %noOfEntries);
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult  and details in acceptableValues:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("Device.WiFi.AccessPoint.%i.Security.MFPConfig is %s" %(noOfEntries,details));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            statusFlag = 1;
+            tdkTestObj.setResultStatus("FAILURE");
+            print("Device.WiFi.AccessPoint.%i.Security.MFPConfig is %s" %(noOfEntries,details));
+            print("[TEST EXECUTION RESULT] :FAILURE");
+        noOfEntries = noOfEntries -1;
 
     #setitng the script status
     if  statusFlag == 1:
-         tdkTestObj.setResultStatus("FAILURE");
-         print "ACTUAL RESULT2: The MFP Configs Access Points donot have the acceptable values";
-         print "[TEST EXECUTION RESULT] :FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("ACTUAL RESULT2: The MFP Configs Access Points donot have the acceptable values");
+        print("[TEST EXECUTION RESULT] :FAILURE");
     else:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT2: The MFP Configs Access Points have the acceptable values";
-        print "[TEST EXECUTION RESULT] :SUCCESS";
+        print("ACTUAL RESULT2: The MFP Configs Access Points have the acceptable values");
+        print("[TEST EXECUTION RESULT] :SUCCESS");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

@@ -104,11 +104,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj.addParameter("ParamName","Device.LogAgent.X_RDKCENTRAL-COM_WiFi_LoggerEnable");
         #Execute the test case in DUT
@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the enable status of WiFi Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of WiFi logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %WiFiLogStatus;
+            print("TEST STEP 2: Get the enable status of WiFi Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of WiFi logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %WiFiLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Set true to both namespaces
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -133,24 +133,24 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Enable logging of WiFi module"
-                print "EXPECTED RESULT 3: Should enable WiFi logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 3: Enable logging of WiFi module")
+                print("EXPECTED RESULT 3: Should enable WiFi logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
                 #Check the timestamp of WiFilog.txt.0
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-		print "Check if the device is dual core or not since WiFi logs uploading in arm side for such devices"
-		RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
+                print("Check if the device is dual core or not since WiFi logs uploading in arm side for such devices")
+                RPCCmd = "sh %s/tdk_utility.sh parseConfigFile RPC_CMD" %TDK_PATH;
                 tdkTestObj.addParameter("command", RPCCmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 RPC_CMD = tdkTestObj.getResultDetails().strip();
                 RPC_CMD = RPC_CMD.replace("\\n", "");
                 if RPC_CMD:
-                    print "The device needs rpc command";
+                    print("The device needs rpc command");
                     cmd = RPC_CMD + " 'tail -1 /rdklogs/logs/WiFilog.txt.0' | grep -v '*' | sed -r '/^\s*$/d'"
                 else:
-                    print "The device doesn't need rpc command"
+                    print("The device doesn't need rpc command")
                     cmd = "tail -1 /rdklogs/logs/WiFilog.txt.0"
                 tdkTestObj.addParameter("command", cmd);
                 tdkTestObj.executeTestCase(expectedresult);
@@ -158,19 +158,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 lastLineofLog = tdkTestObj.getResultDetails().strip();
                 if lastLineofLog:
                     oldTimeStamp = lastLineofLog.split(" ")[0]
-                    print "Current timestamp in WiFilog.txt.0 is %s" %oldTimeStamp
+                    print("Current timestamp in WiFilog.txt.0 is %s" %oldTimeStamp)
                 #If log file is empty
                 else:
                     oldTimeStamp = " "
 
                 #check whether the process is restarted automatically
                 query="sh %s/tdk_platform_utility.sh checkProcess CcspWifiSsp" %TDK_PATH
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
 
-                print "Check for every 10 secs whether the process is up"
+                print("Check for every 10 secs whether the process is up")
                 retryCount = 0;
                 while retryCount < MAX_RETRY:
                     tdkTestObj.executeTestCase("SUCCESS");
@@ -183,7 +183,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                         retryCount = retryCount + 1;
 
                 if not pid:
-                    print "Retry Again: Check for every 5 mins whether the process is up"
+                    print("Retry Again: Check for every 5 mins whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -207,10 +207,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the value of WiFi parameters";
-                    print "EXPECTED RESULT 4: Should get the value of WiFi parameters";
+                    print("TEST STEP 4: Get the value of WiFi parameters");
+                    print("EXPECTED RESULT 4: Should get the value of WiFi parameters");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Get and compare the new timestamp of WiFilog.txt.0
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
@@ -220,25 +220,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                     lastLineofLog = tdkTestObj.getResultDetails().strip();
                     if lastLineofLog:
                         newTimeStamp = lastLineofLog.split(" ")[0]
-                        print "New timestamp in WiFilog.txt.0 is %s" %newTimeStamp
+                        print("New timestamp in WiFilog.txt.0 is %s" %newTimeStamp)
                         if newTimeStamp == oldTimeStamp:
-                            print "FAILURE:The logs are not updated in the log file"
+                            print("FAILURE:The logs are not updated in the log file")
                             tdkTestObj.setResultStatus("FAILURE");
                         else:
-                            print "SUCCESS:The logs are updated in log file"
+                            print("SUCCESS:The logs are updated in log file")
                             tdkTestObj.setResultStatus("SUCCESS");
                     #If log file is empty
                     else:
                         newTimeStamp = " "
-                        print "FAILURE:The Logs are not updated in the file"
-			tdkTestObj.setResultStatus("FAILURE");
+                        print("FAILURE:The Logs are not updated in the file")
+                        tdkTestObj.setResultStatus("FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the value of WiFi parameters";
-                    print "EXPECTED RESULT 4: Should get the value of WiFi parameters";
+                    print("TEST STEP 4: Get the value of WiFi parameters");
+                    print("EXPECTED RESULT 4: Should get the value of WiFi parameters");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert the log enable status
                 tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -248,42 +248,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 details = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :SUCCESS";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP : Revert the logging status"
-                    print "EXPECTED RESULT : Should revert the logging status"
-                    print "ACTUAL RESULT : %s" %details;
-                    print "TEST EXECUTION RESULT :FAILURE";
+                    print("TEST STEP : Revert the logging status")
+                    print("EXPECTED RESULT : Should revert the logging status")
+                    print("ACTUAL RESULT : %s" %details);
+                    print("TEST EXECUTION RESULT :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Enable logging of WiFi module"
-                print "EXPECTED RESULT 3: Should enable WiFi logging"
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 3: Enable logging of WiFi module")
+                print("EXPECTED RESULT 3: Should enable WiFi logging")
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the enable status of WiFi Logging";
-            print "EXPECTED RESULT 2: Should get the enable status of WiFi logging";
-            print "ACTUAL RESULT 2: Enable status is %s" %WiFiLogStatus;
+            print("TEST STEP 2: Get the enable status of WiFi Logging");
+            print("EXPECTED RESULT 2: Should get the enable status of WiFi logging");
+            print("ACTUAL RESULT 2: Enable status is %s" %WiFiLogStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the enable status of Logging";
-        print "EXPECTED RESULT 1: Should get the enable status of logging";
-        print "ACTUAL RESULT 1: Enable status is %s" %LogStatus;
+        print("TEST STEP 1: Get the enable status of Logging");
+        print("EXPECTED RESULT 1: Should get the enable status of logging");
+        print("ACTUAL RESULT 1: Enable status is %s" %LogStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

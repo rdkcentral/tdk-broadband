@@ -102,8 +102,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_Activate_AdvancedParentalControl');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
@@ -132,9 +132,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in (actualresult1 and actualresult2 and actualresult3):
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Get the Advanced ParentalControl Enable status and AdvancedParentalControl Activate status";
-        print "ACTUAL RESULT 1:Advanced ParentalControl Enable status:%s  AdvancedParentalControl Activate status :%s RabidFramework Enable status: %s" %(enabledetails,activatedetails,rabiddetails);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1 :Get the Advanced ParentalControl Enable status and AdvancedParentalControl Activate status");
+        print("ACTUAL RESULT 1:Advanced ParentalControl Enable status:%s  AdvancedParentalControl Activate status :%s RabidFramework Enable status: %s" %(enabledetails,activatedetails,rabiddetails));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetMultiple');
         tdkTestObj.addParameter("paramList","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedParentalControl.Enable|true|bool|Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.Enable|true|bool");
         tdkTestObj.executeTestCase(expectedresult);
@@ -144,10 +144,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Enable Advanced ParentalControl";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Advanced ParentalControl");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_AdvancedParentalControl.Activate");
             tdkTestObj.addParameter("ParamValue","true");
@@ -159,10 +159,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if AdvancedParentalControl can be activated if Advanced ParentalControl is enabled";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3:Check if AdvancedParentalControl can be activated if Advanced ParentalControl is enabled");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj = obj1.createTestStep('ExecuteCmd');
                 cmd = "syscfg show | grep Adv_PCActivate | cut -d = -f 2";
                 tdkTestObj.addParameter("command",cmd);
@@ -173,23 +173,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult and details == "1":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4:Check if AdvancedParental Control Activate is 1";
-                    print "ACTUAL RESULT 4:AdvancedParental Control Activate is 1";
+                    print("TEST STEP 4:Check if AdvancedParental Control Activate is 1");
+                    print("ACTUAL RESULT 4:AdvancedParental Control Activate is 1");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Check if AdvancedParental Control Activate is 1";
-                    print "ACTUAL RESULT 4:AdvancedParental Control Activate is not 1";
+                    print("TEST STEP 4:Check if AdvancedParental Control Activate is 1");
+                    print("ACTUAL RESULT 4:AdvancedParental Control Activate is not 1");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check if AdvancedParentalControl can be activated if Advanced ParentalControl is enabled";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3:Check if AdvancedParentalControl can be activated if Advanced ParentalControl is enabled");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
             tdkTestObj.addParameter("paramList","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.AdvancedParentalControl.Enable|%s|bool|Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.Enable|%s|bool" %(enabledetails,rabiddetails));
             tdkTestObj.executeTestCase(expectedresult);
@@ -197,9 +197,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP:Revert the values"
-                print "ACTUAL RESULT : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP:Revert the values")
+                print("ACTUAL RESULT : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_AdvancedParentalControl.Activate");
                 tdkTestObj.addParameter("ParamValue",activatedetails);
@@ -211,39 +211,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP :Activate the AdvancedParentalControl Activate status";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP :Activate the AdvancedParentalControl Activate status");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP :Activate the AdvancedParentalControl Activate status";
-                    print "ACTUAL RESULT : %s" %details;
+                    print("TEST STEP :Activate the AdvancedParentalControl Activate status");
+                    print("ACTUAL RESULT : %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP:Revert the values"
-                print "ACTUAL RESULT : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP:Revert the values")
+                print("ACTUAL RESULT : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Enable Advanced ParentalControl";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Enable Advanced ParentalControl");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Get the Advanced ParentalControl Enable status and AdvancedParentalControl Activate status";
-        print "ACTUAL RESULT 1:Failed to get Advanced ParentalControl Enable status and AdvancedParentalControl Activate status ";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1 :Get the Advanced ParentalControl Enable status and AdvancedParentalControl Activate status");
+        print("ACTUAL RESULT 1:Failed to get Advanced ParentalControl Enable status and AdvancedParentalControl Activate status ");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

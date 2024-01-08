@@ -116,13 +116,13 @@ pamObj.configureTestCase(ip,port,'TS_PAM_CheckCRCrash');
 #Get the result of connection with test component and STB
 loadmodulestatus =sysObj.getLoadModuleResult();
 pamloadmodulestatus =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     sysObj.setLoadModuleStatus("SUCCESS");
     # Check whether the process is running
     query="sh %s/tdk_platform_utility.sh checkProcess CcspCrSsp" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -131,36 +131,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     tdkTestObj.executeTestCase("SUCCESS");
     actualresult = tdkTestObj.getResult();
     pid = tdkTestObj.getResultDetails().strip()
-    print "CcspCrSsp PID: %s" %pid
+    print("CcspCrSsp PID: %s" %pid)
 
     if expectedresult in actualresult and pid:
-        print "TEST STEP 1:Check if CcspCrSsp process is running"
-        print "EXPECTED RESULT 1: CcspCrSsp should be running";
-        print "ACTUAL RESULT 1: CcspCrSsp process is running"
+        print("TEST STEP 1:Check if CcspCrSsp process is running")
+        print("EXPECTED RESULT 1: CcspCrSsp should be running");
+        print("ACTUAL RESULT 1: CcspCrSsp process is running")
         tdkTestObj.setResultStatus("SUCCESS");
 
-	#save device's current state before it goes for reboot
+        #save device's current state before it goes for reboot
         sysObj.saveCurrentState();
 
         # Kill the process
         query="sh %s/tdk_platform_utility.sh killProcess CcspCrSsp" %TDK_PATH
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj.addParameter("command", query)
         tdkTestObj.executeTestCase("SUCCESS");
         actualresult = tdkTestObj.getResult();
         result = tdkTestObj.getResultDetails().strip()
         if expectedresult in actualresult:
-            print "TEST STEP 2:Kill CcspCr process"
-            print "EXPECTED RESULT 2: CcspCr should be killed";
-            print "ACTUAL RESULT 2: CcspCr should be killed"
+            print("TEST STEP 2:Kill CcspCr process")
+            print("EXPECTED RESULT 2: CcspCr should be killed");
+            print("ACTUAL RESULT 2: CcspCr should be killed")
             tdkTestObj.setResultStatus("SUCCESS");
 
-	    #Restore the device state saved before reboot
+            #Restore the device state saved before reboot
             sysObj.restorePreviousStateAfterReboot();
 
             # Check whether the process is running
             query="sh %s/tdk_platform_utility.sh checkProcess CcspCrSsp" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -169,37 +169,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             tdkTestObj.executeTestCase("SUCCESS");
             actualresult = tdkTestObj.getResult();
             pid = tdkTestObj.getResultDetails().strip()
-            print "CcspCrSsp PID: %s" %pid
+            print("CcspCrSsp PID: %s" %pid)
 
             if expectedresult in actualresult and pid:
-                print "TEST STEP 3:Check if CcspCrSsp process restarted"
-                print "EXPECTED RESULT 3: CcspCrSsp should be restarted"
-                print "ACTUAL RESULT 3: CcspCrSsp process restarted"
+                print("TEST STEP 3:Check if CcspCrSsp process restarted")
+                print("EXPECTED RESULT 3: CcspCrSsp should be restarted")
+                print("ACTUAL RESULT 3: CcspCrSsp process restarted")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3:Check if CcspCr process restarted"
-                print "EXPECTED RESULT 3: CcspCr should be restarted"
-                print "ACTUAL RESULT 3: CcspCr process has not restarted"
+                print("TEST STEP 3:Check if CcspCr process restarted")
+                print("EXPECTED RESULT 3: CcspCr should be restarted")
+                print("ACTUAL RESULT 3: CcspCr process has not restarted")
                 tdkTestObj.setResultStatus("FAILURE");
-		sysObj.initiateReboot();
+                sysObj.initiateReboot();
                 pamObj.resetConnectionAfterReboot();
         else:
-            print "TEST STEP 2:Kill CcspCr process"
-            print "EXPECTED RESULT 2: CcspCr should be killed";
-            print "ACTUAL RESULT 2: CcspCr not killed"
+            print("TEST STEP 2:Kill CcspCr process")
+            print("EXPECTED RESULT 2: CcspCr should be killed");
+            print("ACTUAL RESULT 2: CcspCr not killed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1:Check if CcspCr process is running"
-        print "EXPECTED RESULT 1: CcspCr should be running";
-        print "ACTUAL RESULT 1: CcspCr process is not running"
+        print("TEST STEP 1:Check if CcspCr process is running")
+        print("EXPECTED RESULT 1: CcspCr should be running");
+        print("ACTUAL RESULT 1: CcspCr process is not running")
         tdkTestObj.setResultStatus("FAILURE");
 
     sysObj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 
 else:
-        print "Failed to load the module";
-        sysObj.setLoadModuleStatus("FAILURE");
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load the module");
+    sysObj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

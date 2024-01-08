@@ -79,7 +79,7 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 import socket, struct
 
@@ -92,9 +92,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_MTAHAL_GetDHCPInfo')
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -110,40 +110,40 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and resultDetails != " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Get the DHCP Info"
-        print "EXPECTED RESULT 1: Should get the DHCP Info successfully"
-        print "ACTUAL RESULT 1: The DHCP Info:"
-        print ""
+        print("TEST STEP 1: Get the DHCP Info")
+        print("EXPECTED RESULT 1: Should get the DHCP Info successfully")
+        print("ACTUAL RESULT 1: The DHCP Info:")
+        print("")
         for x in resultDetails.split(";"):
             if "IPAddress" in x:
-                print "IPAddress=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("IPAddress=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "SubnetMask" in x:
-                print "SubnetMask=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("SubnetMask=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "Gateway" in x:
-                print "Gateway=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("Gateway=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "PrimaryDNS" in x:
-                print "PrimaryDNS=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("PrimaryDNS=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "SecondaryDNS" in x:
-                print "SecondaryDNS=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("SecondaryDNS=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "PrimaryDHCPServer" in x:
-                print "PrimaryDHCPServer=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("PrimaryDHCPServer=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             elif "SecondaryDHCPServer" in x:
-                print "SecondaryDHCPServer=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) ))
+                print("SecondaryDHCPServer=%s" %socket.inet_ntoa(struct.pack('<L', (int(x.split("=")[-1]) % 2**32) )))
             else:
-                print x
-        print ""
-        #Get the result of execution        
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+                print(x)
+        print("")
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Get the DHCP Info"
-        print "EXPECTED RESULT 1: Should get the DHCP Info successfully"
-        print "ACTUAL RESULT 1: Failed to get the DHCP Info:"
-        print "%s" %resultDetails
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Get the DHCP Info")
+        print("EXPECTED RESULT 1: Should get the DHCP Info successfully")
+        print("ACTUAL RESULT 1: Failed to get the DHCP Info:")
+        print("%s" %resultDetails)
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

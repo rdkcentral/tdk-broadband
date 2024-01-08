@@ -85,38 +85,38 @@ sysobj.configureTestCase(ip,port,'TS_PAM_CheckIPTableRules_WithFingerPrintEnable
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus) ;
 
 def verify_iptable_rules(tdkTestObj):
     rulesFound = 0;
     cmd = "sh %s/tdk_utility.sh parseConfigFile FINGER_PRINT_IPTABLE_RULES  | tr \"\n\" \"  \"" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult  and details!= "":
-       iptable_list = details.split(",");
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP : Execute the command";
-       print "EXPECTED RESULT : Should execute the command successfully";
-       print "ACTUAL RESULT : Details: %s" %details;
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        iptable_list = details.split(",");
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP : Execute the command");
+        print("EXPECTED RESULT : Should execute the command successfully");
+        print("ACTUAL RESULT : Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       for list in iptable_list:
-           cmd = "iptables-save | grep  -ire \"%s\"" %list;
-           tdkTestObj.addParameter("command",cmd);
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           if expectedresult in actualresult and details == list:
-              rulesFound = 1;
-           else:
-               rulesFound = 0;
-               print "Iptable Rule %s is NOT present"%list
-               break;
+        for list in iptable_list:
+            cmd = "iptables-save | grep  -ire \"%s\"" %list;
+            tdkTestObj.addParameter("command",cmd);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if expectedresult in actualresult and details == list:
+                rulesFound = 1;
+            else:
+                rulesFound = 0;
+                print("Iptable Rule %s is NOT present"%list)
+                break;
     return rulesFound,actualresult;
 
 if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
@@ -137,10 +137,10 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
@@ -154,50 +154,50 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
         initial_value = tdkTestObj.getResultDetails().strip();
 
         if expectedresult in actualresult and initial_value == "true":
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Get current value of Device FingerPrint Enable"
-           print "EXPECTED RESULT 2: Should get current value of Device FingerPrint Enable"
-           print "ACTUAL RESULT 2: current value is %s" %initial_value;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get current value of Device FingerPrint Enable")
+            print("EXPECTED RESULT 2: Should get current value of Device FingerPrint Enable")
+            print("ACTUAL RESULT 2: current value is %s" %initial_value);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-           tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-           result,actualresult= verify_iptable_rules(tdkTestObj);
+            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+            result,actualresult= verify_iptable_rules(tdkTestObj);
 
-           if result == 1 and expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Verify iptables rules for  Device FingerPrint Enable"
-              print "EXPECTED RESULT 3: The iptables rules specific to Device FingerPrint Enable should be present"
-              print "ACTUAL TEST 3: Verification on the iptables rules specific to Device FingerPrint Enable is success"
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Verify iptables rules for  Device FingerPrint Enable"
-               print "EXPECTED RESULT 3: The iptables rules specific to Device FingerPrint Enable should be present"
-               print "ACTUAL TEST 3: Verification on the iptables rules specific to Device FingerPrint Enable Failed";
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE"
+            if result == 1 and expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Verify iptables rules for  Device FingerPrint Enable")
+                print("EXPECTED RESULT 3: The iptables rules specific to Device FingerPrint Enable should be present")
+                print("ACTUAL TEST 3: Verification on the iptables rules specific to Device FingerPrint Enable is success")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Verify iptables rules for  Device FingerPrint Enable")
+                print("EXPECTED RESULT 3: The iptables rules specific to Device FingerPrint Enable should be present")
+                print("ACTUAL TEST 3: Verification on the iptables rules specific to Device FingerPrint Enable Failed");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get current value of Device FingerPrint Enable"
-            print "EXPECTED RESULT 2: Should get current value of Device FingerPrint Enable"
-            print "ACTUAL RESULT 2: current value is %s" %initial_value;
+            print("TEST STEP 2: Get current value of Device FingerPrint Enable")
+            print("EXPECTED RESULT 2: Should get current value of Device FingerPrint Enable")
+            print("ACTUAL RESULT 2: current value is %s" %initial_value);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

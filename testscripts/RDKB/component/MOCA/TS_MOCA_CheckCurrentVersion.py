@@ -102,7 +102,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_MOCA_CheckCurrentVersion');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -119,50 +119,50 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of connected moca clients";
-        print "EXPECTED RESULT 1: Should get the number of connected moca clients";
-        print "ACTUAL RESULT 1: Number of connected moca clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected moca clients");
+        print("EXPECTED RESULT 1: Should get the number of connected moca clients");
+        print("ACTUAL RESULT 1: Number of connected moca clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-	if int(NoOfClients) > 0:
-	    tdkTestObj = obj.createTestStep('Mocastub_Get');
-    	    tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.CurrentVersion");
-    	    expectedresult="SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        if int(NoOfClients) > 0:
+            tdkTestObj = obj.createTestStep('Mocastub_Get');
+            tdkTestObj.addParameter("paramName","Device.MoCA.Interface.1.CurrentVersion");
+            expectedresult="SUCCESS";
 
-    	    #Execute the test case in DUT
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    version= tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            version= tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult and version != "" :
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 1: Get the current version of Moca";
-    	        print "EXPECTED RESULT 1: Should get the current version of Moca as a non-empty value";
-    	        print "ACTUAL RESULT 1: Retrieved current version is a non-empty value.Version is :%s" %version;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the current version of Moca";
-                print "EXPECTED RESULT 1: Should get the current version of Moca as a non-empty value";
-                print "ACTUAL RESULT 1: Retrieved current version is a empty value.Version is :%s" %version;
+            if expectedresult in actualresult and version != "" :
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 1: Get the current version of Moca");
+                print("EXPECTED RESULT 1: Should get the current version of Moca as a non-empty value");
+                print("ACTUAL RESULT 1: Retrieved current version is a non-empty value.Version is :%s" %version);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 1: Get the current version of Moca");
+                print("EXPECTED RESULT 1: Should get the current version of Moca as a non-empty value");
+                print("ACTUAL RESULT 1: Retrieved current version is a empty value.Version is :%s" %version);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "No MoCA client connected.Connect a MoCA client to retrieve the CurrentVersion";
+            print("No MoCA client connected.Connect a MoCA client to retrieve the CurrentVersion");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of connected moca clients";
-        print "EXPECTED RESULT 1: Should get the number of connected moca clients";
-        print "ACTUAL RESULT 1: Number of connected moca clients is :%s" %NoOfClients;
+        print("TEST STEP 1: Get the number of connected moca clients");
+        print("EXPECTED RESULT 1: Should get the number of connected moca clients");
+        print("ACTUAL RESULT 1: Number of connected moca clients is :%s" %NoOfClients);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

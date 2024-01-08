@@ -102,8 +102,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_EnableRFCWebConfig_CheckPersistence_OnR
 #Get the result of connection with test component and DUT
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 revert =0;
 if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -122,11 +122,11 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         setValue = "true";
         if initial_value != "true":
@@ -143,25 +143,25 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 #Set the result status of execution
                 revert =1;
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set Web Config Enable status to true"
-                print "EXPECTED RESULT 2: Should set Web Config Enable status to true"
-                print "ACTUAL RESULT 2: %s" %result;
+                print("TEST STEP 2: Set Web Config Enable status to true")
+                print("EXPECTED RESULT 2: Should set Web Config Enable status to true")
+                print("ACTUAL RESULT 2: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set Web Config Enable status to true"
-                print "EXPECTED RESULT 2: Should set Web Config Enable status to true"
-                print "ACTUAL RESULT 2: %s" %result;
+                print("TEST STEP 2: Set Web Config Enable status to true")
+                print("EXPECTED RESULT 2: Should set Web Config Enable status to true")
+                print("ACTUAL RESULT 2: %s" %result);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
                 setValue ="failed";
         if "true" == setValue:
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             expectedresult="SUCCESS";
             cmd= "sh %s/tdk_utility.sh parseConfigFile WEB_CONFIG_PARAMS" %TDK_PATH;
-            print cmd;
+            print(cmd);
             expectedresult="SUCCESS";
             tdkTestObj.addParameter("command", cmd);
             tdkTestObj.executeTestCase(expectedresult);
@@ -172,10 +172,10 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 SupDocs=details.split(".net,")[1];
                 expectedValues  = [URL,SupDocs];
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Should get the configured WEB_CONFIG parameters"
-                print "ACTUAL RESULT 3: WEB_CONFIG parameters value received succesfully" ;
+                print("TEST STEP 3: Should get the configured WEB_CONFIG parameters")
+                print("ACTUAL RESULT 3: WEB_CONFIG parameters value received succesfully") ;
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 sysobj.initiateReboot();
                 sleep(300);
@@ -191,32 +191,32 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip();
                     if expectedresult in actualresult and expectedValues[i] in details:
-                        print "The value received is %s and  equal to expected value" %details;
+                        print("The value received is %s and  equal to expected value" %details);
                         i=i+1;
                     else:
                         actualresult ="FAILURE";
-                        print "%s is expected to have %s but has %s" %(item,expectedValues[i],details);
+                        print("%s is expected to have %s but has %s" %(item,expectedValues[i],details));
                         break;
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Should get the WEB_CONFIG parameters after enabling WEB CONFIG ";
-                    print "EXPECTED RESULT 4: Should get the WEB_CONFIG parameters equal to the one configured after enabling";
-                    print "ACTUAL RESULT 4:WEB_CONFIG parameters are equal to the one configured after enabling";
+                    print("TEST STEP 4: Should get the WEB_CONFIG parameters after enabling WEB CONFIG ");
+                    print("EXPECTED RESULT 4: Should get the WEB_CONFIG parameters equal to the one configured after enabling");
+                    print("ACTUAL RESULT 4:WEB_CONFIG parameters are equal to the one configured after enabling");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Should get the WEB_CONFIG parameters after enabling WEB CONFIG ";
-                    print "EXPECTED RESULT 4: Should get the WEB_CONFIG parameters equal to the one configured after enabling";
-                    print "ACTUAL RESULT 4:WEB_CONFIG parameters are not equal to the one configured after enabling";
+                    print("TEST STEP 4: Should get the WEB_CONFIG parameters after enabling WEB CONFIG ");
+                    print("EXPECTED RESULT 4: Should get the WEB_CONFIG parameters equal to the one configured after enabling");
+                    print("ACTUAL RESULT 4:WEB_CONFIG parameters are not equal to the one configured after enabling");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Should get the configured WEB_CONFIG parameters"
-                print "ACTUAL RESULT 3: WEB_CONFIG parameter values from properties file:%s" %details;
+                print("TEST STEP 3: Should get the configured WEB_CONFIG parameters")
+                print("ACTUAL RESULT 3: WEB_CONFIG parameter values from properties file:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert the value
             if revert ==1:
@@ -232,32 +232,32 @@ if  "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatu
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Revert the Web Config Enable status to previous"
-                    print "EXPECTED RESULT 5: Should revert Web Config status to previous"
-                    print "ACTUAL RESULT 5: %s" %result;
+                    print("TEST STEP 5: Revert the Web Config Enable status to previous")
+                    print("EXPECTED RESULT 5: Should revert Web Config status to previous")
+                    print("ACTUAL RESULT 5: %s" %result);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS"
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Revert Web Config Enable status to previous"
-                    print "EXPECTED RESULT 5: Should revert  Web Config Enable status to previous"
-                    print "ACTUAL RESULT 5: %s" %result;
+                    print("TEST STEP 5: Revert Web Config Enable status to previous")
+                    print("EXPECTED RESULT 5: Should revert  Web Config Enable status to previous")
+                    print("ACTUAL RESULT 5: %s" %result);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE"
+                    print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get current value of Web Config Enable"
-        print "EXPECTED RESULT 1: Should get current value of Web Config Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Web Config Enable")
+        print("EXPECTED RESULT 1: Should get current value of Web Config Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

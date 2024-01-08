@@ -111,19 +111,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the ReportingPeriod of WifiClient";
-        print "EXPECTED RESULT 1: Should get ReportingPeriod for WifiClient";
-        print "ACTUAL RESULT 1: ReportingPeriod of WifiClient :%s" %default;
+        print("TEST STEP 1: Get the ReportingPeriod of WifiClient");
+        print("EXPECTED RESULT 1: Should get ReportingPeriod for WifiClient");
+        print("ACTUAL RESULT 1: ReportingPeriod of WifiClient :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         ReportingPeriod_list=[1,5,15,30,60,300,900,1800,3600,10800,21600,43200,86400];
         # getting length of list
         length = len(ReportingPeriod_list)
-        print "Supported Values for  Wifi Client ReportingPeriod is ",ReportingPeriod_list
+        print("Supported Values for  Wifi Client ReportingPeriod is ",ReportingPeriod_list)
 
         for i in range(length):
-            print "Setting the Wifi Client ReportingPeriod to ",ReportingPeriod_list[i]
+            print("Setting the Wifi Client ReportingPeriod to ",ReportingPeriod_list[i])
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.WiFi.X_RDKCENTRAL-COM_Report.WifiClient.ReportingPeriod");
@@ -137,29 +137,29 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             SetValue =ReportingPeriod_list[i];
             if expectedresult in actualresult:
-               flag =0;
-               print " Value set successfully to ",ReportingPeriod_list[i];
+                flag =0;
+                print(" Value set successfully to ",ReportingPeriod_list[i]);
 
             else:
                 flag =1;
                 break;
 
         if flag == 0:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Set the ReportingPeriod of WifiClient to all supported Values";
-           print "EXPECTED RESULT 2: Should set ReportingPeriod for WifiClient to all supported Values";
-           print "ACTUAL RESULT 2: Successfully set the all the supported ReportingPeriod for WifiClient" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the ReportingPeriod of WifiClient to all supported Values");
+            print("EXPECTED RESULT 2: Should set ReportingPeriod for WifiClient to all supported Values");
+            print("ACTUAL RESULT 2: Successfully set the all the supported ReportingPeriod for WifiClient") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the ReportingPeriod of WifiClient to all supported Values";
-           print "EXPECTED RESULT 2: Should set ReportingPeriod for WifiClient to all supported Values";
-           print "ACTUAL RESULT 2: Failed to set the ",SetValue," ReportingPeriod for WifiClient" ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the ReportingPeriod of WifiClient to all supported Values");
+            print("EXPECTED RESULT 2: Should set ReportingPeriod for WifiClient to all supported Values");
+            print("ACTUAL RESULT 2: Failed to set the ",SetValue," ReportingPeriod for WifiClient") ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
 
         #Reverting to default
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
@@ -172,32 +172,32 @@ if "SUCCESS" in loadmodulestatus.upper():
         result = tdkTestObj.getResultDetails();
 
         if expectedresult in  expectedresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: Revert the ReportingPeriod of WifiClient to its default";
-           print "EXPECTED RESULT 3: Revert  ReportingPeriod for WifiClient to previous value";
-           print "ACTUAL RESULT 3: Revert Operation sucesss:",result ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 3: Revert the ReportingPeriod of WifiClient to its default");
+            print("EXPECTED RESULT 3: Revert  ReportingPeriod for WifiClient to previous value");
+            print("ACTUAL RESULT 3: Revert Operation sucesss:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 3: Revert the ReportingPeriod of WifiClient to its default";
-           print "EXPECTED RESULT 3: Revert  ReportingPeriod for WifiClient to previous value";
-           print "ACTUAL RESULT 3: Revert Operation failed:",result ;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 3: Revert the ReportingPeriod of WifiClient to its default");
+            print("EXPECTED RESULT 3: Revert  ReportingPeriod for WifiClient to previous value");
+            print("ACTUAL RESULT 3: Revert Operation failed:",result) ;
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the ReportingPeriod of WifiClient";
-        print "EXPECTED RESULT 1: Should get ReportingPeriod for WifiClient";
-        print "ACTUAL RESULT 1: ReportingPeriod of WifiClient :%s" %default;
+        print("TEST STEP 1: Get the ReportingPeriod of WifiClient");
+        print("EXPECTED RESULT 1: Should get ReportingPeriod for WifiClient");
+        print("ACTUAL RESULT 1: ReportingPeriod of WifiClient :%s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

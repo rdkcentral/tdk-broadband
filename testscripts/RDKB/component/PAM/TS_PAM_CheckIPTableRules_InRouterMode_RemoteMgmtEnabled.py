@@ -77,25 +77,25 @@ Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable are router, true, true
 def verify_iptable_rules(tdkTestObj, step):
     rulesFound = 0;
     cmd = "sh %s/tdk_utility.sh parseConfigFile IPTABLE_RULES_ROUTER_REMOTEENABLED  | tr \"\n\" \"  \"" %TDK_PATH;
-    print cmd;
+    print(cmd);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Get the IPTABLE rules from platform property file" %step;
-    print "EXPECTED RESULT %d: Should successfully get the IPTABLE rules" %step;
+    print("\nTEST STEP %d: Get the IPTABLE rules from platform property file" %step);
+    print("EXPECTED RESULT %d: Should successfully get the IPTABLE rules" %step);
 
     if expectedresult in actualresult and details!= "":
         iptable_list = details.split(",");
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: IPTABLE rules are fetched; Details: %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d: IPTABLE rules are fetched; Details: %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         for list in iptable_list:
             cmd = "iptables-save | grep  -ire \"%s\"" %list;
-            print "\n%s" %cmd;
+            print("\n%s" %cmd);
             tdkTestObj.addParameter("command",cmd);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
@@ -103,31 +103,31 @@ def verify_iptable_rules(tdkTestObj, step):
 
             if expectedresult in actualresult and details == list:
                 rulesFound = 1;
-                print "Iptable Rule %s is present"%list
+                print("Iptable Rule %s is present"%list)
             else:
                 rulesFound = 0;
-                print "Iptable Rule %s is NOT present"%list
+                print("Iptable Rule %s is NOT present"%list)
                 break;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: IPTABLE rules are not fetched; Details: %s" %(step, details);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d: IPTABLE rules are not fetched; Details: %s" %(step, details));
+        print("[TEST EXECUTION RESULT] : FAILURE");
     return rulesFound,actualresult;
 
 def checkIPTableRules(result, actualresult, expectedresult, step):
-    print "\nTEST STEP %d: Verify IPTABLE rules for Router Mode with Remote Access Enabled" %step;
-    print "EXPECTED RESULT %d: The IPTABLE rules specific to the scenario should be Enabled" %step;
+    print("\nTEST STEP %d: Verify IPTABLE rules for Router Mode with Remote Access Enabled" %step);
+    print("EXPECTED RESULT %d: The IPTABLE rules specific to the scenario should be Enabled" %step);
 
     if result == 1 and expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL TEST %d: Verification on the IPTABLE rules specific to the scenario is success" %step;
+        print("ACTUAL TEST %d: Verification on the IPTABLE rules specific to the scenario is success" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL TEST %d: Verification on the IPTABLE rules specific to the scenario failed" %step;
+        print("ACTUAL TEST %d: Verification on the IPTABLE rules specific to the scenario failed" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     return;
 
 
@@ -164,18 +164,18 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj = obj.createTestStep('TADstub_Get');
     paramList=["Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode", "Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable", "Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable"]
     tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-    print "\nTEST STEP 1: Get the initial values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable and Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable";
-    print "EXPECTED RESULT 1 : The values should be retrieved successfully";
+    print("\nTEST STEP 1: Get the initial values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable and Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable");
+    print("EXPECTED RESULT 1 : The values should be retrieved successfully");
 
     if expectedresult in status and orgValue[0] != "" and orgValue[1] != "" and orgValue[2] != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: LanMode is : %s, HTTP Enable is : %s, HTTPS Enable is : %s " %(orgValue[0],orgValue[1], orgValue[2]) ;
+        print("ACTUAL RESULT 1: LanMode is : %s, HTTP Enable is : %s, HTTPS Enable is : %s " %(orgValue[0],orgValue[1], orgValue[2])) ;
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if orgValue[0] == "router" and orgValue[1] == "true" and orgValue[2] == "true":
-            print "Set operation not required as Lan Mode, HTTP Enable and HTTPS Enable have expected values initially";
+            print("Set operation not required as Lan Mode, HTTP Enable and HTTPS Enable have expected values initially");
             #Verify IPTABLE rules
             step = 2;
             tdkTestObj = obj2.createTestStep('ExecuteCmd');
@@ -195,25 +195,25 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             details = tdkTestObj.getResultDetails();
 
             sleep(10);
-            print "\nTEST STEP 2 : Set Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode to %s" %(http_enable, https_enable, lan_mode);
-            print "EXPECTED RESULT 2 : SET operations should be success";
+            print("\nTEST STEP 2 : Set Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode to %s" %(http_enable, https_enable, lan_mode));
+            print("EXPECTED RESULT 2 : SET operations should be success");
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 2: Set operation success; Details : %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("ACTUAL RESULT 2: Set operation success; Details : %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
 
                 #Validate the SET with GET
                 tdkTestObj,status,setValue = getMultipleParameterValues(obj,paramList)
-                print "\nTEST STEP 3: Get the values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable and Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable";
-                print "EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values";
+                print("\nTEST STEP 3: Get the values of Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable and Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable");
+                print("EXPECTED RESULT 3: The values should be retrieved successfully and should be the same as set values");
 
                 if expectedresult in status and setValue[0] == lan_mode and setValue[1] == http_enable and setValue[2] == https_enable:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 3: Values after the GET are same as the SET values  %s, %s, %s" %(setValue[0],setValue[1],setValue[2]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are same as the SET values  %s, %s, %s" %(setValue[0],setValue[1],setValue[2])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Verify IPTABLE rules
                     step = 4;
@@ -223,7 +223,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     checkIPTableRules(rulesFound, actualresult, expectedresult, step);
 
                     #Revert to initial values
-                    print "\nReverting to initial state...";
+                    print("\nReverting to initial state...");
                     tdkTestObj = obj1.createTestStep("TDKB_TR181Stub_SetMultiple");
                     tdkTestObj.addParameter("paramList", "Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable|%s|boolean|Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpsEnable|%s|boolean|Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode|%s|string"%(orgValue[1],orgValue[2], orgValue[0]));
                     tdkTestObj.executeTestCase(expectedresult);
@@ -231,39 +231,39 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     details = tdkTestObj.getResultDetails();
 
                     sleep(60);
-                    print "\nTEST STEP 6 : Set Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode to %s" %(orgValue[1],orgValue[2], orgValue[0]);
-                    print "EXPECTED RESULT 6 : SET operations should be success";
+                    print("\nTEST STEP 6 : Set Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s, Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable to %s and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode to %s" %(orgValue[1],orgValue[2], orgValue[0]));
+                    print("EXPECTED RESULT 6 : SET operations should be success");
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 6: Set operation success; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :SUCCESS";
+                        print("ACTUAL RESULT 6: Set operation success; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 6:Set operation failed; Details : %s" %details;
-                        print "TEST EXECUTION RESULT :FAILURE";
+                        print("ACTUAL RESULT 6:Set operation failed; Details : %s" %details);
+                        print("TEST EXECUTION RESULT :FAILURE");
                 else :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s, %s" %(setValue[0],setValue[1],setValue[2]) ;
+                    print("ACTUAL RESULT 3: Values after the GET are not same as the SET values : %s, %s, %s" %(setValue[0],setValue[1],setValue[2])) ;
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 2:Set operation failed; Details : %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("ACTUAL RESULT 2:Set operation failed; Details : %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: GET operation failed";
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT 1: GET operation failed");
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

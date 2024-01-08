@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_GetIfScmod');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -111,23 +111,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and info:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get MoCA SCMODE status using moca_getIfScmod()"
-        print "EXPECTED RESULT 1: Should Get MoCA SCMODE status using moca_getIfScmod()"
-        print "ACTUAL RESULT 1:  %s" %info;
-        print "Mod, Nper, Vlper details are available in TDK AgentConsole log"
+        print("TEST STEP 1: Get MoCA SCMODE status using moca_getIfScmod()")
+        print("EXPECTED RESULT 1: Should Get MoCA SCMODE status using moca_getIfScmod()")
+        print("ACTUAL RESULT 1:  %s" %info);
+        print("Mod, Nper, Vlper details are available in TDK AgentConsole log")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get MoCA SCMODE status using moca_getIfScmod()"
-        print "EXPECTED RESULT 1: Should Get MoCA SCMODE status using moca_getIfScmod()"
-        print "ACTUAL RESULT 1: %s" %info;
+        print("TEST STEP 1: Get MoCA SCMODE status using moca_getIfScmod()")
+        print("EXPECTED RESULT 1: Should Get MoCA SCMODE status using moca_getIfScmod()")
+        print("ACTUAL RESULT 1: %s" %info);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

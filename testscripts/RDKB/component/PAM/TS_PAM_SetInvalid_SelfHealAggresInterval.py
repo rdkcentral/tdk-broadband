@@ -94,75 +94,75 @@ if "SUCCESS" in loadmodulestatus.upper():
     defAggInt = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Self Heal Aggressive Interval";
-       print "EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval";
-       print "ACTUAL RESULT 1: %s" %defAggInt;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Self Heal Aggressive Interval");
+        print("EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval");
+        print("ACTUAL RESULT 1: %s" %defAggInt);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SoftwareProcessManager.SelfHeal.AggressiveInterval")
-       tdkTestObj.addParameter("ParamValue","1");
-       tdkTestObj.addParameter("Type","unsignedint");
-       expectedresult= "FAILURE";
-       #Execute testcase on DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       Setresult = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Set the Self Heal Aggressive Interval to a invalid value ";
-          print "EXPECTED RESULT 2: Should not set the Self Heal Aggressive Interval to 1 min";
-          print "ACTUAL RESULT 2: %s" %Setresult;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Set the Self Heal Aggressive Interval to a invalid value";
-           print "EXPECTED RESULT 2: Should not set the Self Heal Aggressive Interval to 1 min";
-           print "ACTUAL RESULT 2: %s" %Setresult;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SoftwareProcessManager.SelfHeal.AggressiveInterval")
+        tdkTestObj.addParameter("ParamValue","1");
+        tdkTestObj.addParameter("Type","unsignedint");
+        expectedresult= "FAILURE";
+        #Execute testcase on DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        Setresult = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the Self Heal Aggressive Interval to a invalid value ");
+            print("EXPECTED RESULT 2: Should not set the Self Heal Aggressive Interval to 1 min");
+            print("ACTUAL RESULT 2: %s" %Setresult);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Set the Self Heal Aggressive Interval to a invalid value");
+            print("EXPECTED RESULT 2: Should not set the Self Heal Aggressive Interval to 1 min");
+            print("ACTUAL RESULT 2: %s" %Setresult);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-           #revert in caseof invalid set
-           tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-           tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SoftwareProcessManager.SelfHeal.AggressiveInterval")
-           tdkTestObj.addParameter("ParamValue",defAggInt);
-           tdkTestObj.addParameter("Type","unsignedint");
-           expectedresult= "SUCCESS";
-           #Execute testcase on DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           Setresult = tdkTestObj.getResultDetails();
-           if expectedresult in actualresult:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Revert the Self Heal Aggressive Interval  to previous";
-              print "EXPECTED RESULT 3: Should revert the Self Heal Aggressive Interval Interval to %s " %defAggInt;
-              print "ACTUAL RESULT 3: %s" %Setresult;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Revert the Self Heal Aggressive Interval to previous";
-               print "EXPECTED RESULT 3: Should revert the Self Heal Aggressive Interval to %s " %defAggInt;
-               print "ACTUAL RESULT 3: %s" %Setresult;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            #revert in caseof invalid set
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SoftwareProcessManager.SelfHeal.AggressiveInterval")
+            tdkTestObj.addParameter("ParamValue",defAggInt);
+            tdkTestObj.addParameter("Type","unsignedint");
+            expectedresult= "SUCCESS";
+            #Execute testcase on DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            Setresult = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Revert the Self Heal Aggressive Interval  to previous");
+                print("EXPECTED RESULT 3: Should revert the Self Heal Aggressive Interval Interval to %s " %defAggInt);
+                print("ACTUAL RESULT 3: %s" %Setresult);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Revert the Self Heal Aggressive Interval to previous");
+                print("EXPECTED RESULT 3: Should revert the Self Heal Aggressive Interval to %s " %defAggInt);
+                print("ACTUAL RESULT 3: %s" %Setresult);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Self Heal Aggressive Interval";
-        print "EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval";
-        print "ACTUAL RESULT 1: %s" %defAggInt;
+        print("TEST STEP 1: Get the Self Heal Aggressive Interval");
+        print("EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval");
+        print("ACTUAL RESULT 1: %s" %defAggInt);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

@@ -106,38 +106,38 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the WifiClient MacAddress";
-        print "EXPECTED RESULT 1: Should get WifiClient MacAddress";
-        print "ACTUAL RESULT 1: WifiClient current MacAddress:%s" %MacAddress;
+        print("TEST STEP 1: Get the WifiClient MacAddress");
+        print("EXPECTED RESULT 1: Should get WifiClient MacAddress");
+        print("ACTUAL RESULT 1: WifiClient current MacAddress:%s" %MacAddress);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if len(MacAddress) == 12 :
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Check if MacAddress is of length 12";
-           print "EXPECTED RESULT 2: MacAddress is expected have a 12 length of character";
-           print "ACTUAL RESULT 2: Length of MacAddress is: ",len(MacAddress);
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if MacAddress is of length 12");
+            print("EXPECTED RESULT 2: MacAddress is expected have a 12 length of character");
+            print("ACTUAL RESULT 2: Length of MacAddress is: ",len(MacAddress));
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if MacAddress is of length 12";
-            print "EXPECTED RESULT 2: MacAddress is expected have a 12 length of character";
-            print "ACTUAL RESULT 2: Length of MacAddress is: ",len(MacAddress);
+            print("TEST STEP 2: Check if MacAddress is of length 12");
+            print("EXPECTED RESULT 2: MacAddress is expected have a 12 length of character");
+            print("ACTUAL RESULT 2: Length of MacAddress is: ",len(MacAddress));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the WifiClient MacAddress";
-        print "EXPECTED RESULT 1: Should get WifiClient MacAddress";
-        print "ACTUAL RESULT 1: WifiClient current MacAddress:%s" %MacAddress;
+        print("TEST STEP 1: Get the WifiClient MacAddress");
+        print("EXPECTED RESULT 1: Should get WifiClient MacAddress");
+        print("ACTUAL RESULT 1: WifiClient current MacAddress:%s" %MacAddress);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

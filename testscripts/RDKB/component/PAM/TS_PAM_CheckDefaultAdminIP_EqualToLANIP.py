@@ -87,8 +87,8 @@ obj1.configureTestCase(ip,port,'TS_PAM_CheckDefaultAdminIP_EqualToLANIP');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -106,11 +106,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of DefaultAdminIP";
-        print "EXPECTED RESULT 1: Should get the DefaultAdminIP";
-        print "ACTUAL RESULT 1: DefaultAdminIP :%s" %DefaultAdminIP;
+        print("TEST STEP 1: Get the value of DefaultAdminIP");
+        print("EXPECTED RESULT 1: Should get the DefaultAdminIP");
+        print("ACTUAL RESULT 1: DefaultAdminIP :%s" %DefaultAdminIP);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress");
@@ -122,48 +122,48 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the value of LANIPAddress";
-            print "EXPECTED RESULT 2: Should get the LANIPAddress";
-            print "ACTUAL RESULT 2: LANIPAddress is :%s" %LANIPAddress;
+            print("TEST STEP 2: Get the value of LANIPAddress");
+            print("EXPECTED RESULT 2: Should get the LANIPAddress");
+            print("ACTUAL RESULT 2: LANIPAddress is :%s" %LANIPAddress);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if DefaultAdminIP == LANIPAddress:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if LANIPAddress and DefaultAdminIP are equal";
-                print "EXPECTED RESULT 3: Should get the LANIPAddress and DefaultAdminIP equal";
-                print "ACTUAL RESULT 3: LANIPAddress is :%s and DefaultAdminIP is %s" %(LANIPAddress,DefaultAdminIP);
+                print("TEST STEP 3: Check if LANIPAddress and DefaultAdminIP are equal");
+                print("EXPECTED RESULT 3: Should get the LANIPAddress and DefaultAdminIP equal");
+                print("ACTUAL RESULT 3: LANIPAddress is :%s and DefaultAdminIP is %s" %(LANIPAddress,DefaultAdminIP));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if LANIPAddress and DefaultAdminIP are equal";
-                print "EXPECTED RESULT 3: Should get the LANIPAddress and DefaultAdminIP equal";
-                print "ACTUAL RESULT 3: LANIPAddress is :%s and DefaultAdminIP is %s" %(LANIPAddress,DefaultAdminIP);
+                print("TEST STEP 3: Check if LANIPAddress and DefaultAdminIP are equal");
+                print("EXPECTED RESULT 3: Should get the LANIPAddress and DefaultAdminIP equal");
+                print("ACTUAL RESULT 3: LANIPAddress is :%s and DefaultAdminIP is %s" %(LANIPAddress,DefaultAdminIP));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the value of LANIPAddress";
-            print "EXPECTED RESULT 2: Should get the LANIPAddress";
-            print "ACTUAL RESULT 2: LANIPAddress is :%s" %LANIPAddress;
+            print("TEST STEP 2: Get the value of LANIPAddress");
+            print("EXPECTED RESULT 2: Should get the LANIPAddress");
+            print("ACTUAL RESULT 2: LANIPAddress is :%s" %LANIPAddress);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of DefaultAdminIP";
-        print "EXPECTED RESULT 1: Should get the DefaultAdminIP";
-        print "ACTUAL RESULT 1: DefaultAdminIP :%s" %DefaultAdminIP;
+        print("TEST STEP 1: Get the value of DefaultAdminIP");
+        print("EXPECTED RESULT 1: Should get the DefaultAdminIP");
+        print("ACTUAL RESULT 1: DefaultAdminIP :%s" %DefaultAdminIP);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

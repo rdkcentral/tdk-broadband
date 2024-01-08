@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_MTAAGENT_6</test_case_id>
-    <test_objective>To Validate 
-Get Param Names API with Next Level set to FALSE  for 
+    <test_objective>To Validate
+Get Param Names API with Next Level set to FALSE  for
 MTA Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -54,10 +54,10 @@ Input
 1.Parameter Path (paramName)( eg: "Device." )</input_parameters>
     <automation_approch>1.Create a function named MTA_agent_GetParameterNames_NextLevel  in Test Manager GUI.
 2.Configure the info of the  function under test in function  and create a python script
-3.Execute the generated Script(TS_MTAAGENT_GetParamNames_NextLevel.py) using execution page of  Test Manager GUI 
-4.This script will in turn call TR069Agent stub in TDK Agent 
+3.Execute the generated Script(TS_MTAAGENT_GetParamNames_NextLevel.py) using execution page of  Test Manager GUI
+4.This script will in turn call TR069Agent stub in TDK Agent
 5.MTA_agent_GetParameterNames_NextLevel function will call CCSP Base Interface Function named "CcspBaseIf_getParameterNames" , that inturn will call TR069PA Agent Library Function "CcspManagementServer_GetParameterNames"  with Next Level set to 0
-6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 7..Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Param names for Requested Path should be available in Agent Console Log.
@@ -76,8 +76,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -91,15 +91,15 @@ obj.configureTestCase(ip,port,'');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterNames_NextLevel');  
-		
+    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterNames_NextLevel');
+
     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.");
-   		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -107,22 +107,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	 
-    else:   
-        tdkTestObj.setResultStatus("FAILURE"); 
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
     obj.unloadModule("Mta_agent");
-   		 
-else:   
-    print "Failed to load MTA module";
+
+else:
+    print("Failed to load MTA module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";	
-				
+    print("Module loading failed");

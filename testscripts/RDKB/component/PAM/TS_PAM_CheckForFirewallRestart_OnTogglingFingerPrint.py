@@ -83,8 +83,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_CheckForFirewallRestart_OnTogglingFinge
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysutilloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysutilloadmodulestatus) ;
 
 def setFunction(tdkTestObj,set_value):
     tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable");
@@ -114,14 +114,14 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get current value of Device FingerPrint Enable"
-        print "EXPECTED RESULT 1: Should get current value of Device FingerPrint Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Device FingerPrint Enable")
+        print("EXPECTED RESULT 1: Should get current value of Device FingerPrint Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         if initial_value == "true":
-           setValue= "false";
+            setValue= "false";
         else:
             setValue = "true";
 
@@ -129,78 +129,78 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
         actualresult,result=setFunction(tdkTestObj,setValue);
 
         if expectedresult in actualresult:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Toggle value of Device FingerPrint Enable"
-           print "EXPECTED RESULT 2: Should toggle the value of Device FingerPrint Enable"
-           print "ACTUAL RESULT 2: %s" %result;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS"
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Toggle value of Device FingerPrint Enable")
+            print("EXPECTED RESULT 2: Should toggle the value of Device FingerPrint Enable")
+            print("ACTUAL RESULT 2: %s" %result);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-           sleep(60);
-           tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-           cmd = "cat /rdklogs/logs/agent.txt | grep -rin \"CujoAgent triggering firewall restart\"";
-           tdkTestObj.addParameter("command",cmd);
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-           if expectedresult in actualresult and details != "":
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Check if firewall restarted after toggling Device FingerPrint"
-              print "EXPECTED RESULT 3: Firewall should restart after toggling Device FingerPrint";
-              print "ACTUAL RESULT 3: %s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Check if firewall restarted after toggling Device FingerPrint"
-               print "EXPECTED RESULT 3: Firewall should restart after toggling Device FingerPrint";
-               print "ACTUAL RESULT 3: %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            sleep(60);
+            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+            cmd = "cat /rdklogs/logs/agent.txt | grep -rin \"CujoAgent triggering firewall restart\"";
+            tdkTestObj.addParameter("command",cmd);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+            if expectedresult in actualresult and details != "":
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check if firewall restarted after toggling Device FingerPrint")
+                print("EXPECTED RESULT 3: Firewall should restart after toggling Device FingerPrint");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Check if firewall restarted after toggling Device FingerPrint")
+                print("EXPECTED RESULT 3: Firewall should restart after toggling Device FingerPrint");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-           #Revert the value
-           tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-           actualresult,result=setFunction(tdkTestObj,initial_value);
-           if expectedresult in actualresult:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 4: Revert the Device FingerPrint Enable status to previous"
-              print "EXPECTED RESULT 4: Should revert  Device FingerPrint Enable status to %s" %initial_value
-              print "ACTUAL RESULT 4: %s" %result;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS"
-              sleep(60);
-           else:
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 4: Revert the Device FingerPrint Enable status to previous"
-               print "EXPECTED RESULT 4: Should revert  Device FingerPrint Enable status to %s" %initial_value
-               print "ACTUAL RESULT 4: %s" %result;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE"
+            #Revert the value
+            tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+            actualresult,result=setFunction(tdkTestObj,initial_value);
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4: Revert the Device FingerPrint Enable status to previous")
+                print("EXPECTED RESULT 4: Should revert  Device FingerPrint Enable status to %s" %initial_value)
+                print("ACTUAL RESULT 4: %s" %result);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                sleep(60);
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4: Revert the Device FingerPrint Enable status to previous")
+                print("EXPECTED RESULT 4: Should revert  Device FingerPrint Enable status to %s" %initial_value)
+                print("ACTUAL RESULT 4: %s" %result);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle value of Device FingerPrint Enable"
-            print "EXPECTED RESULT 2: Should toggle the value of Device FingerPrint Enable"
-            print "ACTUAL RESULT 2: %s" %result;
+            print("TEST STEP 2: Toggle value of Device FingerPrint Enable")
+            print("EXPECTED RESULT 2: Should toggle the value of Device FingerPrint Enable")
+            print("ACTUAL RESULT 2: %s" %result);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get current value of Device FingerPrint Enable"
-        print "EXPECTED RESULT 1: Should get current value of Device FingerPrint Enable"
-        print "ACTUAL RESULT 1: current value is %s" %initial_value;
+        print("TEST STEP 1: Get current value of Device FingerPrint Enable")
+        print("EXPECTED RESULT 1: Should get current value of Device FingerPrint Enable")
+        print("ACTUAL RESULT 1: current value is %s" %initial_value);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam/sysutil module";
+    print("Failed to load pam/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

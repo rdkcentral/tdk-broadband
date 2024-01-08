@@ -106,254 +106,254 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     default = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult :
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Telemetry Enable status";
-       print "EXPECTED RESULT 1: Should get the Telemetry Enable status";
-       print "ACTUAL RESULT 1: Telemetry Enable status is:",default
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Telemetry Enable status");
+        print("EXPECTED RESULT 1: Should get the Telemetry Enable status");
+        print("ACTUAL RESULT 1: Telemetry Enable status is:",default)
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       if default != "true":
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable");
-          tdkTestObj.addParameter("ParamValue","true");
-          tdkTestObj.addParameter("Type","bool");
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
+        if default != "true":
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable");
+            tdkTestObj.addParameter("ParamValue","true");
+            tdkTestObj.addParameter("Type","bool");
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Set the Telemetry Enable status to true";
-             print "EXPECTED RESULT 2: Should set the Telemetry Enable status to true";
-             print "ACTUAL RESULT 2: Telemetry Enable status is:",details
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             revertflag =1;
-          else:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Set the Telemetry Enable status to true";
-             print "EXPECTED RESULT 2: Should set the Telemetry Enable status to true";
-             print "ACTUAL RESULT 2: Telemetry Enable status is:",details
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             setflag =0;
-
-       if setflag ==1:
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Version");
-          expectedresult="SUCCESS";
-          #Execute the test case in DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          telver = tdkTestObj.getResultDetails();
-          if expectedresult in actualresult and telver == "2.0.1":
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the current Telemetry version in the DUT after Telemetry Enable ";
-             print "EXPECTED RESULT 3: Should get the current Telemetry version as 2.0.1 in the DUT"
-             print "ACTUAL RESULT 3: ",telver;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-
-             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.ConfigURL");
-             expectedresult="SUCCESS";
-             #Execute the test case in DUT
-             tdkTestObj.executeTestCase(expectedresult);
-             actualresult = tdkTestObj.getResult();
-             defURL = tdkTestObj.getResultDetails();
-             if expectedresult in actualresult:
+            if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Get the current Telemetry ConfigURL";
-                print "EXPECTED RESULT 4: Should get the current Telemetry ConfigURL";
-                print "ACTUAL RESULT 4: ",defURL;
+                print("TEST STEP 2: Set the Telemetry Enable status to true");
+                print("EXPECTED RESULT 2: Should set the Telemetry Enable status to true");
+                print("ACTUAL RESULT 2: Telemetry Enable status is:",details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                revertflag =1;
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 2: Set the Telemetry Enable status to true");
+                print("EXPECTED RESULT 2: Should set the Telemetry Enable status to true");
+                print("ACTUAL RESULT 2: Telemetry Enable status is:",details)
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                setflag =0;
 
-                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+        if setflag ==1:
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Version");
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            telver = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and telver == "2.0.1":
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the current Telemetry version in the DUT after Telemetry Enable ");
+                print("EXPECTED RESULT 3: Should get the current Telemetry version as 2.0.1 in the DUT")
+                print("ACTUAL RESULT 3: ",telver);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.ConfigURL");
-                tdkTestObj.addParameter("ParamValue",TEL_CONFIG_URL);
-                tdkTestObj.addParameter("Type","string");
                 expectedresult="SUCCESS";
                 #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails();
-
+                defURL = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 5: Set the Telemetry ConfigURL";
-                   print "EXPECTED RESULT 5: Should set the Telemetry ConfigURL";
-                   print "ACTUAL RESULT 5: ",details;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
-                   print "***************************************************"
-                   print "Initiating Reboot Please wait till the device comes up";
-                   print"*******************************************************"
-                   obj.initiateReboot();
-                   sleep(300);
-                   tdkTestObj = obj.createTestStep('ExecuteCmd');
-                   cmd= "[ -f /rdklogs/logs/telemetry2_0.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
-                   expectedresult="SUCCESS";
-                   tdkTestObj.addParameter("command",cmd);
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Get the current Telemetry ConfigURL");
+                    print("EXPECTED RESULT 4: Should get the current Telemetry ConfigURL");
+                    print("ACTUAL RESULT 4: ",defURL);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                   if details == "File exist" :
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 6: Check for telemetry2_0.txt.0  log file presence";
-                      print "EXPECTED RESULT 6: telemetry2_0.txt.0 log file should be present";
-                      print "ACTUAL RESULT 6: telemetry2_0.txt.0 file is present";
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
+                    tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.ConfigURL");
+                    tdkTestObj.addParameter("ParamValue",TEL_CONFIG_URL);
+                    tdkTestObj.addParameter("Type","string");
+                    expectedresult="SUCCESS";
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
 
-                      tdkTestObj = obj.createTestStep('ExecuteCmd');
-                      cmd = "pidof telemetry2_0";
-                      expectedresult="SUCCESS";
-                      tdkTestObj.addParameter("command",cmd);
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                      if expectedresult in actualresult and details != "":
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 7: Check if telemetry2_0 process is running";
-                         print "EXPECTED RESULT 7:telemetry2_0  process should be running";
-                         print "ACTUAL RESULT 7: pid of telemetry2_0",details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 7: Check if telemetry2_0 process is running";
-                          print "EXPECTED RESULT 7:telemetry2_0  process should be running";
-                          print "ACTUAL RESULT78: pid of telemetry2_0",details;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 6: Check for telemetry2_0.txt.0  log file presence";
-                       print "EXPECTED RESULT 6: telemetry2_0.txt.0 log file should be present";
-                       print "ACTUAL RESULT 6: telemetry2_0.txt.0 file is not present";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-                   #Revert the URL
-                   tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-                   tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.ConfigURL");
-                   tdkTestObj.addParameter("ParamValue",defURL);
-                   tdkTestObj.addParameter("Type","string");
-                   expectedresult="SUCCESS";
-                   #Execute the test case in DUT
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Set the Telemetry ConfigURL");
+                        print("EXPECTED RESULT 5: Should set the Telemetry ConfigURL");
+                        print("ACTUAL RESULT 5: ",details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        print("***************************************************")
+                        print("Initiating Reboot Please wait till the device comes up");
+                        print("*******************************************************")
+                        obj.initiateReboot();
+                        sleep(300);
+                        tdkTestObj = obj.createTestStep('ExecuteCmd');
+                        cmd= "[ -f /rdklogs/logs/telemetry2_0.txt.0 ] && echo \"File exist\" || echo \"File does not exist\"";
+                        expectedresult="SUCCESS";
+                        tdkTestObj.addParameter("command",cmd);
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                   if expectedresult in actualresult:
-                      #Set the result status of execution
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 8: Revert the Telemetry ConfigURL to previous";
-                      print "EXPECTED RESULT 8: Should revert the Telemetry ConfigURL";
-                      print "ACTUAL RESULT 8: ",details;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-                   else:
-                       #Set the result status of execution
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 8: Revert the Telemetry ConfigURL to previous";
-                       print "EXPECTED RESULT 8: Should revert the Telemetry ConfigURL";
-                       print "ACTUAL RESULT 8: ",details;
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
+                        if details == "File exist" :
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 6: Check for telemetry2_0.txt.0  log file presence");
+                            print("EXPECTED RESULT 6: telemetry2_0.txt.0 log file should be present");
+                            print("ACTUAL RESULT 6: telemetry2_0.txt.0 file is present");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            tdkTestObj = obj.createTestStep('ExecuteCmd');
+                            cmd = "pidof telemetry2_0";
+                            expectedresult="SUCCESS";
+                            tdkTestObj.addParameter("command",cmd);
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                            if expectedresult in actualresult and details != "":
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Check if telemetry2_0 process is running");
+                                print("EXPECTED RESULT 7:telemetry2_0  process should be running");
+                                print("ACTUAL RESULT 7: pid of telemetry2_0",details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Check if telemetry2_0 process is running");
+                                print("EXPECTED RESULT 7:telemetry2_0  process should be running");
+                                print("ACTUAL RESULT78: pid of telemetry2_0",details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 6: Check for telemetry2_0.txt.0  log file presence");
+                            print("EXPECTED RESULT 6: telemetry2_0.txt.0 log file should be present");
+                            print("ACTUAL RESULT 6: telemetry2_0.txt.0 file is not present");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                        #Revert the URL
+                        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+                        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.ConfigURL");
+                        tdkTestObj.addParameter("ParamValue",defURL);
+                        tdkTestObj.addParameter("Type","string");
+                        expectedresult="SUCCESS";
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+
+                        if expectedresult in actualresult:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 8: Revert the Telemetry ConfigURL to previous");
+                            print("EXPECTED RESULT 8: Should revert the Telemetry ConfigURL");
+                            print("ACTUAL RESULT 8: ",details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 8: Revert the Telemetry ConfigURL to previous");
+                            print("EXPECTED RESULT 8: Should revert the Telemetry ConfigURL");
+                            print("ACTUAL RESULT 8: ",details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Set the Telemetry ConfigURL");
+                        print("EXPECTED RESULT 5: Should set the Telemetry ConfigURL");
+                        print("ACTUAL RESULT 5: ",details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Set the Telemetry ConfigURL";
-                    print "EXPECTED RESULT 5: Should set the Telemetry ConfigURL";
-                    print "ACTUAL RESULT 5: ",details;
+                    print("TEST STEP 4: Get the current Telemetry ConfigURL");
+                    print("EXPECTED RESULT 4: Should get the current Telemetry ConfigURL");
+                    print("ACTUAL RESULT 4: ",defURL);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP 4: Get the current Telemetry ConfigURL";
-                 print "EXPECTED RESULT 4: Should get the current Telemetry ConfigURL";
-                 print "ACTUAL RESULT 4: ",defURL;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Get the current Telemetry version in the DUT after Telemetry Enable";
-              print "EXPECTED RESULT 3: Should get the current Telemetry version in the DUT"
-              print "ACTUAL RESULT 3: ",telver;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "telemetry was disabled and failed on enabling";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the current Telemetry version in the DUT after Telemetry Enable");
+                print("EXPECTED RESULT 3: Should get the current Telemetry version in the DUT")
+                print("ACTUAL RESULT 3: ",telver);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("telemetry was disabled and failed on enabling");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Telemetry Enable status";
-        print "EXPECTED RESULT 1: Should get the Telemetry Enable status";
-        print "ACTUAL RESULT 1: Telemetry Enable status is:",default
+        print("TEST STEP 1: Get the Telemetry Enable status");
+        print("EXPECTED RESULT 1: Should get the Telemetry Enable status");
+        print("ACTUAL RESULT 1: Telemetry Enable status is:",default)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     if revertflag ==1:
-       tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-       tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable");
-       tdkTestObj.addParameter("ParamValue",default);
-       tdkTestObj.addParameter("Type","bool");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable");
+        tdkTestObj.addParameter("ParamValue",default);
+        tdkTestObj.addParameter("Type","bool");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 9:Revert the telemetry enable status to previous";
-          print "EXPECTED RESULT 9: Should revert the telemetry enable status to previous";
-          print "ACTUAL RESULT 9: Revertion was successful";
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 9:Revert the telemetry enable status to previous");
+            print("EXPECTED RESULT 9: Should revert the telemetry enable status to previous");
+            print("ACTUAL RESULT 9: Revertion was successful");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
-          tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Version")
-          expectedresult= "SUCCESS";
-          #Execute testcase on DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
-          if expectedresult in actualresult and int(details) == 1:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 10:Check if the Telemetry version is 1.0  after disabling Telemetry";
-             print "EXPECTED RESULT 10: Telemetry version should be 1.0  after disabling Telemetry";
-             print "ACTUAL RESULT 10:",details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 10:Check if the Telemetry version is 1.0  after disabling Telemetry";
-              print "EXPECTED RESULT 10: Telemetry version should be 1.0  after disabling Telemetry";
-              print "ACTUAL RESULT 10: ",details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 9:Revert the telemetry enable status to previous";
-          print "EXPECTED RESULT 9: Should revert the telemetry enable status to previous";
-          print "ACTUAL RESULT 9: Revertion failed";
-          print "[TEST EXECUTION RESULT] : FAILURE";
+            tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Version")
+            expectedresult= "SUCCESS";
+            #Execute testcase on DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+            if expectedresult in actualresult and int(details) == 1:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 10:Check if the Telemetry version is 1.0  after disabling Telemetry");
+                print("EXPECTED RESULT 10: Telemetry version should be 1.0  after disabling Telemetry");
+                print("ACTUAL RESULT 10:",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 10:Check if the Telemetry version is 1.0  after disabling Telemetry");
+                print("EXPECTED RESULT 10: Telemetry version should be 1.0  after disabling Telemetry");
+                print("ACTUAL RESULT 10: ",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 9:Revert the telemetry enable status to previous");
+            print("EXPECTED RESULT 9: Should revert the telemetry enable status to previous");
+            print("ACTUAL RESULT 9: Revertion failed");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj1.unloadModule("tdkbtr181");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

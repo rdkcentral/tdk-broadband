@@ -86,7 +86,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_2.4GHzCheckHostActiveStatus_WithConnec
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the load module status
@@ -103,20 +103,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     value = tdkTestObj.getResultDetails();
     hostEntries = value.split("VALUE:")[1].split(' ')[0];
 
-    print "\nTEST STEP %d : Get the number of Host entries using Device.Hosts.HostNumberOfEntries" %step;
-    print "EXPECTED RESULT %d : Should successfully retrieve Device.Hosts.HostNumberOfEntries" %step;
+    print("\nTEST STEP %d : Get the number of Host entries using Device.Hosts.HostNumberOfEntries" %step);
+    print("EXPECTED RESULT %d : Should successfully retrieve Device.Hosts.HostNumberOfEntries" %step);
 
     if expectedresult in actualresult and hostEntries.isdigit():
         hostEntries = int(hostEntries);
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.Hosts.HostNumberOfEntries : %d" %(step, hostEntries);
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT %d : Device.Hosts.HostNumberOfEntries : %d" %(step, hostEntries));
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Iterate through the host table and find the index for which Layer1Interface is Device.WiFi.SSID.1
         clientDetected = 0;
         for index in range(1, hostEntries + 1):
-            print "\n**********For Host Table Entry %d**********" %index;
+            print("\n**********For Host Table Entry %d**********" %index);
             #Get the value of Device.Hosts.Host.{i}.Layer1Interface
             step = step + 1;
             paramName = "Device.Hosts.Host." + str(index) + ".Layer1Interface"
@@ -127,20 +127,20 @@ if "SUCCESS" in loadmodulestatus.upper():
             value = tdkTestObj.getResultDetails();
             layer1Interface = value.split("VALUE:")[1].split(' ')[0];
 
-            print "\nTEST STEP %d : Get the value of %s and check if it is Device.WiFi.SSID.1" %(step, paramName);
-            print "EXPECTED RESULT %d : Should successfully retrieve %s" %(step, paramName);
+            print("\nTEST STEP %d : Get the value of %s and check if it is Device.WiFi.SSID.1" %(step, paramName));
+            print("EXPECTED RESULT %d : Should successfully retrieve %s" %(step, paramName));
 
             if expectedresult in actualresult and layer1Interface != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : %s : %s" %(step, paramName, layer1Interface);
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT %d : %s : %s" %(step, paramName, layer1Interface));
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if layer1Interface == "Device.WiFi.SSID.1":
                     clientDetected = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Identified the Host Table Entry for connected client as : %d" %index;
+                    print("Identified the Host Table Entry for connected client as : %d" %index);
 
                     #Check if the connected client is shown as active using Device.Hosts.Host.{i}.Active
                     step = step + 1;
@@ -152,56 +152,56 @@ if "SUCCESS" in loadmodulestatus.upper():
                     value = tdkTestObj.getResultDetails();
                     activeStatus = value.split("VALUE:")[1].split(' ')[0];
 
-                    print "\nTEST STEP %d : Get the value of %s and check if it is true" %(step, paramName);
-                    print "EXPECTED RESULT %d : Should successfully retrieve %s and it should be true" %(step, paramName);
+                    print("\nTEST STEP %d : Get the value of %s and check if it is true" %(step, paramName));
+                    print("EXPECTED RESULT %d : Should successfully retrieve %s and it should be true" %(step, paramName));
 
                     if expectedresult in actualresult and activeStatus != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : %s : %s" %(step, paramName, activeStatus);
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("ACTUAL RESULT %d : %s : %s" %(step, paramName, activeStatus));
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         if activeStatus == "true":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Host is Active";
+                            print("Host is Active");
                             break;
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Host is NOT Active";
+                            print("Host is NOT Active");
                             break;
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : %s : %s" %(step, paramName, activeStatus);
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("ACTUAL RESULT %d : %s : %s" %(step, paramName, activeStatus));
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         break;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Host Table Entry for connected client is not %d" %index;
+                    print("Host Table Entry for connected client is not %d" %index);
                     continue;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : %s : %s" %(step, paramName, layer1Interface);
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT %d : %s : %s" %(step, paramName, layer1Interface));
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 break;
 
         #Check if client connection is proper or not
         if clientDetected != 1:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "\nNone of the Host Table entries show Device.WiFi.SSID.1 as Layer 1 Interface";
+            print("\nNone of the Host Table entries show Device.WiFi.SSID.1 as Layer 1 Interface");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.Hosts.HostNumberOfEntries : %d" %(step, hostEntries);
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT %d : Device.Hosts.HostNumberOfEntries : %d" %(step, hostEntries));
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 else:
-    print "Failed to load wifi agent module";
+    print("Failed to load wifi agent module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

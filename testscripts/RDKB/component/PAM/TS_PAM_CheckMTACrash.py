@@ -92,7 +92,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-																		#import statements
+                                                                                                                                                #import statements
 import tdklib;
 import time;
 
@@ -107,86 +107,80 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckMTACrash');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
-        obj.setLoadModuleStatus("SUCCESS");
+    obj.setLoadModuleStatus("SUCCESS");
+
+    tdkTestObj = obj.createTestStep('ExecuteCmd');
+    tdkTestObj.addParameter("command", "pidof CcspMtaAgentSsp");
+    expectedresult="SUCCESS";
+
+    tdkTestObj.executeTestCase("expectedresult");
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails().strip();
+
+    if expectedresult in actualresult and "" != details:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Check CcspMtaAgentSsp is up and running");
+        print("EXPECTED RESULT 1: CcspMtaAgentSsp should be running")
+        print("ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('ExecuteCmd');
-        tdkTestObj.addParameter("command", "pidof CcspMtaAgentSsp");
-        expectedresult="SUCCESS";
-
+        tdkTestObj.addParameter("command", "kill -9 `pidof CcspMtaAgentSsp`");
         tdkTestObj.executeTestCase("expectedresult");
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
 
-        if expectedresult in actualresult and "" != details:
+        if expectedresult in actualresult and "" == details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Check CcspMtaAgentSsp is up and running";
-            print "EXPECTED RESULT 1: CcspMtaAgentSsp should be running"
-            print "ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Kill CcspMtaAgentSsp process");
+            print("EXPECTED RESULT 2: Should kill CcspMtaAgentSsp process")
+            print("ACTUAL RESULT 2: CcspMtaAgentSsp status: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
+            #Wait for 15 mins to check whether process is restarted
+            time.sleep(900);
             tdkTestObj = obj.createTestStep('ExecuteCmd');
-            tdkTestObj.addParameter("command", "kill -9 `pidof CcspMtaAgentSsp`");
+            tdkTestObj.addParameter("command", "pidof CcspMtaAgentSsp");
             tdkTestObj.executeTestCase("expectedresult");
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip();
 
-            if expectedresult in actualresult and "" == details:
+            if expectedresult in actualresult and "" != details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Kill CcspMtaAgentSsp process";
-                print "EXPECTED RESULT 2: Should kill CcspMtaAgentSsp process"
-                print "ACTUAL RESULT 2: CcspMtaAgentSsp status: %s" %details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                #Wait for 15 mins to check whether process is restarted
-                time.sleep(900);
-                tdkTestObj = obj.createTestStep('ExecuteCmd');
-                tdkTestObj.addParameter("command", "pidof CcspMtaAgentSsp");
-                tdkTestObj.executeTestCase("expectedresult");
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails().strip();
-
-                if expectedresult in actualresult and "" != details:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 1: Check CcspMtaAgentSsp is up and running";
-                    print "EXPECTED RESULT 1: CcspMtaAgentSsp should be running"
-                    print "ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details;
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 1: Check CcspMtaAgentSsp is up and running"
-                    print "EXPECTED RESULT 1: CcspMtaAgentSsp should be running"
-                    print "ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
-                    obj.initiateReboot();
-	            obj.resetConnectionAfterReboot();
+                print("TEST STEP 1: Check CcspMtaAgentSsp is up and running");
+                print("EXPECTED RESULT 1: CcspMtaAgentSsp should be running")
+                print("ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Kill CcspMtaAgentSsp process"
-                print "EXPECTED RESULT 2: Should kill CcspMtaAgentSsp process"
-                print "ACTUAL RESULT 2: CcspMtaAgentSsp status: %s" %details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
-
+                print("TEST STEP 1: Check CcspMtaAgentSsp is up and running")
+                print("EXPECTED RESULT 1: CcspMtaAgentSsp should be running")
+                print("ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                obj.initiateReboot();
+                obj.resetConnectionAfterReboot();
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Check CcspMtaAgentSsp is up and running"
-            print "EXPECTED RESULT 1: CcspMtaAgentSsp should be running"
-            print "ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Kill CcspMtaAgentSsp process")
+            print("EXPECTED RESULT 2: Should kill CcspMtaAgentSsp process")
+            print("ACTUAL RESULT 2: CcspMtaAgentSsp status: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-        obj.unloadModule("sysutil");
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Check CcspMtaAgentSsp is up and running")
+        print("EXPECTED RESULT 1: CcspMtaAgentSsp should be running")
+        print("ACTUAL RESULT 1: PID of CcspMtaAgentSsp: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
+
+    obj.unloadModule("sysutil");
 else:
-        print "Failed to load the module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
-
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

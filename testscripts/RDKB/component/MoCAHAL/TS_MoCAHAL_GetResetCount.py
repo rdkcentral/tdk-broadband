@@ -99,7 +99,7 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_GetResetCount');
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =objhal.getLoadModuleResult();
 loadmodulestatus2 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s " %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s " %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     #Set the result status of execution
@@ -116,11 +116,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the MocaResetCount";
-        print "EXPECTED RESULT 1: Should get the MocaResetCount";
-        print "ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount;
+        print("TEST STEP 1: Get the MocaResetCount");
+        print("EXPECTED RESULT 1: Should get the MocaResetCount");
+        print("ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_SetOnly');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.X_CISCO_COM_Reset");
         tdkTestObj.addParameter("ParamValue","true");
@@ -134,56 +134,56 @@ if "SUCCESS" in loadmodulestatus1.upper() and loadmodulestatus2.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set reset to true";
-            print "EXPECTED RESULT 2: Should set reset to true";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set reset to true");
+            print("EXPECTED RESULT 2: Should set reset to true");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = objhal.createTestStep('MoCAHAL_GetResetCount');
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             sleep(30);
             NewResetCount = tdkTestObj.getResultDetails().split(":")[1].strip();
-	    Resetcount = int(LastResetCount) +1;
-            print "NewResetCount : %s" %NewResetCount;
-            print "Resetcount : %s" %Resetcount;
-            print "LastResetCount : %s" %LastResetCount;
+            Resetcount = int(LastResetCount) +1;
+            print("NewResetCount : %s" %NewResetCount);
+            print("Resetcount : %s" %Resetcount);
+            print("LastResetCount : %s" %LastResetCount);
             if expectedresult in actualresult and str(Resetcount) in NewResetCount:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the MocaResetCount";
-                print "EXPECTED RESULT 3:Should get the MocaResetCount as one incremented";
-                print "ACTUAL RESULT 3: %s" %NewResetCount;
+                print("TEST STEP 3: Get the MocaResetCount");
+                print("EXPECTED RESULT 3:Should get the MocaResetCount as one incremented");
+                print("ACTUAL RESULT 3: %s" %NewResetCount);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-		#Set the result status of execution
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the MocaResetCount";
-                print "EXPECTED RESULT 3:Should get the MocaResetCount as one incremented";
-                print "ACTUAL RESULT 3: %s" %NewResetCount;
+                print("TEST STEP 3: Get the MocaResetCount");
+                print("EXPECTED RESULT 3:Should get the MocaResetCount as one incremented");
+                print("ACTUAL RESULT 3: %s" %NewResetCount);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set reset to true";
-            print "EXPECTED RESULT 2: Should set reset to true";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set reset to true");
+            print("EXPECTED RESULT 2: Should set reset to true");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the MocaResetCount";
-        print "EXPECTED RESULT 1: Should get the MocaResetCount";
-        print "ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount;
+        print("TEST STEP 1: Get the MocaResetCount");
+        print("EXPECTED RESULT 1: Should get the MocaResetCount");
+        print("ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("moca");
     objhal.unloadModule("mocahal");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

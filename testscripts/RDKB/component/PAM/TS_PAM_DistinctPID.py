@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_PAM_DistinctPID');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -105,10 +105,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     imagename = obj.getDeviceBoxType()
     pattern = "Emulator"
     if pattern in imagename:
-	print "Box Type is Emulator"
-	prefix = "simu"
+        print("Box Type is Emulator")
+        prefix = "simu"
     else:
-	prefix = "eRT"
+        prefix = "eRT"
 
     #select a random PID from process table
     tdkTestObj = obj.createTestStep('ExecuteCmd');
@@ -121,19 +121,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and details:
-	pid = details;
+        pid = details;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get a random PID";
-        print "EXPECTED RESULT 1: Should get a random PID";
-        print "ACTUAL RESULT 1: ProcessId is %s" %details;
+        print("TEST STEP 1: Get a random PID");
+        print("EXPECTED RESULT 1: Should get a random PID");
+        print("ACTUAL RESULT 1: ProcessId is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#check for the no: of occurences of that pid in process table
-	tdkTestObj = obj.createTestStep('ExecuteCmd');
-	tdkTestObj.addParameter("command", "dmcli %s getvalues Device.DeviceInfo.ProcessStatus.Process. | grep -A 1 PID | cut -f3 -d ':' | grep -w %s | wc -l | tr '\r\n' ' '" %(prefix, pid));
-	expectedresult="SUCCESS";
+        #check for the no: of occurences of that pid in process table
+        tdkTestObj = obj.createTestStep('ExecuteCmd');
+        tdkTestObj.addParameter("command", "dmcli %s getvalues Device.DeviceInfo.ProcessStatus.Process. | grep -A 1 PID | cut -f3 -d ':' | grep -w %s | wc -l | tr '\r\n' ' '" %(prefix, pid));
+        expectedresult="SUCCESS";
 
         #Execute the test case in STB
         tdkTestObj.executeTestCase("expectedresult");
@@ -144,27 +144,27 @@ if "SUCCESS" in loadmodulestatus.upper():
             pid = details;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get no: of occurence of PID";
-            print "EXPECTED RESULT 2: Should get no: of occurence of PID as one";
-            print "ACTUAL RESULT 2: no: of occurence is %s" %details;
+            print("TEST STEP 2: Get no: of occurence of PID");
+            print("EXPECTED RESULT 2: Should get no: of occurence of PID as one");
+            print("ACTUAL RESULT 2: no: of occurence is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get no: of occurence of PID";
-            print "EXPECTED RESULT 2: Should get no: of occurence of PID as one";
-            print "ACTUAL RESULT 2: no: of occurence is %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get no: of occurence of PID");
+            print("EXPECTED RESULT 2: Should get no: of occurence of PID as one");
+            print("ACTUAL RESULT 2: no: of occurence is %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get a random PID";
-        print "EXPECTED RESULT 1: Should get a random PID";
-        print "ACTUAL RESULT 1: ProcessId is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get a random PID");
+        print("EXPECTED RESULT 1: Should get a random PID");
+        print("ACTUAL RESULT 1: ProcessId is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

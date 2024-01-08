@@ -114,7 +114,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetNetworkDevicesTrafficPollingPeriod');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -132,33 +132,29 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Polling period of network device traffic\n";
-        print "EXPECTED RESULT 1: Should get the polling period of network device traffic\n";
-        print "ACTUAL RESULT 1: Polling period of network device traffic is %s" %details;
+        print("TEST STEP 1: Get the Polling period of network device traffic\n");
+        print("EXPECTED RESULT 1: Should get the polling period of network device traffic\n");
+        print("ACTUAL RESULT 1: Polling period of network device traffic is %s" %details);
         #Get the result of execution
 
         if defaultPeriod in details:
-            print "Polling period of Network Device traffic is 300\n"
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("Polling period of Network Device traffic is 300\n")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-            print "Polling period of Network Device traffic is wrong value, it should be 300\n"
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("Polling period of Network Device traffic is wrong value, it should be 300\n")
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Polling period of network device traffic\n";
-        print "EXPECTED RESULT 1: Failure in getting the Polling period of network device traffic\n";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the Polling period of network device traffic\n");
+        print("EXPECTED RESULT 1: Failure in getting the Polling period of network device traffic\n");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 
 
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

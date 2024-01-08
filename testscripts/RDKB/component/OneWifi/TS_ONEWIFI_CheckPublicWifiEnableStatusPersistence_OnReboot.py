@@ -111,9 +111,9 @@ loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =obj2.getLoadModuleResult();
 loadmodulestatus3 =obj3.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus3
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus3)
 
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper() and "SUCCESS" in loadmodulestatus3.upper():
@@ -124,17 +124,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(obj1);
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj2.createTestStep('ExecuteCmd');
         details1 = "sh %s/tdk_utility.sh parseConfigFile DSCPMARKPOLICY" %TDK_PATH;
         details2 = "sh %s/tdk_utility.sh parseConfigFile PRIMARYREMOTEENDPOINT" %TDK_PATH;
         details3 = "sh %s/tdk_utility.sh parseConfigFile SECONDARYREMOTEENDPOINT" %TDK_PATH;
-        print details1;
-        print details2;
-        print details3;
+        print(details1);
+        print(details2);
+        print(details3);
 
         expectedresult="SUCCESS";
         tdkTestObj.addParameter("command", details1);
@@ -160,53 +160,51 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             time.sleep(30);
             obj1.initiateReboot();
             time.sleep(300);
             tdkTestObj,actualresult,newValue = getPublicWiFiParamValues(obj1);
             if newValue == setValues:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check public wifi values persist on reboot"
-                print "ACTUAL RESULT 3:Public wifi values persist on reboot"
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3:Check public wifi values persist on reboot")
+                print("ACTUAL RESULT 3:Public wifi values persist on reboot")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check public wifi values persist on reboot"
-                print "ACTUAL RESULT 3:Public wifi values does not persist on reboot"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3:Check public wifi values persist on reboot")
+                print("ACTUAL RESULT 3:Public wifi values does not persist on reboot")
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #Revert the values of public wifi params
             tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj1,orgValue);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP :Revert the PublicWiFi param values"
-                print "ACTUAL RESULT :%s" %details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP :Revert the PublicWiFi param values")
+                print("ACTUAL RESULT :%s" %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP :Revert the PublicWiFi param values"
-                print "ACTUAL RESULT :%s" %details
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP :Revert the PublicWiFi param values")
+                print("ACTUAL RESULT :%s" %details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2:Enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj1.unloadModule("wifiagent");
     obj2.unloadModule("sysutil");
     obj3.unloadModule("tdkbtr181");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

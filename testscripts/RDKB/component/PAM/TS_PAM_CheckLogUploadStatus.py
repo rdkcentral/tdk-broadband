@@ -109,15 +109,15 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow to %s" %(step, value);
-    print "EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow should be set to %s successfully" %(step, value);
+    print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow to %s" %(step, value));
+    print("EXPECTED RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow should be set to %s successfully" %(step, value));
 
     if expectedresult in actualresult and details != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow is set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow is set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check the Log Upload status with Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus
         sleep(60);
@@ -128,19 +128,19 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus" %step;
-        print "EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus" %step;
+        print("\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus" %step);
+        print("EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus" %step);
 
         if expectedresult in actualresult and details != "":
             status = details.strip().replace("\\n", "");
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : Status of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus is : %s" %(step,status);
+            print("ACTUAL RESULT %d : Status of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus is : %s" %(step,status));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if "In Progress" in status or "Complete" in status:
-                print "The Log Upload Status has been moved to : %s" %status;
+                print("The Log Upload Status has been moved to : %s" %status);
                 tdkTestObj.setResultStatus("SUCCESS");
 
                 #Check if upload_log_status file is found under tmp
@@ -151,14 +151,14 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                print "\nTEST STEP %d: Check if upload_log_status is present or not under tmp" %step;
-                print "EXPECTED RESULT %d: upload_log_status should be present under tmp" %step;
+                print("\nTEST STEP %d: Check if upload_log_status is present or not under tmp" %step);
+                print("EXPECTED RESULT %d: upload_log_status should be present under tmp" %step);
 
                 if details == "File exist":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: upload_log_status is present under tmp" %step;
+                    print("ACTUAL RESULT %d: upload_log_status is present under tmp" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if contents to the file is same as the status including the timestamp
                     step = step + 1;
@@ -168,59 +168,58 @@ if "SUCCESS" in sysloadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                    print "\nTEST STEP %d: Get the contents of upload_log_status file" %step;
-                    print "EXPECTED RESULT %d: Should get non-empty content from upload_log_status file" %step;
+                    print("\nTEST STEP %d: Get the contents of upload_log_status file" %step);
+                    print("EXPECTED RESULT %d: Should get non-empty content from upload_log_status file" %step);
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: upload_log_status file contains : %s" %(step, details);
+                        print("ACTUAL RESULT %d: upload_log_status file contains : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         step = step + 1;
-                        print "\nTEST STEP %d: Cross check the status retrieved from TR181 parameter and from the upload_log_status file" %step;
-                        print "EXPECTED RESULT %d: The status retrieved from TR181 parameter and from the upload_log_status file should be same" %step;
+                        print("\nTEST STEP %d: Cross check the status retrieved from TR181 parameter and from the upload_log_status file" %step);
+                        print("EXPECTED RESULT %d: The status retrieved from TR181 parameter and from the upload_log_status file should be same" %step);
 
                         if status == details:
-                            print "ACTUAL RESULT %d: The status of LogUpload is same as the content in upload_log_status file" %step;
+                            print("ACTUAL RESULT %d: The status of LogUpload is same as the content in upload_log_status file" %step);
                             tdkTestObj.setResultStatus("SUCCESS");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
-                            print "ACTUAL RESULT %d: The status of LogUpload is not same as the content in upload_log_status file" %step;
+                            print("ACTUAL RESULT %d: The status of LogUpload is not same as the content in upload_log_status file" %step);
                             tdkTestObj.setResultStatus("FAILURE");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: upload_log_status file contains : %s" %(step, details);
+                        print("ACTUAL RESULT %d: upload_log_status file contains : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: upload_log_status is not present under tmp" %step;
+                    print("ACTUAL RESULT %d: upload_log_status is not present under tmp" %step);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else :
-                print "Log Upload Status : %s" %status;
+                print("Log Upload Status : %s" %status);
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : Status of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus is not retrieved" %step;
+            print("ACTUAL RESULT %d : Status of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMLogsUploadStatus is not retrieved" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow is not set to %s successfully; Details : %s" %(step, value, details);
+        print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMUploadLogsNow is not set to %s successfully; Details : %s" %(step, value, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     pamobj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     pamobj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-

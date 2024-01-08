@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckTelnetRemoteAccessStatus');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -112,20 +112,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if remote access via telnet is enabled or not";
-        print "EXPECTED RESULT 1: Should get the status of remote access via telnet";
-        print "ACTUAL RESULT 1: The status of remote access via telnet :%s" %details;
+        print("TEST STEP 1: Check if remote access via telnet is enabled or not");
+        print("EXPECTED RESULT 1: Should get the status of remote access via telnet");
+        print("ACTUAL RESULT 1: The status of remote access via telnet :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check if remote access via telnet is enabled or not";
-        print "EXPECTED RESULT 1: Should get the status of remote access via telnet";
-        print "ACTUAL RESULT 1: Failure in getting the status of remote access via telnet. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Check if remote access via telnet is enabled or not");
+        print("EXPECTED RESULT 1: Should get the status of remote access via telnet");
+        print("ACTUAL RESULT 1: Failure in getting the status of remote access via telnet. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

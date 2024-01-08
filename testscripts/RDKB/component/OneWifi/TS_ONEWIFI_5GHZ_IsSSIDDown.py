@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_5GHZ_IsSSIDDown');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -120,12 +120,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the state of SSID2";
-        print "EXPECTED RESULT 1: Should get the state of SSID2"
+        print("TEST STEP 1: Get the state of SSID2");
+        print("EXPECTED RESULT 1: Should get the state of SSID2")
         orgState = details.split("VALUE:")[1].split(' ')[0];
-        print "ACTUAL RESULT 1: State is %s %s" %(details,orgState);
+        print("ACTUAL RESULT 1: State is %s %s" %(details,orgState));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Enable ssid2 to check its status
         tdkTestObj = obj.createTestStep('WIFIAgent_Set');
@@ -139,11 +139,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Disable SSID2";
-            print "EXPECTED RESULT 1: Should disable SSID2"
-            print "ACTUAL RESULT 1: State is %s " %details;
+            print("TEST STEP 1: Disable SSID2");
+            print("EXPECTED RESULT 1: Should disable SSID2")
+            print("ACTUAL RESULT 1: State is %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             sleep(5);
             #check if ssid2 status is up or not
@@ -156,18 +156,18 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult and "Down" in status:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Check if SSID2 staus is Down";
-                print "EXPECTED RESULT 1: SSID2 staus should be down";
-                print "ACTUAL RESULT 1: Status is %s %s" %(details,status);
+                print("TEST STEP 1: Check if SSID2 staus is Down");
+                print("EXPECTED RESULT 1: SSID2 staus should be down");
+                print("ACTUAL RESULT 1: Status is %s %s" %(details,status));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Check if SSID2 staus is down";
-                print "EXPECTED RESULT 1: SSID2 staus should be down";
-                print "ACTUAL RESULT 1: Status is %s " %details;
+                print("TEST STEP 1: Check if SSID2 staus is down");
+                print("EXPECTED RESULT 1: SSID2 staus should be down");
+                print("ACTUAL RESULT 1: Status is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
            #change ssid state to previous one
             tdkTestObj = obj.createTestStep('WIFIAgent_Set');
@@ -181,38 +181,37 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Restore Enable state of SSID2";
-                print "EXPECTED RESULT 1: Should Restore Enable state of SSID2";
-                print "ACTUAL RESULT 1: State is %s " %details;
+                print("TEST STEP 1: Restore Enable state of SSID2");
+                print("EXPECTED RESULT 1: Should Restore Enable state of SSID2");
+                print("ACTUAL RESULT 1: State is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Restore Enable state of SSID2";
-                print "EXPECTED RESULT 1: Should Restore Enable state of SSID2";
-                print "ACTUAL RESULT 1: State is %s " %details;
+                print("TEST STEP 1: Restore Enable state of SSID2");
+                print("EXPECTED RESULT 1: Should Restore Enable state of SSID2");
+                print("ACTUAL RESULT 1: State is %s " %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Disable SSID2";
-            print "EXPECTED RESULT 1: Should disable SSID2"
-            print "ACTUAL RESULT 1:  %s " %details;
+            print("TEST STEP 1: Disable SSID2");
+            print("EXPECTED RESULT 1: Should disable SSID2")
+            print("ACTUAL RESULT 1:  %s " %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the state of SSID2"
-        print "EXPECTED RESULT 1: Failure in getting the state of SSID2"
-        print "ACTUAL RESULT 1: State is %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the state of SSID2")
+        print("EXPECTED RESULT 1: Failure in getting the state of SSID2")
+        print("ACTUAL RESULT 1: State is %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("wifiagent");
 
 else:
-        print "Failed to load wifi module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load wifi module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetSupportedNCPs');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -110,30 +110,30 @@ if "SUCCESS" in loadmodulestatus.upper():
     details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-	print details;
-	if "ATCP" or "IPCP" or "IPXCP" or "NBFCP" or "IPV6CP" in details:
+        print(details);
+        if "ATCP" or "IPCP" or "IPXCP" or "NBFCP" or "IPV6CP" in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Check if NCP list is a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]";
-            print "EXPECTED RESULT 1: NCP list should be a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]";
-            print "ACTUAL RESULT 1: NCP list:%s" %details;
+            print("TEST STEP 1: Check if NCP list is a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]");
+            print("EXPECTED RESULT 1: NCP list should be a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]");
+            print("ACTUAL RESULT 1: NCP list:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Check if NCP list is a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]";
-            print "EXPECTED RESULT 1: NCP list should be a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]";
-            print "ACTUAL RESULT 1: NCP list is not a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP], NCP list: %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Check if NCP list is a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]");
+            print("EXPECTED RESULT 1: NCP list should be a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP]");
+            print("ACTUAL RESULT 1: NCP list is not a subset of [ATCP, IPCP, IPXCP, NBFCP, IPV6CP], NCP list: %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the Supported NCP list";
-	print "EXPECTED RESULT 1: Should get the Supported NCP list";
-	print "ACTUAL RESULT 1: Failed to get the Supported NCP list: %s" %details;
-	print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the Supported NCP list");
+        print("EXPECTED RESULT 1: Should get the Supported NCP list");
+        print("ACTUAL RESULT 1: Failed to get the Supported NCP list: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

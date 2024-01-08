@@ -94,14 +94,14 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-    print "\nTEST STEP %d: Check for wifihealth log file presence" %step;
-    print "EXPECTED RESULT %d:wifihealth log file should be present" %step;
+    print("\nTEST STEP %d: Check for wifihealth log file presence" %step);
+    print("EXPECTED RESULT %d:wifihealth log file should be present" %step);
 
     if details == "File exist":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d:wifihealth log file is present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check for the maraker CHUTIL_1
         step = step + 1;
@@ -110,13 +110,13 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
         tdkTestObj.addParameter("command",cmd);
         expectedresult="SUCCESS";
 
-        print "\nTEST STEP %d: Check for the presence of the marker CHUTIL_1" %step;
-        print "EXPECTED RESULT %d: CHUTIL_1 marker should be present" %step;
+        print("\nTEST STEP %d: Check for the presence of the marker CHUTIL_1" %step);
+        print("EXPECTED RESULT %d: CHUTIL_1 marker should be present" %step);
         markerfound = 0;
 
         #Giving 15 iterations of 60s each as the default value of Channel Utility Log Interval is 900s
         for iteration in range(1,16):
-            print "Waiting for the marker to get populated in wifihealth.txt....\nIteration : %d" %iteration;
+            print("Waiting for the marker to get populated in wifihealth.txt....\nIteration : %d" %iteration);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
@@ -130,45 +130,44 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
 
         if markerfound == 1:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: CHUTIL_1 marker is found; Details : %s" %(step,details);
+            print("ACTUAL RESULT %d: CHUTIL_1 marker is found; Details : %s" %(step,details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Get the values for <CU due to self BSS from transmitted traffic>,<CU due to self BSS from received traffic >,<CU due to overlapping BSS>
             marker_list = details.split("split:")[1].split(",");
-            print "Marker_list : ", marker_list;
+            print("Marker_list : ", marker_list);
 
             step = step + 1;
-            print "\nTEST STEP %d : Get the values for CU due to self BSS from transmitted traffic, CU due to self BSS from received traffic and CU due to overlapping BSS" %step;
-            print "EXPECTED RESULT %d : Should get the values for CU due to self BSS from transmitted traffic, CU due to self BSS from received traffic and CU due to overlapping BSS" %step;
+            print("\nTEST STEP %d : Get the values for CU due to self BSS from transmitted traffic, CU due to self BSS from received traffic and CU due to overlapping BSS" %step);
+            print("EXPECTED RESULT %d : Should get the values for CU due to self BSS from transmitted traffic, CU due to self BSS from received traffic and CU due to overlapping BSS" %step);
 
             if marker_list[0] != "" or marker_list[1] != "" or marker_list[2] != "" or marker_list[0] != " " or marker_list[1] != " " or marker_list[2] != " ":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: The marker values are retrieved successfully" %(step);
-                print "CU due to self BSS from transmitted traffic : %s" %marker_list[0];
-                print "CU due to self BSS from received traffic : %s" %marker_list[1];
-                print "CU due to overlapping BSS : %s" %marker_list[2];
+                print("ACTUAL RESULT %d: The marker values are retrieved successfully" %(step));
+                print("CU due to self BSS from transmitted traffic : %s" %marker_list[0]);
+                print("CU due to self BSS from received traffic : %s" %marker_list[1]);
+                print("CU due to overlapping BSS : %s" %marker_list[2]);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: The marker values are not retrieved successfully" %(step);
+                print("ACTUAL RESULT %d: The marker values are not retrieved successfully" %(step));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: CHUTIL_1 marker is not found; Details : %s" %(step,details);
+            print("ACTUAL RESULT %d: CHUTIL_1 marker is not found; Details : %s" %(step,details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d:wifihealth log file is not present" %step;
+        print("ACTUAL RESULT %d:wifihealth log file is not present" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

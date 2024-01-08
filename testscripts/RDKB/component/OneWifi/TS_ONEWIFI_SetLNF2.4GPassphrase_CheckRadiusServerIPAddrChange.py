@@ -112,15 +112,15 @@ if "SUCCESS" in loadmodulestatus1.upper():
     param = "Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr";
     actualresult, details = GetValue(tdkTestObj, param);
 
-    print "\nTEST STEP %d : Get the initial Radius Server IP Address using Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr for LNF 2.4GHz" %step;
-    print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr" %step;
+    print("\nTEST STEP %d : Get the initial Radius Server IP Address using Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr for LNF 2.4GHz" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr" %step);
 
     if expectedresult in actualresult:
         initial_IPAddr = details.split("VALUE:")[1].split(' ')[0].strip();
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-        print "Initial Radius Server IP Address : ", initial_IPAddr;
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+        print("Initial Radius Server IP Address : ", initial_IPAddr);
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         #Get the initial value of the LNF 2.4G KeyPassphrase
         step = step + 1;
@@ -128,20 +128,20 @@ if "SUCCESS" in loadmodulestatus1.upper():
         param = "Device.WiFi.AccessPoint.11.Security.KeyPassphrase";
         actualresult, details = GetValue(tdkTestObj, param);
 
-        print "\nTEST STEP %d : Get the initial security KeyPassphrase using Device.WiFi.AccessPoint.11.Security.KeyPassphrase for LNF 2.4GHz" %step;
-        print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.KeyPassphrase" %step;
+        print("\nTEST STEP %d : Get the initial security KeyPassphrase using Device.WiFi.AccessPoint.11.Security.KeyPassphrase for LNF 2.4GHz" %step);
+        print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.KeyPassphrase" %step);
 
         if expectedresult in actualresult:
             initial_key = details.split("VALUE:")[1].split(' ')[0].strip();
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-            print "Initial KeyPassphrase : ", initial_key;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+            print("Initial KeyPassphrase : ", initial_key);
+            print("TEST EXECUTION RESULT :SUCCESS");
 
             #Check if the KeyPassphrase is not exposed via DMCLI
             if initial_key == "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "The KeyPassphrase value is not exposed";
+                print("The KeyPassphrase value is not exposed");
 
                 #Set new Key Pass phrase randomly
                 step = step + 1;
@@ -150,14 +150,14 @@ if "SUCCESS" in loadmodulestatus1.upper():
                 paramList = "Device.WiFi.AccessPoint.11.Security.KeyPassphrase|"+ key_new + "|string|Device.WiFi.Radio.2.X_CISCO_COM_ApplySetting|true|bool";
                 actualresult, details = SetValue(tdkTestObj, paramList);
 
-                print "\nTEST STEP %d : Set Device.WiFi.AccessPoint.11.Security.KeyPassphrase to %s" %(step, key_new);
-                print "EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.11.Security.KeyPassphrase to %s should be success" %(step, key_new);
+                print("\nTEST STEP %d : Set Device.WiFi.AccessPoint.11.Security.KeyPassphrase to %s" %(step, key_new));
+                print("EXPECTED RESULT %d : Setting Device.WiFi.AccessPoint.11.Security.KeyPassphrase to %s should be success" %(step, key_new));
 
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Set operation success; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Check if the keypassphrase shows NULL value itself as the SET value should not be exposed via DMCLI
                     step = step + 1;
@@ -165,23 +165,23 @@ if "SUCCESS" in loadmodulestatus1.upper():
                     tdkTestObj = obj1.createTestStep("WIFIAgent_Get");
                     actualresult, details = GetValue(tdkTestObj, param);
 
-                    print "\nTEST STEP %d : Get Device.WiFi.AccessPoint.11.Security.KeyPassphrase and check if value is not exposed" %(step);
-                    print "EXPECTED RESULT %d : Device.WiFi.AccessPoint.11.Security.KeyPassphrase GET should not expose the value" %step;
+                    print("\nTEST STEP %d : Get Device.WiFi.AccessPoint.11.Security.KeyPassphrase and check if value is not exposed" %(step));
+                    print("EXPECTED RESULT %d : Device.WiFi.AccessPoint.11.Security.KeyPassphrase GET should not expose the value" %step);
 
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         details = details.split("VALUE:")[1].split(' ')[0].split(',');
                         details = details[0];
-                        print "KeyPassphrase SET : ",key_new;
-                        print "KeyPassphrase GET : ",details;
+                        print("KeyPassphrase SET : ",key_new);
+                        print("KeyPassphrase GET : ",details);
 
                         if details != key_new and details == "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "KeyPassphrase is not exposed";
+                            print("KeyPassphrase is not exposed");
 
                             #Check if the Radius Server IP configuration got changed due to the change in Key Pass phrase
                             step = step + 1;
@@ -189,61 +189,60 @@ if "SUCCESS" in loadmodulestatus1.upper():
                             tdkTestObj = obj1.createTestStep("WIFIAgent_Get");
                             actualresult, details = GetValue(tdkTestObj, param);
 
-                            print "\nTEST STEP %d : Get the current Radius Server IP Address using Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr for LNF 2.4GHz after KeyPassphrase change" %step;
-                            print "EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr after KeyPassphrase change" %step;
+                            print("\nTEST STEP %d : Get the current Radius Server IP Address using Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr for LNF 2.4GHz after KeyPassphrase change" %step);
+                            print("EXPECTED RESULT %d : Should successfully get Device.WiFi.AccessPoint.11.Security.RadiusServerIPAddr after KeyPassphrase change" %step);
 
                             if expectedresult in actualresult:
                                 curr_IPAddr = details.split("VALUE:")[1].split(' ')[0].strip();
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details);
-                                print "TEST EXECUTION RESULT :SUCCESS";
+                                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,details));
+                                print("TEST EXECUTION RESULT :SUCCESS");
 
                                 step = step + 1;
-                                print "\nTEST STEP %d : Check if the current Radius Server IP address is the same as initial IP" %step;
-                                print "EXPECTED RESULT %d : The current Radius Server IP address should be the same as initial IP" %step;
-                                print "Initial Radius Server IP Address : ", initial_IPAddr;
-                                print "Current Radius Server IP Address : ", curr_IPAddr;
+                                print("\nTEST STEP %d : Check if the current Radius Server IP address is the same as initial IP" %step);
+                                print("EXPECTED RESULT %d : The current Radius Server IP address should be the same as initial IP" %step);
+                                print("Initial Radius Server IP Address : ", initial_IPAddr);
+                                print("Current Radius Server IP Address : ", curr_IPAddr);
 
                                 if initial_IPAddr == curr_IPAddr:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: The Radius Server IP Address remains unchanged" %step;
-                                    print "TEST EXECUTION RESULT :SUCCESS";
+                                    print("ACTUAL RESULT %d: The Radius Server IP Address remains unchanged" %step);
+                                    print("TEST EXECUTION RESULT :SUCCESS");
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: The Radius Server IP Address changed" %step;
-                                    print "TEST EXECUTION RESULT : FAILURE";
+                                    print("ACTUAL RESULT %d: The Radius Server IP Address changed" %step);
+                                    print("TEST EXECUTION RESULT : FAILURE");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-                                print "TEST EXECUTION RESULT : FAILURE";
+                                print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+                                print("TEST EXECUTION RESULT : FAILURE");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "KeyPassphrase is exposed";
+                            print("KeyPassphrase is exposed");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details);
+                        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details);
+                    print("ACTUAL RESULT %d: Set operation failed; Details : %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "The KeyPassphrase value is exposed";
+                print("The KeyPassphrase value is exposed");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+            print("TEST EXECUTION RESULT :FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details);
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,details));
+        print("TEST EXECUTION RESULT :FAILURE");
 
     obj1.unloadModule("wifiagent");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

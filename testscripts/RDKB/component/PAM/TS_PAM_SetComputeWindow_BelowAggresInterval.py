@@ -97,104 +97,104 @@ if "SUCCESS" in loadmodulestatus.upper():
     defAggInt = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Self Heal Aggressive Interval";
-       print "EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval";
-       print "ACTUAL RESULT 1: %s" %defAggInt;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Self Heal Aggressive Interval");
+        print("EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval");
+        print("ACTUAL RESULT 1: %s" %defAggInt);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-       tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow");
-       expectedresult="SUCCESS";
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       defCompuWindow = tdkTestObj.getResultDetails();
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow");
+        expectedresult="SUCCESS";
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        defCompuWindow = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Get the Usage Compute Window";
-          print "EXPECTED RESULT 2: Should Get the Usage Compute Window";
-          print "ACTUAL RESULT 2: %s" %defCompuWindow;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Usage Compute Window");
+            print("EXPECTED RESULT 2: Should Get the Usage Compute Window");
+            print("ACTUAL RESULT 2: %s" %defCompuWindow);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-          setValue = int(defAggInt)- 1 ;
-          tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-          tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow")
-          tdkTestObj.addParameter("ParamValue",str(setValue));
-          tdkTestObj.addParameter("Type","unsignedint");
-          expectedresult= "FAILURE";
+            setValue = int(defAggInt)- 1 ;
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow")
+            tdkTestObj.addParameter("ParamValue",str(setValue));
+            tdkTestObj.addParameter("Type","unsignedint");
+            expectedresult= "FAILURE";
 
-          #Execute testcase on DUT
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          Setresult = tdkTestObj.getResultDetails();
+            #Execute testcase on DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            Setresult = tdkTestObj.getResultDetails();
 
-          if expectedresult in actualresult:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Set the Usage Compute Window";
-             print "EXPECTED RESULT 3: Should not set the Usage Compute Window less than Self HealAggressive Interval";
-             print "ACTUAL RESULT 3: %s" %Setresult;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-              #Set the result status of execution
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 3: Set the Usage Compute Window";
-              print "EXPECTED RESULT 3: Should not set the Usage Compute Window less than Self HealAggressive Interval";
-              print "ACTUAL RESULT 3: %s" %Setresult;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Set the Usage Compute Window");
+                print("EXPECTED RESULT 3: Should not set the Usage Compute Window less than Self HealAggressive Interval");
+                print("ACTUAL RESULT 3: %s" %Setresult);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Set the Usage Compute Window");
+                print("EXPECTED RESULT 3: Should not set the Usage Compute Window less than Self HealAggressive Interval");
+                print("ACTUAL RESULT 3: %s" %Setresult);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-              #revert in caseof invalid set
-              tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-              tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow")
-              tdkTestObj.addParameter("ParamValue",defCompuWindow);
-              tdkTestObj.addParameter("Type","unsignedint");
-              expectedresult= "FAILURE";
+                #revert in caseof invalid set
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow")
+                tdkTestObj.addParameter("ParamValue",defCompuWindow);
+                tdkTestObj.addParameter("Type","unsignedint");
+                expectedresult= "FAILURE";
 
-              #Execute testcase on DUT
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              Setresult = tdkTestObj.getResultDetails();
-              if expectedresult in actualresult:
-                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 4: Revert the Usage Compute Window  to previous";
-                 print "EXPECTED RESULT 4: Should revert the Usage Compute Window Interval to %s " %defAggInt;
-                 print "ACTUAL RESULT 4: %s" %Setresult;
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-              else:
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4: Revert the Usage Compute Window to previous";
-                  print "EXPECTED RESULT 4: Should revert the Usage Compute Window to %s " %defAggInt;
-                  print "ACTUAL RESULT 4: %s" %Setresult;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Get the Usage Compute Window";
-           print "EXPECTED RESULT 2: Should Get the Usage Compute Window";
-           print "ACTUAL RESULT 2: %s" %defCompuWindow;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+                #Execute testcase on DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                Setresult = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Revert the Usage Compute Window  to previous");
+                    print("EXPECTED RESULT 4: Should revert the Usage Compute Window Interval to %s " %defAggInt);
+                    print("ACTUAL RESULT 4: %s" %Setresult);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Revert the Usage Compute Window to previous");
+                    print("EXPECTED RESULT 4: Should revert the Usage Compute Window to %s " %defAggInt);
+                    print("ACTUAL RESULT 4: %s" %Setresult);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the Usage Compute Window");
+            print("EXPECTED RESULT 2: Should Get the Usage Compute Window");
+            print("ACTUAL RESULT 2: %s" %defCompuWindow);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Self Heal Aggressive Interval";
-        print "EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval";
-        print "ACTUAL RESULT 1: %s" %defAggInt;
+        print("TEST STEP 1: Get the Self Heal Aggressive Interval");
+        print("EXPECTED RESULT 1: Should Get the Self Heal Aggressive Interval");
+        print("ACTUAL RESULT 1: %s" %defAggInt);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

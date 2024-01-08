@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetSnmpOnboardRebootEnable');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus  = obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -117,73 +117,73 @@ if "SUCCESS" in loadmodulestatus.upper():
     SnmpOnboardRebootStatus= tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult and SnmpOnboardRebootStatus == "true":
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the Snmp Onboard Reboot Status";
-       print "EXPECTED RESULT 1: Should get the Snmp Onboard Reboot as true";
-       print "ACTUAL RESULT 1: Got the Snmp Onboard Reboot status as  :",SnmpOnboardRebootStatus;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the Snmp Onboard Reboot Status");
+        print("EXPECTED RESULT 1: Should get the Snmp Onboard Reboot as true");
+        print("ACTUAL RESULT 1: Got the Snmp Onboard Reboot status as  :",SnmpOnboardRebootStatus);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-       tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-       tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XPC.SnmpOnboardReboot.Enable");
-       tdkTestObj.addParameter("ParamValue","false");
-       tdkTestObj.addParameter("Type","bool");
-       expectedresult="FAILURE";
+        tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+        tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XPC.SnmpOnboardReboot.Enable");
+        tdkTestObj.addParameter("ParamValue","false");
+        tdkTestObj.addParameter("Type","bool");
+        expectedresult="FAILURE";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 2: Disable the Snmp Onboard Reboot Status";
-          print "EXPECTED RESULT 2: Should not disable the Snmp Onboard Reboot Status";
-          print "ACTUAL RESULT 2: Snmp Onboard Reboot set status is : ",details;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 2: Disable the Snmp Onboard Reboot Status";
-           print "EXPECTED RESULT 2: Should not disable the Snmp Onboard Reboot Status";
-           print "ACTUAL RESULT 2: Snmp Onboard Reboot set status is : ",details;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Disable the Snmp Onboard Reboot Status");
+            print("EXPECTED RESULT 2: Should not disable the Snmp Onboard Reboot Status");
+            print("ACTUAL RESULT 2: Snmp Onboard Reboot set status is : ",details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Disable the Snmp Onboard Reboot Status");
+            print("EXPECTED RESULT 2: Should not disable the Snmp Onboard Reboot Status");
+            print("ACTUAL RESULT 2: Snmp Onboard Reboot set status is : ",details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-           #reverting the value
-           tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-           tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XPC.SnmpOnboardReboot.Enable");
-           tdkTestObj.addParameter("ParamValue","true");
-           tdkTestObj.addParameter("Type","bool");
-           expectedresult="FAILURE";
+            #reverting the value
+            tdkTestObj = obj.createTestStep('pam_SetParameterValues');
+            tdkTestObj.addParameter("ParamName","Device.X_RDKCENTRAL-COM_XPC.SnmpOnboardReboot.Enable");
+            tdkTestObj.addParameter("ParamValue","true");
+            tdkTestObj.addParameter("Type","bool");
+            expectedresult="FAILURE";
 
-           #Execute the test case in DUT
-           tdkTestObj.executeTestCase(expectedresult);
-           actualresult = tdkTestObj.getResult();
-           details = tdkTestObj.getResultDetails();
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-           if expectedresult in actualresult:
-              tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Reverting the Snmp Onboard Reboot status";
-              print "EXPECTED RESULT 3: Should enable the Snmp Onboard Reboot Status";
-              print "ACTUAL RESULT 3: Revert status is : ",details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-           else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Reverting the Snmp Onboard Reboot status";
-               print "EXPECTED RESULT 3: Should enable the Snmp Onboard Reboot Status";
-               print "ACTUAL RESULT 3: Revert status is : ",details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Reverting the Snmp Onboard Reboot status");
+                print("EXPECTED RESULT 3: Should enable the Snmp Onboard Reboot Status");
+                print("ACTUAL RESULT 3: Revert status is : ",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Reverting the Snmp Onboard Reboot status");
+                print("EXPECTED RESULT 3: Should enable the Snmp Onboard Reboot Status");
+                print("ACTUAL RESULT 3: Revert status is : ",details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Snmp Onboard Reboot Status";
-        print "EXPECTED RESULT 1: Should get the Snmp Onboard Reboot as true";
-        print "ACTUAL RESULT 1: Got the Snmp Onboard Reboot status as  :",SnmpOnboardRebootStatus;
+        print("TEST STEP 1: Get the Snmp Onboard Reboot Status");
+        print("EXPECTED RESULT 1: Should get the Snmp Onboard Reboot as true");
+        print("ACTUAL RESULT 1: Got the Snmp Onboard Reboot status as  :",SnmpOnboardRebootStatus);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam  module";
+    print("Failed to load pam  module");
     obj.setLoadModuleStatus("FAILURE");

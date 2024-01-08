@@ -113,7 +113,7 @@ obj.configureTestCase(ip,port,'TS_ONEWIFI_EnableSecurityMode');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the load module status
@@ -133,10 +133,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 Set the security mode as WPA2-Personal for 2.4GHZ WIFI";
-        print "EXPECTED RESULT 1: Should set the security mode as WPA2-Personal for 2.4GHZ WIFI";
-        print "ACTUAL RESULT 1: Status %s" %details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1 Set the security mode as WPA2-Personal for 2.4GHZ WIFI");
+        print("EXPECTED RESULT 1: Should set the security mode as WPA2-Personal for 2.4GHZ WIFI");
+        print("ACTUAL RESULT 1: Status %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the encryption method after set
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
@@ -152,24 +152,24 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and "WPA2-Personal" in value:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the security mode of 2.4GHZ WIFI";
-            print "EXPECTED RESULT 2: Should get the security mode of 2.4GHZ WIFI";
-            print "ACTUAL RESULT 2: Security Mode is %s" %value;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Get the security mode of 2.4GHZ WIFI");
+            print("EXPECTED RESULT 2: Should get the security mode of 2.4GHZ WIFI");
+            print("ACTUAL RESULT 2: Security Mode is %s" %value);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the security mode of 2.4GHZ WIFI";
-            print "EXPECTED RESULT 2: Should get the security mode of 2.4GHZ WIFI";
-            print "ACTUAL RESULT 2: Security Mode is %s" %value;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the security mode of 2.4GHZ WIFI");
+            print("EXPECTED RESULT 2: Should get the security mode of 2.4GHZ WIFI");
+            print("ACTUAL RESULT 2: Security Mode is %s" %value);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 Set the security mode as WPA2-Personal for 2.4GHZ WIFI";
-        print "EXPECTED RESULT 1: Should set the security mode as WPA2-Personal for 2.4GHZ WIFI";
-        print "ACTUAL RESULT 1: Status %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1 Set the security mode as WPA2-Personal for 2.4GHZ WIFI");
+        print("EXPECTED RESULT 1: Should set the security mode as WPA2-Personal for 2.4GHZ WIFI");
+        print("ACTUAL RESULT 1: Status %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("wifiagent");
 else:
-        print "Failed to load wifi agent module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load wifi agent module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -81,7 +81,7 @@ PMTAMGMT_MTA_CALLS</input_parameters>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 
 #Test component to be tested
@@ -93,9 +93,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_MTAHAL_GetCalls')
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -111,50 +111,50 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and int(NumOfEntries) > 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %NumOfEntries
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %NumOfEntries)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         for y in range(int(NumOfEntries)):
             #Script to load the configuration file of the component
-            tdkTestObj = obj.createTestStep("MTAHAL_GetCalls")    
+            tdkTestObj = obj.createTestStep("MTAHAL_GetCalls")
             tdkTestObj.addParameter("value",y)
             expectedresult="SUCCESS"
             tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()    
+            actualresult = tdkTestObj.getResult()
             resultDetails = " "
             resultDetails = tdkTestObj.getResultDetails()
 
             if expectedresult in actualresult and resultDetails != " ":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS")
-                print "TEST STEP %s: Get call info for line %s" %(y+2, y+1)
-                print "EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1)
-                print "ACTUAL RESULT %s: call info for line %s:" %(y+2, y+1)
-                print ""
+                print("TEST STEP %s: Get call info for line %s" %(y+2, y+1))
+                print("EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1))
+                print("ACTUAL RESULT %s: call info for line %s:" %(y+2, y+1))
+                print("")
                 for x in resultDetails.split(";"):
-                    print x
-                print ""
+                    print(x)
+                print("")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print "TEST STEP %s: Get call info for line %s" %(y+2, y+1)
-                print "EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1)
-                print "ACTUAL RESULT %s: Failed to get the call info for line %s:" %(y+2, y+1)
-                print "%s" %resultDetails
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("TEST STEP %s: Get call info for line %s" %(y+2, y+1))
+                print("EXPECTED RESULT %s: Should get the call info for line %s" %(y+2, y+1))
+                print("ACTUAL RESULT %s: Failed to get the call info for line %s:" %(y+2, y+1))
+                print("%s" %resultDetails)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %NumOfEntries
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %NumOfEntries)
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

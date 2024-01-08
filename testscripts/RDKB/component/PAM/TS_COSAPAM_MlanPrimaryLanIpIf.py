@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_COSAPAM_MlanPrimaryLanIpIf');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -112,15 +112,15 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the PrimaryLanIpIf object";
-        print "EXPECTED RESULT 1: Should get the PrimaryLanIpIf object";
-        print "ACTUAL RESULT 1: PrimaryLanIpIf object is %s" %details;
+        print("TEST STEP 1: Get the PrimaryLanIpIf object");
+        print("EXPECTED RESULT 1: Should get the PrimaryLanIpIf object");
+        print("ACTUAL RESULT 1: PrimaryLanIpIf object is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details;
+        print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details);
 
-	param = details+'.';
-	tdkTestObj.addParameter("ParamName", param);
-	tdkTestObj.executeTestCase(expectedresult);
+        param = details+'.';
+        tdkTestObj.addParameter("ParamName", param);
+        tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
@@ -128,26 +128,26 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Get the PrimaryLanIpIf";
-            print "EXPECTED RESULT 1: Should get the PrimaryLanIpIf";
-            print "ACTUAL RESULT 1: PrimaryLanIpIf is %s" %details;
+            print("TEST STEP 1: Get the PrimaryLanIpIf");
+            print("EXPECTED RESULT 1: Should get the PrimaryLanIpIf");
+            print("ACTUAL RESULT 1: PrimaryLanIpIf is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS, %s" %details;
+            print("[TEST EXECUTION RESULT] : SUCCESS, %s" %details);
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Get the PrimaryLanIpIf";
-            print "EXPECTED RESULT 1: Should get the PrimaryLanIpIf";
-            print "ACTUAL RESULT 1: Failure in getting the PrimaryLanIpIf. Details : %s" %details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 1: Get the PrimaryLanIpIf");
+            print("EXPECTED RESULT 1: Should get the PrimaryLanIpIf");
+            print("ACTUAL RESULT 1: Failure in getting the PrimaryLanIpIf. Details : %s" %details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the PrimaryLanIpIf object";
-        print "EXPECTED RESULT 1: Should get the PrimaryLanIpIf object";
-        print "ACTUAL RESULT 1: Failure in getting the PrimaryLanIpIf object. Details : %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the PrimaryLanIpIf object");
+        print("EXPECTED RESULT 1: Should get the PrimaryLanIpIf object");
+        print("ACTUAL RESULT 1: Failure in getting the PrimaryLanIpIf object. Details : %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

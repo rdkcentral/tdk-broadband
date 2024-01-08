@@ -79,7 +79,7 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 
 #Test component to be tested
@@ -91,9 +91,9 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_MTAHAL_GetLineTableNumberOfEntries')
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -109,20 +109,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and int(resultDetails) > 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %resultDetails
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: The LineTableNumberOfEntries is %s" %resultDetails)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Get the LineTableNumberOfEntries"
-        print "EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully"
-        print "ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %resultDetails
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Get the LineTableNumberOfEntries")
+        print("EXPECTED RESULT 1: Should get the LineTableNumberOfEntries successfully")
+        print("ACTUAL RESULT 1: Failed to get the LineTableNumberOfEntries, Details :%s" %resultDetails)
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

@@ -114,22 +114,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult not in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: Set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true";
-        print "EXPECTED RESULT : Should not set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true"
-        print "ACTUAL RESULT :%s" %details;
+        print("TEST STEP 2: Set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true");
+        print("EXPECTED RESULT : Should not set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true")
+        print("ACTUAL RESULT :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true";
-        print "EXPECTED RESULT 1: Should not set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true";
-        print "ACTUAL RESULT 1: Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client is set to true";
+        print("TEST STEP 1:Set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true");
+        print("EXPECTED RESULT 1: Should not set the Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client to true");
+        print("ACTUAL RESULT 1: Device.NotifyComponent.X_RDKCENTRAL-COM_Connected-Client is set to true");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

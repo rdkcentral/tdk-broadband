@@ -102,8 +102,8 @@ sysobj.configureTestCase(ip,port,'TS_PAM_CheckSyscfgFilesAfterReboot_WithUpdateN
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysobjloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysobjloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysobjloadmodulestatus) ;
 
 tmpLocation = "/nvram/syscfg.db"
 secureLocation = ""
@@ -147,11 +147,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysobjloadmodulestatus.upper()):
         secureLocation = secLocation;
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the SysCfg Secure location from Platform properties file";
-        print "EXPECTED RESULT 1: Should get the SysCfg Secure location from Platform properties file";
-        print "ACTUAL RESULT 1: SysCfg Secure location found from platfrom properties file";
+        print("TEST STEP 1: Get the SysCfg Secure location from Platform properties file");
+        print("EXPECTED RESULT 1: Should get the SysCfg Secure location from Platform properties file");
+        print("ACTUAL RESULT 1: SysCfg Secure location found from platfrom properties file");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SysCfg.UpdateNvram");
@@ -163,70 +163,70 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysobjloadmodulestatus.upper()):
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the SysCfg UpdateNvram Value";
-            print "EXPECTED RESULT 2: Should get the SysCfg UpdateNvram Value";
-            print "ACTUAL RESULT 2: Initial Value is %s" %initialValue;
+            print("TEST STEP 2: Get the SysCfg UpdateNvram Value");
+            print("EXPECTED RESULT 2: Should get the SysCfg UpdateNvram Value");
+            print("ACTUAL RESULT 2: Initial Value is %s" %initialValue);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if initialValue == "true":
-                print "Update Nvram initial value is True";
+                print("Update Nvram initial value is True");
                 flag = 1;
             else:
                 tdkTestObj = obj.createTestStep('pam_SetParameterValues');
                 set_enable_res,set_enable_details = set_SysCfgUpdateNvram(tdkTestObj,"true");
 
                 if expectedresult in actualresult:
-                     flag = 1;
-                     revertflag = 1;
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 3: Verify Update Nvram is set to True";
-                     print "EXPECTED RESULT 3: Update Nvram should set to True";
-                     print "ACTUAL RESULT 3: Set operations was success";
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
+                    flag = 1;
+                    revertflag = 1;
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Verify Update Nvram is set to True");
+                    print("EXPECTED RESULT 3: Update Nvram should set to True");
+                    print("ACTUAL RESULT 3: Set operations was success");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
-                     flag = 0;
-                     revertflag = 0;
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 3: Verify Update Nvram is set to True";
-                     print "EXPECTED RESULT 3: Update Nvram should set to True";
-                     print "ACTUAL RESULT 3: Set operations was success";
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : FAILURE";
+                    flag = 0;
+                    revertflag = 0;
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Verify Update Nvram is set to True");
+                    print("EXPECTED RESULT 3: Update Nvram should set to True");
+                    print("ACTUAL RESULT 3: Set operations was success");
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             if flag == 1:
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tmp_result, tmp_details, secure_result, secure_details = verify_SysCfgUpdateNvram(tdkTestObj);
 
-   	        if expectedresult in (tmp_result and secure_result) and tmp_details == tmpLocation and secure_details == secureLocation :
+                if expectedresult in (tmp_result and secure_result) and tmp_details == tmpLocation and secure_details == secureLocation :
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Verify Syscfg files present in Nvram location and secured location";
-                    print "EXPECTED RESULT 4: Both syscfg files should be present";
-                    print "ACTUAL RESULT 4: Syscfg files are present ";
+                    print("TEST STEP 4: Verify Syscfg files present in Nvram location and secured location");
+                    print("EXPECTED RESULT 4: Both syscfg files should be present");
+                    print("ACTUAL RESULT 4: Syscfg files are present ");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     query = "rm %s %s"%(tmpLocation,secureLocation)
-                    print query;
+                    print(query);
                     tdkTestObj.addParameter("command", query);
                     tdkTestObj.executeTestCase("expectedresult");
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-	            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     tmp_result, tmp_details, secure_result, secure_details = verify_SysCfgUpdateNvram(tdkTestObj);
 
-	            if expectedresult in (tmp_result and secure_result) and tmp_details == "" and secure_details == "" :
+                    if expectedresult in (tmp_result and secure_result) and tmp_details == "" and secure_details == "" :
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Verify Syscfg files are removed";
-                        print "EXPECTED RESULT 5: Both syscfg files should be Deleted";
-                        print "ACTUAL RESULT 5: Syscfg files are deleted successfully ";
+                        print("TEST STEP 5: Verify Syscfg files are removed");
+                        print("EXPECTED RESULT 5: Both syscfg files should be Deleted");
+                        print("ACTUAL RESULT 5: Syscfg files are deleted successfully ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #rebooting the device
                         obj.initiateReboot();
@@ -238,77 +238,77 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysobjloadmodulestatus.upper()):
                         if expectedresult in (tmp_result and secure_result) and tmp_details == tmpLocation and secure_details == secureLocation :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Verify Syscfg files present in Nvram location and secured location After Reboot";
-                            print "EXPECTED RESULT 6: Both syscfg files should be present after reboot";
-                            print "ACTUAL RESULT 6: Syscfg files are restored after reboot ";
+                            print("TEST STEP 6: Verify Syscfg files present in Nvram location and secured location After Reboot");
+                            print("EXPECTED RESULT 6: Both syscfg files should be present after reboot");
+                            print("ACTUAL RESULT 6: Syscfg files are restored after reboot ");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Verify Syscfg files present in Nvram location and secured location After Reboot";
-                            print "EXPECTED RESULT 6: Both syscfg files should be present after reboot";
-                            print "ACTUAL RESULT 6: Syscfg files are NOT restored after reboot ";
+                            print("TEST STEP 6: Verify Syscfg files present in Nvram location and secured location After Reboot");
+                            print("EXPECTED RESULT 6: Both syscfg files should be present after reboot");
+                            print("ACTUAL RESULT 6: Syscfg files are NOT restored after reboot ");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-	            else:
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Verify Syscfg files are removed";
-                        print "EXPECTED RESULT 5: Both syscfg files should be Deleted";
-                        print "ACTUAL RESULT 5: Syscfg files are NOT removed successfully ";
+                        print("TEST STEP 5: Verify Syscfg files are removed");
+                        print("EXPECTED RESULT 5: Both syscfg files should be Deleted");
+                        print("ACTUAL RESULT 5: Syscfg files are NOT removed successfully ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-   	        else:
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Verify Syscfg files present in Nvram location and secured location";
-                    print "EXPECTED RESULT 4: Both syscfg files should be present";
-                    print "ACTUAL RESULT 4: Syscfg files are present ";
+                    print("TEST STEP 4: Verify Syscfg files present in Nvram location and secured location");
+                    print("EXPECTED RESULT 4: Both syscfg files should be present");
+                    print("ACTUAL RESULT 4: Syscfg files are present ");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Flag was not set, UpdateNvram Value was not set to True"
+                print("Flag was not set, UpdateNvram Value was not set to True")
                 tdkTestObj.setResultStatus("FAILURE");
 
             #Revert The values
             if revertflag ==1:
                 tdkTestObj = obj.createTestStep('pam_SetParameterValues');
-	        revert_set_res,revert_set_details = set_SysCfgUpdateNvram (tdkTestObj,initialValue);
+                revert_set_res,revert_set_details = set_SysCfgUpdateNvram (tdkTestObj,initialValue);
                 if revert_set_res in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Revert operation Success"
-                    print "TEST STEP 10: Revert Update Nvram value to initial value";
-                    print "EXPECTED RESULT 10: Revert operation should success";
-                    print "ACTUAL RESULT 10: Revert Operation was success";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("Revert operation Success")
+                    print("TEST STEP 10: Revert Update Nvram value to initial value");
+                    print("EXPECTED RESULT 10: Revert operation should success");
+                    print("ACTUAL RESULT 10: Revert Operation was success");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 10: Revert Update Nvram value to initial value";
-                    print "EXPECTED RESULT 10: Revert operation should success";
-                    print "ACTUAL RESULT 10: Revert Operation was Failed";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 10: Revert Update Nvram value to initial value");
+                    print("EXPECTED RESULT 10: Revert operation should success");
+                    print("ACTUAL RESULT 10: Revert Operation was Failed");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the SysCfg UpdateNvram Value";
-            print "EXPECTED RESULT 2: Should get the SysCfg UpdateNvram Value";
-            print "ACTUAL RESULT 2: Failed to get initial syscfg updatenvram value";
+            print("TEST STEP 2: Get the SysCfg UpdateNvram Value");
+            print("EXPECTED RESULT 2: Should get the SysCfg UpdateNvram Value");
+            print("ACTUAL RESULT 2: Failed to get initial syscfg updatenvram value");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the SysCfg Secure location from Platform properties file";
-        print "EXPECTED RESULT 1: Should get the SysCfg Secure location from Platform properties file";
-        print "ACTUAL RESULT 1: Failed to get SysCfg Secure location";
+        print("TEST STEP 1: Get the SysCfg Secure location from Platform properties file");
+        print("EXPECTED RESULT 1: Should get the SysCfg Secure location from Platform properties file");
+        print("ACTUAL RESULT 1: Failed to get SysCfg Secure location");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

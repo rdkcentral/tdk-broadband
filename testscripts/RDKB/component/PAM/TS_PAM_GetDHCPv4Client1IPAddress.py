@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_PAM_GetDHCPv4Client1IPAddress');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -112,30 +112,25 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DHCPv4 client IP Address\n";
-        print "EXPECTED RESULT 1: Should get the DHCPv4 client IP Address\n";
-        print "ACTUAL RESULT 1: The DHCPv4 client IP address is %s" %details;
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the DHCPv4 client IP Address\n");
+        print("EXPECTED RESULT 1: Should get the DHCPv4 client IP Address\n");
+        print("ACTUAL RESULT 1: The DHCPv4 client IP address is %s" %details);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Get the result of execution
 
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DHCPv4 client IP Address\n";
-        print "EXPECTED RESULT 1: Should get the DHCPv4 client IP Address\n";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the DHCPv4 client IP Address\n");
+        print("EXPECTED RESULT 1: Should get the DHCPv4 client IP Address\n");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
 
 
     obj.unloadModule("pam");
 
 else:
-        print "Failed to load pam module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
-
+    print("Failed to load pam module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

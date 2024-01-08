@@ -69,10 +69,10 @@ Input
 2.Priority</input_parameters>
     <automation_approch>1.Create a function named MTA_agent_SetSessionId in Test Manager GUI.
 2.Configure the info of the  function under test in function and create a python script
-3.Execute the generated Script(TS_MTAAGENT_SetSessionId.py) using execution page of  Test Manager GUI 
-4.This script will in turn call mta_agent stub in TDK Agent 
+3.Execute the generated Script(TS_MTAAGENT_SetSessionId.py) using execution page of  Test Manager GUI
+4.This script will in turn call mta_agent stub in TDK Agent
 5.MTA_agent_SetSessionId function will call CCSP Base Interface Function named CcspBaseIf_SendcurrentSessionIDSignal, that inturn will call "CcspCcMbi_CurrentSessionIdSignal" along with  provided input arguments to assign session id to global value of MTA Agent.
-6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+6.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 7.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Based upon the priority ,session ID should be set
@@ -90,9 +90,9 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
   <script_tags />
 </xml>
 '''
-																		
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -105,14 +105,14 @@ obj.configureTestCase(ip,port,'TS_MTAAGENT_SetSessionId');
 
 #Get the result of connection with test component and STB
 loadModuleresult =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadModuleresult;
+print("[LIB LOAD STATUS]  :  %s" %loadModuleresult);
 
 loadStatusExpected = "SUCCESS"
 
 if loadStatusExpected not in loadModuleresult.upper():
-        print "[Failed To Load Mta Agent Stub from env TDK Path]"
-        print "[Exiting the Script]"
-        exit();
+    print("[Failed To Load Mta Agent Stub from env TDK Path]")
+    print("[Exiting the Script]")
+    exit();
 
 #Primitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('MTA_agent_SetSessionId');
@@ -130,19 +130,19 @@ tdkTestObj.executeTestCase(expectedresult);
 
 #Get the result of execution
 actualresult = tdkTestObj.getResult();
-print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
 resultDetails = tdkTestObj.getResultDetails();
 
 if expectedresult in actualresult:
-	#Set the result status of execution as success
-	tdkTestObj.setResultStatus("SUCCESS");
-	print "Successfully set the component session Id"
+    #Set the result status of execution as success
+    tdkTestObj.setResultStatus("SUCCESS");
+    print("Successfully set the component session Id")
 else:
-	#Set the result status of execution as failure
-	tdkTestObj.setResultStatus("FAILURE");
-	print "Failed to set the component session Id"	
+    #Set the result status of execution as failure
+    tdkTestObj.setResultStatus("FAILURE");
+    print("Failed to set the component session Id")
 
-print "[TEST EXECUTION RESULT] : %s" %resultDetails ;
+print("[TEST EXECUTION RESULT] : %s" %resultDetails) ;
 
 obj.unloadModule("Mta_agent");

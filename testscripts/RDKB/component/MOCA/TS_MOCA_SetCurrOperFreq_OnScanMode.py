@@ -102,7 +102,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_SetCurrOperFreq_OnScanMode');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 def Mocastub_Get_Function(tdkTestObj,parameter_name):
     tdkTestObj.addParameter("paramName",parameter_name);
@@ -132,175 +132,175 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj_set = obj.createTestStep('Mocastub_Set');
     tdkTestObj_setonly = obj.createTestStep('Mocastub_SetOnly');
 
-    print "\n********** Get the Initial value of Channel ScanMode ********** "
+    print("\n********** Get the Initial value of Channel ScanMode ********** ")
     actualresult_get,cur_scan_mode = Mocastub_Get_Function(tdkTestObj_get,"Device.MoCA.Interface.1.X_CISCO_COM_ChannelScanning");
     if expectedresult in actualresult_get:
         #Set the result status of execution
         tdkTestObj_get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the initial channel ScanMode value";
-        print "EXPECTED RESULT 1: Should Get initial channel ScanMode value";
-        print "ACTUAL RESULT 1: channel ScanMode value Get operation was successful"
+        print("TEST STEP 1: Get the initial channel ScanMode value");
+        print("EXPECTED RESULT 1: Should Get initial channel ScanMode value");
+        print("ACTUAL RESULT 1: channel ScanMode value Get operation was successful")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if cur_scan_mode == "true":
-            print "Channel ScanMode value is true (Auto mode), No need to Set the value again"
+            print("Channel ScanMode value is true (Auto mode), No need to Set the value again")
             scanMode_true = 1;
         else:
-            print "\n********** Set the Channel ScanMode to True ********** "
+            print("\n********** Set the Channel ScanMode to True ********** ")
             actualresult_set,scan_mode = Mocastub_Set_Function(tdkTestObj_set,"Device.MoCA.Interface.1.X_CISCO_COM_ChannelScanning","true","bool");
             if actualresult_set in expectedresult:
                 scanMode_true = 1;
                 revert_flag = 1;
                 #Set the result status of execution
                 tdkTestObj_set.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the channel ScanMode value to true";
-                print "EXPECTED RESULT 2: Should set channel ScanMode value to true";
-                print "ACTUAL RESULT 2: channel ScanMode value Set operation was successful"
+                print("TEST STEP 2: Set the channel ScanMode value to true");
+                print("EXPECTED RESULT 2: Should set channel ScanMode value to true");
+                print("ACTUAL RESULT 2: channel ScanMode value Set operation was successful")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 scanMode_true = 0;
                 #Set the result status of execution
                 tdkTestObj_set.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the channel ScanMode value to true";
-                print "EXPECTED RESULT 2: Should set channel ScanMode value to true";
-                print "ACTUAL RESULT 2: channel ScanMode value Set operation was Failed"
+                print("TEST STEP 2: Set the channel ScanMode value to true");
+                print("EXPECTED RESULT 2: Should set channel ScanMode value to true");
+                print("ACTUAL RESULT 2: channel ScanMode value Set operation was Failed")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         sleep(30);
 
         if scanMode_true == 1:
-            print "\n********** Get the Initial value of Current Operating Frequency and Current Frequency Mask **********"
+            print("\n********** Get the Initial value of Current Operating Frequency and Current Frequency Mask **********")
             actualresult_freq,cur_freq = Mocastub_Get_Function(tdkTestObj_get,"Device.MoCA.Interface.1.CurrentOperFreq");
             actualresult_fremask,cur_freq_mask = Mocastub_Get_Function(tdkTestObj_get,"Device.MoCA.Interface.1.FreqCurrentMaskSetting");
 
             if expectedresult in (actualresult_freq and actualresult_fremask):
                 #Set the result status of execution
                 tdkTestObj_get.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the initial value of Current Operating Frequency and Current Frequency Mask";
-                print "EXPECTED RESULT 3: Should get the initial value of Current Operating Frequency and Current Frequency Mask";
-                print "ACTUAL RESULT 3: Current Operating Frequency and Current Frequency Mask Get operation was successful"
+                print("TEST STEP 3: Get the initial value of Current Operating Frequency and Current Frequency Mask");
+                print("EXPECTED RESULT 3: Should get the initial value of Current Operating Frequency and Current Frequency Mask");
+                print("ACTUAL RESULT 3: Current Operating Frequency and Current Frequency Mask Get operation was successful")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "\nInitial value of ScanMode is: ",cur_scan_mode
-                print "Initial value of CurrentOperFreq is: ",cur_freq
-                print "Initial value of FreqCurrentMaskSetting is:",cur_freq_mask
+                print("\nInitial value of ScanMode is: ",cur_scan_mode)
+                print("Initial value of CurrentOperFreq is: ",cur_freq)
+                print("Initial value of FreqCurrentMaskSetting is:",cur_freq_mask)
 
-                print "\n********** Set the FreqCurrentMaskSetting to a different value **********"
+                print("\n********** Set the FreqCurrentMaskSetting to a different value **********")
                 if "0000000000008000" in cur_freq_mask:
                     Freq_Mask1 = "0000000000020000";
                 else:
                     Freq_Mask1 = "0000000000008000";
-                print "FreqCurrentMaskSetting value to be set is ",	Freq_Mask1
+                print("FreqCurrentMaskSetting value to be set is ",     Freq_Mask1)
 
                 actualresult_freq_set,scan_mode = Mocastub_Set_Function(tdkTestObj_setonly,"Device.MoCA.Interface.1.FreqCurrentMaskSetting",Freq_Mask1,"string");
                 if actualresult_freq_set in expectedresult:
                     #Set the result status of execution
                     tdkTestObj_setonly.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set the current frequency mask value";
-                    print "EXPECTED RESULT 4: Should set current frequency mask";
-                    print "ACTUAL RESULT 4: Frequency Mask set operation was successful"
+                    print("TEST STEP 4: Set the current frequency mask value");
+                    print("EXPECTED RESULT 4: Should set current frequency mask");
+                    print("ACTUAL RESULT 4: Frequency Mask set operation was successful")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     sleep(30);
 
-                    print "\n********** Check whether the CurrentOperFreq is changed or not **********"
+                    print("\n********** Check whether the CurrentOperFreq is changed or not **********")
                     actualresult_freq,new_freq= Mocastub_Get_Function(tdkTestObj_get,"Device.MoCA.Interface.1.CurrentOperFreq");
-                    print "New Freq value is ",new_freq
+                    print("New Freq value is ",new_freq)
 
                     if expectedresult in actualresult_freq and int(new_freq) == int(cur_freq):
                         #Set the result status of execution
                         tdkTestObj_get.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Get the current operating frequency and check with previous frequency";
-                        print "EXPECTED RESULT 5: Current operating frequency should NOT change";
-                        print "ACTUAL RESULT 5: The current operating frequency and new operating frequency are :%s and %s" %(cur_freq,new_freq);
+                        print("TEST STEP 5: Get the current operating frequency and check with previous frequency");
+                        print("EXPECTED RESULT 5: Current operating frequency should NOT change");
+                        print("ACTUAL RESULT 5: The current operating frequency and new operating frequency are :%s and %s" %(cur_freq,new_freq));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj_get.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Get the current operating frequency and check with previous frequency";
-                        print "EXPECTED RESULT 5: Current operating frequency should NOT change";
-                        print "ACTUAL RESULT 5: The current operating frequency and new operating frequency were NOT same "
+                        print("TEST STEP 5: Get the current operating frequency and check with previous frequency");
+                        print("EXPECTED RESULT 5: Current operating frequency should NOT change");
+                        print("ACTUAL RESULT 5: The current operating frequency and new operating frequency were NOT same ")
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
 
-                    print "\n********** Revert the Frequency Mask value to its original value ********** "
+                    print("\n********** Revert the Frequency Mask value to its original value ********** ")
                     actualresult_freq_set,scan_mode = Mocastub_Set_Function(tdkTestObj_set,"Device.MoCA.Interface.1.FreqCurrentMaskSetting",cur_freq_mask,"string");
                     if actualresult_freq_set in expectedresult:
                         #Set the result status of execution
                         tdkTestObj_set.setResultStatus("SUCCESS");
-                        print "TEST STEP 6: Set the initial frequency mask";
-                        print "EXPECTED RESULT 6: Should set initial frequency mask";
-                        print "ACTUAL RESULT 6: Frequency Mask set operation was successful"
+                        print("TEST STEP 6: Set the initial frequency mask");
+                        print("EXPECTED RESULT 6: Should set initial frequency mask");
+                        print("ACTUAL RESULT 6: Frequency Mask set operation was successful")
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj_set.setResultStatus("FAILURE");
-                        print "TEST STEP 6: Set the initial frequency mask";
-                        print "EXPECTED RESULT 6: Should set initial frequency mask";
-                        print "ACTUAL RESULT 6: Frequency Mask set operation was Failed"
+                        print("TEST STEP 6: Set the initial frequency mask");
+                        print("EXPECTED RESULT 6: Should set initial frequency mask");
+                        print("ACTUAL RESULT 6: Frequency Mask set operation was Failed")
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj_setonly.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set the current frequency mask value";
-                    print "EXPECTED RESULT 4: Should set current frequency mask";
-                    print "ACTUAL RESULT 4: Frequency Mask set operation was failed"
+                    print("TEST STEP 4: Set the current frequency mask value");
+                    print("EXPECTED RESULT 4: Should set current frequency mask");
+                    print("ACTUAL RESULT 4: Frequency Mask set operation was failed")
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj_get.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the initial value of Current Operating Frequency and Current Frequency Mask";
-                print "EXPECTED RESULT 3: Should get the initial value of Current Operating Frequency and Current Frequency Mask";
-                print "ACTUAL RESULT 3: Current Operating Frequency and Current Frequency Mask Get operation was Failed"
+                print("TEST STEP 3: Get the initial value of Current Operating Frequency and Current Frequency Mask");
+                print("EXPECTED RESULT 3: Should get the initial value of Current Operating Frequency and Current Frequency Mask");
+                print("ACTUAL RESULT 3: Current Operating Frequency and Current Frequency Mask Get operation was Failed")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
 
-            print "\n********** Revert the channel selection mode to initial value **********"
+            print("\n********** Revert the channel selection mode to initial value **********")
             if revert_flag == 1:
                 actualresult,scan_mode = Mocastub_Set_Function(tdkTestObj_set,"Device.MoCA.Interface.1.X_CISCO_COM_ChannelScanning","true","bool");
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj_set.setResultStatus("SUCCESS");
-                    print "TEST STEP 7: Set the channel selection mode";
-                    print "EXPECTED RESULT 7: Should set channel selection mode as default";
-                    print "ACTUAL RESULT 7: channel selection mode set operation was successful";
+                    print("TEST STEP 7: Set the channel selection mode");
+                    print("EXPECTED RESULT 7: Should set channel selection mode as default");
+                    print("ACTUAL RESULT 7: channel selection mode set operation was successful");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj_set.setResultStatus("FAILURE");
-                    print "TEST STEP 7: Set the channel selection mode";
-                    print "EXPECTED RESULT 7: Should set channel selection mode as default";
-                    print "ACTUAL RESULT 7: channel selection mode set operation was failed";
+                    print("TEST STEP 7: Set the channel selection mode");
+                    print("EXPECTED RESULT 7: Should set channel selection mode as default");
+                    print("ACTUAL RESULT 7: channel selection mode set operation was failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "ChannelScanning value not changed, no need for revert operation"
+                print("ChannelScanning value not changed, no need for revert operation")
         else:
             #Set the result status of execution
             tdkTestObj_set.setResultStatus("FAILURE");
-            print "Not able to set Channel ScanMode to true"
+            print("Not able to set Channel ScanMode to true")
     else:
         #Set the result status of execution
         tdkTestObj_get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the initial channel ScanMode value";
-        print "EXPECTED RESULT 1: Should Get initial channel ScanMode value";
-        print "ACTUAL RESULT 1: channel ScanMode value Get operation was Failed"
+        print("TEST STEP 1: Get the initial channel ScanMode value");
+        print("EXPECTED RESULT 1: Should Get initial channel ScanMode value");
+        print("ACTUAL RESULT 1: channel ScanMode value Get operation was Failed")
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("moca");
 else:
-    print "Failed to load moca module";
+    print("Failed to load moca module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

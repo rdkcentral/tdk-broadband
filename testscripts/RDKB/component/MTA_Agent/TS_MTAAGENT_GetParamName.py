@@ -39,8 +39,8 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_MTAAGENT_5</test_case_id>
-    <test_objective>To Validate 
-Get Param Names API for 
+    <test_objective>To Validate
+Get Param Names API for
 MTA Agent</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -55,12 +55,12 @@ Input
 2.ParamList(Device.X_CISCO_COM_MTA.)</input_parameters>
     <automation_approch>1.Create a function named MTA_agent_GetParameterNames in Test Manager GUI.
 2.Configure the info of the  function under test in function and create a python script
-3.Execute the generated Script(TS_MTAAGENT_GetParamName.py) using execution page of  Test Manager GUI 
-4.This script will in turn call TR069Agent stub in TDK Agent 
-5.MTA_agent_GetParameterNames function will call CCSP Base Interface Function named "CcspBaseIf_getParameterNames" , that inturn will call TR069PA Agent Library Function "CcspManagementServer_GetParameterNames" 
+3.Execute the generated Script(TS_MTAAGENT_GetParamName.py) using execution page of  Test Manager GUI
+4.This script will in turn call TR069Agent stub in TDK Agent
+5.MTA_agent_GetParameterNames function will call CCSP Base Interface Function named "CcspBaseIf_getParameterNames" , that inturn will call TR069PA Agent Library Function "CcspManagementServer_GetParameterNames"
 6.Perform step 5 by having Path name as that of the whole Parameter List.[If we want to get parameter name for (Device.X_CISCO_COM_MTA.LineTable.1.VQM.Calls.1.CallDuration ) then cross check whether it has the same characteristics ,by cross verifying with entire list within  Device.X_CISCO_COM_MTA. set the next level as 0 to get the entire list)
 7.Validate by cross verifying both the output.
-8.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log 
+8.Responses(printf) from TDK Component and mta agentstub would be logged in Agent Console log
 9.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Param name for Requested Path should be available in Agent Console Log.Validate by cross checking its attributes with the entire parameter list in the same path
@@ -79,8 +79,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-						# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+                                                # use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("Mta_agent","RDKB");
@@ -93,17 +93,17 @@ obj.configureTestCase(ip,port,'TS_MTAAGENT_GetParamName');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
 
-    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterNames');  
+    tdkTestObj = obj.createTestStep('MTA_agent_GetParameterNames');
     tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_MTA.LineTable.1.VQM.CallsNumberOfEntries");
     tdkTestObj.addParameter("ParamList","Device.X_CISCO_COM_MTA.");
 
-		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -111,26 +111,22 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	
-    else:   
-        tdkTestObj.setResultStatus("FAILURE"); 
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
 
     obj.unloadModule("Mta_agent");
-   		 
-else:   
-    print "Failed to load MTA module";
-    obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-				
-				
 
-					
+else:
+    print("Failed to load MTA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

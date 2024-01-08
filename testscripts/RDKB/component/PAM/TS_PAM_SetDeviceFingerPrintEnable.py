@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_PAM_SetDeviceFingerPrintEnable');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 
 if "SUCCESS" in loadmodulestatus.upper():
@@ -114,10 +114,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and "true" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of DeviceFingerPrint Enable as true";
-        print "ACTUAL RESULT 1: DeviceFingerPrint Enable:%s" %details;
+        print("TEST STEP 1: Get the value of DeviceFingerPrint Enable as true");
+        print("ACTUAL RESULT 1: DeviceFingerPrint Enable:%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         tdkTestObj = obj.createTestStep('pam_SetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable");
         tdkTestObj.addParameter("ParamValue","false");
@@ -129,10 +129,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the value for DeviceFingerPrint Enable";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value for DeviceFingerPrint Enable");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             time.sleep(1000);
             tdkTestObj = obj.createTestStep('pam_GetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable");
@@ -146,35 +146,34 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and "true" in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Should get the value of DeviceFingerPrint Enable as true";
-                print "ACTUAL RESULT 3: DeviceFingerPrint Enable:%s" %details;
+                print("TEST STEP 3: Should get the value of DeviceFingerPrint Enable as true");
+                print("ACTUAL RESULT 3: DeviceFingerPrint Enable:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Should get the value of DeviceFingerPrint Enable as true";
-                print "ACTUAL RESULT 3: DeviceFingerPrint Enable:%s" %details;
+                print("TEST STEP 3: Should get the value of DeviceFingerPrint Enable as true");
+                print("ACTUAL RESULT 3: DeviceFingerPrint Enable:%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the value for DeviceFingerPrint Enable";
-            print "ACTUAL RESULT 2:%s" %details;
+            print("TEST STEP 2: Set the value for DeviceFingerPrint Enable");
+            print("ACTUAL RESULT 2:%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the value of DeviceFingerPrint Enable as true";
-        print "ACTUAL RESULT 1: Failed to get DeviceFingerPrint Enable as true";
+        print("TEST STEP 1: Get the value of DeviceFingerPrint Enable as true");
+        print("ACTUAL RESULT 1: Failed to get DeviceFingerPrint Enable as true");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("pam");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

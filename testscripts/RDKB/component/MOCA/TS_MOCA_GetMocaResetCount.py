@@ -72,8 +72,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 
 #Test component to be tested
@@ -87,7 +87,7 @@ obj.configureTestCase(ip,port,'TS_MOCA_GetMocaResetCount');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -104,11 +104,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the MocaResetCount";
-        print "EXPECTED RESULT 1: Should get the MocaResetCount";
-        print "ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount;
+        print("TEST STEP 1: Get the MocaResetCount");
+        print("EXPECTED RESULT 1: Should get the MocaResetCount");
+        print("ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('Mocastub_SetOnly');
         tdkTestObj.addParameter("ParamName","Device.MoCA.Interface.1.X_CISCO_COM_Reset");
         tdkTestObj.addParameter("ParamValue","true");
@@ -122,11 +122,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set reset to true";
-            print "EXPECTED RESULT 2: Should set reset to true";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set reset to true");
+            print("EXPECTED RESULT 2: Should set reset to true");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('Mocastub_Get');
             tdkTestObj.addParameter("paramName","Device.MoCA.MocaResetCount");
             sleep(60);
@@ -134,44 +134,41 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             NewResetCount = tdkTestObj.getResultDetails();
-            Resetcount = int(LastResetCount) +1;	    
+            Resetcount = int(LastResetCount) +1;
             if expectedresult in actualresult and str(Resetcount) in NewResetCount:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the MocaResetCount";
-                print "EXPECTED RESULT 3:Should get the MocaResetCount as one incremented";
-                print "ACTUAL RESULT 3: %s" %NewResetCount;
+                print("TEST STEP 3: Get the MocaResetCount");
+                print("EXPECTED RESULT 3:Should get the MocaResetCount as one incremented");
+                print("ACTUAL RESULT 3: %s" %NewResetCount);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-		#Set the result status of execution
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the MocaResetCount";
-                print "EXPECTED RESULT 3:Should get the MocaResetCount as one incremented";
-                print "ACTUAL RESULT 3: %s" %NewResetCount;
+                print("TEST STEP 3: Get the MocaResetCount");
+                print("EXPECTED RESULT 3:Should get the MocaResetCount as one incremented");
+                print("ACTUAL RESULT 3: %s" %NewResetCount);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    #Set the result status of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set reset to true";
-            print "EXPECTED RESULT 2: Should set reset to true";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set reset to true");
+            print("EXPECTED RESULT 2: Should set reset to true");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the MocaResetCount";
-        print "EXPECTED RESULT 1: Should get the MocaResetCount";
-        print "ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount;
+        print("TEST STEP 1: Get the MocaResetCount");
+        print("EXPECTED RESULT 1: Should get the MocaResetCount");
+        print("ACTUAL RESULT 1: MocaResetCount is:%s" %LastResetCount);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("moca");
 else:
-        print "Failed to load moca module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
+    print("Failed to load moca module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -94,7 +94,7 @@ obj.configureTestCase(ip,port,'TS_PAM_CheckRabidEnableStatus_Persistence_OnReboo
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -110,15 +110,15 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the RabidFramework Enable status";
-        print "ACTUAL RESULT 1:RabidFramework Enable status is %s" %orgValue;
+        print("TEST STEP 1: Get the RabidFramework Enable status");
+        print("ACTUAL RESULT 1:RabidFramework Enable status is %s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if orgValue == "true":
-            print "Disable RabidFramework status"
+            print("Disable RabidFramework status")
             setValue = "false"
         else:
-            print "Enable RabidFramework status"
+            print("Enable RabidFramework status")
             setValue = "true"
 
         tdkTestObj = obj.createTestStep('pam_Setparams');
@@ -133,10 +133,10 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: RabidFramework status toggled using set";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: RabidFramework status toggled using set");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #rebooting the device
             obj.initiateReboot();
             time.sleep(300)
@@ -151,17 +151,17 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and setValue in enabledetails:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Check if RabidFramework status persists on reboot";
-                print "ACTUAL RESULT 3:RabidFramework status persists on reboot";
+                print("TEST STEP 3:Check if RabidFramework status persists on reboot");
+                print("ACTUAL RESULT 3:RabidFramework status persists on reboot");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Check if RabidFramework status persists on reboot";
-                print "ACTUAL RESULT 3:RabidFramework status does not persist on reboot";
+                print("TEST STEP 3:Check if RabidFramework status persists on reboot");
+                print("ACTUAL RESULT 3:RabidFramework status does not persist on reboot");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj = obj.createTestStep('pam_Setparams');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RabidFramework.Enable");
             tdkTestObj.addParameter("ParamValue",orgValue);
@@ -173,36 +173,35 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP :Revert RabidFramework status";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP :Revert RabidFramework status");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP :Revert RabidFramework status";
-                print "ACTUAL RESULT : %s" %details;
+                print("TEST STEP :Revert RabidFramework status");
+                print("ACTUAL RESULT : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Toggle RabidFramework status";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2:Toggle RabidFramework status");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the RabidFramework Enable status";
-        print "ACTUAL RESULT 1:Failed to get RabidFramework Enable status";
+        print("TEST STEP 1: Get the RabidFramework Enable status");
+        print("ACTUAL RESULT 1:Failed to get RabidFramework Enable status");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

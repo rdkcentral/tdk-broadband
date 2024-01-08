@@ -80,7 +80,7 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 
 #Test component to be tested
@@ -92,86 +92,86 @@ ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_MTAHAL_InitDB')
 
-#Get the result of connection with test component and DUT 
+#Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult()
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus 
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
 
     #Script to load the configuration file of the component
-    tdkTestObj = obj.createTestStep("MTAHAL_InitDB")    
+    tdkTestObj = obj.createTestStep("MTAHAL_InitDB")
     expectedresult="SUCCESS"
     tdkTestObj.executeTestCase(expectedresult)
-    actualresult = tdkTestObj.getResult()    
+    actualresult = tdkTestObj.getResult()
     resultDetails = " "
     resultDetails = tdkTestObj.getResultDetails()
 
     if expectedresult in actualresult and resultDetails != " ":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print "TEST STEP 1: Initializing the DB of MTA"
-        print "EXPECTED RESULT 1: Should initialize the MTA DB successfully"
-        print "ACTUAL RESULT 1:  %s" %resultDetails;
+        print("TEST STEP 1: Initializing the DB of MTA")
+        print("EXPECTED RESULT 1: Should initialize the MTA DB successfully")
+        print("ACTUAL RESULT 1:  %s" %resultDetails);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #Script to load the configuration file of the component
         tdkTestObj = obj.createTestStep("MTAHAL_GetParamUlongValue");
         tdkTestObj.addParameter("paramName","MTAResetCount");
         expectedresult="SUCCESS"
         tdkTestObj.executeTestCase(expectedresult)
-        actualresult = tdkTestObj.getResult()    
+        actualresult = tdkTestObj.getResult()
         resultDetails = tdkTestObj.getResultDetails()
-        
+
         if expectedresult in actualresult and resultDetails == "0":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the MtaResetCount";
-            print "EXPECTED RESULT 2: Should get the MtaResetCount successfully";
-            print "ACTUAL RESULT 2: The MtaResetCount is %s" %resultDetails;
+            print("TEST STEP 2: Get the MtaResetCount");
+            print("EXPECTED RESULT 2: Should get the MtaResetCount successfully");
+            print("ACTUAL RESULT 2: The MtaResetCount is %s" %resultDetails);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Script to load the configuration file of the component
             tdkTestObj = obj.createTestStep("MTAHAL_GetParamUlongValue");
             tdkTestObj.addParameter("paramName","LineResetCount");
             expectedresult="SUCCESS"
             tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()    
+            actualresult = tdkTestObj.getResult()
             resultDetails = tdkTestObj.getResultDetails()
-            
+
             if expectedresult in actualresult and resultDetails == "0":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Get the LineResetCount";
-                print "EXPECTED RESULT 2: Should get the LineResetCount successfully";
-                print "ACTUAL RESULT 2: The LineResetCount is %s" %resultDetails;
+                print("TEST STEP 2: Get the LineResetCount");
+                print("EXPECTED RESULT 2: Should get the LineResetCount successfully");
+                print("ACTUAL RESULT 2: The LineResetCount is %s" %resultDetails);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Get the LineResetCount";
-                print "EXPECTED RESULT 2: Should get the LineResetCount successfully";
-                print "ACTUAL RESULT 2: Failed to get the LineResetCount, Details : %s" %resultDetails;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 2: Get the LineResetCount");
+                print("EXPECTED RESULT 2: Should get the LineResetCount successfully");
+                print("ACTUAL RESULT 2: Failed to get the LineResetCount, Details : %s" %resultDetails);
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the MtaResetCount";
-            print "EXPECTED RESULT 2: Should get the MtaResetCount successfully";
-            print "ACTUAL RESULT 2: Failed to get the MtaResetCount, Details : %s" %resultDetails;
-            print "[TEST EXECUTION RESULT] : FAILURE";
- 
+            print("TEST STEP 2: Get the MtaResetCount");
+            print("EXPECTED RESULT 2: Should get the MtaResetCount successfully");
+            print("ACTUAL RESULT 2: Failed to get the MtaResetCount, Details : %s" %resultDetails);
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print "TEST STEP 1: Initializing the DB of MTA"
-        print "EXPECTED RESULT 1: Should initialize the MTA DB successfully"
-        print "ACTUAL RESULT 1: Failed to initialise the MTA DB, Details: %s" %resultDetails;
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("TEST STEP 1: Initializing the DB of MTA")
+        print("EXPECTED RESULT 1: Should initialize the MTA DB successfully")
+        print("ACTUAL RESULT 1: Failed to initialise the MTA DB, Details: %s" %resultDetails);
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("mtahal")
 else:
-    print "Failed to load the module"
+    print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed"
+    print("Module loading failed")

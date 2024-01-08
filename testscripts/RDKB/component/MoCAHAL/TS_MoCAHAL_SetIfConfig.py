@@ -97,7 +97,7 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_SetIfConfig');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,129 +112,129 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the MoCA Configuration Parameters"
-        print "EXPECTED RESULT 1: Should get the MoCA Configuration Parameters";
-        print "ACTUAL RESULT 1: The MoCA Configuration is %s" %conf;
+        print("TEST STEP 1: Get the MoCA Configuration Parameters")
+        print("EXPECTED RESULT 1: Should get the MoCA Configuration Parameters");
+        print("ACTUAL RESULT 1: The MoCA Configuration is %s" %conf);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#store the configuration values
-	privacyEnable= conf.split("PrivacyEnabledSetting=")[1].split(",")[0]
+        #store the configuration values
+        privacyEnable= conf.split("PrivacyEnabledSetting=")[1].split(",")[0]
         keyPassphrase = conf.split("KeyPassphrase=")[1].split(",")[0]
         autoPowerRate = conf.split("AutoPowerControlPhyRate=")[1].split(",")[0]
         autoPowerEnable = conf.split("AutoPowerControlEnable=")[1].split(",")[0]
 
-	#Values to be changed on set call
-	privacyEnable_set = 1 - int(privacyEnable)
+        #Values to be changed on set call
+        privacyEnable_set = 1 - int(privacyEnable)
         keyPassphrase_set = "0987654321098"
         autoPowerRate_set = int(autoPowerRate)+10
-	autoPowerEnable_set = 1 - int(autoPowerEnable)
-	print "PrivacyEnable_set is %s"%privacyEnable_set
-	print "KeyPassPhrase_set is %s"%keyPassphrase_set
-	print "AutoPowerRate_set is %s"%autoPowerRate_set
-	print "AutoPowerEnable_set is %s"%autoPowerEnable_set
+        autoPowerEnable_set = 1 - int(autoPowerEnable)
+        print("PrivacyEnable_set is %s"%privacyEnable_set)
+        print("KeyPassPhrase_set is %s"%keyPassphrase_set)
+        print("AutoPowerRate_set is %s"%autoPowerRate_set)
+        print("AutoPowerEnable_set is %s"%autoPowerEnable_set)
 
-	#Set call with updated values
-	tdkTestObj = obj.createTestStep("MoCAHAL_SetIfConfig");
-	tdkTestObj.addParameter("privacyEnable",int(privacyEnable_set));
-	tdkTestObj.addParameter("keyPassphrase",keyPassphrase_set);
-	tdkTestObj.addParameter("autoPowerRate",int(autoPowerRate_set));
-	tdkTestObj.addParameter("autoPowerEnable",int(autoPowerEnable_set));
-	tdkTestObj.addParameter("ifIndex",0);
-	expectedresult="SUCCESS";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
+        #Set call with updated values
+        tdkTestObj = obj.createTestStep("MoCAHAL_SetIfConfig");
+        tdkTestObj.addParameter("privacyEnable",int(privacyEnable_set));
+        tdkTestObj.addParameter("keyPassphrase",keyPassphrase_set);
+        tdkTestObj.addParameter("autoPowerRate",int(autoPowerRate_set));
+        tdkTestObj.addParameter("autoPowerEnable",int(autoPowerEnable_set));
+        tdkTestObj.addParameter("ifIndex",0);
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: Set the MoCA Configuration Parameters"
-	    print "EXPECTED RESULT 2: Should set the MoCA Configuration Parameters";
-            print "ACTUAL RESULT 2: The MoCA set coniguration was success %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the MoCA Configuration Parameters")
+            print("EXPECTED RESULT 2: Should set the MoCA Configuration Parameters");
+            print("ACTUAL RESULT 2: The MoCA set coniguration was success %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Verify the set using get function
-	    tdkTestObj = obj.createTestStep("MoCAHAL_GetIfConfig");
-	    tdkTestObj.addParameter("ifIndex",0);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    conf_afterset = tdkTestObj.getResultDetails();
+            tdkTestObj = obj.createTestStep("MoCAHAL_GetIfConfig");
+            tdkTestObj.addParameter("ifIndex",0);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            conf_afterset = tdkTestObj.getResultDetails();
 
-	    privacyEnable_afterset = conf_afterset.split("PrivacyEnabledSetting=")[1].split(",")[0]
-	    autoPowerRate_afterset = conf_afterset.split("AutoPowerControlPhyRate=")[1].split(",")[0]
-	    autoPowerEnable_afterset = conf_afterset.split("AutoPowerControlEnable=")[1].split(",")[0]
+            privacyEnable_afterset = conf_afterset.split("PrivacyEnabledSetting=")[1].split(",")[0]
+            autoPowerRate_afterset = conf_afterset.split("AutoPowerControlPhyRate=")[1].split(",")[0]
+            autoPowerEnable_afterset = conf_afterset.split("AutoPowerControlEnable=")[1].split(",")[0]
 
             #keyPassPharse can be set with any string value of length within 16, But keyPassphrase in get function will always return encrypted value (888888888), so keypassphrase is not being validated in get method
-	    if expectedresult in actualresult and int(privacyEnable_afterset) == int(privacyEnable_set) and int(autoPowerRate_afterset) == int(autoPowerRate_set) and int(autoPowerEnable_afterset) == int(autoPowerEnable_set):
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 3: Compare the configuration parameters with set values"
-		print "EXPECTED RESULT 3: Configuration parameters should match with set vlues";
-		print "ACTUAL RESULT 3: Configurations are matching %s" %conf_afterset;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
-		tdkTestObj.setResultStatus("FAILURE");
-		print "TEST STEP 3: Compare the configuration parameters with set values"
-		print "EXPECTED RESULT 3: Configuration parameters should match with set vlues";
-		print "ACTUAL RESULT 3: Configurations are NOT matching %s" %conf_afterset;
-		#Get the result of execution
-		print "[TEST EXECUTION RESULT] : FAILURE";
-
-	    #Revert the values
-	    tdkTestObj = obj.createTestStep("MoCAHAL_SetIfConfig");
-	    tdkTestObj.addParameter("privacyEnable",int(privacyEnable));
-	    tdkTestObj.addParameter("keyPassphrase",keyPassphrase);
-	    tdkTestObj.addParameter("autoPowerRate",int(autoPowerRate));
-	    tdkTestObj.addParameter("autoPowerEnable",int(autoPowerEnable));
-	    tdkTestObj.addParameter("ifIndex",0);
-	    expectedresult="SUCCESS";
-	    tdkTestObj.executeTestCase(expectedresult);
-	    actualresult = tdkTestObj.getResult();
-	    details = tdkTestObj.getResultDetails();
-
-	    if expectedresult in actualresult:
+            if expectedresult in actualresult and int(privacyEnable_afterset) == int(privacyEnable_set) and int(autoPowerRate_afterset) == int(autoPowerRate_set) and int(autoPowerEnable_afterset) == int(autoPowerEnable_set):
                 #Set the result status of execution
-	        tdkTestObj.setResultStatus("SUCCESS");
-	        print "TEST STEP 4: Set the MoCA Configuration Parameters"
-	        print "EXPECTED RESULT 4: Should set the MoCA Configuration Parameters";
-                print "ACTUAL RESULT 4: The MoCA set configuration was success for Revert operation %s" %details;
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Compare the configuration parameters with set values")
+                print("EXPECTED RESULT 3: Configuration parameters should match with set vlues");
+                print("ACTUAL RESULT 3: Configurations are matching %s" %conf_afterset);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Compare the configuration parameters with set values")
+                print("EXPECTED RESULT 3: Configuration parameters should match with set vlues");
+                print("ACTUAL RESULT 3: Configurations are NOT matching %s" %conf_afterset);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+            #Revert the values
+            tdkTestObj = obj.createTestStep("MoCAHAL_SetIfConfig");
+            tdkTestObj.addParameter("privacyEnable",int(privacyEnable));
+            tdkTestObj.addParameter("keyPassphrase",keyPassphrase);
+            tdkTestObj.addParameter("autoPowerRate",int(autoPowerRate));
+            tdkTestObj.addParameter("autoPowerEnable",int(autoPowerEnable));
+            tdkTestObj.addParameter("ifIndex",0);
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 4: Set the MoCA Configuration Parameters")
+                print("EXPECTED RESULT 4: Should set the MoCA Configuration Parameters");
+                print("ACTUAL RESULT 4: The MoCA set configuration was success for Revert operation %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
             else:
-	        #Set the result status of execution
-	        tdkTestObj.setResultStatus("FAILURE");
-	        print "TEST STEP 4: Set the MoCA Configuration Parameters"
-	        print "EXPECTED RESULT 4: Should set the MoCA Configuration Parameters";
-	        print "ACTUAL RESULT 4: Failed to revert to original value %s" %details;
-	        #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : FAILURE";
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 4: Set the MoCA Configuration Parameters")
+                print("EXPECTED RESULT 4: Should set the MoCA Configuration Parameters");
+                print("ACTUAL RESULT 4: Failed to revert to original value %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the MoCA Configuration Parameters"
-            print "EXPECTED RESULT 2: Should set the MoCA Configuration Parameters";
-            print "ACTUAL RESULT 2: Failed to MoCA set coniguration Values %s" %details;
+            print("TEST STEP 2: Set the MoCA Configuration Parameters")
+            print("EXPECTED RESULT 2: Should set the MoCA Configuration Parameters");
+            print("ACTUAL RESULT 2: Failed to MoCA set coniguration Values %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the MoCA Configuration Parameters"
-        print "EXPECTED RESULT 1: Should get the MoCA Configuration Parameters";
-        print "ACTUAL RESULT 1: %s" %conf;
+        print("TEST STEP 1: Get the MoCA Configuration Parameters")
+        print("EXPECTED RESULT 1: Should get the MoCA Configuration Parameters");
+        print("ACTUAL RESULT 1: %s" %conf);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed"
+    print("Module loading failed")

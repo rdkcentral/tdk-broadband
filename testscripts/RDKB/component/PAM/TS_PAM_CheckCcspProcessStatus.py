@@ -96,7 +96,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_PAM_CheckCcspProcessStatus');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -104,14 +104,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     imagename = obj.getDeviceBoxType()
     pattern = "Emulator"
     if pattern in imagename:
-	print "Box Type is Emulator"
-	prefix = "simu"
+        print("Box Type is Emulator")
+        prefix = "simu"
     else:
-	prefix = "eRT"
+        prefix = "eRT"
 
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     CcspProcess= "sh %s/tdk_utility.sh parseConfigFile CCSP_PROCESS" %TDK_PATH;
-    print CcspProcess;
+    print(CcspProcess);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", CcspProcess);
     tdkTestObj.executeTestCase(expectedresult);
@@ -120,46 +120,46 @@ if "SUCCESS" in loadmodulestatus.upper():
     CcspProcessList = CcspProcessList.replace("\\n", "");
     if "Invalid Argument passed" not in CcspProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of ccsp processes ";
-        print "EXPECTED RESULT 1: Should get the list of ccsp processes";
-        print "ACTUAL RESULT 1: %s" %CcspProcessList;
+        print("TEST STEP 1: Get the list of ccsp processes ");
+        print("EXPECTED RESULT 1: Should get the list of ccsp processes");
+        print("ACTUAL RESULT 1: %s" %CcspProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
-	CcspProcessList = CcspProcessList.split(",");
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        CcspProcessList = CcspProcessList.split(",");
         for item in CcspProcessList:
-             #getting process status Ccsp process
-             tdkTestObj = obj.createTestStep('ExecuteCmd');
-             tdkTestObj.addParameter("command", "dmcli %s getvalues Device.DeviceInfo.ProcessStatus.Process. | grep -A 10 $(pidof %s) | grep -A 1 State | cut -f3 -d ':' | tr '\r\n' ' '"%(prefix,item));
-             expectedresult="SUCCESS";
-             #Execute the test case in DUT
-             tdkTestObj.executeTestCase("expectedresult");
-             actualresult = tdkTestObj.getResult();
-             details = tdkTestObj.getResultDetails().strip();
-             if expectedresult in actualresult and ("Sleeping" in details or "Running" in details):
-	         pid = details;
-                 #Set the result status of execution
-                 print "TEST STEP : Get status of %s"%item
-                 print "EXPECTED RESULT : Should get status of %s process"%item
-                 print "ACTUAL RESULT : status is %s" %details;
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 #Get the result of execution
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "TEST STEP : Get status of %s"%item
-                 print "EXPECTED RESULT : Should get status of %s process"%item
-                 print "ACTUAL RESULT : status is %s" %details;
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-                 break;
+            #getting process status Ccsp process
+            tdkTestObj = obj.createTestStep('ExecuteCmd');
+            tdkTestObj.addParameter("command", "dmcli %s getvalues Device.DeviceInfo.ProcessStatus.Process. | grep -A 10 $(pidof %s) | grep -A 1 State | cut -f3 -d ':' | tr '\r\n' ' '"%(prefix,item));
+            expectedresult="SUCCESS";
+            #Execute the test case in DUT
+            tdkTestObj.executeTestCase("expectedresult");
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip();
+            if expectedresult in actualresult and ("Sleeping" in details or "Running" in details):
+                pid = details;
+                #Set the result status of execution
+                print("TEST STEP : Get status of %s"%item)
+                print("EXPECTED RESULT : Should get status of %s process"%item)
+                print("ACTUAL RESULT : status is %s" %details);
+                tdkTestObj.setResultStatus("SUCCESS");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP : Get status of %s"%item)
+                print("EXPECTED RESULT : Should get status of %s process"%item)
+                print("ACTUAL RESULT : status is %s" %details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                break;
     else:
-	tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of ccsp processes ";
-        print "EXPECTED RESULT 1: Should get the list of ccsp processes";
-        print "ACTUAL RESULT 1: %s" %CcspProcessList;
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the list of ccsp processes ");
+        print("EXPECTED RESULT 1: Should get the list of ccsp processes");
+        print("ACTUAL RESULT 1: %s" %CcspProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

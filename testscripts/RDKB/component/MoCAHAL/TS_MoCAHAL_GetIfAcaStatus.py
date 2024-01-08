@@ -94,14 +94,14 @@ obj.configureTestCase(ip,port,'TS_MoCAHAL_GetIfAcaStatus');
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %result;
+print("[LIB LOAD STATUS]  :  %s" %result);
 
 #Prmitive test case which associated to this Script
 tdkTestObj = obj.createTestStep('MoCAHAL_GetIfAcaStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -116,10 +116,10 @@ if "SUCCESS" in loadmodulestatus.upper():
     info = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and info:
         #Set the result status of execution
-        print "TEST STEP 1: Get MoCA interface ACA status using moca_getIfAcaStatus()"
-        print "EXPECTED RESULT 1: Should Get MoCA interface ACA status"
+        print("TEST STEP 1: Get MoCA interface ACA status using moca_getIfAcaStatus()")
+        print("EXPECTED RESULT 1: Should Get MoCA interface ACA status")
         info = info.replace('\\n', '\n')
-        print "ACTUAL RESULT 1:  %s" %info;
+        print("ACTUAL RESULT 1:  %s" %info);
 
         ACAStatus = info.split("ACA Status=")[1].split(",")[0]
 
@@ -138,24 +138,24 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if status_str != "Invalid status":
             #Get the result of execution
-            print "ACA Status is ", status_str;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACA Status is ", status_str);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
         else:
-            print "Received invalid ACA status as ", ACAStatus;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("Received invalid ACA status as ", ACAStatus);
+            print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get MoCA interface ACA status using moca_getIfAcaStatus()"
-        print "EXPECTED RESULT 1: Should Get MoCA interface ACA status"
-        print "ACTUAL RESULT 1: %s" %info;
+        print("TEST STEP 1: Get MoCA interface ACA status using moca_getIfAcaStatus()")
+        print("EXPECTED RESULT 1: Should Get MoCA interface ACA status")
+        print("ACTUAL RESULT 1: %s" %info);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("mocahal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");
