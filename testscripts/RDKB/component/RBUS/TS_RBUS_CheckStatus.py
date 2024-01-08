@@ -101,8 +101,8 @@ tr181obj.configureTestCase(ip,port,'TS_RBUS_CheckStatus');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =tr181obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,16 +112,16 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "Detail is ",details
+    print("Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Retrieve the RBUS status via HAL api";
-        print "EXPECTED RESULT 1: Should retrieve the RBUS status via HAL api";
+        print("TEST STEP 1: Retrieve the RBUS status via HAL api");
+        print("EXPECTED RESULT 1: Should retrieve the RBUS status via HAL api");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "RBUS status is %s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("RBUS status is %s" %details);
 
         if int(details) == 0 :
             rbus_status = "RBUS_ENABLED"
@@ -137,40 +137,40 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
 
         if expectedresult in def_result:
             tdkTestObj_Tr181_Get.executeTestCase("SUCCESS");
-            print "TEST STEP 2: Get the Enable Status of RBUS"
-            print "EXPECTED RESULT 2: Should Get the Enable Status of RBUS"
-            print "ACTUAL RESULT 2: RBUS Enable Status retrieved successfully"
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Get the Enable Status of RBUS")
+            print("EXPECTED RESULT 2: Should Get the Enable Status of RBUS")
+            print("ACTUAL RESULT 2: RBUS Enable Status retrieved successfully")
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
             if default_value == "true" and (rbus_status == "RBUS_ENABLED" or rbus_status == "RBUS_DISABLE_PENDING"):
-                print "RBUS is Enabled and RBUS Status is ",rbus_status
+                print("RBUS is Enabled and RBUS Status is ",rbus_status)
                 tdkTestObj.setResultStatus("SUCCESS");
             elif default_value == "false" and (rbus_status == "RBUS_DISABLED" or rbus_status == "RBUS_ENABLE_PENDING"):
-                print "RBUS is Disabled and RBUS Status is ",rbus_status
+                print("RBUS is Disabled and RBUS Status is ",rbus_status)
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "RBUS Enable status from TR181 and HAL is not matching"
-                print "TR181 RBUS enable value is ",default_value
-                print "HAL API RBUS enable value is ",rbus_status
+                print("RBUS Enable status from TR181 and HAL is not matching")
+                print("TR181 RBUS enable value is ",default_value)
+                print("HAL API RBUS enable value is ",rbus_status)
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             tdkTestObj_Tr181_Get.executeTestCase("FAILURE");
-            print "TEST STEP 2: Get the Enable Status of RBUS"
-            print "EXPECTED RESULT 2: Should Get the Enable Status of RBUS"
-            print "ACTUAL RESULT 2: Failed to get RBUS Enable Status"
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Get the Enable Status of RBUS")
+            print("EXPECTED RESULT 2: Should Get the Enable Status of RBUS")
+            print("ACTUAL RESULT 2: Failed to get RBUS Enable Status")
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Retrieve the RBUS status via HAL api";
-        print "EXPECTED RESULT 1: Should retrieve the RBUS status via HAL api";
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
-        print "Failure details: %s" %details
+        print("TEST STEP 1: Retrieve the RBUS status via HAL api");
+        print("EXPECTED RESULT 1: Should retrieve the RBUS status via HAL api");
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
+        print("Failure details: %s" %details)
 
     obj.unloadModule("rbus");
     tr181obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

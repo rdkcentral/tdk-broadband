@@ -88,10 +88,10 @@ obj1.configureTestCase(ip,port,'TS_SNMP_InitiateReboot');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 loadmodulestatus2 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -109,15 +109,15 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "STEP 1 :Get the uptime";
-        print "EXPECTED RESULT 1: Should return the uptime successfully";
-        print "ACTUAL RESULT 1:UpTime before reboot is %s" %Olduptime;
-        print "[TEST EXECUTION RESULT]: SUCCESS";
+        print("STEP 1 :Get the uptime");
+        print("EXPECTED RESULT 1: Should return the uptime successfully");
+        print("ACTUAL RESULT 1:UpTime before reboot is %s" %Olduptime);
+        print("[TEST EXECUTION RESULT]: SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
         #saving the current state before going for reboot
         obj.saveCurrentState();
 
-        print "Initiating Snmp reboot"
+        print("Initiating Snmp reboot")
 
         # Resetting device using snmp command
         #Get the Community String
@@ -129,13 +129,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
 
-        print "actResponse:",actResponse
+        print("actResponse:",actResponse)
 
         if "INTEGER: 1" in actResponse:
-            print "TEST STEP 2: Check if DUT goes for a reboot when initiated  via SNMP"
-            print "EXPECTED RESULT 2: DUT should go for a reboot when initiated  via SNMP"
-            print "ACTUAL RESULT  2: DUT went for  a reboot through SNMP"
-            print "[TEST EXECUTION RESULT]: SUCCESS";
+            print("TEST STEP 2: Check if DUT goes for a reboot when initiated  via SNMP")
+            print("EXPECTED RESULT 2: DUT should go for a reboot when initiated  via SNMP")
+            print("ACTUAL RESULT  2: DUT went for  a reboot through SNMP")
+            print("[TEST EXECUTION RESULT]: SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
@@ -147,81 +147,81 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             actualresult = tdkTestObj.getResult();
             afterdetails = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
-               if int(Olduptime)>=int(afterdetails):
-                  print "TEST STEP 3: compare the uptime before and after reboot to confirm if the device went for reboot";
-                  print "EXPECTED RESULT 3 :Uptime before reboot should be greater than uptime after reboot";
-                  print "UpTime after reboot is %s" %afterdetails;
-                  print "Successfully updated the uptime after reboot";
-                  print "[TEST EXECUTION RESULT] : %s" %actualresult
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  markerfound = 0;
-                  for i in range(1,15):
-                      if markerfound == 1:
-                         break;
-                      else:
-                          #Query for the Telemetry Marker
-                          query="cat /rdklogs/logs/Consolelog.txt.0 | grep -i \"RDKB_REBOOT:\""
-                          print "query:%s" %query
-                          tdkTestObj = obj.createTestStep('ExecuteCmd');
-                          tdkTestObj.addParameter("command", query)
-                          expectedresult="SUCCESS";
-                          tdkTestObj.executeTestCase(expectedresult);
-                          actualresult = tdkTestObj.getResult();
-                          details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                          print "Marker Detail Found fromLog file is: %s "%details;
+                if int(Olduptime)>=int(afterdetails):
+                    print("TEST STEP 3: compare the uptime before and after reboot to confirm if the device went for reboot");
+                    print("EXPECTED RESULT 3 :Uptime before reboot should be greater than uptime after reboot");
+                    print("UpTime after reboot is %s" %afterdetails);
+                    print("Successfully updated the uptime after reboot");
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult)
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    markerfound = 0;
+                    for i in range(1,15):
+                        if markerfound == 1:
+                            break;
+                        else:
+                            #Query for the Telemetry Marker
+                            query="cat /rdklogs/logs/Consolelog.txt.0 | grep -i \"RDKB_REBOOT:\""
+                            print("query:%s" %query)
+                            tdkTestObj = obj.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", query)
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                            print("Marker Detail Found fromLog file is: %s "%details);
 
-                          if (len(details) == 0) or details.endswith(":") or "RDKB_REBOOT" not in details:
-                              markerfound = 0;
-                              sleep(60);
-                          else:
-                              logMsg = details.split("RDKB_REBOOT:")[1].split(',')[0];
-                              markerfound = 1;
+                            if (len(details) == 0) or details.endswith(":") or "RDKB_REBOOT" not in details:
+                                markerfound = 0;
+                                sleep(60);
+                            else:
+                                logMsg = details.split("RDKB_REBOOT:")[1].split(',')[0];
+                                markerfound = 1;
 
-                  if expectedresult in actualresult and markerfound == 1:
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 4: Check for RDKB_REBOOT  Marker";
-                     print "EXPECTED RESULT 4: RDKB_REBOOT  Marker should be present";
-                     print "ACTUAL RESULT 4:RDKB_REBOOT Marker is %s" %logMsg
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : SUCCESS"
-                  else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "TEST STEP 4: Check for RDKB_REBOOT Marker";
-                     print "EXPECTED RESULT 4: RDKB_REBOOT  Marker should be present";
-                     print "ACTUAL RESULT 4:RDKB_REBOOT Marker is %s" %logMsg
-                     #Get the result of execution
-                     print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "STEP 3: compare the uptime before and after reboot";
-                   print "EXPECTED RESULT 3:Uptime before reboot should be greater than uptime after reboot";
-                   print "UpTime after reboot is %s" %afterdetails;
-                   print "Failed to update the uptime after reboot"
-                   print "[TEST EXECUTION RESULT] :%s" %actualresult;
+                    if expectedresult in actualresult and markerfound == 1:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Check for RDKB_REBOOT  Marker");
+                        print("EXPECTED RESULT 4: RDKB_REBOOT  Marker should be present");
+                        print("ACTUAL RESULT 4:RDKB_REBOOT Marker is %s" %logMsg)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Check for RDKB_REBOOT Marker");
+                        print("EXPECTED RESULT 4: RDKB_REBOOT  Marker should be present");
+                        print("ACTUAL RESULT 4:RDKB_REBOOT Marker is %s" %logMsg)
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("STEP 3: compare the uptime before and after reboot");
+                    print("EXPECTED RESULT 3:Uptime before reboot should be greater than uptime after reboot");
+                    print("UpTime after reboot is %s" %afterdetails);
+                    print("Failed to update the uptime after reboot")
+                    print("[TEST EXECUTION RESULT] :%s" %actualresult);
 
             else:
-                print" TEST STEP : Get the uptime of the device";
-                print" EXPECTED  RESULT : Should get the uptime of the device";
-                print" ACTUAL RESULT : Failed to get the uptime after reboot"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print(" TEST STEP : Get the uptime of the device");
+                print(" EXPECTED  RESULT : Should get the uptime of the device");
+                print(" ACTUAL RESULT : Failed to get the uptime after reboot")
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             #Set the result status of execution
-            print "TEST STEP 2: Check if DUT goes for a reboot when initiated  via SNMP"
-            print "EXPECTED RESULT 2: DUT should go for a reboot when initiated  via SNMP"
-            print "ACTUAL RESULT 2: DUT did not go for  a reboot through SNMP"
-            print "[TEST EXECUTION RESULT]: FAILURE";
+            print("TEST STEP 2: Check if DUT goes for a reboot when initiated  via SNMP")
+            print("EXPECTED RESULT 2: DUT should go for a reboot when initiated  via SNMP")
+            print("ACTUAL RESULT 2: DUT did not go for  a reboot through SNMP")
+            print("[TEST EXECUTION RESULT]: FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1 :Get the uptime";
-        print "EXPECTED RESULT 1: Should return the uptime successfully";
-        print "ACTUAL RESULT 1:UpTime before reboot is %s" %Olduptime;
-        print "[TEST EXECUTION RESULT]: FAILURE";
+        print("TEST STEP 1 :Get the uptime");
+        print("EXPECTED RESULT 1: Should return the uptime successfully");
+        print("ACTUAL RESULT 1:UpTime before reboot is %s" %Olduptime);
+        print("[TEST EXECUTION RESULT]: FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("sysutil");
     obj1.unloadModule("pam");
 else:
-    print "FAILURE to load SNMP_PA /PAM module";
+    print("FAILURE to load SNMP_PA /PAM module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

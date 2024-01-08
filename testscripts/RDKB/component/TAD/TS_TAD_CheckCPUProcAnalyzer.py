@@ -119,11 +119,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     if expectedresult in actualresult :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the CPUProc Analyzer Enable status";
-        print "EXPECTED RESULT 1: Should get the CPUProc Analyzer Enable status";
-        print "ACTUAL RESULT 1: CPUProc Analyzer Enable status is:",details
+        print("TEST STEP 1: Get the CPUProc Analyzer Enable status");
+        print("EXPECTED RESULT 1: Should get the CPUProc Analyzer Enable status");
+        print("ACTUAL RESULT 1: CPUProc Analyzer Enable status is:",details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         cmd= "sysevent get UPLOAD_LOGS_VAL_DCM";
@@ -135,11 +135,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         if expectedresult in actualresult  and default !="":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the UPLOAD_LOGS_VAL_DCM value";
-            print "EXPECTED RESULT 2: Should get the UPLOAD_LOGS_VAL_DCM value";
-            print "ACTUAL RESULT 2: UPLOAD_LOGS_VAL_DCM  status is:",default
+            print("TEST STEP 2: Get the UPLOAD_LOGS_VAL_DCM value");
+            print("EXPECTED RESULT 2: Should get the UPLOAD_LOGS_VAL_DCM value");
+            print("ACTUAL RESULT 2: UPLOAD_LOGS_VAL_DCM  status is:",default)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd= "sysevent set UPLOAD_LOGS_VAL_DCM true";
@@ -151,11 +151,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set the UPLOAD_LOGS_VAL_DCM to true";
-                print "EXPECTED RESULT 3 : Should set the UPLOAD_LOGS_VAL_DCM value to true";
-                print "ACTUAL RESULT 3:",details
+                print("TEST STEP 3: Set the UPLOAD_LOGS_VAL_DCM to true");
+                print("EXPECTED RESULT 3 : Should set the UPLOAD_LOGS_VAL_DCM value to true");
+                print("ACTUAL RESULT 3:",details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('ExecuteCmd');
                 cmd= "sysevent get UPLOAD_LOGS_VAL_DCM";
@@ -167,11 +167,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 if expectedresult in actualresult  and details =="true":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if  UPLOAD_LOGS_VAL_DCM is true";
-                    print "EXPECTED RESULT 4: Should get the UPLOAD_LOGS_VAL_DCM as true";
-                    print "ACTUAL RESULT 4: UPLOAD_LOGS_VAL_DCM  status is:",details
+                    print("TEST STEP 4: Check if  UPLOAD_LOGS_VAL_DCM is true");
+                    print("EXPECTED RESULT 4: Should get the UPLOAD_LOGS_VAL_DCM as true");
+                    print("ACTUAL RESULT 4: UPLOAD_LOGS_VAL_DCM  status is:",details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_SetOnly');
                     tdkTestObj.addParameter("ParamName","Device.SelfHeal.CPUProcAnalyzer.Enable");
@@ -185,11 +185,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Enable CPUProc Analyzer";
-                        print "EXPECTED RESULT 5: Should enable CPUProc Analyzer";
-                        print "ACTUAL RESULT 5:",details
+                        print("TEST STEP 5: Enable CPUProc Analyzer");
+                        print("EXPECTED RESULT 5: Should enable CPUProc Analyzer");
+                        print("ACTUAL RESULT 5:",details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         sleep(10);
                         tdkTestObj = obj.createTestStep('ExecuteCmd');
@@ -202,11 +202,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                         if expectedresult in actualresult and details != "":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Check if cpuprocanalyzer process is running";
-                            print "EXPECTED RESULT 6: cpuprocanalyzer process should be running";
-                            print "ACTUAL RESULT 6:pidof cpuprocanalyzer is :",details
+                            print("TEST STEP 6: Check if cpuprocanalyzer process is running");
+                            print("EXPECTED RESULT 6: cpuprocanalyzer process should be running");
+                            print("ACTUAL RESULT 6:pidof cpuprocanalyzer is :",details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             tdkTestObj = obj.createTestStep('ExecuteCmd');
                             cmd= "grep -rin \"error\" /rdklogs/logs/CPUPROCANALYZERlog.txt.0";
@@ -218,27 +218,27 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 7: Check if any Error mesages are present in CPUPROCANALYZERlog.txt.0";
-                                print "EXPECTED RESULT 7: No Error messages should be present in CPUPROCANALYZERlog.txt.0";
-                                print "ACTUAL RESULT 7:",details
+                                print("TEST STEP 7: Check if any Error mesages are present in CPUPROCANALYZERlog.txt.0");
+                                print("EXPECTED RESULT 7: No Error messages should be present in CPUPROCANALYZERlog.txt.0");
+                                print("ACTUAL RESULT 7:",details)
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 7: Check if any Error mesages are present in CPUPROCANALYZERlog.txt.0";
-                                print "EXPECTED RESULT 7: No Error messages should be present in CPUPROCANALYZERlog.txt.0";
-                                print "ACTUAL RESULT 7:",details
+                                print("TEST STEP 7: Check if any Error mesages are present in CPUPROCANALYZERlog.txt.0");
+                                print("EXPECTED RESULT 7: No Error messages should be present in CPUPROCANALYZERlog.txt.0");
+                                print("ACTUAL RESULT 7:",details)
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Check if cpuprocanalyzer process is running";
-                            print "EXPECTED RESULT 6: cpuprocanalyzer process should be running";
-                            print "ACTUAL RESULT 6:pidof cpuprocanalyzer is :",details
+                            print("TEST STEP 6: Check if cpuprocanalyzer process is running");
+                            print("EXPECTED RESULT 6: cpuprocanalyzer process should be running");
+                            print("ACTUAL RESULT 6:pidof cpuprocanalyzer is :",details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Revert the Value
                         tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_SetOnly');
@@ -253,11 +253,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 8: Disable the CPUProcAnalyzer";
-                            print "EXPECTED RESULT 8:Should disable the CPUProcAnalyzer";
-                            print "ACTUAL RESULT 8:",details
+                            print("TEST STEP 8: Disable the CPUProcAnalyzer");
+                            print("EXPECTED RESULT 8:Should disable the CPUProcAnalyzer");
+                            print("ACTUAL RESULT 8:",details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             tdkTestObj = obj.createTestStep('ExecuteCmd');
                             cmd= "sysevent set UPLOAD_LOGS_VAL_DCM %s" %default;
@@ -269,14 +269,14 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 9: Revert the UPLOAD_LOGS_VAL_DCM to %s" %default;
-                                print "EXPECTED RESULT 9 : Should revert the UPLOAD_LOGS_VAL_DCM to previous";
-                                print "ACTUAL RESULT 9:Revert success";
+                                print("TEST STEP 9: Revert the UPLOAD_LOGS_VAL_DCM to %s" %default);
+                                print("EXPECTED RESULT 9 : Should revert the UPLOAD_LOGS_VAL_DCM to previous");
+                                print("ACTUAL RESULT 9:Revert success");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #rebooting the device to stop the running process
-                                print "**Device is going for a reboot to stop the running process as a part of revert operation **";
+                                print("**Device is going for a reboot to stop the running process as a part of revert operation **");
                                 obj.initiateReboot();
                                 sleep(300);
 
@@ -290,81 +290,80 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                                 if expectedresult in actualresult and details == "":
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP 10:Check if cpuprocanalyzer process is running";
-                                    print "EXPECTED RESULT 10 : cpuprocanalyzer process should not be running";
-                                    print "ACTUAL RESULT 10: ",details;
+                                    print("TEST STEP 10:Check if cpuprocanalyzer process is running");
+                                    print("EXPECTED RESULT 10 : cpuprocanalyzer process should not be running");
+                                    print("ACTUAL RESULT 10: ",details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP 10:Check if cpuprocanalyzer process is running";
-                                    print "EXPECTED RESULT 10 : cpuprocanalyzer process should not be running";
-                                    print "ACTUAL RESULT 10: ",details;
+                                    print("TEST STEP 10:Check if cpuprocanalyzer process is running");
+                                    print("EXPECTED RESULT 10 : cpuprocanalyzer process should not be running");
+                                    print("ACTUAL RESULT 10: ",details);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 9: Revert the UPLOAD_LOGS_VAL_DCM to %s" %default;
-                                print "EXPECTED RESULT 9 : Should revert the UPLOAD_LOGS_VAL_DCM to previous";
-                                print "ACTUAL RESULT 9:Revert failed";
+                                print("TEST STEP 9: Revert the UPLOAD_LOGS_VAL_DCM to %s" %default);
+                                print("EXPECTED RESULT 9 : Should revert the UPLOAD_LOGS_VAL_DCM to previous");
+                                print("ACTUAL RESULT 9:Revert failed");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 8: Disable the CPUProcAnalyzer";
-                            print "EXPECTED RESULT 8:Should disable the CPUProcAnalyzer";
-                            print "ACTUAL RESULT 8:",details
+                            print("TEST STEP 8: Disable the CPUProcAnalyzer");
+                            print("EXPECTED RESULT 8:Should disable the CPUProcAnalyzer");
+                            print("ACTUAL RESULT 8:",details)
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Enable CPUProc Analyzer";
-                        print "EXPECTED RESULT 5: Should enable CPUProc Analyzer";
-                        print "ACTUAL RESULT 5:",details
+                        print("TEST STEP 5: Enable CPUProc Analyzer");
+                        print("EXPECTED RESULT 5: Should enable CPUProc Analyzer");
+                        print("ACTUAL RESULT 5:",details)
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if  UPLOAD_LOGS_VAL_DCM is true";
-                    print "EXPECTED RESULT 4: Should get the UPLOAD_LOGS_VAL_DCM as true";
-                    print "ACTUAL RESULT 4: UPLOAD_LOGS_VAL_DCM  status is:",details
+                    print("TEST STEP 4: Check if  UPLOAD_LOGS_VAL_DCM is true");
+                    print("EXPECTED RESULT 4: Should get the UPLOAD_LOGS_VAL_DCM as true");
+                    print("ACTUAL RESULT 4: UPLOAD_LOGS_VAL_DCM  status is:",details)
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set the UPLOAD_LOGS_VAL_DCM to true";
-                print "EXPECTED RESULT 3 : Should set the UPLOAD_LOGS_VAL_DCM value to true";
-                print "ACTUAL RESULT 3:",details
+                print("TEST STEP 3: Set the UPLOAD_LOGS_VAL_DCM to true");
+                print("EXPECTED RESULT 3 : Should set the UPLOAD_LOGS_VAL_DCM value to true");
+                print("ACTUAL RESULT 3:",details)
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the UPLOAD_LOGS_VAL_DCM value";
-            print "EXPECTED RESULT 2: Should get the UPLOAD_LOGS_VAL_DCM value";
-            print "ACTUAL RESULT 2: UPLOAD_LOGS_VAL_DCM  status is:",default
+            print("TEST STEP 2: Get the UPLOAD_LOGS_VAL_DCM value");
+            print("EXPECTED RESULT 2: Should get the UPLOAD_LOGS_VAL_DCM value");
+            print("ACTUAL RESULT 2: UPLOAD_LOGS_VAL_DCM  status is:",default)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the CPUProc Analyzer Enable status";
-        print "EXPECTED RESULT 1: Should get the CPUProc Analyzer Enable status";
-        print "ACTUAL RESULT 1: CPUProc Analyzer Enable status is:",details
+        print("TEST STEP 1: Get the CPUProc Analyzer Enable status");
+        print("EXPECTED RESULT 1: Should get the CPUProc Analyzer Enable status");
+        print("ACTUAL RESULT 1: CPUProc Analyzer Enable status is:",details)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj1.unloadModule("tdkbtr181");
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

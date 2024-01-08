@@ -113,8 +113,8 @@ tr181obj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_QueryRes
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=tr181obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -142,7 +142,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
             if setTestURL == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Test URL table configured successfully";
+                print("Test URL table configured successfully");
 
                 #Check the number of WAN Interfaces for DNS Internet Connectivity Check
                 numberOfInterfaces = getWanInterfaceEntries(obj, expectedresult, step);
@@ -165,12 +165,12 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "WAN Interface set to %s successfully" %setEnable;
+                                print("WAN Interface set to %s successfully" %setEnable);
                             else:
                                 proceedFlag = 0;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "WAN Interface NOT set to %s successfully" %setEnable;
+                                print("WAN Interface NOT set to %s successfully" %setEnable);
                         else:
                             "WAN Interface is enabled already...";
 
@@ -183,10 +183,10 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "DNS queries started successfully";
+                                print("DNS queries started successfully");
 
                                 #Check the DNS Quert result status
-                                print "Sleeping 5s before querying the DNS result status";
+                                print("Sleeping 5s before querying the DNS result status");
                                 sleep(5);
                                 step = step + 1;
                                 paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
@@ -194,23 +194,23 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
 
                                 #DNS query result status is expected to be "CONNECTED"
                                 step = step + 1;
-                                print "\nTEST STEP %d : Check if the DNS query result status is CONNECTED" %step;
-                                print "EXPECTED RESULT %d : The DNS query result status should be CONNECTED" %step;
+                                print("\nTEST STEP %d : Check if the DNS query result status is CONNECTED" %step);
+                                print("EXPECTED RESULT %d : The DNS query result status should be CONNECTED" %step);
 
                                 if expectedresult in actualresult and details == "CONNECTED":
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d : DNS query result is retrieved as %s" %(step, details);
-                                    print "TEST EXECUTION RESULT : SUCCESS";
+                                    print("ACTUAL RESULT %d : DNS query result is retrieved as %s" %(step, details));
+                                    print("TEST EXECUTION RESULT : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d : DNS query result is retrieved as %s which is not expected" %(step, details);
-                                    print "TEST EXECUTION RESULT : FAILURE";
+                                    print("ACTUAL RESULT %d : DNS query result is retrieved as %s which is not expected" %(step, details));
+                                    print("TEST EXECUTION RESULT : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "DNS queries NOT started successfully";
+                                print("DNS queries NOT started successfully");
 
                             #Revert the WAN interface enable if required
                             if initialEnable == "false":
@@ -221,21 +221,21 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                 if expectedresult in actualresult:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "WAN Interface enable reverted successfully";
+                                    print("WAN Interface enable reverted successfully");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "WAN Interface enable NOT reverted successfully";
+                                    print("WAN Interface enable NOT reverted successfully");
                             else:
                                 "%s revert operation not required" %paramName;
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "WAN Interface is not enabled, cannot proceed further...";
+                            print("WAN Interface is not enabled, cannot proceed further...");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Number of WAN Interface entries NOT retrieved successfully";
+                    print("Number of WAN Interface entries NOT retrieved successfully");
 
                 #Delete the Test URL table config
                 step = step + 1;
@@ -244,50 +244,50 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                 if deleteStatus == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Test URL table configured is deleted successfully";
+                    print("Test URL table configured is deleted successfully");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Test URL table configured is NOT deleted successfully";
+                    print("Test URL table configured is NOT deleted successfully");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Test URL table NOT configured successfully";
+                print("Test URL table NOT configured successfully");
 
             #Revert to initial table state
-            print "\n****Revert to initial Test URL Configuration Start****";
+            print("\n****Revert to initial Test URL Configuration Start****");
             step = step + 1;
             setTestURL, newInstanceList, step = createTestURLTable(obj, tr181obj, step, expectedresult, len(testURLStore), testURLStore);
 
             if setTestURL == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Test URL table reverted to initial state";
+                print("Test URL table reverted to initial state");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Test URL table NOT reverted to initial state";
-            print "\n****Revert to initial Test URL Configuration Complete****";
+                print("Test URL table NOT reverted to initial state");
+            print("\n****Revert to initial Test URL Configuration Complete****");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Test URL table Pre-requisites NOT set successfully";
+            print("Test URL table Pre-requisites NOT set successfully");
 
         #Revert operation
         setEnable = "false";
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

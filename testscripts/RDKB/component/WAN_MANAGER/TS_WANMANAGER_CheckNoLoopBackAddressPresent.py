@@ -113,14 +113,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and details == "true":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 : Check if WAN Manager is enabled";
-        print "EXPECTED RESULT 1: WAN Manager should be enabled";
-        print "ACTUAL RESULT 1: wan manager enable status is :",details;
+        print("TEST STEP 1 : Check if WAN Manager is enabled");
+        print("EXPECTED RESULT 1: WAN Manager should be enabled");
+        print("ACTUAL RESULT 1: wan manager enable status is :",details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         query="ls /etc/resolv.conf";
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query)
         expectedresult="SUCCESS";
@@ -130,13 +130,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and "No such file or directory" not in details:
             details = details.replace("\\t","");
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Checking if resolv.conf file is present";
-            print "EXPECTED RESULT 2:resolv.conf file should be presented";
-            print "ACTUAL RESULT 2:",details;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Checking if resolv.conf file is present");
+            print("EXPECTED RESULT 2:resolv.conf file should be presented");
+            print("ACTUAL RESULT 2:",details);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             query="cat /etc/resolv.conf | grep -i \"127.0.0.1\"";
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
@@ -145,31 +145,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and details =="":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Checking no loopback address is present in resolv.conf";
-                print "EXPECTED RESULT 3:No loopback address should be present in resolv.conf";
-                print "ACTUAL RESULT 3:",details;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3: Checking no loopback address is present in resolv.conf");
+                print("EXPECTED RESULT 3:No loopback address should be present in resolv.conf");
+                print("ACTUAL RESULT 3:",details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Checking no loopback address is present in resolv.conf";
-                print "EXPECTED RESULT 3:No loopback address should be present in resolv.conf";
-                print "ACTUAL RESULT 3:",details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Checking no loopback address is present in resolv.conf");
+                print("EXPECTED RESULT 3:No loopback address should be present in resolv.conf");
+                print("ACTUAL RESULT 3:",details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Checking if resolv.conf file is present";
-            print "EXPECTED RESULT 2:resolv.conf file should be presented";
-            print "ACTUAL RESULT 2:",details;
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Checking if resolv.conf file is present");
+            print("EXPECTED RESULT 2:resolv.conf file should be presented");
+            print("ACTUAL RESULT 2:",details);
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 : Check if WAN Manager is enabled";
-        print "EXPECTED RESULT 1: WAN Manager should be enabled";
-        print "ACTUAL RESULT 1: wan manager enable status is :",details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1 : Check if WAN Manager is enabled");
+        print("EXPECTED RESULT 1: WAN Manager should be enabled");
+        print("ACTUAL RESULT 1: wan manager enable status is :",details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

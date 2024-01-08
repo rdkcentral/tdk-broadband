@@ -103,20 +103,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
-        print "########-Rebooting the device to simulate SYS_INFO_bootup marker-#######";
+        print("########-Rebooting the device to simulate SYS_INFO_bootup marker-#######");
         sysobj.initiateReboot();
         #waiting for device to come up after reboot
         sleep(300);
@@ -124,55 +124,55 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         sleep(45);
 
         query = "cat /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_INFO_bootup\"";
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", query);
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-        print "Marker Detail Found from log file is: %s "%details;
+        print("Marker Detail Found from log file is: %s "%details);
 
         if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_INFO_bootup" in details:
-           tdkTestObj.setResultStatus("SUCCESS");
-           markervalue = details.split("SYS_INFO_bootup value : ")[1]
-           print "TEST STEP 2: SYS_INFO_bootup  Marker should be present";
-           print "EXPECTED RESULT 2: SYS_INFO_bootup Marker should be present";
-           print "ACTUAL RESULT 2: SYS_INFO_bootup  Marker Value is ",markervalue;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] 2: SUCCESS";
-           print "***************************************************************"
+            tdkTestObj.setResultStatus("SUCCESS");
+            markervalue = details.split("SYS_INFO_bootup value : ")[1]
+            print("TEST STEP 2: SYS_INFO_bootup  Marker should be present");
+            print("EXPECTED RESULT 2: SYS_INFO_bootup Marker should be present");
+            print("ACTUAL RESULT 2: SYS_INFO_bootup  Marker Value is ",markervalue);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
+            print("***************************************************************")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: SYS_INFO_bootup  Marker should be present";
-            print "EXPECTED RESULT 2: SYS_INFO_bootup Marker should be present";
-            print "ACTUAL RESULT 2: SYS_INFO_bootup  Marker is %s" %details;
+            print("TEST STEP 2: SYS_INFO_bootup  Marker should be present");
+            print("EXPECTED RESULT 2: SYS_INFO_bootup Marker should be present");
+            print("ACTUAL RESULT 2: SYS_INFO_bootup  Marker is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
-            print "***************************************************************"
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("***************************************************************")
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 3: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 3: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 3: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 3: Post Process should be success");
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 3: Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 3: Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 3: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 3: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

@@ -100,27 +100,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     rbus_set,revert_flag = rbus_PreRequisite(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd);
     if rbus_set == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-        print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+        print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
         #Execute the Test Provider Test App
         actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,"/usr/bin/rbusTestProvider > /tmp/rbusTestProvider1.log &");
         if expectedresult in actualresult:
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Execute the Test Provider Test App"
-            print "EXPECTED RESULT 2: Test Provider Test App should be running"
-            print "ACTUAL RESULT 2: Test Provider Test App Running successfully"
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Execute the Test Provider Test App")
+            print("EXPECTED RESULT 2: Test Provider Test App should be running")
+            print("ACTUAL RESULT 2: Test Provider Test App Running successfully")
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
             sleep(3);
             #Execute the Test Consumer Test App for 180 seconds
             actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,"/usr/bin/rbusTestConsumer -a > /tmp/rbusTestConsumer1.log");
             if expectedresult in actualresult:
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Execute the Test Consumer Test App "
-                print "EXPECTED RESULT 3: Test Consumer Test App should be running"
-                print "ACTUAL RESULT 3: Test Consumer Test App Running successfully"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                print("TEST STEP 3: Execute the Test Consumer Test App ")
+                print("EXPECTED RESULT 3: Test Consumer Test App should be running")
+                print("ACTUAL RESULT 3: Test Consumer Test App Running successfully")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
                 #Wait 5 min to finish the consumer app execution
                 sleep(300);
                 cmd = "grep -w \"# PartialPath\" /tmp/rbusTestConsumer1.log";
@@ -128,72 +128,72 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
                 actualresult = tdkTestObj_Sys_ExeCmd.getResult();
                 details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
-                print "Test Name : PartialPath Fail count Result is:",details
+                print("Test Name : PartialPath Fail count Result is:",details)
                 if expectedresult in actualresult and details != "":
-                    print "TEST STEP 4: Get the PartialPath Test Result from consumer log file (/tmp/rbusTestConsumer1.log)"
-                    print "EXPECTED RESULT 4: Should get PartialPath Test Result value from consumer log file (/tmp/rbusTestConsumer1.log)"
-                    print "ACTUAL RESULT 4: Successfully got PartialPath Test Result value from consumer file (/tmp/rbusTestConsumer1.log)"
-                    print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                    print("TEST STEP 4: Get the PartialPath Test Result from consumer log file (/tmp/rbusTestConsumer1.log)")
+                    print("EXPECTED RESULT 4: Should get PartialPath Test Result value from consumer log file (/tmp/rbusTestConsumer1.log)")
+                    print("ACTUAL RESULT 4: Successfully got PartialPath Test Result value from consumer file (/tmp/rbusTestConsumer1.log)")
+                    print("[TEST EXECUTION RESULT] 4: SUCCESS");
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
                     testname = details.split("|")[0]
                     passcount = details.split("|")[1]
                     failcount1 = details.split("|")[2].strip().replace(" ","").split("#")[0];
                     failcount = int(failcount1);
-                    print "Test Name: ",testname
-                    print "Pass Count: ",passcount
-                    print "Fail Count: ",failcount
+                    print("Test Name: ",testname)
+                    print("Pass Count: ",passcount)
+                    print("Fail Count: ",failcount)
                     if int(failcount) == 0:
-                        print "TEST STEP 5: Get the Fail count value for Test name PartialPath"
-                        print "EXPECTED RESULT 5: Fail count value for Test name PartialPath should be zero"
-                        print "[ACTUAL RESULT 5: Failcount value for Test name PartialPath is Zero"
-                        print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                        print("TEST STEP 5: Get the Fail count value for Test name PartialPath")
+                        print("EXPECTED RESULT 5: Fail count value for Test name PartialPath should be zero")
+                        print("[ACTUAL RESULT 5: Failcount value for Test name PartialPath is Zero")
+                        print("[TEST EXECUTION RESULT] 5: SUCCESS");
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP 5: Get the Fail count value for Test name PartialPath"
-                        print "EXPECTED RESULT 5: Fail count value for Test name PartialPath should be zero"
-                        print "[ACTUAL RESULT 5: Failcount value for Test name PartialPath is Zero"
-                        print "[TEST EXECUTION RESULT] 5: FAILURE";
+                        print("TEST STEP 5: Get the Fail count value for Test name PartialPath")
+                        print("EXPECTED RESULT 5: Fail count value for Test name PartialPath should be zero")
+                        print("[ACTUAL RESULT 5: Failcount value for Test name PartialPath is Zero")
+                        print("[TEST EXECUTION RESULT] 5: FAILURE");
                         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 4: Get the PartialPath Test Result from consumer log (/tmp/rbusTestConsumer1.log)"
-                    print "EXPECTED RESULT 4: Should get PartialPath Test Result value from consumer log file (/tmp/rbusTestConsumer1.log)"
-                    print "ACTUAL RESULT 4: Failed to get PartialPath Test Result value from consumer file (/tmp/rbusTestConsumer1.log)"
-                    print "[TEST EXECUTION RESULT] 4: FAILURE";
+                    print("TEST STEP 4: Get the PartialPath Test Result from consumer log (/tmp/rbusTestConsumer1.log)")
+                    print("EXPECTED RESULT 4: Should get PartialPath Test Result value from consumer log file (/tmp/rbusTestConsumer1.log)")
+                    print("ACTUAL RESULT 4: Failed to get PartialPath Test Result value from consumer file (/tmp/rbusTestConsumer1.log)")
+                    print("[TEST EXECUTION RESULT] 4: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                print "TEST STEP 3: Execute the Test Consumer Test App "
-                print "EXPECTED RESULT 3: Test Consumer Test App should be running"
-                print "ACTUAL RESULT 3: ailed to run Test Consumer Test App"
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("TEST STEP 3: Execute the Test Consumer Test App ")
+                print("EXPECTED RESULT 3: Test Consumer Test App should be running")
+                print("ACTUAL RESULT 3: ailed to run Test Consumer Test App")
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
         else:
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-            print "TEST STEP 2: Execute the Test Provider Test App"
-            print "EXPECTED RESULT 2: Test Provider Test App should be running"
-            print "ACTUAL RESULT 2: Failed to run Test Provider Test App"
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Execute the Test Provider Test App")
+            print("EXPECTED RESULT 2: Test Provider Test App should be running")
+            print("ACTUAL RESULT 2: Failed to run Test Provider Test App")
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-        print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+        print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
     post_process_value = rbus_PostProcess(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd,revert_flag);
     if post_process_value == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 6: Execute the Post process of RBUS"
-        print "EXPECTED RESULT 6: Post process of RBUS should be success"
-        print "ACTUAL RESULT 6: Post process of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 6: SUCCESS";
+        print("TEST STEP 6: Execute the Post process of RBUS")
+        print("EXPECTED RESULT 6: Post process of RBUS should be success")
+        print("ACTUAL RESULT 6: Post process of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 6: SUCCESS");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 6: Execute the Post process for RBUS"
-        print "EXPECTED RESULT 6: Post process of RBUS should be success"
-        print "ACTUAL RESULT 6: Post process of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 6: FAILURE";
+        print("TEST STEP 6: Execute the Post process for RBUS")
+        print("EXPECTED RESULT 6: Post process of RBUS should be success")
+        print("ACTUAL RESULT 6: Post process of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 6: FAILURE");
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

@@ -101,7 +101,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_GetEcmMAC');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -114,11 +114,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and details1 != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC ";
-        print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC";
-        print "ACTUAL RESULT 1: %s" %details1;
+        print("TEST STEP 1: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC ");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC");
+        print("ACTUAL RESULT 1: %s" %details1);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('TADstub_Get');
         tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_CISCO_COM_BaseMacAddress");
         expectedresult="SUCCESS";
@@ -128,46 +128,44 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult and details2 != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress";
-            print "EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress";
-            print "ACTUAL RESULT 2: %s" %details2;
+            print("TEST STEP 2: Get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress");
+            print("EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress");
+            print("ACTUAL RESULT 2: %s" %details2);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             if details1 == details2:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddress should be same ";
-                print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddressare same ";
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddress should be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddressare same ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddressshould be same ";
-                print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddress are not same ";
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddressshould be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC and Device.DeviceInfo.X_CISCO_COM_BaseMacAddress are not same ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 2: Get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress";
-             print "EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress";
-             print "ACTUAL RESULT 2: %s" %details2;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress");
+            print("EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.X_CISCO_COM_BaseMacAddress");
+            print("ACTUAL RESULT 2: %s" %details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC";
-        print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC";
-        print "ACTUAL RESULT 1: %s" %details1;
+        print("TEST STEP 1:Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.ecmMAC");
+        print("ACTUAL RESULT 1: %s" %details1);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

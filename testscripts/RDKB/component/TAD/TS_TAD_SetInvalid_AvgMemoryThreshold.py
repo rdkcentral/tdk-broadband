@@ -84,8 +84,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tad","1");
@@ -97,12 +97,12 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_SetInvalid_AvgMemoryThreshold');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-    print "TEST STEP 1: Get the current average Memory threshold"
-    print "EXPECTED RESULT 1: Should get the current average Memory threshold"
+    print("TEST STEP 1: Get the current average Memory threshold")
+    print("EXPECTED RESULT 1: Should get the current average Memory threshold")
     tdkTestObj = obj.createTestStep('TADstub_Get');
     tdkTestObj.addParameter("paramName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold")
     expectedresult="SUCCESS";
@@ -111,12 +111,12 @@ if "SUCCESS" in loadmodulestatus.upper():
     orgValue = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-	print "ACTUAL RESULT 1: %s" %orgValue
-	print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("ACTUAL RESULT 1: %s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        print "TEST STEP 2: Set an invalid new value to AvgMemoryThreshold";
-        print "EXPECTED RESULT 2: Setting an invalid value to AvgMemoryThreshold should fail";
-	tdkTestObj = obj.createTestStep('TADstub_Set');
+        print("TEST STEP 2: Set an invalid new value to AvgMemoryThreshold");
+        print("EXPECTED RESULT 2: Setting an invalid value to AvgMemoryThreshold should fail");
+        tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold")
         tdkTestObj.addParameter("ParamValue","-50");
         tdkTestObj.addParameter("Type","unsignedint");
@@ -127,17 +127,17 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult not in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: %s" %details;
-	    print "[TEST EXECUTION RESULT] : SUCCESS, failed to set invalid value";
-	else:
+            print("ACTUAL RESULT 2: %s" %details);
+            print("[TEST EXECUTION RESULT] : SUCCESS, failed to set invalid value");
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: %s" %details;
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    #Revert Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold to its original value
-            print "TEST STEP 3: Revert to the original value of AvgMemoryThreshold";
-       	    print "EXPECTED RESULT 3: Should revert to the original value of AvgMemoryThreshold"
+            #Revert Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold to its original value
+            print("TEST STEP 3: Revert to the original value of AvgMemoryThreshold");
+            print("EXPECTED RESULT 3: Should revert to the original value of AvgMemoryThreshold")
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold")
             tdkTestObj.addParameter("ParamValue",orgValue);
@@ -147,23 +147,23 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 #Set the result status of execution
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "ACTUAL RESULT 3: Successfully reverted AvgMemoryThreshold"
-                 print "[TEST EXECUTION RESULT] : SUCCESS";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT 3: Successfully reverted AvgMemoryThreshold")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: Failed to revert AvgMemoryThreshold"
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3: Failed to revert AvgMemoryThreshold")
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: %s" %orgValue;
+        print("ACTUAL RESULT 1: %s" %orgValue);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

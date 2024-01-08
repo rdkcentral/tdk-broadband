@@ -114,9 +114,9 @@ loadmodulestatus3 =obj3.getLoadModuleResult();
 MAX_RETRY = 6;
 
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus3
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus3)
 
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper() and "SUCCESS" in loadmodulestatus3.upper():
@@ -127,17 +127,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj,actualresult,orgValue = getPublicWiFiParamValues(obj1);
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj2.createTestStep('ExecuteCmd');
         details1 = "sh %s/tdk_utility.sh parseConfigFile DSCPMARKPOLICY" %TDK_PATH;
         details2 = "sh %s/tdk_utility.sh parseConfigFile PRIMARYREMOTEENDPOINT" %TDK_PATH;
         details3 = "sh %s/tdk_utility.sh parseConfigFile SECONDARYREMOTEENDPOINT" %TDK_PATH;
-        print details1;
-        print details2;
-        print details3;
+        print(details1);
+        print(details2);
+        print(details3);
 
         expectedresult="SUCCESS";
         tdkTestObj.addParameter("command", details1);
@@ -163,13 +163,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Should enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2 : Should enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             sleep(30);
             #check whether the process is running or not
             query="sh %s/tdk_platform_utility.sh checkProcess CcspHotspot" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = obj2.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             tdkTestObj.executeTestCase("SUCCESS");
@@ -177,30 +177,30 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
             if expectedresult in actualresult and pid:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:CcspHotspot process should be running";
-                print "ACTUAL RESULT 3: PID of CcspHotspot process %s" %pid;
+                print("TEST STEP 3:CcspHotspot process should be running");
+                print("ACTUAL RESULT 3: PID of CcspHotspot process %s" %pid);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 # Kill the process
                 query="sh %s/tdk_platform_utility.sh killProcess CcspHotspot" %TDK_PATH
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj.addParameter("command", query)
                 tdkTestObj.executeTestCase("SUCCESS");
                 actualresult = tdkTestObj.getResult();
                 result = tdkTestObj.getResultDetails().strip()
                 if expectedresult in actualresult:
-                    print "TEST STEP 4:Kill CcspHotspot process"
-                    print "ACTUAL RESULT 4: CcspHotspot should be killed"
+                    print("TEST STEP 4:Kill CcspHotspot process")
+                    print("ACTUAL RESULT 4: CcspHotspot should be killed")
                     tdkTestObj.setResultStatus("SUCCESS");
 
                     #check whether the process is restarted automatically
                     query="sh %s/tdk_platform_utility.sh checkProcess CcspHotspot" %TDK_PATH
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj = obj2.createTestStep('ExecuteCmd');
                     tdkTestObj.addParameter("command", query)
                     expectedresult="SUCCESS";
 
-                    print "Check for every 10 secs whether the process is up"
+                    print("Check for every 10 secs whether the process is up")
                     retryCount = 0;
                     while retryCount < MAX_RETRY:
                         tdkTestObj.executeTestCase("SUCCESS");
@@ -213,7 +213,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             retryCount = retryCount + 1;
 
                     if not pid:
-                        print "Retry Again: Check for every 5 mins whether the process is up"
+                        print("Retry Again: Check for every 5 mins whether the process is up")
                         retryCount = 0;
                         while retryCount < MAX_RETRY:
                             tdkTestObj.executeTestCase("SUCCESS");
@@ -226,59 +226,58 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 retryCount = retryCount + 1;
 
                     if expectedresult in actualresult and pid:
-                        print "TEST STEP 5:Check if CcspHotspot process is running"
-                        print "ACTUAL RESULT 5: CcspHotspot process is running"
-                        print "CcspHotspot PID: %s" %pid
+                        print("TEST STEP 5:Check if CcspHotspot process is running")
+                        print("ACTUAL RESULT 5: CcspHotspot process is running")
+                        print("CcspHotspot PID: %s" %pid)
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
-                        print "TEST STEP 5:Check if CcspHotspot process is running"
-                        print "ACTUAL RESULT 5: CcspHotspot process is not running"
+                        print("TEST STEP 5:Check if CcspHotspot process is running")
+                        print("ACTUAL RESULT 5: CcspHotspot process is not running")
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         # Initiate reboot if process is not restarted automatically
                         obj1.initiateReboot();
                 else:
-                    print "TEST STEP 4:Kill CcspHotspot process"
-                    print "ACTUAL RESULT 4: CcspHotspot not killed"
+                    print("TEST STEP 4:Kill CcspHotspot process")
+                    print("ACTUAL RESULT 4: CcspHotspot not killed")
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:CcspHotspot process should be running";
-                print "ACTUAL RESULT 3:CcspHotspot process is not running";
+                print("TEST STEP 3:CcspHotspot process should be running");
+                print("ACTUAL RESULT 3:CcspHotspot process is not running");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert the values of public wifi params
             tdkTestObj, actualresult, details = setPublicWiFiParamValues(obj1,orgValue);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP :Revert the PublicWiFi param values"
-                print "ACTUAL RESULT :%s" %details
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP :Revert the PublicWiFi param values")
+                print("ACTUAL RESULT :%s" %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP :Revert the PublicWiFi param values"
-                print "ACTUAL RESULT :%s" %details
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP :Revert the PublicWiFi param values")
+                print("ACTUAL RESULT :%s" %details)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Enable PublicWiFi"
-            print "ACTUAL RESULT 2:%s" %details
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2:Enable PublicWiFi")
+            print("ACTUAL RESULT 2:%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Get values of PublicWiFi params"
-        print "ACTUAL RESULT 1:%s" %orgValue
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Get values of PublicWiFi params")
+        print("ACTUAL RESULT 1:%s" %orgValue)
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj1.unloadModule("wifiagent");
     obj2.unloadModule("sysutil");
     obj3.unloadModule("tdkbtr181");
 
 else:
-    print "Failed to load wifi module";
+    print("Failed to load wifi module");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

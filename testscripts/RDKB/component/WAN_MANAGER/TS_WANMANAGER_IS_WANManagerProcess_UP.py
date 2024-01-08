@@ -98,7 +98,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     wanmanagerProcess= "sh %s/tdk_utility.sh parseConfigFile WANMANAGER_PROCESS" %TDK_PATH;
-    print wanmanagerProcess;
+    print(wanmanagerProcess);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", wanmanagerProcess);
     tdkTestObj.executeTestCase(expectedresult);
@@ -107,11 +107,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     wanmanagerProcessList = wanmanagerProcessList.replace("\\n", "");
     if "Invalid Argument passed" not in wanmanagerProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of wanmanager process";
-        print "EXPECTED RESULT 1: Should Get the list of wanmanager process";
-        print "ACTUAL RESULT 1: wanmanager process: %s" %wanmanagerProcessList;
+        print("TEST STEP 1: Get the list of wanmanager process");
+        print("EXPECTED RESULT 1: Should Get the list of wanmanager process");
+        print("ACTUAL RESULT 1: wanmanager process: %s" %wanmanagerProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         wanmanagerProcessList = wanmanagerProcessList.split(",");
         for item in wanmanagerProcessList:
             command = "pidof %s" %item
@@ -122,24 +122,24 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = details.replace("\\n", "");
             if expectedresult in actualresult and "" != details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Process Name : %s" %item;
-                print "PID : %s" %details;
-                print "%s with process ID %s is running" %(item,details)
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("Process Name : %s" %item);
+                print("PID : %s" %details);
+                print("%s with process ID %s is running" %(item,details))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Process Name : %s" %item
-                print "%s is not running" %item
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("Process Name : %s" %item)
+                print("%s is not running" %item)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of wanmanager process";
-        print "EXPECTED RESULT 1: Should Get the list of wanmanager Process";
-        print "ACTUAL RESULT 1: wanmanager process: %s" %wanmanagerProcessList;
+        print("TEST STEP 1: Get the list of wanmanager process");
+        print("EXPECTED RESULT 1: Should Get the list of wanmanager Process");
+        print("ACTUAL RESULT 1: wanmanager process: %s" %wanmanagerProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-        print "Failed to load sysutil module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed"
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed")

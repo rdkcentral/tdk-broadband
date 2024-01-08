@@ -67,7 +67,7 @@
     <input_parameters>custom_data_model_enabled</input_parameters>
     <automation_approch>1.Load the module
 2.Get the current value of custom_data_model_enabled via syscfg
-3. Toggle the value and check for successful set 
+3. Toggle the value and check for successful set
 4.Revert the custom_data_model_enabled status to previous
 5.Unload the module</automation_approch>
     <expected_output>The set operation on custom_data_model_enabled via syscfg is expected to be successfull</expected_output>
@@ -81,8 +81,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj= tdklib.TDKScriptingLibrary("sysutil","RDKB");
@@ -95,7 +95,7 @@ obj.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_ToggleWithSyscfg');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -111,18 +111,18 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult and default != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status via syscfg";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status via syscfg");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if default == "0" :
             setValue = "1";
         else:
             setValue = "0";
 
-        print "The value to toggle for custom_data_model_enabled is %s" %setValue;
+        print("The value to toggle for custom_data_model_enabled is %s" %setValue);
 
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         cmd = "syscfg set custom_data_model_enabled %s" %setValue;
@@ -134,11 +134,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status via syscfg";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status via syscfg");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "syscfg get custom_data_model_enabled";
@@ -150,19 +150,19 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and details == setValue:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if set reflected for Custom Data Model Enabled via syscfg";
-                print "EXPECTED RESULT 3: The value set for Custom Data Model Enable should be reflected";
-                print "ACTUAL RESULT 3: set value was %s , get via syscfg is %s" %(setValue,details);
+                print("TEST STEP 3: Check if set reflected for Custom Data Model Enabled via syscfg");
+                print("EXPECTED RESULT 3: The value set for Custom Data Model Enable should be reflected");
+                print("ACTUAL RESULT 3: set value was %s , get via syscfg is %s" %(setValue,details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if set reflected for Custom Data Model Enabled via syscfg";
-                print "EXPECTED RESULT 3: The value set for Custom Data Model Enable should be reflected";
-                print "ACTUAL RESULT 3: set value was %s , get via syscfg is %s" %(setValue,details);
+                print("TEST STEP 3: Check if set reflected for Custom Data Model Enabled via syscfg");
+                print("EXPECTED RESULT 3: The value set for Custom Data Model Enable should be reflected");
+                print("ACTUAL RESULT 3: set value was %s , get via syscfg is %s" %(setValue,details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #revert the value to previous
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "syscfg set custom_data_model_enabled %s" %default;
@@ -174,36 +174,36 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 4: %s" %details;
+                print("TEST STEP 4: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 4: %s" %details;
+                print("TEST STEP 4: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status via syscfg";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status via syscfg");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status via syscfg";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status via syscfg");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

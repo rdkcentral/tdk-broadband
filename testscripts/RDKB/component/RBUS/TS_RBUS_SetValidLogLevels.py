@@ -79,15 +79,15 @@ obj.configureTestCase(ip,port,'TS_RBUS_SetValidLogLevels');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
 
     #Valid log level in range 0 to 4
-    print "\n Valid Log Levels are : RBUS_LOG_DEBUG = 0, RBUS_LOG_INFO = 1, RBUS_LOG_WARN  = 2, RBUS_LOG_ERROR = 3, RBUS_LOG_FATAL = 4";
+    print("\n Valid Log Levels are : RBUS_LOG_DEBUG = 0, RBUS_LOG_INFO = 1, RBUS_LOG_WARN  = 2, RBUS_LOG_ERROR = 3, RBUS_LOG_FATAL = 4");
     for level in range(0,5) :
-        print "\nSetting to Level : %d" %level;
+        print("\nSetting to Level : %d" %level);
         tdkTestObj = obj.createTestStep('RBUS_SetLogLevel');
         tdkTestObj.addParameter("level", level);
         expectedresult = "SUCCESS";
@@ -98,23 +98,22 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "\nTEST STEP 1: rbus_setLogLevel should be invoked successfully with log level value = %d" %level;
-            print "EXPECTED RESULT 1: rbus_setLogLevel should be success";
-            print "ACTUAL RESULT 1: rbus_setLogLevel was success; Details %s" %details;
+            print("\nTEST STEP 1: rbus_setLogLevel should be invoked successfully with log level value = %d" %level);
+            print("EXPECTED RESULT 1: rbus_setLogLevel should be success");
+            print("ACTUAL RESULT 1: rbus_setLogLevel was success; Details %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "\nTEST STEP 1: rbus_setLogLevel should be invoked successfully with log level value = %d" %level;
-            print "EXPECTED RESULT 1: rbus_setLogLevel should be success";
-            print "ACTUAL RESULT 1: rbus_setLogLevel was Failed; Details %s" %details;
+            print("\nTEST STEP 1: rbus_setLogLevel should be invoked successfully with log level value = %d" %level);
+            print("EXPECTED RESULT 1: rbus_setLogLevel should be success");
+            print("ACTUAL RESULT 1: rbus_setLogLevel was Failed; Details %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("rbus");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

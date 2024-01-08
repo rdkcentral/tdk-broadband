@@ -93,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper() :
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
 
-    print "The module to test is: LMLITE ";
+    print("The module to test is: LMLITE ");
 
     setup_type = "TDK"
     factoryReset = "false"
@@ -101,14 +101,14 @@ if "SUCCESS" in loadmodulestatus.upper() :
     #Invoke the utility function to get and validate the values for all configured tr181 params
     moduleStatus,failedParams = tdkbSetAllParams.getAllParams("LMLITE", setup_type, factoryReset, obj, obj1);
 
-    print "Status of LMLITE validation is ", moduleStatus, "\n";
+    print("Status of LMLITE validation is ", moduleStatus, "\n");
     if moduleStatus == "FAILURE":
-        print "The failed params are ", failedParams, "\n";
-	tdkTestObj.setResultStatus("FAILURE");
+        print("The failed params are ", failedParams, "\n");
+        tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -59,8 +59,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("TR069Pa","RDKB");
@@ -73,17 +73,17 @@ obj.configureTestCase(ip,port,'');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-		
-    tdkTestObj = obj.createTestStep('TR069Agent_SetParameterValues');  
+
+    tdkTestObj = obj.createTestStep('TR069Agent_SetParameterValues');
     tdkTestObj.addParameter("ParamName","Device.ManagementServer.EnableCWMP");
     tdkTestObj.addParameter("ParamValue","true");
     tdkTestObj.addParameter("Type","boolean");
-		
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -91,20 +91,20 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-        tdkTestObj = obj.createTestStep('TR069Agent_SetParameterValues');  
- 
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+        tdkTestObj = obj.createTestStep('TR069Agent_SetParameterValues');
+
         tdkTestObj.addParameter("ParamName","Device.ManagementServer.EnableCWMP");
- 
+
         tdkTestObj.addParameter("ParamValue","false");
         tdkTestObj.addParameter("Type","boolean");
-		
+
         expectedresult="SUCCESS";
 
         #Execute the test case in STB
@@ -112,26 +112,26 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-		
+
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
 
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	    print "%s" %details;
-         	    
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
+
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-            print "%s" %details;
-    else:   
-        tdkTestObj.setResultStatus("FAILURE"); 
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-        print "%s" %details;
-   
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+            print("%s" %details);
+    else:
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
     obj.unloadModule("TR069Pa");
-   		 
-else:   
-    print "Failed to load TR069Pa module";
+
+else:
+    print("Failed to load TR069Pa module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

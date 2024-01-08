@@ -114,16 +114,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
     tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj_Tr181_Set = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly');
-    print "\nTEST STEP 1: Execute the Pre Requisite for RBUS"
-    print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
+    print("\nTEST STEP 1: Execute the Pre Requisite for RBUS")
+    print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
     #Execute the PreRequisite of RBUS
     rbus_set,revert_flag = rbus_PreRequisite(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj);
 
     if rbus_set == 1:
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was Success"
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was Success")
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "\n******************************************************************"
+        print("\n******************************************************************")
 
         #Set operation with invalid value; Device.DeviceInfo.Webpa.X_COMCAST-COM_CMC is of unsigned int type
         tdkTestObj_Tr181_Set.addParameter("ParamName","Device.DeviceInfo.Webpa.X_COMCAST-COM_CMC");
@@ -140,39 +140,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj_Tr181_Set.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set DDevice.DeviceInfo.Webpa.X_COMCAST-COM_CMC to an invalid value : %s" %value;
-            print "EXPECTED RESULT 2: The set operation should fail with invalid value";
-            print "ACTUAL RESULT 2: Details : %s" %details
+            print("TEST STEP 2: Set DDevice.DeviceInfo.Webpa.X_COMCAST-COM_CMC to an invalid value : %s" %value);
+            print("EXPECTED RESULT 2: The set operation should fail with invalid value");
+            print("ACTUAL RESULT 2: Details : %s" %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj_Tr181_Set.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set Device.DeviceInfo.Webpa.X_COMCAST-COM_CMC to an invalid value : %s" %value;
-            print "EXPECTED RESULT 2: The set operation should fail with invalid value";
-            print "ACTUAL RESULT 2: Details : %s" %details
+            print("TEST STEP 2: Set Device.DeviceInfo.Webpa.X_COMCAST-COM_CMC to an invalid value : %s" %value);
+            print("EXPECTED RESULT 2: The set operation should fail with invalid value");
+            print("ACTUAL RESULT 2: Details : %s" %details)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-    print "\n******************************************************************";
+    print("\n******************************************************************");
 
-    print "\nTEST STEP 3: Execute the Post process of RBUS"
-    print "EXPECTED RESULT 3: Post process of RBUS should be success"
+    print("\nTEST STEP 3: Execute the Post process of RBUS")
+    print("EXPECTED RESULT 3: Post process of RBUS should be success")
     post_process_value = rbus_PostProcess(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj,revert_flag);
 
     if post_process_value == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 3: Post process of RBUS was Success"
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 3: Post process of RBUS was Success")
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 3: Post process of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 3: Post process of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");
-

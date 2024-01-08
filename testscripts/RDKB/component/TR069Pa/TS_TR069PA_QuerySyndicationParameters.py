@@ -48,7 +48,7 @@
     <api_or_interface_used>pam_GetParameterValues</api_or_interface_used>
     <input_parameters>parameters listed under Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.</input_parameters>
     <automation_approch>1.Load the module
-2.Loop through the syndication parameters listed 
+2.Loop through the syndication parameters listed
 3.Perform get operation on the parameters
 4.Unload the module</automation_approch>
     <expected_output>All the parameters listed under Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication. are expected to be successful when a get operation is done </expected_output>
@@ -78,18 +78,18 @@ obj.configureTestCase(ip,port,'TS_TR069PA_QuerySyndicationParameters');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
-   
-    #listing the syndication parameters 
+
+    #listing the syndication parameters
     paramList =["Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PartnerId","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.TR69CertLocation","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.LocalUIBrandingTable","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.WifiUIBrandingTable","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.PauseScreenFileLocation"  ,"Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.CMVoiceImageSelect","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.WANsideSSH.Enable","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ActivatePartnerId","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_Control.ClearPartnerId","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.DefaultAdminIP","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.DefaultLocalIPv4SubnetRange","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.DefaultLanguage","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.AllowEthernetWAN","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.PartnerLink","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.UserGuideLink","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.CustomerCentralLink","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.PartnerText","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.UserGuideText","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Footer.CustomerCentralText","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Connection.MSOmenu","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Connection.MSOinfo","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Connection.StatusTitle","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.Connection.StatusInfo","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.NetworkDiagnosticTools.ConnectivityTestURL","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.Support","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.PartnerHelpLink","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.SMSsupport","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.MyAccountAppSupport","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.MSOLogo","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.Title","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.WelcomeMessage","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.WiFiPersonalization.WelcomeMessage_fre","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.LocalUI.MSOLogo","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.LocalUI.DefaultLoginUsername","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.LocalUI.DefaultLoginPassword","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.LocalUI.HomeNetworkControl","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.LocalUI.MSOLogoTitle","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.HelpTip.NetworkName","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.CloudUI.brandname","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.CloudUI.productname","Device.DeviceInfo.X_RDKCENTRAL-COM_Syndication.RDKB_UIBranding.CloudUI.productname"];
 
     statusFlag = 0;
-    print "TEST STEP 1: Querying the Parameters listed under DeviceInfo.X_RDKCENTRAL-COM_Syndication.";
-    print "EXPECTED RESULT 1:Get operation should be successful";
+    print("TEST STEP 1: Querying the Parameters listed under DeviceInfo.X_RDKCENTRAL-COM_Syndication.");
+    print("EXPECTED RESULT 1:Get operation should be successful");
     for item in paramList:
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName",item);
@@ -99,31 +99,31 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
-            print "%s value is %s"%(item,details);
+            print("%s value is %s"%(item,details));
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print"Queried %s successfully"%item;
+            print("Queried %s successfully"%item);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";            
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             statusFlag = 1;
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print"Get operation on %s failed "%item;
+            print("Get operation on %s failed "%item);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     #Setting the script status to failure In case any query in the loop failed
     if statusFlag == 1:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Get operation on the listed param failed";
+        print("ACTUAL RESULT 1: Get operation on the listed param failed");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Get operation on the listed param  is successful";
+        print("ACTUAL RESULT 1: Get operation on the listed param  is successful");
     obj.unloadModule("pam");
 else:
-    print "Failed to load pam module";
+    print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

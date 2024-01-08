@@ -74,7 +74,7 @@ obj = TDKScriptingLibrary("rdklogger","RDKB");
 obj.configureTestCase(ip,port,'TS_RDKBLogger_Log_Warning');
 #Get the result of connection with test component and Gateway
 result =obj.getLoadModuleResult();
-print "rdklogger module loading status :%s" %result;
+print("rdklogger module loading status :%s" %result);
 
 #Check for SUCCESS/FAILURE of rdklogger module
 if "SUCCESS" in result.upper():
@@ -87,13 +87,13 @@ if "SUCCESS" in result.upper():
     expectedRes = "SUCCESS"
 
     module = "TEST"
-    print "Requested module: %s"%module
+    print("Requested module: %s"%module)
     tdkTestObj.addParameter("module",module);
     level = "WARNING"
-    print "Requested level: %s"%level
+    print("Requested level: %s"%level)
     tdkTestObj.addParameter("level",level);
     msg = "Test Warning message"
-    print "Requested message: %s"%msg
+    print("Requested message: %s"%msg)
     tdkTestObj.addParameter("msg",msg);
 
     #Execute the test case in Gateway
@@ -101,19 +101,19 @@ if "SUCCESS" in result.upper():
 
     #Get the result of execution
     result = tdkTestObj.getResult();
-    print "[TEST EXECUTION RESULT] : %s" %result;
+    print("[TEST EXECUTION RESULT] : %s" %result);
     details = tdkTestObj.getResultDetails();
     #Set the result status of execution
     if "SUCCESS" in result.upper():
         tdkTestObj.setResultStatus("SUCCESS");
-        print "rdklogger logging Successful";
+        print("rdklogger logging Successful");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "rdklogger logging Failed: [%s]"%details;
+        print("rdklogger logging Failed: [%s]"%details);
 
     #unloading rdklogger module
     obj.unloadModule("rdklogger");
 else:
-    print "Failed to load rdklogger module";
+    print("Failed to load rdklogger module");
     #Set the module loading status
     obj.setLoadModuleStatus("FAILURE");

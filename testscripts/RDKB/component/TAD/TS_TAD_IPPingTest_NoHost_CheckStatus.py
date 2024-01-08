@@ -83,7 +83,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_NoHost_CheckStatus');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -98,11 +98,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: Set the host of IPPing as an empty URI";
-        print "EXPECTED RESULT 2: Should not set an empty host for IPPing";
-        print "ACTUAL RESULT 2: %s" %details;
+        print("TEST STEP 2: Set the host of IPPing as an empty URI");
+        print("EXPECTED RESULT 2: Should not set an empty host for IPPing");
+        print("ACTUAL RESULT 2: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #start the ping test after setting host value
         tdkTestObj = obj.createTestStep('TADstub_Set');
@@ -116,15 +116,15 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Set PingTest.Run of IPPing as true";
-            print "EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true";
-            print "ACTUAL RESULT 3: %s" %details;
+            print("TEST STEP 3: Set PingTest.Run of IPPing as true");
+            print("EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true");
+            print("ACTUAL RESULT 3: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             time.sleep(40);
 
-            print "TEST STEP 4:  Check the DiagnosticsState value after ping"
-            print "EXPECTED RESULT 4: DiagnosticsState value should be Error_Other";
+            print("TEST STEP 4:  Check the DiagnosticsState value after ping")
+            print("EXPECTED RESULT 4: DiagnosticsState value should be Error_Other");
             tdkTestObj = obj.createTestStep('TADstub_Get');
             tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.DiagnosticsState");
             tdkTestObj.executeTestCase(expectedresult);
@@ -132,30 +132,30 @@ if "SUCCESS" in loadmodulestatus.upper():
             diagState =  tdkTestObj.getResultDetails();
             if expectedresult in actualresult and diagState == "Error_Other":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 4: DiagnosticsState value is %s" %diagState
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 4: DiagnosticsState value is %s" %diagState)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 4: %s" %diagState
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 4: %s" %diagState)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Set PingTest.Run of IPPing as true";
-            print "EXPECTED RESULT 3: Should not set PingTest.Run of IPPing as true";
-            print "ACTUAL RESULT 3: %s" %details;
+            print("TEST STEP 3: Set PingTest.Run of IPPing as true");
+            print("EXPECTED RESULT 3: Should not set PingTest.Run of IPPing as true");
+            print("ACTUAL RESULT 3: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 2: Set the host of IPPing as an empty string";
-        print "EXPECTED RESULT 2: Should set the host of IPPing";
-        print "ACTUAL RESULT 2: %s" %details;
+        print("TEST STEP 2: Set the host of IPPing as an empty string");
+        print("EXPECTED RESULT 2: Should set the host of IPPing");
+        print("ACTUAL RESULT 2: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -117,11 +117,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     if expectedresult in actualresult and devicetype != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if devicetype == "RPI":
             i =1;
@@ -136,14 +136,14 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
         actualresult = tdkTestObj.getResult();
         enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
-        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+        print("TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties")
+        print("EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE");
 
         if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if enableFlag == "TRUE":
                 ParamName = "Device.X_RDK_WanManager.Interface." + str(i) + ".VirtualInterface.1.Enable";
@@ -159,11 +159,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
 
             if expectedresult in actualresult and details == "true":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", "grep -rin \"RDKB_PROCESS_CRASHED\" /rdklogs/logs/");
@@ -177,11 +177,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
                 if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if any process crashed before reboot ";
-                    print "EXPECTED RESULT 4: No process should be crashed prior to reboot";
-                    print "ACTUAL RESULT 4: Log files does not have any process crashed logs";
+                    print("TEST STEP 4: Check if any process crashed before reboot ");
+                    print("EXPECTED RESULT 4: No process should be crashed prior to reboot");
+                    print("ACTUAL RESULT 4: Log files does not have any process crashed logs");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                     sysObj.initiateReboot();
@@ -199,51 +199,51 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
                     if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Check if any process crashed after reboot"
-                        print "EXPECTED RESULT 5: No process should be crashed after reboot";
-                        print "ACTUAL RESULT 5: Log files does not have any process crashed logs";
+                        print("TEST STEP 5: Check if any process crashed after reboot")
+                        print("EXPECTED RESULT 5: No process should be crashed after reboot");
+                        print("ACTUAL RESULT 5: Log files does not have any process crashed logs");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Check if any process crashed after reboot";
-                        print "EXPECTED RESULT 5: No process should be crashed after reboot";
-                        print "ACTUAL RESULT 5: %s"%details;
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 5: Check if any process crashed after reboot");
+                        print("EXPECTED RESULT 5: No process should be crashed after reboot");
+                        print("ACTUAL RESULT 5: %s"%details);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if any process crashed before reboot ";
-                    print "EXPECTED RESULT 4: No process should be crashed prior to reboot";
-                    print "ACTUAL RESULT 4: Log files  have process crashed logs :%s "%details;
+                    print("TEST STEP 4: Check if any process crashed before reboot ");
+                    print("EXPECTED RESULT 4: No process should be crashed prior to reboot");
+                    print("ACTUAL RESULT 4: Log files  have process crashed logs :%s "%details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] :FAILURE";
+                    print("[TEST EXECUTION RESULT] :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE enabled";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE enabled");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

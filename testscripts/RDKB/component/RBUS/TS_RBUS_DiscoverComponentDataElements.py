@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_RBUS_DiscoverComponentDataElements');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,16 +108,16 @@ if "SUCCESS" in loadmodulestatus.upper() :
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS Open Detail is ",details
+    print("RBUS Open Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was success";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_DiscoverComponentDataElements');
         tdkTestObj.addParameter("componentName","CcspPandMSsp");
@@ -131,19 +131,19 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult :
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Validate the rbus_discoverComponentDataElements";
-            print "EXPECTED RESULT 2: rbus_discoverComponentDataElements API should be success";
-            print "ACTUAL RESULT 2: rbus_discoverComponentDataElements API was success";
+            print("TEST STEP 2: Validate the rbus_discoverComponentDataElements");
+            print("EXPECTED RESULT 2: rbus_discoverComponentDataElements API should be success");
+            print("ACTUAL RESULT 2: rbus_discoverComponentDataElements API was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Validate the rbus_discoverComponentDataElements";
-            print "EXPECTED RESULT 2: rbus_discoverComponentDataElements API should be success";
-            print "ACTUAL RESULT 2: rbus_discoverComponentDataElements API was Failed";
+            print("TEST STEP 2: Validate the rbus_discoverComponentDataElements");
+            print("EXPECTED RESULT 2: rbus_discoverComponentDataElements API should be success");
+            print("ACTUAL RESULT 2: rbus_discoverComponentDataElements API was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_Close');
         expectedresult = "SUCCESS";
@@ -154,30 +154,30 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Close the RBUS connection";
-            print "EXPECTED RESULT 3: rbus_close should be success";
-            print "ACTUAL RESULT 3: rbus_close was success";
+            print("TEST STEP 3: Close the RBUS connection");
+            print("EXPECTED RESULT 3: rbus_close should be success");
+            print("ACTUAL RESULT 3: rbus_close was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Close the RBUS connection";
-            print "EXPECTED RESULT 3: rbus_close should be success";
-            print "ACTUAL RESULT 3: rbus_close was Failed";
+            print("TEST STEP 3: Close the RBUS connection");
+            print("EXPECTED RESULT 3: rbus_close should be success");
+            print("ACTUAL RESULT 3: rbus_close was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was Failed";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("rbus");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

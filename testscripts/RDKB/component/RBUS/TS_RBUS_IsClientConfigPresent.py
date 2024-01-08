@@ -120,12 +120,12 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
 
     if expectedresult in def_result:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: RBUS Enable Status retrieved successfully"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: RBUS Enable Status retrieved successfully")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-        print "Initial RBUS Enabled Status is",default_value
+        print("Initial RBUS Enabled Status is",default_value)
 
         if default_value == "true":
             rbus_enabled = 1;
@@ -135,61 +135,61 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             if rbus_set == 1:
                 rbus_enabled = 1;
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Enable the RBUS status to TRUE"
-                print "EXPECTED RESULT 2: Should Enable RBUS Status of TRUE"
-                print "ACTUAL RESULT 2: RBUS Enable status set to TRUE"
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                print("TEST STEP 2: Enable the RBUS status to TRUE")
+                print("EXPECTED RESULT 2: Should Enable RBUS Status of TRUE")
+                print("ACTUAL RESULT 2: RBUS Enable status set to TRUE")
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
             else:
                 rbus_enabled = 0
-                print "TEST STEP 2: Enable the RBUS status to TRUE"
-                print "EXPECTED RESULT 2: Should Enable RBUS Status of TRUE"
-                print "ACTUAL RESULT 2: Failed to Enable RBUS status to TRUE"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Enable the RBUS status to TRUE")
+                print("EXPECTED RESULT 2: Should Enable RBUS Status of TRUE")
+                print("ACTUAL RESULT 2: Failed to Enable RBUS status to TRUE")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
         if rbus_enabled == 1:
             actualresult,details = isFilePresent(tdkTestObj_Sys_ExeCmd,"/etc/rbus_client.conf")
-            if 	expectedresult in actualresult and details != "":
-                print "TEST STEP 3: Check whether RBUS client Config file(/etc/rbus_client.conf) is present"
-                print "EXPECTED RESULT 3: RBUS client config file(/etc/rbus_client.conf) should be present under etc"
-                print "ACTUAL RESULT 3: RBUS client config file (/etc/rbus_client.conf) is present"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+            if  expectedresult in actualresult and details != "":
+                print("TEST STEP 3: Check whether RBUS client Config file(/etc/rbus_client.conf) is present")
+                print("EXPECTED RESULT 3: RBUS client config file(/etc/rbus_client.conf) should be present under etc")
+                print("ACTUAL RESULT 3: RBUS client config file (/etc/rbus_client.conf) is present")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3: Check whether RBUS client Config file(/etc/rbus_client.conf)  is present"
-                print "EXPECTED RESULT 3: RBUS client config file(/etc/rbus_client.conf)  should be present under etc"
-                print "ACTUAL RESULT 3: RBUS client config file(/etc/rbus_client.conf) is NOT present"
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("TEST STEP 3: Check whether RBUS client Config file(/etc/rbus_client.conf)  is present")
+                print("EXPECTED RESULT 3: RBUS client config file(/etc/rbus_client.conf)  should be present under etc")
+                print("ACTUAL RESULT 3: RBUS client config file(/etc/rbus_client.conf) is NOT present")
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
         else:
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-            print "RBUS is NOT enabled to TRUE"
+            print("RBUS is NOT enabled to TRUE")
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: Failed to get the RBUS enable status"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: Failed to get the RBUS enable status")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     #Revert Flag will set to 1 only when initial value was false, so disable the RBUS using doEnableDisableRBUS function
     if revert_flag == 1:
         rbus_set,revert_flag = doEnableDisableRBUS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if rbus_set == 1:
-            print "TEST STEP 7: Set the RBUS enable status to False"
-            print "EXPECTED RESULT 7: Should Set the RBUS Enable Status of False"
-            print "ACTUAL RESULT 7: RBUS Enable Status set to False"
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 7: Set the RBUS enable status to False")
+            print("EXPECTED RESULT 7: Should Set the RBUS Enable Status of False")
+            print("ACTUAL RESULT 7: RBUS Enable Status set to False")
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 7: Set the RBUS enable status to False"
-            print "EXPECTED RESULT 7: Should Set the RBUS Enable Status of False"
-            print "ACTUAL RESULT 7: Failed to set RBUS Enable Status to False"
-            print "[TEST EXECUTION RESULT] 1: FAILURE";
+            print("TEST STEP 7: Set the RBUS enable status to False")
+            print("EXPECTED RESULT 7: Should Set the RBUS Enable Status of False")
+            print("ACTUAL RESULT 7: Failed to set RBUS Enable Status to False")
+            print("[TEST EXECUTION RESULT] 1: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

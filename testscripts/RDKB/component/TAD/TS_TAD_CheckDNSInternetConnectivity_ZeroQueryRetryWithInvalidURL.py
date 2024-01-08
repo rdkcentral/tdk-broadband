@@ -104,15 +104,15 @@ def calculateSleep(obj, step, index):
     #Get the initial value of Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{index}.QueryTimeout
     paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryTimeout";
 
-    print "\nTEST STEP %d : Get the value of %s to calculate the sleep duration" %(step, paramName);
-    print "EXPECTED RESULT %d : The value of %s should be retrieved successfully" %(step, paramName);
+    print("\nTEST STEP %d : Get the value of %s to calculate the sleep duration" %(step, paramName));
+    print("EXPECTED RESULT %d : The value of %s should be retrieved successfully" %(step, paramName));
     tdkTestObj, actualresult, details = getDNSParameterValue(obj, expectedresult, paramName);
 
     if expectedresult in actualresult and details != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
-        print "TEST EXECUTION RESULT : SUCCESS";
+        print("ACTUAL RESULT %d: %s : %s" %(step, paramName, details));
+        print("TEST EXECUTION RESULT : SUCCESS");
 
         if details.isdigit():
             timeout = float(details);
@@ -120,16 +120,16 @@ def calculateSleep(obj, step, index):
             timeoutInSec = timeout/1000;
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Required Sleep time : %fs" %timeoutInSec;
+            print("Required Sleep time : %fs" %timeoutInSec);
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "Timeout is not a valid value";
+            print("Timeout is not a valid value");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("ACTUAL RESULT %d: %s : %s" %(step, paramName, details));
+        print("TEST EXECUTION RESULT : FAILURE");
     return timeoutInSec;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
@@ -155,9 +155,9 @@ sysobj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_ZeroQueryR
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=tr181obj.getLoadModuleResult();
 loadmodulestatus2=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2)
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
@@ -186,7 +186,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
             if setTestURL == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Test URL table configured successfully";
+                print("Test URL table configured successfully");
 
                 #Check the number of WAN Interfaces for DNS Internet Connectivity Check
                 numberOfInterfaces = getWanInterfaceEntries(obj, expectedresult, step);
@@ -209,12 +209,12 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "WAN Interface set to %s successfully" %setEnable;
+                                print("WAN Interface set to %s successfully" %setEnable);
                             else:
                                 proceedFlag = 0;
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "WAN Interface NOT set to %s successfully" %setEnable;
+                                print("WAN Interface NOT set to %s successfully" %setEnable);
                         else:
                             "WAN Interface is enabled already...";
 
@@ -223,40 +223,40 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                             step = step + 1;
                             paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryRetry";
 
-                            print "\nTEST STEP %d : Get the initial value of %s" %(step, paramName);
-                            print "EXPECTED RESULT %d : The initial value of %s should be retrieved successfully" %(step, paramName);
+                            print("\nTEST STEP %d : Get the initial value of %s" %(step, paramName));
+                            print("EXPECTED RESULT %d : The initial value of %s should be retrieved successfully" %(step, paramName));
                             tdkTestObj, actualresult, details = getDNSParameterValue(obj, expectedresult, paramName);
 
                             if expectedresult in actualresult and details != "":
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
-                                print "TEST EXECUTION RESULT : SUCCESS";
+                                print("ACTUAL RESULT %d: %s : %s" %(step, paramName, details));
+                                print("TEST EXECUTION RESULT : SUCCESS");
 
                                 if details.isdigit():
                                     initialRetry = int(details);
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "Initial retry count is valid";
+                                    print("Initial retry count is valid");
 
                                     #Set Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry to 0
                                     setRetry = 0;
                                     step = step + 1;
-                                    print "\nTEST STEP %d : Set %s to %d" %(step, paramName, setRetry);
-                                    print "EXPECTED RESULT %d : Setting %s to %d should be success" %(step, paramName, setRetry);
+                                    print("\nTEST STEP %d : Set %s to %d" %(step, paramName, setRetry));
+                                    print("EXPECTED RESULT %d : Setting %s to %d should be success" %(step, paramName, setRetry));
                                     tdkTestObj, actualresult, details = setDNSParameterValue(obj, expectedresult, paramName, str(setRetry), "unsignedint");
 
                                     if expectedresult in actualresult and details != "":
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d: %s set successfully" %(step, paramName);
-                                        print "TEST EXECUTION RESULT : SUCCESS";
+                                        print("ACTUAL RESULT %d: %s set successfully" %(step, paramName));
+                                        print("TEST EXECUTION RESULT : SUCCESS");
 
                                         #Find the initial number of log lines indicating the first DNS query retry attempts
                                         step = step + 1;
                                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                                         retryLog = "Sending Query Retry Attempt:1";
-                                        print "\nGet the initial number of log lines of " + retryLog;
+                                        print("\nGet the initial number of log lines of " + retryLog);
                                         file = "/rdklogs/logs/DNSInternetCheck.txt.0";
                                         initial_count = getLogFileTotalLinesCount(tdkTestObj, file, retryLog, step);
 
@@ -268,13 +268,13 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                         if expectedresult in actualresult:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "DNS queries started successfully";
+                                            print("DNS queries started successfully");
 
                                             #Check the DNS Query result status after waiting for the retries to be completed
                                             step = step + 1;
                                             sleepTime = calculateSleep(obj, step, wanInterface);
                                             if sleepTime != -1:
-                                                print "Sleeping %fs before querying the DNS result status" %sleepTime;
+                                                print("Sleeping %fs before querying the DNS result status" %sleepTime);
                                                 sleep(sleepTime);
                                                 step = step + 1;
                                                 paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryNowResult";
@@ -282,87 +282,87 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
 
                                                 #DNS query result status is expected to be "DISCONNECTED"
                                                 step = step + 1;
-                                                print "\nTEST STEP %d : Check if the DNS query result status is DISCONNECTED" %step;
-                                                print "EXPECTED RESULT %d : The DNS query result status should be DISCONNECTED" %step;
+                                                print("\nTEST STEP %d : Check if the DNS query result status is DISCONNECTED" %step);
+                                                print("EXPECTED RESULT %d : The DNS query result status should be DISCONNECTED" %step);
 
                                                 if expectedresult in actualresult and details == "DISCONNECTED":
                                                     #Set the result status of execution
                                                     tdkTestObj.setResultStatus("SUCCESS");
-                                                    print "ACTUAL RESULT %d : DNS query result is retrieved as %s" %(step, details);
-                                                    print "TEST EXECUTION RESULT : SUCCESS";
+                                                    print("ACTUAL RESULT %d : DNS query result is retrieved as %s" %(step, details));
+                                                    print("TEST EXECUTION RESULT : SUCCESS");
 
                                                     #Find the final number of log lines indicating the DNS query retry attempts
                                                     step = step + 1;
                                                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                                                    print "\nGet the final number of log lines of " + retryLog;
+                                                    print("\nGet the final number of log lines of " + retryLog);
                                                     final_count = getLogFileTotalLinesCount(tdkTestObj, file, retryLog, step);
 
                                                     #Check if the log line difference is = 0
-                                                    print "The Retry Logs should NOT be populated under %s" %file;
+                                                    print("The Retry Logs should NOT be populated under %s" %file);
                                                     step = step + 1;
-                                                    print "\nTEST STEP %d : Check if the log - %s is populated under %s as the Query Retry configured is 0 even though the URL configured in invalid" %(step, retryLog, file);
-                                                    print "EXPECTED RESULT %d : Log should NOT be present under %s as the Query Retry configured is 0 even though the URL configured is invalid" %(step, file);
+                                                    print("\nTEST STEP %d : Check if the log - %s is populated under %s as the Query Retry configured is 0 even though the URL configured in invalid" %(step, retryLog, file));
+                                                    print("EXPECTED RESULT %d : Log should NOT be present under %s as the Query Retry configured is 0 even though the URL configured is invalid" %(step, file));
 
-                                                    print "Number of initial log lines of %s : %d" %(retryLog, initial_count);
-                                                    print "Number of final log lines of %s : %d" %(retryLog, final_count);
+                                                    print("Number of initial log lines of %s : %d" %(retryLog, initial_count));
+                                                    print("Number of final log lines of %s : %d" %(retryLog, final_count));
 
                                                     if initial_count == final_count:
                                                         #Set the result status of execution
                                                         tdkTestObj.setResultStatus("SUCCESS");
-                                                        print "ACTUAL RESULT %d : The required log lines are NOT found under %s" %(step, file);
+                                                        print("ACTUAL RESULT %d : The required log lines are NOT found under %s" %(step, file));
                                                         #Get the result of execution
-                                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                                     else:
                                                         #Set the result status of execution
                                                         tdkTestObj.setResultStatus("FAILURE");
-                                                        print "ACTUAL RESULT %d : The required log lines are found under %s" %(step, file);
+                                                        print("ACTUAL RESULT %d : The required log lines are found under %s" %(step, file));
                                                         #Get the result of execution
-                                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                                        print("[TEST EXECUTION RESULT] : FAILURE");
                                                 else:
                                                     #Set the result status of execution
                                                     tdkTestObj.setResultStatus("FAILURE");
-                                                    print "ACTUAL RESULT %d : DNS query result is retrieved as %s which is not expected" %(step, details);
-                                                    print "TEST EXECUTION RESULT : FAILURE";
+                                                    print("ACTUAL RESULT %d : DNS query result is retrieved as %s which is not expected" %(step, details));
+                                                    print("TEST EXECUTION RESULT : FAILURE");
                                             else:
                                                 #Set the result status of execution
                                                 tdkTestObj.setResultStatus("FAILURE");
-                                                print "Sleep Time could not be retrieved from Timeout";
+                                                print("Sleep Time could not be retrieved from Timeout");
                                         else:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "DNS queries NOT started successfully";
+                                            print("DNS queries NOT started successfully");
 
                                         #Revert Device.Diagnostics.X_RDK_DNSInternet.WANInterface.{i}.QueryRetry to initial value
                                         step = step + 1;
                                         paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".QueryRetry";
-                                        print "\nTEST STEP %d : Revert %s to %d" %(step, paramName, initialRetry);
-                                        print "EXPECTED RESULT %d : Reverting %s to %d should be success" %(step, paramName, initialRetry);
+                                        print("\nTEST STEP %d : Revert %s to %d" %(step, paramName, initialRetry));
+                                        print("EXPECTED RESULT %d : Reverting %s to %d should be success" %(step, paramName, initialRetry));
                                         tdkTestObj, actualresult, details = setDNSParameterValue(obj, expectedresult, paramName, str(initialRetry), "unsignedint");
 
                                         if expectedresult in actualresult and details != "":
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "ACTUAL RESULT %d: %s reverted successfully" %(step, paramName);
-                                            print "TEST EXECUTION RESULT : SUCCESS";
+                                            print("ACTUAL RESULT %d: %s reverted successfully" %(step, paramName));
+                                            print("TEST EXECUTION RESULT : SUCCESS");
                                         else:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "ACTUAL RESULT %d: %s NOT reverted successfully" %(step, paramName);
-                                            print "TEST EXECUTION RESULT : FAILURE";
+                                            print("ACTUAL RESULT %d: %s NOT reverted successfully" %(step, paramName));
+                                            print("TEST EXECUTION RESULT : FAILURE");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d: %s NOT set successfully" %(step, paramName);
-                                        print "TEST EXECUTION RESULT : FAILURE";
+                                        print("ACTUAL RESULT %d: %s NOT set successfully" %(step, paramName));
+                                        print("TEST EXECUTION RESULT : FAILURE");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "Initial retry count is NOT valid";
+                                    print("Initial retry count is NOT valid");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: %s : %s" %(step, paramName, details);
-                                print "TEST EXECUTION RESULT : FAILURE";
+                                print("ACTUAL RESULT %d: %s : %s" %(step, paramName, details));
+                                print("TEST EXECUTION RESULT : FAILURE");
 
                             #Revert the WAN interface enable if required
                             if initialEnable == "false":
@@ -373,21 +373,21 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                 if expectedresult in actualresult:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "WAN Interface enable reverted successfully";
+                                    print("WAN Interface enable reverted successfully");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "WAN Interface enable NOT reverted successfully";
+                                    print("WAN Interface enable NOT reverted successfully");
                             else:
                                 "%s revert operation not required" %paramName;
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "WAN Interface is not enabled, cannot proceed further...";
+                            print("WAN Interface is not enabled, cannot proceed further...");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Number of WAN Interface entries NOT retrieved successfully";
+                    print("Number of WAN Interface entries NOT retrieved successfully");
 
                 #Delete the Test URL table config
                 step = step + 1;
@@ -396,52 +396,52 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                 if deleteStatus == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Test URL table configured is deleted successfully";
+                    print("Test URL table configured is deleted successfully");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Test URL table configured is NOT deleted successfully";
+                    print("Test URL table configured is NOT deleted successfully");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Test URL table NOT configured successfully";
+                print("Test URL table NOT configured successfully");
 
             #Revert to initial table state
-            print "\n****Revert to initial Test URL Configuration Start****";
+            print("\n****Revert to initial Test URL Configuration Start****");
             step = step + 1;
             setTestURL, newInstanceList, step = createTestURLTable(obj, tr181obj, step, expectedresult, len(testURLStore), testURLStore);
 
             if setTestURL == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Test URL table reverted to initial state";
+                print("Test URL table reverted to initial state");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Test URL table NOT reverted to initial state";
-            print "\n****Revert to initial Test URL Configuration Complete****";
+                print("Test URL table NOT reverted to initial state");
+            print("\n****Revert to initial Test URL Configuration Complete****");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Test URL table Pre-requisites NOT set successfully";
+            print("Test URL table Pre-requisites NOT set successfully");
 
         #Revert operation
         setEnable = "false";
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

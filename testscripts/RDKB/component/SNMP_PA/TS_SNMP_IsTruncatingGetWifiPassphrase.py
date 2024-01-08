@@ -70,8 +70,8 @@ WIFIAgent_Set</api_or_interface_used>
 
 Device.WiFi.AccessPoint.1.Security.KeyPassphrase</input_parameters>
     <automation_approch>1.TM will load the snmp_pa library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4.With WIFIAgent_Set set  a passphrase with more than 32 characters
 5.Check if the same passphrase is received on snmpget  or not
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -95,8 +95,8 @@ pam</test_stub_interface>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 from time import sleep;
 
@@ -114,7 +114,7 @@ wifiObj.configureTestCase(ip,port,'TS_SNMP_IsTruncatingGetWifiPassphrase');
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 wifiloadmodulestatus =wifiObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -128,13 +128,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
     get_details =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001", ipaddress);
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
-    
+
     if "=" in get_details:
         orgPassphrase = get_details.rsplit(None, 1)[-1].strip('"');
         tdkTestObj.setResultStatus("SUCCESS");
 
-	#set 32+ passphrase using setparams()
-	temp_pass = "passwordpasswordpasswordpasswordpassword"
+        #set 32+ passphrase using setparams()
+        temp_pass = "passwordpasswordpasswordpasswordpassword"
         tdkTestObj = wifiObj.createTestStep('WIFIAgent_Set');
         tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.KeyPassphrase");
         tdkTestObj.addParameter("paramValue",temp_pass);
@@ -144,31 +144,31 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
         #Execute the test case in Gateway
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();	
+        details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1:set 32+ wifi passphrase";
-            print "EXPECTED RESULT 1: Should set Wifi passphrase successfully";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1:set 32+ wifi passphrase");
+            print("EXPECTED RESULT 1: Should set Wifi passphrase successfully");
+            print("ACTUAL RESULT 1: %s" %details);
 
-	    sleep(30);
-	    #check if on snmpget this long passphrase is getting truncated or not
-	    get_details =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001", ipaddress);
-	    if "=" in get_details:
-        	passphrase = get_details.rsplit(None, 1)[-1].strip('"');
-		print "passphrase after set is ", passphrase
-		if passphrase == temp_pass:
-    	            tdkTestObj.setResultStatus("SUCCESS");
-		    print "SUCCESS : passphrase not getting truncated"
-		else:
-		    tdkTestObj.setResultStatus("FAILURE");
-		    print "FAILURE : passphrase getting truncated"
-	    else:
-        	tdkTestObj.setResultStatus("FAILURE");
-	        print "ACTUAL RESULT : FAILURE, snmpget for passphrase failed %s" %get_details;
+            sleep(30);
+            #check if on snmpget this long passphrase is getting truncated or not
+            get_details =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001", ipaddress);
+            if "=" in get_details:
+                passphrase = get_details.rsplit(None, 1)[-1].strip('"');
+                print("passphrase after set is ", passphrase)
+                if passphrase == temp_pass:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("SUCCESS : passphrase not getting truncated")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("FAILURE : passphrase getting truncated")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT : FAILURE, snmpget for passphrase failed %s" %get_details);
 
-	    #setting passphrase back to original value
+            #setting passphrase back to original value
             tdkTestObj = wifiObj.createTestStep('WIFIAgent_Set');
             tdkTestObj.addParameter("paramName","Device.WiFi.AccessPoint.1.Security.KeyPassphrase");
             tdkTestObj.addParameter("paramValue",orgPassphrase);
@@ -179,29 +179,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in wifiloadmodulestatus.u
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:set original wifi passphrase";
-                print "EXPECTED RESULT 2: Should set Wifi passphrase successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:set original wifi passphrase");
+                print("EXPECTED RESULT 2: Should set Wifi passphrase successfully");
+                print("ACTUAL RESULT 2: %s" %details);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:set original wifi passphrase"
-                print "EXPECTED RESULT 2: Should set Wifi passphrase successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:set original wifi passphrase")
+                print("EXPECTED RESULT 2: Should set Wifi passphrase successfully");
+                print("ACTUAL RESULT 2: %s" %details);
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1:set 32+ wifi passphrase"
-            print "EXPECTED RESULT 1: Should set Wifi passphrase successfully";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1:set 32+ wifi passphrase")
+            print("EXPECTED RESULT 1: Should set Wifi passphrase successfully");
+            print("ACTUAL RESULT 1: %s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: FAILURE, snmpget for passphrase failed %s" %get_details;
+        print("ACTUAL RESULT 1: FAILURE, snmpget for passphrase failed %s" %get_details);
 
     obj.unloadModule("sysutil");
     wifiObj.unloadModule("wifiagent");
 else:
-    print "FAILURE to load SNMP_PA module";
+    print("FAILURE to load SNMP_PA module");
     obj.setLoadModuleStatus("FAILURE");
     wifiObj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

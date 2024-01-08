@@ -71,8 +71,8 @@ Device.IP.Diagnostics.IPPing.MaximumResponseTime</input_parameters>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import time;
 import tdkutility;
 from tdkutility import *
@@ -87,7 +87,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_InvalidUri_CheckFailureAndResponse');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -102,14 +102,14 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 2: Set the host of IPPing as an invalid URI";
-        print "EXPECTED RESULT 2: Should set the host of IPPing";
-        print "ACTUAL RESULT 2: %s" %details;
+        print("TEST STEP 2: Set the host of IPPing as an invalid URI");
+        print("EXPECTED RESULT 2: Should set the host of IPPing");
+        print("ACTUAL RESULT 2: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #start the ping test after setting host value
-	tdkTestObj = obj.createTestStep('TADstub_Set');
+        tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run")
         tdkTestObj.addParameter("ParamValue","true");
         tdkTestObj.addParameter("Type","boolean");
@@ -120,46 +120,46 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Set PingTest.Run of IPPing as true";
-            print "EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true";
-            print "ACTUAL RESULT 3: %s" %details;
+            print("TEST STEP 3: Set PingTest.Run of IPPing as true");
+            print("EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true");
+            print("ACTUAL RESULT 3: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             time.sleep(40);
 
-	    #Check if the ping test has failed, by checking the ping's success count and response time values
-	    paramList=["Device.IP.Diagnostics.IPPing.SuccessCount", "Device.IP.Diagnostics.IPPing.AverageResponseTime", "Device.IP.Diagnostics.IPPing.MinimumResponseTime", "Device.IP.Diagnostics.IPPing.MaximumResponseTime"]
-            print "TEST STEP 4: Get the successcount, AverageResponseTime, MinimumResponseTime, MaximumResponseTime of ping test"
-            print "EXPECTED RESULT 4: successcount, AverageResponseTime, MinimumResponseTime, MaximumResponseTime of ping test should be equal to 0"
-	    tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-	    if expectedresult in status and orgValue == ['0', '0', '0', '0']:
+            #Check if the ping test has failed, by checking the ping's success count and response time values
+            paramList=["Device.IP.Diagnostics.IPPing.SuccessCount", "Device.IP.Diagnostics.IPPing.AverageResponseTime", "Device.IP.Diagnostics.IPPing.MinimumResponseTime", "Device.IP.Diagnostics.IPPing.MaximumResponseTime"]
+            print("TEST STEP 4: Get the successcount, AverageResponseTime, MinimumResponseTime, MaximumResponseTime of ping test")
+            print("EXPECTED RESULT 4: successcount, AverageResponseTime, MinimumResponseTime, MaximumResponseTime of ping test should be equal to 0")
+            tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
+            if expectedresult in status and orgValue == ['0', '0', '0', '0']:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 4: %s" %orgValue;
+                print("ACTUAL RESULT 4: %s" %orgValue);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 4: %s" %orgValue;
+                print("ACTUAL RESULT 4: %s" %orgValue);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE"
-	else:
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Set PingTest.Run of IPPing as true";
-            print "EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true";
-            print "ACTUAL RESULT 3: %s" %details;
+            print("TEST STEP 3: Set PingTest.Run of IPPing as true");
+            print("EXPECTED RESULT 3: Should set PingTest.Run of IPPing as true");
+            print("ACTUAL RESULT 3: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 2: Set the host of IPPing";
-        print "EXPECTED RESULT 2: Should set the host of IPPing";
-        print "ACTUAL RESULT 2: %s" %details;
+        print("TEST STEP 2: Set the host of IPPing");
+        print("EXPECTED RESULT 2: Should set the host of IPPing");
+        print("ACTUAL RESULT 2: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

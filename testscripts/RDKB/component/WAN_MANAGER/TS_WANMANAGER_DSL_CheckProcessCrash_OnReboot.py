@@ -104,11 +104,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult and details == "true":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", "grep -rin \"RDKB_PROCESS_CRASHED\" /rdklogs/logs/");
@@ -121,10 +121,10 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
             if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if any process crashed before reboot ";
-                print "ACTUAL RESULT 3: Log files does not have any process crashed logs";
+                print("TEST STEP 3: Check if any process crashed before reboot ");
+                print("ACTUAL RESULT 3: Log files does not have any process crashed logs");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 sysObj.initiateReboot();
@@ -141,43 +141,43 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()and load
                 if expectedresult in actualresult and "RDKB_PROCESS_CRASHED" not in details:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if any process crashed after reboot"
-                    print "ACTUAL RESULT 4: Log files does not have any process crashed logs";
+                    print("TEST STEP 4: Check if any process crashed after reboot")
+                    print("ACTUAL RESULT 4: Log files does not have any process crashed logs");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if any process crashed after reboot";
-                    print "ACTUAL RESULT 4: %s"%details;
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: Check if any process crashed after reboot");
+                    print("ACTUAL RESULT 4: %s"%details);
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if any process crashed before reboot ";
-                print "ACTUAL RESULT 3: Log files does not have any process crashed logs";
+                print("TEST STEP 3: Check if any process crashed before reboot ");
+                print("ACTUAL RESULT 3: Log files does not have any process crashed logs");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("[TEST EXECUTION RESULT] :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL enabled";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL enabled");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         objReturned.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Check if DSL interface is active";
-        print "EXPECTED RESULT 1: DSL interface is expected to be active";
-        print "ACTUAL RESULT 1: DSL interface is inactive";
+        print("TEST STEP 1 :Check if DSL interface is active");
+        print("EXPECTED RESULT 1: DSL interface is expected to be active");
+        print("ACTUAL RESULT 1: DSL interface is inactive");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
     tadobj.unloadModule("tad");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     tadobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

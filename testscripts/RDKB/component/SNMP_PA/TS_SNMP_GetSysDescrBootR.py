@@ -70,8 +70,8 @@ OID : 1.3.6.1.2.1.1.1.0
 
 Device.DeviceInfo.X_CISCO_COM_BootloaderVersion</input_parameters>
     <automation_approch>1.TM will load the snmp_pa and pam library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. Get bootr using getparams()and compare with snmpget output
 4.Responses from the snmplib and getparams() will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -94,8 +94,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -112,7 +112,7 @@ pamObj.configureTestCase(ip,port,'TS_SNMP_GetSysDescrBootR');
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -125,14 +125,14 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
 
-    if "SNMPv2-MIB" in actResponse:
+    if "No Such Instance currently exists at this OID" in actResponse:
         bootr = actResponse.split("BOOTR:")[1].split(';')[0].strip()
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget for BOOTR in system description";
-        print "EXPECTED RESULT 1: snmpget should get the BOOTR system description values";
-        print "ACTUAL RESULT 1: BOOTR is %s" %bootr;
+        print("TEST STEP 1:Execute snmpget for BOOTR in system description");
+        print("EXPECTED RESULT 1: snmpget should get the BOOTR system description values");
+        print("ACTUAL RESULT 1: BOOTR is %s" %bootr);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %bootr ;
+        print("[TEST EXECUTION RESULT] : %s" %bootr) ;
 
         tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_CISCO_COM_BootloaderVersion");
@@ -145,33 +145,33 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
         if expectedresult in actualresult:
             #Set the result status of execution
-            print "TEST STEP 1: Get the BOOTR using getparams";
-            print "EXPECTED RESULT 1: Should get the same BOOTR as snmpget";
+            print("TEST STEP 1: Get the BOOTR using getparams");
+            print("EXPECTED RESULT 1: Should get the same BOOTR as snmpget");
             if bootr==details:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "ACTUAL RESULT 1: BOOTR from getparams same as snmpget";
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT 1: BOOTR from getparams same as snmpget");
             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "ACTUAL RESULT 1: BOOTR from getparams not same as snmpget";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 1: BOOTR from getparams not same as snmpget");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %details
+            print("[TEST EXECUTION RESULT] : %s" %details)
         else:
-            print "TEST STEP 1: Get the BOOTR using getparams";
-            print "EXPECTED RESULT 1: Should get the same BOOTR as snmpget";
-            print "ACTUAL RESULT 1: Couldn't get BOOTR from getparams"
+            print("TEST STEP 1: Get the BOOTR using getparams");
+            print("EXPECTED RESULT 1: Should get the same BOOTR as snmpget");
+            print("ACTUAL RESULT 1: Couldn't get BOOTR from getparams")
             tdkTestObj.setResultStatus("FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Execute snmpget for BOOTR in system description";
-        print "EXPECTED RESULT 1: snmpget should get the BOOTR system description values";
-        print "ACTUAL RESULT 1: %s" %actResponse;
-        print "[TEST EXECUTION RESULT] : %s" %actResponse ;
+        print("TEST STEP 1:Execute snmpget for BOOTR in system description");
+        print("EXPECTED RESULT 1: snmpget should get the BOOTR system description values");
+        print("ACTUAL RESULT 1: %s" %actResponse);
+        print("[TEST EXECUTION RESULT] : %s" %actResponse) ;
     obj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-	pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

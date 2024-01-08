@@ -85,9 +85,9 @@ sysobj.configureTestCase(ip,port,'TS_TAD_SelfHeal_CheckDefaultStatus');
 loadmodulestatus =obj.getLoadModuleResult();
 pamloadmodulestatus =pamobj.getLoadModuleResult();
 sysloadmodulestatus =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -105,80 +105,77 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Initiate factory reset ";
-       print "EXPECTED RESULT 1: Should inititate factory reset";
-       print "ACTUAL RESULT 1: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       #Restore the device state saved before reboot
-       obj.restorePreviousStateAfterReboot();
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        #Restore the device state saved before reboot
+        obj.restorePreviousStateAfterReboot();
 
-       tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-       expectedresult="SUCCESS";
-       defaults= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_SELFHEAL_VALUES" %TDK_PATH;
-       print defaults;
-       expectedresult="SUCCESS";
-       tdkTestObj.addParameter("command", defaults);
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       defaultValues = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-       if expectedresult in actualresult and defaultValues!= "":
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP: Should get the default self heal parameter values from properties file"
-          print "ACTUAL RESULT :Default self heal parameter values from properties file:%s" %defaultValues;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          defaultValues= defaultValues.split(",");
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+        expectedresult="SUCCESS";
+        defaults= "sh %s/tdk_utility.sh parseConfigFile DEFAULT_SELFHEAL_VALUES" %TDK_PATH;
+        print(defaults);
+        expectedresult="SUCCESS";
+        tdkTestObj.addParameter("command", defaults);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        defaultValues = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+        if expectedresult in actualresult and defaultValues!= "":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP: Should get the default self heal parameter values from properties file")
+            print("ACTUAL RESULT :Default self heal parameter values from properties file:%s" %defaultValues);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            defaultValues= defaultValues.split(",");
 
-          #Check the default status of selfheal
-          paramList = ["Device.SelfHeal.X_RDKCENTRAL-COM_MaxRebootCount","Device.SelfHeal.X_RDKCENTRAL-COM_MaxResetCount","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_PingInterval","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_NumPingsPerServer","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_MinNumPingServer","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_PingRespWaitTime","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_CorrectiveAction","Device.SelfHeal.ConnectivityTest.PingServerList.IPv4PingServerTableNumberOfEntries","Device.SelfHeal.ConnectivityTest.PingServerList.IPv6PingServerTableNumberOfEntries","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgCPUThreshold","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold"]
-          tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-          if expectedresult in status:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 3: Get the values of each selfheal param"
-             print "EXPECTED RESULT 3: Should get the values of each selfheal param"
-             print "ACTUAL RESULT 3: values of each selfheal param :%s" %orgValue
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             #Check if the retrieved selfheal params have the default values or not
-             for i in range(0,12):
-                 if orgValue[i] == defaultValues[i]:
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print orgValue[i],defaultValues[i]
-                    print "Step %d :The param %s has the default value of %s" %(i+1,paramList[i],orgValue[i]);
-                 else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print orgValue[i],defaultValues[i]
-                      print "Step %d :The param %s is not having the default value of %s" %(i+1,paramList[i],orgValue[i]);
-                      break;
-          else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Get the values of each selfheal param"
-               print "EXPECTED RESULT 3: Should get the values of each selfheal param"
-               print "ACTUAL RESULT 3: values of each selfheal param :%s" %orgValue
-               print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP : Should get the default self heal parameter values from properties file"
-           print "ACTUAL RESULT :Default self heal parameter values from properties file:%s" %defaultValues;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] :FAILURE";
+            #Check the default status of selfheal
+            paramList = ["Device.SelfHeal.X_RDKCENTRAL-COM_MaxRebootCount","Device.SelfHeal.X_RDKCENTRAL-COM_MaxResetCount","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_PingInterval","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_NumPingsPerServer","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_MinNumPingServer","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_PingRespWaitTime","Device.SelfHeal.ConnectivityTest.X_RDKCENTRAL-COM_CorrectiveAction","Device.SelfHeal.ConnectivityTest.PingServerList.IPv4PingServerTableNumberOfEntries","Device.SelfHeal.ConnectivityTest.PingServerList.IPv6PingServerTableNumberOfEntries","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgCPUThreshold","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold"]
+            tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
+            if expectedresult in status:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the values of each selfheal param")
+                print("EXPECTED RESULT 3: Should get the values of each selfheal param")
+                print("ACTUAL RESULT 3: values of each selfheal param :%s" %orgValue)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                #Check if the retrieved selfheal params have the default values or not
+                for i in range(0,12):
+                    if orgValue[i] == defaultValues[i]:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print(orgValue[i],defaultValues[i])
+                        print("Step %d :The param %s has the default value of %s" %(i+1,paramList[i],orgValue[i]));
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print(orgValue[i],defaultValues[i])
+                        print("Step %d :The param %s is not having the default value of %s" %(i+1,paramList[i],orgValue[i]));
+                        break;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the values of each selfheal param")
+                print("EXPECTED RESULT 3: Should get the values of each selfheal param")
+                print("ACTUAL RESULT 3: values of each selfheal param :%s" %orgValue)
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP : Should get the default self heal parameter values from properties file")
+            print("ACTUAL RESULT :Default self heal parameter values from properties file:%s" %defaultValues);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] :FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     pamobj.unloadModule("pam");
     obj.unloadModule("sysutil");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -99,8 +99,8 @@ sysobj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_WANInterfa
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -138,12 +138,12 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                         wanStatusToggleString = "wanconnectivity_chk Interface status changed 0->1";
                         wanStatusRevertString = "wanconnectivity_chk Interface status changed 1->0";
 
-                    print "WAN interface is initially in enable %s state" %initialEnable;
+                    print("WAN interface is initially in enable %s state" %initialEnable);
 
                     #Find the initial number of log lines indicating WAN interface enable toggling
                     step = step + 1;
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                    print "\nGet the initial number of log lines of " + wanStatusToggleString;
+                    print("\nGet the initial number of log lines of " + wanStatusToggleString);
                     file = "/rdklogs/logs/DNSInternetCheck.txt.0";
                     count_initial = getLogFileTotalLinesCount(tdkTestObj, file, wanStatusToggleString, step);
 
@@ -154,41 +154,41 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "WAN Interface toggled to %s successfully" %setEnable;
+                        print("WAN Interface toggled to %s successfully" %setEnable);
 
                         #Find the final number of log lines indicating WAN interface toggling
                         sleep(2);
                         step = step + 1;
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                        print "\nGet the final number of log lines of " + wanStatusToggleString;
+                        print("\nGet the final number of log lines of " + wanStatusToggleString);
                         count_final = getLogFileTotalLinesCount(tdkTestObj, file, wanStatusToggleString, step);
 
                         #Check if the log line difference is 1
                         step = step + 1;
-                        print "\nTEST STEP %d : Check if the WAN interface status change log - %s are populated under %s after toggling" %(step, wanStatusToggleString, file);
-                        print "EXPECTED RESULT %d : WAN interface status change log should be present under %s after toggling" %(step, file);
+                        print("\nTEST STEP %d : Check if the WAN interface status change log - %s are populated under %s after toggling" %(step, wanStatusToggleString, file));
+                        print("EXPECTED RESULT %d : WAN interface status change log should be present under %s after toggling" %(step, file));
 
-                        print "Number of initial log lines of %s : %d" %(wanStatusToggleString, count_initial);
-                        print "Number of final log lines of %s : %d" %(wanStatusToggleString, count_final);
+                        print("Number of initial log lines of %s : %d" %(wanStatusToggleString, count_initial));
+                        print("Number of final log lines of %s : %d" %(wanStatusToggleString, count_final));
 
                         if count_final == (count_initial + 1):
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : The required log lines are found under %s after toggling" %(step, file);
+                            print("ACTUAL RESULT %d : The required log lines are found under %s after toggling" %(step, file));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : The required log lines are NOT found under %s after toggling" %(step, file);
+                            print("ACTUAL RESULT %d : The required log lines are NOT found under %s after toggling" %(step, file));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Revert to initial state and check the logs
                         #Find the initial number of log lines indicating WAN interface enable revert
                         step = step + 1;
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                        print "\nGet the initial number of log lines of " + wanStatusRevertString;
+                        print("\nGet the initial number of log lines of " + wanStatusRevertString);
                         count_initial = getLogFileTotalLinesCount(tdkTestObj, file, wanStatusRevertString, step);
 
                         #Now revert the WAN interafce enable
@@ -198,51 +198,51 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "WAN Interface reverted to %s successfully" %initialEnable;
+                            print("WAN Interface reverted to %s successfully" %initialEnable);
 
                             #Find the final number of log lines indicating WAN interface revert
                             sleep(2);
                             step = step + 1;
                             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                            print "\nGet the final number of log lines of " + wanStatusRevertString;
+                            print("\nGet the final number of log lines of " + wanStatusRevertString);
                             count_final = getLogFileTotalLinesCount(tdkTestObj, file, wanStatusRevertString, step);
 
                             #Check if the log line difference is 1
                             step = step + 1;
-                            print "\nTEST STEP %d : Check if the WAN interface status change log - %s are populated under %s after reverting" %(step, wanStatusRevertString, file);
-                            print "EXPECTED RESULT %d : WAN interface status change log should be present under %s after reverting" %(step, file);
+                            print("\nTEST STEP %d : Check if the WAN interface status change log - %s are populated under %s after reverting" %(step, wanStatusRevertString, file));
+                            print("EXPECTED RESULT %d : WAN interface status change log should be present under %s after reverting" %(step, file));
 
-                            print "Number of initial log lines of %s : %d" %(wanStatusRevertString, count_initial);
-                            print "Number of final log lines of %s : %d" %(wanStatusRevertString, count_final);
+                            print("Number of initial log lines of %s : %d" %(wanStatusRevertString, count_initial));
+                            print("Number of final log lines of %s : %d" %(wanStatusRevertString, count_final));
 
                             if count_final == (count_initial + 1):
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d : The required log lines are found under %s after reverting" %(step, file);
+                                print("ACTUAL RESULT %d : The required log lines are found under %s after reverting" %(step, file));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d : The required log lines are NOT found under %s after reverting" %(step, file);
+                                print("ACTUAL RESULT %d : The required log lines are NOT found under %s after reverting" %(step, file));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "WAN Interface NOT reverted to %s successfully" %initialEnable;
+                            print("WAN Interface NOT reverted to %s successfully" %initialEnable);
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "WAN Interface NOT toggled to %s successfully" %setEnable;
+                        print("WAN Interface NOT toggled to %s successfully" %setEnable);
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "WAN Interface enable status is NOT retrieved successfully";
+                    print("WAN Interface enable status is NOT retrieved successfully");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Number of WAN Interface entries NOT retrieved successfully";
+            print("Number of WAN Interface entries NOT retrieved successfully");
 
         #Revert operation
         setEnable = "false";
@@ -250,16 +250,16 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

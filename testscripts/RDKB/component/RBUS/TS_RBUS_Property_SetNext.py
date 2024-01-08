@@ -103,29 +103,29 @@ obj.configureTestCase(ip,port,'TS_RBUS_Property_SetNext');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     prop_name = "Device.rbusPropertyTest1"
 
-    print "\n********** Start of RBUS Open ****************"
+    print("\n********** Start of RBUS Open ****************")
     tdkTestObj = obj.createTestStep('RBUS_Open');
     expectedresult = "SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS Open Detail is ",details
+    print("RBUS Open Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was success";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "RBUS status is %s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("RBUS status is %s" %details);
 
         for loop in range(1,4):
             value_to_set = "test"+str(loop)
@@ -143,13 +143,13 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Initiate rbusValue_Init function";
-                print "EXPECTED RESULT 2: rbusValue_Init should be success";
-                print "ACTUAL RESULT 2: rbusValue_Init  was Success";
+                print("TEST STEP 2: Initiate rbusValue_Init function");
+                print("EXPECTED RESULT 2: rbusValue_Init should be success");
+                print("ACTUAL RESULT 2: rbusValue_Init  was Success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                print "\nValue to be set for rbusValue is ",value_to_set
+                print("\nValue to be set for rbusValue is ",value_to_set)
                 tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                 tdkTestObj.addParameter("operation","rbusValue_SetString");
                 tdkTestObj.addParameter("prop_count",1);
@@ -162,13 +162,13 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Initiate rbusValue_SetString function";
-                    print "EXPECTED RESULT 3: rbusValue_SetString should be success";
-                    print "ACTUAL RESULT 3: rbusValue_SetString  was Success";
+                    print("TEST STEP 3: Initiate rbusValue_SetString function");
+                    print("EXPECTED RESULT 3: rbusValue_SetString should be success");
+                    print("ACTUAL RESULT 3: rbusValue_SetString  was Success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                    print "\nInitiaize the Property prop%d with Property name %s" %(loop,property_to_Set)
+                    print("\nInitiaize the Property prop%d with Property name %s" %(loop,property_to_Set))
                     tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                     tdkTestObj.addParameter("operation","rbusProperty_Init_WithRBUSValue");
                     tdkTestObj.addParameter("prop_count",loop);
@@ -181,21 +181,21 @@ if "SUCCESS" in loadmodulestatus.upper() :
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Initiate rbusProperty_Init_WithRBUSValue function";
-                        print "EXPECTED RESULT 4: rbusProperty_Init_WithRBUSValue should be success";
-                        print "ACTUAL RESULT 4: rbusProperty_Init_WithRBUSValue  was Success";
+                        print("TEST STEP 4: Initiate rbusProperty_Init_WithRBUSValue function");
+                        print("EXPECTED RESULT 4: rbusProperty_Init_WithRBUSValue should be success");
+                        print("ACTUAL RESULT 4: rbusProperty_Init_WithRBUSValue  was Success");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                         if loop != 1:
                             tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                             tdkTestObj.addParameter("operation","rbusProperty_SetNext");
                             if loop == 2:
                                 tdkTestObj.addParameter("prop_count",1);
-                                print "Initiate the Property SetNext for Prop1 and Prop2"
+                                print("Initiate the Property SetNext for Prop1 and Prop2")
                             else:
                                 tdkTestObj.addParameter("prop_count",2);
-                                print "Initiate the Property SetNext for Prop2 and Prop3"
+                                print("Initiate the Property SetNext for Prop2 and Prop3")
 
                             tdkTestObj.addParameter("property_name","dummy");
                             expectedresult = "SUCCESS";
@@ -206,19 +206,19 @@ if "SUCCESS" in loadmodulestatus.upper() :
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 5: Initiate rbusProperty_SetNext function";
-                                print "EXPECTED RESULT 5: rbusProperty_SetNext should be success";
-                                print "ACTUAL RESULT 5: rbusProperty_SetNext  was Success";
+                                print("TEST STEP 5: Initiate rbusProperty_SetNext function");
+                                print("EXPECTED RESULT 5: rbusProperty_SetNext should be success");
+                                print("ACTUAL RESULT 5: rbusProperty_SetNext  was Success");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 5: Initiate rbusProperty_SetNext function";
-                                print "EXPECTED RESULT 5: rbusProperty_SetNext should be success";
-                                print "ACTUAL RESULT 5: rbusProperty_SetNext  was Failed";
+                                print("TEST STEP 5: Initiate rbusProperty_SetNext function");
+                                print("EXPECTED RESULT 5: rbusProperty_SetNext should be success");
+                                print("ACTUAL RESULT 5: rbusProperty_SetNext  was Failed");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                         tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                         tdkTestObj.addParameter("operation","rbusValue_Release");
@@ -232,48 +232,48 @@ if "SUCCESS" in loadmodulestatus.upper() :
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Initiate rbusValue_Release function";
-                            print "EXPECTED RESULT 6: rbusValue_Release should be success";
-                            print "ACTUAL RESULT 6: rbusValue_Release  was Success";
+                            print("TEST STEP 6: Initiate rbusValue_Release function");
+                            print("EXPECTED RESULT 6: rbusValue_Release should be success");
+                            print("ACTUAL RESULT 6: rbusValue_Release  was Success");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Initiate rbusValue_Release function";
-                            print "EXPECTED RESULT 6: rbusValue_Release should be success";
-                            print "ACTUAL RESULT 6: rbusValue_Release  was Failed";
+                            print("TEST STEP 6: Initiate rbusValue_Release function");
+                            print("EXPECTED RESULT 6: rbusValue_Release should be success");
+                            print("ACTUAL RESULT 6: rbusValue_Release  was Failed");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Initiate rbusProperty_Init_WithRBUSValue function";
-                        print "EXPECTED RESULT 4: rbusProperty_Init_WithRBUSValue should be success";
-                        print "ACTUAL RESULT 4: rbusProperty_Init_WithRBUSValue  was Success";
+                        print("TEST STEP 4: Initiate rbusProperty_Init_WithRBUSValue function");
+                        print("EXPECTED RESULT 4: rbusProperty_Init_WithRBUSValue should be success");
+                        print("ACTUAL RESULT 4: rbusProperty_Init_WithRBUSValue  was Success");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Initiate rbusValue_SetString function";
-                    print "EXPECTED RESULT 3: rbusValue_SetString should be success";
-                    print "ACTUAL RESULT 3: rbusValue_SetString  was Success";
+                    print("TEST STEP 3: Initiate rbusValue_SetString function");
+                    print("EXPECTED RESULT 3: rbusValue_SetString should be success");
+                    print("ACTUAL RESULT 3: rbusValue_SetString  was Success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Initiate rbusValue_Init function";
-                print "EXPECTED RESULT 2: rbusValue_Init should be success";
-                print "ACTUAL RESULT 2: rbusValue_Init  was Success";
+                print("TEST STEP 2: Initiate rbusValue_Init function");
+                print("EXPECTED RESULT 2: rbusValue_Init should be success");
+                print("ACTUAL RESULT 2: rbusValue_Init  was Success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         #End of loop....!!!
 
         for count in range(1,4):
-            print "\nGet the Property Value for prop%d" %count
+            print("\nGet the Property Value for prop%d" %count)
             tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
             tdkTestObj.addParameter("operation","rbusProperty_GetValue");
             tdkTestObj.addParameter("prop_count",count);
@@ -282,18 +282,18 @@ if "SUCCESS" in loadmodulestatus.upper() :
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             value = tdkTestObj.getResultDetails();
-            print "rbusProperty_GetValue  Value is ",value
+            print("rbusProperty_GetValue  Value is ",value)
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 7: Initiate rbusProperty_GetValue function";
-                print "EXPECTED RESULT 7: rbusProperty_GetValue should be success";
-                print "ACTUAL RESULT 7: rbusProperty_GetValue  was Success";
+                print("TEST STEP 7: Initiate rbusProperty_GetValue function");
+                print("EXPECTED RESULT 7: rbusProperty_GetValue should be success");
+                print("ACTUAL RESULT 7: rbusProperty_GetValue  was Success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                print "\nGet the Property Name for prop%d" %count
+                print("\nGet the Property Name for prop%d" %count)
                 tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                 tdkTestObj.addParameter("operation","rbusProperty_GetName");
                 tdkTestObj.addParameter("prop_count",1);
@@ -303,40 +303,40 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 actualresult = tdkTestObj.getResult();
                 name = tdkTestObj.getResultDetails();
 
-                print "rbusProperty_GetName Value is ",name
+                print("rbusProperty_GetName Value is ",name)
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 8: Initiate rbusProperty_GetName function";
-                    print "EXPECTED RESULT 8: rbusProperty_GetName should be success";
-                    print "ACTUAL RESULT 8: rbusProperty_GetName  was Success";
+                    print("TEST STEP 8: Initiate rbusProperty_GetName function");
+                    print("EXPECTED RESULT 8: rbusProperty_GetName should be success");
+                    print("ACTUAL RESULT 8: rbusProperty_GetName  was Success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                     if count == 1:
                         if name == "Device.rbusPropertyTest1" and value == "test1":
-                            print "Property name %s for prop1 and its value %s is Successfully Set" %(name,value)
+                            print("Property name %s for prop1 and its value %s is Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "Property name %s for prop1 and its value %s is NOT Successfully Set" %(name,value)
+                            print("Property name %s for prop1 and its value %s is NOT Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("FAILURE");
                     if count == 2:
                         if name == "Device.rbusPropertyTest2" and value == "test2":
-                            print "Property name %s for prop2 and its value %s is Successfully Set" %(name,value)
+                            print("Property name %s for prop2 and its value %s is Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "Property name %s for prop2 and its value %s is NOT Successfully Set" %(name,value)
+                            print("Property name %s for prop2 and its value %s is NOT Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("FAILURE");
                     if count == 3:
                         if name == "Device.rbusPropertyTest3" and value == "test3":
-                            print "Property name %s for prop3 and its value %s is Successfully Set" %(name,value)
+                            print("Property name %s for prop3 and its value %s is Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("SUCCESS");
                         else:
-                            print "Property name %s for prop3 and its value %s is NOT Successfully Set" %(name,value)
+                            print("Property name %s for prop3 and its value %s is NOT Successfully Set" %(name,value))
                             tdkTestObj.setResultStatus("FAILURE");
 
-                    print "\nInitiating the Property Get Next for Prop1"
+                    print("\nInitiating the Property Get Next for Prop1")
                     tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
                     tdkTestObj.addParameter("operation","rbusProperty_GetNext");
                     tdkTestObj.addParameter("prop_count",1);
@@ -349,39 +349,39 @@ if "SUCCESS" in loadmodulestatus.upper() :
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 9: Initiate rbusProperty_GetNext function";
-                        print "EXPECTED RESULT 9: rbusProperty_GetNext should be success";
-                        print "ACTUAL RESULT 9: rbusProperty_GetNext  was Success";
+                        print("TEST STEP 9: Initiate rbusProperty_GetNext function");
+                        print("EXPECTED RESULT 9: rbusProperty_GetNext should be success");
+                        print("ACTUAL RESULT 9: rbusProperty_GetNext  was Success");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 9: Initiate rbusProperty_GetNext function";
-                        print "EXPECTED RESULT 9: rbusProperty_GetNext should be success";
-                        print "ACTUAL RESULT 9: rbusProperty_GetNext  was Failed";
+                        print("TEST STEP 9: Initiate rbusProperty_GetNext function");
+                        print("EXPECTED RESULT 9: rbusProperty_GetNext should be success");
+                        print("ACTUAL RESULT 9: rbusProperty_GetNext  was Failed");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 8: Initiate rbusProperty_GetName function";
-                    print "EXPECTED RESULT 8: rbusProperty_GetName should be success";
-                    print "ACTUAL RESULT 8: rbusProperty_GetName was Failed";
+                    print("TEST STEP 8: Initiate rbusProperty_GetName function");
+                    print("EXPECTED RESULT 8: rbusProperty_GetName should be success");
+                    print("ACTUAL RESULT 8: rbusProperty_GetName was Failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 7: Initiate rbusProperty_GetValue function";
-                print "EXPECTED RESULT 7: rbusProperty_GetValue should be success";
-                print "ACTUAL RESULT 7: rbusProperty_GetValue was Failed";
+                print("TEST STEP 7: Initiate rbusProperty_GetValue function");
+                print("EXPECTED RESULT 7: rbusProperty_GetValue should be success");
+                print("ACTUAL RESULT 7: rbusProperty_GetValue was Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-        print "\n********** Start of RBUS Property Release ****************"
+        print("\n********** Start of RBUS Property Release ****************")
         for count1 in range(1,4):
-            print "Release the Property prop%d" %count1
+            print("Release the Property prop%d" %count1)
             tdkTestObj = obj.createTestStep('RBUS_PropertyCommands');
             tdkTestObj.addParameter("operation","rbusProperty_Release");
             tdkTestObj.addParameter("prop_count",count1);
@@ -394,57 +394,57 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 10: Initiate rbusProperty_Release function";
-                print "EXPECTED RESULT 10: rbusProperty_Release should be success";
-                print "ACTUAL RESULT 10: rbusProperty_Release  was Success";
+                print("TEST STEP 10: Initiate rbusProperty_Release function");
+                print("EXPECTED RESULT 10: rbusProperty_Release should be success");
+                print("ACTUAL RESULT 10: rbusProperty_Release  was Success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 10: Initiate rbusProperty_Release function";
-                print "EXPECTED RESULT 10: rbusProperty_Release should be success";
-                print "ACTUAL RESULT 10: rbusProperty_Release was Failed";
+                print("TEST STEP 10: Initiate rbusProperty_Release function");
+                print("EXPECTED RESULT 10: rbusProperty_Release should be success");
+                print("ACTUAL RESULT 10: rbusProperty_Release was Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "********** End of RBUS Property Release ****************\n"
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("********** End of RBUS Property Release ****************\n")
 
-        print "********** Start of RBUS Close ****************"
+        print("********** Start of RBUS Close ****************")
         tdkTestObj = obj.createTestStep('RBUS_Close');
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS close Detail is ",details
+        print("RBUS close Detail is ",details)
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 11: Close the RBUS connection";
-            print "EXPECTED RESULT 11: rbus_close should be success";
-            print "ACTUAL RESULT 11: rbus_close was success";
+            print("TEST STEP 11: Close the RBUS connection");
+            print("EXPECTED RESULT 11: rbus_close should be success");
+            print("ACTUAL RESULT 11: rbus_close was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 11: Close the RBUS connection";
-            print "EXPECTED RESULT 11: rbus_close should be success";
-            print "ACTUAL RESULT 11: rbus_close was Failed";
+            print("TEST STEP 11: Close the RBUS connection");
+            print("EXPECTED RESULT 11: rbus_close should be success");
+            print("ACTUAL RESULT 11: rbus_close was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "********** End of RBUS Close ****************"
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("********** End of RBUS Close ****************")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was Failed";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-    print "********** End of RBUS Open ****************\n"
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    print("********** End of RBUS Open ****************\n")
     obj.unloadModule("rbus");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

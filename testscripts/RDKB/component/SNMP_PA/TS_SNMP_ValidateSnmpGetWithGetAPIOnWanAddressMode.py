@@ -69,7 +69,7 @@
 snmpVersion : -v 2c
 OID : 1.3.6.1.4.1.17270.50.2.1.9.4.0</input_parameters>
     <automation_approch>1. Load SNMP module
-2. From script invoke GetCommString to obtain Wan Address Mode.  
+2. From script invoke GetCommString to obtain Wan Address Mode.
 3. Check if the snmpgetvalue and APIgetvalue are same
 4. Validation of  the result is done within the python script and send the result status to Test Manager.
 5.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from snmp_pa stub.</automation_approch>
@@ -91,8 +91,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-																								# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+                                                                                                                                                             # use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -109,12 +109,12 @@ pamObj.configureTestCase(ip,port,'TS_SNMP_ValidateSnmpGetWithGetAPIOnWanAddressM
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 pamloadmodulestatus =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     pamObj.setLoadModuleStatus("SUCCESS");
-    
+
     #Get the Community String
     communityString = snmplib.getCommunityString(obj,"snmpget");
     #Get the IP Address
@@ -127,21 +127,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     if "=" in actResponse :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: snmpget request to get the WanAddressMode";
-        print "EXPECTED RESULT 1: Command should return the WanAddressMode";
-        print "ACTUAL RESULT 1: %s" %actResponse;
+        print("TEST STEP 1: snmpget request to get the WanAddressMode");
+        print("EXPECTED RESULT 1: Command should return the WanAddressMode");
+        print("ACTUAL RESULT 1: %s" %actResponse);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
-	snmpgetvalue = actResponse.rsplit(None, 1)[-1];
-	if snmpgetvalue == "1":
-	    snmpgetvalue= "DHCP";
-	elif snmpgetvalue == "2":
-	    snmpgetvalue = "Static";
-	elif snmpgetvalue == "3":
-	    snmpgetvalue ="DUALIP";
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+        snmpgetvalue = actResponse.rsplit(None, 1)[-1];
+        if snmpgetvalue == "1":
+            snmpgetvalue= "DHCP";
+        elif snmpgetvalue == "2":
+            snmpgetvalue = "Static";
+        elif snmpgetvalue == "3":
+            snmpgetvalue ="DUALIP";
 
-        print "ErouterResetCount via snmpget is %s " %snmpgetvalue;
-	tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
+        print("ErouterResetCount via snmpget is %s " %snmpgetvalue);
+        tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.WanAddressMode");
         expectedresult="SUCCESS";
         #Execute the test case in DUT
@@ -150,43 +150,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             APIGetValue= details;
-            print "TEST STEP 2: Get WanAddressMode";
-            print "EXPECTED RESULT 2: Should get the WanAddressMode";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Get WanAddressMode");
+            print("EXPECTED RESULT 2: Should get the WanAddressMode");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-	    print "ErouterResetCount via API is %s" %APIGetValue;
-	    if snmpgetvalue == APIGetValue :
-		tdkTestObj.setResultStatus("SUCCESS");
-		print "TEST STEP 3: Compare the value retrieved via snmp and API";
-		print  "EXPECTED RESULT 3: Value retrieved via snmp and API should be same";
-		print "ACTUAL RESULT 3: Value retrieved via snmp and API are same";
-		print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Compare the value retrieved via snmp and API";
-                print  "EXPECTED RESULT 3: Value retrieved via snmp and API should be same";
-                print "ACTUAL RESULT 3: Value retrieved via snmp and API are not same";
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "TEST STEP 2: Get WanAddressMode";
-            print "EXPECTED RESULT 2: Should get the WanAddressMode";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("ErouterResetCount via API is %s" %APIGetValue);
+            if snmpgetvalue == APIGetValue :
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Compare the value retrieved via snmp and API");
+                print("EXPECTED RESULT 3: Value retrieved via snmp and API should be same");
+                print("ACTUAL RESULT 3: Value retrieved via snmp and API are same");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Compare the value retrieved via snmp and API");
+                print("EXPECTED RESULT 3: Value retrieved via snmp and API should be same");
+                print("ACTUAL RESULT 3: Value retrieved via snmp and API are not same");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get WanAddressMode");
+            print("EXPECTED RESULT 2: Should get the WanAddressMode");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: snmpget request to get the WanAddressMode";
-        print "EXPECTED RESULT 1: Command should return the WanAddressMode";
-        print "ACTUAL RESULT 1: %s" %actResponse;
+        print("TEST STEP 1: snmpget request to get the WanAddressMode");
+        print("EXPECTED RESULT 1: Command should return the WanAddressMode");
+        print("ACTUAL RESULT 1: %s" %actResponse);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
     pamObj.unloadModule("pam");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

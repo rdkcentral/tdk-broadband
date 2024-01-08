@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_TAD_SetFanMaxOverrideAndReboot');
 
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -124,137 +124,137 @@ if "SUCCESS" in loadmodulestatus.upper():
     details= tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-       print "TEST STEP 1: Set the Fan Max Override to true"
-       print "EXPECTED RESULT 1: Should set the Fan Max Override to true"
-       print "ACTUAL RESULT 1 : Set was Successfull"
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Set the Fan Max Override to true")
+        print("EXPECTED RESULT 1: Should set the Fan Max Override to true")
+        print("ACTUAL RESULT 1 : Set was Successfull")
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
 
-       sleep(5);
+        sleep(5);
 
-       tdkTestObj = obj.createTestStep('TADstub_Get');
+        tdkTestObj = obj.createTestStep('TADstub_Get');
 
-       paramList=["Device.Thermal.Fan.Status","Device.Thermal.Fan.Speed","Device.Thermal.Fan.RotorLock","Device.Thermal.Fan.MaxOverride"]
-       tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
-       if expectedresult in status:
-          print "TEST STEP 2: Get the parameters under Device.Thermal.Fan."
-          print "EXPECTED RESULT 2:Should get the parameters under Device.Thermal.Fan."
-          print "ACTUAL RESULT 2: Get was successful"
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS");
+        paramList=["Device.Thermal.Fan.Status","Device.Thermal.Fan.Speed","Device.Thermal.Fan.RotorLock","Device.Thermal.Fan.MaxOverride"]
+        tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
+        if expectedresult in status:
+            print("TEST STEP 2: Get the parameters under Device.Thermal.Fan.")
+            print("EXPECTED RESULT 2:Should get the parameters under Device.Thermal.Fan.")
+            print("ACTUAL RESULT 2: Get was successful")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
 
-          #rebooting the device
-          obj.initiateReboot();
-          sleep(300);
+            #rebooting the device
+            obj.initiateReboot();
+            sleep(300);
 
-          paramList=["Device.Thermal.Fan.Status","Device.Thermal.Fan.Speed","Device.Thermal.Fan.RotorLock","Device.Thermal.Fan.MaxOverride"]
-          tdkTestObj,status,afterrebootValue = getMultipleParameterValues(obj,paramList)
+            paramList=["Device.Thermal.Fan.Status","Device.Thermal.Fan.Speed","Device.Thermal.Fan.RotorLock","Device.Thermal.Fan.MaxOverride"]
+            tdkTestObj,status,afterrebootValue = getMultipleParameterValues(obj,paramList)
 
-          if expectedresult in status:
-             print "TEST STEP 3: Get the parameters under Device.Thermal.Fan after reboot"
-             print "EXPECTED RESULT 3:Should get the parameters under Device.Thermal.Fan  after reboot"
-             print "ACTUAL RESULT 3: Get was successful"
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             tdkTestObj.setResultStatus("SUCCESS");
-
-             print "*************************************************************************************************************************"
-             print "Checking the Fan's  Speed ,Status,Rotor lock,MaxOverride statuse's after  setting the Fan Max Override to true and reboot"
-             print "*************************************************************************************************************************"
-             print "orgValue:",orgValue
-             print "afterrebootValue :",afterrebootValue
-
-             if orgValue[0]!= afterrebootValue[0]:
-                print "TEST STEP 4: Check  for Fan Status"
-                print "EXPECTED RESULT 4: Fan status should be false"
-                print "ACTUAL RESULT 4: Fan status is ",afterrebootValue[0]
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult in status:
+                print("TEST STEP 3: Get the parameters under Device.Thermal.Fan after reboot")
+                print("EXPECTED RESULT 3:Should get the parameters under Device.Thermal.Fan  after reboot")
+                print("ACTUAL RESULT 3: Get was successful")
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj.setResultStatus("SUCCESS");
 
-                if int(orgValue[1]) != afterrebootValue[1] :
-                   print "TEST STEP 5: Check  for Fan Speed"
-                   print "EXPECTED RESULT 5: Fan speed should be equal zero"
-                   print "ACTUAL RESULT 5: Fan speed is ",afterrebootValue[1]
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
-                   tdkTestObj.setResultStatus("SUCCESS");
+                print("*************************************************************************************************************************")
+                print("Checking the Fan's  Speed ,Status,Rotor lock,MaxOverride statuse's after  setting the Fan Max Override to true and reboot")
+                print("*************************************************************************************************************************")
+                print("orgValue:",orgValue)
+                print("afterrebootValue :",afterrebootValue)
 
-                   if (orgValue[2]) != afterrebootValue[2]:
-                       print "TEST STEP 6: Check  for Rotor Lock "
-                       print "EXPECTED RESULT 6: Fan Rotor lock  should be Not_Applicable"
-                       print "ACTUAL RESULT 6: Fan rotor lock  is ",afterrebootValue[2]
-                       print "[TEST EXECUTION RESULT] : SUCCESS";
-                       tdkTestObj.setResultStatus("SUCCESS");
+                if orgValue[0]!= afterrebootValue[0]:
+                    print("TEST STEP 4: Check  for Fan Status")
+                    print("EXPECTED RESULT 4: Fan status should be false")
+                    print("ACTUAL RESULT 4: Fan status is ",afterrebootValue[0])
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    tdkTestObj.setResultStatus("SUCCESS");
 
-                       if (orgValue[3]) == "false":
-                          print "TEST STEP 7: Check  for MaxOverride speed"
-                          print "EXPECTED RESULT 7: Fan MaxOverride speed should be false"
-                          print "ACTUAL RESULT 7: Fan MaxOverride speed  is ",afterrebootValue[3]
-                          print "[TEST EXECUTION RESULT] : SUCCESS";
-                          tdkTestObj.setResultStatus("SUCCESS");
-                       else:
-                           print "TEST STEP 7: Check  for MaxOverride speed"
-                           print "EXPECTED RESULT 7: Fan MaxOverride speed should be false"
-                           print "ACTUAL RESULT 7: Fan MaxOverride speed  is ",afterrebootValue[3]
-                           print "[TEST EXECUTION RESULT] : FAILURE";
-                           tdkTestObj.setResultStatus("FAILURE");
-                   else:
-                       print "TEST STEP 6: Check  for Rotor Lock "
-                       print "EXPECTED RESULT 6: Fan Rotor lock  should be Not_Applicable"
-                       print "ACTUAL RESULT 6: Fan rotor lock  is",afterrebootValue[2]
-                       print "[TEST EXECUTION RESULT] : FAILURE";
-                       tdkTestObj.setResultStatus("FAILURE");
+                    if int(orgValue[1]) != afterrebootValue[1] :
+                        print("TEST STEP 5: Check  for Fan Speed")
+                        print("EXPECTED RESULT 5: Fan speed should be equal zero")
+                        print("ACTUAL RESULT 5: Fan speed is ",afterrebootValue[1])
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        tdkTestObj.setResultStatus("SUCCESS");
+
+                        if (orgValue[2]) != afterrebootValue[2]:
+                            print("TEST STEP 6: Check  for Rotor Lock ")
+                            print("EXPECTED RESULT 6: Fan Rotor lock  should be Not_Applicable")
+                            print("ACTUAL RESULT 6: Fan rotor lock  is ",afterrebootValue[2])
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            tdkTestObj.setResultStatus("SUCCESS");
+
+                            if (orgValue[3]) == "false":
+                                print("TEST STEP 7: Check  for MaxOverride speed")
+                                print("EXPECTED RESULT 7: Fan MaxOverride speed should be false")
+                                print("ACTUAL RESULT 7: Fan MaxOverride speed  is ",afterrebootValue[3])
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                tdkTestObj.setResultStatus("SUCCESS");
+                            else:
+                                print("TEST STEP 7: Check  for MaxOverride speed")
+                                print("EXPECTED RESULT 7: Fan MaxOverride speed should be false")
+                                print("ACTUAL RESULT 7: Fan MaxOverride speed  is ",afterrebootValue[3])
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                                tdkTestObj.setResultStatus("FAILURE");
+                        else:
+                            print("TEST STEP 6: Check  for Rotor Lock ")
+                            print("EXPECTED RESULT 6: Fan Rotor lock  should be Not_Applicable")
+                            print("ACTUAL RESULT 6: Fan rotor lock  is",afterrebootValue[2])
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                            tdkTestObj.setResultStatus("FAILURE");
+                    else:
+                        print("TEST STEP 5: Check  for Fan Speed")
+                        print("EXPECTED RESULT 5: Fan speed should be equal to zero")
+                        print("ACTUAL RESULT 5: Fan speed is ",afterrebootValue[1])
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                        tdkTestObj.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 5: Check  for Fan Speed"
-                    print "EXPECTED RESULT 5: Fan speed should be equal to zero"
-                    print "ACTUAL RESULT 5: Fan speed is ",afterrebootValue[1]
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: Check  for Fan Status")
+                    print("EXPECTED RESULT 4: Fan status should be true")
+                    print("ACTUAL RESULT 4: Fan status is ",afterrebootValue[0])
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     tdkTestObj.setResultStatus("FAILURE");
-             else:
-                 print "TEST STEP 4: Check  for Fan Status"
-                 print "EXPECTED RESULT 4: Fan status should be true"
-                 print "ACTUAL RESULT 4: Fan status is ",afterrebootValue[0]
-                 print "[TEST EXECUTION RESULT] : FAILURE";
-                 tdkTestObj.setResultStatus("FAILURE");
-          else:
-               print "TEST STEP 3: Get the parameters under Device.Thermal.Fan."
-               print "EXPECTED RESULT 3:Should get the parameters under Device.Thermal.Fan."
-               print "ACTUAL RESULT 3: Get Failed"
-               print "[TEST EXECUTION RESULT] : FAILURE";
-               tdkTestObj.setResultStatus("FAILURE");
+            else:
+                print("TEST STEP 3: Get the parameters under Device.Thermal.Fan.")
+                print("EXPECTED RESULT 3:Should get the parameters under Device.Thermal.Fan.")
+                print("ACTUAL RESULT 3: Get Failed")
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
 
-       print "Reverting the Fan max override to false to disable the Fan";
-       #Revert the value
-       tdkTestObj = obj.createTestStep('TADstub_SetOnly');
-       tdkTestObj.addParameter("ParamName","Device.Thermal.Fan.MaxOverride");
-       tdkTestObj.addParameter("ParamValue","false");
-       tdkTestObj.addParameter("Type","bool");
-       expectedresult="SUCCESS";
+        print("Reverting the Fan max override to false to disable the Fan");
+        #Revert the value
+        tdkTestObj = obj.createTestStep('TADstub_SetOnly');
+        tdkTestObj.addParameter("ParamName","Device.Thermal.Fan.MaxOverride");
+        tdkTestObj.addParameter("ParamValue","false");
+        tdkTestObj.addParameter("Type","bool");
+        expectedresult="SUCCESS";
 
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details= tdkTestObj.getResultDetails();
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details= tdkTestObj.getResultDetails();
 
-       if expectedresult in actualresult:
-          print "TEST STEP 7 : Revert the Fan Max Override to previous"
-          print "EXPECTED RESULT 7: Should set the Fan Max Override to false"
-          print "ACTUAL RESULT 7 : Set was Successfull"
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj.setResultStatus("SUCCESS");
-       else:
-          print "TEST STEP 7 : Revert the Fan Max Override to previous"
-          print "EXPECTED RESULT 7: Should set the Fan Max Override to false"
-          print "ACTUAL RESULT 7 : Set was failed"
-          print "[TEST EXECUTION RESULT] : FAILURE";
-          tdkTestObj.setResultStatus("FAILURE");
+        if expectedresult in actualresult:
+            print("TEST STEP 7 : Revert the Fan Max Override to previous")
+            print("EXPECTED RESULT 7: Should set the Fan Max Override to false")
+            print("ACTUAL RESULT 7 : Set was Successfull")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
+        else:
+            print("TEST STEP 7 : Revert the Fan Max Override to previous")
+            print("EXPECTED RESULT 7: Should set the Fan Max Override to false")
+            print("ACTUAL RESULT 7 : Set was failed")
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
 
     else:
-        print "TEST STEP 1: Set the Fan Max Override to true"
-        print "EXPECTED RESULT 1: Should set the Fan Max Override to true"
-        print "ACTUAL RESULT 1 : Set failed"
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Set the Fan Max Override to true")
+        print("EXPECTED RESULT 1: Should set the Fan Max Override to true")
+        print("ACTUAL RESULT 1 : Set failed")
+        print("[TEST EXECUTION RESULT] : FAILURE");
         tdkTestObj.setResultStatus("FAILURE");
     obj.unloadModule("tad");
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

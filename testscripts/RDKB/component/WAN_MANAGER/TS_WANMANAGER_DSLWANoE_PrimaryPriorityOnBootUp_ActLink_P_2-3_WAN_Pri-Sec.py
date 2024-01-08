@@ -96,8 +96,8 @@ obj1.configureTestCase(ip,port,'TS_WANMANAGER_DSLWANoE_PrimaryPriorityOnBootUp_A
 
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     #Set the result status of execution
@@ -107,169 +107,169 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     revertpriority =0;
     expectedresult="SUCCESS";
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    print "\n";
+    print("\n");
     step =0;
     status, policy_initial = get_policy(tdkTestObj, step);
-    print "\n";
+    print("\n");
 
     if (DUT_Mode_Primary_Priority_OnBootup == 0 and status == 0) or (status == 0 and DUT_Mode_Primary_Priority_OnBootup == 1 and policy_initial=="PRIMARY_PRIORITY_ON_BOOTUP"):
-         defaultTypePriority,actualresult  = GetCurrentWanTypeAndPriority(tdkTestObj);
+        defaultTypePriority,actualresult  = GetCurrentWanTypeAndPriority(tdkTestObj);
 
-         if expectedresult in actualresult:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 1: Get the current WAN Type,Priority values for DSL and WANOE";
-             print "EXPECTED RESULT 1: Should get the current WAN Type,Priority values for DSL and WANOE"
-             print "ACTUAL RESULT 1 :The current WAN Type,Priority for DSL and WANOE are %s:"%defaultTypePriority;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-             step = 2;
-             status, policy_initial = get_policy(tdkTestObj, step);
+        if expectedresult in actualresult:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1: Get the current WAN Type,Priority values for DSL and WANOE");
+            print("EXPECTED RESULT 1: Should get the current WAN Type,Priority values for DSL and WANOE")
+            print("ACTUAL RESULT 1 :The current WAN Type,Priority for DSL and WANOE are %s:"%defaultTypePriority);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            step = 2;
+            status, policy_initial = get_policy(tdkTestObj, step);
 
-             if status == 0:
-                 tdkTestObj_Get = obj.createTestStep('TDKB_TR181Stub_Get');
-                 tdkTestObj_Set = obj.createTestStep('TDKB_TR181Stub_Set');
-                 print "\n\n***Checking if WAN types are equal and making them Unequal***";
-                 revertwantype,default,actualresult = MakeWANTypeUnEqual(tdkTestObj_Get,tdkTestObj_Set);
+            if status == 0:
+                tdkTestObj_Get = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj_Set = obj.createTestStep('TDKB_TR181Stub_Set');
+                print("\n\n***Checking if WAN types are equal and making them Unequal***");
+                revertwantype,default,actualresult = MakeWANTypeUnEqual(tdkTestObj_Get,tdkTestObj_Set);
 
-                 if expectedresult in actualresult:
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "\n\n***Checking if WAN priorities are equal and making them Unequal***";
-                     revertpriority,default,actualresult = MakePriorityUnEqual(tdkTestObj_Get,tdkTestObj_Set);
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("\n\n***Checking if WAN priorities are equal and making them Unequal***");
+                    revertpriority,default,actualresult = MakePriorityUnEqual(tdkTestObj_Get,tdkTestObj_Set);
 
-                     if expectedresult in actualresult:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         #Set the Wan Manager Policy
-                         new_policy = "PRIMARY_PRIORITY_ON_BOOTUP"
-                         expectedresult="SUCCESS";
-                         policyStatus =1;
-                         revert = 0
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        #Set the Wan Manager Policy
+                        new_policy = "PRIMARY_PRIORITY_ON_BOOTUP"
+                        expectedresult="SUCCESS";
+                        policyStatus =1;
+                        revert = 0
 
-                         if new_policy != policy_initial:
-                             print "\nSetting the wanmanager policy to :%s"%new_policy
-                             set_policy(new_policy, policy_initial, obj1, revert);
-                             #Get the WANMANAGER POLICY and cross check with the Set value
-                             step = step + 1;
-                             status, policy = get_policy(tdkTestObj, step);
+                        if new_policy != policy_initial:
+                            print("\nSetting the wanmanager policy to :%s"%new_policy)
+                            set_policy(new_policy, policy_initial, obj1, revert);
+                            #Get the WANMANAGER POLICY and cross check with the Set value
+                            step = step + 1;
+                            status, policy = get_policy(tdkTestObj, step);
 
-                             if status == 0:
-                                 revert = 1;
-                                 if policy == new_policy:
-                                     tdkTestObj.setResultStatus("SUCCESS");
-                                     print "\nThe wanmanager policy is set successfully";
-                                 else:
-                                     policyStatus =0;
-                                     tdkTestObj.setResultStatus("FAILURE");
-                                     print "\n The wanmanager policy is not set successfully";
-                             else:
-                                 policyStatus =0;
-                                 tdkTestObj.setResultStatus("FAILURE");
-                                 print "\nFailed to get wanmanager policy after set ";
+                            if status == 0:
+                                revert = 1;
+                                if policy == new_policy:
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("\nThe wanmanager policy is set successfully");
+                                else:
+                                    policyStatus =0;
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("\n The wanmanager policy is not set successfully");
+                            else:
+                                policyStatus =0;
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("\nFailed to get wanmanager policy after set ");
 
-                         if policyStatus == 1:
-                             print "The current WAN Manager Policy is %s" %new_policy;
-                             wanDSL = "Primary";
-                             wanWANOE = "Secondary";
-                             priDSL = "2";
-                             priWANOE ="3";
-                             actualresult = SetWANTypePriority(tdkTestObj_Set,wanDSL,wanWANOE,priDSL,priWANOE);
-                             revertwantype =1;
-                             revertpriority =1;
+                        if policyStatus == 1:
+                            print("The current WAN Manager Policy is %s" %new_policy);
+                            wanDSL = "Primary";
+                            wanWANOE = "Secondary";
+                            priDSL = "2";
+                            priWANOE ="3";
+                            actualresult = SetWANTypePriority(tdkTestObj_Set,wanDSL,wanWANOE,priDSL,priWANOE);
+                            revertwantype =1;
+                            revertpriority =1;
 
-                             if expectedresult in actualresult:
-                                 tdkTestObj.setResultStatus("SUCCESS");
-                                 print "TEST STEP 3: Set the (WANtype,Priority)for DSL(%s,%s) and WANOE(%s,%s)" %(wanDSL,priDSL,wanWANOE,priWANOE);
-                                 print "EXPECTED RESULT 3:Set operation is expected to be successful";
-                                 print "ACTUAL RESULT 3:set operations are successful";
-                                 #Get the result of execution
-                                 print "[TEST EXECUTION RESULT] : SUCCESS";
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 3: Set the (WANtype,Priority)for DSL(%s,%s) and WANOE(%s,%s)" %(wanDSL,priDSL,wanWANOE,priWANOE));
+                                print("EXPECTED RESULT 3:Set operation is expected to be successful");
+                                print("ACTUAL RESULT 3:set operations are successful");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                                 print "\n ****Initiating reboot for WAN Change take place since its PRIMARY_PRIORITY_ON_BOOTUP  policy***";
-                                 tdkTestObj = obj1.createTestStep('ExecuteCmd');
-                                 obj1.initiateReboot();
-                                 sleep(300);
+                                print("\n ****Initiating reboot for WAN Change take place since its PRIMARY_PRIORITY_ON_BOOTUP  policy***");
+                                tdkTestObj = obj1.createTestStep('ExecuteCmd');
+                                obj1.initiateReboot();
+                                sleep(300);
 
-                                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.1.Wan.ActiveLink");
-                                 #Execute the test case in DUT
-                                 tdkTestObj.executeTestCase(expectedresult);
-                                 actualresult1 = tdkTestObj.getResult();
-                                 activeDSL = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-                                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.ActiveLink");
-                                 #Execute the test case in DUT
-                                 tdkTestObj.executeTestCase(expectedresult);
-                                 actualresult2 = tdkTestObj.getResult();
-                                 activeWANOE = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                                tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.1.Wan.ActiveLink");
+                                #Execute the test case in DUT
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult1 = tdkTestObj.getResult();
+                                activeDSL = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                                tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.ActiveLink");
+                                #Execute the test case in DUT
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult2 = tdkTestObj.getResult();
+                                activeWANOE = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                                 if expectedresult in (actualresult1 and actualresult2):
+                                if expectedresult in (actualresult1 and actualresult2):
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP 4: Get the Active link status of DSL and WANOE";
-                                    print "EXPECTED RESULT 4: Active link status of DSL and WANOE should be fetched successfully";
-                                    print "ACTUAL RESULT 4: Get operation succeeded";
+                                    print("TEST STEP 4: Get the Active link status of DSL and WANOE");
+                                    print("EXPECTED RESULT 4: Active link status of DSL and WANOE should be fetched successfully");
+                                    print("ACTUAL RESULT 4: Get operation succeeded");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                     if activeDSL == "true" and activeWANOE == "false":
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "TEST STEP 5: Get the Active link status of DSL and WANOE";
-                                        print "EXPECTED RESULT 5: Active link status of DSL is expected to be true and WANOE as false";
-                                        print "ACTUAL RESULT 5: DSL status :%s, WANOE status : %s" %(activeDSL,activeWANOE);
+                                        print("TEST STEP 5: Get the Active link status of DSL and WANOE");
+                                        print("EXPECTED RESULT 5: Active link status of DSL is expected to be true and WANOE as false");
+                                        print("ACTUAL RESULT 5: DSL status :%s, WANOE status : %s" %(activeDSL,activeWANOE));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "TEST STEP 5: Get the Active link status of DSL and WANOE";
-                                        print "EXPECTED RESULT 5:Active link status of DSL is expected to be true and WANOE as false";
-                                        print "ACTUAL RESULT 5: DSL status :%s, WANOE status : %s" %(activeDSL,activeWANOE);
+                                        print("TEST STEP 5: Get the Active link status of DSL and WANOE");
+                                        print("EXPECTED RESULT 5:Active link status of DSL is expected to be true and WANOE as false");
+                                        print("ACTUAL RESULT 5: DSL status :%s, WANOE status : %s" %(activeDSL,activeWANOE));
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
-                                 else:
-                                     #Set the result status of execution
-                                     tdkTestObj.setResultStatus("FAILURE");
-                                     print "TEST STEP 4: Get the Active link status of DSL and WANOE";
-                                     print "EXPECTED RESULT 4: Active link status of DSL is expected to be true  and WANOE as false";
-                                     print "ACTUAL RESULT 4: Get operation failed ";
-                                     #Get the result of execution
-                                     print "[TEST EXECUTION RESULT] : FAILURE";
-                                 if revert == 1:
-                                     set_policy(new_policy, policy_initial, obj1, revert);
-                             else:
-                                 tdkTestObj.setResultStatus("FAILURE");
-                                 print "TEST STEP 3: Set the (WANtype,Priority)for DSL(%s,%s) and WANOE(%s,%s)"%(wanDSL,priDSL,wanWANOE,priWANOE);
-                                 print "EXPECTED RESULT 3:Set operation is expected to be successful";
-                                 print "ACTUAL RESULT 3 :set operations failed";
-                                 #Get the result of execution
-                                 print "[TEST EXECUTION RESULT] : FAILURE";
-                         else:
-                             print "\nset operation of WAN Policy failed";
-                     else:
-                         tdkTestObj.setResultStatus("FAILURE");
-                         print "\nUnable to make WAN priorities Un-equal"
-                 else:
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print "\nUnable to make WAN Types Un-equal"
-             else:
-                 tdkTestObj.setResultStatus("FAILURE");
-                 print "\nThe current policy is not the expected policy";
-         else:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 1: Get the default WAN Type,Priority values for DSL and WANOE";
-             print "EXPECTED RESULT 1: Should get the default WAN Type,Priority values for DSL and WANOE"
-             print "ACTUAL RESULT 1 :The default WAN Type,Priority for DSL and WANOE are %s:"%defaultTypePriority;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 4: Get the Active link status of DSL and WANOE");
+                                    print("EXPECTED RESULT 4: Active link status of DSL is expected to be true  and WANOE as false");
+                                    print("ACTUAL RESULT 4: Get operation failed ");
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                                if revert == 1:
+                                    set_policy(new_policy, policy_initial, obj1, revert);
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 3: Set the (WANtype,Priority)for DSL(%s,%s) and WANOE(%s,%s)"%(wanDSL,priDSL,wanWANOE,priWANOE));
+                                print("EXPECTED RESULT 3:Set operation is expected to be successful");
+                                print("ACTUAL RESULT 3 :set operations failed");
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            print("\nset operation of WAN Policy failed");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("\nUnable to make WAN priorities Un-equal")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("\nUnable to make WAN Types Un-equal")
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("\nThe current policy is not the expected policy");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 1: Get the default WAN Type,Priority values for DSL and WANOE");
+            print("EXPECTED RESULT 1: Should get the default WAN Type,Priority values for DSL and WANOE")
+            print("ACTUAL RESULT 1 :The default WAN Type,Priority for DSL and WANOE are %s:"%defaultTypePriority);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "\n\n Since DUT_Mode_Primary_Priority_OnBootup is selected as 1 ,set the policy to FIXED_MODE_ON_BOOTUP and run the script";
+        print("\n\n Since DUT_Mode_Primary_Priority_OnBootup is selected as 1 ,set the policy to FIXED_MODE_ON_BOOTUP and run the script");
     #Revert operations
     revertflag =1;
     if revertwantype == 1:
-        print "Reverting WAN Type to defaults";
+        print("Reverting WAN Type to defaults");
         paramList = ["Device.X_RDK_WanManager.CPEInterface.1.Wan.Type","Device.X_RDK_WanManager.CPEInterface.2.Wan.Type"];
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         index = 0;
@@ -284,14 +284,14 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             Setresult = tdkTestObj.getResultDetails();
             index =index +1;
             if expectedresult in result:
-               tdkTestObj.setResultStatus("SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
             else:
                 revertflag =0;
-                print "Revert operation failed for WAN Type";
+                print("Revert operation failed for WAN Type");
                 tdkTestObj.setResultStatus("FAILURE");
                 break;
     if revertpriority ==1:
-        print "Reverting priority to defaults";
+        print("Reverting priority to defaults");
         paramList = ["Device.X_RDK_WanManager.CPEInterface.1.Wan.Priority","Device.X_RDK_WanManager.CPEInterface.2.Wan.Priority"];
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
         index = 2;
@@ -306,20 +306,20 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             Setresult = tdkTestObj.getResultDetails();
             index =index +1;
             if expectedresult in result:
-               tdkTestObj.setResultStatus("SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
             else:
                 revertflag =0;
-                print "Revert operation failed for WAN priority";
+                print("Revert operation failed for WAN priority");
                 tdkTestObj.setResultStatus("FAILURE");
                 break;
     #printing the final revert status
     if revertflag == 1:
-       print "Revert operation successful for WAN Type and WAN priority";
+        print("Revert operation successful for WAN Type and WAN priority");
     else:
-        print "Revert operation failed for either WAN Type or WAN priority";
+        print("Revert operation failed for either WAN Type or WAN priority");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

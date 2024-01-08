@@ -101,17 +101,17 @@ if "SUCCESS" in loadmodulestatus.upper() :
         #Invoke the utility function to get and validate the values for all configured tr181 params
         moduleStatus,failedParams = tdkbSetAllParams.getAllParams("TR069", setup_type, factoryReset, obj, obj1);
 
-        print "Status of TR069 validation is ", moduleStatus, "\n";
+        print("Status of TR069 validation is ", moduleStatus, "\n");
         if moduleStatus == "FAILURE":
-            print "The failed params are ", failedParams, "\n";
+            print("The failed params are ", failedParams, "\n");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

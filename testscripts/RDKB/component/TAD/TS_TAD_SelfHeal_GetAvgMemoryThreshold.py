@@ -87,8 +87,8 @@ pamobj.configureTestCase(ip,port,'TS_TAD_SelfHeal_GetAvgMemoryThreshold');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus =obj.getLoadModuleResult();
 pamloadmodulestatus =pamobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #Set the result status of execution
@@ -103,17 +103,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     currMemoryThreshold = tdkTestObj.getResultDetails();
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the current value of avgMemoryThreshold";
-        print "EXPECTED RESULT 1: Should get the current value of avgMemoryThreshold";
-        print "ACTUAL RESULT 1:Current avgMemoryThreshold :%s" %currMemoryThreshold
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("TEST STEP 1: Get the current value of avgMemoryThreshold");
+        print("EXPECTED RESULT 1: Should get the current value of avgMemoryThreshold");
+        print("ACTUAL RESULT 1:Current avgMemoryThreshold :%s" %currMemoryThreshold)
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	if currMemoryThreshold == "30":
-	    newMemoryThreshold = "40";
-	else:
-	    newMemoryThreshold = "30";
-	#set a random value to avgMemoryThreshold
-	tdkTestObj = obj.createTestStep('TADstub_Set');
+        if currMemoryThreshold == "30":
+            newMemoryThreshold = "40";
+        else:
+            newMemoryThreshold = "30";
+        #set a random value to avgMemoryThreshold
+        tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold");
         tdkTestObj.addParameter("ParamValue",newMemoryThreshold);
         tdkTestObj.addParameter("Type","unsignedint");
@@ -123,37 +123,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Set value to AvgMemoryThreshold";
-            print "EXPECTED RESULT 2: Should set AvgMemoryThreshold";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2:Set value to AvgMemoryThreshold");
+            print("EXPECTED RESULT 2: Should set AvgMemoryThreshold");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	    #save device's current state before it goes for reboot
-    	    obj.saveCurrentState();
+            #save device's current state before it goes for reboot
+            obj.saveCurrentState();
 
-    	    #Initiate Factory reset before checking the default value
-    	    tdkTestObj = pamobj.createTestStep('pam_Setparams');
-    	    tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.FactoryReset");
-    	    tdkTestObj.addParameter("ParamValue","Router,Wifi,VoIP,Dect,MoCA");
-    	    tdkTestObj.addParameter("Type","string");
-    	    tdkTestObj.executeTestCase(expectedresult);
-    	    actualresult = tdkTestObj.getResult();
-    	    details = tdkTestObj.getResultDetails();
+            #Initiate Factory reset before checking the default value
+            tdkTestObj = pamobj.createTestStep('pam_Setparams');
+            tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.FactoryReset");
+            tdkTestObj.addParameter("ParamValue","Router,Wifi,VoIP,Dect,MoCA");
+            tdkTestObj.addParameter("Type","string");
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
 
-    	    if expectedresult in actualresult:
-    	        #Set the result status of execution
-    	        tdkTestObj.setResultStatus("SUCCESS");
-    	        print "TEST STEP 3: Initiate factory reset ";
-    	        print "EXPECTED RESULT 3: Should inititate factory reset";
-    	        print "ACTUAL RESULT 3: %s" %details;
-    	        #Get the result of execution
-    	        print "[TEST EXECUTION RESULT] : SUCCESS";
+            if expectedresult in actualresult:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Initiate factory reset ");
+                print("EXPECTED RESULT 3: Should inititate factory reset");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-    	        #Restore the device state saved before reboot
-    	        obj.restorePreviousStateAfterReboot();
+                #Restore the device state saved before reboot
+                obj.restorePreviousStateAfterReboot();
 
-	        #Check the default status of selfheal
+                #Check the default status of selfheal
                 tdkTestObj = obj.createTestStep('TADstub_Get');
                 tdkTestObj.addParameter("paramName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold");
                 tdkTestObj.executeTestCase(expectedresult);
@@ -161,27 +161,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
                 defAvgMemoryThreshold = tdkTestObj.getResultDetails();
                 if "100" == defAvgMemoryThreshold:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: The AvgMemoryThreshold value should be changed to default value after factory reset";
-                    print "EXPECTED RESULT 4: AvgMemoryThreshold should be 100 after factory reset";
-                    print "ACTUAL RESULT 4: AvgMemoryThreshold:%s" %defAvgMemoryThreshold
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 4: The AvgMemoryThreshold value should be changed to default value after factory reset");
+                    print("EXPECTED RESULT 4: AvgMemoryThreshold should be 100 after factory reset");
+                    print("ACTUAL RESULT 4: AvgMemoryThreshold:%s" %defAvgMemoryThreshold)
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-	            print "TEST STEP 4: The AvgMemoryThreshold value should be changed to default value after factory reset";
-                    print "EXPECTED RESULT 4: AvgMemoryThreshold should be 100 after factory reset";
-                    print "ACTUAL RESULT 4: AvgMemoryThreshold:%s" %defAvgMemoryThreshold
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: The AvgMemoryThreshold value should be changed to default value after factory reset");
+                    print("EXPECTED RESULT 4: AvgMemoryThreshold should be 100 after factory reset");
+                    print("ACTUAL RESULT 4: AvgMemoryThreshold:%s" %defAvgMemoryThreshold)
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
-	    else:
-	        #Set the result status of execution
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Initiate factory reset ";
-                print "EXPECTED RESULT 3: Should inititate factory reset";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Initiate factory reset ");
+                print("EXPECTED RESULT 3: Should inititate factory reset");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	    #Revert the AvgMemoryThreshold to old value
-	    tdkTestObj = obj.createTestStep('TADstub_Set');
+                print("[TEST EXECUTION RESULT] : FAILURE");
+            #Revert the AvgMemoryThreshold to old value
+            tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_AvgMemoryThreshold");
             tdkTestObj.addParameter("ParamValue",currMemoryThreshold);
             tdkTestObj.addParameter("Type","unsignedint");
@@ -191,40 +191,40 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5:Revert value of AvgMemoryThreshold";
-                print "EXPECTED RESULT 5: Should revert value of AvgMemoryThreshold";
-                print "ACTUAL RESULT 5: %s" %details;
+                print("TEST STEP 5:Revert value of AvgMemoryThreshold");
+                print("EXPECTED RESULT 5: Should revert value of AvgMemoryThreshold");
+                print("ACTUAL RESULT 5: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		#Set the result status of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5:Revert value of AvgMemoryThreshold";
-                print "EXPECTED RESULT 5: Should revert value of AvgMemoryThreshold";
-                print "ACTUAL RESULT 5: %s" %details;
+                print("TEST STEP 5:Revert value of AvgMemoryThreshold");
+                print("EXPECTED RESULT 5: Should revert value of AvgMemoryThreshold");
+                print("ACTUAL RESULT 5: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
-	else:
-	    #Set the result status of execution
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Set value to AvgMemoryThreshold";
-            print "EXPECTED RESULT 2: Should set AvgMemoryThreshold";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2:Set value to AvgMemoryThreshold");
+            print("EXPECTED RESULT 2: Should set AvgMemoryThreshold");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Get the current value of avgMemoryThreshold";
-        print "EXPECTED RESULT 1: Should get the current value of avgMemoryThreshold";
-        print "ACTUAL RESULT 1:Current avgMemoryThreshold :%s" %currMemoryThreshold
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the current value of avgMemoryThreshold");
+        print("EXPECTED RESULT 1: Should get the current value of avgMemoryThreshold");
+        print("ACTUAL RESULT 1:Current avgMemoryThreshold :%s" %currMemoryThreshold)
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
     pamobj.unloadModule("pam");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

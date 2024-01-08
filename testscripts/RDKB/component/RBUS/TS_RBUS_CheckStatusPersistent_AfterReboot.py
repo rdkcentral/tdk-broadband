@@ -121,12 +121,12 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in def_result:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: RBUS Enable Status retrieved successfully"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: RBUS Enable Status retrieved successfully")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-        print "Initial RBUS Enabled Status is",default_value
+        print("Initial RBUS Enabled Status is",default_value)
 
         if default_value == "true":
             rbus_enabled = 1;
@@ -136,16 +136,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if rbus_set == 1:
                 rbus_enabled = 1;
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Enable the RBUS status to TRUE"
-                print "EXPECTED RESULT 2: Should Enable RBUS Status of TRUE"
-                print "ACTUAL RESULT 2: RBUS Enable status set to TRUE"
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                print("TEST STEP 2: Enable the RBUS status to TRUE")
+                print("EXPECTED RESULT 2: Should Enable RBUS Status of TRUE")
+                print("ACTUAL RESULT 2: RBUS Enable status set to TRUE")
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
             else:
                 rbus_enabled = 0
-                print "TEST STEP 2: Enable the RBUS status to TRUE"
-                print "EXPECTED RESULT 2: Should Enable RBUS Status of TRUE"
-                print "ACTUAL RESULT 2: Failed to Enable RBUS status to TRUE"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Enable the RBUS status to TRUE")
+                print("EXPECTED RESULT 2: Should Enable RBUS Status of TRUE")
+                print("ACTUAL RESULT 2: Failed to Enable RBUS status to TRUE")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
         if rbus_enabled == 1:
@@ -155,74 +155,74 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             def_result, def_details = isRBUSEnabled(tdkTestObj_Tr181_Get);
             if expectedresult in def_result:
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the Enable Status of RBUS after "
-                print "EXPECTED RESULT 3: Should Get the Enable Status of RBUS after Reboot"
-                print "ACTUAL RESULT 3: RBUS Enable Status retrieved successfully after Reboot"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
-                print "RBUS Enabled Status is",def_details
+                print("TEST STEP 3: Get the Enable Status of RBUS after ")
+                print("EXPECTED RESULT 3: Should Get the Enable Status of RBUS after Reboot")
+                print("ACTUAL RESULT 3: RBUS Enable Status retrieved successfully after Reboot")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
+                print("RBUS Enabled Status is",def_details)
 
                 # RBUS status should be TRUE even after Reboot of Device
                 if def_details == "true":
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the RBUS Enable Status to check value is persistent after Reboot"
-                    print "EXPECTED RESULT 4: RBUS Enable Status should be persistent after Reboot"
-                    print "ACTUAL RESULT 4: RBUS Enable Status value is persistent after Reboot"
-                    print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                    print("TEST STEP 4: Get the RBUS Enable Status to check value is persistent after Reboot")
+                    print("EXPECTED RESULT 4: RBUS Enable Status should be persistent after Reboot")
+                    print("ACTUAL RESULT 4: RBUS Enable Status value is persistent after Reboot")
+                    print("[TEST EXECUTION RESULT] 4: SUCCESS");
 
                     actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"rbus_session_mgr");
                     if expectedresult  in actualresult and pid_value != "":
                         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Check the RBUS process is running or NOT"
-                        print "EXPECTED RESULT 5: RBUS process should be running"
-                        print "ACTUAL RESULT 5: RBUS process is running after Reboot PID:",pid_value
-                        print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                        print("TEST STEP 5: Check the RBUS process is running or NOT")
+                        print("EXPECTED RESULT 5: RBUS process should be running")
+                        print("ACTUAL RESULT 5: RBUS process is running after Reboot PID:",pid_value)
+                        print("[TEST EXECUTION RESULT] 5: SUCCESS");
                     else:
                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Check the RBUS process is running or NOT"
-                        print "EXPECTED RESULT 5: RBUS process should be running"
-                        print "ACTUAL RESULT 5: RBUS process is NOT running after Reboot"
-                        print "[TEST EXECUTION RESULT] 6: FAILURE";
+                        print("TEST STEP 5: Check the RBUS process is running or NOT")
+                        print("EXPECTED RESULT 5: RBUS process should be running")
+                        print("ACTUAL RESULT 5: RBUS process is NOT running after Reboot")
+                        print("[TEST EXECUTION RESULT] 6: FAILURE");
                 else:
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the RBUS Enable Status to check value is persistent after Reboot"
-                    print "EXPECTED RESULT 4: RBUS Enable Status should be persistent after Reboot"
-                    print "ACTUAL RESULT 4: RBUS Enable Status value is NOT persistent after Reboot"
-                    print "[TEST EXECUTION RESULT] 4: FAILURE";
+                    print("TEST STEP 4: Get the RBUS Enable Status to check value is persistent after Reboot")
+                    print("EXPECTED RESULT 4: RBUS Enable Status should be persistent after Reboot")
+                    print("ACTUAL RESULT 4: RBUS Enable Status value is NOT persistent after Reboot")
+                    print("[TEST EXECUTION RESULT] 4: FAILURE");
             else:
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the Enable Status of RBUS after "
-                print "EXPECTED RESULT 3: Should Get the Enable Status of RBUS after Reboot"
-                print "ACTUAL RESULT 3: Failed to get RBUS Enable status"
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("TEST STEP 3: Get the Enable Status of RBUS after ")
+                print("EXPECTED RESULT 3: Should Get the Enable Status of RBUS after Reboot")
+                print("ACTUAL RESULT 3: Failed to get RBUS Enable status")
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
         else:
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-            print "RBUS is NOT enabled to TRUE"
+            print("RBUS is NOT enabled to TRUE")
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: Failed to get the RBUS enable status"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: Failed to get the RBUS enable status")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     #Revert Flag will set to 1 only when initial value was false, so disable the RBUS using doEnableDisableRBUS function
     if revert_flag == 1:
         rbus_set,revert_flag = doEnableDisableRBUS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if rbus_set == 1:
-            print "TEST STEP 6: Set the RBUS enable status to False"
-            print "EXPECTED RESULT 6: Should Set the RBUS Enable Status of False"
-            print "ACTUAL RESULT 6: RBUS Enable Status set to False"
-            print "[TEST EXECUTION RESULT] 6: SUCCESS";
+            print("TEST STEP 6: Set the RBUS enable status to False")
+            print("EXPECTED RESULT 6: Should Set the RBUS Enable Status of False")
+            print("ACTUAL RESULT 6: RBUS Enable Status set to False")
+            print("[TEST EXECUTION RESULT] 6: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 6: Set the RBUS enable status to False"
-            print "EXPECTED RESULT 6: Should Set the RBUS Enable Status of False"
-            print "ACTUAL RESULT 6: Failed to set RBUS Enable Status to False"
-            print "[TEST EXECUTION RESULT] 6: FAILURE";
+            print("TEST STEP 6: Set the RBUS enable status to False")
+            print("EXPECTED RESULT 6: Should Set the RBUS Enable Status of False")
+            print("ACTUAL RESULT 6: Failed to set RBUS Enable Status to False")
+            print("[TEST EXECUTION RESULT] 6: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

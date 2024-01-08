@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus.upper() :
 
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     CcspProcess= "sh %s/tdk_utility.sh parseConfigFile WAN_PROCESSES" %TDK_PATH;
-    print CcspProcess;
+    print(CcspProcess);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", CcspProcess);
     tdkTestObj.executeTestCase(expectedresult);
@@ -115,11 +115,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
     WanProcessList = WanProcessList.replace("\\n", "");
     if "Invalid Argument passed" not in WanProcessList:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the list of WAN_MANAGER rocesses ";
-        print "EXPECTED RESULT 1: Should get the list of WAN_MANAGER processes";
-        print "ACTUAL RESULT 1: %s" %WanProcessList;
+        print("TEST STEP 1: Get the list of WAN_MANAGER rocesses ");
+        print("EXPECTED RESULT 1: Should get the list of WAN_MANAGER processes");
+        print("ACTUAL RESULT 1: %s" %WanProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         WanProcessList = WanProcessList.split(",");
 
         for item in WanProcessList:
@@ -132,24 +132,24 @@ if "SUCCESS" in loadmodulestatus.upper() :
             details = details.replace("\\n", "");
             if expectedresult in actualresult and "" != details:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Process Name : %s" %item;
-                print "PID : %s" %details;
-                print "%s with process ID %s is running" %(item,details)
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("Process Name : %s" %item);
+                print("PID : %s" %details);
+                print("%s with process ID %s is running" %(item,details))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Process Name : %s" %item
-                print "%s is not running" %item
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("Process Name : %s" %item)
+                print("%s is not running" %item)
+                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the list of ccsp processes ";
-        print "EXPECTED RESULT 1: Should get the list of ccsp processes";
-        print "ACTUAL RESULT 1: %s" %WanProcessList;
+        print("TEST STEP 1: Get the list of ccsp processes ");
+        print("EXPECTED RESULT 1: Should get the list of ccsp processes");
+        print("ACTUAL RESULT 1: %s" %WanProcessList);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-     print "Failed to load sysutil module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load sysutil module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

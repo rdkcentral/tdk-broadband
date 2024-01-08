@@ -112,44 +112,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the TR069 Managment Server URL";
-        print "EXPECTED RESULT 1: Should get the TR069 Managment Server URL";
-        print "ACTUAL RESULT 1: serverURL fetched successfully";
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Get the TR069 Managment Server URL");
+        print("EXPECTED RESULT 1: Should get the TR069 Managment Server URL");
+        print("ACTUAL RESULT 1: serverURL fetched successfully");
+        print("TEST EXECUTION RESULT : %s" %actualresult);
 
         tdkTestObj = sysobj.createTestStep("ExecuteCmd");
         cmd = "cat /nvram/partners_defaults.json |  grep -i \"%s\"" %serverURL;
-        print cmd;
+        print(cmd);
         tdkTestObj.addParameter("command", cmd);
         expectedresult="SUCCESS"
         tdkTestObj.executeTestCase(expectedresult);
         actualresult=tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().replace("\\n", "");
-        if expectedresult in actualresult and details!= "" and serverURL in details: 
+        if expectedresult in actualresult and details!= "" and serverURL in details:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if the Server URL is present in parteners_defaults.json file";
-            print "EXPECTED RESULT 2: parteners_defaults.json file should have Managment Server URL entry";
-            print "ACTUAL RESULT 2: Server URL is present in parteners_defaults.json file" ;
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("TEST STEP 2: Check if the Server URL is present in parteners_defaults.json file");
+            print("EXPECTED RESULT 2: parteners_defaults.json file should have Managment Server URL entry");
+            print("ACTUAL RESULT 2: Server URL is present in parteners_defaults.json file") ;
+            print("TEST EXECUTION RESULT : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the Server URL  is present in parteners_defaults.json file";
-            print "EXPECTED RESULT 2: parteners_defaults.json file should have Managment Server URL entry";
-            print "ACTUAL RESULT 2:Server URL is not present in parteners_defaults.json file";
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("TEST STEP 2: Check if the Server URL  is present in parteners_defaults.json file");
+            print("EXPECTED RESULT 2: parteners_defaults.json file should have Managment Server URL entry");
+            print("ACTUAL RESULT 2:Server URL is not present in parteners_defaults.json file");
+            print("TEST EXECUTION RESULT : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the TR069 Managment Server URL";
-        print "EXPECTED RESULT 1: Should get the TR069 Managment Server URL";
-        print "ACTUAL RESULT 1: failed to fetch serverURL";
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("TEST STEP 1: Get the TR069 Managment Server URL");
+        print("EXPECTED RESULT 1: Should get the TR069 Managment Server URL");
+        print("ACTUAL RESULT 1: failed to fetch serverURL");
+        print("TEST EXECUTION RESULT : %s" %actualresult);
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

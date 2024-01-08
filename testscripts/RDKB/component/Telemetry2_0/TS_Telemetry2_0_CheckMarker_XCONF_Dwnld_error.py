@@ -108,29 +108,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
 
             ####Override server url to be used as the mock server url
             actualresult, xconfFile = xconfUtilityLib.overrideServerUrl(sysobj, CDN_MOC_SERVER);
@@ -144,7 +144,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             Curl_CMD = xconfUtilityLib.getXCONFServerConfigCmd(sysobj, FirmwareVersion, FirmwareFilename, "http");
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
 
-            print "Curl Request Formed:",Curl_CMD
+            print("Curl Request Formed:",Curl_CMD)
             tdkTestObj.addParameter("command",Curl_CMD);
             tdkTestObj.executeTestCase("SUCCESS");
 
@@ -152,142 +152,142 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             result = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if "Successfully added configuration" in details:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Execute curl cmnd to  add device configuration"
-               print "EXPECTED RESULT 3: Should add device configuration"
-               print "ACTUAL RESULT 3: Status: %s " %details
-               print "[TEST EXECUTION RESULT] : SUCCESS";
-               print "SUCCESS:Executed Curl Command"
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Execute curl cmnd to  add device configuration")
+                print("EXPECTED RESULT 3: Should add device configuration")
+                print("ACTUAL RESULT 3: Status: %s " %details)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                print("SUCCESS:Executed Curl Command")
 
-               ################get log file name from tdk_platform.properties
-               actualresult, propVal = xconfUtilityLib.GetPlatformProperties(sysobj, "CDN_LOG");
-               if expectedresult in actualresult:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  cdnLog = propVal
-                  print "SUCCESS:get log file name"
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "FAILURE:failed to get log file name"
+                ################get log file name from tdk_platform.properties
+                actualresult, propVal = xconfUtilityLib.GetPlatformProperties(sysobj, "CDN_LOG");
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    cdnLog = propVal
+                    print("SUCCESS:get log file name")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("FAILURE:failed to get log file name")
 
-               ################get CDN file name from tdk_platform.properties
-               actualresult, propVal = xconfUtilityLib.GetPlatformProperties(sysobj, "CDN_FILE");
-               if expectedresult in actualresult:
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "SUCCESS:get cdn file name"
-                  cdnFile = propVal
-               else:
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "FAILURE:failed to get log file name"
+                ################get CDN file name from tdk_platform.properties
+                actualresult, propVal = xconfUtilityLib.GetPlatformProperties(sysobj, "CDN_FILE");
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("SUCCESS:get cdn file name")
+                    cdnFile = propVal
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("FAILURE:failed to get log file name")
 
-               #Remove the exsisting logs
-               result = xconfUtilityLib.removeLog(sysobj, cdnLog);
-               if "SUCCESS" in result:
-                  ###########excute the shell script to download firmware
-                  tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                  tdkTestObj.addParameter("command", cdnFile + " > /dev/null 2>&1 &");
-                  tdkTestObj.executeTestCase("SUCCESS");
+                #Remove the exsisting logs
+                result = xconfUtilityLib.removeLog(sysobj, cdnLog);
+                if "SUCCESS" in result:
+                    ###########excute the shell script to download firmware
+                    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                    tdkTestObj.addParameter("command", cdnFile + " > /dev/null 2>&1 &");
+                    tdkTestObj.executeTestCase("SUCCESS");
 
-                  result = tdkTestObj.getResult();
-                  details = tdkTestObj.getResultDetails();
-                  #wait till log updation
-                  sleep(50)
-                  if "SUCCESS" in result:
-                     tdkTestObj.setResultStatus("SUCCESS");
-                     print "TEST STEP 4: Initiate firmware download"
-                     print "EXPECTED RESULT 4: firmware download should be initiated"
-                     print "ACTUAL RESULT 4: is %s " %details
-                     print "[TEST EXECUTION RESULT] : SUCCESS"
+                    result = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    #wait till log updation
+                    sleep(50)
+                    if "SUCCESS" in result:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Initiate firmware download")
+                        print("EXPECTED RESULT 4: firmware download should be initiated")
+                        print("ACTUAL RESULT 4: is %s " %details)
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                     sleep(20);
+                        sleep(20);
 
-                     lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
-                     if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
-                        tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                        print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                        print "ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount";
-                        print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                        lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+                        if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
+                            tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                            print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                            print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                            print("ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount");
+                            print("[TEST EXECUTION RESULT] 5: SUCCESS");
 
-                        print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
+                            print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
 
-                        query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : XCONF_Dwnld_error\"" %(initialLinesCount,lineCountAfterSimu)
-                        print "query:%s" %query
-                        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                        tdkTestObj.addParameter("command", query);
-                        tdkTestObj.executeTestCase(expectedresult);
-                        actualresult = tdkTestObj.getResult();
-                        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                        print "Marker Detail Found from log file is: %s "%details;
+                            query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : XCONF_Dwnld_error\"" %(initialLinesCount,lineCountAfterSimu)
+                            print("query:%s" %query)
+                            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", query);
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                            print("Marker Detail Found from log file is: %s "%details);
 
-                        if expectedresult in actualresult and details!="" and (len(details) > 0) and "XCONF_Dwnld_error" in details:
-                           tdkTestObj.setResultStatus("SUCCESS");
-                           markervalue = details.split("XCONF_Dwnld_error<#=#>")[1]
-                           print "TEST STEP 6: XCONF_Dwnld_error  Marker should be present";1
-                           print "EXPECTED RESULT 6: XCONF_Dwnld_error Marker should be present";
-                           print "ACTUAL RESULT 6: XCONF_Dwnld_error  Marker Value is %s" %markervalue;
-                           #Get the result of execution
-                           print "[TEST EXECUTION RESULT] 6: SUCCESS";
-                           print "***************************************************************"
+                            if expectedresult in actualresult and details!="" and (len(details) > 0) and "XCONF_Dwnld_error" in details:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                markervalue = details.split("XCONF_Dwnld_error<#=#>")[1]
+                                print("TEST STEP 6: XCONF_Dwnld_error  Marker should be present");1
+                                print("EXPECTED RESULT 6: XCONF_Dwnld_error Marker should be present");
+                                print("ACTUAL RESULT 6: XCONF_Dwnld_error  Marker Value is %s" %markervalue);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] 6: SUCCESS");
+                                print("***************************************************************")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 6: XCONF_Dwnld_error  Marker should be present");
+                                print("EXPECTED RESULT 6: XCONF_Dwnld_error Marker should be present");
+                                print("ACTUAL RESULT 6: XCONF_Dwnld_error  Marker is %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                                print("***************************************************************")
                         else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: XCONF_Dwnld_error  Marker should be present";
-                            print "EXPECTED RESULT 6: XCONF_Dwnld_error Marker should be present";
-                            print "ACTUAL RESULT 6: XCONF_Dwnld_error  Marker is %s" %details;
-                            #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                            print "***************************************************************"
-                     else:
-                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                         print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                         print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                         print "ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount";
-                         print "[TEST EXECUTION RESULT] : FAILURE";
+                            tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                            print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                            print("ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
-                     ###########restore the override file
-                     xconfUtilityLib.restoreOverrideFile(sysobj, xconfFile);
+                        ###########restore the override file
+                        xconfUtilityLib.restoreOverrideFile(sysobj, xconfFile);
 
-                  else:
-                      tdkTestObj.setResultStatus("FAILURE");
-                      print "TEST STEP 4: Initiate firmware download"
-                      print "EXPECTED RESULT 4: firmware download should be initiated"
-                      print "ACTUAL RESULT 4: is %s " %details
-                      print "[TEST EXECUTION RESULT] : FAILURE"
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Initiate firmware download")
+                        print("EXPECTED RESULT 4: firmware download should be initiated")
+                        print("ACTUAL RESULT 4: is %s " %details)
+                        print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Execute curl cmnd to  add device configuration"
-                print "EXPECTED RESULT 3: Should add device configuration"
-                print "ACTUAL RESULT 3: Status: %s " %details
-                print "[TEST EXECUTION RESULT] :FAILURE:Failed to execute Curl Command";
+                print("TEST STEP 3: Execute curl cmnd to  add device configuration")
+                print("EXPECTED RESULT 3: Should add device configuration")
+                print("ACTUAL RESULT 3: Status: %s " %details)
+                print("[TEST EXECUTION RESULT] :FAILURE:Failed to execute Curl Command");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to get the Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to get the Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 8: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 8: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 8: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 8: Post Process should be success");
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

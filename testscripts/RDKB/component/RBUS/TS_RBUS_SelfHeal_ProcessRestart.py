@@ -116,38 +116,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj_Tr181_Set = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly');
 
-    print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-    print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
+    print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+    print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
     #Execute the PreRequisite of RBUS
     rbus_set,revert_flag = rbus_PreRequisite(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd);
 
     if rbus_set == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
-        print "******************************************************************"
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
+        print("******************************************************************")
 
         actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"CcspWifiSsp");
 
         if expectedresult in actualresult and pid_value != "":
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the PID value of CcspWifiSsp Process"
-            print "EXPECTED RESULT 2: Should get the PID value of CcspWifiSsp process"
-            print "ACTUAL RESULT 2: PID value retrieved successfully ",pid_value
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
-            print "******************************************************************"
+            print("TEST STEP 2: Get the PID value of CcspWifiSsp Process")
+            print("EXPECTED RESULT 2: Should get the PID value of CcspWifiSsp process")
+            print("ACTUAL RESULT 2: PID value retrieved successfully ",pid_value)
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
+            print("******************************************************************")
             pid_value = int(pid_value);
 
             actualresult = killProcess(tdkTestObj_Sys_ExeCmd,pid_value,"");
 
             if expectedresult in actualresult:
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Kill the CcspWifiSsp Process"
-                print "EXPECTED RESULT 3: CcspWifiSsp Process should be killed"
-                print "ACTUAL RESULT 3: CcspWifiSsp process killed successfully"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
-                print "******************************************************************"
+                print("TEST STEP 3: Kill the CcspWifiSsp Process")
+                print("EXPECTED RESULT 3: CcspWifiSsp Process should be killed")
+                print("ACTUAL RESULT 3: CcspWifiSsp process killed successfully")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
+                print("******************************************************************")
 
                 sleep(10);
 
@@ -155,50 +155,50 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                 if expectedresult in actualresult and pid_value != "":
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Get the PID value of CcspWifiSsp Process to make sure process is restarted"
-                    print "EXPECTED RESULT 5: Should get the PID value of CcspWifiSsp process"
-                    print "ACTUAL RESULT 5: PID value retrieved successfully and Process is Running "
-                    print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                    print("TEST STEP 5: Get the PID value of CcspWifiSsp Process to make sure process is restarted")
+                    print("EXPECTED RESULT 5: Should get the PID value of CcspWifiSsp process")
+                    print("ACTUAL RESULT 5: PID value retrieved successfully and Process is Running ")
+                    print("[TEST EXECUTION RESULT] 5: SUCCESS");
                 else:
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Get the PID value of CcspWifiSsp Process to make sure process is restarted"
-                    print "EXPECTED RESULT 5: Should get the PID value of CcspWifiSsp process"
-                    print "ACTUAL RESULT 5: Failed to get PID value,Process is not restarted"
-                    print "[TEST EXECUTION RESULT] 5: FAILURE";
+                    print("TEST STEP 5: Get the PID value of CcspWifiSsp Process to make sure process is restarted")
+                    print("EXPECTED RESULT 5: Should get the PID value of CcspWifiSsp process")
+                    print("ACTUAL RESULT 5: Failed to get PID value,Process is not restarted")
+                    print("[TEST EXECUTION RESULT] 5: FAILURE");
 
             else:
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                print "TEST STEP 3: Kill the CcspWifiSsp Process"
-                print "EXPECTED RESULT 3: CcspWifiSsp Process should be killed"
-                print "ACTUAL RESULT 3: Fail to kill the CcspWifiSsp process"
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("TEST STEP 3: Kill the CcspWifiSsp Process")
+                print("EXPECTED RESULT 3: CcspWifiSsp Process should be killed")
+                print("ACTUAL RESULT 3: Fail to kill the CcspWifiSsp process")
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
         else:
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the PID value of CcspWifiSsp Process"
-            print "EXPECTED RESULT 2: Should get the PID value of CcspWifiSsp process"
-            print "ACTUAL RESULT 2: Failed to get PID value "
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Get the PID value of CcspWifiSsp Process")
+            print("EXPECTED RESULT 2: Should get the PID value of CcspWifiSsp process")
+            print("ACTUAL RESULT 2: Failed to get PID value ")
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
-    print "TEST STEP 6: Execute the Post process of RBUS"
-    print "EXPECTED RESULT 6: Post process of RBUS should be success"
+    print("TEST STEP 6: Execute the Post process of RBUS")
+    print("EXPECTED RESULT 6: Post process of RBUS should be success")
 
     post_process_value = rbus_PostProcess(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd,revert_flag);
     if post_process_value == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 6: Post process of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 6: SUCCESS";
+        print("ACTUAL RESULT 6: Post process of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 6: SUCCESS");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 6: Post process of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 6: FAILURE";
+        print("ACTUAL RESULT 6: Post process of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 6: FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

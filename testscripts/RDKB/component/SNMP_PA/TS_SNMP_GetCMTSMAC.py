@@ -70,8 +70,8 @@ OID : 1.3.6.1.2.1.10.127.1.2.1.1.1.2
 
 dmcli eRT getv Device.DeviceInfo.X_RDKCENTRAL-COM_CMTS_MAC</input_parameters>
     <automation_approch>1.TM will load the snmp_pa and sysutil library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. Get CMTS MAC using TR-181 parameter and compare with snmpget output
 4.Responses from the snmplib and TR-181 parameter will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -113,8 +113,8 @@ obj1.configureTestCase(ip,port,'TS_SNMP_GetCMTSMAC');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -127,16 +127,16 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
 
-    if "SNMPv2-SMI" in actResponse:
+    if "No Such Instance currently exists at this OID" not in actResponse:
         mac = actResponse.split("STRING:")[1].strip()
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget for CMTS mac";
-        print "EXPECTED RESULT 1: snmpget should return CMTS mac";
-        print "ACTUAL RESULT 1: CMTS MAC Address retrieved from snmp is %s" %mac;
+        print("TEST STEP 1:Execute snmpget for CMTS mac");
+        print("EXPECTED RESULT 1: snmpget should return CMTS mac");
+        print("ACTUAL RESULT 1: CMTS MAC Address retrieved from snmp is %s" %mac);
         #Set the test execution result
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_CMTS_MAC")
         expectedresult="SUCCESS";
 
@@ -144,41 +144,41 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
+        if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
             CMTS_MAC = details;
-	    print "TEST STEP 2: Get CMTS MAC Address using TR-181 parameter";
-	    print "EXPECTED RESULT 2: Should get CMTS MAC Address";
-            print "ACTUAL RESULT 2: CMTS MAC Address retrieved from TR-181 parameter is %s" %CMTS_MAC;
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-    	    if mac.replace(" ",":")==CMTS_MAC.upper():
-	        tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Compare CMTS MAC Address retrieved from snmpget and TR-181 parameter";
-                print "EXPECTED RESULT 3: CMTS MAC Address retrieved from snmpget and TR-181 parameter should be same";
-                print "ACTUAL RESULT 3 : CMTS MAC Address retrieved from snmpget and TR-181 parameter are same";
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Compare CMTS MAC Address retrieved from snmpget and TR-181 parameter";
-                print "EXPECTED RESULT 3: CMTS MAC Address retrieved from snmpget and TR-181 parameter should be same";
-                print "ACTUAL RESULT 3 : CMTS MAC Address retrieved from snmpget and TR-181 parameter are not same";
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get CMTS MAC Address using TR-181 parameter";
-            print "EXPECTED RESULT 2: Should get CMTS MAC Address";
-	    print "ACTUAL RESULT 2: Couldn't get CMTS MAC from TR-181 parameter";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get CMTS MAC Address using TR-181 parameter");
+            print("EXPECTED RESULT 2: Should get CMTS MAC Address");
+            print("ACTUAL RESULT 2: CMTS MAC Address retrieved from TR-181 parameter is %s" %CMTS_MAC);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            if mac.replace(" ",":")==CMTS_MAC.upper():
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Compare CMTS MAC Address retrieved from snmpget and TR-181 parameter");
+                print("EXPECTED RESULT 3: CMTS MAC Address retrieved from snmpget and TR-181 parameter should be same");
+                print("ACTUAL RESULT 3 : CMTS MAC Address retrieved from snmpget and TR-181 parameter are same");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Compare CMTS MAC Address retrieved from snmpget and TR-181 parameter");
+                print("EXPECTED RESULT 3: CMTS MAC Address retrieved from snmpget and TR-181 parameter should be same");
+                print("ACTUAL RESULT 3 : CMTS MAC Address retrieved from snmpget and TR-181 parameter are not same");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get CMTS MAC Address using TR-181 parameter");
+            print("EXPECTED RESULT 2: Should get CMTS MAC Address");
+            print("ACTUAL RESULT 2: Couldn't get CMTS MAC from TR-181 parameter");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Execute snmpget for CMTS mac";
-        print "EXPECTED RESULT 1: snmpget should return CMTS mac";
-        print "ACTUAL RESULT 1: %s" %actResponse;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Execute snmpget for CMTS mac");
+        print("EXPECTED RESULT 1: snmpget should return CMTS mac");
+        print("ACTUAL RESULT 1: %s" %actResponse);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "FAILURE to load SNMP_PA module";
+    print("FAILURE to load SNMP_PA module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

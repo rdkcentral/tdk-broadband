@@ -109,35 +109,35 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP %d : Set Device.DSL.X_RDK_Report.DSL.Enabled to a non-bool value %s" %(step, reporting_enable);
-        print "EXPECTED RESULT %d : Should not set Device.DSL.X_RDK_Report.DSL.Enabled to a non-bool value" %step;
+        print("TEST STEP %d : Set Device.DSL.X_RDK_Report.DSL.Enabled to a non-bool value %s" %(step, reporting_enable));
+        print("EXPECTED RESULT %d : Should not set Device.DSL.X_RDK_Report.DSL.Enabled to a non-bool value" %step);
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: %s" %(step, details);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: %s" %(step, details));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: %s" %(step, details);
+            print("ACTUAL RESULT %d: %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Check if the values are set
         step = step + 1;
         tdkTestObj, set_value, status = getReportingParams(obj, step);
         step = step + 1;
-        print "TEST STEP %d : Check if all reporting parameters retained their values after the invalid set" %step;
-        print "EXPECTED RESULT %d : All reporting parameters should retain their values after the invalid set" %step;
+        print("TEST STEP %d : Check if all reporting parameters retained their values after the invalid set" %step);
+        print("EXPECTED RESULT %d : All reporting parameters should retain their values after the invalid set" %step);
 
         if (set_value[0] != str(initial_value[0])) or (set_value[1] != str(initial_value[1])) or (set_value[2] != str(initial_value[2])) or (set_value[3] != str(initial_value[3])):
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: All reporting parameters did not retain their values after invalid set" %step;
+            print("ACTUAL RESULT %d: All reporting parameters did not retain their values after invalid set" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
-            print "\n************Revert operation required***************";
+            print("\n************Revert operation required***************");
             expectedresult = "SUCCESS";
             step = step + 1;
             value_list = [];
@@ -146,22 +146,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             set_status = setReportingParams(tdkTestObj1, expectedresult, value_list, step);
 
             if set_status == 0:
-                print "Revert operation was successful";
+                print("Revert operation was successful");
             else :
-                print "Revert operation was not successful";
+                print("Revert operation was not successful");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: All reporting parameters retained their values after the invalid set" %step;
+            print("ACTUAL RESULT %d: All reporting parameters retained their values after the invalid set" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-        print "Reporting parameters are not retrieved successfully";
+        print("Reporting parameters are not retrieved successfully");
     obj.unloadModule("tad");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

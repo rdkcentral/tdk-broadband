@@ -67,7 +67,7 @@
     <api_or_interface_used>subprocess.Popen()</api_or_interface_used>
     <input_parameters>"snmpget -c invalid -v 2c udp6:[" + ip +"] 1.3.6.1.2.1.69.1.4.5.0"</input_parameters>
     <automation_approch>1.TM will load the snmp_pa library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
 3.Responses from the popen() will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
 7.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from snmplib.</automation_approch>
@@ -89,8 +89,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -104,7 +104,7 @@ obj.configureTestCase(ip,port,'TS_SNMP_v2cGETqueryInvalidCommString');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,24 +119,20 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase("SUCCESS");
 
     if actResponse[1] != 0:
-	tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget with invalid community string";
-        print "EXPECTED RESULT 1: snmpget should fail in get";
-        print "ACTUAL RESULT 1: snmpget failed";
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1:Execute snmpget with invalid community string");
+        print("EXPECTED RESULT 1: snmpget should fail in get");
+        print("ACTUAL RESULT 1: snmpget failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actResponse[0] ;
+        print("[TEST EXECUTION RESULT] : %s" %actResponse[0]) ;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Execute snmpget with invalid community string";
-        print "EXPECTED RESULT 1: snmpget should fail in get";
-        print "ACTUAL RESULT 1: snmpget not failed"
-        print "[TEST EXECUTION RESULT] : %s" %actResponse[0] ;
+        print("TEST STEP 1:Execute snmpget with invalid community string");
+        print("EXPECTED RESULT 1: snmpget should fail in get");
+        print("ACTUAL RESULT 1: snmpget not failed")
+        print("[TEST EXECUTION RESULT] : %s" %actResponse[0]) ;
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-					
-
-					
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

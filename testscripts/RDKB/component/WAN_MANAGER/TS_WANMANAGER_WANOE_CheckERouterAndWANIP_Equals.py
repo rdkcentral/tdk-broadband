@@ -118,11 +118,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     if expectedresult in actualresult and devicetype != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if devicetype == "RPI":
             i =1;
@@ -137,14 +137,14 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         actualresult = tdkTestObj.getResult();
         enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
-        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+        print("TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties")
+        print("EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE");
 
         if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if enableFlag == "TRUE":
                 ParamName = "Device.X_RDK_WanManager.Interface." + str(i) + ".VirtualInterface.1.Enable";
@@ -160,14 +160,14 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 query="sysevent get ipv4_wan_ipaddr";
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult="SUCCESS";
@@ -176,7 +176,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 wan_ip = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
                 query="sysevent get ipv4_erouter0_ipaddr";
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult2="SUCCESS";
@@ -185,7 +185,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 erouter_ip = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
                 query="ifconfig erouter0 | grep -i \"inet addr:\"";
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 expectedresult2="SUCCESS";
@@ -195,76 +195,76 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
 
                 if expectedresult in (actualresult1 and actualresult2 and actualresult3):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 :Get th ipv4 address for wan and erouter0 ip from syscfg and ifconfig";
-                    print "EXPECTED RESULT 4: Should get ipv4 address for wan and erouter0 ip from syscfg and ifconfig";
-                    print "ACTUAL RESULT 4: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                    print("TEST STEP 4 :Get th ipv4 address for wan and erouter0 ip from syscfg and ifconfig");
+                    print("EXPECTED RESULT 4: Should get ipv4 address for wan and erouter0 ip from syscfg and ifconfig");
+                    print("ACTUAL RESULT 4: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     if details == "true":
-                        print "The WANOE is enabled , wan ip and erouter0 ip are expected to be equal";
+                        print("The WANOE is enabled , wan ip and erouter0 ip are expected to be equal");
                         if wan_ip==erouter_ip==ifconfig_ip:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5 :check if ipv4 address for wan and erouter0 are equal";
-                            print "EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 as equal";
-                            print "ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                            print("TEST STEP 5 :check if ipv4 address for wan and erouter0 are equal");
+                            print("EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 as equal");
+                            print("ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5 :check if ipv4 address for wan and erouter0 are equal";
-                            print "EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 as equal";
-                            print "ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                            print("TEST STEP 5 :check if ipv4 address for wan and erouter0 are equal");
+                            print("EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 as equal");
+                            print("ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
-                        print "The WANOE is disabled , wan ip and erouter0 ip are expected to be empty";
+                        print("The WANOE is disabled , wan ip and erouter0 ip are expected to be empty");
                         if wan_ip== "" and erouter_ip == "" and ifconfig_ip == "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5 :check if ipv4 address for wan and erouter0 are empty";
-                            print "EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 empty";
-                            print "ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                            print("TEST STEP 5 :check if ipv4 address for wan and erouter0 are empty");
+                            print("EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 empty");
+                            print("ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5:check if ipv4 address for wan and erouter0 are empty";
-                            print "EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 empty";
-                            print "ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                            print("TEST STEP 5:check if ipv4 address for wan and erouter0 are empty");
+                            print("EXPECTED RESULT 5: Should get ipv4 address for wan and erouter0 empty");
+                            print("ACTUAL RESULT 5: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4 :Get th ipv4 address for wan and erouter0";
-                    print "EXPECTED RESULT 4: Should get ipv4 address for wan and erouter0";
-                    print "ACTUAL RESULT 4: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip);
+                    print("TEST STEP 4 :Get th ipv4 address for wan and erouter0");
+                    print("EXPECTED RESULT 4: Should get ipv4 address for wan and erouter0");
+                    print("ACTUAL RESULT 4: wan_ip : %s,erouter_ip :%s,ifconfig erouter ip :%s"%(wan_ip,erouter_ip,ifconfig_ip));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysobj.unloadModule("sysutil");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysobj.setLoadModuleStatus("FAILURE");
     obj.setLoadModuleStatus("FAILURE");

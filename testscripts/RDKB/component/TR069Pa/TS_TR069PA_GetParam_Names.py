@@ -41,7 +41,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_TR069_3</test_case_id>
-    <test_objective>To Validate Get Param Names API for 
+    <test_objective>To Validate Get Param Names API for
 TR069 PA</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3</test_setup>
@@ -54,14 +54,14 @@ TR069Agent_GetParameterNames
 Input
 1.Parameter Path (paramName)( eg: "Device.ManagementServer.Password" )
 2.ParamList(Device.ManagementServer.)</input_parameters>
-    <automation_approch>1.Create a function named TR069Agent_GetParameterNames in Test Manager GUI. 
+    <automation_approch>1.Create a function named TR069Agent_GetParameterNames in Test Manager GUI.
 2.Configure the info of the  function under test in function and create a python script
-3.Execute the generated Script(TS_TR069_GetParam_Names.py) using execution page of  Test Manager GUI 
-4.This script will in turn call TR069Agent stub in TDK Agent 
-5.TR069Agent_GetParameterNames function will call CCSP Base Interface Function named "CcspBaseIf_getParameterNames" , that inturn will call TR069PA Agent Library Function "CcspManagementServer_GetParameterNames" 
+3.Execute the generated Script(TS_TR069_GetParam_Names.py) using execution page of  Test Manager GUI
+4.This script will in turn call TR069Agent stub in TDK Agent
+5.TR069Agent_GetParameterNames function will call CCSP Base Interface Function named "CcspBaseIf_getParameterNames" , that inturn will call TR069PA Agent Library Function "CcspManagementServer_GetParameterNames"
 6.Perform step 5 by having Path name as that of the whole Parameter List.
 7.Validate by cross verifying both the outputd.
-8.Responses(printf) from TDK Component and TR069 agentstub would be logged in Agent Console log 
+8.Responses(printf) from TDK Component and TR069 agentstub would be logged in Agent Console log
 9.Based on the log set the result as SUCCESS or FAILURE</automation_approch>
     <except_output>CheckPoint 1:
 Param name for Requested Path should be available in Agent Console Log.Validate by cross checking its attributes with the entire parameter list in the same path
@@ -80,8 +80,8 @@ TestManager GUI will publish the result as PASS in Execution page</except_output
 </xml>
 
 '''
-																								# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+                                                                                                                                                                                                # use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("TR069Pa","RDKB");
@@ -94,15 +94,15 @@ obj.configureTestCase(ip,port,'TS_TR069PA_GetParam_Names');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
-    obj.setLoadModuleStatus("SUCCESS");		
+    obj.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep('TR069Agent_GetParameterNames');
     tdkTestObj.addParameter("ParamName","Device.ManagementServer.NATDetected");
     tdkTestObj.addParameter("ParamList","Device.ManagementServer.");
- 	
+
     expectedresult="SUCCESS";
 
     #Execute the test case in STB
@@ -110,29 +110,21 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-		
+
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-	print "%s" %details;
-	 
-    else:   
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
+    else:
         tdkTestObj.setResultStatus("FAILURE");
-	print "[TEST EXECUTION RESULT] : %s" %actualresult ;	
-	print "%s" %details;		 
-    
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("%s" %details);
+
     obj.unloadModule("TR069Pa");
-   		 
-else:   
-        print "Failed to load TR069Pa module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
 
-					
-
-					
-
-					
-
-					
+else:
+    print("Failed to load TR069Pa module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

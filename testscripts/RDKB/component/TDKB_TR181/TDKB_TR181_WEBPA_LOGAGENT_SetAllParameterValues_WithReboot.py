@@ -64,8 +64,8 @@ LOGAGENT module's parameter xml should be available</pre_requisite>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import tdkbSetAllParams
 from tdkbVariables import *;
 import webpaUtility;
@@ -93,24 +93,23 @@ if "SUCCESS" in loadmodulestatus.upper() :
 
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj1);
     if "SUCCESS" in preRequisiteStatus:
-        print "The module to test is: LOGAGENT";
+        print("The module to test is: LOGAGENT");
         setup_type = "WEBPA"
 
         #Invoke the utility function to set and validate the values for all configured tr181 params
         moduleStatus,failedParams= tdkbSetAllParams.setAllParams("LOGAGENT", setup_type, obj, obj1,"true");
 
-        print "Status of LOGAGENT module is : ",moduleStatus, "\n";
+        print("Status of LOGAGENT module is : ",moduleStatus, "\n");
         if moduleStatus == "FAILURE":
-            print "The failed params are ", failedParams, "\n";
+            print("The failed params are ", failedParams, "\n");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

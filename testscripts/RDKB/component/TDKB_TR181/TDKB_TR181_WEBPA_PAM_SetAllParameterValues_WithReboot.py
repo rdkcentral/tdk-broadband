@@ -96,21 +96,20 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     expectedresult="SUCCESS";
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase(expectedresult);
-    print "The modules to test is: PAM ";
+    print("The modules to test is: PAM ");
     setup_type = "WEBPA"
 
     #Invoke the utility function to set and validate the values for all configured tr181 params
     moduleStatus,failedParams = tdkbSetAllParams.setAllParams("PAM", setup_type, obj, obj1, "true");
 
-    print "Status of PAM validation is ", moduleStatus, "\n";
+    print("Status of PAM validation is ", moduleStatus, "\n");
     if moduleStatus == "FAILURE":
-        print "The failed params are ", failedParams, "\n";
+        print("The failed params are ", failedParams, "\n");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

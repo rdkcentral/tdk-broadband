@@ -100,7 +100,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_Download_CheckResultParam');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -117,13 +117,13 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Set the interface of Download ";
-        print "EXPECTED RESULT 1: Should set the interface of Download";
-        print "ACTUAL RESULT 1: Interface of Download is %s" %details;
+        print("TEST STEP 1:Set the interface of Download ");
+        print("EXPECTED RESULT 1: Should set the interface of Download");
+        print("ACTUAL RESULT 1: Interface of Download is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        
-	tdkTestObj = obj.createTestStep('TADstub_Set');
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+        tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DownloadURL");
         tdkTestObj.addParameter("ParamValue","http://download.thinkbroadband.com/5MB.zip");
         tdkTestObj.addParameter("Type","string");
@@ -134,11 +134,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the download URL of Download";
-            print "EXPECTED RESULT 2: Should set the download URL of Download ";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the download URL of Download");
+            print("EXPECTED RESULT 2: Should set the download URL of Download ");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DiagnosticsState");
             tdkTestObj.addParameter("ParamValue","Requested");
@@ -150,226 +150,226 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set DiagnosticsState of Download as Requested";
-                print "EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set DiagnosticsState of Download as Requested");
+                print("EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 time.sleep(50);
-		tdkTestObj = obj.createTestStep('TADstub_Get');
+                tdkTestObj = obj.createTestStep('TADstub_Get');
                 tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.ROMTime");
                 expectedresult="SUCCESS";
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details_ROMTime = tdkTestObj.getResultDetails();
-		if expectedresult in actualresult and details_ROMTime!="0000-00-00T00:00:00.000000":
+                if expectedresult in actualresult and details_ROMTime!="0000-00-00T00:00:00.000000":
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4 :Get ROMTime of download");
+                    print("EXPECTED RESULT 4 :Should get the ROMTime of download ");
+                    print("ACTUAL RESULT 4 :The ROMTime of download is , details : %s" %details_ROMTime);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    tdkTestObj = obj.createTestStep('TADstub_Get');
+                    tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.BOMTime");
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details_BOMTime = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult and details_BOMTime!="0000-00-00T00:00:00.000000":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4 :Get ROMTime of download";
-                        print "EXPECTED RESULT 4 :Should get the ROMTime of download ";
-                        print "ACTUAL RESULT 4 :The ROMTime of download is , details : %s" %details_ROMTime;
+                        print("TEST STEP 5:Get BOMTime of download");
+                        print("EXPECTED RESULT 5:Should get the BOMTime of download ");
+                        print("ACTUAL RESULT 5:The BOMTime of download is , details : %s" %details_BOMTime);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-			tdkTestObj = obj.createTestStep('TADstub_Get');
-                	tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.BOMTime");
-                	expectedresult="SUCCESS";
-                	tdkTestObj.executeTestCase(expectedresult);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        tdkTestObj = obj.createTestStep('TADstub_Get');
+                        tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.EOMTime");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
                         actualresult = tdkTestObj.getResult();
-                        details_BOMTime = tdkTestObj.getResultDetails();
-                	if expectedresult in actualresult and details_BOMTime!="0000-00-00T00:00:00.000000":
+                        details_EOMTime = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult and details_EOMTime!="0000-00-00T00:00:00.000000":
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 5:Get BOMTime of download";
-                            print "EXPECTED RESULT 5:Should get the BOMTime of download ";
-                            print "ACTUAL RESULT 5:The BOMTime of download is , details : %s" %details_BOMTime;
+                            print("TEST STEP 6:Get EOMTime of download");
+                            print("EXPECTED RESULT 6:Should get the EOMTime of download ");
+                            print("ACTUAL RESULT 6:The EOMTime of download is , details : %s" %details_EOMTime);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-			    tdkTestObj = obj.createTestStep('TADstub_Get');
-                            tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.EOMTime");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            tdkTestObj = obj.createTestStep('TADstub_Get');
+                            tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TestBytesReceived");
                             expectedresult="SUCCESS";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
-                            details_EOMTime = tdkTestObj.getResultDetails();
-                            if expectedresult in actualresult and details_EOMTime!="0000-00-00T00:00:00.000000":
+                            details_TestBytesReceived = tdkTestObj.getResultDetails();
+                            if expectedresult in actualresult and details_TestBytesReceived>0:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 6:Get EOMTime of download";
-                                print "EXPECTED RESULT 6:Should get the EOMTime of download ";
-                                print "ACTUAL RESULT 6:The EOMTime of download is , details : %s" %details_EOMTime;
+                                print("TEST STEP 7:Get TestBytesReceived of download");
+                                print("EXPECTED RESULT 7:Should get the TestBytesReceived of download ");
+                                print("ACTUAL RESULT 7:The TestBytesReceived of download is , details : %s" %details_TestBytesReceived);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
-				tdkTestObj = obj.createTestStep('TADstub_Get');
-                                tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TestBytesReceived");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                tdkTestObj = obj.createTestStep('TADstub_Get');
+                                tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TotalBytesReceived");
                                 expectedresult="SUCCESS";
                                 tdkTestObj.executeTestCase(expectedresult);
                                 actualresult = tdkTestObj.getResult();
-                                details_TestBytesReceived = tdkTestObj.getResultDetails();
-                                if expectedresult in actualresult and details_TestBytesReceived>0:
+                                details_TotalBytesReceived = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult and details_TotalBytesReceived>0:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "TEST STEP 7:Get TestBytesReceived of download";
-                                    print "EXPECTED RESULT 7:Should get the TestBytesReceived of download ";
-                                    print "ACTUAL RESULT 7:The TestBytesReceived of download is , details : %s" %details_TestBytesReceived;
+                                    print("TEST STEP 8:Get TotalBytesReceived of download");
+                                    print("EXPECTED RESULT 8:Should get the TotalBytesReceived of download ");
+                                    print("ACTUAL RESULT 8:The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
-				    tdkTestObj = obj.createTestStep('TADstub_Get');
-                                    tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TotalBytesReceived");
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                                    tdkTestObj = obj.createTestStep('TADstub_Get');
+                                    tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TCPOpenRequestTime");
                                     expectedresult="SUCCESS";
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
-                                    details_TotalBytesReceived = tdkTestObj.getResultDetails();
-                                    if expectedresult in actualresult and details_TotalBytesReceived>0:
+                                    details_TCPOpenRequestTime = tdkTestObj.getResultDetails();
+                                    if expectedresult in actualresult and details_TCPOpenRequestTime!="0000-00-00T00:00:00.000000":
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "TEST STEP 8:Get TotalBytesReceived of download";
-                                        print "EXPECTED RESULT 8:Should get the TotalBytesReceived of download ";
-                                        print "ACTUAL RESULT 8:The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived;
+                                        print("TEST STEP 9:Get TCPOpenRequestTime of download");
+                                        print("EXPECTED RESULT 9:Should get the TCPOpenRequestTime of download ");
+                                        print("ACTUAL RESULT 9:The TCPOpenRequestTime of download is , details : %s" %details_TCPOpenRequestTime);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : SUCCESS";
-				        tdkTestObj = obj.createTestStep('TADstub_Get');
-                                        tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TCPOpenRequestTime");
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                        tdkTestObj = obj.createTestStep('TADstub_Get');
+                                        tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TCPOpenResponseTime");
                                         expectedresult="SUCCESS";
                                         tdkTestObj.executeTestCase(expectedresult);
                                         actualresult = tdkTestObj.getResult();
-                                        details_TCPOpenRequestTime = tdkTestObj.getResultDetails();
-                                        if expectedresult in actualresult and details_TCPOpenRequestTime!="0000-00-00T00:00:00.000000":
+                                        details_TCPOpenResponseTime = tdkTestObj.getResultDetails();
+                                        if expectedresult in actualresult and details_TCPOpenResponseTime!="0000-00-00T00:00:00.000000":
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "TEST STEP 9:Get TCPOpenRequestTime of download";
-                                            print "EXPECTED RESULT 9:Should get the TCPOpenRequestTime of download ";
-                                            print "ACTUAL RESULT 9:The TCPOpenRequestTime of download is , details : %s" %details_TCPOpenRequestTime;
+                                            print("TEST STEP 10:Get TCPOpenResponseTime of download");
+                                            print("EXPECTED RESULT 10:Should get the TCPOpenResponseTime of download ");
+                                            print("ACTUAL RESULT 10:The TCPOpenResponseTime of download is , details : %s" %details_TCPOpenResponseTime);
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : SUCCESS";
-					    tdkTestObj = obj.createTestStep('TADstub_Get');
-                                            tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.TCPOpenResponseTime");
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                            tdkTestObj = obj.createTestStep('TADstub_Get');
+                                            tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DiagnosticsState");
                                             expectedresult="SUCCESS";
                                             tdkTestObj.executeTestCase(expectedresult);
                                             actualresult = tdkTestObj.getResult();
-                                            details_TCPOpenResponseTime = tdkTestObj.getResultDetails();
-                                            if expectedresult in actualresult and details_TCPOpenResponseTime!="0000-00-00T00:00:00.000000":
+                                            details = tdkTestObj.getResultDetails();
+                                            if expectedresult in actualresult and details=="Completed":
                                                 #Set the result status of execution
                                                 tdkTestObj.setResultStatus("SUCCESS");
-                                                print "TEST STEP 10:Get TCPOpenResponseTime of download";
-                                                print "EXPECTED RESULT 10:Should get the TCPOpenResponseTime of download ";
-                                                print "ACTUAL RESULT 10:The TCPOpenResponseTime of download is , details : %s" %details_TCPOpenResponseTime;
+                                                print("TEST STEP 11:Get Diagnostics State of download as Completed");
+                                                print("EXPECTED RESULT 11:Should get the Diagnostics State of download as Completed ");
+                                                print("ACTUAL RESULT 11:The DiagnosticsState of download is , details : %s" %details_TCPOpenResponseTime);
                                                 #Get the result of execution
-                                                print "[TEST EXECUTION RESULT] : SUCCESS";
-						
-						tdkTestObj = obj.createTestStep('TADstub_Get');
-                                                tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DiagnosticsState");
-                                                expectedresult="SUCCESS";
-                                                tdkTestObj.executeTestCase(expectedresult);
-                                                actualresult = tdkTestObj.getResult();
-                                                details = tdkTestObj.getResultDetails();
-                                                if expectedresult in actualresult and details=="Completed":
-                                                    #Set the result status of execution
-                                                    tdkTestObj.setResultStatus("SUCCESS");
-                                                    print "TEST STEP 11:Get Diagnostics State of download as Completed";
-                                                    print "EXPECTED RESULT 11:Should get the Diagnostics State of download as Completed ";
-                                                    print "ACTUAL RESULT 11:The DiagnosticsState of download is , details : %s" %details_TCPOpenResponseTime;
-                                                    #Get the result of execution
-                                                    print "[TEST EXECUTION RESULT] : SUCCESS";
- 						else:
-						    #Set the result status of execution
-                                                    tdkTestObj.setResultStatus("SUCCESS");
-                                                    print "TEST STEP 11:Get Diagnostics State of download as Completed";
-                                                    print "EXPECTED RESULT 11:Should get the Diagnostics State of download as Completed ";
-                                                    print "ACTUAL RESULT 11:The DiagnosticsState of download is , details : %s" %details_TCPOpenResponseTime;
-                                                    #Get the result of execution
-                                                    print "[TEST EXECUTION RESULT] : SUCCESS";	
-
-
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
                                             else:
-					        #Set the result status of execution
-                                                tdkTestObj.setResultStatus("FAILURE");
-                                                print "TEST STEP 10:Get TCPOpenResponseTime of download";
-                                                print "EXPECTED RESULT 10:Should get the TCPOpenResponseTime of download ";
-                                                print "ACTUAL RESULT 10:The TCPOpenResponseTime of download is , details : %s" %details_TCPOpenResponseTime;
+                                                #Set the result status of execution
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("TEST STEP 11:Get Diagnostics State of download as Completed");
+                                                print("EXPECTED RESULT 11:Should get the Diagnostics State of download as Completed ");
+                                                print("ACTUAL RESULT 11:The DiagnosticsState of download is , details : %s" %details_TCPOpenResponseTime);
                                                 #Get the result of execution
-                                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
 
                                         else:
-					    #Set the result status of execution
+                                            #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "TEST STEP 9:Get TCPOpenRequestTime of download";
-                                            print "EXPECTED RESULT 9:Should get the TCPOpenRequestTime of download ";
-                                            print "ACTUAL RESULT 9:The TCPOpenRequestTime of download is , details : %s" %details_TCPOpenRequestTime;
+                                            print("TEST STEP 10:Get TCPOpenResponseTime of download");
+                                            print("EXPECTED RESULT 10:Should get the TCPOpenResponseTime of download ");
+                                            print("ACTUAL RESULT 10:The TCPOpenResponseTime of download is , details : %s" %details_TCPOpenResponseTime);
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : FAILURE";
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                                     else:
-				         #Set the result status of execution
+                                        #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "TEST STEP 8:Get TotalBytesReceived of download";
-                                        print "EXPECTED RESULT 8:Should get the TotalBytesReceived of download ";
-                                        print "ACTUAL RESULT 8:The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived;
+                                        print("TEST STEP 9:Get TCPOpenRequestTime of download");
+                                        print("EXPECTED RESULT 9:Should get the TCPOpenRequestTime of download ");
+                                        print("ACTUAL RESULT 9:The TCPOpenRequestTime of download is , details : %s" %details_TCPOpenRequestTime);
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                                 else:
-				    #Set the result status of execution
+                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP 7:Get TestBytesReceived of download";
-                                    print "EXPECTED RESULT 7:Should get the TestBytesReceived of download ";
-                                    print "ACTUAL RESULT 7:The TestBytesReceived of download is , details : %s" %details_TestBytesReceived;
+                                    print("TEST STEP 8:Get TotalBytesReceived of download");
+                                    print("EXPECTED RESULT 8:Should get the TotalBytesReceived of download ");
+                                    print("ACTUAL RESULT 8:The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
-                            else:
-			         #Set the result status of execution
-                                tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 6:Get EOMTime of download";
-                                print "EXPECTED RESULT 6:Should get the EOMTime of download ";
-                                print "ACTUAL RESULT 6:The EOMTime of download is , details : %s" %details_EOMTime;
-                                #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
 
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7:Get TestBytesReceived of download");
+                                print("EXPECTED RESULT 7:Should get the TestBytesReceived of download ");
+                                print("ACTUAL RESULT 7:The TestBytesReceived of download is , details : %s" %details_TestBytesReceived);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
-			    #Set the result status of execution
+                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 5:Get BOMTime of download";
-                            print "EXPECTED RESULT 5:Should get the BOMTime of download ";
-                            print "ACTUAL RESULT 5:The BOMTime of download is , details : %s" %details_BOMTime;
+                            print("TEST STEP 6:Get EOMTime of download");
+                            print("EXPECTED RESULT 6:Should get the EOMTime of download ");
+                            print("ACTUAL RESULT 6:The EOMTime of download is , details : %s" %details_EOMTime);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5:Get BOMTime of download");
+                        print("EXPECTED RESULT 5:Should get the BOMTime of download ");
+                        print("ACTUAL RESULT 5:The BOMTime of download is , details : %s" %details_BOMTime);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
 
                 else:
-		    #Set the result status of execution
+                    #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Get ROMTime of download";
-                    print "EXPECTED RESULT 4:Should get the ROMTime of download ";
-                    print "ACTUAL RESULT 4:The ROMTime of download is , details : %s" %details_ROMTime;
+                    print("TEST STEP 4:Get ROMTime of download");
+                    print("EXPECTED RESULT 4:Should get the ROMTime of download ");
+                    print("ACTUAL RESULT 4:The ROMTime of download is , details : %s" %details_ROMTime);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Get DiagnosticsState of download to None";
-                print "EXPECTED RESULT 3: Should get the DiagnosticsState of download to None";
-                print "ACTUAL RESULT 3:The DiagnosticsState of download is, details : %s" %details;
+                print("TEST STEP 3:Get DiagnosticsState of download to None");
+                print("EXPECTED RESULT 3: Should get the DiagnosticsState of download to None");
+                print("ACTUAL RESULT 3:The DiagnosticsState of download is, details : %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
-	    #Set the result status of execution
+            #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the download URL of Download";
-            print "EXPECTED RESULT 2: Should set the download URL of Download ";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the download URL of Download");
+            print("EXPECTED RESULT 2: Should set the download URL of Download ");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
 
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Set the interface of Download";
-        print "EXPECTED RESULT 1: Should set the interface of Download"
-        print "ACTUAL RESULT 1: Failure in setting DiagnosticsState of Download, Details: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Set the interface of Download");
+        print("EXPECTED RESULT 1: Should set the interface of Download")
+        print("ACTUAL RESULT 1: Failure in setting DiagnosticsState of Download, Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

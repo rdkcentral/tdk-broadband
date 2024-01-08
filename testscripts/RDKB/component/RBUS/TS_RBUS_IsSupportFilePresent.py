@@ -118,121 +118,121 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
 
     if expectedresult in def_result:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: RBUS Enable Status retrieved successfully"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: RBUS Enable Status retrieved successfully")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-        print "Initial RBUS Enabled Status is",default_value
+        print("Initial RBUS Enabled Status is",default_value)
 
         if default_value == "true":
             actualresult,details = isFilePresent(tdkTestObj_Sys_ExeCmd,"/nvram/rbus_support")
-            if 	expectedresult in actualresult and details != "":
-                print "TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present"
-                print "EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present"
-                print "ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is present"
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            if  expectedresult in actualresult and details != "":
+                print("TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present")
+                print("EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present")
+                print("ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is present")
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
                 rbus_set,revert_flag = doEnableDisableRBUS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
                 if rbus_set == 1:
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Enable the RBUS status to FALSE"
-                    print "EXPECTED RESULT 3: Should Enable RBUS Status of FALSE"
-                    print "ACTUAL RESULT 3: RBUS Enable status set to FALSE"
-                    print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    print("TEST STEP 3: Enable the RBUS status to FALSE")
+                    print("EXPECTED RESULT 3: Should Enable RBUS Status of FALSE")
+                    print("ACTUAL RESULT 3: RBUS Enable status set to FALSE")
+                    print("[TEST EXECUTION RESULT] 3: SUCCESS");
                     actualresult,details = isFilePresent(tdkTestObj_Sys_ExeCmd,"/nvram/rbus_support")
-                    if 	expectedresult in actualresult and details == "":
-                        print "TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present"
-                        print "EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should not be present"
-                        print "ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is NOT present"
-                        print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                    if  expectedresult in actualresult and details == "":
+                        print("TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present")
+                        print("EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should not be present")
+                        print("ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is NOT present")
+                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
                         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present"
-                        print "EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should NOT be present"
-                        print "ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is still present"
-                        print "[TEST EXECUTION RESULT] 4: FAILURE";
+                        print("TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present")
+                        print("EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should NOT be present")
+                        print("ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is still present")
+                        print("[TEST EXECUTION RESULT] 4: FAILURE");
                         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 3: Enable the RBUS status to FALSE"
-                    print "EXPECTED RESULT 3: Should Enable RBUS Status of FALSE"
-                    print "ACTUAL RESULT 3: Failed to Enable RBUS status to FALSE"
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
+                    print("TEST STEP 3: Enable the RBUS status to FALSE")
+                    print("EXPECTED RESULT 3: Should Enable RBUS Status of FALSE")
+                    print("ACTUAL RESULT 3: Failed to Enable RBUS status to FALSE")
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
-                print "TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present"
-                print "EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present"
-                print "ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present")
+                print("EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present")
+                print("ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
         else:
             actualresult,details = isFilePresent(tdkTestObj_Sys_ExeCmd,"/nvram/rbus_support")
-            if 	expectedresult in actualresult and details != "":
-                print "TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present"
-                print "EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should NOT be present"
-                print "ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present"
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            if  expectedresult in actualresult and details != "":
+                print("TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present")
+                print("EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should NOT be present")
+                print("ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present")
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
                 rbus_set,revert_flag = doEnableDisableRBUS("true",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
                 if rbus_set == 1:
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Enable the RBUS status to TRUE"
-                    print "EXPECTED RESULT 3: Should Enable RBUS Status of TRUE"
-                    print "ACTUAL RESULT 3: RBUS Enable status set to TRUE"
-                    print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    print("TEST STEP 3: Enable the RBUS status to TRUE")
+                    print("EXPECTED RESULT 3: Should Enable RBUS Status of TRUE")
+                    print("ACTUAL RESULT 3: RBUS Enable status set to TRUE")
+                    print("[TEST EXECUTION RESULT] 3: SUCCESS");
 
                     actualresult,details = isFilePresent(tdkTestObj_Sys_ExeCmd,"/nvram/rbus_support")
-                    if 	expectedresult in actualresult and details != "":
-                        print "TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present"
-                        print "EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should be present"
-                        print "ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is present"
-                        print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                    if  expectedresult in actualresult and details != "":
+                        print("TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present")
+                        print("EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should be present")
+                        print("ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is present")
+                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
                         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present"
-                        print "EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should be present"
-                        print "ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is NOT  present"
-                        print "[TEST EXECUTION RESULT] 4: FAILURE";
+                        print("TEST STEP 4: Check whether RBUS support file (/nvram/rbus_support) is present")
+                        print("EXPECTED RESULT 4: RBUS support file(/nvram/rbus_support) should be present")
+                        print("ACTUAL RESULT 4: RBUS support file (/nvram/rbus_support) is NOT  present")
+                        print("[TEST EXECUTION RESULT] 4: FAILURE");
                         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 3: Enable the RBUS status to TRUE"
-                    print "EXPECTED RESULT 3: Should Enable RBUS Status of TRUE"
-                    print "ACTUAL RESULT 3: Failed to Enable RBUS status to TRUE"
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
+                    print("TEST STEP 3: Enable the RBUS status to TRUE")
+                    print("EXPECTED RESULT 3: Should Enable RBUS Status of TRUE")
+                    print("ACTUAL RESULT 3: Failed to Enable RBUS status to TRUE")
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
-                print "TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present"
-                print "EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present"
-                print "ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Check whether RBUS support file (/nvram/rbus_support) is present")
+                print("EXPECTED RESULT 2: RBUS support file(/nvram/rbus_support) should be present")
+                print("ACTUAL RESULT 2: RBUS support file (/nvram/rbus_support) is NOT present")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: Failed to get the RBUS enable status"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: Failed to get the RBUS enable status")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     if revert_flag == 1:
         rbus_set,revert_flag = doEnableDisableRBUS(default_value,sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if rbus_set == 1:
-            print "TEST STEP 5: Set the RBUS enable status to ",default_value
-            print "EXPECTED RESULT 5: Should Set the RBUS Enable Status to ",default_value
-            print "ACTUAL RESULT 5: RBUS Enable Status set to ",default_value
-            print "[TEST EXECUTION RESULT] 1: SUCCESS";
+            print("TEST STEP 5: Set the RBUS enable status to ",default_value)
+            print("EXPECTED RESULT 5: Should Set the RBUS Enable Status to ",default_value)
+            print("ACTUAL RESULT 5: RBUS Enable Status set to ",default_value)
+            print("[TEST EXECUTION RESULT] 1: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 5: Set the RBUS enable status to ",default_value
-            print "EXPECTED RESULT 5: Should Set the RBUS Enable Status to ",default_value
-            print "ACTUAL RESULT 5:Failed to set RBUS Enable Status to ",default_value
-            print "[TEST EXECUTION RESULT] 5: FAILURE";
+            print("TEST STEP 5: Set the RBUS enable status to ",default_value)
+            print("EXPECTED RESULT 5: Should Set the RBUS Enable Status to ",default_value)
+            print("ACTUAL RESULT 5:Failed to set RBUS Enable Status to ",default_value)
+            print("[TEST EXECUTION RESULT] 5: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

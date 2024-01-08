@@ -108,7 +108,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPing_CheckAvgResponseTime_ForInvalidHostName');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -124,11 +124,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set the interface of IPPing";
-        print "EXPECTED RESULT 1: Should set the interface of IPPing";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set the interface of IPPing");
+        print("EXPECTED RESULT 1: Should set the interface of IPPing");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Host");
@@ -141,11 +141,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the host of IPPing";
-            print "EXPECTED RESULT 2: Should set the host of IPPing as Invalid";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the host of IPPing");
+            print("EXPECTED RESULT 2: Should set the host of IPPing as Invalid");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.DiagnosticsState");
@@ -158,11 +158,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set DiagnosticsState of IPPing as Requested";
-                print "EXPECTED RESULT 3: Should set DiagnosticsState of IPPing as Requested";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set DiagnosticsState of IPPing as Requested");
+                print("EXPECTED RESULT 3: Should set DiagnosticsState of IPPing as Requested");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 time.sleep(40);
                 tdkTestObj = obj.createTestStep('TADstub_Get');
                 tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.AverageResponseTime");
@@ -173,46 +173,46 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult and int(details)==0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get avg response time";
-                    print "EXPECTED RESULT 4: Avg response time must be zero";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Get avg response time");
+                    print("EXPECTED RESULT 4: Avg response time must be zero");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get avg response time";
-                    print "EXPECTED RESULT 4: Avg response time must be zero";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Get avg response time");
+                    print("EXPECTED RESULT 4: Avg response time must be zero");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set DiagnosticsState of IPPing as Requested";
-                print "EXPECTED RESULT 3: Should set DiagnosticsState of IPPing as Requested";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set DiagnosticsState of IPPing as Requested");
+                print("EXPECTED RESULT 3: Should set DiagnosticsState of IPPing as Requested");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-	        print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the host of IPPing";
-            print "EXPECTED RESULT 2: Should set the host of IPPing as Invalid";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the host of IPPing");
+            print("EXPECTED RESULT 2: Should set the host of IPPing as Invalid");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set the interface of TraceRoute";
-        print "EXPECTED RESULT 1: Should set the interface of IPPing";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set the interface of TraceRoute");
+        print("EXPECTED RESULT 1: Should set the interface of IPPing");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

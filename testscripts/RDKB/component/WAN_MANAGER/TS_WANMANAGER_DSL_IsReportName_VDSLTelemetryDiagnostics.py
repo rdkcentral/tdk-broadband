@@ -105,16 +105,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj, dsl_wan, enable = getDSLWANStatus(obj, step);
 
     step = step + 1;
-    print "TEST STEP %d : Check if the DSL WAN Status is Up and Active Link is Enabled" %step;
-    print "EXPECTED RESULT %d : The DSL WAN Status is Up and Active Link is true" %step;
+    print("TEST STEP %d : Check if the DSL WAN Status is Up and Active Link is Enabled" %step);
+    print("EXPECTED RESULT %d : The DSL WAN Status is Up and Active Link is true" %step);
 
     #If DSL is enabled
     if enable == 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: DSL WAN Status is Up and Active Link is true" %step;
+        print("ACTUAL RESULT %d: DSL WAN Status is Up and Active Link is true" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         step = step + 1;
         #Get the initial values of "Device.DSL.X_RDK_Report.DSL.Enabled", "Device.DSL.X_RDK_Report.DSL.ReportingPeriod", "Device.DSL.X_RDK_Report.DSL.Default.ReportingPeriod", "Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL"
@@ -127,18 +127,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Check if Pre-requisite function needs to be invoked
             if initial_value[0] == "true":
                 #Invoke the DSL Diagnostic reports pre-requisite function
-                print "Invoking Pre-requisite function for DSL Diagnostic Reports validation....."
+                print("Invoking Pre-requisite function for DSL Diagnostic Reports validation.....")
                 step = step + 1;
                 tdkTestObj2 = obj2.createTestStep("TDKB_TR181Stub_SetMultiple");
                 status = dslreports_prereq(tdkTestObj2, initial_value, step);
 
                 if status == 0:
-                   print "Pre-requisites set successfully";
+                    print("Pre-requisites set successfully");
                 else:
-                   flag = 1;
-                   print "Pre-requisites are not completed successfully";
+                    flag = 1;
+                    print("Pre-requisites are not completed successfully");
             else :
-                print "Pre-requisite function need not be invoked";
+                print("Pre-requisite function need not be invoked");
 
             if flag == 0:
 
@@ -147,10 +147,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
                 log = "VDSLTelemetryDiagnostics";
                 no_of_lines,step = getLogFileTotalLinesCount(tdkTestObj1, log, step);
-                print "The initial number of log lines \"VDSLTelemetryDiagnostics\" in XDSLMANAGERLog.txt.0 is : %d" %no_of_lines;
+                print("The initial number of log lines \"VDSLTelemetryDiagnostics\" in XDSLMANAGERLog.txt.0 is : %d" %no_of_lines);
 
                 #Set Default Reporting Period & Reporting Period to supported values
-                print "Set Reporting parameters and override TTL to 60s";
+                print("Set Reporting parameters and override TTL to 60s");
                 step = step + 1;
                 value_list = [];
                 expectedresult = "SUCCESS";
@@ -167,47 +167,47 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     step = step + 1;
                     tdkTestObj, set_value, status = getReportingParams(obj, step);
                     step = step + 1;
-                    print "TEST STEP %d : Check if the values set are retrived with get" %step;
-                    print "EXPECTED RESULT %d : The get values should match the set values" %step;
+                    print("TEST STEP %d : Check if the values set are retrived with get" %step);
+                    print("EXPECTED RESULT %d : The get values should match the set values" %step);
 
                     if (set_value[0] == str(value_list[0])) and (set_value[1] == str(value_list[1])) and (set_value[2] == str(value_list[2])) and (set_value[3] == str(value_list[3])):
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: The get and the set values match" %step;
+                        print("ACTUAL RESULT %d: The get and the set values match" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         #As the Device.DSL.X_RDK_Report.DSL.Default.ReportingPeriod is set to 60s and override TTL = 60s,  sleeping for 60s
-                        print "Sleeping for 60s";
+                        print("Sleeping for 60s");
                         sleep(60);
 
                         #Get the number of log lines "VDSLTelemetryDiagnostics" in /rdklogs/logs/XDSLMANAGERLog.txt.0
                         step = step + 1;
                         tdkTestObj1 = obj1.createTestStep('ExecuteCmd');
                         no_of_lines_after_rp,step = getLogFileTotalLinesCount(tdkTestObj1, log, step);
-                        print "The final number of log lines \"VDSLTelemetryDiagnostics\" in XDSLMANAGERLog.txt.0 is : %d" %no_of_lines_after_rp;
+                        print("The final number of log lines \"VDSLTelemetryDiagnostics\" in XDSLMANAGERLog.txt.0 is : %d" %no_of_lines_after_rp);
 
                         #One more report should be sent in the last 1 minute
                         step = step + 1;
-                        print "TEST STEP %d : Check if the DSL report sent after setting the Reporting period values has the name \"VDSLTelemetryDiagnostics\"" %step;
-                        print "EXPECTED RESULT %d : The DSL report name should be \"VDSLTelemetryDiagnostics\"" %step;
+                        print("TEST STEP %d : Check if the DSL report sent after setting the Reporting period values has the name \"VDSLTelemetryDiagnostics\"" %step);
+                        print("EXPECTED RESULT %d : The DSL report name should be \"VDSLTelemetryDiagnostics\"" %step);
                         difference = no_of_lines_after_rp - no_of_lines;
 
                         if difference == 1:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: The DSL report name is \"VDSLTelemetryDiagnostics\". The number of DSL reports sent after the set operation is : %d" %(step, difference);
+                            print("ACTUAL RESULT %d: The DSL report name is \"VDSLTelemetryDiagnostics\". The number of DSL reports sent after the set operation is : %d" %(step, difference));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: The DSL report name is \"VDSLTelemetryDiagnostics\". The number of DSL reports sent after the set operation is : %d" %(step, difference);
+                            print("ACTUAL RESULT %d: The DSL report name is \"VDSLTelemetryDiagnostics\". The number of DSL reports sent after the set operation is : %d" %(step, difference));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
                         #Revert Operation
                         if (initial_value[0] != set_value[0]) or (initial_value[1] != set_value[1]) or (initial_value[2] != set_value[2]) or (initial_value[3] != set_value[3]):
-                            print "\n************Revert operation required***************";
+                            print("\n************Revert operation required***************");
                             expectedresult = "SUCCESS";
                             step = step + 1;
                             value_list = [];
@@ -217,37 +217,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                             if set_status == 0:
                                 tdkTestObj2.setResultStatus("SUCCESS");
-                                print "Revert operation was successful";
+                                print("Revert operation was successful");
                             else :
                                 tdkTestObj2.setResultStatus("FAILURE");
-                                print "Revert operation was not successful";
+                                print("Revert operation was not successful");
                         else:
-                            print "Revert operation not required";
+                            print("Revert operation not required");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: The get and the set values do not match" %step;
+                        print("ACTUAL RESULT %d: The get and the set values do not match" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "Reporting parameters are not set successfully";
+                    print("Reporting parameters are not set successfully");
             else:
-                print "Pre-requisites are not set successfully";
+                print("Pre-requisites are not set successfully");
         else:
-            print "Reporting parameters are not retrieved successfully";
+            print("Reporting parameters are not retrieved successfully");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: DSL WAN Status is %s and Active Link is %s" %(step, dsl_wan[1], dsl_wan[2]);
+        print("ACTUAL RESULT %d: DSL WAN Status is %s and Active Link is %s" %(step, dsl_wan[1], dsl_wan[2]));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     obj1.unloadModule("sysutil");
     obj2.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

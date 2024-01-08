@@ -84,7 +84,7 @@ obj.configureTestCase(ip,port,'TS_SNMP_GetErouterOperationalStatus');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -99,125 +99,125 @@ if "SUCCESS" in loadmodulestatus1.upper():
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
 
-    print "\nTEST STEP 1 : Get the erouter0 interface details";
-    print "EXPECTED RESULT 1 : Should get the erouter0 interface details successfully"
+    print("\nTEST STEP 1 : Get the erouter0 interface details");
+    print("EXPECTED RESULT 1 : Should get the erouter0 interface details successfully")
 
     if "eRouter Embedded Interface" in actResponse:
         erouter_details = actResponse.split("STRING:")[1].strip()
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 1: erouter0 details obtained as : %s" %erouter_details;
+        print("ACTUAL RESULT 1: erouter0 details obtained as : %s" %erouter_details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS" ;
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
         #Get the erouter operational status
         actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.2.1.2.2.1.8.1", ipaddress);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
 
-        print "\nTEST STEP 2 : Get the erouter operational status";
-        print "EXPECTED RESULT 2 : Should get the erouter operational status successfully"
+        print("\nTEST STEP 2 : Get the erouter operational status");
+        print("EXPECTED RESULT 2 : Should get the erouter operational status successfully")
 
         if "up" in actResponse or "down" in actResponse:
             erouter_operationalStatus = actResponse.strip().replace("\\n", "").split("INTEGER: ")[1].split("(")[0];
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: erouter operational status obtained as : %s" %erouter_operationalStatus;
+            print("ACTUAL RESULT 2: erouter operational status obtained as : %s" %erouter_operationalStatus);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ;
+            print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
             #Get the atom side erouter file location from platform properties
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             cmd = "sh %s/tdk_utility.sh parseConfigFile EROUTER_OPERATIONAL_STATUS_FILE" %TDK_PATH;
-            print "\nCommand : ", cmd;
+            print("\nCommand : ", cmd);
             tdkTestObj.addParameter("command", cmd);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             file = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-            print "TEST STEP 3: Get the erouter operational status file location from platform property file";
-            print "EXPECTED RESULT 3: Should successfully get the erouter operational status file location from platform property file";
+            print("TEST STEP 3: Get the erouter operational status file location from platform property file");
+            print("EXPECTED RESULT 3: Should successfully get the erouter operational status file location from platform property file");
 
             if expectedresult in actualresult and file != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: File location: %s" %file;
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("ACTUAL RESULT 3: File location: %s" %file);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if the erouter operational status file exists in the given location
                 cmd = "[ -f " + file + " ] && echo \"File exist\" || echo \"File does not exist\"";
-                print "\nCommand : ", cmd;
+                print("\nCommand : ", cmd);
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP 4: Check for %s file presence" %(file);
-                print "EXPECTED RESULT 4: %s file should be present" %(file);
+                print("\nTEST STEP 4: Check for %s file presence" %(file));
+                print("EXPECTED RESULT 4: %s file should be present" %(file));
 
                 if expectedresult in actualresult and details == "File exist":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: %s file is present" %(file);
+                    print("ACTUAL RESULT 4: %s file is present" %(file));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Get the erouter operational status from file
                     cmd = "cat " + file;
-                    print "\nCommand : ", cmd;
+                    print("\nCommand : ", cmd);
                     tdkTestObj.addParameter("command",cmd);
                     tdkTestObj.executeTestCase(expectedresult);
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                    print "TEST STEP 5: Get the erouter operational status from %s" %(file);
-                    print "EXPECTED RESULT 5: Should get the erouter operational from %s successfully" %(file);
+                    print("TEST STEP 5: Get the erouter operational status from %s" %(file));
+                    print("EXPECTED RESULT 5: Should get the erouter operational from %s successfully" %(file));
 
                     if expectedresult in actualresult and details != "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT 5: The erouter operational status from file is : %s" %details;
+                        print("ACTUAL RESULT 5: The erouter operational status from file is : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Check if the operational status is same in both cases
                         operStatus = details.strip();
-                        print "\nTEST STEP 6 : Check if the erouter operational status from SNMP OID is same as the status from device file";
-                        print "EXPECTED RESULT 6 : The erouter operational status from SNMP OID should be same as the status from device file"
-                        print "Erouter Operational status from SNMP OID : %s" %erouter_operationalStatus;
-                        print "Erouter Operational status from %s : %s" %(file, operStatus);
+                        print("\nTEST STEP 6 : Check if the erouter operational status from SNMP OID is same as the status from device file");
+                        print("EXPECTED RESULT 6 : The erouter operational status from SNMP OID should be same as the status from device file")
+                        print("Erouter Operational status from SNMP OID : %s" %erouter_operationalStatus);
+                        print("Erouter Operational status from %s : %s" %(file, operStatus));
 
                         if operStatus == erouter_operationalStatus:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT 6: Both values are the same";
+                            print("ACTUAL RESULT 6: Both values are the same");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT 6: Both values are not the same";
+                            print("ACTUAL RESULT 6: Both values are not the same");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 5: The erouter operational status from file is : %s" %details;
+                        print("ACTUAL RESULT 5: The erouter operational status from file is : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: %s file is not present" %(file);
+                    print("ACTUAL RESULT 4: %s file is not present" %(file));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: File location not obtained from platform property file";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("ACTUAL RESULT 3: File location not obtained from platform property file");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: erouter operational status obtained as : %s" %actResponse;
+            print("ACTUAL RESULT 2: erouter operational status obtained as : %s" %actResponse);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: erouter details obtained as : %s" %actResponse;
+        print("ACTUAL RESULT 1: erouter details obtained as : %s" %actResponse);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
 
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");

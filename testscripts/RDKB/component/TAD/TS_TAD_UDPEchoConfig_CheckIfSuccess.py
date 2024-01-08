@@ -103,7 +103,7 @@ sysObj.configureTestCase(ip,port,'TS_TAD_UDPEchoConfig_CheckIfSuccess');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus=sysObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,11 +118,11 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set the interface of UDPEchoConfig";
-        print "EXPECTED RESULT 1: Should set the interface of UDPEchoConfig";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set the interface of UDPEchoConfig");
+        print("EXPECTED RESULT 1: Should set the interface of UDPEchoConfig");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.UDPEchoConfig.SourceIPAddress");
@@ -135,11 +135,11 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the source IP of UDPEchoconfig";
-            print "EXPECTED RESULT 2: Should set the source IP of UDPEchoConfig";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the source IP of UDPEchoconfig");
+            print("EXPECTED RESULT 2: Should set the source IP of UDPEchoConfig");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.UDPEchoConfig.UDPPort");
             tdkTestObj.addParameter("ParamValue","7");
@@ -151,12 +151,12 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set the port of UDPEchoconfig";
-                print "EXPECTED RESULT 3: Should set the port of UDPEchoConfig";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set the port of UDPEchoconfig");
+                print("EXPECTED RESULT 3: Should set the port of UDPEchoConfig");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
-                
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
                 tdkTestObj = obj.createTestStep('TADstub_Set');
                 tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.UDPEchoConfig.Enable");
                 tdkTestObj.addParameter("ParamValue","true");
@@ -168,30 +168,30 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Set UDPEchoConfig  as Enabled";
-                    print "EXPECTED RESULT 4: Should set  UDPEchoConfig  as Enabled";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Set UDPEchoConfig  as Enabled");
+                    print("EXPECTED RESULT 4: Should set  UDPEchoConfig  as Enabled");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
-		    command = "echo UDPEchoTest > /dev/udp/"+ip+"/7";
-		    print command;
-		    tdkTestObj.addParameter("command",command);
-		    expectedresult="SUCCESS";
+                    command = "echo UDPEchoTest > /dev/udp/"+ip+"/7";
+                    print(command);
+                    tdkTestObj.addParameter("command",command);
+                    expectedresult="SUCCESS";
 
-		    #Execute the test case in STB
-		    tdkTestObj.executeTestCase(expectedresult);
-		    actualresult = tdkTestObj.getResult();
-		    details = tdkTestObj.getResultDetails().strip();
-	
-		    if expectedresult in actualresult:
-			#Set the result status of execution
+                    #Execute the test case in STB
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails().strip();
+
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Send a valid UDP request";
-                        print "EXPECTED RESULT 5: Should send UDP request";
-                        print "ACTUAL RESULT 5:UDP request has sent";
+                        print("TEST STEP 5: Send a valid UDP request");
+                        print("EXPECTED RESULT 5: Should send UDP request");
+                        print("ACTUAL RESULT 5:UDP request has sent");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                         tdkTestObj = obj.createTestStep('TADstub_Get');
                         tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.BytesReceived");
                         expectedresult="SUCCESS";
@@ -199,101 +199,101 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
                         actualresult = tdkTestObj.getResult();
                         bytes_rcvd = tdkTestObj.getResultDetails();
                         if expectedresult in actualresult and int(bytes_rcvd)>0:
-			    tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.PacketsReceived");
-			    expectedresult="SUCCESS";
+                            tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.PacketsReceived");
+                            expectedresult="SUCCESS";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
                             pkts_rcvd = tdkTestObj.getResultDetails();
-			    if expectedresult in actualresult and int(pkts_rcvd)>0:
-				tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.PacketsResponded");
-				expectedresult="SUCCESS";
+                            if expectedresult in actualresult and int(pkts_rcvd)>0:
+                                tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.PacketsResponded");
+                                expectedresult="SUCCESS";
                                 tdkTestObj.executeTestCase(expectedresult);
                                 actualresult = tdkTestObj.getResult();
                                 pkts_rspnd = tdkTestObj.getResultDetails();
                                 if expectedresult in actualresult and int(pkts_rspnd)>0:
-				    tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.BytesResponded");
-				    expectedresult="SUCCESS";
+                                    tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.BytesResponded");
+                                    expectedresult="SUCCESS";
                                     tdkTestObj.executeTestCase(expectedresult);
                                     actualresult = tdkTestObj.getResult();
                                     bytes_rspnd = tdkTestObj.getResultDetails();
                                     if expectedresult in actualresult and int(bytes_rspnd)>0:
-					tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.TimeFirstPacketReceived");
-					expectedresult="SUCCESS";
+                                        tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.TimeFirstPacketReceived");
+                                        expectedresult="SUCCESS";
                                         tdkTestObj.executeTestCase(expectedresult);
                                         actualresult = tdkTestObj.getResult();
                                         Time_rcvd = tdkTestObj.getResultDetails();
                                         if expectedresult in actualresult and Time_rcvd != "0000-00-00T00:00:00.000000":
-					    tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.TimeLastPacketReceived");
-					    expectedresult="SUCCESS";
+                                            tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.UDPEchoConfig.TimeLastPacketReceived");
+                                            expectedresult="SUCCESS";
                                             tdkTestObj.executeTestCase(expectedresult);
                                             actualresult = tdkTestObj.getResult();
                                             Time_rspnd = tdkTestObj.getResultDetails();
                                             if expectedresult in actualresult and Time_rspnd != "0000-00-00T00:00:00.000000":
-                            			#Set the result status of execution
-                            			tdkTestObj.setResultStatus("SUCCESS");
-                            			print "TEST STEP 6: Check if all the result details are updated";
-                            			print "EXPECTED RESULT 6: All result details should be updated";
-                            			print "ACTUAL RESULT 6: \n Bytes recieved : "+bytes_rcvd+" \n Packets received : "+pkts_rcvd+" \n Packets responded : "+pkts_rspnd+" \n Bytes responded : "+bytes_rspnd+" \n TimeFirstPacketReceived : "+Time_rcvd+" \n TimeLastPacketReceived : "+Time_rspnd;
-                            			#Get the result of execution
-                            			print "[TEST EXECUTION RESULT] : SUCCESS";
-					    else:
-					        #Set the result status of execution
-                        		        tdkTestObj.setResultStatus("FAILURE");
-                        		        print "TEST STEP 6: Check if all the result details are updated";
-                        		        print "EXPECTED RESULT 6: All result details should be updated";
-                        		        print "ACTUAL RESULT 6:\n Bytes recieved : "+bytes_rcvd+" \n Packets received : "+pkts_rcvd+" \n Packets responded : "+pkts_rspnd+" \n Bytes responded : "+bytes_rspnd+" \n TimeFirstPacketReceived : "+Time_rcvd+" \n TimeLastPacketReceived : "+Time_rspnd;
-                        		        #Get the result of execution
-                        		        print "[TEST EXECUTION RESULT] : FAILURE";
-					else:
-					    #Set the result status of execution
+                                                #Set the result status of execution
+                                                tdkTestObj.setResultStatus("SUCCESS");
+                                                print("TEST STEP 6: Check if all the result details are updated");
+                                                print("EXPECTED RESULT 6: All result details should be updated");
+                                                print("ACTUAL RESULT 6: \n Bytes recieved : "+bytes_rcvd+" \n Packets received : "+pkts_rcvd+" \n Packets responded : "+pkts_rspnd+" \n Bytes responded : "+bytes_rspnd+" \n TimeFirstPacketReceived : "+Time_rcvd+" \n TimeLastPacketReceived : "+Time_rspnd);
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                            else:
+                                                #Set the result status of execution
+                                                tdkTestObj.setResultStatus("FAILURE");
+                                                print("TEST STEP 6: Check if all the result details are updated");
+                                                print("EXPECTED RESULT 6: All result details should be updated");
+                                                print("ACTUAL RESULT 6:\n Bytes recieved : "+bytes_rcvd+" \n Packets received : "+pkts_rcvd+" \n Packets responded : "+pkts_rspnd+" \n Bytes responded : "+bytes_rspnd+" \n TimeFirstPacketReceived : "+Time_rcvd+" \n TimeLastPacketReceived : "+Time_rspnd);
+                                                #Get the result of execution
+                                                print("[TEST EXECUTION RESULT] : FAILURE");
+                                        else:
+                                            #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "TEST STEP 6: Check if Time received is updated";
-                                            print "EXPECTED RESULT 6: Time received should be updated";
-                                            print "ACTUAL RESULT 6:Failed to update the time";
+                                            print("TEST STEP 6: Check if Time received is updated");
+                                            print("EXPECTED RESULT 6: Time received should be updated");
+                                            print("ACTUAL RESULT 6:Failed to update the time");
                                             #Get the result of execution
-                                            print "[TEST EXECUTION RESULT] : FAILURE";
-				    else:
-					#Set the result status of execution
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
+                                    else:
+                                        #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "TEST STEP 6: Check if bytes responded is updated";
-                                        print "EXPECTED RESULT 6: Bytes responded should be updated";
-                                        print "ACTUAL RESULT 6:Failed to update the bytes responded";
+                                        print("TEST STEP 6: Check if bytes responded is updated");
+                                        print("EXPECTED RESULT 6: Bytes responded should be updated");
+                                        print("ACTUAL RESULT 6:Failed to update the bytes responded");
                                         #Get the result of execution
-                                        print "[TEST EXECUTION RESULT] : FAILURE";
-				else:
-				    #Set the result status of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                else:
+                                    #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "TEST STEP 6: Check if packets responded is updated";
-                                    print "EXPECTED RESULT 6: packets responded should be updated";
-                                    print "ACTUAL RESULT 6:Failed to update the packets responded";
+                                    print("TEST STEP 6: Check if packets responded is updated");
+                                    print("EXPECTED RESULT 6: packets responded should be updated");
+                                    print("ACTUAL RESULT 6:Failed to update the packets responded");
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
-			    else:
-				#Set the result status of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
+                            else:
+                                #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 6: Check if packets received is updated";
-                                print "EXPECTED RESULT 6: packets received should be updated";
-                                print "ACTUAL RESULT 6:Failed to update the packets received";
+                                print("TEST STEP 6: Check if packets received is updated");
+                                print("EXPECTED RESULT 6: packets received should be updated");
+                                print("ACTUAL RESULT 6:Failed to update the packets received");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-			else:
-			    #Set the result status of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Check if bytes received is updated";
-                            print "EXPECTED RESULT 6: bytes received should be updated";
-                            print "ACTUAL RESULT 6:Failed to update the bytes received";
+                            print("TEST STEP 6: Check if bytes received is updated");
+                            print("EXPECTED RESULT 6: bytes received should be updated");
+                            print("ACTUAL RESULT 6:Failed to update the bytes received");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-		    else:
-			#Set the result status of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Send a valid UDP request";
-                        print "EXPECTED RESULT 5: Should send UDP request";
-                        print "ACTUAL RESULT 5: UDP request has sent";
+                        print("TEST STEP 5: Send a valid UDP request");
+                        print("EXPECTED RESULT 5: Should send UDP request");
+                        print("ACTUAL RESULT 5: UDP request has sent");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                     #disable UDPEcho config
-		    tdkTestObj = obj.createTestStep('TADstub_Set');
+                    tdkTestObj = obj.createTestStep('TADstub_Set');
                     tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.UDPEchoConfig.Enable");
                     tdkTestObj.addParameter("ParamValue","false");
                     tdkTestObj.addParameter("Type","boolean");
@@ -304,61 +304,59 @@ if "SUCCESS" in loadmodulestatus.upper() and sysloadmodulestatus.upper():
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Set UDPEchoConfig  as Disabled";
-                        print "EXPECTED RESULT : Should set  UDPEchoConfig  as Disabled";
-                        print "ACTUAL RESULT : %s" %details;
+                        print("TEST STEP : Set UDPEchoConfig  as Disabled");
+                        print("EXPECTED RESULT : Should set  UDPEchoConfig  as Disabled");
+                        print("ACTUAL RESULT : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
-		    else:
-		        #Set the result status of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Set UDPEchoConfig  as Disabled";
-                        print "EXPECTED RESULT : Should set  UDPEchoConfig  as Disabled";
-                        print "ACTUAL RESULT : %s" %details;
+                        print("TEST STEP : Set UDPEchoConfig  as Disabled");
+                        print("EXPECTED RESULT : Should set  UDPEchoConfig  as Disabled");
+                        print("ACTUAL RESULT : %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Set UDPEchoConfig  as Enabled";
-                    print "EXPECTED RESULT 4: Should set UDPEchoConfig  as Enabled ";
-                    print "ACTUAL RESULT 4: %s" %details;
+                    print("TEST STEP 4: Set UDPEchoConfig  as Enabled");
+                    print("EXPECTED RESULT 4: Should set UDPEchoConfig  as Enabled ");
+                    print("ACTUAL RESULT 4: %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-		#Set the result status of execution
+                #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set the port of UDPEchoconfig as seven";
-                print "EXPECTED RESULT 3: Should set the port of UDPEchoConfig";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set the port of UDPEchoconfig as seven");
+                print("EXPECTED RESULT 3: Should set the port of UDPEchoConfig");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set source IP of UDPEchoconfig";
-            print "EXPECTED RESULT 2: Should set the source IP of UDPEchoconfig";
-            print "ACTUAL RESULT 2: %s" %details;
-	     #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set source IP of UDPEchoconfig");
+            print("EXPECTED RESULT 2: Should set the source IP of UDPEchoconfig");
+            print("ACTUAL RESULT 2: %s" %details);
+             #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Set the interface of UDPEchoConfig";
-        print "EXPECTED RESULT 1: Should set the interface of UDPEchoConfig";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set the interface of UDPEchoConfig");
+        print("EXPECTED RESULT 1: Should set the interface of UDPEchoConfig");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-					
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

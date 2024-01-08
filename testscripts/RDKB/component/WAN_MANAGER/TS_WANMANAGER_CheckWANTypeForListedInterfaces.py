@@ -96,7 +96,7 @@ obj.configureTestCase(ip,port,'TS_WANMANAGER_CheckWANTypeForListedInterfaces');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     #Set the result status of execution
@@ -111,59 +111,59 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         noOfEntries = int(details);
         if noOfEntries> 0 :
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 1 :Get the number of CPE Interfaces";
-           print "EXPECTED RESULT 1: Should get the no of CPE Interfaces greater than zero";
-           print "ACTUAL RESULT 1: The value received is :",noOfEntries;
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 1 :Get the number of CPE Interfaces");
+            print("EXPECTED RESULT 1: Should get the no of CPE Interfaces greater than zero");
+            print("ACTUAL RESULT 1: The value received is :",noOfEntries);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-           statusFlag = 0;
-           print "TEST STEP 2:Checking if CPE interfaces has a valid WAN Type";
-           expectedWANType = ["UNCONFIGURED", "PRIMARY", "SECONDARY"];
-           while noOfEntries > 0:
-                 expectedresult="SUCCESS";
-                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                 tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type" %noOfEntries);
-                 #Execute the test case in DUT
-                 tdkTestObj.executeTestCase(expectedresult);
-                 actualresult = tdkTestObj.getResult();
-                 details = tdkTestObj.getResultDetails();
-                 if expectedresult in actualresult  and details.upper() in expectedWANType:
+            statusFlag = 0;
+            print("TEST STEP 2:Checking if CPE interfaces has a valid WAN Type");
+            expectedWANType = ["UNCONFIGURED", "PRIMARY", "SECONDARY"];
+            while noOfEntries > 0:
+                expectedresult="SUCCESS";
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type" %noOfEntries);
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails();
+                if expectedresult in actualresult  and details.upper() in expectedWANType:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print"Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type is %s" %(noOfEntries,details);
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
-                 else:
-                     statusFlag = 1;
-                     tdkTestObj.setResultStatus("FAILURE");
-                     print"Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type is %s" %(noOfEntries,details);
-                     print "[TEST EXECUTION RESULT] :FAILURE";
-                 noOfEntries = noOfEntries -1;
+                    print("Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type is %s" %(noOfEntries,details));
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    statusFlag = 1;
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("Device.X_RDK_WanManager.CPEInterface.%i.Wan.Type is %s" %(noOfEntries,details));
+                    print("[TEST EXECUTION RESULT] :FAILURE");
+                noOfEntries = noOfEntries -1;
 
-           #setitng the script status
-           if  statusFlag == 1:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "ACTUAL RESULT2: The interfaces donot have the expected WAN type";
-               print "[TEST EXECUTION RESULT] :FAILURE";
-           else:
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "ACTUAL RESULT2: The interfaces have the expected WAN type";
-               print "[TEST EXECUTION RESULT] :SUCCESS";
+            #setitng the script status
+            if  statusFlag == 1:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT2: The interfaces donot have the expected WAN type");
+                print("[TEST EXECUTION RESULT] :FAILURE");
+            else:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT2: The interfaces have the expected WAN type");
+                print("[TEST EXECUTION RESULT] :SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1 :Get the number of CPE Interfaces";
-            print "EXPECTED RESULT 1: Should get the no of CPE Interfaces greater than zero";
-            print "ACTUAL RESULT 1: The value received is :",noOfEntries;
+            print("TEST STEP 1 :Get the number of CPE Interfaces");
+            print("EXPECTED RESULT 1: Should get the no of CPE Interfaces greater than zero");
+            print("ACTUAL RESULT 1: The value received is :",noOfEntries);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Get the number of CPE Interfaces";
-        print "EXPECTED RESULT 1: Should get the no of CPE Interfaces";
-        print "ACTUAL RESULT 1: Get operation failed";
+        print("TEST STEP 1 :Get the number of CPE Interfaces");
+        print("EXPECTED RESULT 1: Should get the no of CPE Interfaces");
+        print("ACTUAL RESULT 1: Get operation failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

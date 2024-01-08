@@ -145,47 +145,47 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj_Tr181_set = tr181obj .createTestStep('TDKB_TR181Stub_Set');
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
 
-            print "TEST STEP 3: Increase the CPU Load to hit CPULOAD average value 2";
-            print "EXPECTED RESULT 3: CPULOAD Average should be increased to value 2";
+            print("TEST STEP 3: Increase the CPU Load to hit CPULOAD average value 2");
+            print("EXPECTED RESULT 3: CPULOAD Average should be increased to value 2");
 
             cpuloadabove2 = 0;
             #Wait for 2 min to load the CPU value
             for loop in range (1,24):
                 cpuloadres,cpuload = getCPULoadfromUptime(tdkTestObj_Sys_ExeCmd);
-                print "Value of CPULOAD is",cpuload;
+                print("Value of CPULOAD is",cpuload);
                 if int(cpuload) == 2:
                     cpuloadabove2 = 1;
                     tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                    print "EXPECTED RESULT 3: CPULOAD average Increased to value 2";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("EXPECTED RESULT 3: CPULOAD average Increased to value 2");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                     break;
                 elif int(cpuload) > 2:
-                    print "EXPECTED RESULT 3: CPULOAD average value was more than 2";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("EXPECTED RESULT 3: CPULOAD average value was more than 2");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     cpuloadabove2 = 0;
                     break;
                 else:
@@ -200,10 +200,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n", "");
                 if expectedresult in actualresult:
                     tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Execute the log_mem_cpu_info script in background";
-                    print "EXPECTED RESULT 4: log_mem_cpu_info script should be running";
-                    print "ACTUAL RESULT 4: log_mem_cpu_info Script is Running";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP 4: Execute the log_mem_cpu_info script in background");
+                    print("EXPECTED RESULT 4: log_mem_cpu_info script should be running");
+                    print("ACTUAL RESULT 4: log_mem_cpu_info Script is Running");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                     cmd = "killall yes";
@@ -213,121 +213,121 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Kill all processes used to increase CPULoad";
-                        print "EXPECTED RESULT 5: All yes processes should be killed";
-                        print "ACTUAL RESULT 5: All yes process Killed Successfully";
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 5: Kill all processes used to increase CPULoad");
+                        print("EXPECTED RESULT 5: All yes processes should be killed");
+                        print("ACTUAL RESULT 5: All yes process Killed Successfully");
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         sleep(30);
 
                         lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
                         if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
                             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                            print "EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount";
-                            print "ACTUAL RESULT 6: Line count After Simulation is greater than the initialLinesCount";
-                            print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                            print("EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount");
+                            print("ACTUAL RESULT 6: Line count After Simulation is greater than the initialLinesCount");
+                            print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_ERROR_LoadAbove2\"" %(initialLinesCount,lineCountAfterSimu)
-                            print "query:%s" %query
+                            print("query:%s" %query)
                             tdkTestObj_Sys_ExeCmd.addParameter("command", query);
                             tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
                             actualresult = tdkTestObj_Sys_ExeCmd.getResult();
                             details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
-                            print "Marker Detail Found from log file is: %s "%details;
+                            print("Marker Detail Found from log file is: %s "%details);
 
                             if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_ERROR_LoadAbove2" in details:
                                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
                                 markervalue = details.split("SYS_ERROR_LoadAbove2 value : ")[1]
-                                print "TEST STEP 7: SYS_ERROR_LoadAbove2  Marker should be present";1
-                                print "EXPECTED RESULT 7: SYS_ERROR_LoadAbove2 Marker should be present";
-                                print "ACTUAL RESULT 7: SYS_ERROR_LoadAbove2  Marker Value is %s" %markervalue;
+                                print("TEST STEP 7: SYS_ERROR_LoadAbove2  Marker should be present");1
+                                print("EXPECTED RESULT 7: SYS_ERROR_LoadAbove2 Marker should be present");
+                                print("ACTUAL RESULT 7: SYS_ERROR_LoadAbove2  Marker Value is %s" %markervalue);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                                print "TEST STEP 7: SYS_ERROR_LoadAbove2  Marker should be present";
-                                print "EXPECTED RESULT 7: SYS_ERROR_LoadAbove2 Marker should be present";
-                                print "ACTUAL RESULT 7: SYS_ERROR_LoadAbove2  Marker is %s" %details;
+                                print("TEST STEP 7: SYS_ERROR_LoadAbove2  Marker should be present");
+                                print("EXPECTED RESULT 7: SYS_ERROR_LoadAbove2 Marker should be present");
+                                print("ACTUAL RESULT 7: SYS_ERROR_LoadAbove2  Marker is %s" %details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                            print "TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                            print "EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount";
-                            print "ACTUAL RESULT 6: Line count After Simulation is NOT greater than the initialLinesCount",lineCountAfterSimu
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                            print("EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount");
+                            print("ACTUAL RESULT 6: Line count After Simulation is NOT greater than the initialLinesCount",lineCountAfterSimu)
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Kill all processes used to increase CPULoad";
-                        print "EXPECTED RESULT 5: All yes processes should be killed";
-                        print "ACTUAL RESULT 5: Failed to Kill All yes processes";
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 5: Kill all processes used to increase CPULoad");
+                        print("EXPECTED RESULT 5: All yes processes should be killed");
+                        print("ACTUAL RESULT 5: Failed to Kill All yes processes");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Execute the log_mem_cpu_info script in background";
-                    print "EXPECTED RESULT 4: log_mem_cpu_info script should be running";
-                    print "ACTUAL RESULT 4: Script is NOT Running";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4: Execute the log_mem_cpu_info script in background");
+                    print("EXPECTED RESULT 4: log_mem_cpu_info script should be running");
+                    print("ACTUAL RESULT 4: Script is NOT Running");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 if revertFlag == 1:
-                    print "Revert Flag was set, No need for reboot DUT to reduce CPULOAD"
+                    print("Revert Flag was set, No need for reboot DUT to reduce CPULOAD")
                 elif flag_reboot_to_dec_cpuload == 1:
-                    print "******************************************************"
-                    print "Initiating Reboot, To reduce the CPULOAD Average value";
-                    print"*******************************************************"
+                    print("******************************************************")
+                    print("Initiating Reboot, To reduce the CPULOAD Average value");
+                    print("*******************************************************")
                     sysobj .initiateReboot();
                     sleep(300);
             else:
-                print "CPULOAD average value is not 2, Exiting Script"
+                print("CPULOAD average value is not 2, Exiting Script")
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to get the Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to get the Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 8: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 8: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 8: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 8: Post Process should be success");
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         if flag_reboot_to_dec_cpuload == 1:
             cpuloadres,cpuload = getCPULoadfromUptime(tdkTestObj_Sys_ExeCmd);
 
             if expectedresult in cpuloadres and cpuload <= 2:
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                print "TEST STEP 9: Check CPULOAD Decreased to Normal Value";
-                print "EXPECTED RESULT 9: CPULOAD value  should be below 2";
-                print "ACTUAL RESULT 9: CPULOAD decreased to 2";
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 9: Check CPULOAD Decreased to Normal Value");
+                print("EXPECTED RESULT 9: CPULOAD value  should be below 2");
+                print("ACTUAL RESULT 9: CPULOAD decreased to 2");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                print "TEST STEP 9: Check CPULOAD Decreased to Normal Value";
-                print "EXPECTED RESULT 9: CPULOAD value  should be below 2";
-                print "ACTUAL RESULT 9: CPULOAD value NOT decreased to 2";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 9: Check CPULOAD Decreased to Normal Value");
+                print("EXPECTED RESULT 9: CPULOAD value  should be below 2");
+                print("ACTUAL RESULT 9: CPULOAD value NOT decreased to 2");
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

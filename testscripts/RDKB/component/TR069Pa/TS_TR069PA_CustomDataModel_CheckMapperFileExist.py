@@ -65,7 +65,7 @@
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
     <api_or_interface_used>ExecuteCmd</api_or_interface_used>
     <input_parameters>Filepath of mapper file</input_parameters>
-    <automation_approch>1.Load the module 
+    <automation_approch>1.Load the module
 2.Get the data_model_file_name using syscfg
 3.Check if the same file exists in the DUT
 4.Unload the module</automation_approch>
@@ -97,8 +97,8 @@ obj2.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_CheckMapperFileExist'
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =obj2.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2) ;
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
@@ -118,10 +118,10 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj1.restorePreviousStateAfterReboot();
         sleep(300);
@@ -135,11 +135,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult and details== "/usr/ccsp/tr069pa/custom_mapper.xml":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Query the Custom Data Model file name";
-            print "EXPECTED RESULT 2:Should get Custom Data Model File Name as /usr/ccsp/tr069pa/custom_mapper.xml";
-            print "ACTUAL RESULT 2: The value received is %s" %details;
+            print("TEST STEP 2: Query the Custom Data Model file name");
+            print("EXPECTED RESULT 2:Should get Custom Data Model File Name as /usr/ccsp/tr069pa/custom_mapper.xml");
+            print("ACTUAL RESULT 2: The value received is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj2.createTestStep('ExecuteCmd');
             cmd = "[ -f /usr/ccsp/tr069pa/custom_mapper.xml ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -150,35 +150,35 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if details == "File exist":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check for custom_mapper.xml file presence";
-                print "EXPECTED RESULT 3:custom_mapper.xml file should be present";
-                print "ACTUAL RESULT 3:custom_mapper.xml file is present";
+                print("TEST STEP 3: Check for custom_mapper.xml file presence");
+                print("EXPECTED RESULT 3:custom_mapper.xml file should be present");
+                print("ACTUAL RESULT 3:custom_mapper.xml file is present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check for custom_mapper.xml file presence";
-                print "EXPECTED RESULT 3:custom_mapper.xml file should be present";
-                print "ACTUAL RESULT 3:custom_mapper.xml file is not present";
+                print("TEST STEP 3: Check for custom_mapper.xml file presence");
+                print("EXPECTED RESULT 3:custom_mapper.xml file should be present");
+                print("ACTUAL RESULT 3:custom_mapper.xml file is not present");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Query the Custom Data Model file name";
-            print "EXPECTED RESULT 2:Should get Custom Data Model File Name as /usr/ccsp/tr069pa/custom_mapper.xml";
-            print "ACTUAL RESULT 2: The value received is %s" %details;
+            print("TEST STEP 2: Query the Custom Data Model file name");
+            print("EXPECTED RESULT 2:Should get Custom Data Model File Name as /usr/ccsp/tr069pa/custom_mapper.xml");
+            print("ACTUAL RESULT 2: The value received is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj1.unloadModule("wifiagent");
     obj2.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj1.setLoadModuleStatus("FAILURE");
-     obj2.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj1.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");

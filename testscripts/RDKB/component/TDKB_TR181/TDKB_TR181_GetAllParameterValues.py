@@ -91,7 +91,7 @@ import tdklib;
 import tdkbtr181Utility;
 from tdkbVariables import *;
 import os;
-import ConfigParser;
+import configparser;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -115,7 +115,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     moduleStatus = {};
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     deviceType= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH
-    print deviceType;
+    print(deviceType);
 
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", deviceType);
@@ -125,11 +125,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     deviceType = deviceType.replace("\\n", "");
     if "Invalid Argument passed" not in deviceType:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the device type";
-        print "EXPECTED RESULT 1: Should Get the device type";
-        print "ACTUAL RESULT 1: Device Type: %s" %deviceType;
+        print("TEST STEP 1: Get the device type");
+        print("EXPECTED RESULT 1: Should Get the device type");
+        print("ACTUAL RESULT 1: Device Type: %s" %deviceType);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         #Get the device configuration file name
         ModuleListFile= "tdkbModuleList.config"
@@ -139,7 +139,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         configFilePath = configFilePath + "/tdkbModuleConfig"
 
         #Parse the device configuration file
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.read(configFilePath+'/'+ModuleListFile)
 
         #Variable containing the list of applicable modules for the device
@@ -148,7 +148,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         #Get the list of applicable modules
         moduleList = config.get(ModuleListFile, moduleVariable);
         moduleList = moduleList.split(",");
-        print "The modules to test are: ", moduleList;
+        print("The modules to test are: ", moduleList);
 
         #Variable containing the setup type. It can be TDK/WEBPA
         setupTypeVariable = deviceType +"_SETUP_TYPE"
@@ -167,38 +167,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = tdkTestObj.getResultDetails()
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Factory reset the device"
-                print "TEST STEP 2: Should factory reset the device"
-                print "ACTUAL RESULT 2: ", actualresult
-                print "TEST EXECUTION RESULT: SUCCESS"
+                print("TEST STEP 2: Factory reset the device")
+                print("TEST STEP 2: Should factory reset the device")
+                print("ACTUAL RESULT 2: ", actualresult)
+                print("TEST EXECUTION RESULT: SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Factory reset the device"
-                print "TEST STEP 2: Should factory reset the device"
-                print "ACTUAL RESULT 2: ", actualresult
-                print "TEST EXECUTION RESULT: FAILURE"
+                print("TEST STEP 2: Factory reset the device")
+                print("TEST STEP 2: Should factory reset the device")
+                print("ACTUAL RESULT 2: ", actualresult)
+                print("TEST EXECUTION RESULT: FAILURE")
         #Invoke the utility function to get and validate the values for all configured tr181 params
         result, failedParams= tdkbtr181Utility.getAllParamValues(moduleList,setup_type,deviceType,factory_reset_flag,obj);
 
         for i in range(len(moduleList)):
             moduleStatus[moduleList[i]]= result[i];
 
-        print "\n overall module status ", moduleStatus, "\n";
+        print("\n overall module status ", moduleStatus, "\n");
 
         for module in moduleList:
-            print "Status of ",module, " is : ",moduleStatus[module], "\n";
+            print("Status of ",module, " is : ",moduleStatus[module], "\n");
             if moduleStatus[module] == "FAILURE":
-                print "The failed params are ", failedParams[module], "\n";
+                print("The failed params are ", failedParams[module], "\n");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the device type";
-        print "EXPECTED RESULT 1: Should Get the device type";
-        print "ACTUAL RESULT 1: Device Type: %s" %deviceType;
+        print("TEST STEP 1: Get the device type");
+        print("EXPECTED RESULT 1: Should Get the device type");
+        print("ACTUAL RESULT 1: Device Type: %s" %deviceType);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

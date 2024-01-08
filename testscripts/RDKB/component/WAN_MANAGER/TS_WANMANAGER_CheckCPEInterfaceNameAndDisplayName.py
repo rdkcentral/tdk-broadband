@@ -106,8 +106,8 @@ sysobj.configureTestCase(ip,port,'TS_WANMANAGER_CheckCPEInterfaceNameAndDisplayN
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -123,11 +123,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
     if expectedresult in actualresult:
         noOfEntries = int(details);
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Get the number of CPE Interfaces";
-        print "EXPECTED RESULT 1: Should get the no of CPE Interfaces";
-        print "ACTUAL RESULT 1: The value received is :",noOfEntries;
+        print("TEST STEP 1 :Get the number of CPE Interfaces");
+        print("EXPECTED RESULT 1: Should get the no of CPE Interfaces");
+        print("ACTUAL RESULT 1: The value received is :",noOfEntries);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
         command= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH;
@@ -140,11 +140,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
         if expectedresult in actualresult and devicetype != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the DEVICE TYPE"
-            print "EXPECTED RESULT 2: Should get the device type";
-            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            print("TEST STEP 2: Get the DEVICE TYPE")
+            print("EXPECTED RESULT 2: Should get the device type");
+            print("ACTUAL RESULT 2:Device type  %s" %devicetype);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if devicetype == "RPI":
                 interName=intrName;
@@ -162,23 +162,23 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
             actualresult = tdkTestObj.getResult();
             enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-            print "TEST STEP 3: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
-            print "EXPECTED RESULT 3: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+            print("TEST STEP 3: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties")
+            print("EXPECTED RESULT 3: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE");
 
             if expectedresult in actualresult and enableFlag != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+                print("ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if enableFlag == "TRUE":
                     ParamNamePrefix = "Device.X_RDK_WanManager.Interface.";
                 else:
                     ParamNamePrefix = "Device.X_RDK_WanManager.CPEInterface.";
 
-                print "TEST STEP 4:Check if CPE interface name and display name are as expected";
-                print "Expected CPE interface names is %s" %interName;
-                print "Expected CPE display names is %s" %dispName;
+                print("TEST STEP 4:Check if CPE interface name and display name are as expected");
+                print("Expected CPE interface names is %s" %interName);
+                print("Expected CPE display names is %s" %dispName);
 
                 #Flag to check if retrieved values are as expected
                 flag = 0;
@@ -196,7 +196,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
                     if expectedresult in actualresult and details == interName[interface - 1]:
                         flag =1;
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print"%s is %s" %(ParamName,details);
+                        print("%s is %s" %(ParamName,details));
 
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                         ParamName = ParamNamePrefix + str(interface) + ".DisplayName";
@@ -209,50 +209,50 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
                         if expectedresult in actualresult and details == dispName[interface - 1]:
                             flag = 1;
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "%s is %s which is the expected value" %(ParamName,details);
+                            print("%s is %s which is the expected value" %(ParamName,details));
                         else:
                             flag = 0;
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "%s is NOT %s which is the expected value" %(ParamName,details);
+                            print("%s is NOT %s which is the expected value" %(ParamName,details));
                     else:
                         flag = 0;
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "The CPE interface name is %s which is not among the listed interface name" %details;
+                        print("The CPE interface name is %s which is not among the listed interface name" %details);
 
                 # setting the script status
                 if flag == 1:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT 4: Listed CPE interfaces have expected Display name and interafce name";
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT 4: Listed CPE interfaces have expected Display name and interafce name");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT 4: Listed CPE interfaces does not have expected Display name and interafce name";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT 4: Listed CPE interfaces does not have expected Display name and interafce name");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+                print("ACTUAL RESULT 3: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the DEVICE TYPE"
-            print "EXPECTED RESULT 2: Should get the device type";
-            print "ACTUAL RESULT 2:Device type  %s" %devicetype;
+            print("TEST STEP 2: Get the DEVICE TYPE")
+            print("EXPECTED RESULT 2: Should get the device type");
+            print("ACTUAL RESULT 2:Device type  %s" %devicetype);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Get the number of CPE Interfaces";
-        print "EXPECTED RESULT 1: Should get the no of CPE Interfaces";
-        print "ACTUAL RESULT 1: The value received is :",noOfEntries;
+        print("TEST STEP 1 :Get the number of CPE Interfaces");
+        print("EXPECTED RESULT 1: Should get the no of CPE Interfaces");
+        print("ACTUAL RESULT 1: The value received is :",noOfEntries);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

@@ -72,7 +72,7 @@ Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID
 Device.DeviceInfo.SerialNumber
 </input_parameters>
     <automation_approch>1. Load  TAD modules
-2. From script invoke TADstub_Get and get the values of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID 
+2. From script invoke TADstub_Get and get the values of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID
 3. From script invoke TADstub_Get and get the values of Device.DeviceInfo.SerialNumber
 4. check if both values are same
 5. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -101,7 +101,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_GetDeviceID');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,64 +112,61 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details1 = tdkTestObj.getResultDetails();
     if expectedresult in actualresult and details1 != "":
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID";
-       print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID";
-       print "ACTUAL RESULT 1: %s" %details1;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj = obj.createTestStep('TADstub_Get');
-       tdkTestObj.addParameter("paramName","Device.DeviceInfo.SerialNumber");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details2 = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult and details2 != "":
-         #Set the result status of execution
-         tdkTestObj.setResultStatus("SUCCESS");
-         print "TEST STEP 2: Get the value of Device.DeviceInfo.SerialNumber";
-         print "EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.SerialNumber";
-         print "ACTUAL RESULT 2: %s" %details2;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : SUCCESS";
-         if details1 == details2:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber should be same ";
-           print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber are same ";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-         else:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber should be same ";
-           print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber are same ";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-         #Set the result status of execution
-         tdkTestObj.setResultStatus("FAILURE");
-         print "TEST STEP 2: Get the value of Device.DeviceInfo.SerialNumber";
-         print "EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.SerialNumber";      
-         print "ACTUAL RESULT 2: %s" %details2;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID");
+        print("ACTUAL RESULT 1: %s" %details1);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj = obj.createTestStep('TADstub_Get');
+        tdkTestObj.addParameter("paramName","Device.DeviceInfo.SerialNumber");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details2 = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult and details2 != "":
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the value of Device.DeviceInfo.SerialNumber");
+            print("EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.SerialNumber");
+            print("ACTUAL RESULT 2: %s" %details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            if details1 == details2:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber should be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber are same ");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber should be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID and Device.DeviceInfo.SerialNumber are same ");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the value of Device.DeviceInfo.SerialNumber");
+            print("EXPECTED RESULT 2: Should get the value of Device.DeviceInfo.SerialNumber");
+            print("ACTUAL RESULT 2: %s" %details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1:Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID";
-       print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID";
-       print "ACTUAL RESULT 1: %s" %details1;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1:Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.DeviceID");
+        print("ACTUAL RESULT 1: %s" %details1);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

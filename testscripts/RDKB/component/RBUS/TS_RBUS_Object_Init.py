@@ -96,31 +96,31 @@ obj.configureTestCase(ip,port,'TS_RBUS_Object_Init');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     obj_name = "gTestObject"
 
-    print "\n********** Start of RBUS Open ****************"
+    print("\n********** Start of RBUS Open ****************")
     tdkTestObj = obj.createTestStep('RBUS_Open');
     expectedresult = "SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS Open Detail is ",details
+    print("RBUS Open Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was success";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-        print "\n********** Start of RBUS Object Init ****************"
-        print "Initializing the Object (obj1) with object name ",	obj_name
+        print("\n********** Start of RBUS Object Init ****************")
+        print("Initializing the Object (obj1) with object name ",       obj_name)
         tdkTestObj = obj.createTestStep('RBUS_ObjectCommands');
         tdkTestObj.addParameter("operation","rbusObject_Init");
         tdkTestObj.addParameter("obj_count",1);
@@ -133,23 +133,23 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Initiate rbusObject_Init function";
-            print "EXPECTED RESULT 2: rbusObject_Init should be success";
-            print "ACTUAL RESULT 2: rbusObject_Init  was Success";
+            print("TEST STEP 2: Initiate rbusObject_Init function");
+            print("EXPECTED RESULT 2: rbusObject_Init should be success");
+            print("ACTUAL RESULT 2: rbusObject_Init  was Success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Initiate rbusObject_Init function";
-            print "EXPECTED RESULT 2: rbusObject_Init should be success";
-            print "ACTUAL RESULT 2: rbusObject_Init was Failed";
+            print("TEST STEP 2: Initiate rbusObject_Init function");
+            print("EXPECTED RESULT 2: rbusObject_Init should be success");
+            print("ACTUAL RESULT 2: rbusObject_Init was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "********** End of RBUS Object Init ****************"
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("********** End of RBUS Object Init ****************")
 
-        print "\n********** Start of RBUS Object Release ****************"
-        print "Release the RBUS Object (obj1)"
+        print("\n********** Start of RBUS Object Release ****************")
+        print("Release the RBUS Object (obj1)")
         tdkTestObj = obj.createTestStep('RBUS_ObjectCommands');
         tdkTestObj.addParameter("operation","rbusObject_Release");
         tdkTestObj.addParameter("obj_count",1);
@@ -162,57 +162,57 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 3: Initiate rbusObject_Release function";
-            print "EXPECTED RESULT 3: rbusObject_Release should be success";
-            print "ACTUAL RESULT 3: rbusObject_Release  was Success";
+            print("TEST STEP 3: Initiate rbusObject_Release function");
+            print("EXPECTED RESULT 3: rbusObject_Release should be success");
+            print("ACTUAL RESULT 3: rbusObject_Release  was Success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 3: Initiate rbusObject_Release function";
-            print "EXPECTED RESULT 3: rbusObject_Release should be success";
-            print "ACTUAL RESULT 3: rbusObject_Release was Failed";
+            print("TEST STEP 3: Initiate rbusObject_Release function");
+            print("EXPECTED RESULT 3: rbusObject_Release should be success");
+            print("ACTUAL RESULT 3: rbusObject_Release was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "********** End of RBUS Object Release ****************\n"
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("********** End of RBUS Object Release ****************\n")
 
-        print "********** Start of RBUS Close ****************"
+        print("********** Start of RBUS Close ****************")
         tdkTestObj = obj.createTestStep('RBUS_Close');
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS close Detail is ",details
+        print("RBUS close Detail is ",details)
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Close the RBUS connection";
-            print "EXPECTED RESULT 4: rbus_close should be success";
-            print "ACTUAL RESULT 4: rbus_close was success";
+            print("TEST STEP 4: Close the RBUS connection");
+            print("EXPECTED RESULT 4: rbus_close should be success");
+            print("ACTUAL RESULT 4: rbus_close was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Close the RBUS connection";
-            print "EXPECTED RESULT 4: rbus_close should be success";
-            print "ACTUAL RESULT 4: rbus_close was Failed";
+            print("TEST STEP 4: Close the RBUS connection");
+            print("EXPECTED RESULT 4: rbus_close should be success");
+            print("ACTUAL RESULT 4: rbus_close was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "********** End of RBUS Close ****************"
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("********** End of RBUS Close ****************")
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was Failed";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-    print "********** End of RBUS Open ****************\n"
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+    print("********** End of RBUS Open ****************\n")
     obj.unloadModule("rbus");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

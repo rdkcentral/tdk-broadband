@@ -116,23 +116,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj_Tr181_Set = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly');
 
-    print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-    print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
+    print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+    print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
     #Execute the PreRequisite of RBUS
     rbus_set,revert_flag = rbus_PreRequisite(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd);
 
     if rbus_set == 1:
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "******************************************************************"
+        print("******************************************************************")
 
         actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,"cat /rdklogs/logs/CRlog.txt.0");
         if expectedresult in actualresult:
-            print "TEST STEP 2: Check CRLog file is empty or Not"
-            print "EXPECTED RESULT 2: Should get the content of the CRlog file"
-            print "ACTUAL RESULT 2: CRlog file get operation is success"
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Check CRLog file is empty or Not")
+            print("EXPECTED RESULT 2: Should get the content of the CRlog file")
+            print("ACTUAL RESULT 2: CRlog file get operation is success")
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
             tdkTestObj_Sys_ExeCmd.executeTestCase("SUCCESS");
 
             if expectedresult in actualresult and details!="":
@@ -142,65 +142,65 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     #It is possible that CRLog can be empty If DUT is not rebooted recently due to log rotation or log upload.
                     #Reboot the DUT only if its not rebooted in Prerequisite stage
 
-                    print "CRlog File is empty, Rebooting Device once"
+                    print("CRlog File is empty, Rebooting Device once")
                     doRebootDUT(sysobj);
 
                 actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,"cat /rdklogs/logs/CRlog.txt.0");
                 if expectedresult in actualresult and details != "":
                     cr_log_present = 1;
-                    print "CRlog file is NOT empty after Reboot "
+                    print("CRlog file is NOT empty after Reboot ")
                 else:
-                    print "CRlog file is empty"
+                    print("CRlog file is empty")
                     cr_log_present = 0;
         else:
-            print "TEST STEP 2: Check CRLog file is empty or Not"
-            print "EXPECTED RESULT 2: Should get the content of the CRlog file"
-            print "ACTUAL RESULT 2: CRlog file get operation is Failed"
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Check CRLog file is empty or Not")
+            print("EXPECTED RESULT 2: Should get the content of the CRlog file")
+            print("ACTUAL RESULT 2: CRlog file get operation is Failed")
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
 
         if cr_log_present == 1:
             command = "cat /rdklogs/logs/CRlog.txt.0 | grep \"RBus is enabled\" "
-            print "Command is: ",command
+            print("Command is: ",command)
             actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,command);
-            print "Details is ",details
+            print("Details is ",details)
             if expectedresult in actualresult and details !="" and (len(details) > 0) and "RBus is enabled" in details:
-                print "TEST STEP 3: Check RBUS Enabled log in CR log file "
-                print "EXPECTED RESULT 3: RBUS Enabled log should be present in CR log file"
-                print "ACTUAL RESULT 3: RBUS Enabled log is present in CR log file"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                print("TEST STEP 3: Check RBUS Enabled log in CR log file ")
+                print("EXPECTED RESULT 3: RBUS Enabled log should be present in CR log file")
+                print("ACTUAL RESULT 3: RBUS Enabled log is present in CR log file")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3: Check RBUS Enabled log in CR log file "
-                print "EXPECTED RESULT 3: RBUS Enabled log should be present in CR log file"
-                print "ACTUAL RESULT 3: RBUS Enabled log is NOT present in CR log file"
-                print "[TEST EXECUTION RESULT] 1: FAILURE";
+                print("TEST STEP 3: Check RBUS Enabled log in CR log file ")
+                print("EXPECTED RESULT 3: RBUS Enabled log should be present in CR log file")
+                print("ACTUAL RESULT 3: RBUS Enabled log is NOT present in CR log file")
+                print("[TEST EXECUTION RESULT] 1: FAILURE");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
         else:
             #CR log file should not be empty after reboot
-            print "CR LOG file is empty, Even after Reboot"
+            print("CR LOG file is empty, Even after Reboot")
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
-    print "TEST STEP 4: Execute the Post process of RBUS"
-    print "EXPECTED RESULT 4: Post process of RBUS should be success"
+    print("TEST STEP 4: Execute the Post process of RBUS")
+    print("EXPECTED RESULT 4: Post process of RBUS should be success")
 
     post_process_value = rbus_PostProcess(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd,revert_flag);
     if post_process_value == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 4: Post process of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 4: SUCCESS";
+        print("ACTUAL RESULT 4: Post process of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 4: SUCCESS");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 4: Post process of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 4: FAILURE";
+        print("ACTUAL RESULT 4: Post process of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 4: FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

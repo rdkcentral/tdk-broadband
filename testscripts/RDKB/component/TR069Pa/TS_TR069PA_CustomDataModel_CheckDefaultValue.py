@@ -49,8 +49,8 @@
     <api_or_interface_used>TDKB_TR181Stub_Get
 WIFIAgent_Set</api_or_interface_used>
     <input_parameters>Device.DeviceInfo.CustomDataModelEnabled</input_parameters>
-    <automation_approch>1.Load the module 
-2.Perform the Factory reset on the DUT 
+    <automation_approch>1.Load the module
+2.Perform the Factory reset on the DUT
 3.Check if  Device.DeviceInfo.CustomDataModelEnabled is disabled by default
 4.Unload the module</automation_approch>
     <expected_output>The default value of  Device.DeviceInfo.CustomDataModelEnabled is expected to be  false</expected_output>
@@ -64,7 +64,7 @@ WIFIAgent_Set</api_or_interface_used>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from time import sleep;
 obj1 = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
@@ -81,8 +81,8 @@ obj1.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_CheckDefaultValue');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -101,10 +101,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         sleep(180);
@@ -119,29 +119,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult and details == "false":
             details = details.strip().replace("\\n", "");
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Query Custom Data Model Enabled after Factory reset";
-            print "EXPECTED RESULT 2: Should get Custom Data Model Enabled as false after Factory Reset";
-            print "ACTUAL RESULT 2: The value received is %s" %details;
+            print("TEST STEP 2 : Query Custom Data Model Enabled after Factory reset");
+            print("EXPECTED RESULT 2: Should get Custom Data Model Enabled as false after Factory Reset");
+            print("ACTUAL RESULT 2: The value received is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             details = details.strip().replace("\\n", "");
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 : Query Custom Data Model Enabled after Factory reset";
-            print "EXPECTED RESULT 2: Should get Custom Data Model Enabled as false after Factory Reset";
-            print "ACTUAL RESULT 2: The value received is %s" %details;
+            print("TEST STEP 2 : Query Custom Data Model Enabled after Factory reset");
+            print("EXPECTED RESULT 2: Should get Custom Data Model Enabled as false after Factory Reset");
+            print("ACTUAL RESULT 2: The value received is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("wifiagent");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

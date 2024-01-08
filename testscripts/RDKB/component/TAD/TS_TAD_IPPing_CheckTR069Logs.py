@@ -91,8 +91,8 @@ sysobj.configureTestCase(ip,port,'TS_TAD_IPPing_CheckTR069Logs');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -103,7 +103,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     host = tdkutility.readtdkbConfigFile(obj);
     if host == "NULL":
         tdkTestObj.setResultStatus("FAILURE");
-        print "Host name not available in tdkb config file"
+        print("Host name not available in tdkb config file")
     else:
         #Check if TR69 RFC is enabled
         step = 1;
@@ -115,16 +115,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
-        print "EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step;
+        print("\nTEST STEP %d : Get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
+        print("EXPECTED RESULT %d : Should get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable" %step);
 
         if expectedresult in actualresult:
             init_enable = details.strip().replace("\\n", "");
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %(step, init_enable);
+            print("ACTUAL RESULT %d : Enable Status of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is : %s" %(step, init_enable));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #If disabled initially, then enable
             if init_enable == "false":
@@ -139,26 +139,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
 
-                print "\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to %s" %(step, value);
-                print "EXPECTED RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable should be set to %s successfully" %(step,value);
+                print("\nTEST STEP %d: Set Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable to %s" %(step, value));
+                print("EXPECTED RESULT %d: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable should be set to %s successfully" %(step,value));
 
                 if expectedresult in actualresult:
                     tr69_flag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is set to %s successfully; Details : %s" %(step, value, details);
+                    print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is set to %s successfully; Details : %s" %(step, value, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not set to %s successfully; Details : %s" %(step, value, details);
+                    print("ACTUAL RESULT %d : Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is not set to %s successfully; Details : %s" %(step, value, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tr69_flag = 1;
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TR69 RFC is enabled initially";
+                print("TR69 RFC is enabled initially");
 
             if tr69_flag == 1:
                 #Check if the TR69 log file is created under /rdklogs/logs/TR69log.txt.0
@@ -167,20 +167,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 file = "/rdklogs/logs/TR69log.txt.0"
                 cmd = "[ -f " + file + " ] && echo \"File exist\" || echo \"File does not exist\"";
-                print "Command : ", cmd;
+                print("Command : ", cmd);
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
 
-                print "\nTEST STEP %d: Check for %s file presence" %(step, file);
-                print "EXPECTED RESULT %d: %s file should be present" %(step, file);
+                print("\nTEST STEP %d: Check for %s file presence" %(step, file));
+                print("EXPECTED RESULT %d: %s file should be present" %(step, file));
 
                 if details == "File exist":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: %s file is present" %(step, file);
+                    print("ACTUAL RESULT %d: %s file is present" %(step, file));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Set Device.IP.Diagnostics.TraceRoute.Interface
                     step = step + 1;
@@ -192,15 +192,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult = tdkTestObj.getResult();
                     details = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP %d: Set the interface of IPPing" %step;
-                    print "EXPECTED RESULT %d: Should set the interface of IPPing" %step;
+                    print("\nTEST STEP %d: Set the interface of IPPing" %step);
+                    print("EXPECTED RESULT %d: Should set the interface of IPPing" %step);
 
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: %s" %(step, details);
+                        print("ACTUAL RESULT %d: %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Set Device.IP.Diagnostics.TraceRoute.Host
                         step = step + 1;
@@ -212,15 +212,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult = tdkTestObj.getResult();
                         details = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d: Set the host of IPPing" %step;
-                        print "EXPECTED RESULT %d: Should set the host of IPPing" %step;
+                        print("\nTEST STEP %d: Set the host of IPPing" %step);
+                        print("EXPECTED RESULT %d: Should set the host of IPPing" %step);
 
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d: %s" %(step, details);
+                            print("ACTUAL RESULT %d: %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Set Device.IP.Diagnostics.TraceRoute.DiagnosticsState
                             step = step + 1;
@@ -232,15 +232,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             actualresult = tdkTestObj.getResult();
                             details = tdkTestObj.getResultDetails();
 
-                            print "\nTEST STEP %d: Set DiagnosticsState of IPPing as Requested" %step;
-                            print "EXPECTED RESULT %d: Should set DiagnosticsState of IPPing as Requested" %step;
+                            print("\nTEST STEP %d: Set DiagnosticsState of IPPing as Requested" %step);
+                            print("EXPECTED RESULT %d: Should set DiagnosticsState of IPPing as Requested" %step);
 
                             if expectedresult in actualresult:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: %s" %(step, details);
+                                print("ACTUAL RESULT %d: %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                                 #Check if 'CwmpEvent->EventCode = 8 DIAGNOSTICS COMPLETE' is present in TR69 log file
                                 step = step + 1;
@@ -252,42 +252,42 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 actualresult = tdkTestObj.getResult();
                                 logstatus = tdkTestObj.getResultDetails().strip();
 
-                                print "\nTEST STEP %d : Check if the logs for traceroute are updated in TR069 log file" %step;
-                                print "EXPECTED RESULT %d : Logs for tracerouter should not be updated in TR69 log file" %step;
+                                print("\nTEST STEP %d : Check if the logs for traceroute are updated in TR069 log file" %step);
+                                print("EXPECTED RESULT %d : Logs for tracerouter should not be updated in TR69 log file" %step);
 
                                 if "COMPLETE" in logstatus:
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d : The logs for traceroute are updated in the TR069 log file; Details : %s"%(step, logstatus);
+                                    print("ACTUAL RESULT %d : The logs for traceroute are updated in the TR069 log file; Details : %s"%(step, logstatus));
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : FAILURE";
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                                 else:
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d : The logs for traceroute are not updated in the TR069 log file" %step;
+                                    print("ACTUAL RESULT %d : The logs for traceroute are not updated in the TR069 log file" %step);
                                     #Get the result of execution
-                                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: %s" %(step, details);
+                                print("ACTUAL RESULT %d: %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d: %s" %(step, details);
+                            print("ACTUAL RESULT %d: %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: %s" %(step, details);
+                        print("ACTUAL RESULT %d: %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: %s file is not present" %(step, file);
+                    print("ACTUAL RESULT %d: %s file is not present" %(step, file));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 #Revert operation
                 if init_enable != "true":
@@ -302,27 +302,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                     if expectedresult in actualresult :
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "Revert operation of TR69 RFC was success";
+                        print("Revert operation of TR69 RFC was success");
                     else :
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Revert operation of TR69 RFC was failed";
+                        print("Revert operation of TR69 RFC was failed");
                 else:
-                    print "TR69 RFC revert not required";
+                    print("TR69 RFC revert not required");
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TR69 RFC could not be enabled";
+                print("TR69 RFC could not be enabled");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : GET operation failed; Details : %s" %(step, details);
+            print("ACTUAL RESULT %d : GET operation failed; Details : %s" %(step, details));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
     obj.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

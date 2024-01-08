@@ -110,9 +110,9 @@ sysobj.configureTestCase(ip,port,'TDKB_CMHAL_SNMP_GetAllValues');
 loadmodulestatus1 = objhal.getLoadModuleResult();
 loadmodulestatus2 = obj.getLoadModuleResult();
 loadmodulestatus3 = sysobj.getLoadModuleResult();
-print "[CM HAL LIB LOAD STATUS]  :  %s " %loadmodulestatus1 ;
-print "[TDKBTR181 LIB LOAD STATUS]  :  %s " %loadmodulestatus2 ;
-print "[SYSUTIL LIB LOAD STATUS]  :  %s " %loadmodulestatus3 ;
+print("[CM HAL LIB LOAD STATUS]  :  %s " %loadmodulestatus1) ;
+print("[TDKBTR181 LIB LOAD STATUS]  :  %s " %loadmodulestatus2) ;
+print("[SYSUTIL LIB LOAD STATUS]  :  %s " %loadmodulestatus3) ;
 
 if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loadmodulestatus3.upper()):
     #Set the result status of execution
@@ -125,7 +125,7 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loa
     mainFunctionFailedParams = [];
     prerequisite_status = tdkbHalTr181Utility.prerequisite(sysobj,setup_type);
     if prerequisite_status == 1:
-        print "Pre-requisite for Setup Type %s is SUCCESS"%setup_type
+        print("Pre-requisite for Setup Type %s is SUCCESS"%setup_type)
 
         xmlName = tdkbHalTr181Utility.getXMLNameUsingDeviceType(sysobj,"CMHAL");
 
@@ -135,21 +135,21 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loa
             for plist in range (0,len(paramList)):
                 mainFunctionFailedParams = tdkbHalTr181Utility.getTR181andHALAPIValue(obj,objhal,sysobj,paramList[plist],HALAPIList[plist],tr181_ExpRes[plist],hal_ExpRes[plist],"CMHAL",setup_type);
 
-            print "Failed Parameters are %s"%mainFunctionFailedParams;
+            print("Failed Parameters are %s"%mainFunctionFailedParams);
 
         else:
-            print "Failed to get the XML Name"
+            print("Failed to get the XML Name")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "Pre-requisite Failed";
+        print("Pre-requisite Failed");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
     objhal.unloadModule("cmhal");
 else:
-    print "Failed to load CMHAL/TDKB-TR181 module";
+    print("Failed to load CMHAL/TDKB-TR181 module");
     obj.setLoadModuleStatus("FAILURE");
     objhal.setLoadModuleStatus("FAILURE")
     sysobj.setLoadModuleStatus("FAILURE")
-    print "Module loading failed";
+    print("Module loading failed");

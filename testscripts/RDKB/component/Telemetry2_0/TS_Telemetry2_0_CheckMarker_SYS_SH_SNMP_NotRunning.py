@@ -105,27 +105,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = sysobj.createTestStep('ExecuteCmd');
             cmd = "ps  | grep -i \"snmp_subagent\"| grep -v \"grep\"";
@@ -133,119 +133,119 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-            print "ps details for snmp_subagent:",details
+            print("ps details for snmp_subagent:",details)
             pid  = details.split(" ")[0].strip().replace("\\n", "");
             if expectedresult in actualresult and pid != "":
-               Initialpid = int(pid);
-               tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Check if snmp_subagent  process is running";
-               print "EXPECTED RESULT 3:snmp_subagent   process should be running";
-               print "ACTUAL RESULT 3: pid of snmp_subagent :",pid;
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                Initialpid = int(pid);
+                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check if snmp_subagent  process is running");
+                print("EXPECTED RESULT 3:snmp_subagent   process should be running");
+                print("ACTUAL RESULT 3: pid of snmp_subagent :",pid);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               actualresult =killProcess(tdkTestObj_Sys_ExeCmd,Initialpid,"/usr/ccsp/tad/task_health_monitor.sh");
-               if expectedresult in actualresult :
-                  tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                  print "TEST STEP 4: Kill snmp_subagent  process and run task_health_monitor.sh script";
-                  print "EXPECTED RESULT 4:Should Kill the snmp_subagent   process and run task_health_monitor.sh script";
-                  print "ACTUAL RESULT 4: snmp_subagent  process killed and run task_health_monitor.sh script successfully";
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
+                actualresult =killProcess(tdkTestObj_Sys_ExeCmd,Initialpid,"/usr/ccsp/tad/task_health_monitor.sh");
+                if expectedresult in actualresult :
+                    tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Kill snmp_subagent  process and run task_health_monitor.sh script");
+                    print("EXPECTED RESULT 4:Should Kill the snmp_subagent   process and run task_health_monitor.sh script");
+                    print("ACTUAL RESULT 4: snmp_subagent  process killed and run task_health_monitor.sh script successfully");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                  sleep(130);
+                    sleep(130);
 
-                  lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
-                  if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
-                     print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
-                     tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                     print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                     print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                     print "ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount";
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                     query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_SH_SNMP_NotRunning\"" %(initialLinesCount,lineCountAfterSimu)
-                     print "query:%s" %query
-                     tdkTestObj_Sys_ExeCmd.addParameter("command", query);
-                     tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj_Sys_ExeCmd.getResult();
-                     details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
-                     print "Marker Detail Found from log file is: %s "%details;
-
-                     if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_SH_SNMP_NotRunning" in details:
+                    lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+                    if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
+                        print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                        markervalue = details.split("SYS_SH_SNMP_NotRunning<#=#>")[1]
-                        print "TEST STEP 6:SYS_SH_SNMP_NotRunning  Marker should be present";1
-                        print "EXPECTED RESULT 6: SYS_SH_SNMP_NotRunning Marker should be present";
-                        print "ACTUAL RESULT 6: SYS_SH_SNMP_NotRunning  Marker Value is %s" %markervalue;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                        actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"snmp_subagent");
-                        if expectedresult in actualresult and pid != "" and pid != Initialpid:
-                           tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                           print "TEST STEP 7: Check if the snmp_subagent  proccess restarted";
-                           print "EXPECTED RESULT 7:snmp_subagent  proccess should restart ";
-                           print "ACTUAL RESULT 7: snmp_subagent  restarted successfully";
-                           print "[TEST EXECUTION RESULT] : SUCCESS";
+                        query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_SH_SNMP_NotRunning\"" %(initialLinesCount,lineCountAfterSimu)
+                        print("query:%s" %query)
+                        tdkTestObj_Sys_ExeCmd.addParameter("command", query);
+                        tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj_Sys_ExeCmd.getResult();
+                        details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
+                        print("Marker Detail Found from log file is: %s "%details);
+
+                        if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_SH_SNMP_NotRunning" in details:
+                            tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                            markervalue = details.split("SYS_SH_SNMP_NotRunning<#=#>")[1]
+                            print("TEST STEP 6:SYS_SH_SNMP_NotRunning  Marker should be present");1
+                            print("EXPECTED RESULT 6: SYS_SH_SNMP_NotRunning Marker should be present");
+                            print("ACTUAL RESULT 6: SYS_SH_SNMP_NotRunning  Marker Value is %s" %markervalue);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"snmp_subagent");
+                            if expectedresult in actualresult and pid != "" and pid != Initialpid:
+                                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Check if the snmp_subagent  proccess restarted");
+                                print("EXPECTED RESULT 7:snmp_subagent  proccess should restart ");
+                                print("ACTUAL RESULT 7: snmp_subagent  restarted successfully");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Check if the snmp_subagent  proccess restarted");
+                                print("EXPECTED RESULT 7:snmp_subagent  proccess should restart ");
+                                print("ACTUAL RESULT 7: snmp_subagent  restart failed");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                            print "TEST STEP 7: Check if the snmp_subagent  proccess restarted";
-                            print "EXPECTED RESULT 7:snmp_subagent  proccess should restart ";
-                            print "ACTUAL RESULT 7: snmp_subagent  restart failed";
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                     else:
-                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                         print "TEST STEP 6:SYS_SH_SNMP_NotRunning  Marker should be present";
-                         print "EXPECTED RESULT 6: SYS_SH_SNMP_NotRunning Marker should be present";
-                         print "ACTUAL RESULT 6: SYS_SH_SNMP_NotRunning  Marker is %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                  else:
-                      tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                      print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                      print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                      print "ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount";
-                      print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                   print "TEST STEP 4: Kill snmp_subagent  process and run task_health_monitor.sh script";
-                   print "EXPECTED RESULT 4:Should Kill the snmp_subagent   process and run task_health_monitor.sh script";
-                   print "ACTUAL RESULT 4: Failed to kill snmp_subagent  process and run task_health_monitor.sh script";
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("TEST STEP 6:SYS_SH_SNMP_NotRunning  Marker should be present");
+                            print("EXPECTED RESULT 6: SYS_SH_SNMP_NotRunning Marker should be present");
+                            print("ACTUAL RESULT 6: SYS_SH_SNMP_NotRunning  Marker is %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Kill snmp_subagent  process and run task_health_monitor.sh script");
+                    print("EXPECTED RESULT 4:Should Kill the snmp_subagent   process and run task_health_monitor.sh script");
+                    print("ACTUAL RESULT 4: Failed to kill snmp_subagent  process and run task_health_monitor.sh script");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if snmp_subagent  process is running";
-                print "EXPECTED RESULT 3:snmp_subagent   process should be running";
-                print "ACTUAL RESULT 3: pid of snmp_subagent :",details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check if snmp_subagent  process is running");
+                print("EXPECTED RESULT 3:snmp_subagent   process should be running");
+                print("ACTUAL RESULT 3: pid of snmp_subagent :",details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to retrive Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to retrive Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 8: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 8: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 8: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 8: Post Process should be success");
 
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 8 : Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 8 : Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

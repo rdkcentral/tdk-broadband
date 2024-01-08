@@ -101,8 +101,8 @@ obj1.configureTestCase(ip,port,'TS_WANMANAGER_FixedMode_CheckInternetConnectivit
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     #Set the result status of execution
@@ -118,7 +118,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             #Set the Wan Manager Policy to FIXED_MODE
             new_policy = "FIXED_MODE"
             expectedresult="SUCCESS";
-            print "Setting the wanmanager policy to :%s"%new_policy
+            print("Setting the wanmanager policy to :%s"%new_policy)
             revert = 0
             set_policy(new_policy, policy_initial, obj1, revert);
             #Get the WANMANAGER POLICY and cross check with the Set value
@@ -127,12 +127,12 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             if status == 0:
                 if policy == new_policy:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The wanmanager policy is set successfully"
+                    print("The wanmanager policy is set successfully")
 
                     #Checking for internet connectivity after policy change
                     tdkTestObj = obj1.createTestStep('ExecuteCmd');
                     query ="ping -c 2 google.com |  grep -i \"100% packet loss\"";
-                    print "query:%s" %query;
+                    print("query:%s" %query);
                     tdkTestObj.addParameter("command",query);
                     expectedresult="SUCCESS";
                     #Execute the test case in DUT
@@ -142,35 +142,35 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
                     if expectedresult in actualresult and details == "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP : Do a ping operation and check for internet connectivity";
-                        print "EXPECTED RESULT: ping operation should be success with no 100% packet loss";
-                        print "ACTUAL RESULT : ping operation is success and internet is available";
+                        print("TEST STEP : Do a ping operation and check for internet connectivity");
+                        print("EXPECTED RESULT: ping operation should be success with no 100% packet loss");
+                        print("ACTUAL RESULT : ping operation is success and internet is available");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP : Do a ping operation and check for internet connectivity";
-                        print "EXPECTED RESULT: ping operation should be success with no 100% packet loss";
-                        print "ACTUAL RESULT : %s"%details;
+                        print("TEST STEP : Do a ping operation and check for internet connectivity");
+                        print("EXPECTED RESULT: ping operation should be success with no 100% packet loss");
+                        print("ACTUAL RESULT : %s"%details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                     set_policy(new_policy, policy_initial, obj1, revert);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The wanmanager policy is not set successfully"
+                    print("The wanmanager policy is not set successfully")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Failed to get wanmanager policy after set ";
+                print("Failed to get wanmanager policy after set ");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "The current policy is not the expected policy";
+            print("The current policy is not the expected policy");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Failed to get initial wanmanager policy";
+        print("Failed to get initial wanmanager policy");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

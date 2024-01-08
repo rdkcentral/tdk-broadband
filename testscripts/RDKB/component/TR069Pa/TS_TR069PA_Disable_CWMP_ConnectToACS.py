@@ -65,7 +65,7 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tr69SoapUtil import *
 from tr69Config import *
@@ -81,7 +81,7 @@ obj.configureTestCase(ip,port,'TS_TR069PA_Enable_CWMP_ConnectToACS');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -102,11 +102,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "TEST STEP 1: Get the current EnableCWMP status";
-        print "EXPECTED RESULT : Should get the current EnableCWMP status"
-        print "ACTUAL RESULT :%s" %orgStatus
+        print("TEST STEP 1: Get the current EnableCWMP status");
+        print("EXPECTED RESULT : Should get the current EnableCWMP status")
+        print("ACTUAL RESULT :%s" %orgStatus)
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
 
@@ -126,22 +126,22 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
 
-            print "TEST STEP 2: Set the current EnableCWMP status as enabled";
-            print "EXPECTED RESULT : Should set the current EnableCWMP status"
-            print "ACTUAL RESULT :%s" %details;
+            print("TEST STEP 2: Set the current EnableCWMP status as enabled");
+            print("EXPECTED RESULT : Should set the current EnableCWMP status")
+            print("ACTUAL RESULT :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Try to connect to ACS server and do a get operation
-            print "TEST STEP 3: check the ACS connectivity after enabling EnableCWMP"
+            print("TEST STEP 3: check the ACS connectivity after enabling EnableCWMP")
             parsedResponse = send_xml(Enable_CWMP_XML, "get")
 
             if 200 not in parsedResponse:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE"
+                print("[TEST EXECUTION RESULT] : FAILURE")
 
             #Revert EnableCWMP status
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
@@ -161,38 +161,37 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
 
-                print "TEST STEP 3: Revert the current EnableCWMP status as the original value"
-                print "EXPECTED RESULT : Should revert the current EnableCWMP status"
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP 3: Revert the current EnableCWMP status as the original value")
+                print("EXPECTED RESULT : Should revert the current EnableCWMP status")
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Revert the current EnableCWMP status as the original value"
-                print "EXPECTED RESULT : Should revert the current EnableCWMP status"
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP 3: Revert the current EnableCWMP status as the original value")
+                print("EXPECTED RESULT : Should revert the current EnableCWMP status")
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the current EnableCWMP status as enabled";
-            print "EXPECTED RESULT : Should set the current EnableCWMP status"
-            print "ACTUAL RESULT :%s" %details;
+            print("TEST STEP 2: Set the current EnableCWMP status as enabled");
+            print("EXPECTED RESULT : Should set the current EnableCWMP status")
+            print("ACTUAL RESULT :%s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the current EnableCWMP status";
-        print "EXPECTED RESULT : Should get the current EnableCWMP status"
-        print "ACTUAL RESULT :%s" %details;
+        print("TEST STEP 1: Get the current EnableCWMP status");
+        print("EXPECTED RESULT : Should get the current EnableCWMP status")
+        print("ACTUAL RESULT :%s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -101,7 +101,7 @@ if "SUCCESS" in loadmodulestatus.upper() :
     expectedresult="SUCCESS";
 
     query="sysevent get ipv4_wan_subnet";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -110,7 +110,7 @@ if "SUCCESS" in loadmodulestatus.upper() :
     wan_mask = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
     query="sysevent get ipv4_erouter0_subnet";
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult2="SUCCESS";
@@ -119,33 +119,33 @@ if "SUCCESS" in loadmodulestatus.upper() :
     erouter_mask = tdkTestObj.getResultDetails().strip().replace("\\n","");
     if expectedresult in (actualresult1 and actualresult2):
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 :Get th subnet mask for wan and erouter0";
-        print "EXPECTED RESULT 1: Should get subnet mask for wan and erouter0 ";
-        print "ACTUAL RESULT 1: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask);
+        print("TEST STEP 1 :Get th subnet mask for wan and erouter0");
+        print("EXPECTED RESULT 1: Should get subnet mask for wan and erouter0 ");
+        print("ACTUAL RESULT 1: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if wan_mask != "" and erouter_mask != "" and (wan_mask == erouter_mask):
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:check if subnet mask for wan and erouter0 are non empty and equal";
-            print "EXPECTED RESULT 2: Should get subnet mask for wan and erouter0 non empty and equal";
-            print "ACTUAL RESULT 2: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask);
+            print("TEST STEP 2:check if subnet mask for wan and erouter0 are non empty and equal");
+            print("EXPECTED RESULT 2: Should get subnet mask for wan and erouter0 non empty and equal");
+            print("ACTUAL RESULT 2: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:check if ipv4 subnet address for wan and erouter0 are non-empty and equal";
-            print "EXPECTED RESULT 2: Should get ipv4 subnet address for wan and erouter0 are non-empty and equal";
-            print "ACTUAL RESULT 2: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask);
+            print("TEST STEP 2:check if ipv4 subnet address for wan and erouter0 are non-empty and equal");
+            print("EXPECTED RESULT 2: Should get ipv4 subnet address for wan and erouter0 are non-empty and equal");
+            print("ACTUAL RESULT 2: wan_mask : %s,erouter_mask :%s"%(wan_mask,erouter_mask));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1 :Get th ipv4 subnet address for wan and erouter0";
-        print "EXPECTED RESULT 1: Should get ipv4 subnet address for wan and erouter0";
-        print "ACTUAL RESULT 1: wan_mask : %s,erouter_mask :%s,ifconfig erouter ip :%s"%(wan_mask,erouter_mask,ifconfig_ip);
+        print("TEST STEP 1 :Get th ipv4 subnet address for wan and erouter0");
+        print("EXPECTED RESULT 1: Should get ipv4 subnet address for wan and erouter0");
+        print("ACTUAL RESULT 1: wan_mask : %s,erouter_mask :%s,ifconfig erouter ip :%s"%(wan_mask,erouter_mask,ifconfig_ip));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

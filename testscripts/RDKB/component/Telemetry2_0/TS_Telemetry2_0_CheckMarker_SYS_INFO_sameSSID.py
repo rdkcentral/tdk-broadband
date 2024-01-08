@@ -142,29 +142,29 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
     tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj_Tr181_set = tr181obj .createTestStep('TDKB_TR181Stub_Set');
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
 
             same_name = 0;
             ssid1_res, ssid1_name, tdkTestObj = getSSIDNames(tdkTestObj_Tr181_Get,"Device.WiFi.SSID.1.SSID");
@@ -172,50 +172,50 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
 
             if expectedresult in (ssid1_res and ssid2_res):
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the SSID Names of SSID1 and SSID2";
-                print "EXPECTED RESULT 3: Should get the SSID Names";
-                print "ACTUAL RESULT 3: SSID names Retrieved Successfully ";
+                print("TEST STEP 3: Get the SSID Names of SSID1 and SSID2");
+                print("EXPECTED RESULT 3: Should get the SSID Names");
+                print("ACTUAL RESULT 3: SSID names Retrieved Successfully ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                print "SSID 1 Name is",ssid1_name;
-                print "SSID 2 Name is",ssid2_name;
+                print("SSID 1 Name is",ssid1_name);
+                print("SSID 2 Name is",ssid2_name);
 
                 if str(ssid1_name) == str(ssid2_name):
-                    print "SSID Names are same"
+                    print("SSID Names are same")
                     same_name = 1;
                 else:
-                    print "SSID Names are NOT same, Initiating SET operation"
+                    print("SSID Names are NOT same, Initiating SET operation")
                     set_result1,set_details1, tdkTestObj = setSSIDNames(tdkTestObj_Tr181_set,"Device.WiFi.SSID.1.SSID","Tel_Test_WiFi");
                     set_result2,set_details2, tdkTestObj1 = setSSIDNames(tdkTestObj_Tr181_set,"Device.WiFi.SSID.2.SSID","Tel_Test_WiFi");
                     if expectedresult in (set_result1 and set_result2):
                         same_name = 1;
                         ssid_revert_flag = 1;
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4: Set the SSID Names of SSID1 and SSID2";
-                        print "EXPECTED RESULT 4: Should Set the SSID Names";
-                        print "ACTUAL RESULT 4: SSID names Set was Successful ";
+                        print("TEST STEP 4: Set the SSID Names of SSID1 and SSID2");
+                        print("EXPECTED RESULT 4: Should Set the SSID Names");
+                        print("ACTUAL RESULT 4: SSID names Set was Successful ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         same_name = 0;
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4: Set the SSID Names of SSID1 and SSID2";
-                        print "EXPECTED RESULT 4: Should Set the SSID Names";
-                        print "ACTUAL RESULT 4: SSID names Set was Successful ";
+                        print("TEST STEP 4: Set the SSID Names of SSID1 and SSID2");
+                        print("EXPECTED RESULT 4: Should Set the SSID Names");
+                        print("ACTUAL RESULT 4: SSID names Set was Successful ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the SSID Names of SSID1 and SSID2";
-                print "EXPECTED RESULT 3: Should get the SSID Names";
-                print "ACTUAL RESULT 3: Failed to get SSID Names ";
+                print("TEST STEP 3: Get the SSID Names of SSID1 and SSID2");
+                print("EXPECTED RESULT 3: Should get the SSID Names");
+                print("ACTUAL RESULT 3: Failed to get SSID Names ");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             if same_name == 1:
                 query="sh /usr/ccsp/tad/getSsidNames.sh &"
-                print "query:%s" %query
+                print("query:%s" %query)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", query)
                 tdkTestObj.executeTestCase(expectedresult);
@@ -223,117 +223,117 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()) :
                 details = tdkTestObj.getResultDetails().strip().replace("\\n","");
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Run the getSSIDNames.sh Script";
-                    print "EXPECTED RESULT 5: Script getSSIDNames.sh should run";
-                    print "ACTUAL RESULT 5: Script getSSIDNames.sh was running";
+                    print("TEST STEP 5: Run the getSSIDNames.sh Script");
+                    print("EXPECTED RESULT 5: Script getSSIDNames.sh should run");
+                    print("ACTUAL RESULT 5: Script getSSIDNames.sh was running");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     sleep(30);
 
                     lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
                     if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                        print "TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                        print "EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount";
-                        print "ACTUAL RESULT 6: Line count After Simulation is greater than the initialLinesCount";
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 6: Line count After Simulation is greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                        print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
+                        print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
 
                         query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_INFO_sameSSID\"" %(initialLinesCount,lineCountAfterSimu)
-                        print "query:%s" %query
+                        print("query:%s" %query)
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                         tdkTestObj.addParameter("command", query);
                         tdkTestObj.executeTestCase(expectedresult);
                         actualresult = tdkTestObj.getResult();
 
                         details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                        print "Marker Detail Found from log file is: %s "%details;
+                        print("Marker Detail Found from log file is: %s "%details);
 
                         if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_INFO_sameSSID" in details:
                             tdkTestObj.setResultStatus("SUCCESS");
                             markervalue = details.split("SYS_INFO_sameSSID value : ")[1]
-                            print "TEST STEP 7: SYS_INFO_sameSSID  Marker should be present";1
-                            print "EXPECTED RESULT 7: SYS_INFO_sameSSID Marker should be present";
-                            print "ACTUAL RESULT 7: SYS_INFO_sameSSID  Marker Value is %s" %markervalue;
+                            print("TEST STEP 7: SYS_INFO_sameSSID  Marker should be present");1
+                            print("EXPECTED RESULT 7: SYS_INFO_sameSSID Marker should be present");
+                            print("ACTUAL RESULT 7: SYS_INFO_sameSSID  Marker Value is %s" %markervalue);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-                            print "***************************************************************"
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            print("***************************************************************")
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 7: SYS_INFO_sameSSID  Marker should be present";
-                            print "EXPECTED RESULT 7: SYS_INFO_sameSSID Marker should be present";
-                            print "ACTUAL RESULT 7: SYS_INFO_sameSSID  Marker is %s" %details;
+                            print("TEST STEP 7: SYS_INFO_sameSSID  Marker should be present");
+                            print("EXPECTED RESULT 7: SYS_INFO_sameSSID Marker should be present");
+                            print("ACTUAL RESULT 7: SYS_INFO_sameSSID  Marker is %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                            print "***************************************************************"
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                            print("***************************************************************")
                     else:
                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                        print "TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                        print "EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount";
-                        print "ACTUAL RESULT 6: Line count After Simulation is NOT greater than the initialLinesCount";
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("TEST STEP 6: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 6: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 6: Line count After Simulation is NOT greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Run the getSSIDNames.sh Script";
-                    print "EXPECTED RESULT 5: Script getSSIDNames.sh should run";
-                    print "ACTUAL RESULT 5: Script getSSIDNames.sh NOT running";
+                    print("TEST STEP 5: Run the getSSIDNames.sh Script");
+                    print("EXPECTED RESULT 5: Script getSSIDNames.sh should run");
+                    print("ACTUAL RESULT 5: Script getSSIDNames.sh NOT running");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
                 if ssid_revert_flag == 1:
                     revert_Set1,set_details1, tdkTestObj = setSSIDNames(tdkTestObj_Tr181_set,"Device.WiFi.SSID.1.SSID",ssid1_name);
                     revert_Set2,set_details2, tdkTestObj1 = setSSIDNames(tdkTestObj_Tr181_set,"Device.WiFi.SSID.2.SSID",ssid2_name);
                     if expectedresult in (revert_Set1 and revert_Set2):
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 8: Revert the SSID Names";
-                        print "EXPECTED RESULT 8: Should Revert the SSID Names to original value";
-                        print "ACTUAL RESULT 8: Revert operation was Successful ";
+                        print("TEST STEP 8: Revert the SSID Names");
+                        print("EXPECTED RESULT 8: Should Revert the SSID Names to original value");
+                        print("ACTUAL RESULT 8: Revert operation was Successful ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 8: Revert the SSID Names";
-                        print "EXPECTED RESULT 8: Should Revert the SSID Names to original value";
-                        print "ACTUAL RESULT 8: Revert operation was Failed ";
+                        print("TEST STEP 8: Revert the SSID Names");
+                        print("EXPECTED RESULT 8: Should Revert the SSID Names to original value");
+                        print("ACTUAL RESULT 8: Revert operation was Failed ");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    print "SSID Revert Flag was not SET, no need to revert SSID names"
+                    print("SSID Revert Flag was not SET, no need to revert SSID names")
             else:
-                print "SSID Names are Not Same"
+                print("SSID Names are Not Same")
                 tdkTestObj.setResultStatus("FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to get the Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2: Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to get the Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP : Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 9: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP : Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 9: Post Process should be success");
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 9: Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 9: Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 9: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 9: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

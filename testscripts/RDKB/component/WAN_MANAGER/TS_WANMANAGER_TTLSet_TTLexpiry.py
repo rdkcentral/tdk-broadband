@@ -123,17 +123,17 @@ if "SUCCESS" in loadmodulestatus.upper() :
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP %d : Set Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL to supported value : %s" %(step, override_TTL);
-        print "EXPECTED RESULT %d : Set operation should be success" %step;
+        print("TEST STEP %d : Set Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL to supported value : %s" %(step, override_TTL));
+        print("EXPECTED RESULT %d : Set operation should be success" %step);
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: %s" %(step, details);
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("ACTUAL RESULT %d: %s" %(step, details));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #sleep for the duration of override TTL
-            print "Sleeping for the duation of 300s";
+            print("Sleeping for the duation of 300s");
             sleep(300);
 
             #check if override TTL is zero after the expiry time
@@ -143,29 +143,29 @@ if "SUCCESS" in loadmodulestatus.upper() :
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "TEST STEP %d : Check if Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is 0 after the expiry time" %step;
-            print "EXPECTED RESULT %d : Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL should be 0" %step;
+            print("TEST STEP %d : Check if Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is 0 after the expiry time" %step);
+            print("EXPECTED RESULT %d : Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL should be 0" %step);
 
             if expectedresult in actualresult :
                 value = int(details);
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is :%d" %(step, value);
+                print("ACTUAL RESULT %d: Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is :%d" %(step, value));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if value == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Override TTL is 0 after expiry time";
+                    print("Override TTL is 0 after expiry time");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Override TTL is not 0 after expiry time";
+                    print("Override TTL is not 0 after expiry time");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is not fetched successfully" %step;
+                print("ACTUAL RESULT %d: Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL is not fetched successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Revert back to the initial override TTL only when it has non-zero value initially
             if int(initial_value[3]) != 0:
@@ -178,31 +178,30 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "TEST STEP %d : Revert Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL to : %s" %(step, initial_value[3]);
-                print "EXPECTED RESULT %d : Revert operation should be success" %step;
+                print("TEST STEP %d : Revert Device.DSL.X_RDK_Report.DSL.Default.OverrideTTL to : %s" %(step, initial_value[3]));
+                print("EXPECTED RESULT %d : Revert operation should be success" %step);
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: %s" %(step, details);
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("ACTUAL RESULT %d: %s" %(step, details));
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: %s" %(step, details);
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("ACTUAL RESULT %d: %s" %(step, details));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-                print "Revert operation is not required";
+                print("Revert operation is not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: %s" %(step, details);
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("ACTUAL RESULT %d: %s" %(step, details));
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "Reporting parameters are not retrieved successfully";
+        print("Reporting parameters are not retrieved successfully");
     obj.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

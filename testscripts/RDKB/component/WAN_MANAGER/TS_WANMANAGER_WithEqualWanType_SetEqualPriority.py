@@ -83,7 +83,7 @@ obj.configureTestCase(ip,port,'TS_WANMANAGER_WithEqualWanType_SetEqualPriority')
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 def MakeWanTypeEqual(tdkTestObj_Get,tdkTestObj_Set):
     paramList =["Device.X_RDK_WanManager.CPEInterface.1.Wan.Type","Device.X_RDK_WanManager.CPEInterface.2.Wan.Type"];
@@ -102,12 +102,12 @@ def MakeWanTypeEqual(tdkTestObj_Get,tdkTestObj_Set):
         else:
             break;
 
-    print "Default WAN Values are :",default;
+    print("Default WAN Values are :",default);
     if expectedresult in actualresult:
         if default [0] != default [1]:
             revertflag =1;
             default[0] = str(default[0]);
-            print "The Wan Type are unequal and changing the type for 2nd interface";
+            print("The Wan Type are unequal and changing the type for 2nd interface");
             tdkTestObj = tdkTestObj_Set;
             tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.Type");
             tdkTestObj.addParameter("ParamValue",(default[0]));
@@ -118,7 +118,7 @@ def MakeWanTypeEqual(tdkTestObj_Get,tdkTestObj_Set):
             actualresult = tdkTestObj.getResult();
             Setresult = tdkTestObj.getResultDetails();
         else:
-            print "The Wan Type are equal and no change is required";
+            print("The Wan Type are equal and no change is required");
 
     return revertflag,default,actualresult;
 
@@ -127,13 +127,13 @@ if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult= "SUCCESS";
     revertWanType = 0;
-    print "TEST STEP 1 :Checking if the WAN Type of WANOE and DSL are equal and making them equal if not";
+    print("TEST STEP 1 :Checking if the WAN Type of WANOE and DSL are equal and making them equal if not");
     tdkTestObj_Set = obj.createTestStep('TDKB_TR181Stub_Set');
     tdkTestObj_Get = obj.createTestStep('TDKB_TR181Stub_Get');
     revertWanType,defWanType,actualresult = MakeWanTypeEqual(tdkTestObj_Get,tdkTestObj_Set);
     if expectedresult in actualresult:
-        print "ACTUAL RESUTL 1 : The  Wan Type of WANOE and DSL are  now equal ";
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESUTL 1 : The  Wan Type of WANOE and DSL are  now equal ");
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         paramList =["Device.X_RDK_WanManager.CPEInterface.1.Wan.Priority","Device.X_RDK_WanManager.CPEInterface.2.Wan.Priority"];
         revertPriority = 0;
@@ -147,16 +147,16 @@ if "SUCCESS" in loadmodulestatus.upper() :
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult:
-               default.append(details);
+                default.append(details);
             else:
                 flag =1;
 
         if flag == 0:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the default priority value for DSL and WANOE";
-            print "EXPECTED RESULT 2 : Get operation is expected to be success";
-            print "ACTUAL RESULT 2: %s" %default;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("TEST STEP 2: Get the default priority value for DSL and WANOE");
+            print("EXPECTED RESULT 2 : Get operation is expected to be success");
+            print("ACTUAL RESULT 2: %s" %default);
+            print("TEST EXECUTION RESULT :SUCCESS");
 
             setValue ="1";
             tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -168,26 +168,26 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult:
                 revertPriority = 1;
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Setting priority as 1 for DSL and WANOE";
-                print "EXPECTED RESULT 3 : The set operation is expected to be success";
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :SUCCESS";
+                print("TEST STEP 3: Setting priority as 1 for DSL and WANOE");
+                print("EXPECTED RESULT 3 : The set operation is expected to be success");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Setting priority as 1 for DSL and WANOE";
-                print "EXPECTED RESULT 3 : The set operation is expected to success";
-                print "ACTUAL RESULT 3: %s" %details;
-                print "TEST EXECUTION RESULT :FAILURE";
+                print("TEST STEP 3: Setting priority as 1 for DSL and WANOE");
+                print("EXPECTED RESULT 3 : The set operation is expected to success");
+                print("ACTUAL RESULT 3: %s" %details);
+                print("TEST EXECUTION RESULT :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the default priority value for DSL and WANOE";
-            print "EXPECTED RESULT 2 : Get operation is expected to be success";
-            print "ACTUAL RESULT 2: %s" %default;
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("TEST STEP 2: Get the default priority value for DSL and WANOE");
+            print("EXPECTED RESULT 2 : Get operation is expected to be success");
+            print("ACTUAL RESULT 2: %s" %default);
+            print("TEST EXECUTION RESULT :FAILURE");
     else:
         tdkTestObj_Set.setResultStatus("FAILURE");
-        print "ACTUAL RESUTL 1 :Failed to make Wan Type of WANOE and DSL equal ";
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESUTL 1 :Failed to make Wan Type of WANOE and DSL equal ");
+        print("TEST EXECUTION RESULT :FAILURE");
 
     if revertWanType == 1:
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
@@ -200,11 +200,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
         result = tdkTestObj.getResult();
         Setresult = tdkTestObj.getResultDetails();
         if expectedresult in result:
-            print "Reverted the Wan Type changed";
+            print("Reverted the Wan Type changed");
             tdkTestObj.setResultStatus("SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "failed to revert the changed Wan Type";
+            print("failed to revert the changed Wan Type");
 
     if revertPriority ==1:
         tdkTestObj = obj.createTestStep("TDKB_TR181Stub_SetMultiple");
@@ -215,18 +215,18 @@ if "SUCCESS" in loadmodulestatus.upper() :
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Reverting the priority  for DSL and WANOE";
-            print "EXPECTED RESULT 4 : The set operation is expected to be success";
-            print "ACTUAL RESULT 4: %s" %details;
-            print "TEST EXECUTION RESULT :SUCCESS";
+            print("TEST STEP 4: Reverting the priority  for DSL and WANOE");
+            print("EXPECTED RESULT 4 : The set operation is expected to be success");
+            print("ACTUAL RESULT 4: %s" %details);
+            print("TEST EXECUTION RESULT :SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Reverting the priority  for DSL and WANOE";
-            print "EXPECTED RESULT 4 : The set operation is expected to be success";
-            print "ACTUAL RESULT 4: %s" %details;
-            print "TEST EXECUTION RESULT :FAILURE";
+            print("TEST STEP 4: Reverting the priority  for DSL and WANOE");
+            print("EXPECTED RESULT 4 : The set operation is expected to be success");
+            print("ACTUAL RESULT 4: %s" %details);
+            print("TEST EXECUTION RESULT :FAILURE");
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");

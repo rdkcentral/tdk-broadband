@@ -94,20 +94,20 @@ if "SUCCESS" in loadmodulestatus.upper() :
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase(expectedresult);
 
-    print "The module to test is: TR069 ";
+    print("The module to test is: TR069 ");
     setup_type = "TDK"
 
     #Invoke the utility function to set and validate the values for all configured tr181 params
     moduleStatus,failedParams = tdkbSetAllParams.setAllParams("TR069", setup_type, obj, obj1);
 
-    print "Status of TR069 validation is ", moduleStatus, "\n";
+    print("Status of TR069 validation is ", moduleStatus, "\n");
     if moduleStatus == "FAILURE":
-        print "The failed params are ", failedParams, "\n";
-	tdkTestObj.setResultStatus("FAILURE");
+        print("The failed params are ", failedParams, "\n");
+        tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

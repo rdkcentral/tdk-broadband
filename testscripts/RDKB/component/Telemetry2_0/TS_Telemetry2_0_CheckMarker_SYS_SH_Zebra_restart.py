@@ -123,140 +123,140 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             details,actualresult = getPID(tdkTestObj_Sys_ExeCmd,"zebra");
             if expectedresult in actualresult and details != "":
-               initialPID = int(details);
-               tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Check if zebra process is running";
-               print "EXPECTED RESULT 3:zebra  process should be running";
-               print "ACTUAL RESULT 3: pid of zebra:",details;
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                initialPID = int(details);
+                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check if zebra process is running");
+                print("EXPECTED RESULT 3:zebra  process should be running");
+                print("ACTUAL RESULT 3: pid of zebra:",details);
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-               actualresult =killProcess(tdkTestObj_Sys_ExeCmd,initialPID,"/usr/ccsp/tad/task_health_monitor.sh");
-               if expectedresult in actualresult :
-                  tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                  print "TEST STEP 4: Kill zebra process and run task_health_monitor.sh script";
-                  print "EXPECTED RESULT 4:Should Kill the zebra  process and run task_health_monitor.sh script";
-                  print "ACTUAL RESULT 4: zebra process killed and run task_health_monitor.sh script successfully";
-                  print "[TEST EXECUTION RESULT] : SUCCESS";
+                actualresult =killProcess(tdkTestObj_Sys_ExeCmd,initialPID,"/usr/ccsp/tad/task_health_monitor.sh");
+                if expectedresult in actualresult :
+                    tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Kill zebra process and run task_health_monitor.sh script");
+                    print("EXPECTED RESULT 4:Should Kill the zebra  process and run task_health_monitor.sh script");
+                    print("ACTUAL RESULT 4: zebra process killed and run task_health_monitor.sh script successfully");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                  sleep(45);
+                    sleep(45);
 
-                  lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
-                  if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
-                     print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
-                     tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                     print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                     print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                     print "ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount";
-                     print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                     query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_SH_Zebra_restart\"" %(initialLinesCount,lineCountAfterSimu)
-                     print "query:%s" %query
-                     tdkTestObj_Sys_ExeCmd.addParameter("command", query);
-                     tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj_Sys_ExeCmd.getResult();
-                     details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
-                     print "Marker Detail Found from log file is: %s "%details;
-
-                     if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_SH_Zebra_restart" in details:
+                    lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+                    if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
+                        print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                        markervalue = details.split("SYS_SH_Zebra_restart value : ")[1]
-                        print "TEST STEP 6:SYS_SH_Zebra_restart  Marker should be present";1
-                        print "EXPECTED RESULT 6: SYS_SH_Zebra_restart Marker should be present";
-                        print "ACTUAL RESULT 6: SYS_SH_Zebra_restart  Marker Value is %s" %markervalue;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                        actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"zebra");
-                        if expectedresult in actualresult and pid != "" and pid != initialPID:
-                           tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                           print "TEST STEP 7: Check if the zebra proccess restarted";
-                           print "EXPECTED RESULT 7:zebra proccess should restart ";
-                           print "ACTUAL RESULT 7: zebra restarted successfully";
-                           print "[TEST EXECUTION RESULT] : SUCCESS";
+                        query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : SYS_SH_Zebra_restart\"" %(initialLinesCount,lineCountAfterSimu)
+                        print("query:%s" %query)
+                        tdkTestObj_Sys_ExeCmd.addParameter("command", query);
+                        tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj_Sys_ExeCmd.getResult();
+                        details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
+                        print("Marker Detail Found from log file is: %s "%details);
+
+                        if expectedresult in actualresult and details!="" and (len(details) > 0) and "SYS_SH_Zebra_restart" in details:
+                            tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                            markervalue = details.split("SYS_SH_Zebra_restart value : ")[1]
+                            print("TEST STEP 6:SYS_SH_Zebra_restart  Marker should be present");1
+                            print("EXPECTED RESULT 6: SYS_SH_Zebra_restart Marker should be present");
+                            print("ACTUAL RESULT 6: SYS_SH_Zebra_restart  Marker Value is %s" %markervalue);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"zebra");
+                            if expectedresult in actualresult and pid != "" and pid != initialPID:
+                                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Check if the zebra proccess restarted");
+                                print("EXPECTED RESULT 7:zebra proccess should restart ");
+                                print("ACTUAL RESULT 7: zebra restarted successfully");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Check if the zebra proccess restarted");
+                                print("EXPECTED RESULT 7:zebra proccess should restart ");
+                                print("ACTUAL RESULT 7: Failed to Restart Zebra Process");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                            print "TEST STEP 7: Check if the zebra proccess restarted";
-                            print "EXPECTED RESULT 7:zebra proccess should restart ";
-                            print "ACTUAL RESULT 7: Failed to Restart Zebra Process";
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-                     else:
-                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                         print "TEST STEP 6:SYS_SH_Zebra_restart  Marker should be present";
-                         print "EXPECTED RESULT 6: SYS_SH_Zebra_restart Marker should be present";
-                         print "ACTUAL RESULT 6: SYS_SH_Zebra_restart  Marker is %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : FAILURE";
-                  else:
-                      tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                      print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                      print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                      print "ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount";
-                      print "[TEST EXECUTION RESULT] : FAILURE";
-               else:
-                   tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                   print "TEST STEP 4: Kill zebra process and run task_health_monitor.sh script";
-                   print "EXPECTED RESULT 4:Should Kill the zebra  process and run task_health_monitor.sh script";
-                   print "ACTUAL RESULT 4: Failed to kill zebra process and run task_health_monitor.sh script";
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("TEST STEP 6:SYS_SH_Zebra_restart  Marker should be present");
+                            print("EXPECTED RESULT 6: SYS_SH_Zebra_restart Marker should be present");
+                            print("ACTUAL RESULT 6: SYS_SH_Zebra_restart  Marker is %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Kill zebra process and run task_health_monitor.sh script");
+                    print("EXPECTED RESULT 4:Should Kill the zebra  process and run task_health_monitor.sh script");
+                    print("ACTUAL RESULT 4: Failed to kill zebra process and run task_health_monitor.sh script");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if zebra process is running";
-                print "EXPECTED RESULT 3:zebra  process should be running";
-                print "ACTUAL RESULT 3: pid of zebra:",details;
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check if zebra process is running");
+                print("EXPECTED RESULT 3:zebra  process should be running");
+                print("ACTUAL RESULT 3: pid of zebra:",details);
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to retrive Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to retrive Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 8: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 8: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 8: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 8: Post Process should be success");
 
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 8 : Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 8 : Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 8: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

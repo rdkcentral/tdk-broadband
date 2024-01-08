@@ -90,9 +90,9 @@ loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =obj2.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     #Set the result status of execution
@@ -113,11 +113,11 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper() and load
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult and details == "true":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             expectedresult = "SUCCESS";
             tdkTestObj = obj2.createTestStep('TADstub_Get');
@@ -126,39 +126,39 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper() and load
 
             if expectedresult in status:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the current status of PPP Link parameters";
-                print "EXPECTED RESULT 3: Should get the status of PPP Link parameters:",paramList;
-                print "ACTUAL RESULT 3: The status is  ",Value;
+                print("TEST STEP 3: Get the current status of PPP Link parameters");
+                print("EXPECTED RESULT 3: Should get the status of PPP Link parameters:",paramList);
+                print("ACTUAL RESULT 3: The status is  ",Value);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 dataType =["string","bool","bool","bool"];
                 setValue = ["PPPoE","true","true","true"];
                 setflag =0;
                 index = 0;
                 for item in paramList:
-                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-                     tdkTestObj.addParameter("ParamName",item)
-                     tdkTestObj.addParameter("ParamValue",setValue[index]);
-                     tdkTestObj.addParameter("Type",dataType[index]);
-                     expectedresult= "SUCCESS";
-                     #Execute testcase on DUT
-                     tdkTestObj.executeTestCase(expectedresult);
-                     actualresult = tdkTestObj.getResult();
-                     Setresult = tdkTestObj.getResultDetails();
-                     index = index+1;
-                     if expectedresult in actualresult:
-                         print "Set operation on %s"%item;
-                     else:
-                         setflag =1;
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+                    tdkTestObj.addParameter("ParamName",item)
+                    tdkTestObj.addParameter("ParamValue",setValue[index]);
+                    tdkTestObj.addParameter("Type",dataType[index]);
+                    expectedresult= "SUCCESS";
+                    #Execute testcase on DUT
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    Setresult = tdkTestObj.getResultDetails();
+                    index = index+1;
+                    if expectedresult in actualresult:
+                        print("Set operation on %s"%item);
+                    else:
+                        setflag =1;
 
                 if setflag == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Enable the  PPP Link parameters";
-                    print "EXPECTED RESULT 4: Should enable PPP Link parameters:",paramList;
-                    print "ACTUAL RESULT 4:  ",Setresult;
+                    print("TEST STEP 4: Enable the  PPP Link parameters");
+                    print("EXPECTED RESULT 4: Should enable PPP Link parameters:",paramList);
+                    print("ACTUAL RESULT 4:  ",Setresult);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj1.createTestStep('ExecuteCmd');
                     cmd = "pidof pppmanager";
@@ -170,23 +170,23 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper() and load
                     if expectedresult in actualresult  and details != "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5: Check if pppoe process is running";
-                        print "EXPECTED RESULT 5:pppoe process should be running";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Check if pppoe process is running");
+                        print("EXPECTED RESULT 5:pppoe process should be running");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5: Check if pppoe process is running";
-                        print "EXPECTED RESULT 5 :pppoe process should be running";
-                        print "ACTUAL RESULT 5: %s" %details;
+                        print("TEST STEP 5: Check if pppoe process is running");
+                        print("EXPECTED RESULT 5 :pppoe process should be running");
+                        print("ACTUAL RESULT 5: %s" %details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                     #Revert the value to previous
                     index = 0;
                     flag =0;
-                    print "TEST STEP 6 :  Performing revert operation for :",paramList;
+                    print("TEST STEP 6 :  Performing revert operation for :",paramList);
                     for item in paramList:
                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
                         tdkTestObj.addParameter("ParamName",item)
@@ -199,55 +199,55 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper() and load
                         Setresult = tdkTestObj.getResultDetails();
                         index = index+1;
                         if expectedresult in actualresult:
-                           print "revert operation on %s"%item;
+                            print("revert operation on %s"%item);
                         else:
                             flag =1;
                     if flag == 0:
-                       #Set the result status of execution
-                       tdkTestObj.setResultStatus("SUCCESS");
-                       print "ACTUAL RESULT 6: Revert operation is successful";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : SUCCESSS";
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("ACTUAL RESULT 6: Revert operation is successful");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESSS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT 6: Revert operation failed";
+                        print("ACTUAL RESULT 6: Revert operation failed");
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Enable the PPP Link parameters";
-                    print "EXPECTED RESULT 4: Should enable PPP Link parameters:",paramList;
-                    print "ACTUAL RESULT 4:  ",Setresult;
+                    print("TEST STEP 4: Enable the PPP Link parameters");
+                    print("EXPECTED RESULT 4: Should enable PPP Link parameters:",paramList);
+                    print("ACTUAL RESULT 4:  ",Setresult);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the current status of PPP Link parameters";
-                print "EXPECTED RESULT 3: Should get the status of PPP Link parameters:",paramList;
-                print "ACTUAL RESULT 3: The status is  ",Value;
+                print("TEST STEP 3: Get the current status of PPP Link parameters");
+                print("EXPECTED RESULT 3: Should get the status of PPP Link parameters:",paramList);
+                print("ACTUAL RESULT 3: The status is  ",Value);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         objReturned.setResultStatus("FAILURE");
-        print "TEST STEP 1 :Check if DSL interface is active";
-        print "EXPECTED RESULT 1: DSL interface is expected to be active";
-        print "ACTUAL RESULT 1: DSL interface is inactive";
+        print("TEST STEP 1 :Check if DSL interface is active");
+        print("EXPECTED RESULT 1: DSL interface is expected to be active");
+        print("ACTUAL RESULT 1: DSL interface is inactive");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
     obj2.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");

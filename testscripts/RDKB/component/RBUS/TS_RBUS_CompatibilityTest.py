@@ -71,9 +71,9 @@
 4. Execute the Table consumer Test App with 180 as an argument ( 180 - number of seconds Test consumer app will run)
 5. Above two apps will set up a following data model parameters with its pre-configured values which can be accessed through dmcli for next 180 seconds.
     - TR181 parameter name is Device.Tables1.T1.1.T2.1.Data  and its default value is "The color red"
-	- TR181 parameter name is Device.Tables1.T1.1.T2.[green].Data and its default value is "The color green"
-	- TR181 parameter name is Device.Tables1.T1.2.T2.1.Data and its default value is "The shape circle"
-	- TR181 parameter name is Device.Tables1.T1.2.T2.[square].Data and its default value is "The shape square"
+        - TR181 parameter name is Device.Tables1.T1.1.T2.[green].Data and its default value is "The color green"
+        - TR181 parameter name is Device.Tables1.T1.2.T2.1.Data and its default value is "The shape circle"
+        - TR181 parameter name is Device.Tables1.T1.2.T2.[square].Data and its default value is "The shape square"
 6. Get the above TR181 values and all get operation should be success
 7. Validate the values against the provided default values and both values should be matching
 8. Execute the post process of RBUS and it should be success
@@ -126,10 +126,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if rbus_set == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-        print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+        print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
         #Execute the Table Provider Test App for 200 seconds and Table Consumer App for 180 seconds
         tdkTestObj_Sys_ExeCmd = sysobj.createTestStep('ExecuteCmdReboot');
@@ -140,79 +140,79 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         if expectedresult in actualresult:
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Execute the Table Provider Test App for 200 seconds and Table Consumer Test App for 180 seconds"
-            print "EXPECTED RESULT 2: Table Provider Test App and Table Consumer Test App should be running"
-            print "ACTUAL RESULT 2: Table Provider and Table Consumer Test App Running successfully"
-            print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            print("TEST STEP 2: Execute the Table Provider Test App for 200 seconds and Table Consumer Test App for 180 seconds")
+            print("EXPECTED RESULT 2: Table Provider Test App and Table Consumer Test App should be running")
+            print("ACTUAL RESULT 2: Table Provider and Table Consumer Test App Running successfully")
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
             sleep(10);
 
             t1_data1,t1_value1 = getTR181Value(tdkTestObj_Tr181_Get,"Device.Tables1.T1.1.T2.1.Data");
-            print "Tables1.T1.1.T2.1.Data Result is %s and Value is %s" %(t1_data1,t1_value1)
+            print("Tables1.T1.1.T2.1.Data Result is %s and Value is %s" %(t1_data1,t1_value1))
 
             t1_data2,t1_value2 = getTR181Value(tdkTestObj_Tr181_Get,"Device.Tables1.T1.1.T2.[green].Data");
-            print "Tables1.T1.1.T2.[green].Data Result is %s and Value is %s" %(t1_data2,t1_value2)
+            print("Tables1.T1.1.T2.[green].Data Result is %s and Value is %s" %(t1_data2,t1_value2))
 
             t2_data1,t2_value1 = getTR181Value(tdkTestObj_Tr181_Get,"Device.Tables1.T1.2.T2.1.Data");
-            print "Tables1.T1.2.T2.1.Data Result is %s and Value is %s" %(t2_data1,t2_value1)
+            print("Tables1.T1.2.T2.1.Data Result is %s and Value is %s" %(t2_data1,t2_value1))
 
             t2_data2,t2_value2 = getTR181Value(tdkTestObj_Tr181_Get,"Device.Tables1.T1.2.T2.[square].Data");
-            print "Tables1.T1.2.T2.[square].Data Result is %s and Value is %s" %(t2_data2,t2_value2)
+            print("Tables1.T1.2.T2.[square].Data Result is %s and Value is %s" %(t2_data2,t2_value2))
 
-            if expectedresult in (t1_data1 and 	t1_data2 and t2_data1 and t2_data2):
+            if expectedresult in (t1_data1 and  t1_data2 and t2_data1 and t2_data2):
                 tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Get the TR181 values from the Table"
-                print "EXPECTED RESULT 3: Should get the TR181 values"
-                print "ACTUAL RESULT 3: Get operation on RBUS compatibility Test was successful"
-                print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                print("TEST STEP 3: Get the TR181 values from the Table")
+                print("EXPECTED RESULT 3: Should get the TR181 values")
+                print("ACTUAL RESULT 3: Get operation on RBUS compatibility Test was successful")
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
 
                 if t1_value1 == "The color red" and t1_value2 == "The color green" and t2_value1 == "The shape circle" and t2_value2 == "The shape square":
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Validate the Values from Table"
-                    print "EXPECTED RESULT 4: Values retrieved from table should be matching with the value given"
-                    print "ACTUAL RESULT 4: Values retrieved from tables are Proper"
-                    print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                    print("TEST STEP 4: Validate the Values from Table")
+                    print("EXPECTED RESULT 4: Values retrieved from table should be matching with the value given")
+                    print("ACTUAL RESULT 4: Values retrieved from tables are Proper")
+                    print("[TEST EXECUTION RESULT] 4: SUCCESS");
                 else:
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Validate the Values from Table"
-                    print "EXPECTED RESULT 4: Values retrieved from table should be matching with the value given"
-                    print "ACTUAL RESULT 4: Values retrieved from tables are NOT Proper"
-                    print "[TEST EXECUTION RESULT] 4: FAILURE";
+                    print("TEST STEP 4: Validate the Values from Table")
+                    print("EXPECTED RESULT 4: Values retrieved from table should be matching with the value given")
+                    print("ACTUAL RESULT 4: Values retrieved from tables are NOT Proper")
+                    print("[TEST EXECUTION RESULT] 4: FAILURE");
             else:
                 tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-                print "TEST STEP 3: Get the TR181 values from the Table"
-                print "EXPECTED RESULT 3: Should get the TR181 values"
-                print "ACTUAL RESULT 3: Get operation on RBUS compatibility Test was Failed"
-                print "[TEST EXECUTION RESULT] 3: FAILURE";
+                print("TEST STEP 3: Get the TR181 values from the Table")
+                print("EXPECTED RESULT 3: Should get the TR181 values")
+                print("ACTUAL RESULT 3: Get operation on RBUS compatibility Test was Failed")
+                print("[TEST EXECUTION RESULT] 3: FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Execute the Table Provider Test App for 200 seconds and Table Consumer Test App for 180 seconds"
-            print "EXPECTED RESULT 2: Table Provider Test App and Table Consumer Test App should be running"
-            print "ACTUAL RESULT 2: Failed to RUN Table Provider and Table Consumer Test App"
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Execute the Table Provider Test App for 200 seconds and Table Consumer Test App for 180 seconds")
+            print("EXPECTED RESULT 2: Table Provider Test App and Table Consumer Test App should be running")
+            print("ACTUAL RESULT 2: Failed to RUN Table Provider and Table Consumer Test App")
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 1: Execute the Pre Requisite for RBUS"
-        print "EXPECTED RESULT 1: Pre Requisite of RBUS should be success"
-        print "ACTUAL RESULT 1: PreRequisite of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 1: FAILURE";
+        print("TEST STEP 1: Execute the Pre Requisite for RBUS")
+        print("EXPECTED RESULT 1: Pre Requisite of RBUS should be success")
+        print("ACTUAL RESULT 1: PreRequisite of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 1: FAILURE");
 
     post_process_value = rbus_PostProcess(sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set,tdkTestObj_Sys_ExeCmd,revert_flag);
     if post_process_value == 1:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 5: Execute the Post process of RBUS"
-        print "EXPECTED RESULT 5: Post process of RBUS should be success"
-        print "ACTUAL RESULT 5: Post process of RBUS was Success"
-        print "[TEST EXECUTION RESULT] 5: SUCCESS";
+        print("TEST STEP 5: Execute the Post process of RBUS")
+        print("EXPECTED RESULT 5: Post process of RBUS should be success")
+        print("ACTUAL RESULT 5: Post process of RBUS was Success")
+        print("[TEST EXECUTION RESULT] 5: SUCCESS");
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-        print "TEST STEP 5: Execute the Post process for RBUS"
-        print "EXPECTED RESULT 5: Post process of RBUS should be success"
-        print "ACTUAL RESULT 5: Post process of RBUS was FAILED"
-        print "[TEST EXECUTION RESULT] 5: FAILURE";
+        print("TEST STEP 5: Execute the Post process for RBUS")
+        print("EXPECTED RESULT 5: Post process of RBUS should be success")
+        print("ACTUAL RESULT 5: Post process of RBUS was FAILED")
+        print("[TEST EXECUTION RESULT] 5: FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

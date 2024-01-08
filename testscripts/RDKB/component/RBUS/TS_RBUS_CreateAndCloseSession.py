@@ -98,7 +98,7 @@ obj.configureTestCase(ip,port,'TS_RBUS_CreateAndCloseSession');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -108,16 +108,16 @@ if "SUCCESS" in loadmodulestatus.upper() :
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS Open Detail is ",details
+    print("RBUS Open Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was success";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_Session');
         tdkTestObj.addParameter("operation","CreateSession");
@@ -129,11 +129,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Create session using rbus_createSession";
-            print "EXPECTED RESULT 2: Session should be created ";
-            print "ACTUAL RESULT 2: Session was created successfully, SessionID: ",session_ID
+            print("TEST STEP 2: Create session using rbus_createSession");
+            print("EXPECTED RESULT 2: Session should be created ");
+            print("ACTUAL RESULT 2: Session was created successfully, SessionID: ",session_ID)
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
             tdkTestObj = obj.createTestStep('RBUS_CloseSession');
             tdkTestObj.addParameter("sessionid",int(session_ID));
@@ -145,63 +145,63 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Close the session using rbus_closeSession";
-                print "EXPECTED RESULT : Session should be Closed ";
-                print "ACTUAL RESULT 3: Session was Closed successfully";
+                print("TEST STEP 3: Close the session using rbus_closeSession");
+                print("EXPECTED RESULT : Session should be Closed ");
+                print("ACTUAL RESULT 3: Session was Closed successfully");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Close the session using rbus_closeSession";
-                print "EXPECTED RESULT 3: Session should be Closed ";
-                print "ACTUAL RESULT 3: Closing the session was failed";
+                print("TEST STEP 3: Close the session using rbus_closeSession");
+                print("EXPECTED RESULT 3: Session should be Closed ");
+                print("ACTUAL RESULT 3: Closing the session was failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Create session using rbus_createSession";
-            print "EXPECTED RESULT 2: Session should be created ";
-            print "ACTUAL RESULT 2: Creation of sessionID failed ";
+            print("TEST STEP 2: Create session using rbus_createSession");
+            print("EXPECTED RESULT 2: Session should be created ");
+            print("ACTUAL RESULT 2: Creation of sessionID failed ");
             #Get the result of execution
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_Close');
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS close Detail is ",details
+        print("RBUS close Detail is ",details)
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 4: Close the RBUS connection";
-            print "EXPECTED RESULT 4: rbus_close should be success";
-            print "ACTUAL RESULT 4: rbus_close was success";
+            print("TEST STEP 4: Close the RBUS connection");
+            print("EXPECTED RESULT 4: rbus_close should be success");
+            print("ACTUAL RESULT 4: rbus_close was success");
              #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 4: Close the RBUS connection";
-            print "EXPECTED RESULT 4: rbus_close should be success";
-            print "ACTUAL RESULT 4: rbus_close was Failed";
+            print("TEST STEP 4: Close the RBUS connection");
+            print("EXPECTED RESULT 4: rbus_close should be success");
+            print("ACTUAL RESULT 4: rbus_close was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was Failed";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("rbus");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

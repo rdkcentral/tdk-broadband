@@ -96,8 +96,8 @@ tr181obj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_AddAndDe
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=tr181obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -116,15 +116,15 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         paramName = "Device.Diagnostics.X_RDK_DNSInternet.TestURLNumberOfEntries";
         tdkTestObj, actualresult, initialEntries = getDNSParameterValue(obj, expectedresult, paramName);
 
-        print "\nTEST STEP %d: Get the initial number of Test URLs configured using %s" %(step, paramName);
-        print "EXPECTED RESULT %d: Should get the initial number of Test URLs configured using %s" %(step, paramName);
+        print("\nTEST STEP %d: Get the initial number of Test URLs configured using %s" %(step, paramName));
+        print("EXPECTED RESULT %d: Should get the initial number of Test URLs configured using %s" %(step, paramName));
 
         if expectedresult in actualresult and initialEntries.isdigit():
             initialEntries = int(initialEntries);
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Initial number of Test URLs configured retrieved : %d" %(step, initialEntries);
-            print "TEST EXECUTION RESULT : SUCCESS";
+            print("ACTUAL RESULT %d: Initial number of Test URLs configured retrieved : %d" %(step, initialEntries));
+            print("TEST EXECUTION RESULT : SUCCESS");
 
             #Add 2 new Table instances and populate a Test URLs
             step = step + 1;
@@ -135,34 +135,34 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
             if setTestURL == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "Test URL table configured successfully";
+                print("Test URL table configured successfully");
 
                 #Retrieve the current number of Test URL table entries
                 paramName = "Device.Diagnostics.X_RDK_DNSInternet.TestURLNumberOfEntries";
                 tdkTestObj, actualresult, currentEntries = getDNSParameterValue(obj, expectedresult, paramName);
 
-                print "\nTEST STEP %d: Get the current number of Test URLs configured using %s" %(step, paramName);
-                print "EXPECTED RESULT %d: Should get the current number of Test URLs configured using %s" %(step, paramName);
+                print("\nTEST STEP %d: Get the current number of Test URLs configured using %s" %(step, paramName));
+                print("EXPECTED RESULT %d: Should get the current number of Test URLs configured using %s" %(step, paramName));
 
                 if expectedresult in actualresult and currentEntries.isdigit():
                     currentEntries = int(currentEntries);
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d: Current number of Test URLs configured retrieved : %d" %(step, currentEntries);
-                    print "TEST EXECUTION RESULT : SUCCESS";
+                    print("ACTUAL RESULT %d: Current number of Test URLs configured retrieved : %d" %(step, currentEntries));
+                    print("TEST EXECUTION RESULT : SUCCESS");
 
                     #Check if the number of Test URL table entries is incremeneted by 2
                     step = step + 1;
-                    print "\nTEST STEP %d: Check if the current number of Test URLs configured is incremeneted by 2" %(step);
-                    print "EXPECTED RESULT %d: Should get the current number of Test URLs configured incremented by 2" %(step);
-                    print "Initial Number of Entries : %d" %initialEntries;
-                    print "Current Number of Entries : %d" %currentEntries;
+                    print("\nTEST STEP %d: Check if the current number of Test URLs configured is incremeneted by 2" %(step));
+                    print("EXPECTED RESULT %d: Should get the current number of Test URLs configured incremented by 2" %(step));
+                    print("Initial Number of Entries : %d" %initialEntries);
+                    print("Current Number of Entries : %d" %currentEntries);
 
                     if currentEntries == initialEntries + 2:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d: Current number of Test URLs is incremented by 2" %(step);
-                        print "TEST EXECUTION RESULT : SUCCESS";
+                        print("ACTUAL RESULT %d: Current number of Test URLs is incremented by 2" %(step));
+                        print("TEST EXECUTION RESULT : SUCCESS");
 
                         #Delete the new Test URLs configured
                         step = step + 1;
@@ -171,68 +171,68 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                         if deleteStatus == 0:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "Test URL table configured is deleted successfully";
+                            print("Test URL table configured is deleted successfully");
 
                             #Get the final Test URL number of entries after deleting 2 Test URL table instances
                             step = step + 2;
                             paramName = "Device.Diagnostics.X_RDK_DNSInternet.TestURLNumberOfEntries";
                             tdkTestObj, actualresult, finalEntries = getDNSParameterValue(obj, expectedresult, paramName);
 
-                            print "\nTEST STEP %d: Get the final number of Test URLs configured using %s" %(step, paramName);
-                            print "EXPECTED RESULT %d: Should get the final number of Test URLs configured using %s" %(step, paramName);
+                            print("\nTEST STEP %d: Get the final number of Test URLs configured using %s" %(step, paramName));
+                            print("EXPECTED RESULT %d: Should get the final number of Test URLs configured using %s" %(step, paramName));
 
                             if expectedresult in actualresult and finalEntries.isdigit():
                                 finalEntries = int(finalEntries);
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d: Final number of Test URLs configured retrieved : %d" %(step, finalEntries);
-                                print "TEST EXECUTION RESULT : SUCCESS";
+                                print("ACTUAL RESULT %d: Final number of Test URLs configured retrieved : %d" %(step, finalEntries));
+                                print("TEST EXECUTION RESULT : SUCCESS");
 
                                 #Check if the number of Test URL table entries is same as initial number
                                 step = step + 1;
-                                print "\nTEST STEP %d: Check if the final number of Test URLs configured is same as initial number of entries %d" %(step, initialEntries);
-                                print "EXPECTED RESULT %d: Should get the final number of Test URLs configured as same as initial number of entries %d" %(step, initialEntries);
-                                print "Initial Number of Entries : %d" %initialEntries;
-                                print "Final Number of Entries : %d" %finalEntries;
+                                print("\nTEST STEP %d: Check if the final number of Test URLs configured is same as initial number of entries %d" %(step, initialEntries));
+                                print("EXPECTED RESULT %d: Should get the final number of Test URLs configured as same as initial number of entries %d" %(step, initialEntries));
+                                print("Initial Number of Entries : %d" %initialEntries);
+                                print("Final Number of Entries : %d" %finalEntries);
 
                                 if finalEntries == initialEntries:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d: Final number of Test URLs is same as initial number of Test URL entries" %(step);
-                                    print "TEST EXECUTION RESULT : SUCCESS";
+                                    print("ACTUAL RESULT %d: Final number of Test URLs is same as initial number of Test URL entries" %(step));
+                                    print("TEST EXECUTION RESULT : SUCCESS");
                                 else:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d: Final number of Test URLs is NOT same as initial number of Test URL entries" %(step);
-                                    print "TEST EXECUTION RESULT : FAILURE";
+                                    print("ACTUAL RESULT %d: Final number of Test URLs is NOT same as initial number of Test URL entries" %(step));
+                                    print("TEST EXECUTION RESULT : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d: Final number of Test URLs configured retrieved : %d" %(step, finalEntries);
-                                print "TEST EXECUTION RESULT : FAILURE";
+                                print("ACTUAL RESULT %d: Final number of Test URLs configured retrieved : %d" %(step, finalEntries));
+                                print("TEST EXECUTION RESULT : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "Test URL table configured is NOT deleted successfully";
+                            print("Test URL table configured is NOT deleted successfully");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d: Current number of Test URLs is NOT incremented by 2" %(step);
-                        print "TEST EXECUTION RESULT : FAILURE";
+                        print("ACTUAL RESULT %d: Current number of Test URLs is NOT incremented by 2" %(step));
+                        print("TEST EXECUTION RESULT : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d: Current number of Test URLs configured retrieved : %d" %(step, currentEntries);
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d: Current number of Test URLs configured retrieved : %d" %(step, currentEntries));
+                    print("TEST EXECUTION RESULT : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Test URL table is NOT configured successfully";
+                print("Test URL table is NOT configured successfully");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Initial number of Test URLs configured retrieved : %d" %(step, initialEntries);
-            print "TEST EXECUTION RESULT : FAILURE";
+            print("ACTUAL RESULT %d: Initial number of Test URLs configured retrieved : %d" %(step, initialEntries));
+            print("TEST EXECUTION RESULT : FAILURE");
 
         #Revert operation
         setEnable = "false";
@@ -240,16 +240,16 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
     tr181obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

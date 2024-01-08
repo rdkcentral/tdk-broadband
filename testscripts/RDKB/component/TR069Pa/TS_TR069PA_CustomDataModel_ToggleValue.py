@@ -50,8 +50,8 @@
 TDKB_TR181Stub_Set</api_or_interface_used>
     <input_parameters>Device.DeviceInfo.CustomDataModelEnabled  </input_parameters>
     <automation_approch>1.Load the module
-2.Get the current value of Device.DeviceInfo.CustomDataModelEnabled  
-3.Toggle the value and check for successful set 
+2.Get the current value of Device.DeviceInfo.CustomDataModelEnabled
+3.Toggle the value and check for successful set
 4.Revert the Device.DeviceInfo.CustomDataModelEnabled status to previous
 5.Unload the module</automation_approch>
     <expected_output>The set operation on Device.DeviceInfo.CustomDataModelEnabled is expected to be successfull</expected_output>
@@ -79,7 +79,7 @@ obj.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_ToggleValue');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper() :
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -95,18 +95,18 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if default =="false":
             setValue = "true";
         else:
             setValue = "false";
 
-        print "The value to toggle for Custom Data Model Enabled is %s" %setValue;
+        print("The value to toggle for Custom Data Model Enabled is %s" %setValue);
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
         tdkTestObj.addParameter("ParamValue",setValue);
@@ -118,12 +118,12 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            #waiting for set to reflect 
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            #waiting for set to reflect
             sleep(60);
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
@@ -136,20 +136,20 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult and details == setValue:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check for successful set with a get operation";
-                print "EXPECTED RESULT 3: Paramter value should change after successful set";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Check for successful set with a get operation");
+                print("EXPECTED RESULT 3: Paramter value should change after successful set");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check for successful set with a get operation";
-                print "EXPECTED RESULT 3: Paramter value should change after successful set";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Check for successful set with a get operation");
+                print("EXPECTED RESULT 3: Paramter value should change after successful set");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-            
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
             #revert the value to previous
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
@@ -162,36 +162,36 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 4: %s" %details;
+                print("TEST STEP 4: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 4: %s" %details;
+                print("TEST STEP 4: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

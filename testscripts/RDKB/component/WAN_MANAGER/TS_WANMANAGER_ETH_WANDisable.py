@@ -83,8 +83,8 @@ obj1.configureTestCase(ip,port,'TS_WANMANAGER_ETH_WANDisable');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     #Set the result status of execution
@@ -101,32 +101,32 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     default = tdkTestObj.getResultDetails().strip().replace("\\n", "");
     if expectedresult in actualresult and default == "true":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1 : Check if WAN is enabled by default";
-        print "EXPECTED RESULT 1: WAN should be enabled by default";
-        print "ACTUAL RESULT 1:  WAN enable status is :",default;
+        print("TEST STEP 1 : Check if WAN is enabled by default");
+        print("EXPECTED RESULT 1: WAN should be enabled by default");
+        print("ACTUAL RESULT 1:  WAN enable status is :",default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #save device's current state before it goes for reboot
         obj1.saveCurrentState();
         tdkTestObj1 = obj1.createTestStep('ExecuteCmdReboot');
         query="sleep 2 && dmcli eRT setv Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled bool false";
-        print "query:%s" %query;
+        print("query:%s" %query);
         tdkTestObj1.addParameter("command", query);
         #Execute the test case in DUT
         tdkTestObj1.executeTestCase(expectedresult);
         sleep(300);
-        print "Set operation completed";
+        print("Set operation completed");
         #Restore previous state after reboot
         obj1.restorePreviousStateAfterReboot();
         sleep(60);
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 : Disable the WAN parameter";
-            print "EXPECTED RESULT 2:Should disable the WAN parameter";
-            print "ACTUAL RESULT 2: Disable operation successful";
+            print("TEST STEP 2 : Disable the WAN parameter");
+            print("EXPECTED RESULT 2:Should disable the WAN parameter");
+            print("ACTUAL RESULT 2: Disable operation successful");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             #revert the value
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled")
@@ -139,36 +139,36 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             Setresult = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2 : Revert  the WAN parameter to previous";
-                print "EXPECTED RESULT 2:Should revert the WAN parameter to previous";
-                print "ACTUAL RESULT  2 : Revert operation successful";
+                print("TEST STEP 2 : Revert  the WAN parameter to previous");
+                print("EXPECTED RESULT 2:Should revert the WAN parameter to previous");
+                print("ACTUAL RESULT  2 : Revert operation successful");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2 : Revert  the WAN parameter to previous";
-                print "EXPECTED RESULT 2:Should revert the WAN parameter to previous";
-                print "ACTUAL RESULT  2 : Revert operation failed";
+                print("TEST STEP 2 : Revert  the WAN parameter to previous");
+                print("EXPECTED RESULT 2:Should revert the WAN parameter to previous");
+                print("ACTUAL RESULT  2 : Revert operation failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 : Disable the WAN parameter";
-            print "EXPECTED RESULT 2:Should disable the WAN parameter";
-            print "ACTUAL RESULT 2: Disable operation failed";
+            print("TEST STEP 2 : Disable the WAN parameter");
+            print("EXPECTED RESULT 2:Should disable the WAN parameter");
+            print("ACTUAL RESULT 2: Disable operation failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1 : Check if WAN is enabled by default";
-        print "EXPECTED RESULT 1: WAN should be enabled by default";
-        print "ACTUAL RESULT 1:  WAN enable status is :",default;
+        print("TEST STEP 1 : Check if WAN is enabled by default");
+        print("EXPECTED RESULT 1: WAN should be enabled by default");
+        print("ACTUAL RESULT 1:  WAN enable status is :",default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

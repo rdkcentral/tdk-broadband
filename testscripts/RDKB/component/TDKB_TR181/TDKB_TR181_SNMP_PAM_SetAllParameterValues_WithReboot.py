@@ -66,12 +66,12 @@ PAM module's parameter xml should be available</pre_requisite>
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import tdkbSetAllParams
 from tdkbVariables import *;
 import os;
-import ConfigParser;
+import configparser;
 
 #Test component to be tested
 obj= tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -96,7 +96,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
 
-    print "The module to test is: PAM";
+    print("The module to test is: PAM");
 
     setup_type = "SNMP"
     module = "PAM"
@@ -104,15 +104,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     #Invoke the utility function to set and validate the values for all configured tr181 params
     moduleStatus,failedParams= tdkbSetAllParams.setAllParams(module, setup_type, obj, obj1,"true");
 
-    print "Status of PAM module test is : ",moduleStatus, "\n";
+    print("Status of PAM module test is : ",moduleStatus, "\n");
     if moduleStatus == "FAILURE":
-           print "The failed params are ", failedParams, "\n";
-           tdkTestObj.setResultStatus("FAILURE");
+        print("The failed params are ", failedParams, "\n");
+        tdkTestObj.setResultStatus("FAILURE");
 
     obj1.unloadModule("sysutil");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

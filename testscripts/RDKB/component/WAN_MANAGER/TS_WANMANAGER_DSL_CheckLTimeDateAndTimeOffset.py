@@ -106,20 +106,20 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loa
         details = tdkTestObj.getResultDetails();
         if expectedresult in actualresult and details == "true":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "******performing a pre-requisite where in WANOE inteface is expected to be disabled ***";
+            print("******performing a pre-requisite where in WANOE inteface is expected to be disabled ***");
             tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
             tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.Enable");
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult and details == "true":
-                print "WANOE is enabled and disabling it ";
+                print("WANOE is enabled and disabling it ");
                 tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
                 result,tdkTestObj = EnableDisableInterafce(2,"false",tdkTestObj);
                 revertWANOE = 1;
@@ -139,11 +139,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loa
                 date= date.split(",")[3];
                 if "" != (LTime and date)  and LTime !=  date:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3 :Get the LTime and date ";
-                    print "EXPECTED RESULT 3: Should get the LTime and date unequal";
-                    print "ACTUAL RESULT 3 :Ltime :%s and date : %s" %(LTime,date);
+                    print("TEST STEP 3 :Get the LTime and date ");
+                    print("EXPECTED RESULT 3: Should get the LTime and date unequal");
+                    print("ACTUAL RESULT 3 :Ltime :%s and date : %s" %(LTime,date));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
                     tdkTestObj.addParameter("ParamName","Device.Time.TimeOffset");
@@ -153,62 +153,62 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper() and loa
                     details = tdkTestObj.getResultDetails().replace("\\n","");
                     if expectedresult in actualresult and details!= "":
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 4:Get the Time offset";
-                        print "EXPECTED RESULT 4: Should get the Time offset non empty";
-                        print "ACTUAL RESULT 4: Timeoffset is :%s"%details;
+                        print("TEST STEP 4:Get the Time offset");
+                        print("EXPECTED RESULT 4: Should get the Time offset non empty");
+                        print("ACTUAL RESULT 4: Timeoffset is :%s"%details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 4:Get the Time offset";
-                        print "EXPECTED RESULT 4: Should get the Time offset non empty";
-                        print "ACTUAL RESULT 4: Timeoffset is :%s"%details;
+                        print("TEST STEP 4:Get the Time offset");
+                        print("EXPECTED RESULT 4: Should get the Time offset non empty");
+                        print("ACTUAL RESULT 4: Timeoffset is :%s"%details);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3 :Get the LTime and date ";
-                    print "EXPECTED RESULT 3: Should get the LTime and date unequal";
-                    print "ACTUAL RESULT 3 :Ltime :%s and date : %s" %(LTime,date);
+                    print("TEST STEP 3 :Get the LTime and date ");
+                    print("EXPECTED RESULT 3: Should get the LTime and date unequal");
+                    print("ACTUAL RESULT 3 :Ltime :%s and date : %s" %(LTime,date));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] :FAILURE";
+                    print("[TEST EXECUTION RESULT] :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Get the LTime and date ";
-                print "EXPECTED RESULT 3: Should get the LTime and date";
-                print "ACTUAL RESULT 3 : Get operation failed";
+                print("TEST STEP 3 :Get the LTime and date ");
+                print("EXPECTED RESULT 3: Should get the LTime and date");
+                print("ACTUAL RESULT 3 : Get operation failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] :FAILURE";
+                print("[TEST EXECUTION RESULT] :FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Check if DSL is enabled";
-            print "EXPECTED RESULT 2: Should get the status of DSL";
-            print "ACTUAL RESULT 2: The value received is :",details;
+            print("TEST STEP 2 :Check if DSL is enabled");
+            print("EXPECTED RESULT 2: Should get the status of DSL");
+            print("ACTUAL RESULT 2: The value received is :",details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        print "TEST STEP 1 :Check if DSL interface is active";
-        print "EXPECTED RESULT 1: DSL interface is expected to be active";
-        print "ACTUAL RESULT 1: DSL interface is inactive";
+        print("TEST STEP 1 :Check if DSL interface is active");
+        print("EXPECTED RESULT 1: DSL interface is expected to be active");
+        print("ACTUAL RESULT 1: DSL interface is inactive");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     #Revert operations
     if  revertWANOE == 1:
-         tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
-         result,tdkTestObj = EnableDisableInterafce(2,"true",tdkTestObj);
-         if expectedresult in result:
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "WANOE revert operation successfull";
-         else:
-             tdkTestObj.setResultStatus("FAILURE");
-             print "Enabling the WNOE interafce failed at revert step";
+        tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Set');
+        result,tdkTestObj = EnableDisableInterafce(2,"true",tdkTestObj);
+        if expectedresult in result:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("WANOE revert operation successfull");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("Enabling the WNOE interafce failed at revert step");
 
     sysObj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
     tadobj.unloadModule("tad");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     tadobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

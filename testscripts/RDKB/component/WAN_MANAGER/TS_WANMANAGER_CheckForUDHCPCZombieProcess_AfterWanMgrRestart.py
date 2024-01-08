@@ -93,160 +93,160 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Check the status of RDKWanManagerand service
     step = 1;
-    print "\nTEST STEP %d: Check if RdkWanManager.service is in active state" %step;
-    print "EXPECTED RESULT %d: RdkWanManager.service should be in active state" %step;
+    print("\nTEST STEP %d: Check if RdkWanManager.service is in active state" %step);
+    print("EXPECTED RESULT %d: RdkWanManager.service should be in active state" %step);
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     query="systemctl status RdkWanManager.service | grep -i running";
-    print "query:%s" %query
+    print("query:%s" %query)
     actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
     if expectedresult in actualresult and "running" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d : RdkWanManager.service is running in the device : %s" %(step, details);
+        print("ACTUAL RESULT %d : RdkWanManager.service is running in the device : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Stop RdkWanManager.service
         step = step + 1;
-        print "\nTEST STEP %d: Stop RdkWanManager.service" %step;
-        print "EXPECTED RESULT %d: Stop RdkWanManager.service" %step;
+        print("\nTEST STEP %d: Stop RdkWanManager.service" %step);
+        print("EXPECTED RESULT %d: Stop RdkWanManager.service" %step);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         query="systemctl stop RdkWanManager.service";
-        print "query:%s" %query
+        print("query:%s" %query)
         actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
         if expectedresult in actualresult and details == "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d : RdkWanManager.service is stopped" %(step);
+            print("ACTUAL RESULT %d : RdkWanManager.service is stopped" %(step));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check if RdkWanManager.service is in dead state
             step = step + 1;
-            print "\nTEST STEP %d: Check if RdkWanManager.service is in dead state after stopping the service" %step;
-            print "EXPECTED RESULT %d: RdkWanManager.service should be in dead state after stopping the service" %step;
+            print("\nTEST STEP %d: Check if RdkWanManager.service is in dead state after stopping the service" %step);
+            print("EXPECTED RESULT %d: RdkWanManager.service should be in dead state after stopping the service" %step);
             tdkTestObj = obj.createTestStep('ExecuteCmd');
             query="systemctl status RdkWanManager.service | grep -i dead";
-            print "query:%s" %query
+            print("query:%s" %query)
             actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
             if expectedresult in actualresult and "dead" in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : RdkWanManager.service is in dead state: %s" %(step, details);
+                print("ACTUAL RESULT %d : RdkWanManager.service is in dead state: %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check if UDHCPC zombie process is present in DUT
                 step = step + 1;
-                print "\nTEST STEP %d: Check if UDHCPC is in zombie state when RdkWanManager.service is stopped" %step;
-                print "EXPECTED RESULT %d: UDHCPC should not be in zombie state when RdkWanManager.service is stopped" %step;
+                print("\nTEST STEP %d: Check if UDHCPC is in zombie state when RdkWanManager.service is stopped" %step);
+                print("EXPECTED RESULT %d: UDHCPC should not be in zombie state when RdkWanManager.service is stopped" %step);
                 tdkTestObj = obj.createTestStep('ExecuteCmd');
                 query="ps | grep \"\\[udhcpc\\]\"";
-                print "query:%s" %query
+                print("query:%s" %query)
                 actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
                 if expectedresult in actualresult and details == "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : UDHCPC not found in zombie state when RdkWanManager.service is stopped" %(step);
+                    print("ACTUAL RESULT %d : UDHCPC not found in zombie state when RdkWanManager.service is stopped" %(step));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Restart RdkWanManager.service
                     step = step + 1;
-                    print "\nTEST STEP %d: Restart RdkWanManager.service" %step;
-                    print "EXPECTED RESULT %d: Restart RdkWanManager.service" %step;
+                    print("\nTEST STEP %d: Restart RdkWanManager.service" %step);
+                    print("EXPECTED RESULT %d: Restart RdkWanManager.service" %step);
                     tdkTestObj = obj.createTestStep('ExecuteCmd');
                     query="systemctl start RdkWanManager.service";
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
                     if expectedresult in actualresult and details == "":
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : RdkWanManager.service is restarted" %(step);
+                        print("ACTUAL RESULT %d : RdkWanManager.service is restarted" %(step));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Check if RdkWanManager.service is in running state
                         step = step + 1;
-                        print "\nTEST STEP %d: Check if RdkWanManager.service is in running state after restarting the service" %step;
-                        print "EXPECTED RESULT %d: RdkWanManager.service should be in running state after restarting the service" %step;
+                        print("\nTEST STEP %d: Check if RdkWanManager.service is in running state after restarting the service" %step);
+                        print("EXPECTED RESULT %d: RdkWanManager.service should be in running state after restarting the service" %step);
                         tdkTestObj = obj.createTestStep('ExecuteCmd');
                         query="systemctl status RdkWanManager.service | grep -i running";
-                        print "query:%s" %query
+                        print("query:%s" %query)
                         actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
                         if expectedresult in actualresult and "running" in details:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : RdkWanManager.service is in running state: %s" %(step, details);
+                            print("ACTUAL RESULT %d : RdkWanManager.service is in running state: %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             #Check if UDHCPC zombie process is present in DUT post 5 seconds
                             sleep(5);
                             step = step + 1;
-                            print "\nTEST STEP %d: Check if UDHCPC is in zombie state when RdkWanManager.service is restarted" %step;
-                            print "EXPECTED RESULT %d: UDHCPC should not be in zombie state when RdkWanManager.service is restarted" %step;
+                            print("\nTEST STEP %d: Check if UDHCPC is in zombie state when RdkWanManager.service is restarted" %step);
+                            print("EXPECTED RESULT %d: UDHCPC should not be in zombie state when RdkWanManager.service is restarted" %step);
                             tdkTestObj = obj.createTestStep('ExecuteCmd');
                             query="ps | grep \"\\[udhcpc\\]\"";
-                            print "query:%s" %query
+                            print("query:%s" %query)
                             actualresult, details = doSysutilExecuteCommand(tdkTestObj,query)
 
                             if expectedresult in actualresult and details == "":
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "ACTUAL RESULT %d : UDHCPC not found in zombie state when RdkWanManager.service is restarted" %(step);
+                                print("ACTUAL RESULT %d : UDHCPC not found in zombie state when RdkWanManager.service is restarted" %(step));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "ACTUAL RESULT %d : Process found in zombie state when RdkWanManager.service is restarted : %s" %(step, details);
+                                print("ACTUAL RESULT %d : Process found in zombie state when RdkWanManager.service is restarted : %s" %(step, details));
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : RdkWanManager.service is NOT in running state: %s" %(step, details);
+                            print("ACTUAL RESULT %d : RdkWanManager.service is NOT in running state: %s" %(step, details));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : RdkWanManager.service is NOT restarted; %s" %(step, details);
+                        print("ACTUAL RESULT %d : RdkWanManager.service is NOT restarted; %s" %(step, details));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "ACTUAL RESULT %d : Process found in zombie state when RdkWanManager.service is stopped; %s" %(step, details);
+                    print("ACTUAL RESULT %d : Process found in zombie state when RdkWanManager.service is stopped; %s" %(step, details));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : RdkWanManager.service is NOT in dead state: %s" %(step, details);
+                print("ACTUAL RESULT %d : RdkWanManager.service is NOT in dead state: %s" %(step, details));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d : RdkWanManager.service is NOT stopped" %(step);
+            print("ACTUAL RESULT %d : RdkWanManager.service is NOT stopped" %(step));
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d : RdkWanManager.service is NOT running in the device : %s" %(step, details);
+        print("ACTUAL RESULT %d : RdkWanManager.service is NOT running in the device : %s" %(step, details));
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");

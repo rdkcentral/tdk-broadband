@@ -109,7 +109,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile PARTNER_ID" %TDK_PATH;
-    print command;
+    print(command);
     expectedresult="SUCCESS";
     tdkTestObj.addParameter("command", command);
     tdkTestObj.executeTestCase(expectedresult);
@@ -117,62 +117,60 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     details1 = tdkTestObj.getResultDetails();
     details1 = details1.replace("\\n", "");
     if expectedresult in actualresult and details1 != "":
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 1: Get value of PARTNER_ID"
-       print "EXPECTED RESULT 1: Should get the value of PARTNER_ID";
-       print "ACTUAL RESULT 1:  %s" %details1;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-       tdkTestObj = obj.createTestStep('TADstub_Get');
-       tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
-       expectedresult="SUCCESS";
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details2 = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult and details2 != "":
-         #Set the result status of execution
-         tdkTestObj.setResultStatus("SUCCESS");
-         print "TEST STEP 2: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID";
-         print "EXPECTED RESULT 2: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID";
-         print "ACTUAL RESULT 2: %s" %details2;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : SUCCESS";
-         if details1 == details2:
-           #Set the result status of execution
-           tdkTestObj.setResultStatus("SUCCESS");
-           print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID should be same ";
-           print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID are same ";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-         else:
-           # Set the result status of execution
-           tdkTestObj.setResultStatus("FAILURE");
-           print "TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID should be same ";
-           print "EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID are not same ";
-           #Get the result of execution
-           print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-         #Set the result status of execution
-         tdkTestObj.setResultStatus("FAILURE");
-         print "TEST STEP 2: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID";
-         print "EXPECTED RESULT 1: Should get the Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID";
-         print "ACTUAL RESULT 2: %s" %details2;
-         #Get the result of execution
-         print "[TEST EXECUTION RESULT] : FAILURE";
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get value of PARTNER_ID")
+        print("EXPECTED RESULT 1: Should get the value of PARTNER_ID");
+        print("ACTUAL RESULT 1:  %s" %details1);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj = obj.createTestStep('TADstub_Get');
+        tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details2 = tdkTestObj.getResultDetails();
+        if expectedresult in actualresult and details2 != "":
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
+            print("EXPECTED RESULT 2: Should get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
+            print("ACTUAL RESULT 2: %s" %details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            if details1 == details2:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID should be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID are same ");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+            else:
+                # Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID should be same ");
+                print("EXPECTED RESULT 3:Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID and PARTNER_ID are not same ");
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Get the value of Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
+            print("EXPECTED RESULT 1: Should get the Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.PartnerID");
+            print("ACTUAL RESULT 2: %s" %details2);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 1: Get ping test run value"
-       print "EXPECTED RESULT 1: Should get the ping test run value";
-       print "ACTUAL RESULT 1:  %s" %details1;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : FAILURE";
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get ping test run value")
+        print("EXPECTED RESULT 1: Should get the ping test run value");
+        print("ACTUAL RESULT 1:  %s" %details1);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     sysObj.unloadModule("sysutil");
 else:
-        print "Failed to load module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

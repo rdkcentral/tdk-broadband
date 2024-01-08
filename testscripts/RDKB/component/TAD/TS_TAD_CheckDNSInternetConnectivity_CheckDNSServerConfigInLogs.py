@@ -100,8 +100,8 @@ sysobj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_CheckDNSSe
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -136,12 +136,12 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "WAN Interface set to %s successfully" %setEnable;
+                        print("WAN Interface set to %s successfully" %setEnable);
                     else:
                         proceedFlag = 0;
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "WAN Interface NOT set to %s successfully" %setEnable;
+                        print("WAN Interface NOT set to %s successfully" %setEnable);
                 else:
                     "WAN Interface is enabled already...";
 
@@ -154,32 +154,32 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                     if expectedresult in actualresult:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "DNS queries started successfully";
+                        print("DNS queries started successfully");
 
                         #Check the DNS Server configuration from the log file
                         #Find the number of DNS servers
                         step = step + 1;
                         file = "/rdklogs/logs/DNSInternetCheck.txt.0";
-                        print "\nTEST STEP %d : Get the number of DNS servers configured from %s" %(step, file);
-                        print "EXPECTED RESULT %d : The number of DNS servers configured should be retrieved from %s" %(step, file);
+                        print("\nTEST STEP %d : Get the number of DNS servers configured from %s" %(step, file));
+                        print("EXPECTED RESULT %d : The number of DNS servers configured should be retrieved from %s" %(step, file));
 
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                         cmd = "grep \"DnsServerCount             : \" " + file;
-                        print cmd;
+                        print(cmd);
                         actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd)
 
                         if expectedresult in actualresult and details != "" :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : Details : %s" %(step, details);
-                            print "TEST EXECUTION RESULT : SUCCESS";
+                            print("ACTUAL RESULT %d : Details : %s" %(step, details));
+                            print("TEST EXECUTION RESULT : SUCCESS");
 
                             serverCount = details.split(" : ")[1];
                             if serverCount.isdigit():
                                 serverCount = int(serverCount);
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "Number of DNS servers : %d" %serverCount;
+                                print("Number of DNS servers : %d" %serverCount);
 
                                 #Check if DNS entries are found for each of the DNS servers
                                 serverFlag = 1;
@@ -188,66 +188,66 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                                     dnsEntry = "DNS_ENTRY_" + str(server);
                                     cmd = "grep " + dnsEntry + " " + file;
                                     tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                                    print cmd;
+                                    print(cmd);
                                     actualresult, details = doSysutilExecuteCommand(tdkTestObj,cmd);
 
-                                    print "\nTEST STEP %d : Get the DNS Server at entry %d should be retrieved from %s" %(step, server, file);
-                                    print "EXPECTED RESULT %d : The DNS server configured at entry %d should be retrieved from %s" %(step, server, file);
+                                    print("\nTEST STEP %d : Get the DNS Server at entry %d should be retrieved from %s" %(step, server, file));
+                                    print("EXPECTED RESULT %d : The DNS server configured at entry %d should be retrieved from %s" %(step, server, file));
 
                                     if expectedresult in actualresult and details != "" :
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("SUCCESS");
-                                        print "ACTUAL RESULT %d : Details : %s" %(step, details);
-                                        print "TEST EXECUTION RESULT : SUCCESS";
+                                        print("ACTUAL RESULT %d : Details : %s" %(step, details));
+                                        print("TEST EXECUTION RESULT : SUCCESS");
 
                                         #Check if DNS server is non-empty
                                         serverValue = details.split(" : ")[1];
                                         if serverValue != "":
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("SUCCESS");
-                                            print "DNS server at entry %d : %s" %(server, serverValue);
+                                            print("DNS server at entry %d : %s" %(server, serverValue));
                                         else:
                                             #Set the result status of execution
                                             tdkTestObj.setResultStatus("FAILURE");
-                                            print "DNS server at entry %d is empty" %(server);
+                                            print("DNS server at entry %d is empty" %(server));
                                             serverFlag = 0;
                                             break;
                                     else:
                                         #Set the result status of execution
                                         tdkTestObj.setResultStatus("FAILURE");
-                                        print "ACTUAL RESULT %d : DNS Server entry logs not found" %step;
-                                        print "TEST EXECUTION RESULT : FAILURE";
+                                        print("ACTUAL RESULT %d : DNS Server entry logs not found" %step);
+                                        print("TEST EXECUTION RESULT : FAILURE");
                                         serverFlag = 0;
                                         break;
 
                                 #Check if DNS Server values are retrieved successfully
                                 step = step + 1;
-                                print "\nTEST STEP %d : Check if the DNS Servers retrieved successfully and are non-empty" %step;
-                                print "EXPECTED RESULT %d : All DNS Servers hould be retrieved successfully and should be non-empty" %(step);
+                                print("\nTEST STEP %d : Check if the DNS Servers retrieved successfully and are non-empty" %step);
+                                print("EXPECTED RESULT %d : All DNS Servers hould be retrieved successfully and should be non-empty" %(step));
 
                                 if serverFlag == 1 :
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS");
-                                    print "ACTUAL RESULT %d : All DNS Servers are retrieved successfully and are non-empty" %step;
-                                    print "TEST EXECUTION RESULT : SUCCESS";
+                                    print("ACTUAL RESULT %d : All DNS Servers are retrieved successfully and are non-empty" %step);
+                                    print("TEST EXECUTION RESULT : SUCCESS");
                                 else :
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("FAILURE");
-                                    print "ACTUAL RESULT %d : All DNS Servers are not retrieved successfully or are non-empty" %step;
-                                    print "TEST EXECUTION RESULT : FAILURE";
+                                    print("ACTUAL RESULT %d : All DNS Servers are not retrieved successfully or are non-empty" %step);
+                                    print("TEST EXECUTION RESULT : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "Number of DNS servers retrieved is NOT valid";
+                                print("Number of DNS servers retrieved is NOT valid");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Number of DNS Servers is not VALID" %step;
-                            print "TEST EXECUTION RESULT : FAILURE";
+                            print("ACTUAL RESULT %d : Number of DNS Servers is not VALID" %step);
+                            print("TEST EXECUTION RESULT : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "DNS queries NOT started successfully";
+                        print("DNS queries NOT started successfully");
 
                     #Revert the WAN interface enable if required
                     if initialEnable == "false":
@@ -258,21 +258,21 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                         if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "WAN Interface enable reverted successfully";
+                            print("WAN Interface enable reverted successfully");
                         else:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "WAN Interface enable NOT reverted successfully";
+                            print("WAN Interface enable NOT reverted successfully");
                     else:
                         "%s revert operation not required" %paramName;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "WAN Interface is not enabled, cannot proceed further...";
+                    print("WAN Interface is not enabled, cannot proceed further...");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Number of WAN Interface entries NOT retrieved successfully";
+            print("Number of WAN Interface entries NOT retrieved successfully");
 
         #Revert operation
         setEnable = "false";
@@ -280,16 +280,16 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

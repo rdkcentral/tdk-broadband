@@ -87,19 +87,19 @@ if "SUCCESS" in loadmodulestatus.upper():
     status = details.replace("\\n", "");
     if expectedresult in actualresult and details != "":
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check the lan status";
-        print "EXPECTED RESULT 1: Should Get the lan status";
-        print "ACTUAL RESULT 1: lan status is ",status;
+        print("TEST STEP 1: Check the lan status");
+        print("EXPECTED RESULT 1: Should Get the lan status");
+        print("ACTUAL RESULT 1: lan status is ",status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         if status == "started":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Check if the lan status is started";
-            print "EXPECTED RESULT 2: Should Get the lan status as started";
-            print "ACTUAL RESULT 2: lan status is ",status;
+            print("TEST STEP 2: Check if the lan status is started");
+            print("EXPECTED RESULT 2: Should Get the lan status as started");
+            print("ACTUAL RESULT 2: lan status is ",status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             command = "ps | grep -rn \"provapp\"| grep -v \"grep\"";
             tdkTestObj.addParameter("command", command);
@@ -108,33 +108,33 @@ if "SUCCESS" in loadmodulestatus.upper():
             details = tdkTestObj.getResultDetails().strip();
             if expectedresult in actualresult and details != "":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if the provapp process is running";
-                print "EXPECTED RESULT 3:provapp process should be running";
-                print "ACTUAL RESULT 3: provapp process  details is: ",details;
+                print("TEST STEP 3: Check if the provapp process is running");
+                print("EXPECTED RESULT 3:provapp process should be running");
+                print("ACTUAL RESULT 3: provapp process  details is: ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS"
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if the provapp process is running";
-                print "EXPECTED RESULT 3:provapp process should be running";
-                print "ACTUAL RESULT 3: provapp process  details is: ",details;
+                print("TEST STEP 3: Check if the provapp process is running");
+                print("EXPECTED RESULT 3:provapp process should be running");
+                print("ACTUAL RESULT 3: provapp process  details is: ",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Check if the lan status is started";
-            print "EXPECTED RESULT 2: Should Get the lan status as started";
-            print "ACTUAL RESULT 2: lan status is ",status;
+            print("TEST STEP 2: Check if the lan status is started");
+            print("EXPECTED RESULT 2: Should Get the lan status as started");
+            print("ACTUAL RESULT 2: lan status is ",status);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check the lan status";
-        print "EXPECTED RESULT 1: Should Get the lan status";
-        print "ACTUAL RESULT 1: lan status is ",status;
+        print("TEST STEP 1: Check the lan status");
+        print("EXPECTED RESULT 1: Should Get the lan status");
+        print("ACTUAL RESULT 1: lan status is ",status);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");

@@ -48,7 +48,7 @@
     <api_or_interface_used>json_hal_client_init
 json_hal_client_run
 json_hal_is_client_connected
-json_hal_client_send_and_get_reply 
+json_hal_client_send_and_get_reply
 json_hal_get_param</api_or_interface_used>
     <input_parameters>paramName : Device.Services.VoiceService.1.Capabilities.</input_parameters>
     <automation_approch>1. Load the Telco Voice HAL Module
@@ -86,11 +86,11 @@ obj.configureTestCase(ip,port,'TS_TelcoVoiceMgrHal_GetCapabilities');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
-	
+
     tdkTestObj = obj.createTestStep('TELCOVOICEMgrHal_Init');
     expectedresult = "SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
@@ -100,11 +100,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation";
-        print "EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be success";
-        print "ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was success";
+        print("TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation");
+        print("EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be success");
+        print("ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('TELCOVOICEMgrHal_GetCapabilities');
         tdkTestObj.addParameter("paramName", "Device.Services.VoiceService.1.Capabilities.");
@@ -116,31 +116,31 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the Telco Voice Manager Capabilities details";
-            print "EXPECTED RESULT 2: GetCapabilities operation should be success ";
-            print "ACTUAL RESULT 2: GetCapabilities operation was success , Details: ",capabilities;
+            print("TEST STEP 2: Get the Telco Voice Manager Capabilities details");
+            print("EXPECTED RESULT 2: GetCapabilities operation should be success ");
+            print("ACTUAL RESULT 2: GetCapabilities operation was success , Details: ",capabilities);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the Telco Voice Manager Capabilities details";
-            print "EXPECTED RESULT 2: GetCapabilities operation should be success ";
-            print "ACTUAL RESULT 2: GetCapabilities operation was Failed ";
+            print("TEST STEP 2: Get the Telco Voice Manager Capabilities details");
+            print("EXPECTED RESULT 2: GetCapabilities operation should be success ");
+            print("ACTUAL RESULT 2: GetCapabilities operation was Failed ");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation";
-        print "EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be Success";
-        print "ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was Failed";
+        print("TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation");
+        print("EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be Success");
+        print("ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("telcovoicemgrhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -120,116 +120,116 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
     if expectedresult in def_result:
         tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Enable Status of RBUS"
-        print "EXPECTED RESULT 1: Should Get the Enable Status of RBUS"
-        print "ACTUAL RESULT 1: RBUS Enable Status retrieved successfully"
-        print "[TEST EXECUTION RESULT] 1: SUCCESS";
+        print("TEST STEP 1: Get the Enable Status of RBUS")
+        print("EXPECTED RESULT 1: Should Get the Enable Status of RBUS")
+        print("ACTUAL RESULT 1: RBUS Enable Status retrieved successfully")
+        print("[TEST EXECUTION RESULT] 1: SUCCESS");
 
-        print "Initial RBUS Enabled Status is",default_value
+        print("Initial RBUS Enabled Status is",default_value)
 
         if default_value == "true":
             actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"rbus_session_mgr");
             if expectedresult  in actualresult and pid_value != "":
-                print "TEST STEP 2: Get the PID of RBUS";
-                print "EXPECTED RESULT 2:  Should get the PID value of RBUS";
-                print "ACTUAL RESULT 2: Successfully got the PID value, PID:",pid_value;
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                print("TEST STEP 2: Get the PID of RBUS");
+                print("EXPECTED RESULT 2:  Should get the PID value of RBUS");
+                print("ACTUAL RESULT 2: Successfully got the PID value, PID:",pid_value);
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
                 rbus_set,revert_flag = doEnableDisableRBUS("false",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
                 if rbus_set == 1:
-                    print "TEST STEP 3: Set RBUS Enable Status value to false";
-                    print "EXPECTED RESULT 3:  Set Operation should be success";
-                    print "ACTUAL RESULT 3: Set operation was success";
-                    print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    print("TEST STEP 3: Set RBUS Enable Status value to false");
+                    print("EXPECTED RESULT 3:  Set Operation should be success");
+                    print("ACTUAL RESULT 3: Set operation was success");
+                    print("[TEST EXECUTION RESULT] 3: SUCCESS");
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
                     actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"rbus_session_mgr");
                     if expectedresult  in actualresult and pid_value == "":
-                        print "TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not";
-                        print "EXPECTED RESULT 4: RBUS process should not be running";
-                        print "ACTUAL RESULT 4: RBUS process is NOT Running"
-                        print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                        print("TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not");
+                        print("EXPECTED RESULT 4: RBUS process should not be running");
+                        print("ACTUAL RESULT 4: RBUS process is NOT Running")
+                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not";
-                        print "EXPECTED RESULT 4: RBUS process should not be running";
-                        print "ACTUAL RESULT 4: RBUS process is still Running"
-                        print "[TEST EXECUTION RESULT] 4: FAILURE";
+                        print("TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not");
+                        print("EXPECTED RESULT 4: RBUS process should not be running");
+                        print("ACTUAL RESULT 4: RBUS process is still Running")
+                        print("[TEST EXECUTION RESULT] 4: FAILURE");
                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 3: Set RBUS Enable Status value to false";
-                    print "EXPECTED RESULT 3:  Set Operation should be success";
-                    print "ACTUAL RESULT 3: Set operation was Failed";
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
+                    print("TEST STEP 3: Set RBUS Enable Status value to false");
+                    print("EXPECTED RESULT 3:  Set Operation should be success");
+                    print("ACTUAL RESULT 3: Set operation was Failed");
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
-                print "TEST STEP 2: Get the PID of RBUS";
-                print "EXPECTED RESULT 2:  Should get the PID value of RBUS";
-                print "ACTUAL RESULT 2: Failed to get the PID value of RBUS"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Get the PID of RBUS");
+                print("EXPECTED RESULT 2:  Should get the PID value of RBUS");
+                print("ACTUAL RESULT 2: Failed to get the PID value of RBUS")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
         else:
             actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"rbus_session_mgr");
             if expectedresult  in actualresult and pid_value == "":
-                print "TEST STEP 2: Get the PID of RBUS to check whether RBUS process is Running or Not";
-                print "EXPECTED RESULT 2: RBUS process should not be running";
-                print "ACTUAL RESULT 2: RBUS process is NOT Running"
-                print "[TEST EXECUTION RESULT] 2: SUCCESS";
+                print("TEST STEP 2: Get the PID of RBUS to check whether RBUS process is Running or Not");
+                print("EXPECTED RESULT 2: RBUS process should not be running");
+                print("ACTUAL RESULT 2: RBUS process is NOT Running")
+                print("[TEST EXECUTION RESULT] 2: SUCCESS");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
                 rbus_set,revert_flag = doEnableDisableRBUS("true",sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
                 if rbus_set == 1:
-                    print "TEST STEP 3: Set RBUS Enable Status value to true";
-                    print "EXPECTED RESULT 3:  Set Operation should be success";
-                    print "ACTUAL RESULT 3: Set operation was success";
-                    print "[TEST EXECUTION RESULT] 3: SUCCESS";
+                    print("TEST STEP 3: Set RBUS Enable Status value to true");
+                    print("EXPECTED RESULT 3:  Set Operation should be success");
+                    print("ACTUAL RESULT 3: Set operation was success");
+                    print("[TEST EXECUTION RESULT] 3: SUCCESS");
                     tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
 
                     actualresult,pid_value = getPID(tdkTestObj_Sys_ExeCmd,"rbus_session_mgr");
                     if expectedresult  in actualresult and pid_value != "":
-                        print "TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not";
-                        print "EXPECTED RESULT 4: RBUS process should be running";
-                        print "ACTUAL RESULT 4: RBUS process is Running, PID:",pid_value
-                        print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                        print("TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not");
+                        print("EXPECTED RESULT 4: RBUS process should be running");
+                        print("ACTUAL RESULT 4: RBUS process is Running, PID:",pid_value)
+                        print("[TEST EXECUTION RESULT] 4: SUCCESS");
                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
                     else:
-                        print "TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not";
-                        print "EXPECTED RESULT 4: RBUS process should be running";
-                        print "ACTUAL RESULT 4: RBUS process is NOT Running"
-                        print "[TEST EXECUTION RESULT] 4: FAILURE";
+                        print("TEST STEP 4: Get the PID of RBUS to check whether RBUS process is Running or Not");
+                        print("EXPECTED RESULT 4: RBUS process should be running");
+                        print("ACTUAL RESULT 4: RBUS process is NOT Running")
+                        print("[TEST EXECUTION RESULT] 4: FAILURE");
                         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
                 else:
-                    print "TEST STEP 3: Set RBUS Enable Status value to true";
-                    print "EXPECTED RESULT 3:  Set Operation should be success";
-                    print "ACTUAL RESULT 3: Set operation was Failed";
-                    print "[TEST EXECUTION RESULT] 3: FAILURE";
+                    print("TEST STEP 3: Set RBUS Enable Status value to true");
+                    print("EXPECTED RESULT 3:  Set Operation should be success");
+                    print("ACTUAL RESULT 3: Set operation was Failed");
+                    print("[TEST EXECUTION RESULT] 3: FAILURE");
                     tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
             else:
-                print "TEST STEP 2: Get the PID of RBUS";
-                print "EXPECTED RESULT 2:  Should get the PID value of RBUS";
-                print "ACTUAL RESULT 2: Failed to get the PID value of RBUS"
-                print "[TEST EXECUTION RESULT] 2: FAILURE";
+                print("TEST STEP 2: Get the PID of RBUS");
+                print("EXPECTED RESULT 2:  Should get the PID value of RBUS");
+                print("ACTUAL RESULT 2: Failed to get the PID value of RBUS")
+                print("[TEST EXECUTION RESULT] 2: FAILURE");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
 
     if revert_flag == 1:
         rbus_set,revert_flag = doEnableDisableRBUS(default_value,sysobj,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_Set);
         if rbus_set == 1:
-            print "TEST STEP 5: Set RBUS Enable Status value to initial value",;
-            print "EXPECTED RESULT 5: Revert operation should be success";
-            print "ACTUAL RESULT 5: REvert operation was success";
-            print "[TEST EXECUTION RESULT] 5: SUCCESS";
+            print("TEST STEP 5: Set RBUS Enable Status value to initial value", end=' ');
+            print("EXPECTED RESULT 5: Revert operation should be success");
+            print("ACTUAL RESULT 5: REvert operation was success");
+            print("[TEST EXECUTION RESULT] 5: SUCCESS");
             tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
         else:
-            print "TEST STEP 5: Set RBUS Enable Status value to initial value",;
-            print "EXPECTED RESULT 5: Revert operation should be success";
-            print "ACTUAL RESULT 5: REvert operation was Failed";
-            print "[TEST EXECUTION RESULT] 5: FAILURE";
+            print("TEST STEP 5: Set RBUS Enable Status value to initial value", end=' ');
+            print("EXPECTED RESULT 5: Revert operation should be success");
+            print("ACTUAL RESULT 5: REvert operation was Failed");
+            print("[TEST EXECUTION RESULT] 5: FAILURE");
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

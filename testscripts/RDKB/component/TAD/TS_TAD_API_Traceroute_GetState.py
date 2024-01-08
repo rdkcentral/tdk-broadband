@@ -85,8 +85,8 @@
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import tdkutility;
 
 #Test component to be tested
@@ -99,7 +99,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_API_Traceroute_GetState');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -112,7 +112,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     if host == "NULL":
         tdkTestObj.setResultStatus("FAILURE");
-        print "Host name not available in tdkb config file"
+        print("Host name not available in tdkb config file")
     else:
         tdkTestObj = obj.createTestStep('TADstub_Init');
         expectedresult="SUCCESS";
@@ -124,18 +124,18 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Set diagnostics init"
-            print "EXPECTED RESULT 1: Should set diagnostics init";
-            print "ACTUAL RESULT 1:  %s" %details;
+            print("TEST STEP 1: Set diagnostics init")
+            print("EXPECTED RESULT 1: Should set diagnostics init");
+            print("ACTUAL RESULT 1:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set diagnostics init"
-            print "EXPECTED RESULT 1: Should set diagnostics init";
-            print "ACTUAL RESULT 1:  %s" %details;
+            print("TEST STEP 1: Set diagnostics init")
+            print("EXPECTED RESULT 1: Should set diagnostics init");
+            print("ACTUAL RESULT 1:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE, exiting script";
+            print("[TEST EXECUTION RESULT] : FAILURE, exiting script");
             exit();
 
         tdkTestObj = obj.createTestStep('TADstub_SetCfg');
@@ -152,11 +152,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Set traceroute config values"
-            print "EXPECTED RESULT 1: Should set the traceroute config";
-            print "ACTUAL RESULT 1:  %s" %details;
+            print("TEST STEP 1: Set traceroute config values")
+            print("EXPECTED RESULT 1: Should set the traceroute config");
+            print("ACTUAL RESULT 1:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Check for getState output
             tdkTestObj = obj.createTestStep('TADstub_GetState');
@@ -169,29 +169,26 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult and "state is 0" in details:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1: Get the state of traceroute object"
-                print "EXPECTED RESULT 1: Should get the state of traceroute object"
-                print "ACTUAL RESULT 1:  %s" %details;
+                print("TEST STEP 1: Get the state of traceroute object")
+                print("EXPECTED RESULT 1: Should get the state of traceroute object")
+                print("ACTUAL RESULT 1:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 1: Get the state of traceroute object"
-                print "EXPECTED RESULT 1: Should get the state of traceroute object"
-                print "ACTUAL RESULT 1:  %s" %details;
+                print("TEST STEP 1: Get the state of traceroute object")
+                print("EXPECTED RESULT 1: Should get the state of traceroute object")
+                print("ACTUAL RESULT 1:  %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set traceroute config values"
-            print "EXPECTED RESULT 1: Should set the traceroute config"
-            print "ACTUAL RESULT 1:  %s" %details;
+            print("TEST STEP 1: Set traceroute config values")
+            print("EXPECTED RESULT 1: Should set the traceroute config")
+            print("ACTUAL RESULT 1:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
 obj.unloadModule("tad");
-
-
-					

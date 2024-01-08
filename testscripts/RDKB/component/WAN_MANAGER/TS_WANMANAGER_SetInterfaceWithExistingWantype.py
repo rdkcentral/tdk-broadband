@@ -80,7 +80,7 @@ obj.configureTestCase(ip,port,'TS_WANMANAGER_SetInterfaceWithExistingWantype');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 def MakePriorityEqual (tdkTestObj_Get,tdkTestObj_Set):
     paramList =["Device.X_RDK_WanManager.CPEInterface.1.Wan.Priority","Device.X_RDK_WanManager.CPEInterface.2.Wan.Priority"];
@@ -97,12 +97,12 @@ def MakePriorityEqual (tdkTestObj_Get,tdkTestObj_Set):
         if expectedresult in actualresult:
             default.append(details);
 
-    print "Default priority Values are :",default;
+    print("Default priority Values are :",default);
 
     if default [0] != default [1]:
         revertflag =1;
         default[0] = str(default[0]);
-        print "The priorities are unequal and changing the priority for 2nd interface";
+        print("The priorities are unequal and changing the priority for 2nd interface");
         tdkTestObj = tdkTestObj_Set;
         tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.Priority");
         tdkTestObj.addParameter("ParamValue",(default[0]));
@@ -113,7 +113,7 @@ def MakePriorityEqual (tdkTestObj_Get,tdkTestObj_Set):
         actualresult = tdkTestObj.getResult();
         Setresult = tdkTestObj.getResultDetails();
     else:
-        print "The priorities are equal and no change is required";
+        print("The priorities are equal and no change is required");
 
     return revertflag,default,actualresult;
 
@@ -123,13 +123,13 @@ if "SUCCESS" in loadmodulestatus.upper():
     expectedresult= "SUCCESS";
 
     revertpriority = 0;
-    print "TEST STEP 1 :Checking if the priorites of WANOE and DSL are equal and making them equal if not";
+    print("TEST STEP 1 :Checking if the priorites of WANOE and DSL are equal and making them equal if not");
     tdkTestObj_Set = obj.createTestStep('TDKB_TR181Stub_Set');
     tdkTestObj_Get = obj.createTestStep('TDKB_TR181Stub_Get');
     revertpriority,defPriority,actualresult = MakePriorityEqual(tdkTestObj_Get,tdkTestObj_Set);
     if expectedresult in actualresult:
-        print "ACTUAL RESUTL 1 : The  priorites of WANOE and DSL are  now equal ";
-        print "TEST EXECUTION RESULT :SUCCESS";
+        print("ACTUAL RESUTL 1 : The  priorites of WANOE and DSL are  now equal ");
+        print("TEST EXECUTION RESULT :SUCCESS");
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.2.Wan.Type");
@@ -140,11 +140,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         wanType=details.strip().replace("\\n", "");
         if expectedresult in actualresult and wanType != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2 :Get the WAN Type of interface no. 2";
-            print "EXPECTED RESULT 2: Should get WAN Type of interface no. 2";
-            print "ACTUAL RESULT 2: The value received is %s" %wanType;
+            print("TEST STEP 2 :Get the WAN Type of interface no. 2");
+            print("EXPECTED RESULT 2: Should get WAN Type of interface no. 2");
+            print("ACTUAL RESULT 2: The value received is %s" %wanType);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.X_RDK_WanManager.CPEInterface.1.Wan.Type");
@@ -157,25 +157,25 @@ if "SUCCESS" in loadmodulestatus.upper():
             Setresult = tdkTestObj.getResultDetails();
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 :Set the Wan WAN Type of interface no. 1 with same as interface no. 2";
-                print "EXPECTED RESULT 3: Should not set interface no. 1 with same as interface no. 2";
-                print "ACTUAL RESULT 3: ",Setresult;
+                print("TEST STEP 3 :Set the Wan WAN Type of interface no. 1 with same as interface no. 2");
+                print("EXPECTED RESULT 3: Should not set interface no. 1 with same as interface no. 2");
+                print("ACTUAL RESULT 3: ",Setresult);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Set the Wan WAN Type of interface no. 1 with same as interface no. 2";
-                print "EXPECTED RESULT 3: Should not set interface no. 1 with same as interface no. 2";
-                print "ACTUAL RESULT 3: ",Setresult;
+                print("TEST STEP 3 :Set the Wan WAN Type of interface no. 1 with same as interface no. 2");
+                print("EXPECTED RESULT 3: Should not set interface no. 1 with same as interface no. 2");
+                print("ACTUAL RESULT 3: ",Setresult);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2 :Get the Wan WAN Type of interface no. 2";
-            print "EXPECTED RESULT 2: Should get Wan WAN Type of interface no. 2";
-            print "ACTUAL RESULT 2: The value received is %s" %wanType;
+            print("TEST STEP 2 :Get the Wan WAN Type of interface no. 2");
+            print("EXPECTED RESULT 2: Should get Wan WAN Type of interface no. 2");
+            print("ACTUAL RESULT 2: The value received is %s" %wanType);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         if revertpriority ==1:
             paramList =["Device.X_RDK_WanManager.CPEInterface.1.Wan.Priority","Device.X_RDK_WanManager.CPEInterface.2.Wan.Priority"];
@@ -192,15 +192,15 @@ if "SUCCESS" in loadmodulestatus.upper():
                 Setresult = tdkTestObj.getResultDetails();
                 index =index +1;
                 if expectedresult in result:
-                    print "Reverted the unequal  priority";
+                    print("Reverted the unequal  priority");
                     tdkTestObj.setResultStatus("SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "failed to revert the changed priority";
+                    print("failed to revert the changed priority");
     else:
-        print "ACTUAL RESUTL 1 : failed to make priorites of WANOE and DSL equal ";
-        print "TEST EXECUTION RESULT :FAILURE";
+        print("ACTUAL RESUTL 1 : failed to make priorites of WANOE and DSL equal ");
+        print("TEST EXECUTION RESULT :FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");

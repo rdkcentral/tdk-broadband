@@ -66,7 +66,7 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tr69SoapUtil import *
 from tr69Config import *
@@ -82,7 +82,7 @@ obj.configureTestCase(ip,port,'TS_TR069PA_SetManagementServerURL');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -92,22 +92,22 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase("SUCCESS")
 
     #get and save the current ManagementServer URL
-    print "TEST STEP 1: get the current ManagementServer URI"
+    print("TEST STEP 1: get the current ManagementServer URI")
     parsedResponse = send_xml(SERVERURI_GET_XML, "get")
     if 200 in parsedResponse:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         orgUri = parsedResponse[1];
-        print "original firewall level: ",orgUri
+        print("original firewall level: ",orgUri)
 
-        print "TEST STEP 2: set the current ManagementServer URI"
+        print("TEST STEP 2: set the current ManagementServer URI")
         parsedResponse = send_xml(SERVERURI_SET_XML, "set")
         if 200 in parsedResponse:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            print "TEST STEP 3: revert the current ManagementServer URI"
+            print("TEST STEP 3: revert the current ManagementServer URI")
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
             tdkTestObj.addParameter("ParamName","Device.ManagementServer.URL");
             tdkTestObj.addParameter("ParamValue",orgUri);
@@ -124,29 +124,28 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
 
-                print "TEST STEP 3: Revert the current ManagementServer URI"
-                print "EXPECTED RESULT : Should revert the current ManagementServer URI"
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP 3: Revert the current ManagementServer URI")
+                print("EXPECTED RESULT : Should revert the current ManagementServer URI")
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Revert the current ManagementServer URI"
-                print "EXPECTED RESULT : Should revert the ManagementServer URI"
-                print "ACTUAL RESULT :%s" %details;
+                print("TEST STEP 3: Revert the current ManagementServer URI")
+                print("EXPECTED RESULT : Should revert the ManagementServer URI")
+                print("ACTUAL RESULT :%s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE"
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "[TEST EXECUTION RESULT] : FAILURE"
+        print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("tdkbtr181");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

@@ -91,7 +91,7 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-						# use tdklib library,which provides a wrapper for tdk testcase script
+                                                # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_TAD_UDPEchoConfig_InvalidInterface');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -121,24 +121,21 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set an invalid interface of UDPEchoConfig";
-        print "EXPECTED RESULT 1: Should not set the interface of UDPEchoConfig";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set an invalid interface of UDPEchoConfig");
+        print("EXPECTED RESULT 1: Should not set the interface of UDPEchoConfig");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
-	#Set the result status of execution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Set an invalid interface of UDPEchoConfig";
-        print "EXPECTED RESULT 1: Should not set the interface of UDPEchoConfig";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Set an invalid interface of UDPEchoConfig");
+        print("EXPECTED RESULT 1: Should not set the interface of UDPEchoConfig");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-
-
-					
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");

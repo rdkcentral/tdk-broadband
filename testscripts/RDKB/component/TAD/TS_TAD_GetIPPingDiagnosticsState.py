@@ -104,7 +104,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_GetIPPingDiagnosticsState');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -122,36 +122,36 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DiagnosticsState of IPPing";
-        print "EXPECTED RESULT 1: Should get the DiagnosticsState of IPPing";
-        print "ACTUAL RESULT 1: DiagnosticsState of IPPing is %s" %details;
+        print("TEST STEP 1: Get the DiagnosticsState of IPPing");
+        print("EXPECTED RESULT 1: Should get the DiagnosticsState of IPPing");
+        print("ACTUAL RESULT 1: DiagnosticsState of IPPing is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if details in DiagnosticsState_list:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2:Validate DiagnosticsState of IPPing";
-            print "EXPECTED RESULT 2: Returned DiagnosticsState of IPPing should be valid";
-            print "ACTUAL RESULT 2: DiagnosticsState of IPPing is %s" %details;
+            print("TEST STEP 2:Validate DiagnosticsState of IPPing");
+            print("EXPECTED RESULT 2: Returned DiagnosticsState of IPPing should be valid");
+            print("ACTUAL RESULT 2: DiagnosticsState of IPPing is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Validate DiagnosticsState of IPPing";
-            print "EXPECTED RESULT 2: Returned DiagnosticsState of IPPing should be valid";
-            print "ACTUAL RESULT 2: DiagnosticsState of IPPing is %s" %details;
+            print("TEST STEP 2:Validate DiagnosticsState of IPPing");
+            print("EXPECTED RESULT 2: Returned DiagnosticsState of IPPing should be valid");
+            print("ACTUAL RESULT 2: DiagnosticsState of IPPing is %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DiagnosticsState of IPPing";
-        print "EXPECTED RESULT 1: Should get the DiagnosticsState of IPPing"
-        print "ACTUAL RESULT 1: Failure in getting DiagnosticsState of IPPing, Details: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the DiagnosticsState of IPPing");
+        print("EXPECTED RESULT 1: Should get the DiagnosticsState of IPPing")
+        print("ACTUAL RESULT 1: Failure in getting DiagnosticsState of IPPing, Details: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

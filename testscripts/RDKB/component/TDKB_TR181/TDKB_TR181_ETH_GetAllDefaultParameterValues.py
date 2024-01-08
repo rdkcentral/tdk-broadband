@@ -97,7 +97,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     obj1.setLoadModuleStatus("SUCCESS")
     obj2.setLoadModuleStatus("SUCCESS")
 
-    print "The modules to test is: ETH ";
+    print("The modules to test is: ETH ");
 
     setup_type = "TDK"
     factoryReset = "true"
@@ -118,11 +118,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP : Initiate factory reset ";
-        print "EXPECTED RESULT : Should initiate factory reset";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Initiate factory reset ");
+        print("EXPECTED RESULT : Should initiate factory reset");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
@@ -130,25 +130,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         #Invoke the utility function to get and validate the values for all configured tr181 params
         moduleStatus,failedParams = tdkbSetAllParams.getAllParams("ETH", setup_type, factoryReset, obj, obj1);
 
-        print "Status of ETH validation is ", moduleStatus, "\n";
+        print("Status of ETH validation is ", moduleStatus, "\n");
         if moduleStatus == "FAILURE":
-            print "The failed params are ", failedParams, "\n";
+            print("The failed params are ", failedParams, "\n");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP : Initiate factory reset ";
-        print "EXPECTED RESULT : Should initiate factory reset";
-        print "ACTUAL RESULT : %s" %details;
+        print("TEST STEP : Initiate factory reset ");
+        print("EXPECTED RESULT : Should initiate factory reset");
+        print("ACTUAL RESULT : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
     obj2.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
     obj2.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

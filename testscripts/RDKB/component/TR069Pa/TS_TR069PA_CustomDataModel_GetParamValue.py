@@ -77,7 +77,7 @@ obj.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_GetParamValue');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     #Set the result status of execution
@@ -93,37 +93,37 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status retreived successfully";
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status retreived successfully");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if  details  == "true" or details  == "false":
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 2: Check if Custom Data Model is enabled or disabled";
-             print "EXPECTED RESULT 2: Custom Data Model should be either enabled or disabled";
-             print "ACTUAL RESULT 2: Custom Data Model Enable status is %s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check if Custom Data Model is enabled or disabled");
+            print("EXPECTED RESULT 2: Custom Data Model should be either enabled or disabled");
+            print("ACTUAL RESULT 2: Custom Data Model Enable status is %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 2: Check if Custom Data Model is enabled or disabled";
-             print "EXPECTED RESULT 2: Custom Data Model should be either enabled or disabled";
-             print "ACTUAL RESULT 2: Custom Data Model Enable status is %s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : FAILURE";
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check if Custom Data Model is enabled or disabled");
+            print("EXPECTED RESULT 2: Custom Data Model should be either enabled or disabled");
+            print("ACTUAL RESULT 2: Custom Data Model Enable status is %s" %details);
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Failed to retreived Custom Data Model Enabled status ";
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Failed to retreived Custom Data Model Enabled status ");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT]: FAILURE";
+        print("[TEST EXECUTION RESULT]: FAILURE");
     obj.unloadModule("tdkbtr181");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");

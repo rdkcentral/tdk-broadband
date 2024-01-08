@@ -72,8 +72,8 @@ OID : 1.3.6.1.2.1.1.1.0
 
 "cat /etc/device.properties | grep MODEL | cut -d \"=\" -f2 | tr \"\n\" \" \""</input_parameters>
     <automation_approch>1.TM will load the snmp_pa and pam library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. Get model using executecmd and compare with snmpget output
 4.Responses from the snmplib and executecmd will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -97,8 +97,8 @@ pam</test_stub_interface>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib
 
 #Test component to be tested
@@ -115,7 +115,7 @@ pamObj.configureTestCase(ip,port,'TS_SNMP_GetSysDescrModel');
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -128,17 +128,17 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
 
-    if "SNMPv2-MIB" in actResponse:
+    if "No Such Instance currently exists at this OID" not in actResponse:
         model = actResponse.split("MODEL:")[1].split(';')[0].strip();
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget for Model in system description";
-        print "EXPECTED RESULT 1: snmpget should get the Model system description values";
-        print "ACTUAL RESULT 1: Model is %s" %model;
+        print("TEST STEP 1:Execute snmpget for Model in system description");
+        print("EXPECTED RESULT 1: snmpget should get the Model system description values");
+        print("ACTUAL RESULT 1: Model is %s" %model);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %model ;
+        print("[TEST EXECUTION RESULT] : %s" %model) ;
 
         tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-	tdkTestObj.addParameter("ParamName","Device.DeviceInfo.ModelName");
+        tdkTestObj.addParameter("ParamName","Device.DeviceInfo.ModelName");
         expectedresult="SUCCESS";
 
         #Execute the test case in DUT
@@ -146,31 +146,31 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
         if expectedresult in actualresult and details:
-            print "TEST STEP 1:Get model using getparams";
-            print "EXPECTED RESULT 1: Model details from getparams and snmpget should be same ", details
+            print("TEST STEP 1:Get model using getparams");
+            print("EXPECTED RESULT 1: Model details from getparams and snmpget should be same ", details)
             if model==details:
-                print "ACTUAL RESULT 1: Model details from getparams and snmpget are same"
+                print("ACTUAL RESULT 1: Model details from getparams and snmpget are same")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 1: Model details from getparams and snmpget are not same"
+                print("ACTUAL RESULT 1: Model details from getparams and snmpget are not same")
                 tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : %s" %details
+            print("[TEST EXECUTION RESULT] : %s" %details)
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1:Get model from getparams";
-            print "EXPECTED RESULT 1: Model details from getparams and snmpget should be same";
-            print "ACTUAL RESULT 1: Couldn't get model from getparams"
+            print("TEST STEP 1:Get model from getparams");
+            print("EXPECTED RESULT 1: Model details from getparams and snmpget should be same");
+            print("ACTUAL RESULT 1: Couldn't get model from getparams")
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Execute snmpget for Model in system description";
-        print "EXPECTED RESULT 1: snmpget should get the Model system description values";
-        print "ACTUAL RESULT 1: %s" %actResponse;
-        print "[TEST EXECUTION RESULT] : %s" %actResponse ;
+        print("TEST STEP 1:Execute snmpget for Model in system description");
+        print("EXPECTED RESULT 1: snmpget should get the Model system description values");
+        print("ACTUAL RESULT 1: %s" %actResponse);
+        print("[TEST EXECUTION RESULT] : %s" %actResponse) ;
     pamObj.unloadModule("pam");
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-	pamObj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    pamObj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

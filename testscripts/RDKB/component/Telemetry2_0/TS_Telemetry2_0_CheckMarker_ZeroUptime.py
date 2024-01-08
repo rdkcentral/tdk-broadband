@@ -106,18 +106,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         tdkTestObj_Tr181_Get.addParameter("ParamName","Device.DeviceInfo.UpTime");
         expectedresult="SUCCESS";
@@ -125,133 +125,133 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj_Tr181_Get.executeTestCase(expectedresult);
         actualresult = tdkTestObj_Tr181_Get.getResult();
         upTime = tdkTestObj_Tr181_Get.getResultDetails();
-        print "Uptime of the DUT is :",upTime;
+        print("Uptime of the DUT is :",upTime);
 
         if expectedresult in actualresult:
-           tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
-           print "TEST STEP 2: Get the Uptime of the DUT";
-           print "EXPECTED RESULT 2: Should get the Uptime of the DUT";
-           print "ACTUAL RESULT 2: Uptime of the DUT is :",upTime;
-           print "[TEST EXECUTION RESULT] 2: SUCCESS";
+            tdkTestObj_Tr181_Get.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Get the Uptime of the DUT");
+            print("EXPECTED RESULT 2: Should get the Uptime of the DUT");
+            print("ACTUAL RESULT 2: Uptime of the DUT is :",upTime);
+            print("[TEST EXECUTION RESULT] 2: SUCCESS");
 
-           if int(upTime) >=86400:
-              print "########-Uptime of the device is greater than the 1 day and need to reboot the device for ZeroUptime marker simulation-#######";
-              print "*********-Initiating Reboot Please wait till the device comes up-********";
-              sysobj.initiateReboot();
-              sleep(300);
+            if int(upTime) >=86400:
+                print("########-Uptime of the device is greater than the 1 day and need to reboot the device for ZeroUptime marker simulation-#######");
+                print("*********-Initiating Reboot Please wait till the device comes up-********");
+                sysobj.initiateReboot();
+                sleep(300);
 
-           print "########-Uptime of the device is less than the 1 day no reboot required for ZeroUptime marker simulation-######";
+            print("########-Uptime of the device is less than the 1 day no reboot required for ZeroUptime marker simulation-######");
 
-           lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+            lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
-           if expectedresult in lineCountResult:
-              tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-              print "TEST STEP 3: Get the initial Line count of Telemetry Log file";
-              print "EXPECTED RESULT 3: Should get the initial line count of Telemetry Log file";
-              print "ACTUAL RESULT 3: Line count retrieved Successfully";
-              print "[TEST EXECUTION RESULT] 3: SUCCESS";
+            if expectedresult in lineCountResult:
+                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get the initial Line count of Telemetry Log file");
+                print("EXPECTED RESULT 3: Should get the initial line count of Telemetry Log file");
+                print("ACTUAL RESULT 3: Line count retrieved Successfully");
+                print("[TEST EXECUTION RESULT] 3: SUCCESS");
 
-              print "Initial Line count of Telemetry Log File is ",initialLinesCount
+                print("Initial Line count of Telemetry Log File is ",initialLinesCount)
 
-              tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-              cmd = "sh /usr/ccsp/tad/uptime.sh &";
-              tdkTestObj.addParameter("command",cmd);
-              tdkTestObj.executeTestCase(expectedresult);
-              actualresult = tdkTestObj.getResult();
-              details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-              if expectedresult in actualresult:
-                 tdkTestObj.setResultStatus("SUCCESS");
-                 print "TEST STEP 4: Execute the uptime.sh script in background";
-                 print "EXPECTED RESULT 4: uptime.sh script should be running";
-                 print "ACTUAL RESULT 4: Script is Running";
-                 print "[TEST EXECUTION RESULT] 4: SUCCESS";
+                tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                cmd = "sh /usr/ccsp/tad/uptime.sh &";
+                tdkTestObj.addParameter("command",cmd);
+                tdkTestObj.executeTestCase(expectedresult);
+                actualresult = tdkTestObj.getResult();
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Execute the uptime.sh script in background");
+                    print("EXPECTED RESULT 4: uptime.sh script should be running");
+                    print("ACTUAL RESULT 4: Script is Running");
+                    print("[TEST EXECUTION RESULT] 4: SUCCESS");
 
-                 sleep(45);
+                    sleep(45);
 
-                 lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
-                 if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
-                    tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                    print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                    print "ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount";
-                    print "[TEST EXECUTION RESULT] 5: SUCCESS";
+                    lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+                    if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
+                        tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] 5: SUCCESS");
 
-                    print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
+                        print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
 
-                    query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : ZeroUptime\"" %(initialLinesCount,lineCountAfterSimu)
-                    print "query:%s" %query
-                    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-                    tdkTestObj.addParameter("command", query);
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails().strip().replace("\\n","");
-                    print "Marker Detail Found from log file is: %s "%details;
+                        query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : ZeroUptime\"" %(initialLinesCount,lineCountAfterSimu)
+                        print("query:%s" %query)
+                        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+                        tdkTestObj.addParameter("command", query);
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                        print("Marker Detail Found from log file is: %s "%details);
 
-                    if expectedresult in actualresult and details!="" and (len(details) > 0) and "ZeroUptime" in details:
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        markervalue = details.split("ZeroUptime value : ")[1]
-                        print "TEST STEP 6: ZeroUptime  Marker should be present";1
-                        print "EXPECTED RESULT 6: ZeroUptime Marker should be present";
-                        print "ACTUAL RESULT 6: ZeroUptime  Marker Value is %s" %markervalue;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] 5: SUCCESS";
-                        print "***************************************************************"
+                        if expectedresult in actualresult and details!="" and (len(details) > 0) and "ZeroUptime" in details:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            markervalue = details.split("ZeroUptime value : ")[1]
+                            print("TEST STEP 6: ZeroUptime  Marker should be present");1
+                            print("EXPECTED RESULT 6: ZeroUptime Marker should be present");
+                            print("ACTUAL RESULT 6: ZeroUptime  Marker Value is %s" %markervalue);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] 5: SUCCESS");
+                            print("***************************************************************")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 6: ZeroUptime  Marker should be present");
+                            print("EXPECTED RESULT 6: ZeroUptime Marker should be present");
+                            print("ACTUAL RESULT 6: ZeroUptime  Marker is %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                            print("***************************************************************")
                     else:
-                        tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 6: ZeroUptime  Marker should be present";
-                        print "EXPECTED RESULT 6: ZeroUptime Marker should be present";
-                        print "ACTUAL RESULT 6: ZeroUptime  Marker is %s" %details;
-                        #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
-                        print "***************************************************************"
-                 else:
-                     tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                     print "TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                     print "EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount";
-                     print "ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount";
-                     print "[TEST EXECUTION RESULT] : FAILURE";
-              else:
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 4: Execute the uptime.sh script in background";
-                  print "EXPECTED RESULT 4: uptime.sh script should be running";
-                  print "ACTUAL RESULT 4: Script is NOT Running";
-                  print "[TEST EXECUTION RESULT] : FAILURE";
-           else:
-               tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-               print "TEST STEP 3: Get the initial Line count of Telemetry Log file";
-               print "EXPECTED RESULT 3: Should get the initial line count of Telemetry Log file";
-               print "ACTUAL RESULT 3: Failed to get the Line count";
-               print "[TEST EXECUTION RESULT] : FAILURE";
+                        tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                        print("EXPECTED RESULT 5: Line count After Simulation should be greater than the initialLinesCount");
+                        print("ACTUAL RESULT 5: Line count After Simulation is NOT greater than the initialLinesCount");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Execute the uptime.sh script in background");
+                    print("EXPECTED RESULT 4: uptime.sh script should be running");
+                    print("ACTUAL RESULT 4: Script is NOT Running");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+            else:
+                tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get the initial Line count of Telemetry Log file");
+                print("EXPECTED RESULT 3: Should get the initial line count of Telemetry Log file");
+                print("ACTUAL RESULT 3: Failed to get the Line count");
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj_Tr181_Get.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the Uptime of the DUT";
-            print "EXPECTED RESULT 2: Should get the Uptime of the DUT";
-            print "ACTUAL RESULT 2: Uptime of the DUT is :",upTime;
-            print "[TEST EXECUTION RESULT] 2: FAILURE";
+            print("TEST STEP 2: Get the Uptime of the DUT");
+            print("EXPECTED RESULT 2: Should get the Uptime of the DUT");
+            print("ACTUAL RESULT 2: Uptime of the DUT is :",upTime);
+            print("[TEST EXECUTION RESULT] 2: FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 7: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 7: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 7: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 7: Post Process should be success");
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 7: Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 7: Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 7: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 7: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

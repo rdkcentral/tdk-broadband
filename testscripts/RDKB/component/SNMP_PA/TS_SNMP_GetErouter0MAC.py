@@ -70,8 +70,8 @@ OID : 1.3.6.1.2.1.2.2.1.6.1
 
 "ifconfig | grep erouter0 | cut -d \" \" -f7 | tr \"\n\" \" \" "</input_parameters>
     <automation_approch>1.TM will load the snmp_pa and sysutil library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. Get erouter0 MAC using executecmd and compare with snmpget output
 4.Responses from the snmplib and executecmd will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -94,8 +94,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -109,7 +109,7 @@ obj.configureTestCase(ip,port,'TS_SNMP_GetErouter0MAC');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -123,14 +123,14 @@ if "SUCCESS" in loadmodulestatus1.upper():
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
 
-    if "IF-MIB" in actResponse:
+    if "No Such Instance currently exists at this OID" not in actResponse:
         mac = actResponse.split("STRING:")[1].strip()
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget for erouter0 mac";
-        print "EXPECTED RESULT 1: snmpget should return erouter0 mac";
-        print "ACTUAL RESULT 1: erouter0 mac is %s" %mac;
+        print("TEST STEP 1:Execute snmpget for erouter0 mac");
+        print("EXPECTED RESULT 1: snmpget should return erouter0 mac");
+        print("ACTUAL RESULT 1: erouter0 mac is %s" %mac);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %mac ;
+        print("[TEST EXECUTION RESULT] : %s" %mac) ;
 
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.addParameter("command", "ifconfig | grep erouter0 | cut -d \" \" -f7 | tr \"\n\" \" \" ");
@@ -149,30 +149,29 @@ if "SUCCESS" in loadmodulestatus1.upper():
             mac_list.append(mac_hex);
             final_mac=":".join(mac_list);
         if expectedresult in actualresult and final_mac:
-            print "TEST STEP 2:Execute ifconfig for erouter0 mac";
-            print "EXPECTED RESULT 2: ifconfig should return erouter0 mac";
+            print("TEST STEP 2:Execute ifconfig for erouter0 mac");
+            print("EXPECTED RESULT 2: ifconfig should return erouter0 mac");
             if mac==final_mac:
-                print "ACTUAL RESULT 2: erouter0 MAC from snmpget and ifconfig are same"
+                print("ACTUAL RESULT 2: erouter0 MAC from snmpget and ifconfig are same")
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "ACTUAL RESULT 2: erouter0 MAC from snmpget and ifconfig are not same"
+                print("ACTUAL RESULT 2: erouter0 MAC from snmpget and ifconfig are not same")
                 tdkTestObj.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : %s" %final_mac
+            print("[TEST EXECUTION RESULT] : %s" %final_mac)
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Execute ifconfig for erouter0 mac";
-            print "EXPECTED RESULT 2: ifconfig should return erouter0 mac";
-            print "ACTUAL RESULT 2: Couldn't get erouter0 MAC from ifconfig"
+            print("TEST STEP 2:Execute ifconfig for erouter0 mac");
+            print("EXPECTED RESULT 2: ifconfig should return erouter0 mac");
+            print("ACTUAL RESULT 2: Couldn't get erouter0 MAC from ifconfig")
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Execute snmpget for erouter0 mac";
-        print "EXPECTED RESULT 1: snmpget should return erouter0 mac";
-        print "ACTUAL RESULT 1: %s" %actResponse;
-        print "[TEST EXECUTION RESULT] : %s" %actResponse ;
+        print("TEST STEP 1:Execute snmpget for erouter0 mac");
+        print("EXPECTED RESULT 1: snmpget should return erouter0 mac");
+        print("ACTUAL RESULT 1: %s" %actResponse);
+        print("[TEST EXECUTION RESULT] : %s" %actResponse) ;
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

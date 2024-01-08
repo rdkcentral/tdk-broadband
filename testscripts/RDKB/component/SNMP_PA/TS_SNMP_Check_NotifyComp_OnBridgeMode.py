@@ -84,14 +84,14 @@ obj.configureTestCase(ip,port,'TS_SNMP_Check_NotifyComp_OnBridgeMode');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
     #check whether the process is running or not
     query="sh %s/tdk_platform_utility.sh checkProcess notify_comp" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -100,11 +100,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
     if expectedresult in actualresult and pid:
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Check notify_comp process";
-        print "EXPECTED RESULT 1: notify_comp process should be running";
-        print "ACTUAL RESULT 1: pid of notify_comp %s" %pid;
+        print("TEST STEP 1:Check notify_comp process");
+        print("EXPECTED RESULT 1: notify_comp process should be running");
+        print("ACTUAL RESULT 1: pid of notify_comp %s" %pid);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Get the Community String
         communityString = snmplib.getCommunityString(obj,"snmpget");
@@ -115,113 +115,113 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj = obj.createTestStep('ExecuteCmd');
         tdkTestObj.executeTestCase("SUCCESS");
 
-        if "SNMPv2-SMI" in actResponse:
-	    lanmode = actResponse.split("INTEGER:")[1].strip()
-	    if lanmode == "2":
-	        lanMode = "router";
-	    elif lanmode == "1":
-	        lanMode = "bridge-static";
-	    else:
-	        lanMode = "Invalid lan Mode";
+        if "No Such Instance currently exists at this OID" not in actResponse:
+            lanmode = actResponse.split("INTEGER:")[1].strip()
+            if lanmode == "2":
+                lanMode = "router";
+            elif lanmode == "1":
+                lanMode = "bridge-static";
+            else:
+                lanMode = "Invalid lan Mode";
 
-	    if lanMode != "Invalid lan Mode":
+            if lanMode != "Invalid lan Mode":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Execute snmpget for lanmode";
-                print "EXPECTED RESULT 2: snmpget should get the lanmode";
-                print "ACTUAL RESULT 2: lanmode is %s" %lanMode;
+                print("TEST STEP 2:Execute snmpget for lanmode");
+                print("EXPECTED RESULT 2: snmpget should get the lanmode");
+                print("ACTUAL RESULT 2: lanmode is %s" %lanMode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	        #set lanmode as bridge-static
-	        if lanMode != "bridge-static":
-		    actResponse =snmplib.SnmpExecuteCmd("snmpset", commSetStr, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32 i 1", ipaddress);
-		    sleep(60);
-		    actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32", ipaddress);
-		    if "SNMPv2-SMI" in actResponse:
-			lanmode_new = actResponse.split("INTEGER:")[1].strip()
-			if lanmode_new == "1":
-			    tdkTestObj.setResultStatus("SUCCESS");
-                	    print "TEST STEP 3:Set the lanmode as bridge-static";
-                	    print "EXPECTED RESULT 3: Should the lanmode as bridge-static";
-                	    #Get the result of execution
-                	    print "[TEST EXECUTION RESULT] : SUCCESS";
-
-			    #check whether the process is running or not
-            		    query="sh %s/tdk_platform_utility.sh checkProcess notify_comp" %TDK_PATH
-            		    print "query:%s" %query
-            		    tdkTestObj = obj.createTestStep('ExecuteCmd');
-            		    tdkTestObj.addParameter("command", query)
-            		    expectedresult="SUCCESS";
-            		    tdkTestObj.executeTestCase("SUCCESS");
-            		    actualresult = tdkTestObj.getResult();
-            		    pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
-            		    if expectedresult in actualresult and pid:
-            		        tdkTestObj.setResultStatus("SUCCESS");
-            		        print "TEST STEP 4:Check notify_comp process";
-            		        print "EXPECTED RESULT 4: notify_comp process should be running";
-            		        print "ACTUAL RESULT 4: pid of notify_comp %s" %pid;
-            		        #Get the result of execution
-            		        print "[TEST EXECUTION RESULT] : SUCCESS";
-			    else:
-				tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 4:Check notify_comp process";
-                                print "EXPECTED RESULT 4: notify_comp process should be running";
-                                print "ACTUAL RESULT 4: pid of notify_comp %s" %pid;
-                                #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 3:Set the lanmode as bridge-static";
-                            print "EXPECTED RESULT 3: Should set the lanmode as bridge-static";
+                #set lanmode as bridge-static
+                if lanMode != "bridge-static":
+                    actResponse =snmplib.SnmpExecuteCmd("snmpset", commSetStr, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32 i 1", ipaddress);
+                    sleep(60);
+                    actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32", ipaddress);
+                    if "No Such Instance currently exists at this OID" not in actResponse:
+                        lanmode_new = actResponse.split("INTEGER:")[1].strip()
+                        if lanmode_new == "1":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 3:Set the lanmode as bridge-static");
+                            print("EXPECTED RESULT 3: Should the lanmode as bridge-static");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
-			#Reset the value of lan mode
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            #check whether the process is running or not
+                            query="sh %s/tdk_platform_utility.sh checkProcess notify_comp" %TDK_PATH
+                            print("query:%s" %query)
+                            tdkTestObj = obj.createTestStep('ExecuteCmd');
+                            tdkTestObj.addParameter("command", query)
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase("SUCCESS");
+                            actualresult = tdkTestObj.getResult();
+                            pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
+                            if expectedresult in actualresult and pid:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 4:Check notify_comp process");
+                                print("EXPECTED RESULT 4: notify_comp process should be running");
+                                print("ACTUAL RESULT 4: pid of notify_comp %s" %pid);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 4:Check notify_comp process");
+                                print("EXPECTED RESULT 4: notify_comp process should be running");
+                                print("ACTUAL RESULT 4: pid of notify_comp %s" %pid);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 3:Set the lanmode as bridge-static");
+                            print("EXPECTED RESULT 3: Should set the lanmode as bridge-static");
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                        #Reset the value of lan mode
                         actResponse =snmplib.SnmpExecuteCmd("snmpset", commSetStr, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32 i 2", ipaddress);
                         sleep(60);
                         actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", "1.3.6.1.4.1.17270.50.2.3.2.1.1.32", ipaddress);
-                        if "SNMPv2-SMI" in actResponse:
+                        if "No Such Instance currently exists at this OID" not in actResponse:
                             lanmode_revert = actResponse.split("INTEGER:")[1].strip()
                             if lanmode_revert == lanmode:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "TEST STEP 5:Set the lanmode to previous value";
-                                print "EXPECTED RESULT 5: Should set the lanmode to previous value";
+                                print("TEST STEP 5:Set the lanmode to previous value");
+                                print("EXPECTED RESULT 5: Should set the lanmode to previous value");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : SUCCESS";
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 5:Set the lanmode to previous value";
-                                print "EXPECTED RESULT 5: Should set the lanmode to previous value";
+                                print("TEST STEP 5:Set the lanmode to previous value");
+                                print("EXPECTED RESULT 5: Should set the lanmode to previous value");
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-			else:
-			    tdkTestObj.setResultStatus("FAILURE");
-			    print "Failed to execute snmp command to set lanmode"
-		    else:
-			tdkTestObj.setResultStatus("FAILURE");
-			print "Failed to set the lanmode through snmp"
-			print "Details: %s" %actResponse
-		else:
-		    print "\nLanmode is already bridge-static and notify_comp process is running\n"
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("Failed to execute snmp command to set lanmode")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("Failed to set the lanmode through snmp")
+                        print("Details: %s" %actResponse)
+                else:
+                    print("\nLanmode is already bridge-static and notify_comp process is running\n")
 
-	    else:
-		tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Execute snmpget for lanmode";
-                print "EXPECTED RESULT 2: snmpget should get the lanmode";
-                print "ACTUAL RESULT 2: lanmode is %s" %lanMode;
+            else:
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 2:Execute snmpget for lanmode");
+                print("EXPECTED RESULT 2: snmpget should get the lanmode");
+                print("ACTUAL RESULT 2: lanmode is %s" %lanMode);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-	    print "Failed to execute snmp command to get the lan mode"
+                print("[TEST EXECUTION RESULT] : FAILURE");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("Failed to execute snmp command to get the lan mode")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Check notify_comp process";
-        print "EXPECTED RESULT 1: notify_comp process should be running";
-        print "ACTUAL RESULT 1: %s" %pid;
+        print("TEST STEP 1:Check notify_comp process");
+        print("EXPECTED RESULT 1: notify_comp process should be running");
+        print("ACTUAL RESULT 1: %s" %pid);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";				
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

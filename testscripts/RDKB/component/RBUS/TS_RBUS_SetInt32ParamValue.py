@@ -101,7 +101,7 @@ obj.configureTestCase(ip,port,'TS_RBUS_SetInt32ParamValue');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -113,17 +113,17 @@ if "SUCCESS" in loadmodulestatus.upper() :
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS Open Detail is ",details
+    print("RBUS Open Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was success";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
-        print "RBUS status is %s" %details;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
+        print("RBUS status is %s" %details);
 
         tdkTestObj = obj.createTestStep('RBUS_GetValue');
         tdkTestObj.addParameter("paramType","Integer");
@@ -133,23 +133,23 @@ if "SUCCESS" in loadmodulestatus.upper() :
         actualresult = tdkTestObj.getResult();
         initial_Value = tdkTestObj.getResultDetails();
 
-        print "Initial Value is: ",initial_Value
+        print("Initial Value is: ",initial_Value)
 
         if expectedresult in actualresult and initial_Value != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the value of parameter using rbusValue_GetInt32";
-            print "EXPECTED RESULT 2: Should get the value of the parameter: ",parameterName;
-            print "ACTUAL RESULT 2: value of the parameter is ", initial_Value;
+            print("TEST STEP 2: Get the value of parameter using rbusValue_GetInt32");
+            print("EXPECTED RESULT 2: Should get the value of the parameter: ",parameterName);
+            print("ACTUAL RESULT 2: value of the parameter is ", initial_Value);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
             new_value_to_set = "0";
 
             if initial_Value == "0":
                 new_value_to_set = "10";
 
-            print "New value to be set is: ",new_value_to_set
+            print("New value to be set is: ",new_value_to_set)
 
             tdkTestObj = obj.createTestStep('RBUS_SetValue');
             tdkTestObj.addParameter("paramType","Integer");
@@ -163,11 +163,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
             if expectedresult in actualresult and details != "":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set the value for parameter using rbusValue_SetInt32";
-                print "EXPECTED RESULT 3: Set function should be succcess";
-                print "ACTUAL RESULT 3: Set function was Success";
+                print("TEST STEP 3: Set the value for parameter using rbusValue_SetInt32");
+                print("EXPECTED RESULT 3: Set function should be succcess");
+                print("ACTUAL RESULT 3: Set function was Success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                 tdkTestObj = obj.createTestStep('RBUS_GetValue');
                 tdkTestObj.addParameter("paramType","Integer");
@@ -177,33 +177,33 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 actualresult = tdkTestObj.getResult();
                 new_Value = tdkTestObj.getResultDetails();
 
-                print "New value is: ",new_Value
+                print("New value is: ",new_Value)
 
                 if expectedresult in actualresult and new_Value != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Get the value of parameter using rbusValue_GetInt32";
-                    print "EXPECTED RESULT 4: Should get the value of the parameter: ",parameterName;
-                    print "ACTUAL RESULT 4: value of the parameter is ", new_Value;
+                    print("TEST STEP 4: Get the value of parameter using rbusValue_GetInt32");
+                    print("EXPECTED RESULT 4: Should get the value of the parameter: ",parameterName);
+                    print("ACTUAL RESULT 4: value of the parameter is ", new_Value);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                     if int(new_Value) == int(new_value_to_set):
-                        print "Validation for set operation was Successful"
+                        print("Validation for set operation was Successful")
                         tdkTestObj.setResultStatus("SUCCESS");
                     else:
-                        print "Validation for set operation was Failed"
+                        print("Validation for set operation was Failed")
                         tdkTestObj.setResultStatus("FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Get the value of parameter using rbusValue_GetInt32";
-                    print "EXPECTED RESULT 4: Should get the value of the parameter: ",parameterName;
-                    print "ACTUAL RESULT 4: value of the parameter is ", new_Value;
+                    print("TEST STEP 4: Get the value of parameter using rbusValue_GetInt32");
+                    print("EXPECTED RESULT 4: Should get the value of the parameter: ",parameterName);
+                    print("ACTUAL RESULT 4: value of the parameter is ", new_Value);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                print "Value to be set for Revert operation is: ",initial_Value
+                print("Value to be set for Revert operation is: ",initial_Value)
 
                 tdkTestObj = obj.createTestStep('RBUS_SetValue');
                 tdkTestObj.addParameter("paramType","Integer");
@@ -217,70 +217,70 @@ if "SUCCESS" in loadmodulestatus.upper() :
                 if expectedresult in actualresult and details != "":
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 5: Set the value to initial_Value";
-                    print "EXPECTED RESULT 5: Revert operation should be succcess";
-                    print "ACTUAL RESULT 5: Revert operation was Successful";
+                    print("TEST STEP 5: Set the value to initial_Value");
+                    print("EXPECTED RESULT 5: Revert operation should be succcess");
+                    print("ACTUAL RESULT 5: Revert operation was Successful");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 5: Set the value to initial_Value";
-                    print "EXPECTED RESULT 5: Revert operation should be succcess";
-                    print "ACTUAL RESULT 5: Revert operation was Failed";
+                    print("TEST STEP 5: Set the value to initial_Value");
+                    print("EXPECTED RESULT 5: Revert operation should be succcess");
+                    print("ACTUAL RESULT 5: Revert operation was Failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set the value for parameter using rbusValue_SetInt32";
-                print "EXPECTED RESULT 3: Set function should be succcess";
-                print "ACTUAL RESULT 3: Set function was Failed";
+                print("TEST STEP 3: Set the value for parameter using rbusValue_SetInt32");
+                print("EXPECTED RESULT 3: Set function should be succcess");
+                print("ACTUAL RESULT 3: Set function was Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the value of parameter using rbusValue_GetInt32";
-            print "EXPECTED RESULT 2: Should get the value of the parameter: ",parameterName;
-            print "ACTUAL RESULT 2: Failed to get the value of the parameter "
+            print("TEST STEP 2: Get the value of parameter using rbusValue_GetInt32");
+            print("EXPECTED RESULT 2: Should get the value of the parameter: ",parameterName);
+            print("ACTUAL RESULT 2: Failed to get the value of the parameter ")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_Close');
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS close Detail is ",details
+        print("RBUS close Detail is ",details)
 
         if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 6: Close the RBUS connection";
-            print "EXPECTED RESULT 6: rbus_close should be success";
-            print "ACTUAL RESULT 6: rbus_close was success";
+            print("TEST STEP 6: Close the RBUS connection");
+            print("EXPECTED RESULT 6: rbus_close should be success");
+            print("ACTUAL RESULT 6: rbus_close was success");
              #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 6: Close the RBUS connection";
-            print "EXPECTED RESULT 6: rbus_close should be success";
-            print "ACTUAL RESULT 6: rbus_close was Failed";
+            print("TEST STEP 6: Close the RBUS connection");
+            print("EXPECTED RESULT 6: rbus_close should be success");
+            print("ACTUAL RESULT 6: rbus_close was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS connection";
-        print "EXPECTED RESULT 1: rbus_open Should be success";
-        print "ACTUAL RESULT 1: rbus_open was Failed";
+        print("TEST STEP 1: Open the RBUS connection");
+        print("EXPECTED RESULT 1: rbus_open Should be success");
+        print("ACTUAL RESULT 1: rbus_open was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
     obj.unloadModule("rbus");
 else:
-     print "Failed to load the module";
-     obj.setLoadModuleStatus("FAILURE");
-     print "Module loading failed";
+    print("Failed to load the module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -84,8 +84,8 @@ sysobj.configureTestCase(ip,port,'TS_RBUS_CloseWithActiveSubscription');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -100,17 +100,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Open the RBUS connection" %step;
-    print "EXPECTED RESULT %d: rbus_open Should be success" %step;
-    print "RBUS Open Details : ",details;
+    print("\nTEST STEP %d: Open the RBUS connection" %step);
+    print("EXPECTED RESULT %d: rbus_open Should be success" %step);
+    print("RBUS Open Details : ",details);
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: rbus_open was success" %step;
+        print("ACTUAL RESULT %d: rbus_open was success" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS" ;
-        print "RBUS status is %s" %details;
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
+        print("RBUS status is %s" %details);
 
         #Register a event "sample_prop" using rbuscli
         step = step + 1;
@@ -122,15 +122,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\n Command : %s" %cmd;
-        print "TEST STEP %d: Register an event %s using rbuscli" %(step, event_name);
-        print "EXPECTED RESULT %d: Should register the event successfully" %step;
+        print("\n Command : %s" %cmd);
+        print("TEST STEP %d: Register an event %s using rbuscli" %(step, event_name));
+        print("EXPECTED RESULT %d: Should register the event successfully" %step);
 
         if expectedresult in actualresult :
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: Registered successfully" %step;
+            print("ACTUAL RESULT %d: Registered successfully" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Subscribe to the registered event
             step = step + 1;
@@ -141,26 +141,26 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\n Command : %s" %cmd;
-            print "TEST STEP %d: Subscribe to the event %s using rbuscli" %(step, event_name);
-            print "EXPECTED RESULT %d: Should subscribe to the event successfully" %step;
+            print("\n Command : %s" %cmd);
+            print("TEST STEP %d: Subscribe to the event %s using rbuscli" %(step, event_name));
+            print("EXPECTED RESULT %d: Should subscribe to the event successfully" %step);
 
             if expectedresult in actualresult :
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Subscribed successfully" %step;
+                print("ACTUAL RESULT %d: Subscribed successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 string_to_print = "with active subscription";
             else :
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Not subscribed successfully" %step;
+                print("ACTUAL RESULT %d: Not subscribed successfully" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else :
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: Not registered successfully" %step;
+            print("ACTUAL RESULT %d: Not registered successfully" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
         #Check if RBUS close connection is success
         step = step + 1;
@@ -169,33 +169,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
 
-        print "\nTEST STEP %d: Close the RBUS connection %s" %(step, string_to_print);
-        print "EXPECTED RESULT %d: rbus_close should be success" %step;
-        print "RBUS close Details : ",details;
+        print("\nTEST STEP %d: Close the RBUS connection %s" %(step, string_to_print));
+        print("EXPECTED RESULT %d: rbus_close should be success" %step);
+        print("RBUS close Details : ",details);
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT %d: rbus_close was success" %step;
+            print("ACTUAL RESULT %d: rbus_close was success" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ;
+            print("[TEST EXECUTION RESULT] : SUCCESS") ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT %d: rbus_close was Failed" %step;
+            print("ACTUAL RESULT %d: rbus_close was Failed" %step);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: rbus_open was Failed" %step;
+        print("ACTUAL RESULT %d: rbus_open was Failed" %step);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
 
     obj.unloadModule("rbus");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

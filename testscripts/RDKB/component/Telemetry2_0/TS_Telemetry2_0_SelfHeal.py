@@ -101,77 +101,77 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
 
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
         # Kill the process
         query="sh %s/tdk_platform_utility.sh killProcess telemetry2_0" %TDK_PATH
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj_Sys_ExeCmd.addParameter("command", query)
         tdkTestObj_Sys_ExeCmd.executeTestCase("SUCCESS");
         actualresult = tdkTestObj_Sys_ExeCmd.getResult();
         result = tdkTestObj_Sys_ExeCmd.getResultDetails().strip()
         if expectedresult in actualresult:
-            print "TEST STEP 2:Kill telemetry2_0 process"
-            print "EXPECTED RESULT 2: telemetry2_0 should be killed";
-            print "ACTUAL RESULT 2: telemetry2_0 should be killed"
+            print("TEST STEP 2:Kill telemetry2_0 process")
+            print("EXPECTED RESULT 2: telemetry2_0 should be killed");
+            print("ACTUAL RESULT 2: telemetry2_0 should be killed")
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"telemetry2_0");
             if expectedresult in actualresult and pid != "":
-                print "TEST STEP 3:Check if telemetry2_0 process is running"
-                print "EXPECTED RESULT 3: telemetry2_0 should be running";
-                print "ACTUAL RESULT 3: telemetry2_0 process is running"
-                print "telemetry2_0 PID: %s" %pid
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3:Check if telemetry2_0 process is running")
+                print("EXPECTED RESULT 3: telemetry2_0 should be running");
+                print("ACTUAL RESULT 3: telemetry2_0 process is running")
+                print("telemetry2_0 PID: %s" %pid)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3:Check if telemetry2_0 process is running"
-                print "EXPECTED RESULT 3: telemetry2_0 should be running";
-                print "ACTUAL RESULT 3: telemetry2_0 process is not running"
+                print("TEST STEP 3:Check if telemetry2_0 process is running")
+                print("EXPECTED RESULT 3: telemetry2_0 should be running");
+                print("ACTUAL RESULT 3: telemetry2_0 process is not running")
                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 # Initiate reboot if process is not restarted automatically
                 sysobj.initiateReboot();
         else:
-            print "TEST STEP 2:Kill telemetry2_0 process"
-            print "EXPECTED RESULT 2: telemetry2_0 should be killed";
-            print "ACTUAL RESULT 2: telemetry2_0 not killed"
+            print("TEST STEP 2:Kill telemetry2_0 process")
+            print("EXPECTED RESULT 2: telemetry2_0 should be killed");
+            print("ACTUAL RESULT 2: telemetry2_0 not killed")
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 4: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 4: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 4: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 4: Post Process should be success");
 
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 4 : Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 4 : Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 4: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 4: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

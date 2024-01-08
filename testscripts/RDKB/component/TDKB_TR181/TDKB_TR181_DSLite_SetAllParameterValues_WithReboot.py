@@ -96,22 +96,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj = obj1.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase(expectedresult);
 
-    print "The modules to test is: DSLite";
+    print("The modules to test is: DSLite");
     setup_type = "TDK"
 
     #Invoke the utility function to set and validate the values for all configured tr181 params
     moduleStatus,failedParams = tdkbSetAllParams.setAllParams("DSLite", setup_type, obj, obj1,"true");
 
-    print "Status of DSLite validation is ", moduleStatus, "\n";
+    print("Status of DSLite validation is ", moduleStatus, "\n");
     if moduleStatus == "FAILURE":
-        print "The failed params are ", failedParams, "\n";
+        print("The failed params are ", failedParams, "\n");
         tdkTestObj.setResultStatus("FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
-
+    print("Module loading failed");

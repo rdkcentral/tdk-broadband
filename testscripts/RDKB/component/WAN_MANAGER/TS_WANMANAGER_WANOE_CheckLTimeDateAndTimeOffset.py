@@ -118,14 +118,14 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
     if expectedresult in actualresult and devicetype != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if devicetype == "RPI":
-           i =1;
+            i =1;
         else:
             i=2;
 
@@ -137,14 +137,14 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
         actualresult = tdkTestObj.getResult();
         enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
-        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+        print("TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties")
+        print("EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE");
 
         if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if enableFlag == "TRUE":
                 ParamName = "Device.X_RDK_WanManager.Interface." + str(i) + ".VirtualInterface.1.Enable";
@@ -160,11 +160,11 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
 
             if expectedresult in actualresult and details == "true":
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = sysObj.createTestStep('ExecuteCmd');
                 tdkTestObj.addParameter("command", "LTime");
@@ -180,20 +180,20 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
 
                 if expectedresult in (actualresult2 and actualresult1):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 :Get the LTime and date ";
-                    print "EXPECTED RESULT 4: Should get the LTime and date";
-                    print "ACTUAL RESULT 4 : Get operation success";
+                    print("TEST STEP 4 :Get the LTime and date ");
+                    print("EXPECTED RESULT 4: Should get the LTime and date");
+                    print("ACTUAL RESULT 4 : Get operation success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] :SUCCESS";
+                    print("[TEST EXECUTION RESULT] :SUCCESS");
 
                     date= date.split(",")[3];
                     if "" != (LTime and date)  and LTime !=  date:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "TEST STEP 5 :Get the LTime and date ";
-                        print "EXPECTED RESULT 5: Should get the LTime and date not equal";
-                        print "ACTUAL RESULT 5 :Ltime :%s and date : %s" %(LTime,date);
+                        print("TEST STEP 5 :Get the LTime and date ");
+                        print("EXPECTED RESULT 5: Should get the LTime and date not equal");
+                        print("ACTUAL RESULT 5 :Ltime :%s and date : %s" %(LTime,date));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         tdkTestObj = obj1.createTestStep('TDKB_TR181Stub_Get');
                         tdkTestObj.addParameter("ParamName","Device.Time.TimeOffset");
@@ -204,58 +204,58 @@ if "SUCCESS" in (loadmodulestatus1.upper() and loadmodulestatus2.upper()):
 
                         if expectedresult in actualresult and details!= "":
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6:Get the Time offset";
-                            print "EXPECTED RESULT 6: Should get the Time offset non empty";
-                            print "ACTUAL RESULT 6: Timeoffset is :%s"%details;
+                            print("TEST STEP 6:Get the Time offset");
+                            print("EXPECTED RESULT 6: Should get the Time offset non empty");
+                            print("ACTUAL RESULT 6: Timeoffset is :%s"%details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP 6:Get the Time offset";
-                            print "EXPECTED RESULT 6: Should get the Time offset non empty";
-                            print "ACTUAL RESULT 6: Timeoffset is :%s"%details;
+                            print("TEST STEP 6:Get the Time offset");
+                            print("EXPECTED RESULT 6: Should get the Time offset non empty");
+                            print("ACTUAL RESULT 6: Timeoffset is :%s"%details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "TEST STEP 5 :Get the LTime and date ";
-                        print "EXPECTED RESULT 5: Should get the LTime and date not equal";
-                        print "ACTUAL RESULT 5 :Ltime :%s and date : %s" %(LTime,date);
+                        print("TEST STEP 5 :Get the LTime and date ");
+                        print("EXPECTED RESULT 5: Should get the LTime and date not equal");
+                        print("ACTUAL RESULT 5 :Ltime :%s and date : %s" %(LTime,date));
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] :FAILURE";
+                        print("[TEST EXECUTION RESULT] :FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4 :Get the LTime and date ";
-                    print "EXPECTED RESULT 4: Should get the LTime and date";
-                    print "ACTUAL RESULT 4 : Get operation failed";
+                    print("TEST STEP 4 :Get the LTime and date ");
+                    print("EXPECTED RESULT 4: Should get the LTime and date");
+                    print("ACTUAL RESULT 4 : Get operation failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] :FAILURE";
+                    print("[TEST EXECUTION RESULT] :FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :Check if WANOE is enabled";
-                print "EXPECTED RESULT 3: Should get the status of WANOE";
-                print "ACTUAL RESULT 3: The value received is :",details;
+                print("TEST STEP 3 :Check if WANOE is enabled");
+                print("EXPECTED RESULT 3: Should get the status of WANOE");
+                print("ACTUAL RESULT 3: The value received is :",details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the DEVICE TYPE"
-        print "EXPECTED RESULT 1: Should get the device type";
-        print "ACTUAL RESULT 1:Device type  %s" %devicetype;
+        print("TEST STEP 1: Get the DEVICE TYPE")
+        print("EXPECTED RESULT 1: Should get the device type");
+        print("ACTUAL RESULT 1:Device type  %s" %devicetype);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
     obj1.unloadModule("tdkbtr181");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -110,13 +110,13 @@ obj.configureTestCase(ip,port,'TS_RBUS_RegisterMethodsBeyondLimits');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 
-print "[RBUS LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[RBUS LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult="SUCCESS";
 
-    print "\n*************Start of Broker Connection*******************************";
+    print("\n*************Start of Broker Connection*******************************");
     tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
     tdkTestObj.addParameter("operation","openBrokerConnection");
     tdkTestObj.addParameter("objectName","tdkb_method"); #This Will be converted to Component name in Wrapper code
@@ -125,38 +125,38 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    print "RBUS openBrokerConnection Detail is ",details
+    print("RBUS openBrokerConnection Detail is ",details)
 
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Open the RBUS Broker connection";
-        print "EXPECTED RESULT 1: rbus_openBrokerConnection Should be success";
-        print "ACTUAL RESULT 1: rbus_openBrokerConnection was success";
+        print("TEST STEP 1: Open the RBUS Broker connection");
+        print("EXPECTED RESULT 1: rbus_openBrokerConnection Should be success");
+        print("ACTUAL RESULT 1: rbus_openBrokerConnection was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-        print "\n*************Start of Registering Object*****************************"
+        print("\n*************Start of Registering Object*****************************")
         tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
         tdkTestObj.addParameter("operation","registerObj");
         tdkTestObj.addParameter("objectName","tdkb_method.obj1");
-        tdkTestObj.addParameter("methodName","dummy");	 #Dummy Value
+        tdkTestObj.addParameter("methodName","dummy");   #Dummy Value
 
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS register Obj Detail is ",details
+        print("RBUS register Obj Detail is ",details)
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Register the object with RBUS ";
-            print "EXPECTED RESULT 2: rbus_registerObj should be success";
-            print "ACTUAL RESULT 2: rbus_registerObj was success";
+            print("TEST STEP 2: Register the object with RBUS ");
+            print("EXPECTED RESULT 2: rbus_registerObj should be success");
+            print("ACTUAL RESULT 2: rbus_registerObj was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-            print "\n*************Start of Registering Method*****************************"
+            print("\n*************Start of Registering Method*****************************")
 
             max_method = 32;
             method_name = "";
@@ -164,7 +164,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             for method in range(0,max_method):
                 method_name = "Method"+str(method);
-                print "Registering Method with Method Name ",method_name;
+                print("Registering Method with Method Name ",method_name);
 
                 tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
                 tdkTestObj.addParameter("operation","registerMethod");
@@ -174,30 +174,30 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "RBUS register method Detail is ",details
+                print("RBUS register method Detail is ",details)
 
                 if expectedresult in actualresult:
                     counter = counter + 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 3: Register the Method with RBUS ";
-                    print "EXPECTED RESULT 3: rbus_registerMethod should be success";
-                    print "ACTUAL RESULT 3: rbus_registerMethod was success";
+                    print("TEST STEP 3: Register the Method with RBUS ");
+                    print("EXPECTED RESULT 3: rbus_registerMethod should be success");
+                    print("ACTUAL RESULT 3: rbus_registerMethod was success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 3: Register the Method with RBUS ";
-                    print "EXPECTED RESULT 3: rbus_registerMethod should be success";
-                    print "ACTUAL RESULT 3: rbus_registerMethod was Failed";
+                    print("TEST STEP 3: Register the Method with RBUS ");
+                    print("EXPECTED RESULT 3: rbus_registerMethod should be success");
+                    print("ACTUAL RESULT 3: rbus_registerMethod was Failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     break;
 
-            print "*************End of Registering 32 Method*****************************\n"
+            print("*************End of Registering 32 Method*****************************\n")
 
-            print "Register Method Beyond the Limit(more than 32)"
+            print("Register Method Beyond the Limit(more than 32)")
 
             tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
             tdkTestObj.addParameter("operation","registerMethod");
@@ -207,26 +207,26 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "RBUS register method Detail is ",details
+            print("RBUS register method Detail is ",details)
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Register the Method with RBUS Beyond the Limit";
-                print "EXPECTED RESULT 3: rbus_registerMethod should Fail if the limit is exceeds 32";
-                print "ACTUAL RESULT 3: rbus_registerMethod was Failed as expected";
+                print("TEST STEP 3: Register the Method with RBUS Beyond the Limit");
+                print("EXPECTED RESULT 3: rbus_registerMethod should Fail if the limit is exceeds 32");
+                print("ACTUAL RESULT 3: rbus_registerMethod was Failed as expected");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS" ;
+                print("[TEST EXECUTION RESULT] : SUCCESS") ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Register the Method with RBUS Beyond the Limit";
-                print "EXPECTED RESULT 3: rbus_registerMethod should Fail if the limit is exceeds 32";
-                print "ACTUAL RESULT 3: rbus_registerMethod was NOT Failed";
+                print("TEST STEP 3: Register the Method with RBUS Beyond the Limit");
+                print("EXPECTED RESULT 3: rbus_registerMethod should Fail if the limit is exceeds 32");
+                print("ACTUAL RESULT 3: rbus_registerMethod was NOT Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE" ;
+                print("[TEST EXECUTION RESULT] : FAILURE") ;
 
-            print "\nUnregister one Method (Method0) to freeup the Method register queue"
+            print("\nUnregister one Method (Method0) to freeup the Method register queue")
 
             tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
             tdkTestObj.addParameter("operation","unregisterMethod");
@@ -236,18 +236,18 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "RBUS unregister Method Detail is ",details
+            print("RBUS unregister Method Detail is ",details)
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 4: UnRegister the Method with RBUS ";
-                print "EXPECTED RESULT 4: rbus_unregisterMethod should be success";
-                print "ACTUAL RESULT 4: rbus_unregisterMethod was success";
+                print("TEST STEP 4: UnRegister the Method with RBUS ");
+                print("EXPECTED RESULT 4: rbus_unregisterMethod should be success");
+                print("ACTUAL RESULT 4: rbus_unregisterMethod was success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-                print "\nRegister the Method (Method0) again after unregistering it"
+                print("\nRegister the Method (Method0) again after unregistering it")
                 tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
                 tdkTestObj.addParameter("operation","registerMethod");
                 tdkTestObj.addParameter("objectName","tdkb_method.obj1");
@@ -256,38 +256,38 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "RBUS unregister Method Detail is ",details
+                print("RBUS unregister Method Detail is ",details)
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Register the Method with RBUS again";
-                    print "EXPECTED RESULT 4: rbus_registerMethod should be success";
-                    print "ACTUAL RESULT 4: rbus_registerMethod was success";
+                    print("TEST STEP 4: Register the Method with RBUS again");
+                    print("EXPECTED RESULT 4: rbus_registerMethod should be success");
+                    print("ACTUAL RESULT 4: rbus_registerMethod was success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Register the Method with RBUS again";
-                    print "EXPECTED RESULT 4: rbus_registerMethod should be success";
-                    print "ACTUAL RESULT 4: rbus_registerMethod was Failed";
+                    print("TEST STEP 4: Register the Method with RBUS again");
+                    print("EXPECTED RESULT 4: rbus_registerMethod should be success");
+                    print("ACTUAL RESULT 4: rbus_registerMethod was Failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: UnRegister the Method with RBUS ";
-                print "EXPECTED RESULT 4: rbus_unregisterMethod should be success";
-                print "ACTUAL RESULT 4: rbus_unregisterMethod was Failed";
+                print("TEST STEP 4: UnRegister the Method with RBUS ");
+                print("EXPECTED RESULT 4: rbus_unregisterMethod should be success");
+                print("ACTUAL RESULT 4: rbus_unregisterMethod was Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-            print "\n*************Start of UnRegistering Methods*****************************"
+            print("\n*************Start of UnRegistering Methods*****************************")
             method_name = "";
             for method in range(0,counter):
                 method_name = "Method"+str(method);
-                print "UnRegistering Method with Method Name ",method_name;
+                print("UnRegistering Method with Method Name ",method_name);
 
                 tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
                 tdkTestObj.addParameter("operation","unregisterMethod");
@@ -297,28 +297,28 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                print "RBUS unregister Method Detail is ",details
+                print("RBUS unregister Method Detail is ",details)
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: UnRegister the Method with RBUS ";
-                    print "EXPECTED RESULT 4: rbus_unregisterMethod should be success";
-                    print "ACTUAL RESULT 4: rbus_unregisterMethod was success";
+                    print("TEST STEP 4: UnRegister the Method with RBUS ");
+                    print("EXPECTED RESULT 4: rbus_unregisterMethod should be success");
+                    print("ACTUAL RESULT 4: rbus_unregisterMethod was success");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: UnRegister the Method with RBUS ";
-                    print "EXPECTED RESULT 4: rbus_unregisterMethod should be success";
-                    print "ACTUAL RESULT 4: rbus_unregisterMethod was Failed";
+                    print("TEST STEP 4: UnRegister the Method with RBUS ");
+                    print("EXPECTED RESULT 4: rbus_unregisterMethod should be success");
+                    print("ACTUAL RESULT 4: rbus_unregisterMethod was Failed");
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                    print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                     break;
 
-            print "*************End of UnRegistering 32 Methods*******************************\n"
+            print("*************End of UnRegistering 32 Methods*******************************\n")
 
             tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
             tdkTestObj.addParameter("operation","unregisterObj");
@@ -328,72 +328,72 @@ if "SUCCESS" in loadmodulestatus.upper():
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            print "RBUS unregister Obj Detail is ",details
+            print("RBUS unregister Obj Detail is ",details)
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: UnRegister the object with RBUS ";
-                print "EXPECTED RESULT 5: rbus_unregisterObj should be success";
-                print "ACTUAL RESULT 5: rbus_unregisterObj was success";
+                print("TEST STEP 5: UnRegister the object with RBUS ");
+                print("EXPECTED RESULT 5: rbus_unregisterObj should be success");
+                print("ACTUAL RESULT 5: rbus_unregisterObj was success");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 5: UnRegister the object with RBUS ";
-                print "EXPECTED RESULT 5: rbus_unregisterObj should be success";
-                print "ACTUAL RESULT 5: rbus_unregisterObj was Failed";
+                print("TEST STEP 5: UnRegister the object with RBUS ");
+                print("EXPECTED RESULT 5: rbus_unregisterObj should be success");
+                print("ACTUAL RESULT 5: rbus_unregisterObj was Failed");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+                print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 5: Register the object with RBUS ";
-            print "EXPECTED RESULT 5: rbus_registerObj should be success";
-            print "ACTUAL RESULT 5: rbus_registerObj was Failed";
+            print("TEST STEP 5: Register the object with RBUS ");
+            print("EXPECTED RESULT 5: rbus_registerObj should be success");
+            print("ACTUAL RESULT 5: rbus_registerObj was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-        print "*************End of Registering Object*******************************\n"
+        print("*************End of Registering Object*******************************\n")
         tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
         tdkTestObj.addParameter("operation","closeBrokerConnection");
         tdkTestObj.addParameter("objectName","tdkb_method"); #This Will be converted to Component name in Wrapper code
-        tdkTestObj.addParameter("methodName","dummy");	 #Dummy Value
+        tdkTestObj.addParameter("methodName","dummy");   #Dummy Value
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails();
-        print "RBUS closeBrokerConnection Detail is ",details
+        print("RBUS closeBrokerConnection Detail is ",details)
 
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 6: Close the RBUS Broker connection";
-            print "EXPECTED RESULT 6: rbus_closeBrokerConnection should be success";
-            print "ACTUAL RESULT 6: rbus_closeBrokerConnection was success";
+            print("TEST STEP 6: Close the RBUS Broker connection");
+            print("EXPECTED RESULT 6: rbus_closeBrokerConnection should be success");
+            print("ACTUAL RESULT 6: rbus_closeBrokerConnection was success");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 6: Close the RBUS Broker connection";
-            print "EXPECTED RESULT 6: rbus_closeBrokerConnection should be success";
-            print "ACTUAL RESULT 6: rbus_closeBrokerConnection was Failed";
+            print("TEST STEP 6: Close the RBUS Broker connection");
+            print("EXPECTED RESULT 6: rbus_closeBrokerConnection should be success");
+            print("ACTUAL RESULT 6: rbus_closeBrokerConnection was Failed");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+            print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Open the RBUS Broker connection";
-        print "EXPECTED RESULT 1: rbus_openBrokerConnection Should be success";
-        print "ACTUAL RESULT 1: rbus_openBrokerConnection was Failed";
+        print("TEST STEP 1: Open the RBUS Broker connection");
+        print("EXPECTED RESULT 1: rbus_openBrokerConnection Should be success");
+        print("ACTUAL RESULT 1: rbus_openBrokerConnection was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : %s" %actualresult ;
+        print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-    print "*************End of Broker Connection*******************************\n"
+    print("*************End of Broker Connection*******************************\n")
     obj.unloadModule("rbus");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

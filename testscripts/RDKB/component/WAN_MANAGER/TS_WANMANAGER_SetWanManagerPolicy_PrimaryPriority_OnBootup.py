@@ -101,8 +101,8 @@ obj1.configureTestCase(ip,port,'TS_WANMANAGER_SetWanManagerPolicy_PrimaryPriorit
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     #Set the result status of execution
@@ -118,7 +118,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             #Set the Wan Manager Policy to PRIMARY_PRIORITY_ON_BOOTUP
             new_policy = "PRIMARY_PRIORITY_ON_BOOTUP"
             expectedresult="SUCCESS";
-            print "Setting the wanmanager policy to :%s"%new_policy
+            print("Setting the wanmanager policy to :%s"%new_policy)
             revert = 0
             set_policy(new_policy, policy_initial, obj1, revert);
             #Get the WANMANAGER POLICY and cross check with the Set value
@@ -127,14 +127,14 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
             if status == 0:
                 if policy == new_policy:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The wanmanager policy is set successfully"
+                    print("The wanmanager policy is set successfully")
                     #check if the required logs are present
                     log_file = "/rdklogs/logs/WANMANAGERLog.txt.0"
                     log = "Primary Priority On Bootup Policy Thread Starting"
                     result = [];
-                    print "\n***Checking if %s message is present in WANMANAGERLog.txt.0***" %log;
+                    print("\n***Checking if %s message is present in WANMANAGERLog.txt.0***" %log);
                     query="grep -rin \"%s\" \"%s\"" %(log,log_file);
-                    print "query:%s" %query
+                    print("query:%s" %query)
                     tdkTestObj2 = obj1.createTestStep('ExecuteCmd');
                     tdkTestObj2.addParameter("command", query)
                     expectedresult="SUCCESS";
@@ -142,23 +142,23 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
                     actualresult = tdkTestObj2.getResult();
                     details = tdkTestObj2.getResultDetails().strip().replace("\\n","");
                     step = step + 1;
-                    print "TEST STEP %d : Check if the expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0" %step;
-                    print "EXPECTED RESULT %d : The expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0 " %step;
+                    print("TEST STEP %d : Check if the expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0" %step);
+                    print("EXPECTED RESULT %d : The expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0 " %step);
                     result.append(details);
                     revert = 1;
                     if (len(details) != 0)  and  log in details:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : The expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0 :%s"%(step, result);
-                        print "[TEST EXECUTION RESULT]  : SUCCESS";
+                        print("ACTUAL RESULT %d : The expected log is present in /rdklogs/logs/WANMANAGERLog.txt.0 :%s"%(step, result));
+                        print("[TEST EXECUTION RESULT]  : SUCCESS");
                         set_policy(new_policy, policy_initial, obj1, revert);
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : The expected log is not present in /rdklogs/logs/WANMANAGERLog.txt.0 :%s"%(step, result);
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("ACTUAL RESULT %d : The expected log is not present in /rdklogs/logs/WANMANAGERLog.txt.0 :%s"%(step, result));
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                         set_policy(new_policy, policy_initial, obj1, revert);
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The wanmanager policy is not set successfully"
+                    print("The wanmanager policy is not set successfully")
             else:
                 pass;
         else:
@@ -168,6 +168,6 @@ if "SUCCESS" in (loadmodulestatus.upper() and loadmodulestatus1.upper()):
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

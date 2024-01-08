@@ -88,8 +88,8 @@ sysobj.configureTestCase(ip,port,'TS_TAD_GetARPTableDetails');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 sysloadmodulestatus = sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %sysloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.upper():
     #Set the result status of execution
@@ -107,11 +107,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the number of entries in ARP table";
-        print "EXPECTED RESULT 1: Should get the number of entries in ARP table";
-        print "ACTUAL RESULT 1: The number of entries in ARP table is %s" %numberofEntries;
+        print("TEST STEP 1: Get the number of entries in ARP table");
+        print("EXPECTED RESULT 1: Should get the number of entries in ARP table");
+        print("ACTUAL RESULT 1: The number of entries in ARP table is %s" %numberofEntries);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         if int(numberofEntries) > 0:
             ARPdetails = [];
             for i in range(1,int(numberofEntries)+1):
@@ -123,23 +123,23 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 tdkTestObj,status,orgValue = getMultipleParameterValues(obj,paramList)
                 if expectedresult in status:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP %d: Get the ipaddress, macaddress and type of ARP table entry %d" %(i,i)
-                    print "EXPECTED RESULT %d: Should retrieve the ipaddress, macaddress and type of ARP table entry %d" %(i,i)
-                    print "ACTUAL RESULT %d: %s" %(i,orgValue);
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("TEST STEP %d: Get the ipaddress, macaddress and type of ARP table entry %d" %(i,i))
+                    print("EXPECTED RESULT %d: Should retrieve the ipaddress, macaddress and type of ARP table entry %d" %(i,i))
+                    print("ACTUAL RESULT %d: %s" %(i,orgValue));
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP %d: Get the ipaddress, macaddress and type of ARP table entry %d" %(i,i)
-                    print "EXPECTED RESULT %d: Should retrieve the ipaddress, macaddress and type of ARP table entry %d" %(i,i)
-                    print "ACTUAL RESULT %d: %s" %(i,orgValue);
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP %d: Get the ipaddress, macaddress and type of ARP table entry %d" %(i,i))
+                    print("EXPECTED RESULT %d: Should retrieve the ipaddress, macaddress and type of ARP table entry %d" %(i,i))
+                    print("ACTUAL RESULT %d: %s" %(i,orgValue));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
                     break;
 
                 #Append all values to a list
                 value = orgValue[0] + "|" + orgValue[1] + "|" + orgValue[2];
                 ARPdetails.append(value);
 
-            print "The details retrieved from the ARP table is: %s" %ARPdetails;
+            print("The details retrieved from the ARP table is: %s" %ARPdetails);
 
             #Get the ARP table details from 'ip neigh' command
             if ARPdetails:
@@ -152,7 +152,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                 numberofBrlan0 = tdkTestObj.getResultDetails().strip().replace("\\n", "");
                 if int(numberofBrlan0) >0 :
                     for i in range(1,int(numberofBrlan0)+1):
-                        arpCommand = "ip neigh show | sed -n '"+ `i` +"p'"
+                        arpCommand = "ip neigh show | sed -n '"+ repr(i) +"p'"
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd');
                         tdkTestObj.addParameter("command", arpCommand);
                         tdkTestObj.executeTestCase(expectedresult);
@@ -167,52 +167,52 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysloadmodulestatus.up
                         #Append the values to a list
                         cmdvalue = ipaddress + "|" + macaddress + "|" + isstatic
                         commandDetails.append(cmdvalue)
-                    print "The details retrieved from the ip neigh command is: %s" %commandDetails;
+                    print("The details retrieved from the ip neigh command is: %s" %commandDetails);
                     #Check if both lists are same or not
                     if commandDetails:
                         if list(set(ARPdetails) - set(commandDetails)) == []:
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP : Check if the entries in ARP table and ip neigh command are same";
-                            print "EXPECTED RESULT : Should get the entries in ARP table and ip neigh command as same";
-                            print "ACTUAL RESULT : SUCCESS";
+                            print("TEST STEP : Check if the entries in ARP table and ip neigh command are same");
+                            print("EXPECTED RESULT : Should get the entries in ARP table and ip neigh command as same");
+                            print("ACTUAL RESULT : SUCCESS");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "TEST STEP : Check if the entries in ARP table and ip neigh command are same";
-                            print "EXPECTED RESULT : Should get the entries in ARP table and ip neigh command as same";
-                            print "ACTUAL RESULT : FAILURE";
+                            print("TEST STEP : Check if the entries in ARP table and ip neigh command are same");
+                            print("EXPECTED RESULT : Should get the entries in ARP table and ip neigh command as same");
+                            print("ACTUAL RESULT : FAILURE");
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "Failed to get the entries from ip neigh command"
-                        print "List generated from ip neigh command is :%s" %commandDetails
+                        print("Failed to get the entries from ip neigh command")
+                        print("List generated from ip neigh command is :%s" %commandDetails)
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Failed to get the number of entries in ip neigh command"
+                    print("Failed to get the number of entries in ip neigh command")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Failed to get the entries from ARP table"
-                print "List generated from ARP table is :%s" %ARPdetails
+                print("Failed to get the entries from ARP table")
+                print("List generated from ARP table is :%s" %ARPdetails)
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: The number of entries in ARP table is zero";
-            print "EXPECTED RESULT 2: Should get the number of entries in ARP table as greater than zero";
-            print "ACTUAL RESULT 2: The number of entries in ARP table %s" %numberofEntries;
+            print("TEST STEP 2: The number of entries in ARP table is zero");
+            print("EXPECTED RESULT 2: Should get the number of entries in ARP table as greater than zero");
+            print("ACTUAL RESULT 2: The number of entries in ARP table %s" %numberofEntries);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the number of entries in ARP table";
-        print "EXPECTED RESULT 1: Should get the number of entries in ARP table";
-        print "ACTUAL RESULT 1: The number of entries in ARP table is %s" %numberofEntries;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Get the number of entries in ARP table");
+        print("EXPECTED RESULT 1: Should get the number of entries in ARP table");
+        print("ACTUAL RESULT 1: The number of entries in ARP table is %s" %numberofEntries);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     sysobj.unloadModule("sysutil");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

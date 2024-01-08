@@ -103,218 +103,215 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_ConfigureTimeout');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
-  # Set the result status of execution
-  obj.setLoadModuleStatus("SUCCESS");
-  tdkTestObj = obj.createTestStep('TADstub_Get');
-  tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.Timeout");
-  expectedresult="SUCCESS";
-  tdkTestObj.executeTestCase(expectedresult);
-  actualresult = tdkTestObj.getResult();
-  orgvalue = tdkTestObj.getResultDetails();
-  if expectedresult in actualresult and orgvalue != "":
-    #Set the result status of execution
-    tdkTestObj.setResultStatus("SUCCESS");
-    print "TEST STEP 1: Get the value of Device.IP.Diagnostics.IPPing.Timeout";
-    print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.IPPing.Timeout";
-    print "ACTUAL RESULT 1: %s" %orgvalue;
-    #Get the result of execution
-    print "[TEST EXECUTION RESULT] : SUCCESS";
-    tdkTestObj = obj.createTestStep('TADstub_Set');
-    tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Timeout");
-    tdkTestObj.addParameter("Type","unsignedint");
-    tdkTestObj.addParameter("ParamValue","1000");
+    # Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep('TADstub_Get');
+    tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.Timeout");
     expectedresult="SUCCESS";
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
+    orgvalue = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult and orgvalue != "":
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Get the value of Device.IP.Diagnostics.IPPing.Timeout");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.IPPing.Timeout");
+        print("ACTUAL RESULT 1: %s" %orgvalue);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj = obj.createTestStep('TADstub_Set');
+        tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Timeout");
+        tdkTestObj.addParameter("Type","unsignedint");
+        tdkTestObj.addParameter("ParamValue","1000");
+        expectedresult="SUCCESS";
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
 
-    if expectedresult in actualresult and details != "":
-      #Set the result status of execution
-      tdkTestObj.setResultStatus("SUCCESS");
-      print "TEST STEP 2: Set value of Device.IP.Diagnostics.IPPing.Timeout";
-      print "EXPECTED RESULT 2: Should set value of Device.IP.Diagnostics.IPPing.Timeout";
-      print "ACTUAL RESULT 2: %s" %details;
-      #Get the result of execution
-      print "[TEST EXECUTION RESULT] : SUCCESS";
-      tdkTestObj = obj.createTestStep('TADstub_Get');
-      tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.Timeout");
-      expectedresult="SUCCESS";
-      tdkTestObj.executeTestCase(expectedresult);
-      tdkTestObj.executeTestCase(expectedresult);
-      actualresult = tdkTestObj.getResult();
-      details = tdkTestObj.getResultDetails();
-      #convert milliseconds to seconds
-      details1=int(details)
-      sleepoutvalue=float((details1/1000)%60)
-      if expectedresult in actualresult and details != "":
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("SUCCESS");
-       print "TEST STEP 3: Get value of Device.IP.Diagnostics.IPPing.Timeout";
-       print "EXPECTED RESULT 3: Should get value of Device.IP.Diagnostics.IPPing.Timeout";
-       print "ACTUAL RESULT 3: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : SUCCESS";
-
-       tdkTestObj = obj.createTestStep('TADstub_Set');
-
-       #setting host for ping
-       tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Host");
-       tdkTestObj.addParameter("Type","string");
-       tdkTestObj.addParameter("ParamValue","www.invalidurl.c");
-
-       #Execute the test case in DUT
-       tdkTestObj.executeTestCase(expectedresult);
-       actualresult = tdkTestObj.getResult();
-       details = tdkTestObj.getResultDetails();
-       if expectedresult in actualresult:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("SUCCESS");
-          print "TEST STEP 4: Set invalid value for Device.IP.Diagnostics.IPPing.Host"
-          print "EXPECTED RESULT 4: Should set invalid value for Device.IP.Diagnostics.IPPing.Host";
-          print "ACTUAL RESULT 4:  %s" %details;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : SUCCESS";
-          tdkTestObj = obj.createTestStep('TADstub_Set');
-          tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run");
-          tdkTestObj.addParameter("ParamValue","true");
-          tdkTestObj.addParameter("Type","boolean");
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
-          if expectedresult in actualresult:
+        if expectedresult in actualresult and details != "":
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 5: Set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run"
-            print "EXPECTED RESULT 5: Should set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run";
-            print "ACTUAL RESULT 5:  %s" %details;
+            print("TEST STEP 2: Set value of Device.IP.Diagnostics.IPPing.Timeout");
+            print("EXPECTED RESULT 2: Should set value of Device.IP.Diagnostics.IPPing.Timeout");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('TADstub_Get');
-            tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.DiagnosticsState");
+            tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.Timeout");
+            expectedresult="SUCCESS";
+            tdkTestObj.executeTestCase(expectedresult);
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-	      tdkTestObj.setResultStatus("SUCCESS");
-              print "TEST STEP 6: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState"
-              print "EXPECTED RESULT 6: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState";
-              print "ACTUAL RESULT 6:  %s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : SUCCESS";
+            #convert milliseconds to seconds
+            details1=int(details)
+            sleepoutvalue=float((details1/1000)%60)
+            if expectedresult in actualresult and details != "":
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get value of Device.IP.Diagnostics.IPPing.Timeout");
+                print("EXPECTED RESULT 3: Should get value of Device.IP.Diagnostics.IPPing.Timeout");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	      if details == "Error_CannotResolveHostName":
-		print "The state is Error_CannotResolveHostName before the timeout"
-		Status = "SUCCESS";
-	      else:
-		#wait for timeout value and get the status again
-                time.sleep(sleepoutvalue);
+                tdkTestObj = obj.createTestStep('TADstub_Set');
+
+                #setting host for ping
+                tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Host");
+                tdkTestObj.addParameter("Type","string");
+                tdkTestObj.addParameter("ParamValue","www.invalidurl.c");
+
+                #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails();
-                if expectedresult in actualresult and details == "Error_CannotResolveHostName":
-		  print "The state is Error_CannotResolveHostName after timeout"
-		  Status = "SUCCESS";
-		else:
-		  print "Failed to get the state as Error_CannotResolveHostName"
-		  Status = "FAILURE"
+                if expectedresult in actualresult:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4: Set invalid value for Device.IP.Diagnostics.IPPing.Host")
+                    print("EXPECTED RESULT 4: Should set invalid value for Device.IP.Diagnostics.IPPing.Host");
+                    print("ACTUAL RESULT 4:  %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                    tdkTestObj = obj.createTestStep('TADstub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run");
+                    tdkTestObj.addParameter("ParamValue","true");
+                    tdkTestObj.addParameter("Type","boolean");
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5: Set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run")
+                        print("EXPECTED RESULT 5: Should set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run");
+                        print("ACTUAL RESULT 5:  %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        tdkTestObj = obj.createTestStep('TADstub_Get');
+                        tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.DiagnosticsState");
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 6: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState")
+                            print("EXPECTED RESULT 6: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState");
+                            print("ACTUAL RESULT 6:  %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	      if Status == "SUCCESS":
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("SUCCESS");
-                  print "TEST STEP 7: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName "
-                  print "EXPECTED RESULT 7: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName ";
-                  print "ACTUAL RESULT 7:  %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : SUCCESS"; 
-              else:  
-                  #Set the result status of execution
-                  tdkTestObj.setResultStatus("FAILURE");
-                  print "TEST STEP 7: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName  "
-                  print "EXPECTED RESULT 7: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName ";
-                  print "ACTUAL RESULT 7:  %s" %details;
-                  #Get the result of execution
-                  print "[TEST EXECUTION RESULT] : FAILURE";
+                            if details == "Error_CannotResolveHostName":
+                                print("The state is Error_CannotResolveHostName before the timeout")
+                                Status = "SUCCESS";
+                            else:
+                                #wait for timeout value and get the status again
+                                time.sleep(sleepoutvalue);
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult and details == "Error_CannotResolveHostName":
+                                    print("The state is Error_CannotResolveHostName after timeout")
+                                    Status = "SUCCESS";
+                                else:
+                                    print("Failed to get the state as Error_CannotResolveHostName")
+                                    Status = "FAILURE"
+
+                            if Status == "SUCCESS":
+                                    #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName ")
+                                print("EXPECTED RESULT 7: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName ");
+                                print("ACTUAL RESULT 7:  %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                            else:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("TEST STEP 7: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName  ")
+                                print("EXPECTED RESULT 7: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState as Error_CannotResolveHostName ");
+                                print("ACTUAL RESULT 7:  %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 6: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState")
+                            print("EXPECTED RESULT 6: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState");
+                            print("ACTUAL RESULT 6:  %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5: Set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run")
+                        print("EXPECTED RESULT 5: Should set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run");
+                        print("ACTUAL RESULT 5:  %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+                else:
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 4: Set invalid value for Device.IP.Diagnostics.IPPing.Host")
+                    print("EXPECTED RESULT 4: Should set invalid value for Device.IP.Diagnostics.IPPing.Host");
+                    print("ACTUAL RESULT 4:  %s" %details);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+                    #Revert changes to original value
+                    tdkTestObj = obj.createTestStep('TADstub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Timeout");
+                    tdkTestObj.addParameter("Type","unsignedint");
+                    tdkTestObj.addParameter("ParamValue",orgvalue);
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult and details != "":
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 8: Set original value of Device.IP.Diagnostics.IPPing.Timeout");
+                        print("EXPECTED RESULT 8: Should set original value of Device.IP.Diagnostics.IPPing.Timeout");
+                        print("ACTUAL RESULT 8: %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        #Set the result status of execution
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 8: Set original value of Device.IP.Diagnostics.IPPing.Timeout");
+                        print("EXPECTED RESULT 8: Should set original value of Device.IP.Diagnostics.IPPing.Timeout");
+                        print("ACTUAL RESULT 8: %s" %details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
             else:
-              tdkTestObj.setResultStatus("FAILURE");
-              print "TEST STEP 6: Get value for Device.IP.Diagnostics.IPPing.DiagnosticsState"
-              print "EXPECTED RESULT 6: Should get the value of Device.IP.Diagnostics.IPPing.DiagnosticsState";
-              print "ACTUAL RESULT 6:  %s" %details;
-              #Get the result of execution
-              print "[TEST EXECUTION RESULT] : FAILURE";
-          else:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get value of Device.IP.Diagnostics.IPPing.Timeout");
+                print("EXPECTED RESULT 3: Should get value of Device.IP.Diagnostics.IPPing.Timeout");
+                print("ACTUAL RESULT 3: %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 5: Set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run"
-            print "EXPECTED RESULT 5: Should set value for Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run";
-            print "ACTUAL RESULT 5:  %s" %details;
+            print("TEST STEP 2:Set value of Device.IP.Diagnostics.IPPing.Timeout");
+            print("EXPECTED RESULT 2: Should set value of Device.IP.Diagnostics.IPPing.Timeout");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
-       else:
-          #Set the result status of execution
-          tdkTestObj.setResultStatus("FAILURE");
-          print "TEST STEP 4: Set invalid value for Device.IP.Diagnostics.IPPing.Host"
-          print "EXPECTED RESULT 4: Should set invalid value for Device.IP.Diagnostics.IPPing.Host";
-          print "ACTUAL RESULT 4:  %s" %details;
-          #Get the result of execution
-          print "[TEST EXECUTION RESULT] : FAILURE";
-          #Revert changes to original value
-          tdkTestObj = obj.createTestStep('TADstub_Set');
-          tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.IPPing.Timeout");
-          tdkTestObj.addParameter("Type","unsignedint");
-          tdkTestObj.addParameter("ParamValue",orgvalue);
-          expectedresult="SUCCESS";
-          tdkTestObj.executeTestCase(expectedresult);
-          actualresult = tdkTestObj.getResult();
-          details = tdkTestObj.getResultDetails();
-          if expectedresult in actualresult and details != "":
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("SUCCESS");
-             print "TEST STEP 8: Set original value of Device.IP.Diagnostics.IPPing.Timeout";
-             print "EXPECTED RESULT 8: Should set original value of Device.IP.Diagnostics.IPPing.Timeout";
-             print "ACTUAL RESULT 8: %s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : SUCCESS";
-          else:
-             #Set the result status of execution
-             tdkTestObj.setResultStatus("FAILURE");
-             print "TEST STEP 8: Set original value of Device.IP.Diagnostics.IPPing.Timeout";
-             print "EXPECTED RESULT 8: Should set original value of Device.IP.Diagnostics.IPPing.Timeout";
-             print "ACTUAL RESULT 8: %s" %details;
-             #Get the result of execution
-             print "[TEST EXECUTION RESULT] : FAILURE"; 
-      else:
-       #Set the result status of execution
-       tdkTestObj.setResultStatus("FAILURE");
-       print "TEST STEP 3: Get value of Device.IP.Diagnostics.IPPing.Timeout";
-       print "EXPECTED RESULT 3: Should get value of Device.IP.Diagnostics.IPPing.Timeout";
-       print "ACTUAL RESULT 3: %s" %details;
-       #Get the result of execution
-       print "[TEST EXECUTION RESULT] : FAILURE";
-
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-      #Set the result status of execution
-      tdkTestObj.setResultStatus("FAILURE");
-      print "TEST STEP 2:Set value of Device.IP.Diagnostics.IPPing.Timeout";
-      print "EXPECTED RESULT 2: Should set value of Device.IP.Diagnostics.IPPing.Timeout";
-      print "ACTUAL RESULT 2: %s" %details;
-      #Get the result of execution
-      print "[TEST EXECUTION RESULT] : FAILURE";
-  else:
-    #Set the result status of execution
-    tdkTestObj.setResultStatus("FAILURE");
-    print "TEST STEP 1: Get the value of Device.IP.Diagnostics.IPPing.Timeout";
-    print "EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.IPPing.Timeout";
-    print "ACTUAL RESULT 1: %s" %orgvalue;
-    #Get the result of execution
-    print "[TEST EXECUTION RESULT] : FAILURE";
-  obj.unloadModule("tad");
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Get the value of Device.IP.Diagnostics.IPPing.Timeout");
+        print("EXPECTED RESULT 1: Should get the value of Device.IP.Diagnostics.IPPing.Timeout");
+        print("ACTUAL RESULT 1: %s" %orgvalue);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("tad");
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

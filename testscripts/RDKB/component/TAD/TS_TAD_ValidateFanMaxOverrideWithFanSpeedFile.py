@@ -82,8 +82,8 @@ obj1.configureTestCase(ip,port,'TS_TAD_ValidateFanMaxOverrideWithFanSpeedFile');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 def FileExist (tdkTestObj):
     cmd = "[ -f /tmp/.fan_speed_override ] && echo \"File exist\" || echo \"File does not exist\"";
@@ -109,120 +109,120 @@ def SetFanMaxOverride(tdkTestObj,setValue):
     return actualresult;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
-     #Set the result status of execution
-     obj.setLoadModuleStatus("SUCCESS");
-     obj1.setLoadModuleStatus("SUCCESS");
+    #Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
+    obj1.setLoadModuleStatus("SUCCESS");
 
-     tdkTestObj = obj1.createTestStep('ExecuteCmd');
-     actualresult,defdetails = FileExist (tdkTestObj);
-     expectedresult="SUCCESS";
+    tdkTestObj = obj1.createTestStep('ExecuteCmd');
+    actualresult,defdetails = FileExist (tdkTestObj);
+    expectedresult="SUCCESS";
 
-     if expectedresult in actualresult and defdetails == "File exist":
-        print "TEST STEP 1: Check for .fan_speed_override"
-        print "EXPECTED RESULT 1:should retrieve the presence of .fan_speed_override"
-        print "ACTUAL RESULT 1 : .fan_speed_override file is present";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+    if expectedresult in actualresult and defdetails == "File exist":
+        print("TEST STEP 1: Check for .fan_speed_override")
+        print("EXPECTED RESULT 1:should retrieve the presence of .fan_speed_override")
+        print("ACTUAL RESULT 1 : .fan_speed_override file is present");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
 
-        print "Fan Max override is Enabled as .fan_speed_override  is present";
-        print "Disabling Fan Max Override ";
+        print("Fan Max override is Enabled as .fan_speed_override  is present");
+        print("Disabling Fan Max Override ");
 
         tdkTestObj= obj.createTestStep('TADstub_SetOnly');
         actualresult = SetFanMaxOverride(tdkTestObj,"false");
 
         if expectedresult in actualresult:
-           print "TEST STEP 2: Set the Fan Max Override to false"
-           print "EXPECTED RESULT 2: Should set the Fan Max Override to false"
-           print "ACTUAL RESULT 2 : Set was Successfull"
-           print "[TEST EXECUTION RESULT] : SUCCESS";
-           tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Set the Fan Max Override to false")
+            print("EXPECTED RESULT 2: Should set the Fan Max Override to false")
+            print("ACTUAL RESULT 2 : Set was Successfull")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
 
-           tdkTestObj = obj1.createTestStep('ExecuteCmd');
-           actualresult,details = FileExist (tdkTestObj);
-           if expectedresult in actualresult and details == "File does not exist":
-              print "TEST STEP 3: Check for .fan_speed_override"
-              print "EXPECTED RESULT 3:.fan_speed_override should not be present"
-              print "ACTUAL RESULT 3 : .fan_speed_override file is not present";
-              print "[TEST EXECUTION RESULT] : SUCCESS";
-              tdkTestObj.setResultStatus("SUCCESS");
-           else:
-               print "TEST STEP 3: Check for .fan_speed_override"
-               print "EXPECTED RESULT 3:.fan_speed_override should not be present"
-               print "ACTUAL RESULT 3 : .fan_speed_override file is present";
-               print "[TEST EXECUTION RESULT] : FAILURE";
-               tdkTestObj.setResultStatus("FAILURE");
+            tdkTestObj = obj1.createTestStep('ExecuteCmd');
+            actualresult,details = FileExist (tdkTestObj);
+            if expectedresult in actualresult and details == "File does not exist":
+                print("TEST STEP 3: Check for .fan_speed_override")
+                print("EXPECTED RESULT 3:.fan_speed_override should not be present")
+                print("ACTUAL RESULT 3 : .fan_speed_override file is not present");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
+            else:
+                print("TEST STEP 3: Check for .fan_speed_override")
+                print("EXPECTED RESULT 3:.fan_speed_override should not be present")
+                print("ACTUAL RESULT 3 : .fan_speed_override file is present");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+                tdkTestObj.setResultStatus("FAILURE");
         else:
-            print "TEST STEP 2: Set the Fan Max Override to false"
-            print "EXPECTED RESULT 2: Should set the Fan Max Override to false"
-            print "ACTUAL RESULT 2 : Set failed"
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Set the Fan Max Override to false")
+            print("EXPECTED RESULT 2: Should set the Fan Max Override to false")
+            print("ACTUAL RESULT 2 : Set failed")
+            print("[TEST EXECUTION RESULT] : FAILURE");
             tdkTestObj.setResultStatus("FAILURE");
-     else:
-         print "TEST STEP 1: Check for .fan_speed_override"
-         print "EXPECTED RESULT 1:should retrieve the presence of .fan_speed_override"
-         print "ACTUAL RESULT 1 : .fan_speed_override file is not present";
-         print "[TEST EXECUTION RESULT] : SUCCESS";
-         tdkTestObj.setResultStatus("SUCCESS");
+    else:
+        print("TEST STEP 1: Check for .fan_speed_override")
+        print("EXPECTED RESULT 1:should retrieve the presence of .fan_speed_override")
+        print("ACTUAL RESULT 1 : .fan_speed_override file is not present");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        tdkTestObj.setResultStatus("SUCCESS");
 
-         print "Fan Max override is disabled as .fan_speed_override  is not present";
-         print "Enabling Fan Max Override ";
+        print("Fan Max override is disabled as .fan_speed_override  is not present");
+        print("Enabling Fan Max Override ");
 
-         tdkTestObj= obj.createTestStep('TADstub_SetOnly');
-         actualresult = SetFanMaxOverride(tdkTestObj,"true");
-         if expectedresult in actualresult:
-            print "TEST STEP 2: Set the Fan Max Override to true"
-            print "EXPECTED RESULT 2: Should set the Fan Max Override to true"
-            print "ACTUAL RESULT 2 : Set was Successfull"
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+        tdkTestObj= obj.createTestStep('TADstub_SetOnly');
+        actualresult = SetFanMaxOverride(tdkTestObj,"true");
+        if expectedresult in actualresult:
+            print("TEST STEP 2: Set the Fan Max Override to true")
+            print("EXPECTED RESULT 2: Should set the Fan Max Override to true")
+            print("ACTUAL RESULT 2 : Set was Successfull")
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj.setResultStatus("SUCCESS");
 
             tdkTestObj = obj1.createTestStep('ExecuteCmd');
             actualresult,details = FileExist (tdkTestObj);
 
             if expectedresult in actualresult and details == "File exist":
-               print "TEST STEP 3: Check for .fan_speed_override"
-               print "EXPECTED RESULT 3:.fan_speed_override should be present"
-               print "ACTUAL RESULT 3 : .fan_speed_override file is present";
-               print "[TEST EXECUTION RESULT] : SUCCESS";
-               tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Check for .fan_speed_override")
+                print("EXPECTED RESULT 3:.fan_speed_override should be present")
+                print("ACTUAL RESULT 3 : .fan_speed_override file is present");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3: Check for .fan_speed_override"
-                print "EXPECTED RESULT 3:.fan_speed_override should be present"
-                print "ACTUAL RESULT 3 : .fan_speed_override file is present";
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3: Check for .fan_speed_override")
+                print("EXPECTED RESULT 3:.fan_speed_override should be present")
+                print("ACTUAL RESULT 3 : .fan_speed_override file is present");
+                print("[TEST EXECUTION RESULT] : FAILURE");
                 tdkTestObj.setResultStatus("FAILURE");
-         else:
-             print "TEST STEP 2: Set the Fan Max Override to true"
-             print "EXPECTED RESULT 2: Should set the Fan Max Override to true"
-             print "ACTUAL RESULT 2 : Set failed"
-             print "[TEST EXECUTION RESULT] : FAILURE";
-             tdkTestObj.setResultStatus("FAILURE");
+        else:
+            print("TEST STEP 2: Set the Fan Max Override to true")
+            print("EXPECTED RESULT 2: Should set the Fan Max Override to true")
+            print("ACTUAL RESULT 2 : Set failed")
+            print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE");
 
-     #Reverting the Value
-     if defdetails == "File exist":
+    #Reverting the Value
+    if defdetails == "File exist":
         Setvalue = "true";
-     else:
-         Setvalue = "false";
+    else:
+        Setvalue = "false";
 
-     print "Reverting the SetFanMaxOverride  to ",Setvalue;
-     tdkTestObj= obj.createTestStep('TADstub_SetOnly');
-     actualresult = SetFanMaxOverride(tdkTestObj,Setvalue);
-     if expectedresult in actualresult:
-        print "TEST STEP 4: Revert SetFanMaxOverride to previous"
-        print "EXPECTED RESULT 4:Should revert the SetFanMaxOverride to previous"
-        print "ACTUAL RESULT 4 : Reversion was success";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+    print("Reverting the SetFanMaxOverride  to ",Setvalue);
+    tdkTestObj= obj.createTestStep('TADstub_SetOnly');
+    actualresult = SetFanMaxOverride(tdkTestObj,Setvalue);
+    if expectedresult in actualresult:
+        print("TEST STEP 4: Revert SetFanMaxOverride to previous")
+        print("EXPECTED RESULT 4:Should revert the SetFanMaxOverride to previous")
+        print("ACTUAL RESULT 4 : Reversion was success");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj.setResultStatus("SUCCESS");
-     else:
-         print "TEST STEP 4: Revert SetFanMaxOverride to previous"
-         print "EXPECTED RESULT 4:Should revert the SetFanMaxOverride to previous"
-         print "ACTUAL RESULT 4 : Reversion failed";
-         print "[TEST EXECUTION RESULT] : FAILURE";
-         tdkTestObj.setResultStatus("FAILURE");
-     obj.unloadModule("tad");
-     obj1.unloadModule("sysutil");
+    else:
+        print("TEST STEP 4: Revert SetFanMaxOverride to previous")
+        print("EXPECTED RESULT 4:Should revert the SetFanMaxOverride to previous")
+        print("ACTUAL RESULT 4 : Reversion failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        tdkTestObj.setResultStatus("FAILURE");
+    obj.unloadModule("tad");
+    obj1.unloadModule("sysutil");
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

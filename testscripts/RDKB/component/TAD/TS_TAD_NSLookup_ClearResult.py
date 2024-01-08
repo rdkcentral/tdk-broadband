@@ -73,7 +73,7 @@ Device.DNS.Diagnostics.NSLookupDiagnostics.DiagnosticsState
 Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer</input_parameters>
     <automation_approch>1. Load  TAD modules
 2.From script invoke pam_GetParameterNames to obtain the namespace to be set as the interface
-3.Get the DNS Sever value and store it 
+3.Get the DNS Sever value and store it
 4.Set the DNS Server IP using Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer
 5.From script invoke TADstub_Set to set  the interface and hostname of NSLookup and invoke TADstub_SetDiagnosticsState to set the diagnostics state
 6.If set returns success, check the ResultNumberOfEntries and Success Count
@@ -117,7 +117,7 @@ pamObj.configureTestCase(ip,port,'TS_TAD_NSLookup_ClearResult');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -129,7 +129,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
     tdkTestObj.executeTestCase(expectedresult);
     if host == "NULL":
         tdkTestObj.setResultStatus("FAILURE");
-        print "Host name not available in tdkb config file"
+        print("Host name not available in tdkb config file")
     else:
         tdkTestObj = pamObj.createTestStep('pam_GetParameterNames');
         tdkTestObj.addParameter("ParamName","Device.IP.Interface.");
@@ -145,7 +145,7 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         actualresult = tdkTestObj.getResult();
         addrInstance = tdkTestObj.getResultDetails().strip();
         namespace=addrInstance+"IPAddress";
-        print "%s" %namespace;
+        print("%s" %namespace);
         tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.Interface");
         tdkTestObj.addParameter("ParamValue",namespace);
@@ -157,11 +157,11 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1: Set the interface of NSLookup";
-            print "EXPECTED RESULT 1: Should set the interface of NSLookup";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Set the interface of NSLookup");
+            print("EXPECTED RESULT 1: Should set the interface of NSLookup");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.HostName");
@@ -174,11 +174,11 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2: Set the host of NSLookup";
-                print "EXPECTED RESULT 2: Should set the host of NSLookup";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the host of NSLookup");
+                print("EXPECTED RESULT 2: Should set the host of NSLookup");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('TADstub_Get');
                 tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer");
@@ -187,188 +187,188 @@ if "SUCCESS" in loadmodulestatus.upper()and "SUCCESS" in loadmodulestatus1.upper
                 actualresult = tdkTestObj.getResult();
                 defDNSServer  = tdkTestObj.getResultDetails();
                 if expectedresult in actualresult:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 3: Get the NSLookup Diagnostics DNSServer"
-                   print "EXPECTED RESULT 3: Should get the NSLookup Diagnostics DNSServer";
-                   print "ACTUAL RESULT 3:",defDNSServer;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 3: Get the NSLookup Diagnostics DNSServer")
+                    print("EXPECTED RESULT 3: Should get the NSLookup Diagnostics DNSServer");
+                    print("ACTUAL RESULT 3:",defDNSServer);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                   tdkTestObj = obj.createTestStep('TADstub_Set');
-                   tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer");
-                   tdkTestObj.addParameter("ParamValue",DNS_SERVER_IP);
-                   tdkTestObj.addParameter("Type","string");
-                   expectedresult="SUCCESS";
-                   tdkTestObj.executeTestCase(expectedresult);
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
-                   if expectedresult in actualresult and DNS_SERVER_IP != "":
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 4: Set the NSLookup Diagnostics DNSServer"
-                      print "EXPECTED RESULT 4: Should Set the NSLookup Diagnostics DNSServer";
-                      print "ACTUAL RESULT 4:",details;
-                      #Get the result of execution
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
+                    tdkTestObj = obj.createTestStep('TADstub_Set');
+                    tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer");
+                    tdkTestObj.addParameter("ParamValue",DNS_SERVER_IP);
+                    tdkTestObj.addParameter("Type","string");
+                    expectedresult="SUCCESS";
+                    tdkTestObj.executeTestCase(expectedresult);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult and DNS_SERVER_IP != "":
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 4: Set the NSLookup Diagnostics DNSServer")
+                        print("EXPECTED RESULT 4: Should Set the NSLookup Diagnostics DNSServer");
+                        print("ACTUAL RESULT 4:",details);
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                      tdkTestObj = obj.createTestStep('TADstub_SetDiagnosticsState');
-                      tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DiagnosticsState");
-                      tdkTestObj.addParameter("ParamValue","Requested");
-                      tdkTestObj.addParameter("Type","string");
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails();
-                      if expectedresult in actualresult:
-                         #Set the result status of execution
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 5: Set DiagnosticsState of NSLookup as Requested";
-                         print "EXPECTED RESULT 5: Should set DiagnosticsState of NSLookup as Requested";
-                         print "ACTUAL RESULT 5: %s" %details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                         time.sleep(50);
-                         tdkTestObj = obj.createTestStep('TADstub_Get');
-                         tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.ResultNumberOfEntries");
-                         expectedresult="SUCCESS";
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         details_ResultNumberOfEntries = tdkTestObj.getResultDetails();
-                         tdkTestObj = obj.createTestStep('TADstub_Get');
-                         tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.SuccessCount");
-                         expectedresult="SUCCESS";
-                         tdkTestObj.executeTestCase(expectedresult);
-                         actualresult = tdkTestObj.getResult();
-                         details_SuccessCount = tdkTestObj.getResultDetails();
-                         if expectedresult in actualresult and int(details_ResultNumberOfEntries)>0 and int(details_SuccessCount)>0:
+                        tdkTestObj = obj.createTestStep('TADstub_SetDiagnosticsState');
+                        tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DiagnosticsState");
+                        tdkTestObj.addParameter("ParamValue","Requested");
+                        tdkTestObj.addParameter("Type","string");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "TEST STEP 6: Check if ResultNumberOfEntries and SuccessCount are greater than zero";
-                            print "EXPECTED RESULT 6: Should get ResultNumberOfEntries and SuccessCount are greater than zero";
-                            print "ACTUAL RESULT 6: %s" %details;
+                            print("TEST STEP 5: Set DiagnosticsState of NSLookup as Requested");
+                            print("EXPECTED RESULT 5: Should set DiagnosticsState of NSLookup as Requested");
+                            print("ACTUAL RESULT 5: %s" %details);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
-                            tdkTestObj = obj.createTestStep('TADstub_Set');
-                            tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.Interface");
-                            tdkTestObj.addParameter("ParamValue",namespace);
-                            tdkTestObj.addParameter("Type","string");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                            time.sleep(50);
+                            tdkTestObj = obj.createTestStep('TADstub_Get');
+                            tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.ResultNumberOfEntries");
                             expectedresult="SUCCESS";
                             tdkTestObj.executeTestCase(expectedresult);
                             actualresult = tdkTestObj.getResult();
-                            details = tdkTestObj.getResultDetails();
-                            if expectedresult in actualresult:
-                               #Set the result status of execution
-                               tdkTestObj.setResultStatus("SUCCESS");
-                               print "TEST STEP 7: Set the interface of NSLookup";
-                               print "EXPECTED RESULT 7: Should set the interface of NSLookup";
-                               print "ACTUAL RESULT 7: %s" %details;
-                               #Get the result of execution
-                               print "[TEST EXECUTION RESULT] : SUCCESS";
+                            details_ResultNumberOfEntries = tdkTestObj.getResultDetails();
+                            tdkTestObj = obj.createTestStep('TADstub_Get');
+                            tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.SuccessCount");
+                            expectedresult="SUCCESS";
+                            tdkTestObj.executeTestCase(expectedresult);
+                            actualresult = tdkTestObj.getResult();
+                            details_SuccessCount = tdkTestObj.getResultDetails();
+                            if expectedresult in actualresult and int(details_ResultNumberOfEntries)>0 and int(details_SuccessCount)>0:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("TEST STEP 6: Check if ResultNumberOfEntries and SuccessCount are greater than zero");
+                                print("EXPECTED RESULT 6: Should get ResultNumberOfEntries and SuccessCount are greater than zero");
+                                print("ACTUAL RESULT 6: %s" %details);
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+                                tdkTestObj = obj.createTestStep('TADstub_Set');
+                                tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.Interface");
+                                tdkTestObj.addParameter("ParamValue",namespace);
+                                tdkTestObj.addParameter("Type","string");
+                                expectedresult="SUCCESS";
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails();
+                                if expectedresult in actualresult:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("TEST STEP 7: Set the interface of NSLookup");
+                                    print("EXPECTED RESULT 7: Should set the interface of NSLookup");
+                                    print("ACTUAL RESULT 7: %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                               tdkTestObj = obj.createTestStep('TADstub_Get');
-                               tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.ResultNumberOfEntries");
-                               expectedresult="SUCCESS";
-                               tdkTestObj.executeTestCase(expectedresult);
-                               actualresult = tdkTestObj.getResult();
-                               details = tdkTestObj.getResultDetails();
-                               if expectedresult in actualresult and int(details)==0:
-                                  #Set the result status of execution
-                                  tdkTestObj.setResultStatus("SUCCESS");
-                                  print "TEST STEP 8: Check if ResultNumberOfEntries of NSLookup is zero";
-                                  print "EXPECTED RESULT 8: Should get ResultNumberOfEntries of NSLookup as zero";
-                                  print "ACTUAL RESULT 8: %s" %details;
-                                  #Get the result of execution
-                                  print "[TEST EXECUTION RESULT] : SUCCESS";
-                               else:
-                                   #Set the result status of execution
-                                   tdkTestObj.setResultStatus("FAILURE");
-                                   print "TEST STEP 8: Check if ResultNumberOfEntries of NSLookup is zero";
-                                   print "EXPECTED RESULT 8: Should get ResultNumberOfEntries of NSLookup as zero";
-                                   print "ACTUAL RESULT 8: %s" %details;
-                                   #Get the result of execution
-                                   print "[TEST EXECUTION RESULT] : FAILURE";
+                                    tdkTestObj = obj.createTestStep('TADstub_Get');
+                                    tdkTestObj.addParameter("paramName","Device.DNS.Diagnostics.NSLookupDiagnostics.ResultNumberOfEntries");
+                                    expectedresult="SUCCESS";
+                                    tdkTestObj.executeTestCase(expectedresult);
+                                    actualresult = tdkTestObj.getResult();
+                                    details = tdkTestObj.getResultDetails();
+                                    if expectedresult in actualresult and int(details)==0:
+                                        #Set the result status of execution
+                                        tdkTestObj.setResultStatus("SUCCESS");
+                                        print("TEST STEP 8: Check if ResultNumberOfEntries of NSLookup is zero");
+                                        print("EXPECTED RESULT 8: Should get ResultNumberOfEntries of NSLookup as zero");
+                                        print("ACTUAL RESULT 8: %s" %details);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                                    else:
+                                        #Set the result status of execution
+                                        tdkTestObj.setResultStatus("FAILURE");
+                                        print("TEST STEP 8: Check if ResultNumberOfEntries of NSLookup is zero");
+                                        print("EXPECTED RESULT 8: Should get ResultNumberOfEntries of NSLookup as zero");
+                                        print("ACTUAL RESULT 8: %s" %details);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    print("TEST STEP 7: Set the interface of NSLookup");
+                                    print("EXPECTED RESULT 7: Should set the interface of NSLookup");
+                                    print("ACTUAL RESULT 7: %s" %details);
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "TEST STEP 7: Set the interface of NSLookup";
-                                print "EXPECTED RESULT 7: Should set the interface of NSLookup";
-                                print "ACTUAL RESULT 7: %s" %details;
+                                print("TEST STEP 6: Check if ResultNumberOfEntries and SuccessCount are greater than zero");
+                                print("EXPECTED RESULT 6: Should get ResultNumberOfEntries and SuccessCount are greater than zero");
+                                print("ACTUAL RESULT 6: %s" %details);
                                 #Get the result of execution
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-                         else:
-                             #Set the result status of execution
-                             tdkTestObj.setResultStatus("FAILURE");
-                             print "TEST STEP 6: Check if ResultNumberOfEntries and SuccessCount are greater than zero";
-                             print "EXPECTED RESULT 6: Should get ResultNumberOfEntries and SuccessCount are greater than zero";
-                             print "ACTUAL RESULT 6: %s" %details;
-                             #Get the result of execution
-                             print "[TEST EXECUTION RESULT] : FAILURE";
-                      else:
-                          #Set the result status of execution
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 5: Set DiagnosticsState of NSLookup as Requested";
-                          print "EXPECTED RESULT 5: Should set DiagnosticsState of NSLookup as Requested";
-                          print "ACTUAL RESULT 5: %s" %details;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 5: Set DiagnosticsState of NSLookup as Requested");
+                            print("EXPECTED RESULT 5: Should set DiagnosticsState of NSLookup as Requested");
+                            print("ACTUAL RESULT 5: %s" %details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE");
 
-                      #Revert  the value
-                      tdkTestObj = obj.createTestStep('TADstub_Set');
-                      tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer");
-                      tdkTestObj.addParameter("ParamValue",defDNSServer);
-                      tdkTestObj.addParameter("Type","string");
-                      expectedresult="SUCCESS";
-                      tdkTestObj.executeTestCase(expectedresult);
-                      actualresult = tdkTestObj.getResult();
-                      details = tdkTestObj.getResultDetails();
-                      if expectedresult in actualresult:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 9: Set the NSLookup Diagnostics DNSServer to previous"
-                         print "EXPECTED RESULT 9: Should Set the NSLookup Diagnostics DNSServer to previous value";
-                         print "ACTUAL RESULT 9:",details;
-                         #Get the result of execution
-                         print "[TEST EXECUTION RESULT] :SUCCESS";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 9: Set the NSLookup Diagnostics DNSServer to previous"
-                          print "EXPECTED RESULT 9: Should Set the NSLookup Diagnostics DNSServer to previous value";
-                          print "ACTUAL RESULT 9:",details;
-                          #Get the result of execution
-                          print "[TEST EXECUTION RESULT] :FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 4: Set the NSLookup Diagnostics DNSServer"
-                       print "EXPECTED RESULT 4: Should Set the NSLookup Diagnostics DNSServer";
-                       print "ACTUAL RESULT 4: Set failed or the DNS IP was received empty";
-                       #Get the result of execution
-                       print "[TEST EXECUTION RESULT] : FAILURE";
+                        #Revert  the value
+                        tdkTestObj = obj.createTestStep('TADstub_Set');
+                        tdkTestObj.addParameter("ParamName","Device.DNS.Diagnostics.NSLookupDiagnostics.DNSServer");
+                        tdkTestObj.addParameter("ParamValue",defDNSServer);
+                        tdkTestObj.addParameter("Type","string");
+                        expectedresult="SUCCESS";
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails();
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 9: Set the NSLookup Diagnostics DNSServer to previous")
+                            print("EXPECTED RESULT 9: Should Set the NSLookup Diagnostics DNSServer to previous value");
+                            print("ACTUAL RESULT 9:",details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 9: Set the NSLookup Diagnostics DNSServer to previous")
+                            print("EXPECTED RESULT 9: Should Set the NSLookup Diagnostics DNSServer to previous value");
+                            print("ACTUAL RESULT 9:",details);
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] :FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 4: Set the NSLookup Diagnostics DNSServer")
+                        print("EXPECTED RESULT 4: Should Set the NSLookup Diagnostics DNSServer");
+                        print("ACTUAL RESULT 4: Set failed or the DNS IP was received empty");
+                        #Get the result of execution
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                   #Set the result status of execution
-                   tdkTestObj.setResultStatus("FAILURE");
-                   print "TEST STEP 3: Get the NSLookup Diagnostics DNSServer"
-                   print "EXPECTED RESULT 3: Should get the NSLookup Diagnostics DNSServer";
-                   print "ACTUAL RESULT 3:",defDNSServer;
-                   #Get the result of execution
-                   print "[TEST EXECUTION RESULT] : FAILURE";
+                    #Set the result status of execution
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("TEST STEP 3: Get the NSLookup Diagnostics DNSServer")
+                    print("EXPECTED RESULT 3: Should get the NSLookup Diagnostics DNSServer");
+                    print("ACTUAL RESULT 3:",defDNSServer);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2: Set the host of NSLookup";
-                print "EXPECTED RESULT 2: Should set the host of NSLookup";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2: Set the host of NSLookup");
+                print("EXPECTED RESULT 2: Should set the host of NSLookup");
+                print("ACTUAL RESULT 2: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1: Set the interface of NSLookup";
-            print "EXPECTED RESULT 1: Should set the interface of NSLookup";
-            print "ACTUAL RESULT 1: %s" %details;
+            print("TEST STEP 1: Set the interface of NSLookup");
+            print("EXPECTED RESULT 1: Should set the interface of NSLookup");
+            print("ACTUAL RESULT 1: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     pamObj.unloadModule("pam");
 else:
-    print "Failed to load tad module";
+    print("Failed to load tad module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

@@ -88,7 +88,7 @@ obj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivity_WANInterfaceC
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -113,35 +113,35 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             for wanInterface in range(1, numberOfInterfaces + 1):
                 paramName = "Device.Diagnostics.X_RDK_DNSInternet.WANInterface." + str(wanInterface) + ".Alias"
-                print "\nTEST STEP %d : Check if %s is retrieved as %s" %(step, paramName, aliasExpected[wanInterface - 1]);
-                print "EXPECTED RESULT %d : %s should be retrieved as expected" %(step, paramName);
+                print("\nTEST STEP %d : Check if %s is retrieved as %s" %(step, paramName, aliasExpected[wanInterface - 1]));
+                print("EXPECTED RESULT %d : %s should be retrieved as expected" %(step, paramName));
                 tdkTestObj, actualresult, alias = getDNSParameterValue(obj, expectedresult, paramName);
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Alias expected for WAN Interface %d as : %s" %(wanInterface, aliasExpected[wanInterface - 1]);
-                    print "Alias retrieved for WAN Interface %d as : %s" %(wanInterface, alias);
+                    print("Alias expected for WAN Interface %d as : %s" %(wanInterface, aliasExpected[wanInterface - 1]));
+                    print("Alias retrieved for WAN Interface %d as : %s" %(wanInterface, alias));
 
                     if alias == aliasExpected[wanInterface - 1]:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : Alias retrieved for WAN Interface %d is as expected" %(step, wanInterface);
-                        print "TEST EXECUTION RESULT : SUCCESS";
+                        print("ACTUAL RESULT %d : Alias retrieved for WAN Interface %d is as expected" %(step, wanInterface));
+                        print("TEST EXECUTION RESULT : SUCCESS");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : Alias retrieved for WAN Interface %d is NOT as expected" %(step, wanInterface);
-                        print "TEST EXECUTION RESULT : FAILURE";
+                        print("ACTUAL RESULT %d : Alias retrieved for WAN Interface %d is NOT as expected" %(step, wanInterface));
+                        print("TEST EXECUTION RESULT : FAILURE");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "ACTUAL RESULT %d : Alias NOT retrieved for WAN Interface %d" %(step, wanInterface);
-                    print "TEST EXECUTION RESULT : FAILURE";
+                    print("ACTUAL RESULT %d : Alias NOT retrieved for WAN Interface %d" %(step, wanInterface));
+                    print("TEST EXECUTION RESULT : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "As Number of WAN Interfaces is not valid, cannot proceed further...";
+            print("As Number of WAN Interfaces is not valid, cannot proceed further...");
 
         #Revert operation
         setEnable = "false";
@@ -149,14 +149,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         if revertStatus == 1:
             DNSInternetConnectivity_Revert(obj, step, setEnable, expectedresult);
         else:
-            print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+            print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "Pre-Requisites are not set successfully";
+        print("Pre-Requisites are not set successfully");
 
     obj.unloadModule("tad");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

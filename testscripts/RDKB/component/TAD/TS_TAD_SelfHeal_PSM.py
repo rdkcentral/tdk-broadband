@@ -73,7 +73,7 @@ killall PsmSsp;  ps -ef | grep PsmSsp | grep -v grep</input_parameters>
 2. From script invoke ExecuteCmd to check if PSM process is up or not
 3. If CcspPSM is up, kill it using ExecuteCmd
 4. Wait for 30 minutes for it to restart
-5. Using ExecuteCmd, check if PSM is up again 
+5. Using ExecuteCmd, check if PSM is up again
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
 7.Test Manager will publish the result in GUI as PASS/FAILURE based on the response from pam stub.</automation_approch>
     <except_output>CcspPSMSsp process should get restarted</except_output>
@@ -88,8 +88,8 @@ sysutil</test_stub_interface>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 from time import sleep;
 from tdkbVariables import *;
 
@@ -110,7 +110,7 @@ sysObj.configureTestCase(ip,port,'TS_TAD_SelfHeal_PSM');
 loadmodulestatus1 =obj.getLoadModuleResult();
 loadmodulestatus2 =sysObj.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -118,7 +118,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     # Check whether the process is running
     query="sh %s/tdk_platform_utility.sh checkProcess PsmSsp" %TDK_PATH
-    print "query:%s" %query
+    print("query:%s" %query)
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     tdkTestObj.addParameter("command", query)
     expectedresult="SUCCESS";
@@ -127,35 +127,35 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj.executeTestCase("SUCCESS");
     actualresult = tdkTestObj.getResult();
     pid = tdkTestObj.getResultDetails().strip().replace("\\n","");
-    print "PsmSsp PID: %s" %pid
+    print("PsmSsp PID: %s" %pid)
 
     if expectedresult in actualresult and pid:
-        print "TEST STEP 1:Check if PsmSsp process is running"
-        print "EXPECTED RESULT 1: PsmSsp should be running";
-        print "ACTUAL RESULT 1: PsmSsp process is running"
+        print("TEST STEP 1:Check if PsmSsp process is running")
+        print("EXPECTED RESULT 1: PsmSsp should be running");
+        print("ACTUAL RESULT 1: PsmSsp process is running")
         tdkTestObj.setResultStatus("SUCCESS");
 
         # Kill the process
         query="sh %s/tdk_platform_utility.sh killProcess PsmSsp" %TDK_PATH
-        print "query:%s" %query
+        print("query:%s" %query)
         tdkTestObj.addParameter("command", query)
         tdkTestObj.executeTestCase("SUCCESS");
         actualresult = tdkTestObj.getResult();
         result = tdkTestObj.getResultDetails().strip()
         if expectedresult in actualresult:
-            print "TEST STEP 1:Kill PsmSsp process"
-            print "EXPECTED RESULT 1: PsmSsp should be killed";
-            print "ACTUAL RESULT 1: PsmSsp should be killed"
+            print("TEST STEP 1:Kill PsmSsp process")
+            print("EXPECTED RESULT 1: PsmSsp should be killed");
+            print("ACTUAL RESULT 1: PsmSsp should be killed")
             tdkTestObj.setResultStatus("SUCCESS");
 
             #check whether the process is restarted automatically
             query="sh %s/tdk_platform_utility.sh checkProcess PsmSsp" %TDK_PATH
-            print "query:%s" %query
+            print("query:%s" %query)
             tdkTestObj = sysObj.createTestStep('ExecuteCmd');
             tdkTestObj.addParameter("command", query)
             expectedresult="SUCCESS";
 
-            print "Check for every 10 secs whether the process is up"
+            print("Check for every 10 secs whether the process is up")
             retryCount = 0;
             while retryCount < MAX_RETRY:
                 tdkTestObj.executeTestCase("SUCCESS");
@@ -168,7 +168,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     retryCount = retryCount + 1;
 
             if not pid:
-                print "Retry Again: Check for every 5 mins whether the process is up"
+                print("Retry Again: Check for every 5 mins whether the process is up")
                 retryCount = 0;
                 while retryCount < MAX_RETRY:
                     tdkTestObj.executeTestCase("SUCCESS");
@@ -181,34 +181,34 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         retryCount = retryCount + 1;
 
             if expectedresult in actualresult and pid:
-                print "TEST STEP 3:Check if PsmSsp process is running"
-                print "EXPECTED RESULT 3: PsmSsp should be running";
-                print "ACTUAL RESULT 3: PsmSsp process is running"
-                print "PsmSsp PID: %s" %pid
+                print("TEST STEP 3:Check if PsmSsp process is running")
+                print("EXPECTED RESULT 3: PsmSsp should be running");
+                print("ACTUAL RESULT 3: PsmSsp process is running")
+                print("PsmSsp PID: %s" %pid)
                 tdkTestObj.setResultStatus("SUCCESS");
             else:
-                print "TEST STEP 3:Check if PsmSsp process is running"
-                print "EXPECTED RESULT 3: PsmSsp should be running";
-                print "ACTUAL RESULT 3: PsmSsp process is not running"
+                print("TEST STEP 3:Check if PsmSsp process is running")
+                print("EXPECTED RESULT 3: PsmSsp should be running");
+                print("ACTUAL RESULT 3: PsmSsp process is not running")
                 tdkTestObj.setResultStatus("FAILURE");
                 # Initiate reboot if process is not restarted automatically
                 obj.initiateReboot();
-			
+
         else:
-            print "TEST STEP 1:Kill PsmSsp process"
-            print "EXPECTED RESULT 1: PsmSsp should be killed";
-            print "ACTUAL RESULT 1: PsmSsp not killed"
+            print("TEST STEP 1:Kill PsmSsp process")
+            print("EXPECTED RESULT 1: PsmSsp should be killed");
+            print("ACTUAL RESULT 1: PsmSsp not killed")
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "TEST STEP 1:Check if PsmSsp process is running"
-        print "EXPECTED RESULT 1: PsmSsp should be running";
-        print "ACTUAL RESULT 1: PsmSsp process is not running"
+        print("TEST STEP 1:Check if PsmSsp process is running")
+        print("EXPECTED RESULT 1: PsmSsp should be running");
+        print("ACTUAL RESULT 1: PsmSsp process is not running")
         tdkTestObj.setResultStatus("FAILURE");
 
     sysObj.unloadModule("sysutil");
     obj.unloadModule("tad");
 else:
-    print "FAILURE to load TAD module";
+    print("FAILURE to load TAD module");
     obj.setLoadModuleStatus("FAILURE");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading FAILURE";
+    print("Module loading FAILURE");

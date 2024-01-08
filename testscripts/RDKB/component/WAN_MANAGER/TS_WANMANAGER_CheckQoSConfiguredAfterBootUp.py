@@ -80,7 +80,7 @@ loadmodulestatus1 =sysObj.getLoadModuleResult();
 if "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     sysObj.setLoadModuleStatus("SUCCESS");
-    print "***The Device is going for a reboot wait for 300 sec for the device to come up ****\n\n";
+    print("***The Device is going for a reboot wait for 300 sec for the device to come up ****\n\n");
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     sysObj.initiateReboot();
@@ -96,20 +96,20 @@ if "SUCCESS" in loadmodulestatus1.upper():
     if expectedresult in actualresult and "QoS,queue,configured,successfully" in details:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Check if Qos Configured successfully"
-        print "EXPECTED RESULT 1: Qos Configured message should be present in VLANIFACEMGRLog.txt.0";
-        print "ACTUAL RESULT 1 : %s" %details;
+        print("TEST STEP 1: Check if Qos Configured successfully")
+        print("EXPECTED RESULT 1: Qos Configured message should be present in VLANIFACEMGRLog.txt.0");
+        print("ACTUAL RESULT 1 : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Check if Qos Configured successfully"
-        print "EXPECTED RESULT 1: Qos Configured message should be present in VLANIFACEMGRLog.txt.0";
-        print "ACTUAL RESULT 1: %s"%details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Check if Qos Configured successfully")
+        print("EXPECTED RESULT 1: Qos Configured message should be present in VLANIFACEMGRLog.txt.0");
+        print("ACTUAL RESULT 1: %s"%details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     sysObj.unloadModule("sysutil");
 else:
-    print "Failed to load sysutil module";
+    print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

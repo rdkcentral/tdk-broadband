@@ -126,198 +126,198 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     initialVersion = "";
     initialURL = "";
 
-    print "***************************************************************"
-    print "TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0";
-    print "EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success";
+    print("***************************************************************")
+    print("TEST STEP 1: Initiating Pre-Requisite Check for Telemetry2_0");
+    print("EXPECTED RESULT 1:Pre-Requisite Check for Telemetry2_0 Should be Success");
 
     preReq_Status,revertFlag,initialStatus,initialVersion,initialURL = telemetry2_0_Prerequisite(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_Get,tdkTestObj_Tr181_set);
 
     if preReq_Status == 1:
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("***************************************************************")
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
 
         lineCountResult, initialLinesCount = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
 
         if expectedresult in lineCountResult:
-            print "Initial Line count of Telemetry Log File is ",initialLinesCount
+            print("Initial Line count of Telemetry Log File is ",initialLinesCount)
             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Line count retrieved Successfully";
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Line count retrieved Successfully");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             tdkTestObj,actualresult,orgValue = GetPublicWiFiParamValues(wifiobj);
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3:Get values of PublicWiFi params"
-                print "ACTUAL RESULT 3:%s" %orgValue
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("TEST STEP 3:Get values of PublicWiFi params")
+                print("ACTUAL RESULT 3:%s" %orgValue)
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 setvalues,tdkTestObj,actualresult  = parsePublicWiFiConfigValues(sysobj);
 
                 if expectedresult in actualresult:
-                   tdkTestObj.setResultStatus("SUCCESS");
-                   print "TEST STEP 4:Get the set values to enable PublicWiFi"
-                   print "ACTUAL RESULT 4:Get was successful";
-                   print "[TEST EXECUTION RESULT] : SUCCESS";
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("TEST STEP 4:Get the set values to enable PublicWiFi")
+                    print("ACTUAL RESULT 4:Get was successful");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                   values = [setvalues[0],setvalues[1],setvalues[2],setvalues[3],setvalues[3],"true","true","true","true",setvalues[3],"true","true",setvalues[4],setvalues[5],setvalues[6],setvalues[7],setvalues[8],setvalues[7],setvalues[8],setvalues[3],"true","true",setvalues[4],setvalues[5],setvalues[6],setvalues[7],setvalues[8],setvalues[7],setvalues[8],"true"];
-                   tdkTestObj, actualresult, details = SetPublicWiFiParamValues(wifiobj,values);
-                   #Execute the test case in DUT
-                   tdkTestObj.executeTestCase(expectedresult);
+                    values = [setvalues[0],setvalues[1],setvalues[2],setvalues[3],setvalues[3],"true","true","true","true",setvalues[3],"true","true",setvalues[4],setvalues[5],setvalues[6],setvalues[7],setvalues[8],setvalues[7],setvalues[8],setvalues[3],"true","true",setvalues[4],setvalues[5],setvalues[6],setvalues[7],setvalues[8],setvalues[7],setvalues[8],"true"];
+                    tdkTestObj, actualresult, details = SetPublicWiFiParamValues(wifiobj,values);
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult);
 
-                   actualresult = tdkTestObj.getResult();
-                   details = tdkTestObj.getResultDetails();
-                   if expectedresult in actualresult:
-                      tdkTestObj.setResultStatus("SUCCESS");
-                      print "TEST STEP 5 : Should enable PublicWiFi"
-                      print "ACTUAL RESULT 5:%s" %details
-                      print "[TEST EXECUTION RESULT] : SUCCESS";
-                      sleep(30);
+                    actualresult = tdkTestObj.getResult();
+                    details = tdkTestObj.getResultDetails();
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("TEST STEP 5 : Should enable PublicWiFi")
+                        print("ACTUAL RESULT 5:%s" %details)
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                        sleep(30);
 
-                      details,actualresult = getPID(tdkTestObj_Sys_ExeCmd,"CcspHotspot");
-                      if expectedresult in actualresult and details != "":
-                         Initialpid = int(details);
-                         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                         print "TEST STEP 6: Check if CcspHotspot process is running";
-                         print "EXPECTED RESULT 6:CcspHotspot  process should be running";
-                         print "ACTUAL RESULT 6: pid of CcspHotspot:",details;
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-
-                         actualresult =killProcess(tdkTestObj_Sys_ExeCmd,Initialpid,"");
-                         if expectedresult in actualresult :
+                        details,actualresult = getPID(tdkTestObj_Sys_ExeCmd,"CcspHotspot");
+                        if expectedresult in actualresult and details != "":
+                            Initialpid = int(details);
                             tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                            print "TEST STEP 7: Kill CcspHotspot process";
-                            print "EXPECTED RESULT 7:Should Kill the CcspHotspot  process ";
-                            print "ACTUAL RESULT 7: CcspHotspot process killed successfully";
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("TEST STEP 6: Check if CcspHotspot process is running");
+                            print("EXPECTED RESULT 6:CcspHotspot  process should be running");
+                            print("ACTUAL RESULT 6: pid of CcspHotspot:",details);
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            #WIFI_SH_hotspot_restart marker comes up once the GRE tunnel is created hence doing a sleep for marker to be uploaded
-                            sleep(900);
+                            actualresult =killProcess(tdkTestObj_Sys_ExeCmd,Initialpid,"");
+                            if expectedresult in actualresult :
+                                tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                print("TEST STEP 7: Kill CcspHotspot process");
+                                print("EXPECTED RESULT 7:Should Kill the CcspHotspot  process ");
+                                print("ACTUAL RESULT 7: CcspHotspot process killed successfully");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                            lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
-                            if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
-                               print "Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu
-                               tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                               print "TEST STEP 8: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                               print "EXPECTED RESULT 8: Line count After Simulation should be greater than the initialLinesCount";
-                               print "ACTUAL RESULT 8: Line count After Simulation is greater than the initialLinesCount";
-                               print "[TEST EXECUTION RESULT] : SUCCESS";
+                                #WIFI_SH_hotspot_restart marker comes up once the GRE tunnel is created hence doing a sleep for marker to be uploaded
+                                sleep(900);
 
-                               query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : WIFI_SH_hotspot_restart\"" %(initialLinesCount,lineCountAfterSimu)
-                               print "query:%s" %query
-                               tdkTestObj_Sys_ExeCmd.addParameter("command", query);
-                               tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
-                               actualresult = tdkTestObj_Sys_ExeCmd.getResult();
-                               details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
-                               print "Marker Detail Found from log file is: %s "%details;
+                                lineCountResult1, lineCountAfterSimu = getTelLogFileTotalLinesCount(tdkTestObj_Sys_ExeCmd);
+                                if expectedresult in lineCountResult and  int(lineCountAfterSimu) > int(initialLinesCount):
+                                    print("Line count of Telemetry Log File After Simulation is ",lineCountAfterSimu)
+                                    tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                    print("TEST STEP 8: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                                    print("EXPECTED RESULT 8: Line count After Simulation should be greater than the initialLinesCount");
+                                    print("ACTUAL RESULT 8: Line count After Simulation is greater than the initialLinesCount");
+                                    print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                               if expectedresult in actualresult and details!="" and (len(details) > 0) and "WIFI_SH_hotspot_restart" in details:
-                                  tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                                  markervalue = details.split("WIFI_SH_hotspot_restart value :")[1]
-                                  print "TEST STEP 9:WIFI_SH_hotspot_restart  Marker should be present";1
-                                  print "EXPECTED RESULT 9: WIFI_SH_hotspot_restart Marker should be present";
-                                  print "ACTUAL RESULT 9: WIFI_SH_hotspot_restart  Marker Value is %s" %markervalue;
-                                  #Get the result of execution
-                                  print "[TEST EXECUTION RESULT] : SUCCESS";
+                                    query = "sed -n -e %s,%sp /rdklogs/logs/telemetry2_0.txt.0 | grep -i \"Received eventInfo : WIFI_SH_hotspot_restart\"" %(initialLinesCount,lineCountAfterSimu)
+                                    print("query:%s" %query)
+                                    tdkTestObj_Sys_ExeCmd.addParameter("command", query);
+                                    tdkTestObj_Sys_ExeCmd.executeTestCase(expectedresult);
+                                    actualresult = tdkTestObj_Sys_ExeCmd.getResult();
+                                    details = tdkTestObj_Sys_ExeCmd.getResultDetails().strip().replace("\\n","");
+                                    print("Marker Detail Found from log file is: %s "%details);
 
-                                  actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"CcspHotspot");
-                                  if expectedresult in actualresult and pid != "" and pid != Initialpid:
-                                     tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-                                     print "TEST STEP 7: Check if the CcspHotspot proccess restarted";
-                                     print "EXPECTED RESULT 7:CcspHotspot proccess should restart ";
-                                     print "ACTUAL RESULT 7: CcspHotspot restarted successfully";
-                                     print "[TEST EXECUTION RESULT] : SUCCESS";
-                                  else:
-                                      tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                                      print "TEST STEP 7: Check if the CcspHotspot proccess restarted";
-                                      print "EXPECTED RESULT 7:CcspHotspot proccess should restart ";
-                                      print "ACTUAL RESULT 7: CcspHotspot restart failed";
-                                      print "[TEST EXECUTION RESULT] : FAILURE";
-                               else:
-                                   tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                                   print "TEST STEP 9:WIFI_SH_hotspot_restart  Marker should be present";
-                                   print "EXPECTED RESULT 9: WIFI_SH_hotspot_restart Marker should be present";
-                                   print "ACTUAL RESULT 9: WIFI_SH_hotspot_restart  Marker is %s" %details;
-                                   #Get the result of execution
-                                   print "[TEST EXECUTION RESULT] : FAILURE";
+                                    if expectedresult in actualresult and details!="" and (len(details) > 0) and "WIFI_SH_hotspot_restart" in details:
+                                        tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                        markervalue = details.split("WIFI_SH_hotspot_restart value :")[1]
+                                        print("TEST STEP 9:WIFI_SH_hotspot_restart  Marker should be present");1
+                                        print("EXPECTED RESULT 9: WIFI_SH_hotspot_restart Marker should be present");
+                                        print("ACTUAL RESULT 9: WIFI_SH_hotspot_restart  Marker Value is %s" %markervalue);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                                        actualresult,pid = checkProcessRestarted(tdkTestObj_Sys_ExeCmd,"CcspHotspot");
+                                        if expectedresult in actualresult and pid != "" and pid != Initialpid:
+                                            tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
+                                            print("TEST STEP 7: Check if the CcspHotspot proccess restarted");
+                                            print("EXPECTED RESULT 7:CcspHotspot proccess should restart ");
+                                            print("ACTUAL RESULT 7: CcspHotspot restarted successfully");
+                                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                                        else:
+                                            tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                                            print("TEST STEP 7: Check if the CcspHotspot proccess restarted");
+                                            print("EXPECTED RESULT 7:CcspHotspot proccess should restart ");
+                                            print("ACTUAL RESULT 7: CcspHotspot restart failed");
+                                            print("[TEST EXECUTION RESULT] : FAILURE");
+                                    else:
+                                        tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                                        print("TEST STEP 9:WIFI_SH_hotspot_restart  Marker should be present");
+                                        print("EXPECTED RESULT 9: WIFI_SH_hotspot_restart Marker should be present");
+                                        print("ACTUAL RESULT 9: WIFI_SH_hotspot_restart  Marker is %s" %details);
+                                        #Get the result of execution
+                                        print("[TEST EXECUTION RESULT] : FAILURE");
+                                else:
+                                    tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                                    print("TEST STEP 8: Get the line count of telemetry log file and compare the value with initialLinesCount");
+                                    print("EXPECTED RESULT 8: Line count After Simulation should be greater than the initialLinesCount");
+                                    print("ACTUAL RESULT 8: Line count After Simulation is NOT greater than the initialLinesCount");
+                                    print("[TEST EXECUTION RESULT] : FAILURE");
                             else:
                                 tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                                print "TEST STEP 8: Get the line count of telemetry log file and compare the value with initialLinesCount";
-                                print "EXPECTED RESULT 8: Line count After Simulation should be greater than the initialLinesCount";
-                                print "ACTUAL RESULT 8: Line count After Simulation is NOT greater than the initialLinesCount";
-                                print "[TEST EXECUTION RESULT] : FAILURE";
-                         else:
-                             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                             print "TEST STEP 7: Kill CcspHotspot process";
-                             print "EXPECTED RESULT 7:Should Kill the CcspHotspot  process ";
-                             print "ACTUAL RESULT 7: Failed to kill CcspHotspot process";
-                             print "[TEST EXECUTION RESULT] : FAILURE";
-                      else:
-                          tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-                          print "TEST STEP 6: Check if CcspHotspot process is running";
-                          print "EXPECTED RESULT 6:CcspHotspot  process should be running";
-                          print "ACTUAL RESULT 6: pid of CcspHotspot:",details;
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                      #Revert the values of public wifi params
-                      tdkTestObj, actualresult, details = SetPublicWiFiParamValues(wifiobj,orgValue);
-                      if expectedresult in actualresult:
-                         tdkTestObj.setResultStatus("SUCCESS");
-                         print "TEST STEP 11:Revert the PublicWiFi param values"
-                         print "ACTUAL RESULT 11:%s" %details
-                         print "[TEST EXECUTION RESULT] : SUCCESS";
-                      else:
-                          tdkTestObj.setResultStatus("FAILURE");
-                          print "TEST STEP 11:Revert the PublicWiFi param values"
-                          print "ACTUAL RESULT 11:%s" %details
-                          print "[TEST EXECUTION RESULT] : FAILURE";
-                   else:
-                       tdkTestObj.setResultStatus("FAILURE");
-                       print "TEST STEP 5 : Should enable PublicWiFi"
-                       print "ACTUAL RESULT 5:%s" %details
-                       print "[TEST EXECUTION RESULT] : FAILURE";
+                                print("TEST STEP 7: Kill CcspHotspot process");
+                                print("EXPECTED RESULT 7:Should Kill the CcspHotspot  process ");
+                                print("ACTUAL RESULT 7: Failed to kill CcspHotspot process");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+                        else:
+                            tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
+                            print("TEST STEP 6: Check if CcspHotspot process is running");
+                            print("EXPECTED RESULT 6:CcspHotspot  process should be running");
+                            print("ACTUAL RESULT 6: pid of CcspHotspot:",details);
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                        #Revert the values of public wifi params
+                        tdkTestObj, actualresult, details = SetPublicWiFiParamValues(wifiobj,orgValue);
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("TEST STEP 11:Revert the PublicWiFi param values")
+                            print("ACTUAL RESULT 11:%s" %details)
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("TEST STEP 11:Revert the PublicWiFi param values")
+                            print("ACTUAL RESULT 11:%s" %details)
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("TEST STEP 5 : Should enable PublicWiFi")
+                        print("ACTUAL RESULT 5:%s" %details)
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4:Get the set values to enable PublicWiFi"
-                    print "ACTUAL RESULT 4:Get failed";
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("TEST STEP 4:Get the set values to enable PublicWiFi")
+                    print("ACTUAL RESULT 4:Get failed");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3:Get values of PublicWiFi params"
-                print "ACTUAL RESULT 3:%s" %orgValue
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("TEST STEP 3:Get values of PublicWiFi params")
+                print("ACTUAL RESULT 3:%s" %orgValue)
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the initial Line count of Telemetry Log file";
-            print "EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file";
-            print "ACTUAL RESULT 2: Failed to retrive Line count";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP 2: Get the initial Line count of Telemetry Log file");
+            print("EXPECTED RESULT 2 : Should get the initial line count of Telemetry Log file");
+            print("ACTUAL RESULT 2: Failed to retrive Line count");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
-        print "***************************************************************"
+        print("ACTUAL RESULT 1: Pre-Requisite for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+        print("***************************************************************")
 
-    print "***************************************************************"
-    print "TEST STEP 11: Initiating Post Process for Telemetry2_0";
-    print "EXPECTED RESULT 11: Post Process should be success";
+    print("***************************************************************")
+    print("TEST STEP 11: Initiating Post Process for Telemetry2_0");
+    print("EXPECTED RESULT 11: Post Process should be success");
 
     postprocess_Status = telemetry2_0_PostProcess(sysobj,tdkTestObj_Sys_ExeCmd,tdkTestObj_Tr181_set,revertFlag,initialStatus,initialVersion,initialURL);
     if postprocess_Status == 1:
         tdkTestObj_Sys_ExeCmd.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT 11 : Post Process for Telemetry2_0 was Successful";
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("ACTUAL RESULT 11 : Post Process for Telemetry2_0 was Successful");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 11: Post Process for Telemetry2_0 was Failed";
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("ACTUAL RESULT 11: Post Process for Telemetry2_0 was Failed");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     tr181obj.unloadModule("tdkbtr181");
     sysobj.unloadModule("sysutil");
     wifiobj.unloadModule("wifiagent");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     tr181obj.setLoadModuleStatus("FAILURE");

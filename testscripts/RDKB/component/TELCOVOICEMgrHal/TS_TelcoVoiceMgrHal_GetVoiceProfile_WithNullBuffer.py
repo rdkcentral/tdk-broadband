@@ -65,7 +65,7 @@
     <api_or_interface_used>json_hal_client_init
 json_hal_client_run
 json_hal_is_client_connected
-json_hal_client_send_and_get_reply 
+json_hal_client_send_and_get_reply
 json_hal_get_param
 json_hal_add_param</api_or_interface_used>
     <input_parameters>flag : 1
@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_TelcoVoiceMgrHal_GetVoiceProfile_WithNullBuffe
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
@@ -120,11 +120,11 @@ if "SUCCESS" in loadmodulestatus.upper() :
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation";
-        print "EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be success";
-        print "ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was success";
+        print("TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation");
+        print("EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be success");
+        print("ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was success");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS" ;
+        print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
         tdkTestObj = obj.createTestStep('TELCOVOICEMgrHal_GetVoiceProfile');
         #Null Buffer flag = 1
@@ -139,31 +139,31 @@ if "SUCCESS" in loadmodulestatus.upper() :
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Get the Voice Profile details";
-            print "EXPECTED RESULT 2: GetVoiceProfile operation should be failed with Null Buffer as input";
-            print "ACTUAL RESULT 2: GetVoiceProfile operation failed , Details: ",voice_profile_details;
+            print("TEST STEP 2: Get the Voice Profile details");
+            print("EXPECTED RESULT 2: GetVoiceProfile operation should be failed with Null Buffer as input");
+            print("ACTUAL RESULT 2: GetVoiceProfile operation failed , Details: ",voice_profile_details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS" ;
+            print("[TEST EXECUTION RESULT] : SUCCESS") ;
 
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Get the Voice Profile details";
-            print "EXPECTED RESULT 2: GetVoiceProfile operation should be failed with Null Buffer as input";
-            print "ACTUAL RESULT 2: GetVoiceProfile operation success, Details : ", voice_profile_details;
+            print("TEST STEP 2: Get the Voice Profile details");
+            print("EXPECTED RESULT 2: GetVoiceProfile operation should be failed with Null Buffer as input");
+            print("ACTUAL RESULT 2: GetVoiceProfile operation success, Details : ", voice_profile_details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE" ;
+            print("[TEST EXECUTION RESULT] : FAILURE") ;
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation";
-        print "EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be Success";
-        print "ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was Failed";
+        print("TEST STEP 1: Initiate the TELCOVOICEMgrHal_Init operation");
+        print("EXPECTED RESULT 1: TELCOVOICEMgrHal_Init Should be Success");
+        print("ACTUAL RESULT 1: TELCOVOICEMgrHal_Init was Failed");
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE" ;
+        print("[TEST EXECUTION RESULT] : FAILURE") ;
 
     obj.unloadModule("telcovoicemgrhal");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

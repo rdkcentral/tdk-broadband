@@ -99,7 +99,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPingTest_InvalidHostName');
 
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
@@ -118,11 +118,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Set ping host URL"
-        print "EXPECTED RESULT 1: Should set the host URL";
-        print "ACTUAL RESULT 1:  %s" %details;
+        print("TEST STEP 1: Set ping host URL")
+        print("EXPECTED RESULT 1: Should set the host URL");
+        print("ACTUAL RESULT 1:  %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.X_RDKCENTRAL-COM_PingTest.Run");
         tdkTestObj.addParameter("ParamValue","true");
@@ -134,57 +134,53 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set ping test run value as true"
-            print "EXPECTED RESULT 2: Should set the ping test run value as true";
-            print "ACTUAL RESULT 2:  %s" %details;
+            print("TEST STEP 2: Set ping test run value as true")
+            print("EXPECTED RESULT 2: Should set the ping test run value as true");
+            print("ACTUAL RESULT 2:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
-            
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
             time.sleep(20);
- 
+
             tdkTestObj = obj.createTestStep('TADstub_Get');
             tdkTestObj.addParameter("paramName","Device.IP.Diagnostics.IPPing.DiagnosticsState");
             tdkTestObj.executeTestCase(expectedresult);
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
             if expectedresult in actualresult and details == "Error_CannotResolveHostName":
-               #Set the result status of execution
-               tdkTestObj.setResultStatus("SUCCESS");
-               print "TEST STEP 3: Get ping test diagnostic state"
-               print "EXPECTED RESULT 3: Should get the ping test diagnostic state as Error_CannotResolveHostName";
-               print "ACTUAL RESULT 3:  %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : SUCCESS";
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("TEST STEP 3: Get ping test diagnostic state")
+                print("EXPECTED RESULT 3: Should get the ping test diagnostic state as Error_CannotResolveHostName");
+                print("ACTUAL RESULT 3:  %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
-               tdkTestObj.setResultStatus("FAILURE");
-               print "TEST STEP 3: Get ping test diagnostic state"
-               print "EXPECTED RESULT 3: Should get the ping test diagnostic state as Error_CannotResolveHostName";
-               print "ACTUAL RESULT 3:  %s" %details;
-               #Get the result of execution
-               print "[TEST EXECUTION RESULT] : FAILURE";
+                tdkTestObj.setResultStatus("FAILURE");
+                print("TEST STEP 3: Get ping test diagnostic state")
+                print("EXPECTED RESULT 3: Should get the ping test diagnostic state as Error_CannotResolveHostName");
+                print("ACTUAL RESULT 3:  %s" %details);
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set ping test run value as true"
-            print "EXPECTED RESULT 2: Should set ping test run value as true";
-            print "ACTUAL RESULT 2:  %s" %details;
+            print("TEST STEP 2: Set ping test run value as true")
+            print("EXPECTED RESULT 2: Should set ping test run value as true");
+            print("ACTUAL RESULT 2:  %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Set ping host URL"
-        print "EXPECTED RESULT 1: Should set the ping host URL"
-        print "ACTUAL RESULT 1:  %s" %details;
+        print("TEST STEP 1: Set ping host URL")
+        print("EXPECTED RESULT 1: Should set the ping host URL")
+        print("ACTUAL RESULT 1:  %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-
-
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

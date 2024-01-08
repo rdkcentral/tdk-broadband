@@ -67,8 +67,8 @@
 SnmpVersion : v2c
 OID : 1.3.6.1.2.1.69.1.3.5.0</input_parameters>
     <automation_approch>1.TM will load the snmp_pa library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. Get sw version using executecmd and compare with snmpget output
 4.Responses from the snmplib  will be logged in Script log.
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -91,8 +91,8 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 
 #Test component to be tested
@@ -106,7 +106,7 @@ obj.configureTestCase(ip,port,'TS_SNMP_GetSwCurrentVersion');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,26 +119,25 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
     imagename = tdklib.getImageName (ip, port);
-    print "image name : ",imagename;
+    print("image name : ",imagename);
 
     if imagename in actResponse:
         sw_rev = actResponse.split("STRING:")[1]
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Execute snmpget for Software version";
-        print "EXPECTED RESULT 1: snmpget should get the Software version";
-        print "ACTUAL RESULT 1: SW_verion is %s" %sw_rev;
+        print("TEST STEP 1:Execute snmpget for Software version");
+        print("EXPECTED RESULT 1: snmpget should get the Software version");
+        print("ACTUAL RESULT 1: SW_verion is %s" %sw_rev);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         tdkTestObj.setResultStatus("FAILURE");
         details = tdkTestObj.getResultDetails();
-        print "TEST STEP 1:Execute snmpget for Software version";
-        print "EXPECTED RESULT 1: snmpget should get the Software version";
-        print "ACTUAL RESULT 1: %s" %actResponse;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1:Execute snmpget for Software version");
+        print("EXPECTED RESULT 1: snmpget should get the Software version");
+        print("ACTUAL RESULT 1: %s" %actResponse);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

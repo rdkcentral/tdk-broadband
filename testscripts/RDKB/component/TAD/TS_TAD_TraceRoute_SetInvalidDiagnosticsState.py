@@ -104,38 +104,36 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_TraceRoute_SetInvalidDiagnosticsState');
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper():
-	#Set the result status of execution
-	obj.setLoadModuleStatus("SUCCESS");
-	tdkTestObj = obj.createTestStep('TADstub_Set');
-	tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.TraceRoute.DiagnosticsState");
-	tdkTestObj.addParameter("ParamValue","Completed");
-	tdkTestObj.addParameter("Type","string");
-	expectedresult="FAILURE";
-	tdkTestObj.executeTestCase(expectedresult);
-	actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if expectedresult in actualresult:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2:Set DiagnosticsState of TraceRoute as completed";
-	    print "EXPECTED RESULT 2: DiagnosticsState of TraceRoute must be Requested or Canceled";
-	    print "ACTUAL RESULT 2: Can not set DiagnosticsState of TraceRoute as completed, details : %s" %details;
-	    #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    #Set the result status of execution
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2:Set DiagnosticsState of TraceRoute as completed";
-            print "EXPECTED RESULT 2: DiagnosticsState of TraceRoute must be Requested or Canceled";
-            print "ACTUAL RESULT 2: DiagnosticsState of TraceRoute is set as completed, details : %s" %details;
-            #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
-	obj.unloadModule("tad");
+    #Set the result status of execution
+    obj.setLoadModuleStatus("SUCCESS");
+    tdkTestObj = obj.createTestStep('TADstub_Set');
+    tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.TraceRoute.DiagnosticsState");
+    tdkTestObj.addParameter("ParamValue","Completed");
+    tdkTestObj.addParameter("Type","string");
+    expectedresult="FAILURE";
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    if expectedresult in actualresult:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 2:Set DiagnosticsState of TraceRoute as completed");
+        print("EXPECTED RESULT 2: DiagnosticsState of TraceRoute must be Requested or Canceled");
+        print("ACTUAL RESULT 2: Can not set DiagnosticsState of TraceRoute as completed, details : %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+    else:
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 2:Set DiagnosticsState of TraceRoute as completed");
+        print("EXPECTED RESULT 2: DiagnosticsState of TraceRoute must be Requested or Canceled");
+        print("ACTUAL RESULT 2: DiagnosticsState of TraceRoute is set as completed, details : %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
+    obj.unloadModule("tad");
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
-					
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

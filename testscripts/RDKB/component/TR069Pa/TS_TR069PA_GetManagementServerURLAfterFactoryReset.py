@@ -48,9 +48,9 @@
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
     <api_or_interface_used>TDKB_TR181Stub_Get</api_or_interface_used>
     <input_parameters>Device.ManagementServer.URL</input_parameters>
-    <automation_approch>1.Load the module 
+    <automation_approch>1.Load the module
 2.Perform Factory reset on the DUT
-3.Check if  Device.ManagementServer.URL hold the configured default value 
+3.Check if  Device.ManagementServer.URL hold the configured default value
 4.unload the module</automation_approch>
     <expected_output>On factory reset Device.ManagementServer.URL is expected to hold the Factory default value</expected_output>
     <priority>High</priority>
@@ -64,7 +64,7 @@
 </xml>
 
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tr69Config import *
 from time import sleep;
@@ -82,8 +82,8 @@ obj1.configureTestCase(ip,port,'TS_TR069PA_GetManagementServerURLAfterFactoryRes
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -102,14 +102,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         sleep(180);
-        
+
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
         tdkTestObj.addParameter("ParamName","Device.ManagementServer.URL");
         expectedresult="SUCCESS";
@@ -121,29 +121,29 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             details = details.strip().replace("\\n", "");
             if details == SERVER_URL:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2 : Query Management Server URL after Factory reset";
-                print "EXPECTED RESULT 2: Should get default Managment Server URL after Factory Reset";
-                print "ACTUAL RESULT 2: The value received is the default URL";
+                print("TEST STEP 2 : Query Management Server URL after Factory reset");
+                print("EXPECTED RESULT 2: Should get default Managment Server URL after Factory Reset");
+                print("ACTUAL RESULT 2: The value received is the default URL");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 details = details.strip().replace("\\n", "");
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2 : Query Management Server URL after Factory reset";
-                print "EXPECTED RESULT 2: Should get default Management Server URL after Factory Reset";
-                print "ACTUAL RESULT 2: The value received is not the expected default URL";
+                print("TEST STEP 2 : Query Management Server URL after Factory reset");
+                print("EXPECTED RESULT 2: Should get default Management Server URL after Factory Reset");
+                print("ACTUAL RESULT 2: The value received is not the expected default URL");
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("wifiagent");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj1.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

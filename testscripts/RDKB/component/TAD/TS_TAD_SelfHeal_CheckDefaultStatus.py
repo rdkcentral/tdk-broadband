@@ -86,8 +86,8 @@ pamobj.configureTestCase(ip,port,'TS_TAD_SelfHeal_CheckDefaultStatus');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus =obj.getLoadModuleResult();
 pamloadmodulestatus =pamobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %pamloadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     #Set the result status of execution
@@ -110,46 +110,45 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-	#Restore the device state saved before reboot
+        #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
 
-	#Check the default status of selfheal
-	tdkTestObj = obj.createTestStep('TADstub_Get');
+        #Check the default status of selfheal
+        tdkTestObj = obj.createTestStep('TADstub_Get');
         tdkTestObj.addParameter("paramName","Device.SelfHeal.X_RDKCENTRAL-COM_Enable");
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
-	details = tdkTestObj.getResultDetails();
-	if "true" == details:
-	    tdkTestObj.setResultStatus("SUCCESS");
-	    print "TEST STEP 2: Selfheal feature is enabled by default"
-	    print "EXPECTED RESULT 2: Selfheal feature should be enabled by default"
-	    print "ACTUAL RESULT 2: Selfheal feature status :%s" %details
-	    print "[TEST EXECUTION RESULT] : SUCCESS";
-	else:
-	    tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Selfheal feature is enabled by default"
-            print "EXPECTED RESULT 2: Selfheal feature should be enabled by default"
-            print "ACTUAL RESULT 2: Selfheal feature status :%s" %details
-            print "[TEST EXECUTION RESULT] : FAILURE";
+        details = tdkTestObj.getResultDetails();
+        if "true" == details:
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Selfheal feature is enabled by default")
+            print("EXPECTED RESULT 2: Selfheal feature should be enabled by default")
+            print("ACTUAL RESULT 2: Selfheal feature status :%s" %details)
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+        else:
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Selfheal feature is enabled by default")
+            print("EXPECTED RESULT 2: Selfheal feature should be enabled by default")
+            print("ACTUAL RESULT 2: Selfheal feature status :%s" %details)
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-	print "TEST STEP 1: Initiate factory reset ";
-        print "EXPECTED RESULT 1: Should inititate factory reset";
-        print "ACTUAL RESULT 1: %s" %details;
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should inititate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tad");
     pamobj.unloadModule("pam");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
-
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

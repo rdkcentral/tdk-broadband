@@ -105,7 +105,7 @@ obj.configureTestCase(ip,port,'TS_TAD_CheckDNSInternetConnectivityNamespaces_Wit
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -114,40 +114,40 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     #Get the initial enable state of Device.Diagnostics.X_RDK_DNSInternet.Enable
     step = 1;
-    print "\nTEST STEP %d : Get the initial enable state of Device.Diagnostics.X_RDK_DNSInternet.Enable" %step;
-    print "EXPECTED RESULT %d : The initial enable state of Device.Diagnostics.X_RDK_DNSInternet.Enable should be retrieved successfully" %step;
+    print("\nTEST STEP %d : Get the initial enable state of Device.Diagnostics.X_RDK_DNSInternet.Enable" %step);
+    print("EXPECTED RESULT %d : The initial enable state of Device.Diagnostics.X_RDK_DNSInternet.Enable should be retrieved successfully" %step);
     tdkTestObj, actualresult, initialEnable = getDNSParameterValue(obj, expectedresult, "Device.Diagnostics.X_RDK_DNSInternet.Enable");
 
     if expectedresult in actualresult and initialEnable != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable : %s" %(step, initialEnable);
-        print "TEST EXECUTION RESULT : SUCCESS";
+        print("ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable : %s" %(step, initialEnable));
+        print("TEST EXECUTION RESULT : SUCCESS");
 
         #If initialEnable is "false", enable it
         proceedFlag = 1;
         if initialEnable == "false":
-            print "DNSInternet is disabled initially";
+            print("DNSInternet is disabled initially");
             #Enabling Device.Diagnostics.X_RDK_DNSInternet.Enable and validating the SET
             step = step + 1;
             setEnable = "true";
-            print "\nTEST STEP %d : Enable Device.Diagnostics.X_RDK_DNSInternet.Enable" %step;
-            print "EXPECTED RESULT %d : Device.Diagnostics.X_RDK_DNSInternet.Enable should be enabled successfully" %step;
+            print("\nTEST STEP %d : Enable Device.Diagnostics.X_RDK_DNSInternet.Enable" %step);
+            print("EXPECTED RESULT %d : Device.Diagnostics.X_RDK_DNSInternet.Enable should be enabled successfully" %step);
             tdkTestObj, actualresult, details = setDNSParameterValue(obj, expectedresult, "Device.Diagnostics.X_RDK_DNSInternet.Enable", setEnable, "boolean");
 
             if expectedresult in actualresult and details == "Set has been validated successfully":
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable set to %s successfully" %(step, setEnable);
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable set to %s successfully" %(step, setEnable));
+                print("TEST EXECUTION RESULT : SUCCESS");
             else:
                 proceedFlag = 0;
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable was NOT set to %s successfully" %(step, setEnable);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable was NOT set to %s successfully" %(step, setEnable));
+                print("TEST EXECUTION RESULT : FAILURE");
         else:
-            print "Device.Diagnostics.X_RDK_DNSInternet.Enable is already in enabled state";
+            print("Device.Diagnostics.X_RDK_DNSInternet.Enable is already in enabled state");
 
         #If the DNS Internet is enabled, proceed
         if proceedFlag == 1:
@@ -155,53 +155,53 @@ if "SUCCESS" in loadmodulestatus.upper():
             step = step + 1;
             dmlFlag = 0;
             paramList = ["Device.Diagnostics.X_RDK_DNSInternet.Active", "Device.Diagnostics.X_RDK_DNSInternet.TestURLNumberOfEntries", "Device.Diagnostics.X_RDK_DNSInternet.WANInterfaceNumberOfEntries"];
-            print "\nTEST STEP %d : Verify that DNS Internet Connectivity DML objects are available under Device.Diagnostics.X_RDK_DNSInternet. " %step;
-            print "EXPECTED RESULT %d : DNS Internet Connectivity DML objects should be available under Device.Diagnostics.X_RDK_DNSInternet. " %step;
+            print("\nTEST STEP %d : Verify that DNS Internet Connectivity DML objects are available under Device.Diagnostics.X_RDK_DNSInternet. " %step);
+            print("EXPECTED RESULT %d : DNS Internet Connectivity DML objects should be available under Device.Diagnostics.X_RDK_DNSInternet. " %step);
 
             for param in paramList:
                 tdkTestObj, actualresult, details = getDNSParameterValue(obj, expectedresult, param);
-                print "%s : %s" %(param, details);
+                print("%s : %s" %(param, details));
 
                 if expectedresult in actualresult:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "Parameter retrieved";
+                    print("Parameter retrieved");
                 else:
                     dmlFlag = 1;
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "Parameter NOT retrieved";
+                    print("Parameter NOT retrieved");
                     break;
 
             if dmlFlag == 0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d: DNS Internet Connectivity DML objects are available under Device.Diagnostics.X_RDK_DNSInternet." %(step);
-                print "TEST EXECUTION RESULT : SUCCESS";
+                print("ACTUAL RESULT %d: DNS Internet Connectivity DML objects are available under Device.Diagnostics.X_RDK_DNSInternet." %(step));
+                print("TEST EXECUTION RESULT : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d: DNS Internet Connectivity DML objects are NOT available under Device.Diagnostics.X_RDK_DNSInternet." %(step);
-                print "TEST EXECUTION RESULT : FAILURE";
+                print("ACTUAL RESULT %d: DNS Internet Connectivity DML objects are NOT available under Device.Diagnostics.X_RDK_DNSInternet." %(step));
+                print("TEST EXECUTION RESULT : FAILURE");
 
             #Revert Device.Diagnostics.X_RDK_DNSInternet. if required
             step = step + 1;
             if initialEnable != "true":
                 DNSInternetConnectivity_Revert(obj, step, initialEnable, expectedresult);
             else:
-                print "Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required";
+                print("Reverting Device.Diagnostics.X_RDK_DNSInternet.Enable to initial value not required");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "Unable to enable Device.Diagnostics.X_RDK_DNSInternet.Enable, cannot proceed further...";
+            print("Unable to enable Device.Diagnostics.X_RDK_DNSInternet.Enable, cannot proceed further...");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable not retrieved" %step;
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("ACTUAL RESULT %d: Device.Diagnostics.X_RDK_DNSInternet.Enable not retrieved" %step);
+        print("TEST EXECUTION RESULT : FAILURE");
 
     obj.unloadModule("tad");
 else:
-    print "Failed to load the module";
+    print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

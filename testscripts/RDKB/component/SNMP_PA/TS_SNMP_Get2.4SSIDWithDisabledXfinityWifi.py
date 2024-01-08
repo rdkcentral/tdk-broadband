@@ -59,7 +59,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_SNMP_PA_32</test_case_id>
-    <test_objective>Do snmp query for  2.4Ghz xfinitywifi SSID name	when xfinitywifi is disabled</test_objective>
+    <test_objective>Do snmp query for  2.4Ghz xfinitywifi SSID name     when xfinitywifi is disabled</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3, Emulator</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
@@ -71,8 +71,8 @@ pam_SetParameterValues</api_or_interface_used>
 
 Device.DeviceInfo.X_COMCAST_COM_xfinitywifiEnable</input_parameters>
     <automation_approch>1.TM will load the snmp_pa library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4. pam_SetParameterValues sets value of xfinitywifiEnable as disabled
 5. With snmpget check that the value of wifiSSId is "OutOfService"
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -96,8 +96,8 @@ pam</test_stub_interface>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
 import snmplib;
 from time import sleep;
 
@@ -115,7 +115,7 @@ pamObj.configureTestCase(ip,port,'TS_SNMP_Get2.4SSIDWithDisabledXfinityWifi');
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 pamloadmodulestatus =pamObj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -132,13 +132,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
     if "=" in actResponse :
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: snmpget request to get xfinity wifi status";
-        print "EXPECTED RESULT 1: Command should return xfinity wifi status";
-        print "ACTUAL RESULT 1: %s" %actResponse;
+        print("TEST STEP 1: snmpget request to get xfinity wifi status");
+        print("EXPECTED RESULT 1: Command should return xfinity wifi status");
+        print("ACTUAL RESULT 1: %s" %actResponse);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS"
+        print("[TEST EXECUTION RESULT] : SUCCESS")
         org_value = actResponse.rsplit(None, 1)[-1];
-        print "Current Status is %s " %org_value;
+        print("Current Status is %s " %org_value);
         if org_value != "2":
             tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST_COM_xfinitywifiEnable");
@@ -152,33 +152,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Disable Xfinity Wifi";
-                print "EXPECTED RESULT 2: Should disable Xfinity Wifi successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:Disable Xfinity Wifi");
+                print("EXPECTED RESULT 2: Should disable Xfinity Wifi successfully");
+                print("ACTUAL RESULT 2: %s" %details);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Disable Xfinity Wifi";
-                print "EXPECTED RESULT 2: Should disable Xfinity Wifi successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:Disable Xfinity Wifi");
+                print("EXPECTED RESULT 2: Should disable Xfinity Wifi successfully");
+                print("ACTUAL RESULT 2: %s" %details);
                 obj.unloadModule("sysutil");
                 pamObj.unloadModule("pam");
 
         actResponse =snmplib.SnmpExecuteCmd("snmpget", communityString, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.2.1.1.3.10003", ipaddress);
         if "OutOfService" in actResponse:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: snmpget request to get the SSID";
-            print "EXPECTED RESULT 2: Command should not return any SSID since Xfinity Wifi is disabled";
-            print "ACTUAL RESULT 2: %s" %actResponse;
+            print("TEST STEP 2: snmpget request to get the SSID");
+            print("EXPECTED RESULT 2: Command should not return any SSID since Xfinity Wifi is disabled");
+            print("ACTUAL RESULT 2: %s" %actResponse);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS"
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: snmpget request to get the SSID";
-            print "EXPECTED RESULT 2: Command should not return any SSID since Xfinity Wifi is disabled";
-            print "ACTUAL RESULT 2: %s" %actResponse;
+            print("TEST STEP 2: snmpget request to get the SSID");
+            print("EXPECTED RESULT 2: Command should not return any SSID since Xfinity Wifi is disabled");
+            print("ACTUAL RESULT 2: %s" %actResponse);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
         if org_value != "2":
             tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_COMCAST_COM_xfinitywifiEnable");
@@ -192,25 +192,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in pamloadmodulestatus.up
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 2:Disable Xfinity Wifi";
-                print "EXPECTED RESULT 2: Should disable Xfinity Wifi successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:Disable Xfinity Wifi");
+                print("EXPECTED RESULT 2: Should disable Xfinity Wifi successfully");
+                print("ACTUAL RESULT 2: %s" %details);
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 2:Disable Xfinity Wifi";
-                print "EXPECTED RESULT 2: Should disable Xfinity Wifi successfully";
-                print "ACTUAL RESULT 2: %s" %details;
+                print("TEST STEP 2:Disable Xfinity Wifi");
+                print("EXPECTED RESULT 2: Should disable Xfinity Wifi successfully");
+                print("ACTUAL RESULT 2: %s" %details);
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: snmpget request to get xfinity wifi status";
-        print "EXPECTED RESULT 1: Command should return xfinity wifi status";
-        print "ACTUAL RESULT 1: %s" %actResponse;
+        print("TEST STEP 1: snmpget request to get xfinity wifi status");
+        print("EXPECTED RESULT 1: Command should return xfinity wifi status");
+        print("ACTUAL RESULT 1: %s" %actResponse);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     pamObj.unloadModule("pam");
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

@@ -69,8 +69,8 @@
 
 "snmpset", "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001 s pass"</input_parameters>
     <automation_approch>1.TM will load the snmp_pa library via Test agent
-2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID 
-3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string. 
+2.From python script, invoke SnmpExecuteCmd function in snmplib to get the value of given OID
+3. GetCommString function in the SNMP_PA stub  will be called from snmplib to get the community string.
 4.With snmpset set  a passphrase with less than 8 characters, set should fail
 5.Check if snmpset was successful or not
 6. Validation of  the result is done within the python script and send the result status to Test Manager.
@@ -93,9 +93,9 @@ TestManager GUI will publish the result as PASS in Execution/Console page of Tes
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script 
-import tdklib; 
-import snmplib; 
+# use tdklib library,which provides a wrapper for tdk testcase script
+import tdklib;
+import snmplib;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
@@ -108,11 +108,11 @@ obj.configureTestCase(ip,port,'TS_SNMP_Set8MinusWifiPassphrase');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
-    
+
     #Get the Community String
     commGetStr = snmplib.getCommunityString(obj,"snmpget");
     commSetStr = snmplib.getCommunityString(obj,"snmpset");
@@ -122,7 +122,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     get_details =snmplib.SnmpExecuteCmd("snmpget", commGetStr, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001", ipaddress);
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     tdkTestObj.executeTestCase("SUCCESS");
-    
+
     if "=" in get_details:
         orgPassphrase = get_details.rsplit(None, 1)[-1];
         tdkTestObj.setResultStatus("SUCCESS");
@@ -131,40 +131,38 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         if "ERROR" not in setDetails:
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 1:Execute snmpset for wifi passphrase with less than 8 characters";
-            print "EXPECTED RESULT 1: snmpset should not set the wifi passphrase";
-            print "ACTUAL RESULT 1: FAILURE, passphrase set"
+            print("TEST STEP 1:Execute snmpset for wifi passphrase with less than 8 characters");
+            print("EXPECTED RESULT 1: snmpset should not set the wifi passphrase");
+            print("ACTUAL RESULT 1: FAILURE, passphrase set")
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : %s" %setDetails;
+            print("[TEST EXECUTION RESULT] : %s" %setDetails);
 
             setDetails =snmplib.SnmpExecuteCmd("snmpset", commSetStr, "-v 2c", ".1.3.6.1.4.1.17270.50.2.2.3.3.1.3.10001 s %s" %orgPassphrase, ipaddress);
             if "=" in setDetails:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1:Execute snmpset for original wifi passphrase";
-                print "EXPECTED RESULT 1: snmpset should set the wifi passphrase";
-                print "ACTUAL RESULT 1: SUCCESS, passphrase set"
+                print("TEST STEP 1:Execute snmpset for original wifi passphrase");
+                print("EXPECTED RESULT 1: snmpset should set the wifi passphrase");
+                print("ACTUAL RESULT 1: SUCCESS, passphrase set")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %setDetails;
+                print("[TEST EXECUTION RESULT] : %s" %setDetails);
             else:
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 1:Execute snmpset for original wifi passphrase";
-                print "EXPECTED RESULT 1: snmpset should set the wifi passphrase";
-                print "ACTUAL RESULT 1: FAILURE, passphrase set"
+                print("TEST STEP 1:Execute snmpset for original wifi passphrase");
+                print("EXPECTED RESULT 1: snmpset should set the wifi passphrase");
+                print("ACTUAL RESULT 1: FAILURE, passphrase set")
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : %s" %setDetails;
+                print("[TEST EXECUTION RESULT] : %s" %setDetails);
         else:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 1:Execute snmpset for wifi passphrase with less than 8 characters";
-            print "EXPECTED RESULT 1: snmpset should not set the wifi passphrase";
-            print "ACTUAL RESULT 1: FAILURE, passphrase not set"
-            print "[TEST EXECUTION RESULT] : %s" %setDetails ;
+            print("TEST STEP 1:Execute snmpset for wifi passphrase with less than 8 characters");
+            print("EXPECTED RESULT 1: snmpset should not set the wifi passphrase");
+            print("ACTUAL RESULT 1: FAILURE, passphrase not set")
+            print("[TEST EXECUTION RESULT] : %s" %setDetails) ;
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT 1: FAILURE, snmpget for passphrase failed %s" %get_details;
+        print("ACTUAL RESULT 1: FAILURE, snmpget for passphrase failed %s" %get_details);
     obj.unloadModule("sysutil");
 else:
-        print "FAILURE to load SNMP_PA module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading FAILURE";
-
-					
+    print("FAILURE to load SNMP_PA module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");

@@ -106,7 +106,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_IPPing_SetInvalidDiagnosticsState');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -122,23 +122,23 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Set DiagnosticsState of IPPing as completed";
-        print "EXPECTED RESULT 1: DiagnosticsState of IPPing must be Requested or Canceled";
-        print "ACTUAL RESULT 1: Can not set DiagnosticsState of IPPing as completed, details : %s" %details;
+        print("TEST STEP 1:Set DiagnosticsState of IPPing as completed");
+        print("EXPECTED RESULT 1: DiagnosticsState of IPPing must be Requested or Canceled");
+        print("ACTUAL RESULT 1: Can not set DiagnosticsState of IPPing as completed, details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Set DiagnosticsState of IPPing as completed";
-        print "EXPECTED RESULT 1: DiagnosticsState of IPPing must be Requested or Canceled";
-        print "ACTUAL RESULT 1: DiagnosticsState of IPPing is set as completed, details : %s" %details;
+        print("TEST STEP 1:Set DiagnosticsState of IPPing as completed");
+        print("EXPECTED RESULT 1: DiagnosticsState of IPPing must be Requested or Canceled");
+        print("ACTUAL RESULT 1: DiagnosticsState of IPPing is set as completed, details : %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

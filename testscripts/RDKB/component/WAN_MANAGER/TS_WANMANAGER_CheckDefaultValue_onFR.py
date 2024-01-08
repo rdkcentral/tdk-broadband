@@ -105,9 +105,9 @@ sysobj.configureTestCase(ip,port,'TS_WANMANAGER_CheckDefaultValue_onFR');
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =obj1.getLoadModuleResult();
 loadmodulestatus2 =sysobj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus2;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus2);
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper()and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
@@ -127,10 +127,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot();
         sleep(180);
@@ -144,14 +144,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         actualresult = tdkTestObj.getResult();
         enableFlag = tdkTestObj.getResultDetails().strip().replace("\\n","");
 
-        print "TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties"
-        print "EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE";
+        print("TEST STEP 2: Get the WANMANAGER_UNIFICATION_ENABLE from platform properties")
+        print("EXPECTED RESULT 2: Should get the enable state of WANMANAGER_UNIFICATION_ENABLE");
 
         if expectedresult in actualresult and enableFlag != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag;
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE : %s" %enableFlag);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             if enableFlag == "TRUE":
                 compareValue = "AUTOWAN_MODE";
@@ -171,11 +171,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult and details == compareValue:
                 details = details.strip().replace("\\n", "");
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3 : Default WANMANAGER policy value after Factory reset";
-                print "EXPECTED RESULT 3: Should get WANMANAGER policy default value after Factory reset";
-                print "ACTUAL RESULT 3: The value received is %s" %details;
+                print("TEST STEP 3 : Default WANMANAGER policy value after Factory reset");
+                print("EXPECTED RESULT 3: Should get WANMANAGER policy default value after Factory reset");
+                print("ACTUAL RESULT 3: The value received is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                 tdkTestObj.addParameter("ParamName", "Device.X_RDK_WanManager.Enable");
@@ -187,43 +187,43 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult and details == "true":
                     details = details.strip().replace("\\n", "");
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 : Default WANMANAGER Enable value after Factory reset";
-                    print "EXPECTED RESULT 4: Should get WANMANAGER Enable default value after Factory reset";
-                    print "ACTUAL RESULT 4: The value received is %s" %details;
+                    print("TEST STEP 4 : Default WANMANAGER Enable value after Factory reset");
+                    print("EXPECTED RESULT 4: Should get WANMANAGER Enable default value after Factory reset");
+                    print("ACTUAL RESULT 4: The value received is %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4 : Default WANMANAGER Enable value after Factory reset";
-                    print "EXPECTED RESULT 4: Should get WANMANAGER Enable default value after Factory reset";
-                    print "ACTUAL RESULT 4: The value received is %s" %details;
+                    print("TEST STEP 4 : Default WANMANAGER Enable value after Factory reset");
+                    print("EXPECTED RESULT 4: Should get WANMANAGER Enable default value after Factory reset");
+                    print("ACTUAL RESULT 4: The value received is %s" %details);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3 :  Default WANMANAGER policy value after Factory reset";
-                print "EXPECTED RESULT 3: Should get WANMANAGER policy default value after Factory reset";
-                print "ACTUAL RESULT 3: The value received is %s" %details;
+                print("TEST STEP 3 :  Default WANMANAGER policy value after Factory reset");
+                print("EXPECTED RESULT 3: Should get WANMANAGER policy default value after Factory reset");
+                print("ACTUAL RESULT 3: The value received is %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties";
+            print("ACTUAL RESULT 2: WANMANAGER_UNIFICATION_ENABLE not retrieved from platform properties");
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Initiate factory reset ";
-        print "ACTUAL RESULT 1: %s" %details;
+        print("TEST STEP 1: Initiate factory reset ");
+        print("ACTUAL RESULT 1: %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] :FAILURE";
+        print("[TEST EXECUTION RESULT] :FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("wifiagent");
     sysobj.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");

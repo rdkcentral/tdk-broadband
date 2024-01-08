@@ -112,7 +112,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     obj1.setLoadModuleStatus("SUCCESS")
 
     expectedresult="SUCCESS";
-    print "The modules to test is: DSLite";
+    print("The modules to test is: DSLite");
 
     setup_type = "WEBPA"
     factoryReset = "true"
@@ -129,9 +129,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.executeTestCase("SUCCESS");
         if "SUCCESS" in parsedResponse[0]:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP : Initiate factory reset ";
-            print "EXPECTED RESULT : Should initiate factory reset";
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("TEST STEP : Initiate factory reset ");
+            print("EXPECTED RESULT : Should initiate factory reset");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
             #Restore the device state saved before reboot
             obj.restorePreviousStateAfterReboot();
@@ -142,28 +142,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                #Invoke the utility function to get and validate the values for all configured tr181 params
                 moduleStatus,failedParams = tdkbSetAllParams.getAllParams("DSLite", setup_type, factoryReset, obj, obj1);
 
-                print "Status of DSLite validation is ", moduleStatus, "\n";
+                print("Status of DSLite validation is ", moduleStatus, "\n");
                 if moduleStatus == "FAILURE":
-                    print "The failed params are ", failedParams, "\n";
+                    print("The failed params are ", failedParams, "\n");
                     tdkTestObj.setResultStatus("FAILURE");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+                print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP : Initiate factory reset ";
-            print "EXPECTED RESULT : Should initiate factory reset";
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("TEST STEP : Initiate factory reset ");
+            print("EXPECTED RESULT : Should initiate factory reset");
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print "Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device"
+        print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
-
+    print("Module loading failed");

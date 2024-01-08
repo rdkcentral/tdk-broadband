@@ -101,8 +101,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     #save device's current state before it goes for reboot
     obj1.saveCurrentState();
     tdkTestObj.setResultStatus("SUCCESS");
-    print "TEST STEP : Initiate factory reset ";
-    print "EXPECTED RESULT : Should initiate factory reset";
+    print("TEST STEP : Initiate factory reset ");
+    print("EXPECTED RESULT : Should initiate factory reset");
 
     # Resetting device using snmp command
     #Get the Community String
@@ -112,7 +112,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     ########## Script to Execute the snmp command ###########
     actResponse =snmplib.SnmpExecuteCmd("snmpset", communityString, "-t 15 -v 2c", "1.3.6.1.4.1.17270.50.2.1.1.1002.0 i 1", ipaddress);
     if "INTEGER" in actResponse:
-        print "Factory reset : SUCCESS";
+        print("Factory reset : SUCCESS");
         #Restore the device state saved before reboot
         obj1.restorePreviousStateAfterReboot();
         time.sleep(60);
@@ -123,18 +123,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         #Invoke the utility function to get and validate the values for all configured tr181 params
         moduleStatus,failedParams = tdkbSetAllParams.getAllParams("WIFI", setup_type, factoryReset, obj, obj1);
 
-        print "Status of WIFI validation is ", moduleStatus, "\n";
+        print("Status of WIFI validation is ", moduleStatus, "\n");
         if moduleStatus == "FAILURE":
-            print "The failed params are ", failedParams, "\n";
+            print("The failed params are ", failedParams, "\n");
             tdkTestObj.setResultStatus("FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "[Factory Reset] : FAILURE";
+        print("[Factory Reset] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("sysutil");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

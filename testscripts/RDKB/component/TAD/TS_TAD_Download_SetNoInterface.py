@@ -100,7 +100,7 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TAD_Download_SetNoInterface');
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
 if "SUCCESS" in loadmodulestatus.upper():
     #Set the result status of execution
@@ -117,11 +117,11 @@ if "SUCCESS" in loadmodulestatus.upper():
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1:Set the interface of Download ";
-        print "EXPECTED RESULT 1: Should set the interface of Download";
-        print "ACTUAL RESULT 1: Interface of Download is %s" %details;
+        print("TEST STEP 1:Set the interface of Download ");
+        print("EXPECTED RESULT 1: Should set the interface of Download");
+        print("ACTUAL RESULT 1: Interface of Download is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         tdkTestObj = obj.createTestStep('TADstub_Set');
         tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DownloadURL");
@@ -134,14 +134,14 @@ if "SUCCESS" in loadmodulestatus.upper():
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Set the download URL of Download";
-            print "EXPECTED RESULT 2: Should set the download URL of Download ";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the download URL of Download");
+            print("EXPECTED RESULT 2: Should set the download URL of Download ");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('TADstub_Set');
             tdkTestObj.addParameter("ParamName","Device.IP.Diagnostics.DownloadDiagnostics.DiagnosticsState");
-	    tdkTestObj.addParameter("ParamValue","Requested");
+            tdkTestObj.addParameter("ParamValue","Requested");
             tdkTestObj.addParameter("Type","string");
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);
@@ -150,11 +150,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Set DiagnosticsState of Download as Requested";
-                print "EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set DiagnosticsState of Download as Requested");
+                print("EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
                 time.sleep(50);
                 tdkTestObj = obj.createTestStep('TADstub_Get');
                 tdkTestObj.addParameter("paramName"," Device.IP.Diagnostics.DownloadDiagnostics.TotalBytesReceived");
@@ -165,47 +165,47 @@ if "SUCCESS" in loadmodulestatus.upper():
                 if expectedresult in actualresult and details_TotalBytesReceived>0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4 :Get TotalBytesReceived of download greater than zero";
-                    print "EXPECTED RESULT 4 :Should get the TotalBytesReceived of download as greater than zero ";
-                    print "ACTUAL RESULT 4 :The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived;
+                    print("TEST STEP 4 :Get TotalBytesReceived of download greater than zero");
+                    print("EXPECTED RESULT 4 :Should get the TotalBytesReceived of download as greater than zero ");
+                    print("ACTUAL RESULT 4 :The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4 :Get TotalBytesReceived of download as greater than zero";
-                    print "EXPECTED RESULT 4 :Should get the TotalBytesReceived of download as greater than zero";
-                    print "ACTUAL RESULT 4 :The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived;
+                    print("TEST STEP 4 :Get TotalBytesReceived of download as greater than zero");
+                    print("EXPECTED RESULT 4 :Should get the TotalBytesReceived of download as greater than zero");
+                    print("ACTUAL RESULT 4 :The TotalBytesReceived of download is , details : %s" %details_TotalBytesReceived);
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Set DiagnosticsState of Download as Requested";
-                print "EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested";
-                print "ACTUAL RESULT 3: %s" %details;
+                print("TEST STEP 3: Set DiagnosticsState of Download as Requested");
+                print("EXPECTED RESULT 3: Should set DiagnosticsState of Download as Requested");
+                print("ACTUAL RESULT 3: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Set the download URL of Download";
-            print "EXPECTED RESULT 2: Should set the download URL of Download ";
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Set the download URL of Download");
+            print("EXPECTED RESULT 2: Should set the download URL of Download ");
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-	    print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
          #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1:Set the interface of empty ";
-        print "EXPECTED RESULT 1: Should set the interface of Download as empty";
-        print "ACTUAL RESULT 1: Interface of Download is %s" %details;
+        print("TEST STEP 1:Set the interface of empty ");
+        print("EXPECTED RESULT 1: Should set the interface of Download as empty");
+        print("ACTUAL RESULT 1: Interface of Download is %s" %details);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tad");
 
 else:
-        print "Failed to load tad module";
-        obj.setLoadModuleStatus("FAILURE");
-        print "Module loading failed";
+    print("Failed to load tad module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");

@@ -90,8 +90,8 @@ obj1.configureTestCase(ip,port,'TS_TAD_AddandDeleteIPv4PingServerTable');
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
 loadmodulestatus1=obj1.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1)
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
@@ -107,19 +107,19 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
 
-    print "\nTEST STEP %d: Add a new IPv4 Ping Server Table instance" %step;
-    print "EXPECTED RESULT %d: Should add a new IPv4 Ping Server Table instance successfully" %step;
+    print("\nTEST STEP %d: Add a new IPv4 Ping Server Table instance" %step);
+    print("EXPECTED RESULT %d: Should add a new IPv4 Ping Server Table instance successfully" %step);
 
     if expectedresult in actualresult and details != "":
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "ACTUAL RESULT %d: Added a new IPv4 Ping Server Table instance successfully; Details : %s" %(step, details);
-        print "TEST EXECUTION RESULT : %s" %actualresult;
+        print("ACTUAL RESULT %d: Added a new IPv4 Ping Server Table instance successfully; Details : %s" %(step, details));
+        print("TEST EXECUTION RESULT : %s" %actualresult);
         instance = details.split(':')[1];
 
         if instance.isdigit() and int(instance) > 0:
             tdkTestObj.setResultStatus("SUCCESS");
-            print "INSTANCE VALUE : %s" %instance;
+            print("INSTANCE VALUE : %s" %instance);
 
             #Check default value of the newly added entry Ipv4 Ping Serve URI
             step = step + 1;
@@ -132,20 +132,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult1 = tdkTestObj.getResult();
             details1 = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d : Get the default value of %s and check if it is empty" %(step, ping_uri);
-            print "EXPECTED RESULT %d : The default value retrived should be empty" %step;
+            print("\nTEST STEP %d : Get the default value of %s and check if it is empty" %(step, ping_uri));
+            print("EXPECTED RESULT %d : The default value retrived should be empty" %step);
 
             if expectedresult in actualresult1:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : The default value of the newly added instance retrieved successfully" %step;
-                print "%s : %s" %(ping_uri, details1);
+                print("ACTUAL RESULT %d : The default value of the newly added instance retrieved successfully" %step);
+                print("%s : %s" %(ping_uri, details1));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 if details1 == "":
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "The default value of the new IPv4 Ping Server Table instance - %s is empty as expected" %(ping_uri);
+                    print("The default value of the new IPv4 Ping Server Table instance - %s is empty as expected" %(ping_uri));
 
                     #Check if are able to set a new IPV4 value
                     ipv4_addr = "8.8.8.8";
@@ -158,15 +158,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     actualresult1 = tdkTestObj.getResult();
                     details1 = tdkTestObj.getResultDetails();
 
-                    print "\nTEST STEP %d : Set value for %s to %s" %(step, ping_uri, ipv4_addr);
-                    print "EXPECTED RESULT %d : The value should be set successfully" %step;
+                    print("\nTEST STEP %d : Set value for %s to %s" %(step, ping_uri, ipv4_addr));
+                    print("EXPECTED RESULT %d : The value should be set successfully" %step);
 
                     if expectedresult in actualresult1:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print "ACTUAL RESULT %d : The IPv4 Ping Server URI of the newly added instance set successfully" %step;
+                        print("ACTUAL RESULT %d : The IPv4 Ping Server URI of the newly added instance set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : SUCCESS";
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
 
                         #Cross check the SET value with GET
                         step = step + 1;
@@ -176,44 +176,44 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult1 = tdkTestObj.getResult();
                         details1 = tdkTestObj.getResultDetails();
 
-                        print "\nTEST STEP %d : Get the value of %s and check if it is same as set value" %(step, ping_uri);
-                        print "EXPECTED RESULT %d : The value should be retrieved successfully and it should be the same as set value" %step;
+                        print("\nTEST STEP %d : Get the value of %s and check if it is same as set value" %(step, ping_uri));
+                        print("EXPECTED RESULT %d : The value should be retrieved successfully and it should be the same as set value" %step);
 
                         if expectedresult in actualresult1:
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS");
-                            print "ACTUAL RESULT %d : The value of the newly added instance retrieved successfully" %step;
-                            print "%s : %s" %(ping_uri, details1);
+                            print("ACTUAL RESULT %d : The value of the newly added instance retrieved successfully" %step);
+                            print("%s : %s" %(ping_uri, details1));
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : SUCCESS";
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
 
                             if details1 == ipv4_addr:
                                 tdkTestObj.setResultStatus("SUCCESS");
-                                print "The value of the new IPv4 ping Server Table instance - %s is %s as expected" %(ping_uri, details1);
+                                print("The value of the new IPv4 ping Server Table instance - %s is %s as expected" %(ping_uri, details1));
                             else:
                                 tdkTestObj.setResultStatus("FAILURE");
-                                print "The GET value of the new IPv4 ping Server instance is not as expected";
+                                print("The GET value of the new IPv4 ping Server instance is not as expected");
                         else :
                             #Set the result status of execution
                             tdkTestObj.setResultStatus("FAILURE");
-                            print "ACTUAL RESULT %d : Failed to retrieve the newly added Table instance value" %step;
+                            print("ACTUAL RESULT %d : Failed to retrieve the newly added Table instance value" %step);
                             #Get the result of execution
-                            print "[TEST EXECUTION RESULT] : FAILURE";
+                            print("[TEST EXECUTION RESULT] : FAILURE");
                     else:
                         #Set the result status of execution
                         tdkTestObj.setResultStatus("FAILURE");
-                        print "ACTUAL RESULT %d : The IPv4 Ping Server URI of the newly added instance NOT set successfully" %step;
+                        print("ACTUAL RESULT %d : The IPv4 Ping Server URI of the newly added instance NOT set successfully" %step);
                         #Get the result of execution
-                        print "[TEST EXECUTION RESULT] : FAILURE";
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "The default value of the new IPv4 Ping Server Table instance is not as expected";
+                    print("The default value of the new IPv4 Ping Server Table instance is not as expected");
             else :
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : Failed to retrieve the new IPv4 Ping Server Table instance value" %step;
+                print("ACTUAL RESULT %d : Failed to retrieve the new IPv4 Ping Server Table instance value" %step);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
 
             #Delete the added instance from the CSI Table
             step = step + 1;
@@ -223,33 +223,33 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails();
 
-            print "\nTEST STEP %d : Delete the newly added IPv4 Ping Server Table instance" %step;
-            print "EXPECTED RESULT %d: Should delete the newly added IPv4 Ping Server Table instance successfully" %step;
+            print("\nTEST STEP %d : Delete the newly added IPv4 Ping Server Table instance" %step);
+            print("EXPECTED RESULT %d: Should delete the newly added IPv4 Ping Server Table instance successfully" %step);
 
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details);
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added instance is deleted successfully";
+                print("ACTUAL RESULT %d : New instance deleted successfully; Details : %s" %(step, details));
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added instance is deleted successfully");
             else:
                 tdkTestObj.setResultStatus("FAILURE");
-                print "ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details);
-                print "[TEST EXECUTION RESULT] : %s" %actualresult;
-                print "Added instance could not be deleted";
+                print("ACTUAL RESULT %d : New instance NOT deleted successfully; Details : %s" %(step, details));
+                print("[TEST EXECUTION RESULT] : %s" %actualresult);
+                print("Added instance could not be deleted");
         else:
             tdkTestObj.setResultStatus("FAILURE");
-            print "INSTANCE VALUE : %s is not a valid value" %instance
+            print("INSTANCE VALUE : %s is not a valid value" %instance)
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "ACTUAL RESULT %d: Unable to add a new instance to IPv4 Ping Server Table; Details : %s" %(step, details);
-        print "TEST EXECUTION RESULT : FAILURE";
+        print("ACTUAL RESULT %d: Unable to add a new instance to IPv4 Ping Server Table; Details : %s" %(step, details));
+        print("TEST EXECUTION RESULT : FAILURE");
 
     obj.unloadModule("tdkbtr181");
     obj1.unloadModule("tad");
 else:
-    print "Failed to load module";
+    print("Failed to load module");
     obj.setLoadModuleStatus("FAILURE");
     obj1.setLoadModuleStatus("FAILURE");
-    print "Module loading failed";
+    print("Module loading failed");

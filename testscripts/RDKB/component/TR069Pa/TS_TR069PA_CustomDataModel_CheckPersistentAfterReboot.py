@@ -71,7 +71,7 @@ TDKB_TR181Stub_Get
 2.Get the current value of  Device.DeviceInfo.CustomDataModelEnabled and toggle
 3.Trigger a reboot on the DUT
 4. Check if the value is persistent on reboot via syscg and tr-181
-5.Revert the value to previous 
+5.Revert the value to previous
 6.Unload the module</automation_approch>
     <expected_output>Device.DeviceInfo.CustomDataModelEnabled is expected to be persistent on reboot</expected_output>
     <priority>High</priority>
@@ -101,8 +101,8 @@ obj2.configureTestCase(ip,port,'TS_TR069PA_CustomDataModel_CheckPersistentAfterR
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1=obj2.getLoadModuleResult();
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus ;
-print "[LIB LOAD STATUS]  :  %s" %loadmodulestatus1 ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
@@ -119,18 +119,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     if expectedresult in actualresult:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is : %s" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : SUCCESS";
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
         if default == "false" :
             setValue = "true";
             checkValue = "1";
         else:
-             setValue = "false";
-             checkValue = "0";
+            setValue = "false";
+            checkValue = "0";
 
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
         tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
@@ -143,13 +143,13 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if expectedresult in actualresult:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : SUCCESS";
+            print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            print "****DUT is going for a reboot and will be up after 300 seconds*****";
+            print("****DUT is going for a reboot and will be up after 300 seconds*****");
             obj2.initiateReboot();
             sleep(300);
 
@@ -163,11 +163,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult and details != checkValue:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 3: Check if the Custom Data Model Enable via syscfg does not persists on reboot";
-                print "EXPECTED RESULT 3: The setValue %s should not persist after reboot" %setValue;
-                print "ACTUAL RESULT 3: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue);
+                print("TEST STEP 3: Check if the Custom Data Model Enable via syscfg does not persists on reboot");
+                print("EXPECTED RESULT 3: The setValue %s should not persist after reboot" %setValue);
+                print("ACTUAL RESULT 3: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
                 tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
@@ -180,27 +180,27 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 if expectedresult in actualresult and details !=setValue:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print "TEST STEP 4: Check if the Custom Data Model Enable via tr181 does not persists on reboot";
-                    print "EXPECTED RESULT 4: The setValue %s should not persist after reboot" %setValue;
-                    print "ACTUAL RESULT 4: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue);
+                    print("TEST STEP 4: Check if the Custom Data Model Enable via tr181 does not persists on reboot");
+                    print("EXPECTED RESULT 4: The setValue %s should not persist after reboot" %setValue);
+                    print("ACTUAL RESULT 4: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : SUCCESS";
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("FAILURE");
-                    print "TEST STEP 4: Check if the Custom Data Model Enable via tr181 does not persists on reboot";
-                    print "EXPECTED RESULT 4: The setValue %s should not persist after reboot" %setValue;
-                    print "ACTUAL RESULT 4: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue);
+                    print("TEST STEP 4: Check if the Custom Data Model Enable via tr181 does not persists on reboot");
+                    print("EXPECTED RESULT 4: The setValue %s should not persist after reboot" %setValue);
+                    print("ACTUAL RESULT 4: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue));
                     #Get the result of execution
-                    print "[TEST EXECUTION RESULT] : FAILURE";
+                    print("[TEST EXECUTION RESULT] : FAILURE");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 3: Check if the Custom Data Model Enable via syscfg does not persists on reboot";
-                print "EXPECTED RESULT 3: The setValue %s should not persist after reboot" %setValue;
-                print "ACTUAL RESULT 3: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue);
+                print("TEST STEP 3: Check if the Custom Data Model Enable via syscfg does not persists on reboot");
+                print("EXPECTED RESULT 3: The setValue %s should not persist after reboot" %setValue);
+                print("ACTUAL RESULT 3: Custom Data Model Enabled status is : %s the set value was %s" %(details,setValue));
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
             #revert the value to previous
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_SetOnly');
             tdkTestObj.addParameter("ParamName","Device.DeviceInfo.CustomDataModelEnabled");
@@ -213,38 +213,38 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if expectedresult in actualresult:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
-                print "TEST STEP 5: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 5: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 5: %s" %details;
+                print("TEST STEP 5: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 5: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 5: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : SUCCESS";
+                print("[TEST EXECUTION RESULT] : SUCCESS");
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
-                print "TEST STEP 4: Revert the Custom Data Model Enable to previous"
-                print "EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default;
-                print "ACTUAL RESULT 4: %s" %details;
+                print("TEST STEP 4: Revert the Custom Data Model Enable to previous")
+                print("EXPECTED RESULT 4: Should revert the Custom Data Model Enable to %s" %default);
+                print("ACTUAL RESULT 4: %s" %details);
                 #Get the result of execution
-                print "[TEST EXECUTION RESULT] : FAILURE";
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
-            print "TEST STEP 2: Toggle the Custom Data Model Enabled status";
-            print "EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue;
-            print "ACTUAL RESULT 2: %s" %details;
+            print("TEST STEP 2: Toggle the Custom Data Model Enabled status");
+            print("EXPECTED RESULT 2: Should toggle the Custom Data Model Enabled status to %s" %setValue);
+            print("ACTUAL RESULT 2: %s" %details);
             #Get the result of execution
-            print "[TEST EXECUTION RESULT] : FAILURE";
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
-        print "TEST STEP 1: Get the Custom Data Model Enabled status";
-        print "EXPECTED RESULT 1: Should get the Custom Data Model Enabled status";
-        print "ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default;
+        print("TEST STEP 1: Get the Custom Data Model Enabled status");
+        print("EXPECTED RESULT 1: Should get the Custom Data Model Enabled status");
+        print("ACTUAL RESULT 1: Custom Data Model Enabled status is %s:" %default);
         #Get the result of execution
-        print "[TEST EXECUTION RESULT] : FAILURE";
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("tdkbtr181");
     obj2.unloadModule("sysutil");
 else:
-     print "Failed to load module";
-     obj.setLoadModuleStatus("FAILURE");
-     obj2.setLoadModuleStatus("FAILURE");
+    print("Failed to load module");
+    obj.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");
