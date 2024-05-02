@@ -53,7 +53,7 @@
 3. Get the initial line count of "lsof: not found" in Consolelog.txt.0
 4. Get the PID of webpa process
 5. Kill the webpa process
-6. Ensure that the process comes up by checking every 10s for 1 min duration
+6. Ensure that the process comes up by checking every 1 min for 16 min duration
 7. Check the final line count of "lsof: not found". The manual killing of webpa process should not cause the logging, so it should be the same as the initial count.
 8. Unload the module</automation_approch>
     <expected_output>The logging of "lsof: not found" should not happen in Consolelog.txt.0 when a process is killed.</expected_output>
@@ -149,14 +149,14 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                #Check if the process is back up with a different PID every 10 seconds for 1 minute
+                #Check if the process is back up with a different PID every 60 seconds for 16 minutes
                 step = step + 1;
                 processfound = 0;
 
                 print("\nTEST STEP %d : Check if the Webpa process is restarted" %step);
                 print("EXPECTED RESULT %d : Webpa process should be restarted" %step);
 
-                for iteration in range(1,7):
+                for iteration in range(1,16):
                     print("Waiting for the webpa process to be restarted....\nIteration : %d" %iteration);
                     actualresult, new_pid = getPID(tdkTestObj, ps_name);
 
@@ -164,7 +164,7 @@ if "SUCCESS" in sysutilloadmodulestatus.upper():
                         processfound = 1;
                         break;
                     else:
-                        sleep(10);
+                        sleep(60);
                         continue;
 
                 if processfound == 1 and new_pid.isdigit() and new_pid != initial_pid:

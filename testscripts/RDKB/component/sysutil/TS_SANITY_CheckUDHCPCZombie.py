@@ -146,7 +146,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if uptime >= 300 and status == 0:
             #Initiate a device reboot and check if any services are in activating state after devices comes up
             print("\n****DUT is going for a reboot and will be up after 360 seconds*****");
-            pam.initiateReboot();
+            pamobj.initiateReboot();
             sleep(360);
             step = 3;
             status, tdkTestObj = udhcpczombie(obj, step);

@@ -89,18 +89,23 @@ from time import sleep;
 from tdkbVariables import *;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","1");
+obj1 = tdklib.TDKScriptingLibrary("tdkbtr181","1");
 #IP and Port of box, No need to change,
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_WEBPABootUpLog');
+obj1.configureTestCase(ip,port,'TS_SANITY_WEBPABootUpLog');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
+loadmodulestatus1=obj1.getLoadModuleResult();
 
-if "SUCCESS" in loadmodulestatus.upper():
+
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
+    obj1.setLoadModuleStatus("SUCCESS");
     revert =0;
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile DEVICETYPE" %TDK_PATH;
@@ -193,7 +198,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
         if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCESS");
+            tdkTestObj.setResultStatus("SUCCESS");
             print("TEST STEP 3: Enable the rdkbLogMonitor.service as a part of revertion")
             print("EXPECTED RESULT 3: revert operation should be sucessfull");
             print("ACTUAL RESULT 3:Revertion success");
@@ -207,6 +212,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("sysutil");
+    obj1.unloadModule("tdkbtr181");
 else:
-    print("Failed to load sysutil module");
+    print("Failed to load sysutil/tr181 module");
     obj.setLoadModuleStatus("FAILURE");
+    obj1.setLoadModuleStatus("FAILURE");

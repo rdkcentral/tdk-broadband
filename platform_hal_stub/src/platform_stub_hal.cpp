@@ -287,8 +287,8 @@ void platform_stub_hal::platform_stub_hal_getFactoryPartnerId(IN const Json::Val
 **************************************************************************************************/
 void platform_stub_hal::platform_stub_hal_GetFirmwareName(IN const Json::Value& req, OUT Json::Value& response)
 {
-	unsigned long int maxSize = MAX_STRING_SIZE;
-	char getResult[MAX_STRING_SIZE] = {0};
+	unsigned long int maxSize = 128;
+	char getResult[maxSize] = {0};
 	int isNegativeScenario = 0;
 	int result = RETURN_FAILURE;
 

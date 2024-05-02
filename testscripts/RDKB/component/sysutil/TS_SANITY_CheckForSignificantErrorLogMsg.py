@@ -90,19 +90,24 @@
 import tdklib;
 from time import sleep;
 
+
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","1");
+obj1 = tdklib.TDKScriptingLibrary("tdkbtr181","1");
 #IP and Port of box, No need to change,
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_CheckForSignificantErrorLogMsg');
+obj1.configureTestCase(ip,port,'TS_SANITY_CheckForSignificantErrorLogMsg');
 #Get the result of connection with test component and DUT
-loadmodulestatus=obj.getLoadModuleResult();
+loadmodulestatus= obj.getLoadModuleResult();
+loadmodulestatus1 = obj1.getLoadModuleResult();
 
-if "SUCCESS" in loadmodulestatus.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
+    obj1.setLoadModuleStatus("SUCCESS");
 
     obj.initiateReboot();
     sleep(300);
@@ -130,6 +135,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             result.append(details);
             markerfound =1;
 
+
+
     if markerfound == 0:
         tdkTestObj.setResultStatus("SUCCESS");
         print("ACTUAL RESULT : The Above listed Log Messgaes were not present in /rdklogs/logs/");
@@ -140,6 +147,11 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("[TEST EXECUTION RESULT] : FAILURE");
         print("***************************************************");
     obj.unloadModule("sysutil");
+    obj1.unloadModule("tdkbtr181");
 else:
     print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
+    print("Failed to load TDKB-TR181 module");
+    obj1.setLoadModuleStatus("FAILURE");
+    print("Module loading failed");
+

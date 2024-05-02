@@ -83,25 +83,30 @@
   <script_tags />
 </xml>
 '''
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
 
 #Test component to be tested
 sysObj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
+tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181","RDKB");
 
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 sysObj.configureTestCase(ip,port,'TS_SANITY_CheckErrorLogFiles');
+tr181obj.configureTestCase(ip,port,'TS_SANITY_CheckErrorLogFiles');
 count = 0;
 
 #Get the result of connection with test component and DUT
 loadmodulestatus1 =sysObj.getLoadModuleResult();
+loadmodulestatus2 =tr181obj.getLoadModuleResult();
 
-if "SUCCESS" in loadmodulestatus1.upper():
+if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
     sysObj.setLoadModuleStatus("SUCCESS");
+    tr181obj.setLoadModuleStatus("SUCCESS");
 
     tdkTestObj = sysObj.createTestStep('ExecuteCmd');
     sysObj.initiateReboot();
@@ -142,8 +147,10 @@ if "SUCCESS" in loadmodulestatus1.upper():
         print("ACTUAL RESULT 1: Log files has error logs ");
         print("[TEST EXECUTION RESULT] : FAILURE");
     sysObj.unloadModule("sysutil");
+    tr181obj.unloadModule("tdkbtr181");
 
 else:
     print("Failed to load sysutil module");
     sysObj.setLoadModuleStatus("FAILURE");
+    tr181obj.setLoadModuleStatus("FAILURE");
     print("Module loading failed");

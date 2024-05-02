@@ -49,7 +49,6 @@
   <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
     <!--  -->
   </box_types>
   <rdk_versions>

@@ -77,21 +77,25 @@ from time import sleep;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
+obj2 = tdklib.TDKScriptingLibrary("tdkbtr181","RDKB");
 
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_SyscfgPartnerIDCorrectiveActionOnReboot');
+obj2.configureTestCase(ip,port,'TS_SANITY_SyscfgPartnerIDCorrectiveActionOnReboot');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus =obj.getLoadModuleResult();
+loadmodulestatus2 =obj2.getLoadModuleResult();
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 
-if "SUCCESS" in loadmodulestatus.upper() :
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus2.upper() :
     #Set the result status of execution
     expectedresult="SUCCESS";
     obj.setLoadModuleStatus("SUCCESS");
+    obj2.setLoadModuleStatus("SUCCESS");
 
     #Get the Syscfg Partner ID
     step = 1;
@@ -382,6 +386,8 @@ if "SUCCESS" in loadmodulestatus.upper() :
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil");
+    obj2.unloadModule("tdkbtr181");
 else:
     print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");

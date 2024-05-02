@@ -95,19 +95,23 @@ from tdkbVariables import *;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","1");
+obj2 = tdklib.TDKScriptingLibrary("tdkbtr181","1");
 
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_Is_DeviceUp_AfterReboot');
+obj2.configureTestCase(ip,port,'TS_SANITY_Is_DeviceUp_AfterReboot');
 
 #Get the result of connection with test component and STB
 loadmodulestatus =obj.getLoadModuleResult();
+loadmodulestatus1 =obj2.getLoadModuleResult();
 
-if "SUCCESS" in loadmodulestatus.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
+    obj2.setLoadModuleStatus("SUCCESS");
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     command= "sh %s/tdk_utility.sh parseConfigFile INTERFACE" %TDK_PATH;
     print(command);
@@ -183,11 +187,13 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.setResultStatus("FAILURE");
         print("TEST STEP 1: Get the wan interface of device");
         print("EXPECTED RESULT 1: Should get the wan interface of device");
-        print("ACTUAL RESULT 1: %s" %inteface);
+        print("ACTUAL RESULT 1: %s" %interface);
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil");
+    obj2.unloadModule("tdkbtr181");
 else:
     print("Failed to load sysutil module");
-    sysObj.setLoadModuleStatus("FAILURE");
+    obj.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");
     print("Module loading failed");

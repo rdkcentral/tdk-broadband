@@ -125,7 +125,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('ExecuteCmd');
-            cmd = "grep -rin \"LAN_init_complete\" /rdklogs/logs/";
+            cmd = "grep -rin \"Laninit_complete\" /rdklogs/logs/";
             tdkTestObj.addParameter("command",cmd);
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);

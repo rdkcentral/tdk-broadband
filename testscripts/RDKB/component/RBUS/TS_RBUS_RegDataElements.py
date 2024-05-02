@@ -65,8 +65,8 @@
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script
 3.DUT should be in RBUS mode</pre_requisite>
     <api_or_interface_used>rbus_regDataElements</api_or_interface_used>
-    <input_parameters>Device.WiFi.SSID.1.SSID
-Device.WiFi.SSID.2.SSID</input_parameters>
+    <input_parameters>dummy1
+dummy2</input_parameters>
     <automation_approch>1. Load the rbus module
 2. Open the rbus connection using rbus_open RBUS API
 3. Invoke the RBUS API rbus_regDataElements and the return status should be success
@@ -119,8 +119,8 @@ if "SUCCESS" in loadmodulestatus.upper() :
         print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
         tdkTestObj = obj.createTestStep('RBUS_DataElements');
-        tdkTestObj.addParameter("element1","Device.WiFi.SSID.1.SSID");
-        tdkTestObj.addParameter("element2","Device.WiFi.SSID.1.SSID");
+        tdkTestObj.addParameter("element1","dummy1");
+        tdkTestObj.addParameter("element2","dummy2");
         tdkTestObj.addParameter("operation","Register");
         expectedresult = "SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);

@@ -109,7 +109,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         obj.restorePreviousStateAfterReboot();
         sleep(200);
         tdkTestObj = obj.createTestStep('ExecuteCmd');
-        cmd = "grep -rin \"Wan_init_start\" /rdklogs/logs/";
+        cmd = "grep -rin \"Waninit_start\" /rdklogs/logs/";
         tdkTestObj.addParameter("command",cmd);
         expectedresult="SUCCESS";
         tdkTestObj.executeTestCase(expectedresult);
@@ -123,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : SUCCESS");
             tdkTestObj = obj.createTestStep('ExecuteCmd');
-            cmd = "grep -rin \"Wan_init_complete\" /rdklogs/logs/";
+            cmd = "grep -rin \"Waninit_complete\" /rdklogs/logs/";
             tdkTestObj.addParameter("command",cmd);
             expectedresult="SUCCESS";
             tdkTestObj.executeTestCase(expectedresult);

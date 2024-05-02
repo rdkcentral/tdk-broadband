@@ -86,19 +86,23 @@ import tdklib;
 from tdkbVariables import *;
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("sysutil","1");
+obj2 = tdklib.TDKScriptingLibrary("tdkbtr181","1");
 from time import sleep;
 #IP and Port of box, No need to change,
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_SANITY_BootTimeLogMarkers');
+obj2.configureTestCase(ip,port,'TS_SANITY_BootTimeLogMarkers');
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=obj.getLoadModuleResult();
+loadmodulestatus2=obj2.getLoadModuleResult();
 
-if "SUCCESS" in loadmodulestatus.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus2.upper():
     #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
+    obj2.setLoadModuleStatus("SUCCESS");
 
     tdkTestObj = obj.createTestStep('ExecuteCmd');
     cmd = "sh %s/tdk_utility.sh parseConfigFile BOOTTIME_LOG_MARKERS" %TDK_PATH;
@@ -190,7 +194,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             actualresult = tdkTestObj.getResult();
             details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
             if expectedresult in actualresult:
-                tdkTestObj.setResultStatus("SUCESS");
+                tdkTestObj.setResultStatus("SUCCESS");
                 print("TEST STEP 3: Enable the rdkbLogMonitor.service as a part of revertion")
                 print("EXPECTED RESULT 3: revert operation should be sucessfull");
                 print("ACTUAL RESULT 3:Revertion success");
@@ -211,6 +215,9 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("sysutil");
+    obj2.unloadModule("tdkbtr181");
 else:
     print("Failed to load sysutil module");
     obj.setLoadModuleStatus("FAILURE");
+    obj2.setLoadModuleStatus("FAILURE");
+

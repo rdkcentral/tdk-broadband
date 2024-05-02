@@ -50,8 +50,6 @@
   <box_types>
     <box_type>Broadband</box_type>
     <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
@@ -61,7 +59,7 @@
     <test_case_id>TC_TDKB_HAL_15</test_case_id>
     <test_objective>To Check if all TR181 parameter values of WIFI (using WEBPA) matching with its corresponding HAL API Values</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>Broadband,RPI</test_setup>
+    <test_setup>Broadband</test_setup>
     <pre_requisite>TDK test agent should be running
 WIFIHAL module's parameter xml should be availabl</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
