@@ -70,7 +70,7 @@ Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WifiClient.ActiveMeasurements.Num
     <automation_approch>1. Load wifiagent, tad and sysutil modules
 2. Do a factory reset and get the ActiveMeasurements values
 3. Check if it is restored to default value
-4. Unload wifiagent, tad and sysutil modules<automation_approch>
+4. Unload wifiagent, tad and sysutil modules</automation_approch>
     <expected_output>After factory reset,ActiveMeasurements should be restored to default values</expected_output>
     <priority>High</priority>
     <test_stub_interface>ONEWIFI/obj1</test_stub_interface>
