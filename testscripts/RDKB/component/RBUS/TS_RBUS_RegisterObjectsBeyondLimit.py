@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>To validate the RBUS API rbus_registerObj by registering Objects beyond the limit (63)</synopsis>
+  <synopsis>To validate the RBUS API rbus_registerObj by registering Objects beyond the limit (127)</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -58,7 +58,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_RBUS_41</test_case_id>
-    <test_objective>To validate the RBUS API rbus_registerObj by registering Objects beyond the limit (63)</test_objective>
+    <test_objective>To validate the RBUS API rbus_registerObj by registering Objects beyond the limit (127)</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1. Ccsp Components  should be in a running state of DUT
@@ -71,8 +71,8 @@ rbus_unregisterObj</api_or_interface_used>
     <automation_approch>1. Load the rbus module
 2. open the rbus broker connection using rbus_openBrokerConnection API with component name as "tdk_b"
 3. The rbus_openBrokerConnection should be success
-4. Register multiple objects (63 objects) in RBUS using rbus_registerObj API and the return status should be success
-5. Try to Register the 64th object using rbus_registerObj and the return status should be failure since its beyond the limit
+4. Register multiple objects (127 objects) in RBUS using rbus_registerObj API and the return status should be success
+5. Try to Register the 128th object using rbus_registerObj and the return status should be failure since its beyond the limit
 6. Unregister one Object from RBUS and the return status should be success
 7. Now try to register the same Method again and return status should be success
 8. UnRegister all registered objects using rbus_unregisterObj API and the return status should be success
@@ -137,7 +137,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         print("\n*************** Start of Registering  Objects ********************************************")
 
-        max_object = 63;
+        max_object = 127;
         object_name = "";
         counter = 0;
 
@@ -178,7 +178,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("\nRegistering Object Beyond the limit (More than  Objects)")
         tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
         tdkTestObj.addParameter("operation","registerObj");
-        tdkTestObj.addParameter("objectName","tdkb_object.obj64");
+        tdkTestObj.addParameter("objectName","tdkb_object.obj128");
         tdkTestObj.addParameter("methodName","dummy");#Dummy Value
         expectedresult="FAILURE";
         tdkTestObj.executeTestCase(expectedresult);
@@ -190,7 +190,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             print("TEST STEP 3: Register the object beyond the limits");
-            print("EXPECTED RESULT 3: rbus_registerObj should should fail if 63 objects already registered");
+            print("EXPECTED RESULT 3: rbus_registerObj should should fail if 127 objects already registered");
             print("ACTUAL RESULT 3: rbus_registerObj was Failed as expected");
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : SUCCESS");
@@ -198,7 +198,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE");
             print("TEST STEP 3: Register the object beyond the limits");
-            print("EXPECTED RESULT 3: rbus_registerObj should should fail if 63 objects already registered");
+            print("EXPECTED RESULT 3: rbus_registerObj should should fail if 127 objects already registered");
             print("ACTUAL RESULT 3: rbus_registerObj was NOT Failed");
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : FAILURE") ;
@@ -259,7 +259,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : FAILURE") ;
 
-        print("\n*************** Start of UnRegistering 62 Objects ********************************************")
+        print("\n*************** Start of UnRegistering 126 Objects ********************************************")
         object_name = "";
         for object in range (0,counter):
             object_name = "tdkb_object.obj"+str(object);
@@ -293,7 +293,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
                 break;
 
-        print("*************** End of UnRegistering 62 Object ********************************************\n")
+        print("*************** End of UnRegistering 126 Objects ********************************************\n")
 
         tdkTestObj = obj.createTestStep('RBUS_RegisterOperation');
         tdkTestObj.addParameter("operation","closeBrokerConnection");
