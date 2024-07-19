@@ -127,6 +127,8 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("ACTUAL RESULT 1: %s" %details);
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
+        #Sleep for 2s before querying the Radio Enable
+        sleep(2);
         tdkTestObj = obj.createTestStep('WIFIAgent_Get');
         tdkTestObj.addParameter("paramName","Device.WiFi.Radio.1.Enable")
         tdkTestObj.executeTestCase("expectedresult");
