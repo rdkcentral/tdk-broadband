@@ -48,6 +48,8 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>Broadband</box_type>
+    <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
   </box_types>
@@ -59,7 +61,7 @@
     <test_case_id>TC_CellularManager_17</test_case_id>
     <test_objective>Check if current Access Technology Device.Cellular.Interface.1.CurrentAccessTechnology is within supported access Technologies Device.Cellular.Interface.1.SupportedAccessTechnologies.</test_objective>
     <test_type>Positive</test_type>
-    <test_setup> RPI</test_setup>
+    <test_setup> Broadband, RPI</test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state.
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script.
 3. Cellular manager should be UP and status should be CONNECTED .</pre_requisite>
@@ -80,7 +82,7 @@ Type : string</input_parameters>
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_GetCurrentAccessTechnology</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />
@@ -163,4 +165,3 @@ if "SUCCESS" in result.upper():
 else:
     print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print("Module loading failed");

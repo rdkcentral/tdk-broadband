@@ -16,16 +16,28 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
 <?xml version='1.0' encoding='utf-8'?>
 <xml>
-  <module name='CellularManager' testGroup='Component'>
-    <primitiveTests>
-      <primitiveTest name='CellularManager_DoNothing' id='' version='1'>
-        <function>CellularManager_DoNothing</function>
-        <parameters />
-      </primitiveTest>
-    </primitiveTests>
+  <module>
+  <!-- Module Name  -->
+    <moduleName>CellularManager</moduleName>
+  <!-- Category of the module  -->
+    <category>RDKB</category>
+  <!-- Excecution time out of module -->
+    <executionTimeOut>10</executionTimeOut>
+  <!-- Excecution time out of module -->
+    <testGroup>Component</testGroup>
+  <!-- Logs File Names of module -->
+    <logFileNames>[]</logFileNames>
+  <!-- Crash File Names of the module -->
+    <crashFileNames>[]</crashFileNames>
+  <!-- Module is thundeEnabled or not -->
+    <moduleThunder>Disable</moduleThunder>
+  <!-- Total functions corresponding module  -->
+    <functions>
+      <function name='CellularManager_DoNothing' />
+    </functions>
+  <!-- Total parameters corresponding module  -->
+    <parameters />
   </module>
 </xml>
-

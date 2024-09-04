@@ -52,6 +52,8 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>Broadband</box_type>
+    <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
   </box_types>
@@ -67,7 +69,7 @@
 "Device.Cellular.Interface.{i}.RSRP" : -155 dBm to -44 dBm
 "Device.Cellular.Interface.{i}.RSRQ" : -43 dB to 20 dB			</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>RPI</test_setup>
+    <test_setup>Broadband, RPI</test_setup>
     <pre_requisite>TDK agent should be running in the DUT and DUT should be online in TDK test manager.
 Cellular Manager setup should be up and running.</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
@@ -100,7 +102,7 @@ value:-43 dB to 20 dB
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_CheckInterfaceParamsWithinRange</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks></remarks>
   </test_cases>
   <script_tags />

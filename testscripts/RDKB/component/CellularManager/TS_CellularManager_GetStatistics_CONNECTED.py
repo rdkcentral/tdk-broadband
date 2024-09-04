@@ -48,6 +48,8 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>Broadband</box_type>
+    <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
   </box_types>
@@ -59,7 +61,7 @@
     <test_case_id>TC_CellularManager_11</test_case_id>
     <test_objective>When Device.Cellular.X_RDK_Status == CONNECTED, Cellular manager will pull the Device.Cellular.Interface[i].X_RDK_Statistics every minute to provide subscription capability.</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>RPI</test_setup>
+    <test_setup>Broadband, RPI</test_setup>
     <pre_requisite>TDK agent should be running in the DUT and DUT should be online in TDK test manager.
 Cellular Manager setup should be up and running.</pre_requisite>
     <api_or_interface_used>No</api_or_interface_used>
@@ -76,7 +78,7 @@ Device.Cellular.Interface.1.X_RDK_Statistics.PacketsSent</input_parameters>
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_GetStatistics_CONNECTED</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks></remarks>
   </test_cases>
   <script_tags />

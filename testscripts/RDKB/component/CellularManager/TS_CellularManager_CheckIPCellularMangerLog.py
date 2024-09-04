@@ -48,6 +48,8 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>Broadband</box_type>
+    <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
   </box_types>
@@ -59,7 +61,7 @@
     <test_case_id>TC_CellularManager_15</test_case_id>
     <test_objective>Check whether ip listed in cellular manager logs matches wwan0 ip		</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>RPI</test_setup>
+    <test_setup>Broadband, RPI</test_setup>
     <pre_requisite>1.TDK Agent should be in running state or invoke it through StartTdk.sh script.
 2. Cellular manager should be UP and status should be CONNECTED.</pre_requisite>
     <api_or_interface_used>Nil</api_or_interface_used>
@@ -75,7 +77,7 @@
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_CheckIPCellularMangerLog</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />

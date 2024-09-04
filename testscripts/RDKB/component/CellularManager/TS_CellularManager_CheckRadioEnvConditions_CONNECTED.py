@@ -94,7 +94,7 @@ POOR:    (-105 &gt;= RSRP &gt; -115)
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_CheckRadioEnvConditions_CONNECTED</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />

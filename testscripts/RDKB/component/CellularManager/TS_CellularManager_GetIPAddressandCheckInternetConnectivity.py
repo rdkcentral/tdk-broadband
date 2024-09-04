@@ -48,6 +48,8 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>Broadband</box_type>
+    <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
   </box_types>
@@ -59,7 +61,7 @@
     <test_case_id>TC_CellularManager_10</test_case_id>
     <test_objective>Verify the wwan0 interface state changes and internet connectivity based on the value of Device.Cellular.Interface.1.Enable.</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>RPI</test_setup>
+    <test_setup>Broadband, RPI</test_setup>
     <pre_requisite>1. TDK agent should be running in the DUT and DUT should be online in TDK test manager.
 2. Cellular Manager setup should be up and running.</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
@@ -84,7 +86,7 @@ Type: string</input_parameters>
     <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
     <test_script>TS_CellularManager_GetIPAddressandCheckInternetConnectivity</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />

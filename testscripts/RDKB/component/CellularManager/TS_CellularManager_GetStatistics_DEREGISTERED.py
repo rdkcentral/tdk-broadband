@@ -93,7 +93,7 @@ Type : int</input_parameters>
     <test_stub_interface>tdkbtr181</test_stub_interface>
     <test_script>TS_CellularManager_GetStatistics_DEREGISTERED</test_script>
     <skipped>No</skipped>
-    <release_version>M125</release_version>
+    <release_version>M128</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />
@@ -313,4 +313,3 @@ if "SUCCESS" in result.upper():
 else:
     print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
-    print("Module loading failed");
