@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>18</version>
+  <version>21</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_CellularManager_X_RDK_Enable_PersistenceOnReboot</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -68,11 +68,16 @@
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>Device.Cellular.Interface.1.Enable
 </input_parameters>
-    <automation_approch>.</automation_approch>
-    <expected_output>.</expected_output>
+    <automation_approch>.1.Load the tdkb-tr181 and sysutil modules
+2. Get Device.Cellular.X_RDK_Enable and store its value
+3.Set Device.Cellular.X_RDK_Enable to new value
+4. Initiate reboot
+5. Check whether value of Device.Cellular.X_RDK_Enable persists
+6.Unload the tdkbtr181 and sysutil modules</automation_approch>
+    <expected_output>.Value persistence on reboot : Success</expected_output>
     <priority>High</priority>
-    <test_stub_interface>.</test_stub_interface>
-    <test_script>TS_CellularManager_X_RDK_EnablePersistenceOnReboot</test_script>
+    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
+    <test_script>TS_CellularManager_X_RDK_Enable_PersistenceOnReboot</test_script>
     <skipped>No</skipped>
     <release_version>M128</release_version>
     <remarks>None</remarks>
@@ -130,7 +135,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
         step = step + 1;
         setVal = "false";
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-        tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.Enable");
+        tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Enable");
         tdkTestObj.addParameter("ParamValue",setVal);
         tdkTestObj.addParameter("Type","bool");
         expectedresult="SUCCESS";
@@ -195,7 +200,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
                 print("[TEST EXECUTION RESULT] : FAILURE");
             #Reverting the value of Device.Cellular.X_RDK_Enable to initial one
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-            tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.Enable");
+            tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Enable");
             tdkTestObj.addParameter("ParamValue",initialvalue);
             tdkTestObj.addParameter("Type","bool");
             expectedresult="SUCCESS";

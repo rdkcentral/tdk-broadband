@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>3</version>
+  <version>6</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_CellularManager_CheckIPCellularMangerLog</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -83,7 +83,7 @@
   <script_tags />
 </xml>
 '''
- # use tdklib library,which provides a wrapper for tdk testcase script
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from time import sleep;
 
@@ -146,7 +146,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
         print("EXPECTED RESULT 2: Should get the IP address from CellularManagerLog.txt.0");
 
         if expectedresult in actualresult and details != "":
-            ip_cellmanagerlog = details[8:22];
+            ip_cellmanagerlog = details[details.find("[") + 1 : details.find("]")];
             print("ACTUAL RESULT 2: IP obtained from at /rdklogs/logs/CellularManagerLog.txt.0 : %s" %ip_cellmanagerlog);
 
             #Set the result status of execution
