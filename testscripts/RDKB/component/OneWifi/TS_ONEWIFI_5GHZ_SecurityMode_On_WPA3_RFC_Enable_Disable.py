@@ -56,7 +56,7 @@
     <test_case_id>TC_ONEWIFI_277</test_case_id>
     <test_objective>To check the operational mode for private_wifi_2g (AP1) when WPA3_Personal_Transition.Enable is set to true.</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI</test_setup>
+    <test_setup>Broadband</test_setup>
     <pre_requisite>1. Ccsp Components in DUT should be in a running state that includes component under test Cable Modem 2. TDK Agent should be in a running state or invoke it through StartTdk.sh script</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable

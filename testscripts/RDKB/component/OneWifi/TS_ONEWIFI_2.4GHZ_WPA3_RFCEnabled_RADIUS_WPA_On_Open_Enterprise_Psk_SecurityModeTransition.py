@@ -49,9 +49,6 @@
   <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
@@ -61,7 +58,7 @@
     <test_case_id>TC_ONEWIFI_278</test_case_id>
     <test_objective>To check whether WPA3 Configuration will be reset or not on security mode transition(open-enterprise-psk) for 2.4GHZ</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>Brodband, RPI</test_setup>
+    <test_setup>Brodband</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem 2.TDK Agent should be in running state or invoke it through StartTdk.sh script 3.WPA3_Personal_Transition RFC should be enabled</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>Device.WiFi.AccessPoint.1.Security.ModeEnabled
