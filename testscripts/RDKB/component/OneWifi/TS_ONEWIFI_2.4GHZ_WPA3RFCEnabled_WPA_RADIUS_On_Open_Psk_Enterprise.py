@@ -70,7 +70,7 @@ name: Device.WiFi.AccessPoint.1.Security.KeyPassphrase
 Device.WiFi.AccessPoint.1.Security.RadiusServerIPAddr
 Device.WiFi.AccessPoint.1.Security.RadiusServerPort
 Device.WiFi.AccessPoint.1.Security.RadiusSecret</input_parameters>
-    <automation_approch><1. Load the module.
+    <automation_approch>1. Load the module.
 2.Enable RFC using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable
 3 Get the security mode using Device.WiFi.AccessPoint.1.Security.ModeEnabled and store it.
 4. Change security mode to None using Device.WiFi.AccessPoint.1.Security.ModeEnabled.
@@ -79,7 +79,8 @@ Device.WiFi.AccessPoint.1.Security.RadiusSecret</input_parameters>
 7. Check if mode set is reflected in get and if the WPA configuration is set to the new values.
 8. Now set to the enterprise mode WPA3-Enterprise encryption method to AES, radius parameters: radius server, radius secret, radius port to valid values.
 9. Check if security mode set is reflected in get and if the RADIUS configuration is set to the new values. Also check if the WPA configuration Preshared Key returns empty.
-10. Revert to initial security mode. 11. unload the module/automation_approch>
+10. Revert to initial security mode.
+11. unload the module</automation_approch>
     <expected_output>When security mode changes form open to psk (None to WPA3-Personal) WPA config should set . When it changes form psk to enterprise (WPA3-Personal to WPA3-Enterprise) WPA config should reset.</expected_output>
     <priority></priority>
     <test_stub_interface>WifiAgent</test_stub_interface>
@@ -274,7 +275,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         actualresult = tdkTestObj.getResult()
                         sleep(2)
 
-                        print(f"TEST STEP {step}: Change security mode to WPA3-Personal, Encryption mode to {ENCRYPTION_MODE} and PresharedKey to {PRESHAREDKEY} " % step)
+                        print(f"TEST STEP {step}: Change security mode to WPA3-Personal, Encryption mode to {ENCRYPTION_MODE} and PresharedKey to {PRESHAREDKEY} ")
                         print("EXPECTED RESULT %s: Should set security mode to WPA3-Personal and WPA config parameters to new values" % step)
 
                         if expectedresult in actualresult:
@@ -321,7 +322,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 sleep(2)
 
                                 print("TEST STEP %s: Change security mode to WPA3-Enterprise and Radius Configuration to new values" % step)
-                                print(f"EXPECTED RESULT {step}: Should set security mode to WPA3-Enterprise Encryption mode to {ENCRYPTION_MODE}, RADIUSserverIP to {RADIUS_IP}, RADIUSserverPort to {RADIUS_PORT} and RADIUSsecret to {RADIUS_SECRET}" % step)
+                                print(f"EXPECTED RESULT {step}: Should set security mode to WPA3-Enterprise Encryption mode to {ENCRYPTION_MODE}, RADIUSserverIP to {RADIUS_IP}, RADIUSserverPort to {RADIUS_PORT} and RADIUSsecret to {RADIUS_SECRET}" )
 
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS")
@@ -348,7 +349,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                         actual_values.append(value)
 
                                     print("TEST STEP %s: Check security mode, Radius configuration Values and PreSharedKey" % step)
-                                    print(f"EXPECTED RESULT {step}: Security mode should be WPA3-Enterprise, Encryption mode should be {ENCRYPTION_MODE}, RadiusIp should be {RADIUS_IP}, RadiusServerPort should be {RADIUS_PORT} , RadiusSecret and PreSharedKey should be empty" % step)
+                                    print(f"EXPECTED RESULT {step}: Security mode should be WPA3-Enterprise, Encryption mode should be {ENCRYPTION_MODE}, RadiusIp should be {RADIUS_IP}, RadiusServerPort should be {RADIUS_PORT} , RadiusSecret and PreSharedKey should be empty" )
 
                                     if "FAILURE" not in actualresult_all and actual_values == expected_values:
                                         tdkTestObj.setResultStatus("SUCCESS")

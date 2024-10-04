@@ -60,7 +60,7 @@
     <test_objective>When WPA3_Personal_Transition RFC Feature is enabled and When security mode transitions from None to WPA3-Personal to WPA3-Personal-Transition  (open-psk-psk), check if the WPA configuration (Encryption method and Preshared key) are updated for(None--> WPA3-Personal) and does not gets reset for(WPA3-Personal-->WPA3-Personal-Transition) for 5GHZ</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
-    <pre_requisite><1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem 2.TDK Agent should be in running state or invoke it through StartTdk.sh script/pre_requisite>
+    <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem 2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WPA3_Personal_Transition.Enable
 Device.WiFi.AccessPoint.2.Security.ModeEnabled
@@ -383,9 +383,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         print("ACTUAL RESULT %d : Revert operation failed" %step)
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print("Reverting to pre-requisites Failed")
+                    print("Reverting to pre-requisites not required")
             else:
+                tdkTestObj.setResultStatus("FAILURE")
                 print("Pre-Requisite is not set successfully")
         else:
             tdkTestObj.setResultStatus("FAILURE")
