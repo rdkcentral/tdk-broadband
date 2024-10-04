@@ -39,7 +39,7 @@
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
   <test_cases>
-    <test_case_id><TC_ONEWIFI_247/test_case_id>
+    <test_case_id>TC_ONEWIFI_247</test_case_id>
     <test_objective>Check if WIFI_NOISE_FLOOR_1 is populated in wifihealth.txt</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
