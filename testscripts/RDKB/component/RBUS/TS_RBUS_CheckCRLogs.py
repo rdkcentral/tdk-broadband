@@ -160,11 +160,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             tdkTestObj_Sys_ExeCmd.setResultStatus("FAILURE");
 
         if cr_log_present == 1:
-            command = "cat /rdklogs/logs/CRlog.txt.0 | grep \"RBus is enabled\" "
+            command = "cat /rdklogs/logs/CRlog.txt.0 | grep \"RBus Enabled\" "
             print("Command is: ",command)
             actualresult,details = doSysutilExecuteCommand(tdkTestObj_Sys_ExeCmd,command);
             print("Details is ",details)
-            if expectedresult in actualresult and details !="" and (len(details) > 0) and "RBus is enabled" in details:
+            if expectedresult in actualresult and details !="" and (len(details) > 0) and "RBus Enabled" in details:
                 print("TEST STEP 3: Check RBUS Enabled log in CR log file ")
                 print("EXPECTED RESULT 3: RBUS Enabled log should be present in CR log file")
                 print("ACTUAL RESULT 3: RBUS Enabled log is present in CR log file")
