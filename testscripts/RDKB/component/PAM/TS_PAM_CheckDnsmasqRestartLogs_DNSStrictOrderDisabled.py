@@ -227,19 +227,19 @@ def killDnsmasq_CheckLogs(obj, step):
                 final_count = getLogFileTotalLinesCount(obj, step);
 
                 step = step + 1;
-                print("\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step);
-                print("EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step);
+                print("\nTEST STEP %d : Check if the final number of log lines is incremented by 2" %step);
+                print("EXPECTED RESULT %d : The final number of log lines should be incremented by 2" %step);
                 print("Initial Count : %d" %count);
                 print("Final Count : %d" %final_count);
 
-                if final_count == (count + 1):
+                if final_count == (count + 2):
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print("ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step);
+                    print("ACTUAL RESULT %d:The final number of log lines is incremented by 2" %step);
                     #Get the result of execution
                     print("[TEST EXECUTION RESULT] : SUCCESS");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
-                    print("ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step);
+                    print("ACTUAL RESULT %d:The final number of log lines is not incremented by 2" %step);
                     #Get the result of execution
                     print("[TEST EXECUTION RESULT] : FAILURE");
             else:
