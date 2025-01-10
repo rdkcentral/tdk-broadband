@@ -183,7 +183,6 @@ ANSC_STATUS
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     char                            CrName[256]     = {0};
-    PCCSP_DM_XML_CFG_LIST           pXmlCfgList     = NULL;
 
     g_pComponent_Common_Dm->Health = CCSP_COMMON_COMPONENT_HEALTH_Yellow;
 
@@ -210,20 +209,13 @@ ANSC_STATUS
         _ansc_sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
     }
 
-    returnStatus = CcspComponentLoadDmXmlList(pStartCfg->DmXmlCfgFileName, &pXmlCfgList);
-
-    if ( returnStatus != ANSC_STATUS_SUCCESS )
-    {
-        return  returnStatus;
-    }
-
     returnStatus =
-        pDslhCpeController->RegisterCcspDataModel
+        pDslhCpeController->RegisterCcspDataModel2
         (
          (ANSC_HANDLE)pDslhCpeController,
          CrName,                             /* CCSP CR ID */
-         pXmlCfgList->FileList[0],           /* Data Model XML file. Can be empty if only base data model supported. */
-         pStartCfg->ComponentName,           /* Component Name    */
+         DMPackCreateDataModelXML,           /* Comcast generated code to create XML. */
+	 pStartCfg->ComponentName,           /* Component Name    */
          pStartCfg->Version,                 /* Component Version */
          pStartCfg->DbusPath,                /* Component Path    */
          g_Subsystem                         /* Component Prefix  */
@@ -234,8 +226,6 @@ ANSC_STATUS
         /* System is fully initialized */
         g_pComponent_Common_Dm->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
     }
-
-    AnscFreeMemory(pXmlCfgList);
 
     return ANSC_STATUS_SUCCESS;
 }
