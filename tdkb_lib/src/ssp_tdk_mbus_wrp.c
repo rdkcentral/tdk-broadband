@@ -40,7 +40,6 @@
 
 void *tdk_bus_handle = NULL;
 PCCSP_COMPONENT_CFG gpTDKStartCfg = NULL ;
-PCCSP_DM_XML_CFG_LIST gpTDKDmXml  = NULL;
 name_spaceType_t name_space[11];
 int sessionId=0;
 extern char subsystem_prefix[32];
@@ -111,30 +110,9 @@ int ssp_mbus_loadcfg(char *pCmpCfg)
 
 int ssp_mbus_load_dmlxml(char *pCmpDmXml)
 {
+    // Dummy wrapper implementation
     int return_status = SSP_MBUS_FAILURE;
 
-    if(gpTDKDmXml == NULL)
-    {
-        gpTDKDmXml = (PCCSP_DM_XML_CFG_LIST)AnscAllocateMemory(sizeof(CCSP_DM_XML_CFG_LIST));
-    }
-
-    return_status = CcspComponentLoadDmXmlList(pCmpDmXml,
-            &gpTDKDmXml);
-
-    if(return_status != SSP_MBUS_SUCCESS)
-    {
-        printf("\n ssp_mbus_load_dmlxml :: CcspComponentLoadDmXmlList fails with ansc return status value %d",return_status);
-        return_status = SSP_MBUS_FAILURE;
-    }
-    else
-    {
-        printf("\n ssp_mbus_load_dmlxml :: CcspComponentLoadDmXmlList success with ansc return status value %d",return_status);
-    }
-    if(gpTDKDmXml!= NULL)
-    {
-        AnscFreeMemory(gpTDKDmXml);
-        gpTDKDmXml = NULL;
-    }
     return return_status;
 }
 

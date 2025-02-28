@@ -84,6 +84,7 @@ revision:
 
 #include "ssp_global.h"
 #include "ccsp_trace.h"
+#include "dm_pack_create_func.h"
 extern ULONG                                       g_ulAllocatedSizePeak;
 
 extern  PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController;
@@ -214,7 +215,7 @@ ANSC_STATUS
         (
          (ANSC_HANDLE)pDslhCpeController,
          CrName,                             /* CCSP CR ID */
-         DMPackCreateDataModelXML,           /* Comcast generated code to create XML. */
+         DMPackCreateDataModelXML,           /* To generate component Data Model XML file */
 	 pStartCfg->ComponentName,           /* Component Name    */
          pStartCfg->Version,                 /* Component Version */
          pStartCfg->DbusPath,                /* Component Path    */
@@ -226,6 +227,7 @@ ANSC_STATUS
         /* System is fully initialized */
         g_pComponent_Common_Dm->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
     }
+
 
     return ANSC_STATUS_SUCCESS;
 }
