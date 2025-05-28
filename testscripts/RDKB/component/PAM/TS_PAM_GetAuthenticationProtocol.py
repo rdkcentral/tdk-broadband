@@ -33,7 +33,7 @@
   <skip>false</skip>
   <box_types>
     <box_type>RPI</box_type>
-    <box_type>Broadband</box_type>
+    <box_type>BPI</box_type><box_type>Broadband</box_type>
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>

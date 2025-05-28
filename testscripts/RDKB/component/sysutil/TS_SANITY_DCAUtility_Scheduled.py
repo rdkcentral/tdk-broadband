@@ -52,7 +52,7 @@
     <!--  -->
     <box_type>RPI</box_type>
     <!--  -->
-  </box_types>
+  <box_type>BPI</box_type></box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
     <!--  -->
@@ -119,7 +119,8 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("EXPECTED RESULT 1: Should get the Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable\n");
             print("ACTUAL RESULT 1: Value is %s" %actual_details);
             #Get the result of execution
-            print("[TEST EXECUTION RESULT] : SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
 
             if actual_details != "false":
                 tdkTestObj = pamobj.createTestStep('pam_SetParameterValues');

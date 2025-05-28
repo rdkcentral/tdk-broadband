@@ -37,7 +37,7 @@ Test Type: Negative</synopsis>
     <box_type>Emulator</box_type>
     <box_type>Broadband</box_type>
     <box_type>RPI</box_type>
-  </box_types>
+  <box_type>BPI</box_type></box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
