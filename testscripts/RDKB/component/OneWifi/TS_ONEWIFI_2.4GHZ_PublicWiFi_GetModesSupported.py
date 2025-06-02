@@ -110,7 +110,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
     Mode = details.split("VALUE:")[1].split(' ')[0].split(',');
-    expectedModes = ["None","WPA-Personal","WPA2-Personal","WPA3-Personal","WPA-WPA2-Personal","WPA3-Personal-Transition","WPA-Enterprise","WPA2-Enterprise","WPA3-Enterprise","WPA-WPA2-Enterprise","Enhanced-Open"]
+    expectedModes = ["None","WPA-Personal","WPA2-Personal","WPA3-Personal","WPA-WPA2-Personal","WPA3-Personal-Transition","WPA-Enterprise","WPA2-Enterprise","WPA3-Enterprise","WPA-WPA2-Enterprise","Enhanced-Open","WPA3-Personal-Compatibility"]
 
     #Check if the get modes are all available in expectedModes
     result =  all(elem in expectedModes for elem in Mode)
