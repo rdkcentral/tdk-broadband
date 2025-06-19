@@ -157,18 +157,20 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
     details = tdkTestObj.getResultDetails();
 
     print("TEST STEP %d: Get the Device.Cellular.X_RDK_Status" %step);
-    print("EXPECTED RESULT %d: Should get the Device.Cellular.X_RDK_Status " %step);
-    print("ACTUAL RESULT %d: Interface status is %s" %(step,details));
+    print("EXPECTED RESULT %d: Should get the Device.Cellular.X_RDK_Status and status should returned as DOWN" %step);
 
-    if expectedresult in actualresult:
+
+    if expectedresult in actualresult and details == "DOWN":
         tdkTestObj.setResultStatus("SUCCESS");
         #Get the result of execution
+        print("ACTUAL RESULT %d: Interface status is %s" %(step,details));
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
         #Get the result of execution
+        print("ACTUAL RESULT %d: Interface status is %s" %(step,details));
         print("[TEST EXECUTION RESULT] : FAILURE");
 
     step = step + 1;
@@ -196,36 +198,47 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
 
-    sleep(20);
-    step = step + 1;
-
     # Get Device.Cellular.X_RDK_Status
-    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
-    expectedresult="SUCCESS";
+    step = step + 1;
+    print("TEST STEP %d: Get the Device.Cellular.X_RDK_Status until status returned as REGISTERED" %step);
+    print("EXPECTED RESULT %d: Should get the Device.Cellular.X_RDK_Status until status returned as REGISTERED" %step);
 
-    #Execute testcase in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
+    max_tries = 20
+    registered = False
 
-    print("TEST STEP %d: Get the Device.Cellular.X_RDK_Status" %step);
-    print("EXPECTED RESULT %d: Should get the Device.Cellular.X_RDK_Status as REGISTERED" %step);
-    print("ACTUAL RESULT %d: Interface status is %s" %(step,details));
-    #Check whether Device.Cellular.X_RDK_Status is DEREGISTERED
-    if expectedresult in actualresult and details == "REGISTERED":
+    #Check whether Device.Cellular.X_RDK_Status is REGISTERED
+    for attempt in range(max_tries):
+        print(f"Attempt{attempt} get the Device.Cellular.X_RDK_Status")
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
+        expectedresult="SUCCESS";
+
+        #Execute testcase in DUT
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+        print(f"Attempt {attempt} status: {details}")
+
+        if expectedresult in actualresult and details == "REGISTERED":
+            registered = True
+            break
+
+        sleep(1)
+
+    if registered:
         tdkTestObj.setResultStatus("SUCCESS");
+        print("ACTUAL RESULT %d: Interface status is %s" %(step,details));
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE");
+        print("ACTUAL RESULT %d: Interface status does not returned as REGISTERED" %(step))
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
 
     step = step + 1;
-    # Get Device.Cellular.X_RDK_Status
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent");
     expectedresult="SUCCESS";
@@ -238,7 +251,6 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
     print("TEST STEP %d: Get the Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent " %step);
     print("EXPECTED RESULT %d: Should get the Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent as zero" %step);
     print("ACTUAL RESULT %d: Bytes sent is %s" %(step,details));
-    #Check whether Device.Cellular.X_RDK_Status is DEREGISTERED
     if expectedresult in actualresult and details == "0":
         tdkTestObj.setResultStatus("SUCCESS");
         #Get the result of execution
@@ -259,7 +271,6 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
     print("TEST STEP %d: Get the Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived " %step);
     print("EXPECTED RESULT %d: Should get the Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived as zero" %step);
     print("ACTUAL RESULT %d: Bytes Received is %s" %(step,details));
-    #Check whether Device.Cellular.X_RDK_Status is DEREGISTERED
     if expectedresult in actualresult and details == "0":
         tdkTestObj.setResultStatus("SUCCESS");
         #Get the result of execution
