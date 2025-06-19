@@ -156,7 +156,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 tdkTestObj = obj.createTestStep('ExecuteCmd');
-                tdkTestObj.addParameter("command", "ps -ef  | grep \"dropbear\" | grep -v \"grep\"");
+                tdkTestObj.addParameter("command", "ps | grep \"dropbear\" | grep -v \"grep\"");
                 expectedresult="SUCCESS";
                 #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult);
