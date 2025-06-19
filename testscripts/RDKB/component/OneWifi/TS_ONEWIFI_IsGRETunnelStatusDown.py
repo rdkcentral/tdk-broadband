@@ -56,7 +56,7 @@
 3.Set Device.X_COMCAST-COM_GRE.Tunnel.1.Enable as false
 3. Using WIFIAgent_Get, get Device.X_COMCAST-COM_GRE.Tunnel.1.Status
 6. Restore value of Device.X_COMCAST-COM_GRE.Tunnel.1.Enable</automation_approch>
-    <except_output>Device.X_COMCAST-COM_GRE.Tunnel.1.Status should be Down or Error</except_output>
+    <except_output>Device.X_COMCAST-COM_GRE.Tunnel.1.Status should be Error or Disabled</except_output>
     <priority>High</priority>
     <test_stub_interface>WifiAgent</test_stub_interface>
     <test_script>TS_ONEWIFI_IsGRETunnelStatusDown</test_script>
@@ -153,17 +153,17 @@ if "SUCCESS" in loadmodulestatus.upper():
                     details = tdkTestObj.getResultDetails();
                     status = details.split("VALUE:")[1].split(' ')[0];
 
-                    if expectedresult in actualresult and "Down" in status or "Error" in status:
+                    if expectedresult in actualresult and "Error" in status or "Disabled" in status:
                         tdkTestObj.setResultStatus("SUCCESS");
-                        print("TEST STEP 5: Check if Tunnel staus is Down or Error");
-                        print("EXPECTED RESULT 5: Tunnel staus should be Down or Error");
+                        print("TEST STEP 5: Check if Tunnel staus is Error or Disabled");
+                        print("EXPECTED RESULT 5: Tunnel staus should be Error or Disabled");
                         print("ACTUAL RESULT 5: Status is %s" %status);
                         #Get the result of execution
                         print("[TEST EXECUTION RESULT] : SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print("TEST STEP 5: Check if Tunnel staus is Down or Error");
-                        print("EXPECTED RESULT 5: Tunnel staus should be Down or Error");
+                        print("TEST STEP 5: Check if Tunnel staus is Error or Disabled");
+                        print("EXPECTED RESULT 5: Tunnel staus should be Error or Disabled");
                         print("ACTUAL RESULT 5: Status is %s" %status);
                         #Get the result of execution
                         print("[TEST EXECUTION RESULT] : FAILURE");
