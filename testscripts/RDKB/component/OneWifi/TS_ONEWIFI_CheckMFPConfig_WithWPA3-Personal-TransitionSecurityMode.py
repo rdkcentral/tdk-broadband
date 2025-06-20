@@ -17,26 +17,45 @@
 # limitations under the License.
 ##########################################################################
 '''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>4</version>
+<?xml version='1.0' encoding='utf-8'?>
+<xml>
+  <id></id>
+  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
+  <version>32</version>
+  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_ONEWIFI_CheckMFPConfig_WithWPA3-Personal-TransitionSecurityMode</name>
-  <primitive_test_id/>
+  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
+  <primitive_test_id></primitive_test_id>
+  <!-- Do not change primitive_test_id if you are editing an existing script. -->
   <primitive_test_name>onewifi_DoNothing</primitive_test_name>
+  <!--  -->
   <primitive_test_version>1</primitive_test_version>
+  <!--  -->
   <status>FREE</status>
+  <!--  -->
   <synopsis>To check if the MFP Configuration retrieved using Device.WiFi.AccessPoint.{i}.Security.MFPConfig for the applicable radio's private AP is [2.4G - Optional, 5G - Optional] when the security mode enabled, Device.WiFi.AccessPoint.{i}.Security.ModeEnabled is "WPA3-Personal-Transition".</synopsis>
-  <groups_id/>
+  <!--  -->
+  <groups_id />
+  <!--  -->
   <execution_time>5</execution_time>
+  <!--  -->
   <long_duration>false</long_duration>
+  <!--  -->
   <advanced_script>false</advanced_script>
-  <remarks/>
+  <!-- execution_time is the time out time for test execution -->
+  <remarks></remarks>
+  <!-- Reason for skipping the tests if marked to skip -->
   <skip>false</skip>
+  <!--  -->
   <box_types>
+    <box_type>BPI</box_type>
+    <!--  -->
     <box_type>Broadband</box_type>
+    <!--  -->
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
+    <!--  -->
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_ONEWIFI_206</test_case_id>
@@ -68,18 +87,15 @@ paramName : Device.WiFi.AccessPoint.{i}.Security.MFPConfig</input_parameters>
     <test_script>TS_ONEWIFI_CheckMFPConfig_WithWPA3-Personal-TransitionSecurityMode</test_script>
     <skipped>No</skipped>
     <release_version>M103</release_version>
-    <remarks/>
+    <remarks></remarks>
   </test_cases>
-  <script_tags/>
+  <script_tags />
 </xml>
-
 '''
-
 def getParams(obj, ap_indices, param):
     Value = [];
     status = 0;
     expectedresult = "SUCCESS";
-
     for index in range(0, len(ap_indices)):
         paramName = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security." + param;
         tdkTestObj = obj.createTestStep("WIFIAgent_Get");
@@ -87,7 +103,6 @@ def getParams(obj, ap_indices, param):
         tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
         if expectedresult in actualresult and details != "":
             tdkTestObj.setResultStatus("SUCCESS");
             details = details.split("VALUE:")[1].split(" ")[0].strip();
@@ -100,113 +115,130 @@ def getParams(obj, ap_indices, param):
             break;
     return status, Value, tdkTestObj;
 
-# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
-from tdkutility import *
-from time import sleep;
+from tdkutility import *;
 from tdkbVariables import *;
 
-#Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent","1");
 
-#IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckMFPConfig_WithWPA3-Personal-TransitionSecurityMode');
 
-#Get the result of connection with test component and DUT
-loadmodulestatus1 =obj.getLoadModuleResult();
-print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+loadmodulestatus1 = obj.getLoadModuleResult();
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1);
 
 if "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS"
-
     ap_indices = [1,2];
-    #Get the initial security mode for all the applicable VAPs
+    # Initialize config
+    # Passphrases are test values only.
+    config = {
+        "Device.WiFi.AccessPoint.1.Security.SAEPassphrase": "effect8080chord",
+        "Device.WiFi.AccessPoint.1.Security.X_CISCO_COM_EncryptionMethod": "AES",
+        "Device.WiFi.AccessPoint.2.Security.SAEPassphrase": "effect8080chord",
+        "Device.WiFi.AccessPoint.2.Security.X_CISCO_COM_EncryptionMethod": "AES"
+    }
     step = 1;
     print("\nTEST STEP %d : Retrieve the initial security mode enabled using Device.WiFi.AccessPoint.{i}.Security.ModeEnabled" %step);
     print("EXPECTED RESULT %d : The initial security modes enabled should be retrieved successfully" %step);
-
     param = "ModeEnabled";
     status, initial_mode, tdkTestObj = getParams(obj, ap_indices, param);
-
     if status == 0:
         tdkTestObj.setResultStatus("SUCCESS");
         print("\nACTUAL RESULT %d: Initial security Modes enabled retrieved successfully" %step);
-        #Get the result of execution
         print("TEST EXECUTION RESULT :SUCCESS");
-
-        #Check the Pre-requisites - WPA3_Personal_Transition RFC should be enabled
         step = step + 1;
-        pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
-
-        if pre_req_set == 1:
-            print("\n*************RFC Pre-requisite set for the DUT*****************");
-
-            #Set the security mode to WPA3-Personal-Transition if the initial security mode is different
+        print("\nTEST STEP %d : Retrieve the initial security configurations for all Access Points" %step);
+        print("EXPECTED RESULT %d : The initial security configurations should be retrieved successfully" %step);
+        initial_config = {}
+        config_status = 0
+        for index in range(0, len(ap_indices)):
+            tdkTestObj, actualresult, ap_config = getSecurityModeEnabledConfig(obj, initial_mode[index], ap_indices[index])
+            if actualresult == "SUCCESS":
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: Retrieved initial security config for AP %d; Details : %s" % (step, ap_indices[index], ap_config))
+                initial_config[ap_indices[index]] = ap_config
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Failed to retrieve initial security config for AP %d; Details : %s" % (step, ap_indices[index], ap_config))
+                config_status = 1
+        if config_status == 0:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("\nACTUAL RESULT %d: Initial security configurations retrieved successfully" %step)
             step = step + 1;
-            mode = "WPA3-Personal-Transition";
-            status = 0;
-            revert = [];
-
-            for index in range(0, len(ap_indices)):
-                param = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security.ModeEnabled";
-                if initial_mode[index] != mode:
-                    tdkTestObj = obj.createTestStep("WIFIAgent_Set_Get");
-                    tdkTestObj.addParameter("paramName",param)
-                    tdkTestObj.addParameter("paramValue",mode);
-                    tdkTestObj.addParameter("paramType","string");
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
-                    if expectedresult in actualresult and details != "":
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print("\n%s set successfully to %s" %(param, mode));
-                        revert.append(1);
-                    else :
-                        tdkTestObj.setResultStatus("FAILURE");
-                        status = 1;
-                        print("\n%s NOT set successfully to %s" %(param, mode));
-                        revert.append(0);
+            pre_req_set, tdkTestObj, step, revert_flag, initial_value = CheckWPA3Pre_requiste(obj, step);
+            if pre_req_set == 1:
+                print("\n*************RFC Pre-requisite set for the DUT*****************");
+                mode = "WPA3-Personal-Transition";
+                status = 0;
+                currMode = initial_mode.copy()
+                if revert_flag == 1:
+                    for index in range(0, len(ap_indices)):
+                        param = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security.ModeEnabled";
+                        tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                        tdkTestObj.addParameter("paramName", param)
+                        tdkTestObj.executeTestCase(expectedresult);
+                        actualresult = tdkTestObj.getResult();
+                        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                        if expectedresult in actualresult and "VALUE:WPA3-Personal-Transition" in details:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("\n%s is automatically set to %s due to WPA3 RFC enable" %(param, mode));
+                            currMode[index] = mode
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            status = 1;
+                            print("\n%s is NOT automatically set to %s; Details: %s" %(param, mode, details));
                 else:
-                    print("\n%s is already set to %s" %(param, mode));
-                    revert.append(0);
-
-            print("\nTEST STEP %d : Set the security mode enabled using Device.WiFi.AccessPoint.{i}.Security.ModeEnabled to WPA3-Personal-Transition" %step);
-            print("EXPECTED RESULT %d : The security modes should be set to WPA3-Personal-Transition mode successfully" %step);
-
-            if status == 0:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("ACTUAL RESULT %d: Security Modes are set to WPA3-Personal-Transition successfully" %step);
-                #Get the result of execution
-                print("TEST EXECUTION RESULT :SUCCESS");
-
-                #Get the MFP Configuration values when the security mode enabled is WPA3-Personal-Transition mode
+                    for index in range(0, len(ap_indices)):
+                        param = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security.ModeEnabled";
+                        if initial_mode[index] != mode:
+                            step = step + 1
+                            tdkTestObj, actualresult = setSecurityModeEnabledConfig(obj, mode, ap_indices[index], config, currMode[index])
+                            print("\nTEST STEP %d : Set %s to %s" % (step, param, mode))
+                            print("EXPECTED RESULT %d : Should successfully set %s to %s" % (step, param, mode))
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("ACTUAL RESULT %d: Set operation success for AP %d" % (step, ap_indices[index]));
+                                currMode[index] = mode
+                                step = step + 1
+                                tdkTestObj = obj.createTestStep("WIFIAgent_Get");
+                                tdkTestObj.addParameter("paramName", param)
+                                tdkTestObj.executeTestCase(expectedresult);
+                                actualresult_get = tdkTestObj.getResult();
+                                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                                print("\nTEST STEP %d : Get %s to verify SET operation for AP %d" % (step, param, ap_indices[index]))
+                                print("EXPECTED RESULT %d : Should successfully get %s as %s for AP %d" % (step, param, mode, ap_indices[index]))
+                                if expectedresult in actualresult_get and "VALUE:WPA3-Personal-Transition" in details:
+                                    tdkTestObj.setResultStatus("SUCCESS");
+                                    print("ACTUAL RESULT %d: Get operation success for AP %d; Details : %s" % (step, ap_indices[index], details))
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE");
+                                    status = 1;
+                                    print("ACTUAL RESULT %d: Get operation failed or mismatched for AP %d; Details : %s" % (step, ap_indices[index], details))
+                                    print("TEST EXECUTION RESULT : FAILURE")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE");
+                                status = 1;
+                                print("\nACTUAL RESULT %d: Set operation failed for AP %d; Details: %s" % (step, ap_indices[index], actualresult));
+                                print("TEST EXECUTION RESULT : FAILURE")
+                        else:
+                            print("\n%s is already set to %s" %(param, mode));
                 step = step + 1;
                 print("\nTEST STEP %d : Get the MFP Configurations using Device.WiFi.AccessPoint.{i}.Security.MFPConfig" %step);
                 print("EXPECTED RESULT %d : The MFP Configurations should be retrieved successfully" %step);
-
                 param = "MFPConfig";
                 status, actual_mfp, tdkTestObj = getParams(obj, ap_indices, param);
-
                 if status == 0:
                     tdkTestObj.setResultStatus("SUCCESS");
                     print("\nACTUAL RESULT %d: MFP Configurations are retrieved successfully" %step);
-                    #Get the result of execution
                     print("TEST EXECUTION RESULT :SUCCESS");
-
-                    #Check if the MFP Config values are as expected
-                    #For VAPs 1, 2 MFP Config = Optional, VAP 17 MFP Config = Required when WPA3-Personal-Transition is the security mode enabled
                     step = step + 1;
                     expected_mfp = ["Optional", "Optional"];
                     status = 0;
-
                     print("\nTEST STEP %d : Check if the MFP Configurations are as expected for the applicable VAPs when the security mode enabled in WPA3-Personal-Transition" %step);
                     print("EXPECTED RESULT %d : The MFP Configurations should be as expected for the applicable VAPs when the security mode enabled in WPA3-Personal-Transition" %step);
-
                     for index in range(0, len(ap_indices)):
                         print("\nFor VAP %d, expected MFPConfig : %s, actual MFPConfig : %s" %(ap_indices[index], expected_mfp[index], actual_mfp[index]));
                         if expected_mfp[index] == actual_mfp[index]:
@@ -215,93 +247,74 @@ if "SUCCESS" in loadmodulestatus1.upper():
                         else:
                             tdkTestObj.setResultStatus("FAILURE");
                             status = 1;
-
                     if status == 0:
                         tdkTestObj.setResultStatus("SUCCESS");
                         print("\nACTUAL RESULT %d: MFP Configurations are as expected when the security mode enabled is WPA3-Personal-Transition" %step);
-                        #Get the result of execution
                         print("TEST EXECUTION RESULT :SUCCESS");
                     else:
                         tdkTestObj.setResultStatus("FAILURE");
-                        print("ACTUAL RESULT %d: MFP Configurations are NOT as expected when the security mode enabled is WPA3-Personal-Transition" %step);
-                        #Get the result of execution
+                        print("\nACTUAL RESULT %d: MFP Configurations are NOT as expected when the security mode enabled is WPA3-Personal-Transition" %step);
                         print("TEST EXECUTION RESULT :FAILURE");
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
                     print("ACTUAL RESULT %d: MFP Configurations are NOT retrieved successfully" %step);
-                    #Get the result of execution
                     print("TEST EXECUTION RESULT :FAILURE");
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("ACTUAL RESULT %d: Security Modes are NOT set to WPA3-Personal-Transition successfully" %step);
-                #Get the result of execution
-                print("TEST EXECUTION RESULT :FAILURE");
-
-            #Revert the pre-requisites set
-            if revert_flag == 1:
-                step = step + 1;
-                status = RevertWPA3Pre_requisite(obj, initial_value);
-
-                print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
-                print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
-
-                if status == 1:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print("ACTUAL RESULT %d : Revert operation was success" %step);
-                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                #Revert the pre-requisites set
+                if revert_flag == 1:
+                    step = step + 1;
+                    status = RevertWPA3Pre_requisite(obj, initial_value);
+                    print("\nTEST STEP %d : Revert the pre-requisite to initial value" %step);
+                    print("EXPECTED RESULT %d : Pre-requisites set should be reverted successfully" %step);
+                    if status == 1:
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("ACTUAL RESULT %d : Revert operation was success" %step);
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("ACTUAL RESULT %d : Revert operation failed" %step);
+                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print("ACTUAL RESULT %d : Revert operation failed" %step);
-                    print("[TEST EXECUTION RESULT] : FAILURE");
-            else:
-                print("Reverting pre-requisites not required");
+                    print("Reverting pre-requisites not required");
+                #Revert Operation of Security Mode.
+                step = step + 1;
+                for index in range(0, len(ap_indices)):
+                    param = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security.ModeEnabled";
+                    if (revert_flag == 0 and initial_mode[index] != currMode[index]) or (revert_flag == 1 and initial_mode[index] != "WPA2-Personal"):
+                        print("Reverting to initial Security Mode for AP %d..." % ap_indices[index]);
+                        tdkTestObj, actualresult = setSecurityModeEnabledConfig(obj, initial_mode[index], ap_indices[index], initial_config.get(ap_indices[index], {}), currMode[index])
+                        print("\nTEST STEP %d : Revert %s to initial mode : %s" % (step, param, initial_mode[index]))
+                        print("EXPECTED RESULT %d : Reverting to initial security mode should be success for AP %d" % (step, ap_indices[index]))
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ACTUAL RESULT %d : Reverting Mode to initial value was successful for AP %d; Details : %s" % (step, ap_indices[index], initial_mode[index]))
+                            print("TEST EXECUTION RESULT : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            status = 1;
+                            print("ACTUAL RESULT %d : Reverting Mode to initial value was NOT successful for AP %d; Details : %s" % (step, ap_indices[index], actualresult))
+                            print("TEST EXECUTION RESULT : FAILURE");
+                    elif revert_flag == 1 and initial_mode[index] == "WPA2-Personal":
+                        tdkTestObj, actualresult, current_mode = wifi_GetParam(obj, param)
+                        print("\nTEST STEP %d : Check if %s fell back to WPA2-Personal for AP %d" % (step, param, ap_indices[index]))
+                        print("EXPECTED RESULT %d : Security mode should fall back to WPA2-Personal after disabling WPA3 Transition enable RFC for AP %d" % (step, ap_indices[index]))
+                        if expectedresult in actualresult and current_mode == "WPA2-Personal":
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ACTUAL RESULT %d : Security mode fell back to WPA2-Personal for AP %d; Details : %s" % (step, ap_indices[index], current_mode))
+                            print("TEST EXECUTION RESULT : SUCCESS");
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE");
+                            status = 1;
+                            print("ACTUAL RESULT %d : Security mode did not fall back to WPA2-Personal for AP %d; Details : %s" % (step, ap_indices[index], current_mode))
+                            print("TEST EXECUTION RESULT : FAILURE");
         else:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("FAILURE");
-            print("Pre-Requisite is not set successfully");
-
-        #Revert operation of security mode
-        step = step + 1;
-        status = 0;
-        print("\nTEST STEP %d : Revert current security mode enabled to initial mode" %(step));
-        print("EXPECTED RESULT %d : Should revert to initial security mode successfully" %step);
-
-        for index in range(0, len(ap_indices)):
-            paramName = "Device.WiFi.AccessPoint." + str(ap_indices[index]) + ".Security.ModeEnabled";
-            if revert[index] == 1:
-                tdkTestObj = obj.createTestStep("WIFIAgent_Set_Get");
-                tdkTestObj.addParameter("paramName",paramName)
-                tdkTestObj.addParameter("paramValue",initial_mode[index]);
-                tdkTestObj.addParameter("paramType","string");
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
-                if expectedresult in actualresult and details != "":
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print("%s is reverted to initial security mode" %paramName);
-                else :
-                    tdkTestObj.setResultStatus("FAILURE");
-                    status = 1;
-                    print("%s is NOT reverted to initial security mode" %paramName);
-            else:
-                print("%s revert is not required" %paramName);
-
-        if status == 0:
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("\nACTUAL RESULT %d : Revert operation was success" %(step));
-            print("TEST EXECUTION RESULT : SUCCESS");
-        else :
-            tdkTestObj.setResultStatus("FAILURE");
-            print("ACTUAL RESULT %d : Revert operation failed" %(step));
-            print("TEST EXECUTION RESULT : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE")
+            print("\nACTUAL RESULT %d: Initial security configurations NOT retrieved successfully" %step)
+            print("TEST EXECUTION RESULT :FAILURE")
+            obj.unloadModule("wifiagent")
     else:
         tdkTestObj.setResultStatus("FAILURE");
-        print("ACTUAL RESULT %d: Get operation failed" %(step));
+        print("ACTUAL RESULT %d: Get operation failed" %step);
         print("TEST EXECUTION RESULT :FAILURE");
-
     obj.unloadModule("wifiagent");
 else:
     print("Failed to load the module");
