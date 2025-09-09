@@ -21,9 +21,9 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>45</version>
+  <version>22</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_RFC_ToggleParentalControlManagedSitesEnable</name>
+  <name>TS_RFC_RebootPersistence_afterDMToggle</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
   <primitive_test_id></primitive_test_id>
   <!-- Do not change primitive_test_id if you are editing an existing script. -->
@@ -33,11 +33,11 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server.</synopsis>
+  <synopsis>To validate that RFC feature configuration persists across device reboot and the DM parameter maintains the configured value after reboot.</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
-  <execution_time>10</execution_time>
+  <execution_time>20</execution_time>
   <!--  -->
   <long_duration>false</long_duration>
   <!--  -->
@@ -60,8 +60,8 @@
     <!--  -->
   </rdk_versions>
   <test_cases>
-    <test_case_id>TC_RFC_1</test_case_id>
-    <test_objective>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server</test_objective>
+    <test_case_id>TC_RFC_6</test_case_id>
+    <test_objective>To validate that RFC feature configuration persists across device reboot and the DM parameter maintains the configured value after reboot</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1. Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
@@ -72,22 +72,24 @@
     <automation_approch>1. Load the modules
     2. Get the initial DM value
     3. Verify XConf server URL
-    4. Delete existing RFC log file dcmrfc.log for clean logging
-    5. Configure RFC feature with MAC
-    6. Set feature rule with MAC
-    7. Validate feature rule with MAC
-    8. Restart RFC service
-    9. Query updated DM to confirm toggle
-    10. Revert DM value via RFC
-    11. Delete feature rule
-    12. Delete feature
-    13. Unload the modules</automation_approch>
-    <expected_output>Restarting RFC service should update the value of the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable.</expected_output>
+    4. Configure RFC feature
+    5. Set feature rule with MAC
+    6. Validate feature rule with MAC
+    7. Restart RFC service
+    8. Query updated DM to confirm toggle
+    9. Reboot the device
+    10. Wait for device to come back online
+    11. Query DM to confirm persistence after reboot
+    12. Revert DM value via RFC
+    13. Delete feature rule
+    14. Delete feature
+    15. Unload the modules</automation_approch>
+    <expected_output>RFC feature configuration should persist across device reboot and the DM parameter should maintain the configured value.</expected_output>
     <priority>High</priority>
     <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_RFC_ToggleParentalControlManagedSitesEnable</test_script>
+    <test_script>TS_RFC_RebootPersistence_afterDMToggle</test_script>
     <skipped>No</skipped>
-    <release_version>M140</release_version>
+    <release_version>M141</release_version>
     <remarks></remarks>
   </test_cases>
   <script_tags />
@@ -107,8 +109,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil", "1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
-sysobj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
+obj.configureTestCase(ip,port,'TS_RFC_RebootPersistence_afterDMToggle')
+sysobj.configureTestCase(ip,port,'TS_RFC_RebootPersistence_afterDMToggle')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult()
@@ -117,6 +119,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
     obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
+
     step = 1
     # Get MAC Address of the device
     print("\nTEST STEP %d: Get the MAC address of the device" % step)
@@ -141,7 +144,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Verify XConf server URL against rfc.properties
+            # Verify XConf server URL against rfc.properties using existing functionality
             print("\nTEST STEP %d: Verify XConf server URL against rfc.properties" % step)
             print("EXPECTED RESULT %d: URL should match the configured RFC_CONFIG_SERVER_URL" % step)
             command = "sh %s/tdk_utility.sh parseConfigFile RFC_PATH" % tdkbVariables.TDK_PATH
@@ -178,22 +181,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
             # Continue only if URL matches
             if url_match:
-                step += 1
-                # Delete the dcmrfc.log file to ensure clean logging
-                print("\nTEST STEP %d: Delete the dcmrfc.log file to ensure clean logging" % step)
-                print("EXPECTED RESULT %d: The dcmrfc.log file should be deleted successfully" % step)
-                command = f"rm -f {RFC_LOG_FILE}"
-                tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                actualresult, details = doSysutilExecuteCommand(tdkTestObj, command)
-                if "SUCCESS" in actualresult:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: The dcmrfc.log file deleted successfully. Details: %s" % (step, details))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-                else:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Command executed (file may not have existed). Details: %s" % (step, details))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-
                 step += 1
                 # Configure RFC feature - using dictionary for single parameter
                 print("\nTEST STEP %d: Configure RFC feature in XConf server" % step)
@@ -259,53 +246,64 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                                         print("ACTUAL RESULT %d: RFC file exists and contains feature instance %s. Details: %s" % (step, feature_name, parsed_details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                        # Query updated DM
+                                        # Query updated DM before reboot
                                         step += 1
-                                        print("\nTEST STEP %d: Query updated DM to confirm toggle" % step)
+                                        print("\nTEST STEP %d: Query updated DM to confirm toggle before reboot" % step)
                                         print("EXPECTED RESULT %d: DM should be toggled" % step)
                                         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
                                         actualresult, updated_value = getTR181Value(tdkTestObj, param)
                                         updated_value = updated_value.strip()
                                         if updated_value != initial_value:
                                             tdkTestObj.setResultStatus("SUCCESS")
-                                            print("ACTUAL RESULT %d: DM toggled to %s" % (step, updated_value))
+                                            print("ACTUAL RESULT %d: DM toggled to %s before reboot" % (step, updated_value))
                                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                            # Validate logs if DM is toggled
+                                            # Reboot the device
                                             step += 1
-                                            print("\nTEST STEP %d: Validate logs for DM update" % step)
-                                            print("EXPECTED RESULT %d: Logs should contain update for %s" % (step, param))
-                                            command = f'cat {RFC_LOG_FILE} | grep "updated for Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"'
-                                            tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                                            actualresult, log_details = doSysutilExecuteCommand(tdkTestObj, command)
-                                            if "SUCCESS" in actualresult and "updated for Device.X_Comcast_com_ParentalControl.ManagedSites.Enable" in log_details:
-                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                print("ACTUAL RESULT %d: Logs contain update. Details: %s" % (step, log_details))
-                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                            else:
-                                                tdkTestObj.setResultStatus("FAILURE")
-                                                print("ACTUAL RESULT %d: Logs do not contain update. Details: %s" % (step, log_details))
-                                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                            print("\nTEST STEP %d: Reboot the device" % step)
+                                            print("EXPECTED RESULT %d: Device should reboot successfully" % step)
+                                            print("****DUT is going for a reboot and will be up after 300 seconds*****")
+                                            sysobj.initiateReboot();
+                                            sleep(300)
+                                            # After reboot, continue using the same obj and sysobj instances
+                                            print("ACTUAL RESULT %d: Device reboot completed successfully" % step)
+                                            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                            # Revert DM value via RFC - using dictionary for single parameter
-                                            sleep(30)
+                                            # Query DM after reboot to confirm persistence
                                             step += 1
-                                            print("\nTEST STEP %d: Revert DM value via RFC update" % step)
-                                            print("EXPECTED RESULT %d: DM value should be reverted to initial value %s" % (step, initial_value))
-                                            # Pass clean parameter with initial value as dictionary
-                                            revert_param_value_dict = {param: initial_value}
-                                            tdkTestObj, actualresult, details = rfc_revert_dm_value(sysobj, obj, feature_id, feature_name, revert_param_value_dict)
-                                            if expectedresult in actualresult:
+                                            print("\nTEST STEP %d: Query DM after reboot to confirm persistence" % step)
+                                            print("EXPECTED RESULT %d: DM should maintain the toggled value %s after reboot" % (step, updated_value))
+                                            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                                            actualresult, post_reboot_value = getTR181Value(tdkTestObj, param)
+                                            post_reboot_value = post_reboot_value.strip()
+                                            if post_reboot_value == updated_value and post_reboot_value != initial_value:
                                                 tdkTestObj.setResultStatus("SUCCESS")
-                                                print("ACTUAL RESULT %d: DM reverted successfully. Details: %s" % (step, details))
+                                                print("ACTUAL RESULT %d: DM value persisted after reboot: %s (Expected: %s)" % (step, post_reboot_value, updated_value))
                                                 print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                                # Revert DM value via RFC - using dictionary for single parameter
+                                                sleep(30)
+                                                step += 1
+                                                print("\nTEST STEP %d: Revert DM value via RFC update" % step)
+                                                print("EXPECTED RESULT %d: DM value should be reverted to initial value %s" % (step, initial_value))
+                                                # Pass clean parameter with initial value as dictionary
+                                                revert_param_value_dict = {param: initial_value}
+                                                tdkTestObj, actualresult, details = rfc_revert_dm_value(sysobj, obj, feature_id, feature_name, revert_param_value_dict)
+                                                if expectedresult in actualresult:
+                                                    tdkTestObj.setResultStatus("SUCCESS")
+                                                    print("ACTUAL RESULT %d: DM reverted successfully after reboot test. Details: %s" % (step, details))
+                                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                                else:
+                                                    tdkTestObj.setResultStatus("FAILURE")
+                                                    print("ACTUAL RESULT %d: DM revert failed after reboot test. Details: %s" % (step, details))
+                                                    print("[TEST EXECUTION RESULT] : FAILURE")
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE")
-                                                print("ACTUAL RESULT %d: DM revert failed. Details: %s" % (step, details))
+                                                print("ACTUAL RESULT %d: DM value did not persist after reboot. Expected: %s, Got: %s" % (step, updated_value, post_reboot_value))
                                                 print("[TEST EXECUTION RESULT] : FAILURE")
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE")
-                                            print("ACTUAL RESULT %d: DM not toggled. Value: %s" % (step, updated_value))
+                                            print("ACTUAL RESULT %d: DM not toggled before reboot. Value: %s" % (step, updated_value))
                                             print("[TEST EXECUTION RESULT] : FAILURE")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
