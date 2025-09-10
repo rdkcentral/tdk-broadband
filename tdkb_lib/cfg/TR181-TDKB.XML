@@ -42,7 +42,7 @@
   <description></description>
 
   <library>
-    <path>libmta_tr181</path>
+    <path></path>
     <func_Init>COSA_Init</func_Init>
     <func_Async_Init>COSA_Async_Init</func_Async_Init>
     <func_Unload>COSA_Unload</func_Unload>
