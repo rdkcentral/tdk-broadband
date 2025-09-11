@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>18</version>
+  <version>19</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_USPPA_OperateReboot_sendresp_false</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>Send OPERATE message to reboot the EUT with send_resp false ,receives no valid response and resumes connectivity with the test system via USP protocol.</synopsis>
+  <synopsis>Send OPERATE message to reboot the EUT with send_resp set to false, receives no valid response and resumes connectivity with the test system via USP protocol.</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -48,11 +48,11 @@
   <skip>false</skip>
   <!--  -->
   <box_types>
+    <box_type>BPI</box_type>
+    <!--  -->
     <box_type>Broadband</box_type>
     <!--  -->
     <box_type>RPI</box_type>
-    <!--  -->
-    <box_type>BPI</box_type>
     <!--  -->
   </box_types>
   <rdk_versions>
@@ -61,7 +61,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_USPPA_10</test_case_id>
-    <test_objective>This test case is to send OPERATE message to reboot the EUT with send_resp false, receives no valid response backand resumes connectivity with the test system via USP protocol.</test_objective>
+    <test_objective>This test case is to send OPERATE message to reboot the EUT with send_resp set to false, receives no valid response backand resumes connectivity with the test system via USP protocol.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1.Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
@@ -73,7 +73,7 @@
 Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason</input_parameters>
     <automation_approch>1. Load sysutil module
 2. Check the prerequisite function is success.
-3. Configure USP controller to send OPERATE request for rebooting the EUT via Device.Reboot() with send_resp false.
+3. Configure USP controller to send OPERATE request for rebooting the EUT via Device.Reboot() with send_resp set to false.
 4. Once request is success with no valid response, wait for the device to come up.
 5.Query the last reboot reason to confirm the EUT's reboot, and controller-agent connection restored via USP protocol.
 6. Unload sysutil module</automation_approch>
@@ -114,8 +114,8 @@ if "SUCCESS" in result.upper() :
     tdkTestObj,agentID,preRequisiteStatus = usppaPreRequisite(obj)
     if "SUCCESS" in preRequisiteStatus:
         #Send operate message to reboot the EUT
-        print("TEST STEP 1: Send operate message to reboot the EUT with send_resp false and receive no valid response back via USP protocol")
-        print("EXPECTED RESULT 1: Send operate message to reboot the EUT with send_resp false successfully and receive no valid response back via USP protocol")
+        print("TEST STEP 1: Send operate message to reboot the EUT with send_resp set to false and receive no valid response back via USP protocol")
+        print("EXPECTED RESULT 1: Send operate message to reboot the EUT with send_resp set to false successfully and receive no valid response back via USP protocol")
         queryParam = {"name":"Device.Reboot()", "send_resp":"false"}
 
         #save device's current state before it goes for reboot
@@ -132,7 +132,7 @@ if "SUCCESS" in result.upper() :
             tdkTestObj,agentID,preRequisiteStatus = usppaPreRequisite(obj)
             if "SUCCESS" in preRequisiteStatus:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT 1: Sent operate message to reboot the EUT with send_resp false successfully and received USP message timeout via USP protocol")
+                print("ACTUAL RESULT 1: Sent operate message to reboot the EUT with send_resp set to false successfully and received USP message timeout via USP protocol")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 #Check if EUT is rebooted successfully
@@ -167,7 +167,7 @@ if "SUCCESS" in result.upper() :
             tdkTestObj.setResultStatus("FAILURE")
             if status == "FAILURE":
                 print(" Token Generation failed")
-            print(f"ACTUAL RESULT 1: Failed to send operate message to reboot the EUT with send_resp false via USP protocol with status: {status}")
+            print(f"ACTUAL RESULT 1: Failed to send operate message to reboot the EUT with send_resp set to false via USP protocol with status: {status}")
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
