@@ -21,9 +21,9 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>15</version>
+  <version>27</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_USPPA_GetInstances_Controller_firstlevelonly_true</name>
+  <name>TS_USPPA_GetSupportedDM_DeviceInterfaces_firstlevelonly_false_allOptions</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
   <primitive_test_id></primitive_test_id>
   <!-- Do not change primitive_test_id if you are editing an existing script. -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>To send GET_INSTANCES request to get the instance details of controller instance with first_level_only set to true and receive a valid response via USP protocol.</synopsis>
+  <synopsis>To send a GET_SUPPORTED_DM request to retrieve the supported data model details of Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled via USP protocol</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -60,33 +60,33 @@
     <!--  -->
   </rdk_versions>
   <test_cases>
-    <test_case_id>TC_USPPA_8</test_case_id>
-    <test_objective>This test case is to send GET_INSTANCES request to get the instance details of controller instance with first_level_only set to true and receive a valid response via USP protocol.</test_objective>
+    <test_case_id>TC_USPPA_16</test_case_id>
+    <test_objective>This test case is to send a GET_SUPPORTED_DM request via the USP protocol to retrieve the supported data model details of the Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1.Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script
 3.USPPA should be enabled
-4. USP agent and controller are up and communicating with each other.</pre_requisite>
+4.USP agent and controller are up and communicating with each other.</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>Device.LocalAgent.Controller.</input_parameters>
+    <input_parameters>Device.IP.Interface.</input_parameters>
     <automation_approch>1. Load sysutil module
 2. Check the prerequisite function is success.
-3. Configure USP controller to send GET_INSTANCES request for getting the  Device.LocalAgent.Controller. value with first_level_only as true
-4. Once request is success, parse the USP response and get the supported parameters
+3. Configure USP controller to send GET_SUPPORTED_DM request for getting the Device.IP.Interface. details with first_level_only as false and options like return_params, return_commands and return_events are enabled.
+4. Once request is success, parse the USP response and get the supported parameters, events and commands.
 5. Unload sysutil module</automation_approch>
-    <expected_output>Should get the Instance details of Device.LocalAgent.Controller via USP protocol with first_level_only as true successfully.</expected_output>
+    <expected_output>Should get the supported DM details of Device.IP.Interface. with first_level_only as false and options like return_params, return_commands and return_events are enabled via USP protocol successfully.</expected_output>
     <priority>High</priority>
     <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_USPPA_GetInstances_Controller_firstlevelonly_true</test_script>
+    <test_script>TS_USPPA_GetSupportedDM_DeviceInterfaces_firstlevelonly_false_allOptions</test_script>
     <skipped>No</skipped>
-    <release_version>M140</release_version>
+    <release_version>M141</release_version>
     <remarks>None</remarks>
   </test_cases>
   <script_tags />
 </xml>
 '''
-# use tdklib library,which provides a wrapper for tdk testcase script
+  # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from usppaUtility import *
 
@@ -97,7 +97,7 @@ obj = tdklib.TDKScriptingLibrary("sysutil","1")
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_USPPA_GetInstances_Controller_firstlevelonly_true')
+obj.configureTestCase(ip,port,'TS_USPPA_GetSupportedDM_DeviceInterfaces_firstlevelonly_false_allOptions')
 
 #Get the result of connection with test component and DUT
 result =obj.getLoadModuleResult();
@@ -110,31 +110,31 @@ if "SUCCESS" in result.upper() :
     #Check for prerequisites
     tdkTestObj,agentID,preRequisiteStatus = usppaPreRequisite(obj)
     if "SUCCESS" in preRequisiteStatus:
-        #get the GetInstances message on a single object when first_level_only is true
-        queryParam = {"name":"Device.LocalAgent.Controller.","first_level_only" :"true"}
-        print("\nTEST STEP 1: Send GET_INSTANCES request to get the instance details of controller instance with first_level_only set to true and receive a valid response via USP protocol.")
-        print("EXPECTED RESULT 1: Send GET_INSTANCES request to get the instance details of controller instance with first_level_only set to true and receive a valid response successfully via USP protocol.")
-        status,queryResponse = usppaQuery(agentID,queryParam ,"get_instances")
+        #Get the GetSupportedDM message using a single object with first_level_only as false and options like return_params, return_commands and return_events are enabled
+        print("\nTEST STEP 1: Send a GET_SUPPORTED_DM request to retrieve the supported data model details of Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled via USP protocol")
+        print("EXPECTED RESULT 1: Send a GET_SUPPORTED_DM request to retrieve the supported data model details of the Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled via USP protocol successfully")
+        queryParam = {"name":"Device.IP.Interface.","first_level_only" :"false","ret_param":"true","ret_cmd":"true","ret_event":"true"}
+        status,queryResponse = usppaQuery(agentID,queryParam,"get_supported_dm")
         if status == 200:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT 1: Sent GET_INSTANCES request to get the instance details of controller instance with first_level_only set to true successfully via USP protocol.")
-            #Parse the response from get_instances operation
-            parsedResponse = parseUsppaResponse(queryResponse,"get_instances")
+            print("ACTUAL RESULT 1 : Sent a GET_SUPPORTED_DM request to retrieve the supported data model details of Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled via USP protocol successfully \n")
+            #Parse the response from get_supported_dm operation
+            parsedResponse = parseUsppaResponse(queryResponse,"get_supported_dm")
             if "SUCCESS" in parsedResponse[0] and parsedResponse[1]:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("Agent correctly processed the GetInstances message for Controller instance with first_level_only set to true successfully via USP protocol.")
+                print("Agent correctly processed the get_supported_dm message for Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled successfully")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("Agent failed to process the GetInstances message for Controller instance with first_level_only set to true via USP protocol.")
+                print("Agent failed to process the get_supported_dm message for Device IP Interfaces, with first_level_only set to false and options like return_params, return_commands and return_events are enabled")
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT 1: Failed to send the GetInstances message for Controller instance with first_level_only set to true via USP protocol with status: {status}")
+            print(f"ACTUAL RESULT 1 : Failed to get the SupportedDM message for Device IP Interfaces with first_level_only as false and options like return_params, return_commands and return_events are enabled via USP protocol with status: {status}")
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("Usppa Pre-requisite failed. Please check if usppa processes are running in device or controller setup is ready or agent ID failed to fetch.")
+        print("Usppa Pre-requisite failed. Please check if usppa processes are running in device or controller setup is ready or agent ID failed to fetch \n")
         print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil")
 else:

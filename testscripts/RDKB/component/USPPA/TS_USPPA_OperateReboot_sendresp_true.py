@@ -17,51 +17,32 @@
 # limitations under the License.
 ##########################################################################
 '''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
+<?xml version="1.0" encoding="UTF-8"?><xml>
+  <id/>
   <version>28</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_USPPA_OperateReboot_sendresp_true</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
+  <primitive_test_id/>
   <primitive_test_name>USPPA_Donothing</primitive_test_name>
-  <!--  -->
   <primitive_test_version>1</primitive_test_version>
-  <!--  -->
   <status>FREE</status>
-  <!--  -->
   <synopsis>To send OPERATE message to reboot the EUT with send_resp true, receives valid response and resumes connectivity with the test system via USP Protocol.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
+  <groups_id/>
   <execution_time>20</execution_time>
-  <!--  -->
   <long_duration>false</long_duration>
-  <!--  -->
   <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
+  <remarks/>
   <skip>false</skip>
-  <!--  -->
   <box_types>
     <box_type>Broadband</box_type>
-    <!--  -->
     <box_type>RPI</box_type>
-    <!--  -->
     <box_type>BPI</box_type>
-    <!--  -->
   </box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
-    <!--  -->
   </rdk_versions>
   <test_cases>
-    <test_case_id>TC_USPPA_10</test_case_id>
-    <test_objective>This test case is to send OPERATE message to reboot the EUT with send_resp true and resumes connectivity with the test system via USP protocol.</test_objective>
+    <test_case_id>TC_USPPA_12</test_case_id>
+    <test_objective>This test case is to send OPERATE message to reboot the EUT with send_resp set to true and resumes connectivity with the test system via USP protocol.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1.Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
@@ -73,7 +54,7 @@
 Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason</input_parameters>
     <automation_approch>1. Load sysutil module
 2. Check the prerequisite function is success.
-3. Configure USP controller to send OPERATE request for rebooting the EUT via Device.Reboot() with send_resp true.
+3. Configure USP controller to send OPERATE request for rebooting the EUT via Device.Reboot() with send_resp set to true.
 4. Once request is success with a valid response, wait for the device to come up and parse the response.
 5.Query the last reboot reason to confirm the EUT's reboot, and controller-agent connection restored via USP protocol.
 6. Unload sysutil module</automation_approch>
@@ -85,8 +66,9 @@ Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason</input_parameters>
     <release_version>M140</release_version>
     <remarks>None</remarks>
   </test_cases>
-  <script_tags />
+  <script_tags/>
 </xml>
+
 '''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
