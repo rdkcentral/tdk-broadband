@@ -21,7 +21,7 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>44</version>
+  <version>48</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
   <name>TS_RFC_ToggleMultipleParameters</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
@@ -37,7 +37,7 @@
   <!--  -->
   <groups_id />
   <!--  -->
-  <execution_time>15</execution_time>
+  <execution_time>10</execution_time>
   <!--  -->
   <long_duration>false</long_duration>
   <!--  -->
@@ -65,25 +65,27 @@
     <test_type>Positive</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1. Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2. TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
+2. TDK Agent should be in running state or invoke it through StartTdk.sh script
+3. Xconf server should be up and running.</pre_requisite>
+    <api_or_interface_used></api_or_interface_used>
     <input_parameters></input_parameters>
     <automation_approch>1. Load the modules
     2. Get initial DM values for multiple parameters
     3. Verify XConf server URL
-    4. Configure RFC features with MAC for multiple parameters
-    5. Set feature rule with MAC
-    6. Validate feature rule with MAC
-    7. Restart RFC service
-    8. Validate RFC file creation
-    9. Verify feature instance in RFC file
-    10. Query updated DM parameters to confirm toggle
-    11. Validate logs for DM updates
-    12. Revert DM values to initial values
-    13. Delete feature rule
-    14. Delete feature
-    15. Unload the modules</automation_approch>
-    <expected_output>RFC Immediate Mode validation with multiple feature updates should be successful.</expected_output>
+    4. Delete existing dcmrfc.log for clean logging
+    5. Configure RFC features with MAC for multiple parameters
+    6. Set feature rule with MAC
+    7. Validate feature rule with MAC
+    8. Restart RFC service
+    9. Validate RFC file creation
+    10. Verify feature instance in RFC file
+    11. Query updated DM parameters to confirm toggle
+    12. Validate logs for DM updates
+    13. Revert DM values to initial values
+    14. Delete feature rule
+    15. Delete feature
+    16. Unload the modules</automation_approch>
+    <expected_output>RFC validation with multiple feature updates should be successful.</expected_output>
     <priority>High</priority>
     <test_stub_interface>sysutil</test_stub_interface>
     <test_script>TS_RFC_ToggleMultipleParameters</test_script>
@@ -94,7 +96,6 @@
   <script_tags />
 </xml>
 '''
-
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -180,7 +181,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd')
                     actualresult, prop_url = doSysutilExecuteCommand(tdkTestObj, command)
                     prop_url = prop_url.strip()
-                    if actualresult in expectedresult and prop_url and prop_url == RFC_URL:
+                    if actualresult in expectedresult and prop_url == RFC_URL:
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("ACTUAL RESULT %d: URL matches. Configured: %s, Properties: %s" % (step, RFC_URL, prop_url))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -200,6 +201,22 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
             # Continue only if URL matches
             if url_match:
+                step += 1
+                # Delete the dcmrfc.log file to ensure clean logging
+                print("\nTEST STEP %d: Delete the dcmrfc.log file to ensure clean logging" % step)
+                print("EXPECTED RESULT %d: The dcmrfc.log file should be deleted successfully" % step)
+                command = f"rm -f {RFC_LOG_FILE}"
+                tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+                actualresult, details = doSysutilExecuteCommand(tdkTestObj, command)
+                if "SUCCESS" in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: The dcmrfc.log file deleted successfully. Details: %s" % (step, details))
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: Command executed (file may not have existed). Details: %s" % (step, details))
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
                 step += 1
                 # Configure RFC feature with multiple parameters - all clean parameters as dictionary
                 print("\nTEST STEP %d: Configure RFC feature in XConf server with multiple parameters" % step)
@@ -239,7 +256,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                         # Validate feature rule
                         print("\nTEST STEP %d: Validate feature rule using GET" % step)
                         print("EXPECTED RESULT %d: Feature rule should be validated" % step)
-                        tdkTestObj, actualresult, details = rfc_validate_feature_rule(sysobj, mac)
+                        tdkTestObj, actualresult, details = rfc_validate_feature_rule(sysobj, mac, feature_name, param_value_dict)
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS")
                             print("ACTUAL RESULT %d: Feature rule validated successfully. Details: %s" % (step, details))
@@ -312,8 +329,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                                                 tdkTestObj.setResultStatus("FAILURE")
                                                 print("ACTUAL RESULT %d: Some logs missing for parameter updates" % step)
                                                 print("[TEST EXECUTION RESULT] : FAILURE")
-
+      
                                             # Revert DM values via RFC - using dictionary
+                                            sleep(30)
                                             step += 1
                                             print("\nTEST STEP %d: Revert DM values to initial values via RFC update" % step)
                                             print("EXPECTED RESULT %d: All DM values should be reverted to initial values" % step)

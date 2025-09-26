@@ -21,9 +21,9 @@
 <xml>
   <id></id>
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>45</version>
+  <version></version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_RFC_ToggleParentalControlManagedSitesEnable</name>
+  <name>TS_RFC_InvalidConfigData_ParentalControlManagedSitesEnable</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
   <primitive_test_id></primitive_test_id>
   <!-- Do not change primitive_test_id if you are editing an existing script. -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server.</synopsis>
+  <synopsis>To validate that RFC service handles invalid configData(e.g., 'invalid') gracefully and does not update the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable parameter when invalid data is provided.</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -60,9 +60,9 @@
     <!--  -->
   </rdk_versions>
   <test_cases>
-    <test_case_id>TC_RFC_1</test_case_id>
-    <test_objective>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server</test_objective>
-    <test_type>Positive</test_type>
+    <test_case_id>TC_RFC_4</test_case_id>
+    <test_objective>Validate RFC behavior with invalid config values such as 'invalid' instead of true/false</test_objective>
+    <test_type>Negative</test_type>
     <test_setup>Broadband,RPI,BPI</test_setup>
     <pre_requisite>1. Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
 2. TDK Agent should be in running state or invoke it through StartTdk.sh script
@@ -72,27 +72,27 @@
     <automation_approch>1. Load the modules
     2. Get the initial DM value
     3. Verify XConf server URL
-    4. Delete existing RFC log file dcmrfc.log for clean logging
-    5. Configure RFC feature with MAC
+    4. Delete existing RFC log file
+    5. Configure RFC feature with invalid boolean configuration value e.g., 'invalid'
     6. Set feature rule with MAC
-    7. Validate feature rule with MAC
-    8. Restart RFC service
-    9. Query updated DM to confirm toggle
-    10. Revert DM value via RFC
-    11. Delete feature rule
-    12. Delete feature
-    13. Unload the modules</automation_approch>
-    <expected_output>Restarting RFC service should update the value of the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable.</expected_output>
+    7. Validate feature rule set
+    8. Restart rfc.service
+    9. Query DM to confirm value unchanged
+    10. Delete feature rule
+    11. Delete feature
+    12. Unload the modules</automation_approch>
+    <expected_output>RFC should handle invalid configData gracefully without updating DM parameter.</expected_output>
     <priority>High</priority>
     <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_RFC_ToggleParentalControlManagedSitesEnable</test_script>
+    <test_script>TS_RFC_InvalidConfigData_ParentalControlManagedSitesEnable</test_script>
     <skipped>No</skipped>
-    <release_version>M140</release_version>
+    <release_version>M141</release_version>
     <remarks></remarks>
   </test_cases>
   <script_tags />
 </xml>
 '''
+
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -107,8 +107,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil", "1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
-sysobj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
+obj.configureTestCase(ip,port,'TS_RFC_InvalidConfigData_ParentalControlManagedSitesEnable')
+sysobj.configureTestCase(ip,port,'TS_RFC_InvalidConfigData_ParentalControlManagedSitesEnable')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult()
@@ -117,6 +117,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
     obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
+
     step = 1
     # Get MAC Address of the device
     print("\nTEST STEP %d: Get the MAC address of the device" % step)
@@ -179,35 +180,34 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
             # Continue only if URL matches
             if url_match:
                 step += 1
-                # Delete the dcmrfc.log file to ensure clean logging
-                print("\nTEST STEP %d: Delete the dcmrfc.log file to ensure clean logging" % step)
-                print("EXPECTED RESULT %d: The dcmrfc.log file should be deleted successfully" % step)
+                # Delete existing RFC log file for clean logging
+                print("\nTEST STEP %d: Delete existing RFC log file %s" % (step, RFC_LOG_FILE))
+                print("EXPECTED RESULT %d: RFC log file should be deleted to clear previous logs" % step)
                 command = f"rm -f {RFC_LOG_FILE}"
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd')
                 actualresult, details = doSysutilExecuteCommand(tdkTestObj, command)
-                if "SUCCESS" in actualresult:
+                if actualresult in expectedresult:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: The dcmrfc.log file deleted successfully. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: RFC log file deleted successfully" % step)
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Command executed (file may not have existed). Details: %s" % (step, details))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to delete RFC log file. Details: %s" % (step, details))
+                    print("[TEST EXECUTION RESULT] : FAILURE")
 
                 step += 1
-                # Configure RFC feature - using dictionary for single parameter
-                print("\nTEST STEP %d: Configure RFC feature in XConf server" % step)
-                print("EXPECTED RESULT %d: Feature should be configured successfully" % step)
-                feature_id = Feature_name
-                feature_name = Feature_name
-                toggle_value = "true" if initial_value == "false" else "false"
-                # Pass clean parameter as dictionary - utility will add tr181 prefix
-                param_value_dict = {param: toggle_value}
-                tdkTestObj, actualresult, details = rfc_configure_feature(sysobj, feature_id, feature_name, param_value_dict)
+                # Configure RFC feature with invalid configData(e.g., 'invalid')
+                print("\nTEST STEP %d: Configure RFC feature with invalid configData in XConf server" % step)
+                print("EXPECTED RESULT %d: Feature should be configured with invalid data 'invalid'" % step)
+                feature_id = Feature_name + "_InvalidData"
+                feature_name = Feature_name + "_InvalidData"
+                # Use invalid data instead of true/false
+                invalid_param_value_dict = {param: "invalid"}
+                tdkTestObj, actualresult, details = rfc_configure_feature(sysobj, feature_id, feature_name, invalid_param_value_dict)
                 feature_created = False
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Feature configured successfully. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Feature configured with invalid data successfully. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                     feature_created = True
 
@@ -226,17 +226,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                         sleep(30)
 
                         step += 1
-                        # Validate feature rule
+                        # Validate feature rule using GET
                         print("\nTEST STEP %d: Validate feature rule using GET" % step)
                         print("EXPECTED RESULT %d: Feature rule should be validated" % step)
-                        tdkTestObj, actualresult, details = rfc_validate_feature_rule(sysobj, mac, feature_name, param_value_dict)
+                        tdkTestObj, actualresult, details = rfc_validate_feature_rule(sysobj, mac, feature_name, invalid_param_value_dict)
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS")
                             print("ACTUAL RESULT %d: Feature rule validated successfully. Details: %s" % (step, details))
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                            # Restart RFC after validation
                             step += 1
+                            # Restart RFC service
                             print("\nTEST STEP %d: Restart RFC service" % step)
                             print("EXPECTED RESULT %d: RFC service should restart successfully" % step)
                             tdkTestObj, actualresult, details = rfc_restart_service(sysobj)
@@ -245,75 +245,36 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                                 print("ACTUAL RESULT %d: RFC service restarted successfully. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                # RFC file validation
+                                # Query DM to confirm value is unchanged (default value)
                                 step += 1
-                                print("\nTEST STEP %d: Validate RFC file %s" % (step, RFC_FILE_PATH))
-                                print("EXPECTED RESULT %d: RFC file should exist and contain feature instance %s" % (step, feature_name))
-                                tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                                actualresult, file_details = isFilePresent(tdkTestObj, RFC_FILE_PATH)
-                                if expectedresult in actualresult:
-                                    command = f"cat {RFC_FILE_PATH} | grep '{feature_name}'"
-                                    actualresult, parsed_details = doSysutilExecuteCommand(tdkTestObj, command)
-                                    if "SUCCESS" in actualresult and feature_name in parsed_details:
+                                print("\nTEST STEP %d: Query DM to confirm value is unchanged" % step)
+                                print("EXPECTED RESULT %d: DM should maintain initial value %s (not changed by invalid data)" % (step, initial_value))
+                                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                                actualresult, current_value = getTR181Value(tdkTestObj, param)
+                                current_value = current_value.strip()
+                                if current_value == initial_value:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print("ACTUAL RESULT %d: DM value unchanged as expected. Current: %s, Initial: %s" % (step, current_value, initial_value))
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                    # Check RFC logs for error handling
+                                    step += 1
+                                    print("\nTEST STEP %d: Validate RFC logs for invalid data handling" % step)
+                                    print("EXPECTED RESULT %d: Logs should contain error about dmcli SET failed with invalid value" % step)
+                                    command = f'cat {RFC_LOG_FILE} | grep "dmcli SET failed for {param} with value invalid"'
+                                    tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+                                    actualresult, log_details = doSysutilExecuteCommand(tdkTestObj, command)
+                                    if "SUCCESS" in actualresult and log_details.strip():
                                         tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: RFC file exists and contains feature instance %s. Details: %s" % (step, feature_name, parsed_details))
+                                        print("ACTUAL RESULT %d: RFC logs contain expected error for invalid data handling. Details: %s" % (step, log_details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                        # Query updated DM
-                                        step += 1
-                                        print("\nTEST STEP %d: Query updated DM to confirm toggle" % step)
-                                        print("EXPECTED RESULT %d: DM should be toggled" % step)
-                                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
-                                        actualresult, updated_value = getTR181Value(tdkTestObj, param)
-                                        updated_value = updated_value.strip()
-                                        if updated_value != initial_value:
-                                            tdkTestObj.setResultStatus("SUCCESS")
-                                            print("ACTUAL RESULT %d: DM toggled to %s" % (step, updated_value))
-                                            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                            # Validate logs if DM is toggled
-                                            step += 1
-                                            print("\nTEST STEP %d: Validate logs for DM update" % step)
-                                            print("EXPECTED RESULT %d: Logs should contain update for %s" % (step, param))
-                                            command = f'cat {RFC_LOG_FILE} | grep "updated for Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"'
-                                            tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                                            actualresult, log_details = doSysutilExecuteCommand(tdkTestObj, command)
-                                            if "SUCCESS" in actualresult and "updated for Device.X_Comcast_com_ParentalControl.ManagedSites.Enable" in log_details:
-                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                print("ACTUAL RESULT %d: Logs contain update. Details: %s" % (step, log_details))
-                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                            else:
-                                                tdkTestObj.setResultStatus("FAILURE")
-                                                print("ACTUAL RESULT %d: Logs do not contain update. Details: %s" % (step, log_details))
-                                                print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                            # Revert DM value via RFC - using dictionary for single parameter
-                                            sleep(30)
-                                            step += 1
-                                            print("\nTEST STEP %d: Revert DM value via RFC update" % step)
-                                            print("EXPECTED RESULT %d: DM value should be reverted to initial value %s" % (step, initial_value))
-                                            # Pass clean parameter with initial value as dictionary
-                                            revert_param_value_dict = {param: initial_value}
-                                            tdkTestObj, actualresult, details = rfc_revert_dm_value(sysobj, obj, feature_id, feature_name, revert_param_value_dict)
-                                            if expectedresult in actualresult:
-                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                print("ACTUAL RESULT %d: DM reverted successfully. Details: %s" % (step, details))
-                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                            else:
-                                                tdkTestObj.setResultStatus("FAILURE")
-                                                print("ACTUAL RESULT %d: DM revert failed. Details: %s" % (step, details))
-                                                print("[TEST EXECUTION RESULT] : FAILURE")
-                                        else:
-                                            tdkTestObj.setResultStatus("FAILURE")
-                                            print("ACTUAL RESULT %d: DM not toggled. Value: %s" % (step, updated_value))
-                                            print("[TEST EXECUTION RESULT] : FAILURE")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: RFC file does not contain feature instance %s. Details: %s" % (step, feature_name, parsed_details))
+                                        print("ACTUAL RESULT %d: Expected error log not found for invalid data handling. Details: %s" % (step, log_details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: RFC file does not exist. Details: %s" % (step, file_details))
+                                    print("ACTUAL RESULT %d: DM value changed unexpectedly. Current: %s, Initial: %s" % (step, current_value, initial_value))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
@@ -363,7 +324,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                         print("No need to delete feature as it was not created")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Feature configuration failed. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Feature configuration with invalid data failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
