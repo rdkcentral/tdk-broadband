@@ -178,7 +178,6 @@ AC_CONFIG_FILES([Makefile
 	 SNMP_PA_Stub/Makefile
 	 pam_stub/Makefile
 	 SysUtil_stub/Makefile
-         RDKLogger_stub/Makefile
 	 TAD_stub/Makefile
 	 Moca_Stub/Makefile
 	 LMLite_Stub/Makefile
