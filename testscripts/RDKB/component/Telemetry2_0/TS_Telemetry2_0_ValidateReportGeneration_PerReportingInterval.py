@@ -23,7 +23,6 @@ import tdklib
 from tdkutility import *
 from tdkbTelemetry2_0_Variables import *
 from tdkbTelemetry2_0Utility import *
-import re
 from time import sleep
 
 # Test component to be tested
@@ -48,7 +47,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
     wifiobj.setLoadModuleStatus("SUCCESS")
-    
+
     step = 1
     profileType = "JSON"
     numProfiles = 1
@@ -91,12 +90,12 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
         else:
             print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test")
 
-        if flag == 0: 
+        if flag == 0:
             step += 1
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType)
             profile_names = [profile["name"] for profile in reportProfilesJSON["profiles"]]
             report = json.dumps(reportProfilesJSON)
-            print("Report Profile JSON body to be set : %s" %report)
+            print("\nReport Profile JSON body to be set : %s" %report)
 
             check_flag, initial_report_profiles, param_name, step = SetReportProfiles(wifiobj, report, profileType, numProfiles, step)
 
@@ -152,7 +151,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: cJSON report is not generated in the telemetry2.0 logs." % step)
-                        print("[TEST EXECUTION RESULT] : FAILURE")      
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Profile is not created in /nvram/.t2reportprofiles/" %step)
@@ -167,7 +166,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 tdkTestObj.addParameter("ParamType","string")
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
-                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "")
 
                 if expectedresult in actualresult and "success" in details.lower():
                     tdkTestObj.setResultStatus("SUCCESS")
@@ -177,9 +176,8 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Failed to revert %s to initial value. Details : %s" % (step, param_name, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
-                             
             else:
-                print("Failed to set the profile.")            
+                print("Failed to set the profile.")
         else:
             print("\nTelemetry2.0 Prerequisite values setting failed.")
     else:
@@ -187,6 +185,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
         print("ACTUAL RESULT %d: Failed to get the Telemetry2.0 configuration values" %step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 
+    print("\n")
     #Unload the modules loaded
     obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

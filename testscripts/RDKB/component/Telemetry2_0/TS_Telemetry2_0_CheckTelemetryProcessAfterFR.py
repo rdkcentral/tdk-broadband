@@ -55,10 +55,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
         #Restore the device state saved before reboot
         sysobj.restorePreviousStateAfterReboot()
-         
+
         step += 1
         #Check if Telemetry2.0 process is running after Factory Reset
-        print("TEST STEP %d: Check if Telemetry2.0 process is running after Factory Reset" %step)
+        print("\nTEST STEP %d: Check if Telemetry2.0 process is running after Factory Reset" %step)
         print("EXPECTED RESULT %d: Telemetry2.0 process should be running" %step)
 
         tdkTestObj = sysobj.createTestStep('ExecuteCmd')
@@ -78,7 +78,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Factory Reset triggering failed. Details : %s" %(step, details))
         print("[TEST EXECUTION RESULT] : FAILURE")
-
+    print("\n")
     #Unload the modules loaded
     obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

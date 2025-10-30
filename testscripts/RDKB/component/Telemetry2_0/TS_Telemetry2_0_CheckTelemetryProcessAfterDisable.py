@@ -80,11 +80,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                 step += 1
                 sleep(5)
                 #Check if Telemetry2.0 process is down
-                print("TEST STEP %d: Check whether the Telemetry2.0 process state is down after reboot" %step)
+                print("\nTEST STEP %d: Check whether the Telemetry2.0 process state is down after reboot" %step)
                 print("EXPECTED RESULT %d: Telemetry2.0 process state after reboot should be down" %step)
 
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                
+
                 actualresult,details = getPID(tdkTestObj, 'telemetry2_0')
 
                 if expectedresult in actualresult and details == "":
@@ -134,7 +134,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
                             print("ACTUAL RESULT %d: Telemetry2.0 process is down. Details : %s" %(step, details))
-                            print("[TEST EXECUTION RESULT] : FAILURE")  
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: Failed to restart CcspTelemetry2_0 service" %step)
@@ -157,7 +157,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable. Details : %s" %(step, details))
         print("[TEST EXECUTION RESULT] : FAILURE")
-
+    print("\n")
     #Unload the modules loaded
     obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

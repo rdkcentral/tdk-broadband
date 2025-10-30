@@ -27,7 +27,7 @@ from tdkbTelemetry2_0Utility import *
 # Test component to be tested
 sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
-wifiobj = tdklib.TDKScriptingLibrary("wifiagent","1");
+wifiobj = tdklib.TDKScriptingLibrary("wifiagent","1")
 
 # IP and Port of box, No need to change,
 # This will be replaced with corresponding DUT Ip and port while executing script
@@ -46,7 +46,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
     wifiobj.setLoadModuleStatus("SUCCESS")
-    
+
     step = 1
     profileType = "MsgPack"
     numProfiles = 1
@@ -80,25 +80,21 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             if setStatus == 1:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: Successfully set the Telemetry2.0 prerequisite configuration values" %step)
-                print("[TEST EXECUTION RESULT] : SUCCESS\n")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 flag = 1
                 tdkTestObj.setResultStatus("FAILURE")
                 print("ACTUAL RESULT %d: Failed to set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test.\n")
+            print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test.")
 
         if flag == 0:
-            
             step += 1
-            profileType = "MsgPack"
-            numProfiles = 1
             #Create Report Profiles JSON body
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType)
-            profile_names = [profile["name"] for profile in reportProfilesJSON["profiles"]]
             msg_pack = JsontoMsgPackBase64(reportProfilesJSON)
-            print("Report Profile MsgPack Base64 to be set : %s" %msg_pack)
+            print("\nReport Profile MsgPack Base64 to be set : %s" %msg_pack)
 
             check_flag, initial_report_profiles, param_name, step = SetReportProfiles(wifiobj, msg_pack, profileType, numProfiles, step)
 
@@ -115,12 +111,12 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 if profile_check:
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Profiles are created in /nvram/.t2reportprofiles/" %step)
-                    print("[TEST EXECUTION RESULT] : SUCCESS\n")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Profiles are not created in /nvram/.t2reportprofiles/" %step)
-                    print("[TEST EXECUTION RESULT] : FAILURE\n")
-                
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+
                 #Revert to initial value
                 step += 1
                 print("\nTEST STEP %d: Revert %s to the initial value %s" % (step, param_name, initial_report_profiles))
@@ -131,8 +127,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 tdkTestObj.addParameter("ParamType","string")
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
-                details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
-
+                details = tdkTestObj.getResultDetails().strip().replace("\\n", "")
                 if expectedresult in actualresult and "success" in details.lower():
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Successfully reverted %s to initial value. Details : %s" % (step, param_name, details))
@@ -142,18 +137,18 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     print("ACTUAL RESULT %d: Failed to revert %s to initial value. Details : %s" % (step, param_name, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                print("Failed to set the profile.")            
+                print("Failed to set the profile.")
         else:
             print("\nTelemetry2.0 Prerequisite values setting failed.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get the Telemetry2.0 configuration values" %step)
         print("[TEST EXECUTION RESULT] : FAILURE")
-
+    print("\n")
     #Unload the modules loaded
     obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
-    wifiobj.unloadModule("wifiagent");
+    wifiobj.unloadModule("wifiagent")
 else:
     print("Failed to load the module")
     obj.setLoadModuleStatus("FAILURE")
