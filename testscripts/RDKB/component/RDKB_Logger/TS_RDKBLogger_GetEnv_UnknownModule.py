@@ -34,10 +34,7 @@ Test Type: Negative</synopsis>
   <remarks/>
   <skip>false</skip>
   <box_types>
-    <box_type>Emulator</box_type>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  <box_type>BPI</box_type></box_types>
+</box_types>
   <rdk_versions>
     <rdk_version>RDKB</rdk_version>
   </rdk_versions>
@@ -45,7 +42,7 @@ Test Type: Negative</synopsis>
     <test_case_id>TC_RDKLOGGER_8</test_case_id>
     <test_objective>To get the environment variable value of a module not present in debug.ini file.</test_objective>
     <test_type>Positive</test_type>
-    <test_setup>Emulator,XB3</test_setup>
+    <test_setup></test_setup>
     <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components.
 2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
