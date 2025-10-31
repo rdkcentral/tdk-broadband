@@ -65,20 +65,22 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
             print("ACTUAL RESULT %d: Successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to false" %step)
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            #Restrt the CcspTelemetry service
+            #Reboot the device to get the changes applied and check whether the DUT is up
             step += 1
-            print("\nTEST STEP %d: Restart the CcspTelemetry2_0 service" %step)
-            print("EXPECTED RESULT %d: CcspTelemetry2_0 service should restart successfully" %step)
-            tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-            cmd = "systemctl restart CcspTelemetry"
-            actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd)
-            if expectedresult in actualresult:
+            print("\nTEST STEP %d: Reboot the device to apply changes" %step)
+            print("EXPECTED RESULT %d: Device should reboot successfully" %step)
+
+            print("****DUT is going for a reboot and will be up after 180 seconds*****")
+            obj.initiateReboot()
+            sleep(180)
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+            actualresult, uptime = getTR181Value(tdkTestObj, "Device.DeviceInfo.UpTime")
+            if expectedresult in actualresult and int(uptime) > 0:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: CcspTelemetry2_0 service restarted successfully" %step)
+                print("ACTUAL RESULT %d: Device rebooted successfully. Uptime after reboot is : %s" %(step, uptime))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
-                sleep(5)
                 #Check if Telemetry2.0 process is down
                 print("\nTEST STEP %d: Check whether the Telemetry2.0 process state is down after reboot" %step)
                 print("EXPECTED RESULT %d: Telemetry2.0 process state after reboot should be down" %step)
@@ -109,20 +111,22 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                     print("ACTUAL RESULT %d: Successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to %s" % (step, initial_telemetry_enable))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                    #Restart the CcspTelemetry service
+                    #Reboot the device to get the changes applied
                     step += 1
-                    print("\nTEST STEP %d: Restart the CcspTelemetry2_0 service" %step)
-                    print("EXPECTED RESULT %d: CcspTelemetry2_0 service should restart successfully" %step)
-                    tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                    cmd = "systemctl restart CcspTelemetry"
-                    actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd)
-                    if expectedresult in actualresult:
+                    print("\nTEST STEP %d: Reboot the device" %step)
+                    print("EXPECTED RESULT %d: Device should reboot successfully" %step)
+                    print("****DUT is going for a reboot and will be up after 180 seconds*****")
+                    obj.initiateReboot()
+                    sleep(180)
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                    actualresult, uptime = getTR181Value(tdkTestObj, "Device.DeviceInfo.UpTime")
+                    if expectedresult in actualresult and int(uptime) > 0:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: CcspTelemetry2_0 service restarted successfully" %step)
+                        print("ACTUAL RESULT %d: Device is up after reboot. Uptime : %s" %(step, uptime))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
+                        #Check the Telemetry2.0 process state
                         step += 1
-                        sleep(5)
                         print("\nTEST STEP %d: Check whether the Telemetry2.0 process state is up after restart" %step)
                         print("EXPECTED RESULT %d: Telemetry2.0 process state after restart should be up" %step)
                         tdkTestObj = sysobj.createTestStep('ExecuteCmd')
@@ -137,7 +141,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Failed to restart CcspTelemetry2_0 service" %step)
+                        print("ACTUAL RESULT %d: Failed to reboot the device" %step)
                         print("[TEST EXECUTION RESULT] : FAILURE")
 
                 else:
@@ -146,7 +150,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to restart CcspTelemetry2_0 service" %step)
+                print("ACTUAL RESULT %d: Failed to reboot the device. Details : %s" %(step, uptime))
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
         else:

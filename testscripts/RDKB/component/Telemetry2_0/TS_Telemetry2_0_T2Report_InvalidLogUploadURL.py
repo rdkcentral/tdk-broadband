@@ -90,7 +90,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test")
 
         if flag == 0:
-            #Get the Report Profile with invlid LogUpload Location URL
+            #Get the Report Profile with invalid LogUpload Location URL
             step += 1
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType, scenario="invalid_upload_url")
             profile_names = [profile["name"] for profile in reportProfilesJSON["profiles"]]
