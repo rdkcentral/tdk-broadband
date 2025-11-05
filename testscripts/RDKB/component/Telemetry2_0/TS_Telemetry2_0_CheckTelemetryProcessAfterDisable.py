@@ -70,9 +70,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
             print("\nTEST STEP %d: Reboot the device to apply changes" %step)
             print("EXPECTED RESULT %d: Device should reboot successfully" %step)
 
-            print("****DUT is going for a reboot and will be up after 180 seconds*****")
+            print("****DUT is going for a reboot and will be up after 300 seconds*****")
             obj.initiateReboot()
-            sleep(180)
+            sleep(300)
             tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
             actualresult, uptime = getTR181Value(tdkTestObj, "Device.DeviceInfo.UpTime")
             if expectedresult in actualresult and int(uptime) > 0:
@@ -93,60 +93,60 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Telemetry2.0 process is down after setting Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to false. Details : %s" %(step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    # Reverting Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value
+                    step += 1
+                    print("\nTEST STEP %d: Revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value" %step)
+                    print("EXPECTED RESULT %d: Should set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value successfully" %step)
+
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+                    actualresult, details = setTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable", initial_telemetry_enable, "boolean")
+
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d: Successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to %s" % (step, initial_telemetry_enable))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                        #Reboot the device to get the changes applied
+                        step += 1
+                        print("\nTEST STEP %d: Reboot the device" %step)
+                        print("EXPECTED RESULT %d: Device should reboot successfully" %step)
+                        print("****DUT is going for a reboot and will be up after 300 seconds*****")
+                        obj.initiateReboot()
+                        sleep(300)
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                        actualresult, uptime = getTR181Value(tdkTestObj, "Device.DeviceInfo.UpTime")
+                        if expectedresult in actualresult and int(uptime) > 0:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print("ACTUAL RESULT %d: Device is up after reboot. Uptime : %s" %(step, uptime))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                            #Check the Telemetry2.0 process state
+                            step += 1
+                            print("\nTEST STEP %d: Check whether the Telemetry2.0 process state is up after restart" %step)
+                            print("EXPECTED RESULT %d: Telemetry2.0 process state after restart should be up" %step)
+                            tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+                            actualresult,details = getPID(tdkTestObj, 'telemetry2_0')
+                            if expectedresult in actualresult and details != "":
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: Telemetry2.0 process is running after reverting Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to %s. Details : %s" %(step, initial_telemetry_enable,details))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE")
+                                print("ACTUAL RESULT %d: Telemetry2.0 process is down. Details : %s" %(step, details))
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Failed to reboot the device" %step)
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d: Failed to set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value. Details : %s" %(step, details))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Telemetry2.0 process is running. Details : %s" %(step, details))
-                    print("[TEST EXECUTION RESULT] : FAILURE")
-
-                # Reverting Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value
-                step += 1
-                print("\nTEST STEP %d: Revert the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value" %step)
-                print("EXPECTED RESULT %d: Should set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value successfully" %step)
-
-                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
-                actualresult, details = setTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable", initial_telemetry_enable, "boolean")
-
-                if expectedresult in actualresult:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Successfully set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to %s" % (step, initial_telemetry_enable))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                    #Reboot the device to get the changes applied
-                    step += 1
-                    print("\nTEST STEP %d: Reboot the device" %step)
-                    print("EXPECTED RESULT %d: Device should reboot successfully" %step)
-                    print("****DUT is going for a reboot and will be up after 180 seconds*****")
-                    obj.initiateReboot()
-                    sleep(180)
-                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
-                    actualresult, uptime = getTR181Value(tdkTestObj, "Device.DeviceInfo.UpTime")
-                    if expectedresult in actualresult and int(uptime) > 0:
-                        tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: Device is up after reboot. Uptime : %s" %(step, uptime))
-                        print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                        #Check the Telemetry2.0 process state
-                        step += 1
-                        print("\nTEST STEP %d: Check whether the Telemetry2.0 process state is up after restart" %step)
-                        print("EXPECTED RESULT %d: Telemetry2.0 process state after restart should be up" %step)
-                        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                        actualresult,details = getPID(tdkTestObj, 'telemetry2_0')
-                        if expectedresult in actualresult and details != "":
-                            tdkTestObj.setResultStatus("SUCCESS")
-                            print("ACTUAL RESULT %d: Telemetry2.0 process is running after reverting Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to %s. Details : %s" %(step, initial_telemetry_enable,details))
-                            print("[TEST EXECUTION RESULT] : SUCCESS")
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: Telemetry2.0 process is down. Details : %s" %(step, details))
-                            print("[TEST EXECUTION RESULT] : FAILURE")
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Failed to reboot the device" %step)
-                        print("[TEST EXECUTION RESULT] : FAILURE")
-
-                else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Failed to set the value of Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.Telemetry.Enable to initial value. Details : %s" %(step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")

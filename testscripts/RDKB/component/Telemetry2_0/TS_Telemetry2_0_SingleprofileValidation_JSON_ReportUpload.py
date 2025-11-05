@@ -50,7 +50,9 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     step = 1
     profileType = "JSON"
     numProfiles = 1
-    flag = 0
+    t2_flag = 0 # Flag to check whether Telemetry2.0 prerequisite is already met
+    t2_revert_flag = 0 # Flag to check whether Telemetry2.0 revert is required
+
     t2_config = [TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION]
     print("Telemetry2.0 Prerequisite values are : Enable = %s, ConfigURL = %s, Version = %s" %(TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION))
 
@@ -65,7 +67,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
         tdkTestObj.setResultStatus("SUCCESS")
         print("ACTUAL RESULT %d: Successfully got the Telemetry2.0 configuration values" %step)
         print("[TEST EXECUTION RESULT] : SUCCESS")
-
         #Validate the prerequisite values
         if t2_config != [defTelEnable, defURL, defVersion]:
             print("\nTelemetry2.0 Prerequisite values are not met. Hence setting the prerequisite values")
@@ -78,18 +79,24 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             setStatus = setTelemetry2_0Values(tdkTestObj, TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION)
 
             if setStatus == 1:
+                t2_revert_flag = 1
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: Successfully set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
-                flag = 1
                 tdkTestObj.setResultStatus("FAILURE")
                 print("ACTUAL RESULT %d: Failed to set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
+            t2_flag = 1
             print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test.")
 
-        if flag == 0:
+        #Delete the earlier telemetry2.0 logs
+        step += 1
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+        rm_t2_flag = removeTelemetry2_0Log(tdkTestObj, step)
+
+        if (t2_flag or t2_revert_flag == 1) and rm_t2_flag:
             step += 1
             #Create Report Profiles JSON body
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType)
@@ -104,52 +111,53 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 print("The profile setting has been completed.")
                 #Check whether the profile is created in /nvram/.t2reportprofiles/
                 step += 1
-                print("\nTEST STEP %d: Check whether the profile is created in /nvram/.t2reportprofiles/" %step)
-                print("EXPECTED RESULT %d: Profile should be created in /nvram/.t2reportprofiles/" %step)
+                print("\nTEST STEP %d: Check whether the profile is created in %s" %(step, PROFILE_PATH))
+                print("EXPECTED RESULT %d: Profile should be created in %s" %(step, PROFILE_PATH))
                 print("Profile to be checked : %s" %profile_names)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd')
                 profile_check = isProfileFileExist(tdkTestObj, profile_names)
                 if profile_check:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Profile is created in /nvram/.t2reportprofiles/" %step)
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-                else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Profile is not created in /nvram/.t2reportprofiles/" %step)
-                    print("[TEST EXECUTION RESULT] : FAILURE")
-
-                sleep(REPORTING_INTERVAL)
-                sleep(10)
-
-                #Check whether the cJSON report is getting generated in the telemetry2.0 logs
-                step += 1
-                print("\nTEST STEP %d: Check whether the cJSON report is getting generated in the telemetry2.0 logs" %step)
-                print("EXPECTED RESULT %d: cJSON report should be generated in the telemetry2.0 logs" %step)
-                tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                log_check, details = checkReportGenerated(tdkTestObj, profile_names)
-                if log_check:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: cJSON report is generated in the telemetry2.0 logs. Profile List : %s" % (step, profile_names))
+                    print("ACTUAL RESULT %d: Profile is created in %s" %(step, PROFILE_PATH))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                    #Check whether the generated report is getting uploaded to the Telemetry Server
+                    sleep(REPORTING_INTERVAL)
+                    sleep(10)
+
+                    #Check whether the cJSON report is getting generated in the telemetry2.0 logs
                     step += 1
-                    print("\nTEST STEP %d: Check whether the generated report is getting uploaded to the Telemetry Server" %step)
-                    print("EXPECTED RESULT %d: Generated report should be uploaded to the Telemetry Server" %step)
+                    print("\nTEST STEP %d: Check whether the cJSON report is getting generated in the telemetry2.0 logs" %step)
+                    print("EXPECTED RESULT %d: cJSON report should be generated in the telemetry2.0 logs" %step)
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                    upload_check = checkReportUpload(tdkTestObj, profile_names)
-                    if upload_check:
+                    log_check, details = checkReportGenerated(tdkTestObj, profile_names)
+                    if log_check:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: Report upload to Telemetry Server is successful for profile list %s" % (step, profile_names))
+                        print("ACTUAL RESULT %d: cJSON report is generated in the telemetry2.0 logs. Profile List : %s" % (step, profile_names))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                        #Check whether the generated report is getting uploaded to the Telemetry Server
+                        step += 1
+                        print("\nTEST STEP %d: Check whether the generated report is getting uploaded to the Telemetry Server" %step)
+                        print("EXPECTED RESULT %d: Generated report should be uploaded to the Telemetry Server" %step)
+                        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+                        upload_check = checkReportUpload(tdkTestObj, profile_names)
+                        if upload_check:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print("ACTUAL RESULT %d: Report upload to Telemetry Server is successful for profile list %s" % (step, profile_names))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Report upload to Telemetry Server is not successful for profile %s" % (step, profile_names))
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Report upload to Telemetry Server is not successful for profile %s" % (step, profile_names))
+                        print("ACTUAL RESULT %d: cJSON report is not generated in the telemetry2.0 logs for profile list %s" % (step, profile_names))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: cJSON report is not generated in the telemetry2.0 logs for profile list %s" % (step, profile_names))
+                    print("ACTUAL RESULT %d: Profile is not created in %s" %(step, PROFILE_PATH))
                     print("[TEST EXECUTION RESULT] : FAILURE")
+
 
                 #Revert to initial value
                 step += 1
@@ -172,8 +180,24 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 print("Failed to set the profile.")
+
+            #Revert Telemetry2.0 configuration values to the initial values if required
+            if t2_revert_flag == 1:
+                step += 1
+                print("\nTEST STEP %d: Revert Telemetry2.0 configuration values to the initial values" %step)
+                print("EXPECTED RESULT %d: Should revert Telemetry2 configuration values to the initial values" %step)
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+                revertStatus = setTelemetry2_0Values(tdkTestObj, defTelEnable, defURL, defVersion)
+                if revertStatus == 1:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: Successfully reverted Telemetry2.0 configuration values to the initial values" %step)
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to revert Telemetry2.0 configuration values to the initial values" %step)
+                    print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            print("\nTelemetry2.0 Prerequisite values setting failed.")
+            print("\nPrerequisite setting failed.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get the Telemetry2.0 configuration values." %step)

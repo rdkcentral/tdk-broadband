@@ -53,6 +53,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
         print("ACTUAL RESULT %d: Factory Reset triggered successfully. Details : %s" %(step, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
+        sleep(300)
         #Restore the device state saved before reboot
         sysobj.restorePreviousStateAfterReboot()
 

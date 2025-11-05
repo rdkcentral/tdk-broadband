@@ -51,7 +51,9 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     step = 1
     profileType = "JSON"
     numProfiles = 1
-    flag = 0
+    t2_flag = 0 # Flag to check whether Telemetry2.0 prerequisite is already met
+    t2_revert_flag = 0 # Flag to check whether Telemetry2.0 revert is required
+
     t2_config = [TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION]
     print("Telemetry2.0 Prerequisite values are : Enable = %s, ConfigURL = %s, Version = %s" %(TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION))
 
@@ -79,6 +81,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             setStatus = setTelemetry2_0Values(tdkTestObj, TELEMETRY_ENABLE, TELEMETRY_CONFIG_URL, TELEMETRY_VERSION)
 
             if setStatus == 1:
+                t2_revert_flag = 1
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: Successfully set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -88,9 +91,15 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 print("ACTUAL RESULT %d: Failed to set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
+            t2_flag = 1
             print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test")
 
-        if flag == 0:
+        #Delete the earlier telemetry2.0 logs
+        step += 1
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+        rm_t2_flag = removeTelemetry2_0Log(tdkTestObj, step)
+
+        if (t2_flag or t2_revert_flag) == 1 and rm_t2_flag:
             step += 1
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType, scenario="invalid_interval")
             profile_names = [profile["name"] for profile in reportProfilesJSON["profiles"]]
@@ -106,21 +115,21 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 print("The profile setting has been completed.")
                 #Check whether the profile is created in /nvram/.t2reportprofiles/
                 step += 1
-                print("\nTEST STEP %d: Check whether the profile is created in /nvram/.t2reportprofiles/" %step)
-                print("EXPECTED RESULT %d: Profiles should be created in /nvram/.t2reportprofiles/" %step)
+                print("\nTEST STEP %d: Check whether the profile is created in %s" %(step, PROFILE_PATH))
+                print("EXPECTED RESULT %d: Profiles should be created in %s" %(step, PROFILE_PATH))
                 print("Profiles to be checked : %s" %profile_names)
                 tdkTestObj = sysobj.createTestStep('ExecuteCmd')
                 profile_check = isProfileFileExist(tdkTestObj, profile_names)
                 if not profile_check:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Profile is not created in /nvram/.t2reportprofiles/" %step)
+                    print("ACTUAL RESULT %d: Profile is not created in %s" %(step, PROFILE_PATH))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     #Check whether the error logs are present in telemetry2.0 logs
                     step += 1
                     print("\nTEST STEP %d: Check whether invalid reporting interval logs are present in telemetry2.0 logs" %step)
                     print("EXPECTED RESULT %d: Invalid Reporting Interval error logs should be present in telemetry2.0 logs" %step)
-                    cmd = f"cat /rdklogs/logs/telemetry2_0.txt.0 | grep {profile_names[0]}"
+                    cmd = f"cat {TELEMETRY_LOG_PATH} | grep {profile_names[0]}"
                     print("Command : %s" %cmd)
                     tdkTestObj = sysobj.createTestStep('ExecuteCmd')
                     actualresult, details = doSysutilExecuteCommand(tdkTestObj, cmd)
@@ -135,7 +144,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Profile is created in /nvram/.t2reportprofiles/" %step)
+                    print("ACTUAL RESULT %d: Profile is created in %s" %(step, PROFILE_PATH))
                     print("[TEST EXECUTION RESULT] : FAILURE")
 
                 #Revert to initial value
@@ -160,8 +169,25 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 print("Failed to set the profile.")
+
+            #Revert Telemetry2.0 configuration values to the initial values if required
+            if t2_revert_flag == 1:
+                step += 1
+                print("\nTEST STEP %d: Revert Telemetry2.0 configuration values to the initial values" %step)
+                print("EXPECTED RESULT %d: Should revert Telemetry2 configuration values to the initial values" %step)
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+                revertStatus = setTelemetry2_0Values(tdkTestObj, defTelEnable, defURL, defVersion)
+                if revertStatus == 1:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: Successfully reverted Telemetry2.0 configuration values to the initial values" %step)
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to revert Telemetry2.0 configuration values to the initial values" %step)
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+
         else:
-            print("\nTelemetry2.0 Prerequisite values setting failed.")
+            print("\nPrerequisite values setting failed.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get the Telemetry2.0 configuration values." %step)
