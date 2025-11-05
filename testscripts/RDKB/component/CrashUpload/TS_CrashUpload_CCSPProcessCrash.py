@@ -62,95 +62,95 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
             tdkTestObj.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: %s is in active (waiting) state" % (step, COREDUMP_PATH_UNIT))
             print("[TEST EXECUTION RESULT] : SUCCESS")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: %s is not in active (waiting) state. State: %s" % (step, COREDUMP_PATH_UNIT, state))
-            print("[TEST EXECUTION RESULT] : FAILURE")
-
-        step += 1
-        # Get initial count of minidump files
-        print("\nTEST STEP %d: Get initial count of .dmp files in %s directory" % (step, MINIDUMPS_DIR))
-        print("EXPECTED RESULT %d: Should get count of existing .dmp files" % step)
-        tdkTestObj, actualresult, initial_minidump_count = check_directory_filecount(sysobj, MINIDUMPS_DIR)
-        if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Initial .dmp file count: %s" % (step, initial_minidump_count))
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to get initial .dmp file count" % step)
-            print("[TEST EXECUTION RESULT] : FAILURE")
-
-        step += 1
-        # Get process PID using tdk_platform_utility.sh
-        print("\nTEST STEP %d: Get PID of %s process" % (step, process_name))
-        print("EXPECTED RESULT %d: Should get valid PID" % step)
-        query = "sh %s/tdk_platform_utility.sh checkProcess %s" % (TDK_PATH, process_name)
-        print("Command: %s" % query)
-        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-        tdkTestObj.addParameter("command", query)
-        tdkTestObj.executeTestCase(expectedresult)
-        actualresult = tdkTestObj.getResult()
-        old_pid = tdkTestObj.getResultDetails().strip().replace("\\n", "")
-        if expectedresult in actualresult and old_pid:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Process PID obtained: %s" % (step, old_pid))
-            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Kill the process with SIGSEGV
-            print("\nTEST STEP %d: Kill %s process (PID: %s) with SIGSEGV signal" % (step, process_name, old_pid))
-            print("EXPECTED RESULT %d: Process should be killed successfully" % step)
-            query = "kill -11 %s" % old_pid
+            # Get initial count of minidump files
+            print("\nTEST STEP %d: Get initial count of .dmp files in %s directory" % (step, MINIDUMPS_DIR))
+            print("EXPECTED RESULT %d: Should get count of existing .dmp files" % step)
+            tdkTestObj, actualresult, initial_minidump_count = check_directory_filecount(sysobj, MINIDUMPS_DIR)
+            if expectedresult in actualresult:
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: Initial .dmp file count: %s" % (step, initial_minidump_count))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Failed to get initial .dmp file count" % step)
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
+            step += 1
+            # Get process PID using tdk_platform_utility.sh
+            print("\nTEST STEP %d: Get PID of %s process" % (step, process_name))
+            print("EXPECTED RESULT %d: Should get valid PID" % step)
+            query = "sh %s/tdk_platform_utility.sh checkProcess %s" % (TDK_PATH, process_name)
             print("Command: %s" % query)
             tdkTestObj = sysobj.createTestStep('ExecuteCmd')
             tdkTestObj.addParameter("command", query)
             tdkTestObj.executeTestCase(expectedresult)
             actualresult = tdkTestObj.getResult()
-            if expectedresult in actualresult:
+            old_pid = tdkTestObj.getResultDetails().strip().replace("\\n", "")
+            if expectedresult in actualresult and old_pid:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: Process killed successfully" % step)
+                print("ACTUAL RESULT %d: Process PID obtained: %s" % (step, old_pid))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
-                # Verify minidump file created
-                print("\nTEST STEP %d: Verify minidump file created in %s" % (step, MINIDUMPS_DIR))
-                print("EXPECTED RESULT %d: .dmp file count should be increased" % step)
-                tdkTestObj, actualresult, filename = verify_minidump_file_created(sysobj, initial_minidump_count, MINIDUMPS_DIR)
-                if expectedresult in actualresult and filename != "":
+                # Kill the process with SIGSEGV
+                print("\nTEST STEP %d: Kill %s process (PID: %s) with SIGSEGV signal" % (step, process_name, old_pid))
+                print("EXPECTED RESULT %d: Process should be killed successfully" % step)
+                query = "kill -11 %s" % old_pid
+                print("Command: %s" % query)
+                tdkTestObj = sysobj.createTestStep('ExecuteCmd')
+                tdkTestObj.addParameter("command", query)
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Minidump file created: %s" % (step, filename))
+                    print("ACTUAL RESULT %d: Process killed successfully" % step)
                     print("[TEST EXECUTION RESULT] : SUCCESS")
-                    minidump_created = True
 
                     step += 1
-                    # Verify process PID changed (process restarted)
-                    print("\nTEST STEP %d: Verify %s process restarted with new PID" % (step, process_name))
-                    print("EXPECTED RESULT %d: Process should be running with different PID" % step)
-                    tdkTestObj, actualresult, new_pid = verify_process_restart(sysobj, process_name, old_pid, MAX_RETRY)
-                    if expectedresult in actualresult and new_pid and new_pid != old_pid:
+                    # Verify minidump file created
+                    print("\nTEST STEP %d: Verify minidump file created in %s" % (step, MINIDUMPS_DIR))
+                    print("EXPECTED RESULT %d: .dmp file count should be increased" % step)
+                    tdkTestObj, actualresult, filename = verify_minidump_file_created(sysobj, initial_minidump_count, MINIDUMPS_DIR)
+                    if expectedresult in actualresult and filename != "":
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: Process restarted successfully. Old PID: %s, New PID: %s" % (step, old_pid, new_pid))
+                        print("ACTUAL RESULT %d: Minidump file created: %s" % (step, filename))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
-                    elif new_pid == old_pid:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Process PID unchanged: %s (process may not have crashed)" % (step, new_pid))
-                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        minidump_created = True
+
+                        step += 1
+                        # Verify process PID changed (process restarted)
+                        print("\nTEST STEP %d: Verify %s process restarted with new PID" % (step, process_name))
+                        print("EXPECTED RESULT %d: Process should be running with different PID" % step)
+                        tdkTestObj, actualresult, new_pid = verify_process_restart(sysobj, process_name, old_pid, MAX_RETRY)
+                        if expectedresult in actualresult and new_pid and new_pid != old_pid:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print("ACTUAL RESULT %d: Process restarted successfully. Old PID: %s, New PID: %s" % (step, old_pid, new_pid))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        elif new_pid == old_pid:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Process PID unchanged: %s (process may not have crashed)" % (step, new_pid))
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Process not running after crash" % step)
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Process not running after crash" % step)
+                        print("ACTUAL RESULT %d: Minidump file not created" % step)
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Minidump file not created" % step)
+                    print("ACTUAL RESULT %d: Failed to kill process" % step)
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to kill process" % step)
+                print("ACTUAL RESULT %d: Failed to get process PID" % step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to get process PID" % step)
+            print("ACTUAL RESULT %d: %s is not in active (waiting) state. State: %s" % (step, COREDUMP_PATH_UNIT, state))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
         # Revert ulimit to initial value

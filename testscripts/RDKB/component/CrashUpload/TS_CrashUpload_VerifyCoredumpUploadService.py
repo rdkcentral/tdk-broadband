@@ -54,6 +54,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
         print("[TEST EXECUTION RESULT] : SUCCESS")
         # Restore the device state saved before Factory Reset
         sysobj.restorePreviousStateAfterReboot()
+        sleep(300)
 
         step += 1
         unit_name = COREDUMP_SERVICE_UNIT
