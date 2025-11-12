@@ -16,9 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-
 # use tdklib library,which provides a wrapper for tdk testcase script
-import json
 import tdklib
 from tdkutility import *
 from tdkbTelemetry2_0_Variables import *
@@ -33,15 +31,16 @@ wifiobj = tdklib.TDKScriptingLibrary("wifiagent","1")
 # This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
+expectedresult = "SUCCESS"
 
-obj.configureTestCase(ip,port,'TS_Telemetry2_0_SingleprofileValidation_MsgPackReportProfiles')
-sysobj.configureTestCase(ip,port,'TS_Telemetry2_0_SingleprofileValidation_MsgPackReportProfiles')
-wifiobj.configureTestCase(ip,port,'TS_Telemetry2_0_SingleprofileValidation_MsgPackReportProfiles')
+obj.configureTestCase(ip,port,'TS_Telemetry2_0_MultiprofileValidation_MsgPackReportProfiles')
+sysobj.configureTestCase(ip,port,'TS_Telemetry2_0_MultiprofileValidation_MsgPackReportProfiles')
+wifiobj.configureTestCase(ip,port,'TS_Telemetry2_0_MultiprofileValidation_MsgPackReportProfiles')
 # Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult()
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
 loadmodulestatus_wifi = wifiobj.getLoadModuleResult()
-expectedresult = "SUCCESS"
+
 if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulestatus_sys.upper() and expectedresult in loadmodulestatus_wifi.upper():
     obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
@@ -49,7 +48,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
 
     step = 1
     profileType = "MsgPack"
-    numProfiles = 1
+    numProfiles = 2
     t2_flag = 0 # Flag to check whether Telemetry2.0 prerequisite is already met
     t2_revert_flag = 0 # Flag to check whether Telemetry2.0 revert is required
 
@@ -83,27 +82,27 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 t2_revert_flag = 1
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: Successfully set the Telemetry2.0 prerequisite configuration values" %step)
-                print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS\n")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print("ACTUAL RESULT %d: Failed to set the Telemetry2.0 prerequisite configuration values" %step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            t2_flag = 1
-            print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test.")
+            t2_flag =  1
+            print("Telemetry2.0 Prerequisite values are already set. Proceeding with the test.\n")
 
         if (t2_flag or t2_revert_flag) == 1:
             step += 1
-            #Create Report Profiles JSON body
             reportProfilesJSON = createReportProfilesJSON(numProfiles, profileType)
+            profile_names = [profile["name"] for profile in reportProfilesJSON["profiles"]]
             msg_pack = JsontoMsgPackBase64(reportProfilesJSON)
-            print("\nReport Profile MsgPack Base64 to be set : %s" %msg_pack)
+            print("\nReport Profiles MsgPack Base64 to be set : %s" %msg_pack)
 
             check_flag, initial_report_profiles, param_name, step = SetReportProfiles(wifiobj, msg_pack, profileType, numProfiles, step)
 
             if check_flag == 1:
                 print("The profile setting has been completed.")
-                #Check whether the msgpack profile is created in the designated profile directory
+                #Check whether the profiles are created in the designated profile directory
                 step += 1
                 msg_pack_name = ["profiles.msgpack"]
                 print("\nTEST STEP %d: Check whether the MsgPack profile is created in %s" %(step, PROFILE_PATH))
@@ -114,11 +113,12 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 if profile_check:
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Profiles are created in %s" %(step, PROFILE_PATH))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    print("[TEST EXECUTION RESULT] : SUCCESS\n")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Profiles are not created in %s" %(step, PROFILE_PATH))
-                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    print("[TEST EXECUTION RESULT] : FAILURE\n")
+
 
                 #Revert to initial value
                 step += 1
@@ -131,6 +131,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
                 details = tdkTestObj.getResultDetails().strip().replace("\\n", "")
+
                 if expectedresult in actualresult and "success" in details.lower():
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Successfully reverted %s to initial value. Details : %s" % (step, param_name, details))
@@ -140,7 +141,8 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     print("ACTUAL RESULT %d: Failed to revert %s to initial value. Details : %s" % (step, param_name, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                print("Failed to set the profile.")
+                print("Failed to set the profiles.")
+
             #Revert Telemetry2.0 configuration values to the initial values if required
             if t2_revert_flag == 1:
                 step += 1
@@ -156,8 +158,9 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Failed to revert Telemetry2.0 configuration values to the initial values" %step)
                     print("[TEST EXECUTION RESULT] : FAILURE")
+
         else:
-            print("\Prerequisite Setting failed.")
+            print("\nPrerequisite values setting failed.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get the Telemetry2.0 configuration values" %step)
