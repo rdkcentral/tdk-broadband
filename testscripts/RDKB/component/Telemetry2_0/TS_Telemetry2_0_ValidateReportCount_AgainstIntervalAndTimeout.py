@@ -140,7 +140,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                         print("\nTEST STEP %d: Check whether the report frequency is as per the Reporting Interval and Activation Timeout" %step)
                         print("EXPECTED RESULT %d: Report frequency should be as per the Reporting Interval and Activation Timeout" %step)
 
-                        # cmd = f"grep {profile_names[0]} /rdklogs/logs/telemetry2_0.txt.0 | grep -i cJSON | wc -l"
                         cmd = f"grep -i cJSON {TELEMETRY_LOG_PATH} | wc -l"
 
                         print("Command : %s" %cmd)
