@@ -109,7 +109,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
 
             if check_flag == 1:
                 print("The profile setting has been completed.")
-                #Check whether the profile is created in /nvram/.t2reportprofiles/
+                #Check whether the profile is created in the designated profile directory 
                 step += 1
                 print("\nTEST STEP %d: Check whether the profile is created in %s" %(step, PROFILE_PATH))
                 print("EXPECTED RESULT %d: Profile should be created in %s" %(step, PROFILE_PATH))
@@ -121,7 +121,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     print("ACTUAL RESULT %d: Profile is not created in %s" %(step, PROFILE_PATH))
                     print("[TEST EXECUTION RESULT] : FAILURE")
 
-                    #Check whether the report is available under cached folder /nvram/.t2cachedmessages
+                    #Check whether the report is available under cached folder 
 
                     step += 1
                     print("\nTEST STEP %d: Check whether the report is available under cached folder %s" %(step, CACHED_REPORT_PATH))

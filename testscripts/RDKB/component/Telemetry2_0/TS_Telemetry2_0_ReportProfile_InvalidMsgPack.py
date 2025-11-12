@@ -113,7 +113,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
 
             if check_flag == 1:
                 print("The profile setting has been completed.")
-                #Check whether the profile is created in /nvram/.t2reportprofiles/
+                #Check whether the profile is created in the designated profile directory
                 msg_pack_name = ["profiles.msgpack"]
                 step += 1
                 print("\nTEST STEP %d: Check whether the profile is created in %s when invalid MsgPack is provided" %(step, PROFILE_PATH))
