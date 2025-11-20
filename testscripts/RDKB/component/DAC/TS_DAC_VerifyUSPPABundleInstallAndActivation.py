@@ -49,7 +49,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     tdkTestObj, actualresult, details = usppa_install_bundle(sysobj, BUNDLE_DOWNLOAD_URL)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: Bundle installation started: %s" % (step, details))
+        print("ACTUAL RESULT %d: Bundle installation started. Details: %s" % (step, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
         print("Waiting %d seconds for installation to complete..." % BUNDLE_INSTALL_WAIT_TIME)
         sleep(BUNDLE_INSTALL_WAIT_TIME)
@@ -73,7 +73,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             tdkTestObj, actualresult, details = usppa_set_eu_state(sysobj, EU_SET_STATE_PARAM, "Active")
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: ExecutionUnit activated: %s" % (step, details))
+                print("ACTUAL RESULT %d: ExecutionUnit activated. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
@@ -97,15 +97,15 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: ExecutionUnit status check failed: %s" % (step, details))
+                    print("ACTUAL RESULT %d: ExecutionUnit status check failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to activate ExecutionUnit: %s" % (step, details))
+                print("ACTUAL RESULT %d: Failed to activate ExecutionUnit. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Installed app not found in destination: %s" % (step, details))
+            print("ACTUAL RESULT %d: Installed app not found in destination. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
         step += 1
@@ -115,15 +115,15 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
         tdkTestObj, actualresult, details = usppa_uninstall_bundle(sysobj, DU_UNINSTALL_PARAM_1)
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Uninstall started: %s" % (step, details))
+            print("ACTUAL RESULT %d: Uninstall started. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Uninstall failed: %s" % (step, details))
+            print("ACTUAL RESULT %d: Uninstall failed. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Bundle installation failed: %s" % (step, details))
+        print("ACTUAL RESULT %d: Bundle installation failed. Details: %s" % (step, details))
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     # Unload the modules

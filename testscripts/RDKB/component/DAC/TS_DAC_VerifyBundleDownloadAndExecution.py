@@ -76,7 +76,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                 tdkTestObj, actualresult, details = verify_bundle_structure(sysobj, DAC_TEST_DIR, expected_files)
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Bundle structure verified: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Bundle structure verified. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     step += 1
@@ -88,7 +88,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                     tdkTestObj, actualresult, details = verify_bundle_structure(sysobj, iperf3_check_path, expected_binaries)
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: iperf3 binary verified: %s" % (step, details))
+                        print("ACTUAL RESULT %d: iperf3 binary verified. Details: %s" % (step, details))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
                         step += 1
@@ -99,7 +99,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                         tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_SERVER_CONTAINER, DAC_TEST_DIR, server_cmd)
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS")
-                            print("ACTUAL RESULT %d: Server container started: %s" % (step, details))
+                            print("ACTUAL RESULT %d: Server container started. Details: %s" % (step, details))
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
                             step += 1
@@ -109,7 +109,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                             tdkTestObj, actualresult, details = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: Server container is running: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Server container is running. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                 step += 1
@@ -117,10 +117,10 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                 print("\nTEST STEP %d: Execute iperf3 client inside container" % step)
                                 print("EXPECTED RESULT %d: Client should execute and show performance results" % step)
                                 client_cmd = f"{IPERF3_BINARY_PATH} -c {CONTAINER_IP} -t 60 -b 100M -P 4"
-                                tdkTestObj, actualresult, details = start_dobby_container(sysobj, "id", DAC_TEST_DIR, client_cmd)
+                                tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_CLIENT_CONTAINER, DAC_TEST_DIR, client_cmd)
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS")
-                                    print("ACTUAL RESULT %d: Client container started: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Client container started. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                     step += 1
@@ -128,15 +128,15 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                     print("\nTEST STEP %d: Confirm both server and client containers are running" % step)
                                     print("EXPECTED RESULT %d: Both containers should be in running state" % step)
                                     sleep(2)
-                                    container_list = [IPERF3_SERVER_CONTAINER, "id"]
+                                    container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
                                     tdkTestObj, actualresult, details = verify_multiple_containers_running(sysobj, container_list)
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: Both containers are running: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Both containers are running. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Not all containers are running: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Not all containers are running. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
 
                                     step += 1
@@ -146,11 +146,11 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                     tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: Server container stopped: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Failed to stop server container: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Failed to stop server container. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
 
                                     step += 1
@@ -174,43 +174,43 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                     tdkTestObj, actualresult, details = verify_no_containers(sysobj)
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: No containers running: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: No containers running. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Containers still running: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Containers still running. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: Failed to start client container: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Failed to start client container. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: Server container is not running: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Server container is not running. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: Failed to start server container: %s" % (step, details))
+                            print("ACTUAL RESULT %d: Failed to start server container. Details: %s" % (step, details))
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: iperf3 binary not found: %s" % (step, details))
+                        print("ACTUAL RESULT %d: iperf3 binary not found. Details: %s" % (step, details))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Bundle structure verification failed: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Bundle structure verification failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to extract bundle: %s" % (step, details))
+                print("ACTUAL RESULT %d: Failed to extract bundle. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to download bundle: %s" % (step, details))
+            print("ACTUAL RESULT %d: Failed to download bundle. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to create directory: %s" % (step, details))
+        print("ACTUAL RESULT %d: Failed to create directory. Details: %s" % (step, details))
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     # Unload the module
@@ -219,4 +219,3 @@ else:
     print("Failed to load the module")
     sysobj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
-
