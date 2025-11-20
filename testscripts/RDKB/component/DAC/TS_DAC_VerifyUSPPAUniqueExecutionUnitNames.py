@@ -23,14 +23,17 @@ from DACVariables import *
 from DACUtility import *
 from tdkutility import *
 
+# Test component to be tested
 sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 
+# IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
 sysobj.configureTestCase(ip,port,'TS_DAC_VerifyUSPPAUniqueExecutionUnitNames')
 obj.configureTestCase(ip,port,'TS_DAC_VerifyUSPPAUniqueExecutionUnitNames')
 
+# Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
 loadmodulestatus = obj.getLoadModuleResult()
 
@@ -40,15 +43,17 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     expectedresult = "SUCCESS"
     step = 1
 
+    # Install first DAC bundle via USP-PA
     print("\nTEST STEP %d: Install first DAC bundle via USP-PA" % step)
     print("EXPECTED RESULT %d: First bundle installation should start successfully" % step)
     tdkTestObj, actualresult, details = usppa_install_bundle(sysobj, BUNDLE_DOWNLOAD_URL)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: First bundle installation started: %s" % (step, details))
+        print("ACTUAL RESULT %d: First bundle installation started. Details: %s" % (step, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
         sleep(BUNDLE_INSTALL_WAIT_TIME)
 
+        # Verify first bundle is present in destination directory
         step += 1
         print("\nTEST STEP %d: Verify first bundle in destination directory" % step)
         print("EXPECTED RESULT %d: First bundle directory should exist" % step)
@@ -60,6 +65,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("ACTUAL RESULT %d: First bundle present: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
+            # Verify DeploymentUnit.1.URL and Status are correct
             step += 1
             print("\nTEST STEP %d: Verify DeploymentUnit.1.URL and Status" % step)
             print("EXPECTED RESULT %d: URL should match and Status should be Installed" % step)
@@ -71,16 +77,18 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 print("ACTUAL RESULT %d: DeploymentUnit.1 verified - URL: %s, Status: %s" % (step, details_url, details_status))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
+                # Install second DAC bundle via USP-PA
                 step += 1
                 print("\nTEST STEP %d: Install second DAC bundle via USP-PA" % step)
                 print("EXPECTED RESULT %d: Second bundle installation should start successfully" % step)
                 tdkTestObj, actualresult, details = usppa_install_bundle(sysobj, BUNDLE_DOWNLOAD_URL_2)
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Second bundle installation started: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Second bundle installation started. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                     sleep(BUNDLE_INSTALL_WAIT_TIME)
 
+                    # Verify second bundle is present in destination directory
                     step += 1
                     print("\nTEST STEP %d: Verify second bundle in destination directory" % step)
                     print("EXPECTED RESULT %d: Second bundle directory should exist" % step)
@@ -92,6 +100,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                         print("ACTUAL RESULT %d: Second bundle present: %s" % (step, details))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
+                        # Verify DeploymentUnit.2.URL and Status are correct
                         step += 1
                         print("\nTEST STEP %d: Verify DeploymentUnit.2.URL and Status" % step)
                         print("EXPECTED RESULT %d: URL should match and Status should be Installed" % step)
@@ -102,6 +111,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                             print("ACTUAL RESULT %d: DeploymentUnit.2 verified - URL: %s, Status: %s" % (step, details_url, details_status))
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
+                            # Verify unique names assigned to ExecutionUnits
                             step += 1
                             print("\nTEST STEP %d: Verify unique names assigned to ExecutionUnits" % step)
                             print("EXPECTED RESULT %d: ExecutionUnit.1 and ExecutionUnit.2 should have unique names" % step)
@@ -121,11 +131,11 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Second bundle not found: %s" % (step, details))
+                        print("ACTUAL RESULT %d: Second bundle not found. Details: %s" % (step, details))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Second bundle installation failed: %s" % (step, details))
+                    print("ACTUAL RESULT %d: Second bundle installation failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
@@ -133,20 +143,21 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: First bundle not found: %s" % (step, details))
+            print("ACTUAL RESULT %d: First bundle not found. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
+        # Cleanup: Uninstall the Execution Units(Both first and second)
         step += 1
         print("\nTEST STEP %d: Cleanup - Uninstall first DeploymentUnit" % step)
         print("EXPECTED RESULT %d: Uninstall should start successfully" % step)
         tdkTestObj, actualresult, details = usppa_uninstall_bundle(sysobj, DU_UNINSTALL_PARAM_1)
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: First bundle uninstall started: %s" % (step, details))
+            print("ACTUAL RESULT %d: First bundle uninstall started. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: First bundle uninstall failed: %s" % (step, details))
+            print("ACTUAL RESULT %d: First bundle uninstall failed. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
         step += 1
@@ -155,17 +166,18 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
         tdkTestObj, actualresult, details = usppa_uninstall_bundle(sysobj, DU_UNINSTALL_PARAM_2)
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Second bundle uninstall started: %s" % (step, details))
+            print("ACTUAL RESULT %d: Second bundle uninstall started. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Second bundle uninstall failed: %s" % (step, details))
+            print("ACTUAL RESULT %d: Second bundle uninstall failed. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: First bundle installation failed: %s" % (step, details))
+        print("ACTUAL RESULT %d: First bundle installation failed. Details: %s" % (step, details))
         print("[TEST EXECUTION RESULT] : FAILURE")
 
+    # Unload the modules
     obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
 else:
