@@ -83,7 +83,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                     # Verify iperf3 binary exists
                     print("\nTEST STEP %d: Verify iperf3 binary in rootfs" % step)
                     print("EXPECTED RESULT %d: iperf3 binary should exist" % step)
-                    iperf3_check_path = f"{DAC_TEST_DIR}/rootfs/usr/bin/"
+                    iperf3_check_path = f"{DAC_TEST_DIR}/rootfs/usr/bin"
                     expected_binaries = ["iperf3", "update-alternatives"]
                     tdkTestObj, actualresult, details = verify_bundle_structure(sysobj, iperf3_check_path, expected_binaries)
                     if expectedresult in actualresult:

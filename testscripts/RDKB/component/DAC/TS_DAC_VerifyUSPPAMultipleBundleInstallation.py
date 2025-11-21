@@ -146,7 +146,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: DeploymentUnit.1.Status check failed. Details. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: DeploymentUnit.1.Status check failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
