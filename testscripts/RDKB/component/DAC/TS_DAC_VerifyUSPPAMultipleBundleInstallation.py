@@ -65,25 +65,25 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("ACTUAL RESULT %d: First bundle present: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            # Verify DeploymentUnit.1.URL is correct
+            # Verify First DeploymentUnit URL is correct
             step += 1
-            print("\nTEST STEP %d: Verify DeploymentUnit.1.URL" % step)
+            print("\nTEST STEP %d: Verify First DeploymentUnit URL" % step)
             print("EXPECTED RESULT %d: URL should match first bundle URL" % step)
             tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
             actualresult, details = getTR181Value(tdkTestObj_tr181, DU1_URL_PARAM)
             if expectedresult in actualresult and BUNDLE_DOWNLOAD_URL in details:
                 tdkTestObj_tr181.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: DeploymentUnit.1.URL verified. Details: %s" % (step, details))
+                print("ACTUAL RESULT %d: First DeploymentUnit URL verified. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                # Verify DeploymentUnit.1.Status is correct
+                # Verify First DeploymentUnit Status is correct
                 step += 1
-                print("\nTEST STEP %d: Verify DeploymentUnit.1.Status" % step)
+                print("\nTEST STEP %d: Verify First DeploymentUnit Status" % step)
                 print("EXPECTED RESULT %d: Status should be Installed" % step)
                 actualresult, details = getTR181Value(tdkTestObj_tr181, DU1_STATUS_PARAM)
                 if expectedresult in actualresult and EXPECTED_DU_STATUS in details:
                     tdkTestObj_tr181.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: DeploymentUnit.1.Status is Installed. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: First DeploymentUnit Status is Installed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     # Install second DAC bundle via USP-PA
@@ -109,32 +109,32 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                             print("ACTUAL RESULT %d: Second bundle present: %s" % (step, details))
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                            # Verify DeploymentUnit.2.URL is correct
+                            # Verify Second DeploymentUnit URL is correct
                             step += 1
-                            print("\nTEST STEP %d: Verify DeploymentUnit.2.URL" % step)
+                            print("\nTEST STEP %d: Verify Second DeploymentUnit URL" % step)
                             print("EXPECTED RESULT %d: URL should match second bundle URL" % step)
                             actualresult, details = getTR181Value(tdkTestObj_tr181, DU2_URL_PARAM)
                             if expectedresult in actualresult and BUNDLE_DOWNLOAD_URL_2 in details:
                                 tdkTestObj_tr181.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: DeploymentUnit.2.URL verified. Details: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Second DeploymentUnit URL verified. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                # Verify DeploymentUnit.1.Status is correct
+                                # Verify Second DeploymentUnit Status is correct
                                 step += 1
-                                print("\nTEST STEP %d: Verify DeploymentUnit.2.Status" % step)
+                                print("\nTEST STEP %d: Verify Second DeploymentUnit Status" % step)
                                 print("EXPECTED RESULT %d: Status should be Installed" % step)
                                 actualresult, details = getTR181Value(tdkTestObj_tr181, DU2_STATUS_PARAM)
                                 if expectedresult in actualresult and EXPECTED_DU_STATUS in details:
                                     tdkTestObj_tr181.setResultStatus("SUCCESS")
-                                    print("ACTUAL RESULT %d: DeploymentUnit.2.Status is Installed. Details: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Second DeploymentUnit Status is Installed. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
                                 else:
                                     tdkTestObj_tr181.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: DeploymentUnit.2.Status check failed. Details: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Second DeploymentUnit Status check failed. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj_tr181.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: DeploymentUnit.2.URL check failed. Details: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Second DeploymentUnit URL check failed. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
@@ -146,11 +146,11 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: DeploymentUnit.1.Status check failed. Details: %s" % (step, details))
+                    print("ACTUAL RESULT %d: First DeploymentUnit Status check failed. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: DeploymentUnit.1.URL check failed. Details: %s" % (step, details))
+                print("ACTUAL RESULT %d: First DeploymentUnit URL check failed. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")

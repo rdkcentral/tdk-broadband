@@ -70,7 +70,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             # Activate ExecutionUnit
             print("\nTEST STEP %d: Activate ExecutionUnit via USP-PA" % step)
             print("EXPECTED RESULT %d: ExecutionUnit should be activated successfully" % step)
-            tdkTestObj, actualresult, details = usppa_set_eu_state(sysobj, EU_SET_STATE_PARAM, "Active")
+            tdkTestObj, actualresult, details = usppa_set_eu_state(sysobj, EU_SET_STATE_PARAM, EXPECTED_EU_STATUS_ACTIVE)
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: ExecutionUnit activated. Details: %s" % (step, details))
@@ -134,4 +134,3 @@ else:
     obj.setLoadModuleStatus("FAILURE")
     sysobj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
-
