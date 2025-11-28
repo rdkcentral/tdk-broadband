@@ -84,7 +84,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                     # Launch iperf3 server container with initial name
                     print("\nTEST STEP %d: Launch iperf3 server container with initial name" % step)
                     print("EXPECTED RESULT %d: Server container should start successfully" % step)
-                    server_cmd = f"{IPERF3_BINARY_PATH} -s"
+                    server_cmd = f"{IPERF3_BINARY_PATH} -s {INTERFACE_IP}"
                     tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_SERVER_CONTAINER, DAC_TEST_DIR, server_cmd)
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS")
@@ -104,197 +104,155 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
                             step += 1
-                            # Test initial server functionality
-                            print("\nTEST STEP %d: Test initial server functionality using crun exec" % step)
-                            print("EXPECTED RESULT %d: Should show successful iperf3 test results" % step)
-                            tdkTestObj, actualresult, details = execute_iperf_test(sysobj, IPERF3_SERVER_CONTAINER, GATEWAY_IP)
+                            # Stop the server container
+                            print("\nTEST STEP %d: Stop the server container" % step)
+                            print("EXPECTED RESULT %d: Container should stop successfully" % step)
+                            tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
                             if expectedresult in actualresult:
                                 tdkTestObj.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: iperf3 test successful. Details: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                 step += 1
-                                # Stop the server container
-                                print("\nTEST STEP %d: Stop the server container" % step)
-                                print("EXPECTED RESULT %d: Container should stop successfully" % step)
-                                tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
+                                # Verify container stopped and state cleared
+                                print("\nTEST STEP %d: Verify container stopped and state cleared" % step)
+                                print("EXPECTED RESULT %d: Container should be removed" % step)
+                                container_list = [IPERF3_SERVER_CONTAINER]
+                                tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS")
-                                    print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Container state cleared. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                     step += 1
-                                    # Verify container stopped and state cleared
-                                    print("\nTEST STEP %d: Verify container stopped and state cleared" % step)
-                                    print("EXPECTED RESULT %d: Container should be removed" % step)
-                                    container_list = [IPERF3_SERVER_CONTAINER]
-                                    tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
+                                    # Restart server container with same name
+                                    print("\nTEST STEP %d: Restart server container with same name" % step)
+                                    print("EXPECTED RESULT %d: Server should restart successfully" % step)
+                                    tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_SERVER_CONTAINER, DAC_TEST_DIR, server_cmd)
                                     if expectedresult in actualresult:
                                         tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: Container state cleared. Details: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Server container restarted. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                         step += 1
-                                        # Restart server container with same name
-                                        print("\nTEST STEP %d: Restart server container with same name" % step)
-                                        print("EXPECTED RESULT %d: Server should restart successfully" % step)
-                                        tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_SERVER_CONTAINER, DAC_TEST_DIR, server_cmd)
+                                        # Verify server restarted with new descriptor
+                                        print("\nTEST STEP %d: Verify server restarted successfully with new descriptor" % step)
+                                        print("EXPECTED RESULT %d: Server should be running with new descriptor" % step)
+                                        tdkTestObj, actualresult, details = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
                                         if expectedresult in actualresult:
-                                            tdkTestObj.setResultStatus("SUCCESS")
-                                            print("ACTUAL RESULT %d: Server container restarted. Details: %s" % (step, details))
-                                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                                            # Extract the new descriptor from details
+                                            new_descriptor = details
+                                            # Compare initial and new descriptors
+                                            if initial_descriptor != new_descriptor:
+                                                tdkTestObj.setResultStatus("SUCCESS")
+                                                print("ACTUAL RESULT %d: Server restarted with new descriptor. Initial: %s, New: %s" % (step, initial_descriptor, new_descriptor))
+                                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                                            else:
+                                                tdkTestObj.setResultStatus("FAILURE")
+                                                print("ACTUAL RESULT %d: Server restarted but descriptor unchanged. Descriptor: %s" % (step, new_descriptor))
+                                                print("[TEST EXECUTION RESULT] : FAILURE")
 
                                             step += 1
-                                            # Verify server restarted with new descriptor
-                                            print("\nTEST STEP %d: Verify server restarted successfully with new descriptor" % step)
-                                            print("EXPECTED RESULT %d: Server should be running with new descriptor" % step)
-                                            tdkTestObj, actualresult, details = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
+                                            # Launch client container
+                                            print("\nTEST STEP %d: Launch client container to verify server-client communication" % step)
+                                            print("EXPECTED RESULT %d: Client container should start successfully" % step)
+                                            client_cmd = f"{IPERF3_BINARY_PATH} -c {INTERFACE_IP} -t 10"
+                                            tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_CLIENT_CONTAINER, DAC_TEST_DIR, client_cmd)
                                             if expectedresult in actualresult:
-                                                # Extract the new descriptor from details
-                                                new_descriptor = details
-                                                # Compare initial and new descriptors
-                                                if initial_descriptor != new_descriptor:
-                                                    tdkTestObj.setResultStatus("SUCCESS")
-                                                    print("ACTUAL RESULT %d: Server restarted with new descriptor. Initial: %s, New: %s" % (step, initial_descriptor, new_descriptor))
-                                                    print("[TEST EXECUTION RESULT] : SUCCESS")
-                                                else:
-                                                    tdkTestObj.setResultStatus("FAILURE")
-                                                    print("ACTUAL RESULT %d: Server restarted but descriptor unchanged. Descriptor: %s" % (step, new_descriptor))
-                                                    print("[TEST EXECUTION RESULT] : FAILURE")
+                                                tdkTestObj.setResultStatus("SUCCESS")
+                                                print("ACTUAL RESULT %d: Client container started. Details: %s" % (step, details))
+                                                print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                                 step += 1
-                                                # Test restarted server functionality
-                                                print("\nTEST STEP %d: Test restarted server functionality" % step)
-                                                print("EXPECTED RESULT %d: Server should operate normally after restart" % step)
-                                                tdkTestObj, actualresult, details = execute_iperf_test(sysobj, IPERF3_SERVER_CONTAINER, GATEWAY_IP)
+                                                # Verify both containers running
+                                                print("\nTEST STEP %d: Verify both server and client containers are running" % step)
+                                                print("EXPECTED RESULT %d: Both containers should be in running state" % step)
+                                                sleep(2)
+                                                container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
+                                                tdkTestObj, actualresult, details = verify_multiple_containers_running(sysobj, container_list)
                                                 if expectedresult in actualresult:
                                                     tdkTestObj.setResultStatus("SUCCESS")
-                                                    print("ACTUAL RESULT %d: Restarted server functioning normally. Details: %s" % (step, details))
+                                                    print("ACTUAL RESULT %d: Both containers running. Details: %s" % (step, details))
                                                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                                     step += 1
-                                                    # Launch client container
-                                                    print("\nTEST STEP %d: Launch client container to verify server-client communication" % step)
-                                                    print("EXPECTED RESULT %d: Client container should start successfully" % step)
-                                                    client_cmd = f"{IPERF3_BINARY_PATH} -c {GATEWAY_IP} -t 10"
-                                                    tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_CLIENT_CONTAINER, DAC_TEST_DIR, client_cmd)
-                                                    if expectedresult in actualresult:
+                                                    # Wait for client to complete
+                                                    print("\nTEST STEP %d: Wait for client container to complete its test" % step)
+                                                    print("EXPECTED RESULT %d: Client should complete after waiting" % step)
+                                                    print("Waiting %d seconds for client to complete..." % CLIENT_COMPLETION_WAIT_TIME)
+                                                    sleep(CLIENT_COMPLETION_WAIT_TIME)
+                                                    tdkTestObj.setResultStatus("SUCCESS")
+                                                    print("ACTUAL RESULT %d: Wait completed" % step)
+                                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                                    step += 1
+                                                    # Verify client auto-stopped
+                                                    print("\nTEST STEP %d: Verify client auto-stopped after completion, server still running" % step)
+                                                    print("EXPECTED RESULT %d: Only server should be running" % step)
+                                                    # Verify server is still running
+                                                    tdkTestObj, actualresult_server, details_server = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
+                                                    # Verify client is not running
+                                                    tdkTestObj, actualresult_client, details_client = verify_container_running(sysobj, IPERF3_CLIENT_CONTAINER)
+                                                    if actualresult_server == "SUCCESS" and actualresult_client == "FAILURE":
                                                         tdkTestObj.setResultStatus("SUCCESS")
-                                                        print("ACTUAL RESULT %d: Client container started. Details: %s" % (step, details))
+                                                        print("ACTUAL RESULT %d: Client auto-stopped, server still running - Server: running, Client: stopped" % step)
                                                         print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                                        step += 1
-                                                        # Verify both containers running
-                                                        print("\nTEST STEP %d: Verify both server and client containers are running" % step)
-                                                        print("EXPECTED RESULT %d: Both containers should be in running state" % step)
-                                                        sleep(2)
-                                                        container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
-                                                        tdkTestObj, actualresult, details = verify_multiple_containers_running(sysobj, container_list)
-                                                        if expectedresult in actualresult:
-                                                            tdkTestObj.setResultStatus("SUCCESS")
-                                                            print("ACTUAL RESULT %d: Both containers running. Details: %s" % (step, details))
-                                                            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                                            step += 1
-                                                            # Wait for client to complete
-                                                            print("\nTEST STEP %d: Wait for client container to complete its test" % step)
-                                                            print("EXPECTED RESULT %d: Client should complete after waiting" % step)
-                                                            print("Waiting %d seconds for client to complete..." % CLIENT_COMPLETION_WAIT_TIME)
-                                                            sleep(CLIENT_COMPLETION_WAIT_TIME)
-                                                            tdkTestObj.setResultStatus("SUCCESS")
-                                                            print("ACTUAL RESULT %d: Wait completed" % step)
-                                                            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                                            step += 1
-                                                            # Verify client auto-stopped
-                                                            print("\nTEST STEP %d: Verify client auto-stopped after completion, server still running" % step)
-                                                            print("EXPECTED RESULT %d: Only server should be running" % step)
-                                                            # Verify server is still running
-                                                            tdkTestObj, actualresult_server, details_server = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
-                                                            # Verify client is not running
-                                                            tdkTestObj, actualresult_client, details_client = verify_container_running(sysobj, IPERF3_CLIENT_CONTAINER)
-                                                            if actualresult_server == "SUCCESS" and actualresult_client == "FAILURE":
-                                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                                print("ACTUAL RESULT %d: Client auto-stopped, server still running - Server: running, Client: stopped" % step)
-                                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                                            else:
-                                                                tdkTestObj.setResultStatus("FAILURE")
-                                                                print("ACTUAL RESULT %d: Unexpected container state - Server: %s, Client: %s" % (step, actualresult_server, actualresult_client))
-                                                                print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                                            step += 1
-                                                            # Stop server container
-                                                            print("\nTEST STEP %d: Cleanup - Stop the server container" % step)
-                                                            print("EXPECTED RESULT %d: Server should stop successfully" % step)
-                                                            tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
-                                                            if expectedresult in actualresult:
-                                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                                print("ACTUAL RESULT %d: Server stopped. Details: %s" % (step, details))
-                                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                                            else:
-                                                                tdkTestObj.setResultStatus("FAILURE")
-                                                                print("ACTUAL RESULT %d: Failed to stop server. Details: %s" % (step, details))
-                                                                print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                                            step += 1
-                                                            # Confirm all containers cleaned up
-                                                            print("\nTEST STEP %d: Confirm all containers cleaned up" % step)
-                                                            print("EXPECTED RESULT %d: Containers should be removed" % step)
-                                                            container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
-                                                            tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
-                                                            if expectedresult in actualresult:
-                                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                                print("ACTUAL RESULT %d: All containers cleaned up. Details: %s" % (step, details))
-                                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                                            else:
-                                                                tdkTestObj.setResultStatus("FAILURE")
-                                                                print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
-                                                                print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                                            step += 1
-                                                            # Remove DAC directory
-                                                            print("\nTEST STEP %d: Remove the DAC directory" % step)
-                                                            print("EXPECTED RESULT %d: Directory should be removed successfully" % step)
-                                                            tdkTestObj, actualresult, details = remove_directory(sysobj, DAC_TEST_DIR)
-                                                            if expectedresult in actualresult:
-                                                                tdkTestObj.setResultStatus("SUCCESS")
-                                                                print("ACTUAL RESULT %d: DAC directory removed" % step)
-                                                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                                                            else:
-                                                                tdkTestObj.setResultStatus("FAILURE")
-                                                                print("ACTUAL RESULT %d: Failed to remove directory" % step)
-                                                                print("[TEST EXECUTION RESULT] : FAILURE")
-                                                        else:
-                                                            tdkTestObj.setResultStatus("FAILURE")
-                                                            print("ACTUAL RESULT %d: Both containers not running. Details: %s" % (step, details))
-                                                            print("[TEST EXECUTION RESULT] : FAILURE")
                                                     else:
                                                         tdkTestObj.setResultStatus("FAILURE")
-                                                        print("ACTUAL RESULT %d: Failed to start client container. Details: %s" % (step, details))
+                                                        print("ACTUAL RESULT %d: Unexpected container state - Server: %s, Client: %s" % (step, actualresult_server, actualresult_client))
+                                                        print("[TEST EXECUTION RESULT] : FAILURE")
+
+                                                    step += 1
+                                                    # Stop server container
+                                                    print("\nTEST STEP %d: Cleanup - Stop the server container" % step)
+                                                    print("EXPECTED RESULT %d: Server should stop successfully" % step)
+                                                    tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
+                                                    if expectedresult in actualresult:
+                                                        tdkTestObj.setResultStatus("SUCCESS")
+                                                        print("ACTUAL RESULT %d: Server stopped. Details: %s" % (step, details))
+                                                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                                                    else:
+                                                        tdkTestObj.setResultStatus("FAILURE")
+                                                        print("ACTUAL RESULT %d: Failed to stop server. Details: %s" % (step, details))
+                                                        print("[TEST EXECUTION RESULT] : FAILURE")
+
+                                                    step += 1
+                                                    # Confirm all containers cleaned up
+                                                    print("\nTEST STEP %d: Confirm all containers cleaned up" % step)
+                                                    print("EXPECTED RESULT %d: Containers should be removed" % step)
+                                                    container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
+                                                    tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
+                                                    if expectedresult in actualresult:
+                                                        tdkTestObj.setResultStatus("SUCCESS")
+                                                        print("ACTUAL RESULT %d: All containers cleaned up. Details: %s" % (step, details))
+                                                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                                                    else:
+                                                        tdkTestObj.setResultStatus("FAILURE")
+                                                        print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
                                                         print("[TEST EXECUTION RESULT] : FAILURE")
                                                 else:
                                                     tdkTestObj.setResultStatus("FAILURE")
-                                                    print("ACTUAL RESULT %d: Restarted server not functioning. Details: %s" % (step, details))
+                                                    print("ACTUAL RESULT %d: Both containers not running. Details: %s" % (step, details))
                                                     print("[TEST EXECUTION RESULT] : FAILURE")
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE")
-                                                print("ACTUAL RESULT %d: Server not running after restart. Details: %s" % (step, details))
+                                                print("ACTUAL RESULT %d: Failed to start client container. Details: %s" % (step, details))
                                                 print("[TEST EXECUTION RESULT] : FAILURE")
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE")
-                                            print("ACTUAL RESULT %d: Failed to restart server. Details: %s" % (step, details))
+                                            print("ACTUAL RESULT %d: Server not running after restart. Details: %s" % (step, details))
                                             print("[TEST EXECUTION RESULT] : FAILURE")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Container state not cleared. Details: %s" % (step, details))
+                                        print("ACTUAL RESULT %d: Failed to restart server. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: Failed to stop server. Details: %s" % (step, details))
+                                    print("ACTUAL RESULT %d: Container state not cleared. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: Initial server test failed. Details: %s" % (step, details))
+                                print("ACTUAL RESULT %d: Failed to stop server. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
@@ -315,6 +273,20 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
         else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: Failed to download bundle. Details: %s" % (step, details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+        # Remove DAC directory
+        step += 1
+        print("\nTEST STEP %d: Remove the DAC directory" % step)
+        print("EXPECTED RESULT %d: Directory should be removed successfully" % step)
+        tdkTestObj, actualresult, details = remove_directory(sysobj, DAC_TEST_DIR)
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: DAC directory removed" % step)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to remove directory" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")

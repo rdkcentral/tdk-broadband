@@ -96,7 +96,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                         # Launch iperf3 server container
                         print("\nTEST STEP %d: Launch iperf3 server in DAC container" % step)
                         print("EXPECTED RESULT %d: Server container should start successfully" % step)
-                        server_cmd = f"{IPERF3_BINARY_PATH} -s"
+                        server_cmd = f"{IPERF3_BINARY_PATH} -s {INTERFACE_IP}"
                         tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_SERVER_CONTAINER, DAC_TEST_DIR, server_cmd)
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS")
@@ -117,7 +117,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                 # Execute iperf3 client
                                 print("\nTEST STEP %d: Execute iperf3 client inside container" % step)
                                 print("EXPECTED RESULT %d: Client should execute and show performance results" % step)
-                                client_cmd = f"{IPERF3_BINARY_PATH} -c {GATEWAY_IP} -t 60 -b 100M -P 4"
+                                client_cmd = f"{IPERF3_BINARY_PATH} -c {INTERFACE_IP} -t 60 -b 100M -P 4"
                                 tdkTestObj, actualresult, details = start_dobby_container(sysobj, IPERF3_CLIENT_CONTAINER, DAC_TEST_DIR, client_cmd)
                                 if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS")

@@ -140,6 +140,20 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                             tdkTestObj.setResultStatus("FAILURE")
                             print("ACTUAL RESULT %d: Second bundle not found. Details: %s" % (step, details))
                             print("[TEST EXECUTION RESULT] : FAILURE")
+
+                        # Cleanup: Uninstall second DeploymentUnit
+                        step += 1
+                        print("\nTEST STEP %d: Cleanup - Uninstall second DeploymentUnit" % step)
+                        print("EXPECTED RESULT %d: Uninstall should start successfully" % step)
+                        tdkTestObj, actualresult, details = usppa_uninstall_bundle(sysobj, DU_UNINSTALL_PARAM_2)
+                        if expectedresult in actualresult:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print("ACTUAL RESULT %d: Second bundle uninstall started. Details: %s" % (step, details))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Second bundle uninstall failed. Details: %s" % (step, details))
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: Second bundle installation failed. Details: %s" % (step, details))
@@ -157,7 +171,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("ACTUAL RESULT %d: First bundle not found. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
-        # Cleanup: Uninstall the Execution Units(Both first and second)
+        # Cleanup: Uninstall first DeploymentUnit
         step += 1
         print("\nTEST STEP %d: Cleanup - Uninstall first DeploymentUnit" % step)
         print("EXPECTED RESULT %d: Uninstall should start successfully" % step)
@@ -169,19 +183,6 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
         else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: First bundle uninstall failed. Details: %s" % (step, details))
-            print("[TEST EXECUTION RESULT] : FAILURE")
-
-        step += 1
-        print("\nTEST STEP %d: Cleanup - Uninstall second DeploymentUnit" % step)
-        print("EXPECTED RESULT %d: Uninstall should start successfully" % step)
-        tdkTestObj, actualresult, details = usppa_uninstall_bundle(sysobj, DU_UNINSTALL_PARAM_2)
-        if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Second bundle uninstall started. Details: %s" % (step, details))
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Second bundle uninstall failed. Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
@@ -196,4 +197,3 @@ else:
     obj.setLoadModuleStatus("FAILURE")
     sysobj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
-
