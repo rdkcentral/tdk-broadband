@@ -94,6 +94,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
 
                         step += 1
                         # Launch iperf3 server container
+                        server_container_started = False
                         print("\nTEST STEP %d: Launch iperf3 server in DAC container" % step)
                         print("EXPECTED RESULT %d: Server container should start successfully" % step)
                         server_cmd = f"{IPERF3_BINARY_PATH} -s {INTERFACE_IP}"
@@ -109,6 +110,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                             print("EXPECTED RESULT %d: Server container should be in running state" % step)
                             tdkTestObj, actualresult, details = verify_container_running(sysobj, IPERF3_SERVER_CONTAINER)
                             if expectedresult in actualresult:
+                                server_container_started = True
                                 tdkTestObj.setResultStatus("SUCCESS")
                                 print("ACTUAL RESULT %d: Server container is running. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -148,34 +150,35 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                 print("ACTUAL RESULT %d: Server container is not running. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
 
-                            step += 1
-                            # Stop server container
-                            print("\nTEST STEP %d: Stop the server container" % step)
-                            print("EXPECTED RESULT %d: Server container should stop successfully" % step)
-                            tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
-                            if expectedresult in actualresult:
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            else:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: Failed to stop server container. Details: %s" % (step, details))
-                                print("[TEST EXECUTION RESULT] : FAILURE")
+                            if server_container_started:
+                                step += 1
+                                # Stop server container
+                                print("\nTEST STEP %d: Stop the server container" % step)
+                                print("EXPECTED RESULT %d: Server container should stop successfully" % step)
+                                tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
+                                if expectedresult in actualresult:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print("ACTUAL RESULT %d: Failed to stop server container. Details: %s" % (step, details))
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
 
-                            step += 1
-[O                            # Confirm containers are removed
-                            print("\nTEST STEP %d: Confirm containers are removed" % step)
-                            print("EXPECTED RESULT %d: Containers should be removed" % step)
-                            container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
-                            tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
-                            if expectedresult in actualresult:
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: Containers removed. Details: %s" % (step, details))
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            else:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
-                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                step += 1
+                                # Confirm containers are removed
+                                print("\nTEST STEP %d: Confirm containers are removed" % step)
+                                print("EXPECTED RESULT %d: Containers should be removed" % step)
+                                container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
+                                tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
+                                if expectedresult in actualresult:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print("ACTUAL RESULT %d: Containers removed. Details: %s" % (step, details))
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
                             print("ACTUAL RESULT %d: Failed to start server container. Details: %s" % (step, details))
