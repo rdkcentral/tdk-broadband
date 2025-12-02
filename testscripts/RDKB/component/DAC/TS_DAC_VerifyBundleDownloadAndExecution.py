@@ -139,49 +139,6 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                                         tdkTestObj.setResultStatus("FAILURE")
                                         print("ACTUAL RESULT %d: Not all containers are running. Details: %s" % (step, details))
                                         print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                    step += 1
-                                    # Stop server container
-                                    print("\nTEST STEP %d: Stop the server container" % step)
-                                    print("EXPECTED RESULT %d: Server container should stop successfully" % step)
-                                    tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
-                                    if expectedresult in actualresult:
-                                        tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
-                                        print("[TEST EXECUTION RESULT] : SUCCESS")
-                                    else:
-                                        tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Failed to stop server container. Details: %s" % (step, details))
-                                        print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                    step += 1
-                                    # Confirm containers are removed
-                                    print("\nTEST STEP %d: Confirm containers are removed" % step)
-                                    print("EXPECTED RESULT %d: Containers should be removed" % step)
-                                    container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
-                                    tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
-                                    if expectedresult in actualresult:
-                                        tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: Containers removed. Details: %s" % (step, details))
-                                        print("[TEST EXECUTION RESULT] : SUCCESS")
-                                    else:
-                                        tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
-                                        print("[TEST EXECUTION RESULT] : FAILURE")
-
-                                    step += 1
-                                    # Remove DAC directory
-                                    print("\nTEST STEP %d: Remove the DAC directory" % step)
-                                    print("EXPECTED RESULT %d: Directory should be removed successfully" % step)
-                                    tdkTestObj, actualresult, details = remove_directory(sysobj, DAC_TEST_DIR)
-                                    if expectedresult in actualresult:
-                                        tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: DAC directory removed successfully" % step)
-                                        print("[TEST EXECUTION RESULT] : SUCCESS")
-                                    else:
-                                        tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: Failed to remove DAC directory" % step)
-                                        print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
                                     print("ACTUAL RESULT %d: Failed to start client container. Details: %s" % (step, details))
@@ -189,6 +146,35 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
                                 print("ACTUAL RESULT %d: Server container is not running. Details: %s" % (step, details))
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+
+                            step += 1
+                            # Stop server container
+                            print("\nTEST STEP %d: Stop the server container" % step)
+                            print("EXPECTED RESULT %d: Server container should stop successfully" % step)
+                            tdkTestObj, actualresult, details = stop_dobby_container(sysobj, IPERF3_SERVER_CONTAINER)
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: Server container stopped. Details: %s" % (step, details))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE")
+                                print("ACTUAL RESULT %d: Failed to stop server container. Details: %s" % (step, details))
+                                print("[TEST EXECUTION RESULT] : FAILURE")
+
+                            step += 1
+[O                            # Confirm containers are removed
+                            print("\nTEST STEP %d: Confirm containers are removed" % step)
+                            print("EXPECTED RESULT %d: Containers should be removed" % step)
+                            container_list = [IPERF3_SERVER_CONTAINER, IPERF3_CLIENT_CONTAINER]
+                            tdkTestObj, actualresult, details = verify_containers_removed(sysobj, container_list)
+                            if expectedresult in actualresult:
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: Containers removed. Details: %s" % (step, details))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE")
+                                print("ACTUAL RESULT %d: Containers still present. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
@@ -209,6 +195,20 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
         else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: Failed to download bundle. Details: %s" % (step, details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+        step += 1
+        # Remove DAC directory
+        print("\nTEST STEP %d: Remove the DAC directory" % step)
+        print("EXPECTED RESULT %d: Directory should be removed successfully" % step)
+        tdkTestObj, actualresult, details = remove_directory(sysobj, DAC_TEST_DIR)
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: DAC directory removed successfully" % step)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to remove DAC directory" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
