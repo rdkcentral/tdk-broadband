@@ -53,7 +53,7 @@ if load_flag == 1:
     step = 1
     #Get the required config values from tdk_platform.properties file
     config_keys = ["FW_UPGRADE_SERVICE", "FW_NAME_SUFFIX"]
-    
+
     tdkTestObj, actualresult_all ,config_values = GetPlatformProperties(obj, config_keys)
     FWUPGRADE_SERVICE = config_values["FW_UPGRADE_SERVICE"]
     FW_NAME_SUFFIX = config_values["FW_NAME_SUFFIX"]
@@ -84,7 +84,7 @@ if load_flag == 1:
             step += 1
             #Configure the Xconf server config and rules. "POST" - Create Config and "PUT" - Update Config
             config_curl_cmd = getXCONFServer_CreateConfigCmd(obj, FirmwareVersion, FirmwareFilename, "POST", step)
-            
+
             step += 1
             size = len(config_curl_cmd)
             result = [None] * size
@@ -112,10 +112,10 @@ if load_flag == 1:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: The XConf server rules configured successfully.")
                 print("[TEST EXECUTION RESULT] : SUCCESS\n")
-                
+
                 step += 1
                 partition_count = getPartitionCount(obj, step)
-                
+
                 step += 1
                 command = "systemctl restart " + FWUPGRADE_SERVICE
                 print(f"Command: {command}")
@@ -140,13 +140,13 @@ if load_flag == 1:
                     # Restart the swupdate service to trigger firmware upgrade
                     tdkTestObj = obj.createTestStep('ExecuteCmd')
                     actualresult, details = doSysutilExecuteCommand(tdkTestObj,command)
-                    
+
                 sleep(SERVICE_RESTART_WAIT)
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"ACTUAL RESULT {step}: The {FWUPGRADE_SERVICE} is restarted successfully.")
                     print("[TEST EXECUTION RESULT] : SUCCESS\n")
-                        
+
                     #Check whether firmware download is triggered in the device
                     step += 1
                     query = f"grep -qiE \"<html|Error code: 404|HTTPStatus.NOT_FOUND\" {xconf_firmware_location}/{FirmwareFilename}"
@@ -173,7 +173,7 @@ if load_flag == 1:
                 tdkTestObj.setResultStatus("FAILURE")
                 print(f"ACTUAL RESULT {step}: Failed to configure XConf server as required.")
                 print("[TEST EXECUTION RESULT] : FAILURE \n")
-            
+
             #Delete the XConf rule
             step += 1
             delete_curl_cmd = getXCONFServer_DeleteConfigCmd()
