@@ -19,13 +19,11 @@
 #
 
 # use tdklib library,which provides a wrapper for tdk testcase script
-
 import tdklib
 from time import sleep
 from firmwareUpgradeVariables import *
 from firmwareUpgradeUtility import *
 from tdkutility import *
-
 
 def loadAndUnloadModules():
     #Test component to be tested
@@ -34,7 +32,7 @@ def loadAndUnloadModules():
     #This will be replaced with corresponding DUT Ip and port while executing script
     ip = <ipaddress>
     port = <port>
-    obj.configureTestCase(ip,port,'TS_FirmwareUpgrade_InvalidURL_FWUpgradeUsingXCONFServer')
+    obj.configureTestCase(ip,port,'TS_FirmwareUpgrade_InvalidImage_FWUpgradeUsingXCONFServer')
     #Get the result of connection with test component and DUT
     loadmodulestatus =obj.getLoadModuleResult()
     flag = int("SUCCESS" in loadmodulestatus.upper())
@@ -42,10 +40,10 @@ def loadAndUnloadModules():
 
 load_flag, obj = loadAndUnloadModules()
 expectedresult = "SUCCESS"
-
 XCONF_CMD_WAIT = 30
 SERVICE_RESTART_WAIT = 20
 PARTITION_CREATION_WAIT = 100
+
 
 if load_flag == 1:
     obj.setLoadModuleStatus("SUCCESS")
@@ -54,10 +52,11 @@ if load_flag == 1:
 
     step = 1
     #Get the required config values from tdk_platform.properties file
-    config_keys = ["FW_UPGRADE_SERVICE"]
+    config_keys = ["FW_UPGRADE_SERVICE", "FW_NAME_SUFFIX"]
     
     tdkTestObj, actualresult_all ,config_values = GetPlatformProperties(obj, config_keys)
     FWUPGRADE_SERVICE = config_values["FW_UPGRADE_SERVICE"]
+    FW_NAME_SUFFIX = config_values["FW_NAME_SUFFIX"]
     print(f"Config values obtained from tdk_platform_properties : {config_values}")
 
     print(f"\nTEST STEP {step}: Get the required config values from tdk_platform.properties")
@@ -76,13 +75,15 @@ if load_flag == 1:
         Old_FirmwareVersion, Old_FirmwareFilename = getCurrentFirmware(obj, step)
 
         step += 1
-        #get target firmware details
-        FirmwareVersion, FirmwareFilename = getFirmwareDetailsFromServer(obj, step)
+        #Target firmware details are set to dummy values. These values do not exist on the server.
+        #These are not real values and used for test purpose only
+        FirmwareVersion = "Dummy_FW_Name"
+        FirmwareFilename = FirmwareVersion + FW_NAME_SUFFIX
 
         if FirmwareFilename != Old_FirmwareFilename and FirmwareFilename and erouter_ip != "":
             step += 1
             #Configure the Xconf server config and rules. "POST" - Create Config and "PUT" - Update Config
-            config_curl_cmd = getXCONFServer_CreateConfigCmd(obj, FirmwareVersion, FirmwareFilename, "POST", step, scenario = "invalid_url")
+            config_curl_cmd = getXCONFServer_CreateConfigCmd(obj, FirmwareVersion, FirmwareFilename, "POST", step)
             
             step += 1
             size = len(config_curl_cmd)
@@ -96,7 +97,6 @@ if load_flag == 1:
                     print(f"\nValidating the added rule using {operation}")
                 else:
                     print(f"\nConfiguring {operation} in XConf Server")
-
                 print(f"\nCommand: {config_cmd}")
                 tdkTestObj = obj.createTestStep('ExecuteCmd')
                 result[index], cmd_details[index] = doSysutilExecuteCommand(tdkTestObj, config_cmd)
@@ -106,11 +106,11 @@ if load_flag == 1:
                 index += 1
 
             print(f"Command execution result: {result}")
-            print(f"\nTEST STEP {step}: Configure the XConf server - Firmware Config, Mac List, Mac Rule and Properties of Firmware rule [with invalid firmware URL]")
+            print(f"\nTEST STEP {step}: Configure the XConf server - Firmware Config[with invalid image name], Mac List, Mac Rule and Properties of Firmware rule ")
             print(f"EXPECTED RESULT {step}: Should configure the XConf server Firmware Configs and Rule")
             if "FAILURE" not in result and "" not in cmd_details:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: The XConf server rules configured successfully. Details: {cmd_details[size-1]} ")
+                print(f"ACTUAL RESULT {step}: The XConf server rules configured successfully.")
                 print("[TEST EXECUTION RESULT] : SUCCESS\n")
                 
                 step += 1
@@ -149,21 +149,21 @@ if load_flag == 1:
                         
                     #Check whether firmware download is triggered in the device
                     step += 1
-                    query = f"ls {xconf_firmware_location} | grep {FirmwareFilename}"
+                    query = f"grep -qiE \"<html|Error code: 404|HTTPStatus.NOT_FOUND\" {xconf_firmware_location}/{FirmwareFilename}"
                     print(f"Command: {query}")
 
                     tdkTestObj = obj.createTestStep('ExecuteCmd')
                     actualresult, details = doSysutilExecuteCommand(tdkTestObj, query)
 
-                    print(f"TEST STEP {step}: Check whether the firmware download is triggered in the device when invalid firmware URL is provided")
+                    print(f"TEST STEP {step}: Check whether the firmware download is triggered in the device when invalid firmware name is provided")
                     print(f"EXPECTED RESULT {step}: The firmware download should not be triggered in the device")
-                    if expectedresult in actualresult and FirmwareFilename not in details.strip():
+                    if expectedresult in actualresult and details.strip() == "":
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: Firmware download is not triggered as expected since invalid firmware URL is provided. Details: {details.strip()}")
+                        print(f"ACTUAL RESULT {step}: Firmware download is not triggered as expected since invalid firmware name is provided.")
                         print("[TEST EXECUTION RESULT] : SUCCESS\n")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: Firmware download is triggered unexpectedly. Details: {details.strip()}")
+                        print(f"ACTUAL RESULT {step}: Firmware download is triggered unexpectedly.")
                         print("[TEST EXECUTION RESULT] : FAILURE \n")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
@@ -195,6 +195,7 @@ if load_flag == 1:
                 print(f"ACTUAL RESULT {step}: Failed to delete the XConf server rules. Details {details} ")
                 print("[TEST EXECUTION RESULT] : FAILURE \n")
         else:
+            tdkTestObj.setResultStatus("FAILURE")
             print("Required Details are not available to proceed with firmware upgrade. So skipping the test\n")
     else:
         tdkTestObj.setResultStatus("FAILURE")
