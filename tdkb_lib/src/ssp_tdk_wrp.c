@@ -71,7 +71,8 @@ GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
     int i;
     int cmpt;
     char *pCompArr_ParamName[MAX_PARAM_SIZE];
-    
+    int length = 0;
+
     printf("\nssp_getParameterValue::Entering ssp_getParameterValue Function in Component Stub ...\n");
 
     pCompArr_ParamName[0] = pParamName;
@@ -139,21 +140,25 @@ GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
         {
             for ( i = 0; i < size; i++ )
             {
-                GetValues[i].pParamValues = (char *)malloc(MAX_PARAM_SIZE*sizeof(char*));
+                length = strlen(parameterVal[i]->parameterValue);
+                GetValues[i].pParamValues = (char *)malloc(length + 1);
                 if(NULL==GetValues[i].pParamValues)
                 {
                     printf("Malloc failed for the struct in GetParameter Values\n");
                     return NULL;
                 }
-                GetValues[i].pParamNames = (char *)malloc(MAX_PARAM_SIZE*sizeof(char*));
+                memset(GetValues[i].pParamValues,0,length + 1);
+                length = strlen(parameterVal[i]->parameterName);
+                GetValues[i].pParamNames = (char *)malloc(length + 1);
                 if(NULL==GetValues[i].pParamNames)
                 {
                     printf("Malloc failed for the struct in GetParameter Values\n");
+                    free(GetValues[i].pParamValues);
                     return NULL;
                 }
-                memset(GetValues[i].pParamValues,0,MAX_PARAM_SIZE*sizeof(char*));
+                memset(GetValues[i].pParamNames,0,length + 1);
+
                 strcpy(GetValues[i].pParamValues,parameterVal[i]->parameterValue);
-                memset(GetValues[i].pParamNames,0,MAX_PARAM_SIZE*sizeof(char*));
                 strcpy(GetValues[i].pParamNames,parameterVal[i]->parameterName);
                 GetValues[i].pParamType=parameterVal[i]->type;
 
@@ -176,7 +181,6 @@ GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
     printf("ssp_getParameterValue::Returning param value to agent stub\n");
     return GetValues;
 }
-
 
 /*******************************************************************************************
  *
@@ -1407,7 +1411,7 @@ int ssp_Diag_Start(int mode)
 {
     diag_err_t status;
     diag_mode_t diag_mode = mode;
-    
+
     status = diag_start(diag_mode);
     if(status == DIAG_ERR_OK)
     {
@@ -1425,7 +1429,7 @@ int ssp_Diag_Start(int mode)
 int ssp_Diag_Stop(int mode)
 {
     diag_err_t status;
-    
+
     status = diag_stop(mode);
     sleep(20);
 

@@ -145,7 +145,7 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus1.upper():
                 sleep(sleepTime);
 
             tdkTestObj = obj.createTestStep('ExecuteCmd');
-            List = ["CCSP_PROCESS","SNMP_PROCESS","WEBPA_PROCESS","LIGHTTPD_PROCESS","DROPBEAR_PROCESS"];
+            List = ["CCSP_PROCESS","SNMP_PROCESS","WEBPA_PROCESS","LIGHTTPD_PROCESS","DROPBEAR_PROCESS","NOTIFYCOMP_PROCESS","WEBCONFIG_PROCESS","PSM_PROCESS","TELEMETRY_PROCESS","WIFI_PROCESS"];
             process_List = [];
             for item in List :
                 Process= "sh %s/tdk_utility.sh parseConfigFile %s" %(TDK_PATH,item);

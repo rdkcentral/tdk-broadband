@@ -108,7 +108,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
 
             if check_flag == 1:
                 print("The profile setting has been completed.")
-                #Check whether the profile is created in /nvram/.t2reportprofiles/
+                #Check whether the profile is created in the designated profile directory
                 step += 1
                 print("\nTEST STEP %d: Check whether the profile is created in %s" %(step, PROFILE_PATH))
                 print("EXPECTED RESULT %d: Profiles should be created in %s" %(step, PROFILE_PATH))
@@ -140,7 +140,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                         print("\nTEST STEP %d: Check whether the report frequency is as per the Reporting Interval and Activation Timeout" %step)
                         print("EXPECTED RESULT %d: Report frequency should be as per the Reporting Interval and Activation Timeout" %step)
 
-                        # cmd = f"grep {profile_names[0]} /rdklogs/logs/telemetry2_0.txt.0 | grep -i cJSON | wc -l"
                         cmd = f"grep -i cJSON {TELEMETRY_LOG_PATH} | wc -l"
 
                         print("Command : %s" %cmd)
