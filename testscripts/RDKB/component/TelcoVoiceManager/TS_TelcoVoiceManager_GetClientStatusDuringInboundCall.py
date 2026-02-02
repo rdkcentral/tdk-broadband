@@ -19,8 +19,6 @@
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
-from tdkutility import *
-from time import sleep
 from tdkbTelcoVoiceManagerVariables import *
 from tdkbTelcoVoiceManagerUtility import *
 
@@ -39,7 +37,7 @@ loadmodulestatus = obj.getLoadModuleResult()
 if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
-    
+
     # Call Initiation between inbound SIP Clients
     print("\nInitiating a call between the SIP clients configured in the same WAN network")
     dialplan_context = "internal"

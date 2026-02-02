@@ -70,7 +70,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             tdkTestObj.setResultStatus("SUCCESS")
             print(f"ACTUAL RESULT {step}: RdkTelcoVoiceManager.service is up and running")
             print("[TEST EXECUTION RESULT] : SUCCESS")
-            
+
             step += 1
             #Get the PID of RdkTelcoVoiceManager.service
             print(f"\nTEST STEP {step}: Get the PID of RdkTelcoVoiceManager.service.")
@@ -96,7 +96,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                     tdkTestObj.setResultStatus("FAILURE")
                     print(f"ACTUAL RESULT {step}: Asterisk server is down. Failed to get the PID of Asterisk server.")
                     print("[TEST EXECUTION RESULT] : FAILURE")
-                
+
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print(f"ACTUAL RESULT {step}: Failed to get the PID of RdkTelcoVoiceManager service.")

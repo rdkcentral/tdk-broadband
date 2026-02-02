@@ -39,7 +39,7 @@ loadmodulestatus = obj.getLoadModuleResult()
 if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
-    
+
     #Get the initial active call count
     print(f"\nTEST STEP {step}: Get the initial active call count from the asterisk server.")
     print(f"EXPECTED RESULT {step}: Should get the active call count from the asterisk server.")
@@ -67,7 +67,7 @@ if expectedresult in loadmodulestatus.upper():
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: The active call count is incremented by 1 after call initiation. Current active call count is {call_count.strip()}")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
-                        
+
                 step += 1
                 print("\nDisconnecting the call between the SIP clients in the same WAN network")
                 hangup_status = callHangup(obj, step)

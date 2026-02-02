@@ -19,7 +19,6 @@
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
-from tdkutility import *
 from time import sleep
 from tdkbTelcoVoiceManagerVariables import *
 from tdkbTelcoVoiceManagerUtility import *
@@ -45,7 +44,7 @@ loadmodulestatus1 = tr181obj.getLoadModuleResult()
 if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
-    
+
     print("Prerequisite : One SIP client need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.\n Another external SIP client endpoint needs to be configured in subscribe.linphone.org")
 
     #Get the outbound call configurations
