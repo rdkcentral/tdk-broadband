@@ -52,7 +52,7 @@ if expectedresult in loadmodulestatus.upper():
         set_flag = setTelcoOutboundConfigs(tr181obj, valueList, step)
 
         if set_flag:
-            sleep(20)
+            sleep(10)
             #Get the  Voice Call Line status
             step += 1
             print(f"\nTEST STEP {step}: Get the Line Status once the configurations are updated")

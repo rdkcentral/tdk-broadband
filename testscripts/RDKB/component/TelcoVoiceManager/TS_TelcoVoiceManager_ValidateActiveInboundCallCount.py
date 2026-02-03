@@ -40,65 +40,74 @@ if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
 
-    #Get the initial active call count
-    print(f"\nTEST STEP {step}: Get the initial active call count from the asterisk server.")
-    print(f"EXPECTED RESULT {step}: Should get the active call count from the asterisk server.")
-    tdkTestObj, actualresult, initial_call_count = getActiveCallCount(obj)
-    if expectedresult in actualresult and initial_call_count.strip().isdigit():
-        tdkTestObj.setResultStatus("SUCCESS")
-        print(f"ACTUAL RESULT {step}: Initial active call count is {initial_call_count.strip()}")
-        print("[TEST EXECUTION RESULT] : SUCCESS")
+    #Cleaning up the existing calls if any before starting the test execution
+    print("\nCleaning up the existing calls if any before starting the test execution")
+    hangup_status = callHangup(obj, step, prereq=True)
+    if hangup_status:
+        print("Existing calls if any are cleaned up successfully before starting the test execution")
 
-        step +=1
-        # Call Initiation between inbound SIP Clients
-        print("\nInitiating a call between the SIP clients configured in the same WAN network")
-        dialplan_context = "internal"
-        initiate_call_status = initiateCall(obj, client1_username, client2_username, dialplan_context, step)
-        if initiate_call_status:
-            print("Call has been initiated successfully between the SIP clients in the same WAN network")
+        step += 1
+        #Get the initial active call count
+        print(f"\nTEST STEP {step}: Get the initial active call count from the asterisk server.")
+        print(f"EXPECTED RESULT {step}: Should get the active call count from the asterisk server.")
+        tdkTestObj, actualresult, initial_call_count = getActiveCallCount(obj)
+        if expectedresult in actualresult and type(initial_call_count) is int and initial_call_count == 0:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print(f"ACTUAL RESULT {step}: Initial active call count is {initial_call_count}")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            step += 1
-            sleep(20)
-            #Get the active call count after call initiation
-            print(f"\nTEST STEP {step}: Get the active call count from the asterisk server after call initiation.")
-            print(f"EXPECTED RESULT {step}: Active call count should be incremented by 1 after call initiation.")
-            tdkTestObj, actualresult, call_count = getActiveCallCount(obj)
-            if expectedresult in actualresult and int(call_count.strip()) == int(initial_call_count.strip()) + 1:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: The active call count is incremented by 1 after call initiation. Current active call count is {call_count.strip()}")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
+            step +=1
+            # Call Initiation between inbound SIP Clients
+            print("\nInitiating a call between the SIP clients configured in the same WAN network")
+            dialplan_context = "internal"
+            initiate_call_status = initiateCall(obj, client1_username, client2_username, dialplan_context, step)
+            if initiate_call_status:
+                print("Call has been initiated successfully between the SIP clients in the same WAN network")
 
                 step += 1
-                print("\nDisconnecting the call between the SIP clients in the same WAN network")
-                hangup_status = callHangup(obj, step)
-                if hangup_status:
-                    print("Call has been disconnected successfully.")
+                sleep(10)
+                #Get the active call count after call initiation
+                print(f"\nTEST STEP {step}: Get the active call count from the asterisk server after call initiation.")
+                print(f"EXPECTED RESULT {step}: Active call count should be incremented by 1 after call initiation.")
+                tdkTestObj, actualresult, call_count = getActiveCallCount(obj)
+                if expectedresult in actualresult  and type(call_count) is int and call_count == initial_call_count + 1:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print(f"ACTUAL RESULT {step}: The active call count is incremented by 1 after call initiation. Current active call count is {call_count}")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                    #Validate the active call count after hanging up the call
                     step += 1
-                    print(f"\nTEST STEP {step}: Get the active call count from the asterisk server after hanging up the call.")
-                    print(f"EXPECTED RESULT {step}: Active call count should be equal to the initial active call count.")
-                    tdkTestObj, actualresult, final_call_count = getActiveCallCount(obj)
-                    if expectedresult in actualresult and int(final_call_count.strip()) == int(initial_call_count.strip()):
-                        tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: The active call count is equal to the initial active call count after hanging up the call. Current active call count is {final_call_count.strip()}")
-                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    print("\nDisconnecting the call between the SIP clients in the same WAN network")
+                    hangup_status = callHangup(obj, step)
+                    if hangup_status:
+                        print("Call has been disconnected successfully.")
+
+                        #Validate the active call count after hanging up the call
+                        step += 1
+                        print(f"\nTEST STEP {step}: Get the active call count from the asterisk server after hanging up the call.")
+                        print(f"EXPECTED RESULT {step}: Active call count should be equal to the initial active call count.")
+                        tdkTestObj, actualresult, final_call_count = getActiveCallCount(obj)
+                        if expectedresult in actualresult and type(final_call_count) is int and final_call_count == initial_call_count:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step}: The active call count is equal to the initial active call count after hanging up the call. Current active call count is {final_call_count}")
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step}: The active call count is not equal to the initial active call count after hanging up the call. Current active call count is {final_call_count}")
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: The active call count is not equal to the initial active call count after hanging up the call. Current active call count is {final_call_count.strip()}")
-                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        print("Failed to disconnect the call.")
                 else:
-                    print("Failed to disconnect the call.")
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print(f"ACTUAL RESULT {step}: The active call count is not incremented by 1 after call initiation. Current active call count is {call_count}")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print(f"ACTUAL RESULT {step}: The active call count is not incremented by 1 after call initiation. Current active call count is {call_count.strip()}")
-                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("Failed to initiate the call between the SIP clients in the same WAN network")
         else:
-            print("Failed to initiate the call between the SIP clients in the same WAN network")
+            tdkTestObj.setResultStatus("FAILURE")
+            print(f"ACTUAL RESULT {step}: Failed to get the initial active call count from the asterisk server. Details: {initial_call_count}")
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-        tdkTestObj.setResultStatus("FAILURE")
-        print(f"ACTUAL RESULT {step}: Failed to get the initial active call count from the asterisk server. Details: {initial_call_count}")
-        print("[TEST EXECUTION RESULT] : FAILURE")
+        print("Failed to clean up the existing calls if any before starting the test execution")
     obj.unloadModule("sysutil")
 else:
     print("\nFailed to load the module")

@@ -38,49 +38,58 @@ if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
 
-    # Call Initiation between inbound SIP Clients
-    print("\nInitiating a call between the SIP clients configured in the same WAN network")
-    dialplan_context = "internal"
-    initiate_call_status = initiateCall(obj, client1_username, client2_username, dialplan_context, step)
-    if initiate_call_status:
-        print("Call has been initiated successfully between the SIP clients in the same WAN network")
-        step += 1
-        print("\nDisconnecting the call between the SIP clients in the same WAN network")
-        hangup_status = callHangup(obj, step)
-        if hangup_status:
-            print("Call has been disconnected successfully.")
+    #Cleaning up the existing calls if any before starting the test execution
+    print("\nCleaning up the existing calls if any before starting the test execution")
+    hangup_status = callHangup(obj, step, prereq=True)
+    if hangup_status:
+        print("Existing calls if any are cleaned up successfully before starting the test execution")
 
+        step += 1
+        # Call Initiation between inbound SIP Clients
+        print("\nInitiating a call between the SIP clients configured in the same WAN network")
+        dialplan_context = "internal"
+        initiate_call_status = initiateCall(obj, client1_username, client2_username, dialplan_context, step)
+        if initiate_call_status:
+            print("Call has been initiated successfully between the SIP clients in the same WAN network")
             step += 1
-            #Client1 Status after hangup
-            print(f"\nTEST STEP {step}: Check whether the SIP client status is not in use after hangup in client 1 - {client1_username}.")
-            print(f"EXPECTED RESULT {step}: The SIP Client status should be Not in Use, indicating hung up call in client 1.")
-            tdkTestObj, actualresult, status = clientStatus(obj, client1_username)
-            if expectedresult in actualresult and status == "Not in use":
-                tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: The call is hung up and SIP client 1 status is {status}")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
+            print("\nDisconnecting the call between the SIP clients in the same WAN network")
+            hangup_status = callHangup(obj, step)
+            if hangup_status:
+                print("Call has been disconnected successfully.")
 
                 step += 1
-                #Client 2 Status after hangup
-                print(f"\nTEST STEP {step}: Check whether the SIP client status is not in use after hangup in client 2 - {client2_username}.")
-                print(f"EXPECTED RESULT {step}: The SIP Client status should be Not in Use, indicating hung up call in client 2.")
-                tdkTestObj, actualresult, status = clientStatus(obj, client2_username)
-                if expectedresult in actualresult and status == "Not in use":
+                #Client1 Status after hangup
+                print(f"\nTEST STEP {step}: Check whether the SIP client status is not in use after hangup in client 1 - {client1_username}.")
+                print(f"EXPECTED RESULT {step}: The SIP Client status should be Not in Use, indicating hung up call in client 1.")
+                tdkTestObj, actualresult, status = clientStatus(obj, client1_username)
+                if expectedresult in actualresult and "Not in use" in status:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"ACTUAL RESULT {step}: The call is hung up and SIP client 2 status is {status}")
+                    print(f"ACTUAL RESULT {step}: The call is hung up and SIP client 1 status is {status}")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    step += 1
+                    #Client 2 Status after hangup
+                    print(f"\nTEST STEP {step}: Check whether the SIP client status is not in use after hangup in client 2 - {client2_username}.")
+                    print(f"EXPECTED RESULT {step}: The SIP Client status should be Not in Use, indicating hung up call in client 2.")
+                    tdkTestObj, actualresult, status = clientStatus(obj, client2_username)
+                    if expectedresult in actualresult and "Not in use" in status:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: The call is hung up and SIP client 2 status is {status}")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: The SIP client 2 status is {status}")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print(f"ACTUAL RESULT {step}: The SIP client 2 status is {status}")
+                    print(f"ACTUAL RESULT {step}: The SIP client 1 status is {status}")
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print(f"ACTUAL RESULT {step}: The SIP client 1 status is {status}")
-                print("[TEST EXECUTION RESULT] : FAILURE")
+                print("Failed to disconnect the call.")
         else:
-            print("Failed to disconnect the call.")
+            print("Failed to initiate the call between the SIP clients in the same WAN network")
     else:
-        print("Failed to initiate the call between the SIP clients in the same WAN network")
+        print("Failed to clean up the existing calls if any before starting the test execution")
 
     obj.unloadModule("sysutil")
 else:
