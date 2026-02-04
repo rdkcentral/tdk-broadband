@@ -45,26 +45,26 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get Device.X_RDK_WanManager.CurrentActiveInterface
+        # Step 2: Get the value of WanManager CurrentActiveInterface DM
         print("\nTEST STEP %d: Get the value of %s" % (step, DM_WAN_MANAGER_CURRENT_ACTIVE_INTERFACE))
         print("EXPECTED RESULT %d: Should successfully retrieve the current active interface" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_WAN_MANAGER_CURRENT_ACTIVE_INTERFACE)
-        if expectedresult in actualresult:
-            current_active_interface = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            current_active_interface = details.strip()
             tdkTestObj_tr181.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: Current active interface is: %s" % (step, current_active_interface))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Step 3: Verify and confirm the value is "usb0"
+            # Step 3: Verify and confirm the value is expected when RNDIS is active
             print("\nTEST STEP %d: Verify the current active interface is %s" % (step, ANDROID_WAN_INTERFACE))
             print("EXPECTED RESULT %d: Current active interface should be %s" % (step, ANDROID_WAN_INTERFACE))
             if current_active_interface == ANDROID_WAN_INTERFACE:
@@ -74,19 +74,19 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
-                # Step 4: Get Device.X_RDK_WanManager.CurrentStatus
+                # Step 4: Get the value of WanManager CurrentStatus DM
                 print("\nTEST STEP %d: Get the value of %s" % (step, DM_WAN_MANAGER_CURRENT_STATUS))
                 print("EXPECTED RESULT %d: Should successfully retrieve the current WAN status" % step)
                 tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
                 actualresult, details = getTR181Value(tdkTestObj_tr181, DM_WAN_MANAGER_CURRENT_STATUS)
-                if expectedresult in actualresult:
-                    current_status = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+                if expectedresult in actualresult and details != "":
+                    current_status = details.strip()
                     tdkTestObj_tr181.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Current WAN status is: %s" % (step, current_status))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     step += 1
-                    # Step 5: Verify and confirm the value is "Up"
+                    # Step 5: Verify and confirm the value is as expected when RNDIS is active
                     print("\nTEST STEP %d: Verify the current WAN status is Up" % step)
                     print("EXPECTED RESULT %d: Current status should be %s" % (step, EXPECTED_WAN_STATUS_UP))
                     if current_status == EXPECTED_WAN_STATUS_UP:

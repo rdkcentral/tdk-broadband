@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+
 import tdklib
 from time import sleep
 from RNDISVariables import *
@@ -42,54 +43,40 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     expectedresult = "SUCCESS"
     step = 1
 
-    # Step 1: Confirm if usb0 interface is up with active IP (prerequisite)
+    # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, interface_ip = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, interface_ip))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get the value of Device.X_RDK_WanManager.Interface.2.VirtualInterface.1.IP.IPv4Address
+        # Step 2: Get the value of WanManager IPv4Address DM 
         print("\nTEST STEP %d: Get the value of %s" % (step, DM_WAN_MANAGER_VIRTUAL_INTERFACE_IPV4))
         print("EXPECTED RESULT %d: Should successfully retrieve the virtual interface IPv4 address" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_WAN_MANAGER_VIRTUAL_INTERFACE_IPV4)
-        if expectedresult in actualresult:
-            dm_ipv4_address = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            dm_ipv4_address = details.strip()
             tdkTestObj_tr181.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: Virtual interface IPv4 address is: %s" % (step, dm_ipv4_address))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Step 3: Get the value of usb0 interface IP
-            print("\nTEST STEP %d: Get the IP address of %s interface" % (step, ANDROID_WAN_INTERFACE))
-            print("EXPECTED RESULT %d: Should successfully retrieve the interface IP address" % step)
-            tdkTestObj, actualresult, usb0_ip = get_interface_ip_address(sysobj, ANDROID_WAN_INTERFACE)
-            if expectedresult in actualresult:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: %s interface IP address is: %s" % (step, ANDROID_WAN_INTERFACE, usb0_ip))
+            # Step 3: Compare both values and confirm they are the same
+            print("\nTEST STEP %d: Compare virtual interface IPv4 address with %s interface IP" % (step, ANDROID_WAN_INTERFACE))
+            print("EXPECTED RESULT %d: Both IP addresses should match" % step)
+            if dm_ipv4_address == interface_ip:
+                tdkTestObj_tr181.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: IP addresses match - DM IPv4: %s, %s IP: %s" % 
+                      (step, dm_ipv4_address, ANDROID_WAN_INTERFACE, interface_ip))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                step += 1
-                # Step 4: Compare both values and confirm they are the same
-                print("\nTEST STEP %d: Compare virtual interface IPv4 address with %s interface IP" % (step, ANDROID_WAN_INTERFACE))
-                print("EXPECTED RESULT %d: Both IP addresses should match" % step)
-                if dm_ipv4_address == usb0_ip:
-                    tdkTestObj_tr181.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: IP addresses match - DM IPv4: %s, %s IP: %s" % 
-                          (step, dm_ipv4_address, ANDROID_WAN_INTERFACE, usb0_ip))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-                else:
-                    tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: IP addresses mismatch - DM IPv4: %s, %s IP: %s" % 
-                          (step, dm_ipv4_address, ANDROID_WAN_INTERFACE, usb0_ip))
-                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get %s interface IP address" % (step, ANDROID_WAN_INTERFACE))
+                tdkTestObj_tr181.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: IP addresses mismatch - DM IPv4: %s, %s IP: %s" % 
+                      (step, dm_ipv4_address, ANDROID_WAN_INTERFACE, interface_ip))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj_tr181.setResultStatus("FAILURE")

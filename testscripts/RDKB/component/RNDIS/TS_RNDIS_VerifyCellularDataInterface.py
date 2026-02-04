@@ -45,20 +45,20 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get Device.Cellular.X_RDK_DataInterface
+        # Step 2: Get the value of cellular DataInterface DM
         print("\nTEST STEP %d: Get the value of %s" % (step, DM_CELLULAR_DATA_INTERFACE))
         print("EXPECTED RESULT %d: Should successfully retrieve the data interface value" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_DATA_INTERFACE)
-        if expectedresult in actualresult:
-            data_interface = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            data_interface = details.strip()
             tdkTestObj_tr181.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: Data interface value is: %s" % (step, data_interface))
             print("[TEST EXECUTION RESULT] : SUCCESS")

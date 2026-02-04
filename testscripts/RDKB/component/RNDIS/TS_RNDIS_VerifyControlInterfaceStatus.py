@@ -45,27 +45,27 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get Device.Cellular.X_RDK_ControlInterfaceStatus
+        # Step 2: Get the value of Cellular ControlInterfaceStatus DM
         print("\nTEST STEP %d: Get the value of %s" % (step, DM_CELLULAR_CONTROL_INTERFACE_STATUS))
         print("EXPECTED RESULT %d: Should successfully retrieve the control interface status" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_CONTROL_INTERFACE_STATUS)
-        if expectedresult in actualresult:
-            control_status = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            control_status = details.strip()
             tdkTestObj_tr181.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: Control interface status is: %s" % (step, control_status))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Step 3: Verify the value is "OPENED"
-            print("\nTEST STEP %d: Verify the control interface status is OPENED" % step)
+            # Step 3: Verify the value is as expected when RNDIS is active
+            print("\nTEST STEP %d: Verify the control interface status is %s" % (step, EXPECTED_CONTROL_INTERFACE_STATUS))
             print("EXPECTED RESULT %d: Control interface status should be %s" % (step, EXPECTED_CONTROL_INTERFACE_STATUS))
             if control_status == EXPECTED_CONTROL_INTERFACE_STATUS:
                 tdkTestObj_tr181.setResultStatus("SUCCESS")

@@ -46,26 +46,26 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get the default value of Device.Cellular.Interface.1.Enable
+        # Step 2: Get the default value of Cellular Interface Enable DM
         print("\nTEST STEP %d: Get the default value of %s" % (step, DM_CELLULAR_INTERFACE_ENABLE))
-        print("EXPECTED RESULT %d: Should get the current value (Expected: true)" % step)
+        print("EXPECTED RESULT %d: Should get the current value" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_INTERFACE_ENABLE)
-        if expectedresult in actualresult:
-            initial_enable_value = details.split("VALUE:")[1].split(',')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            initial_enable_value = details.strip()
             tdkTestObj_tr181.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: Current value of %s is %s" % (step, DM_CELLULAR_INTERFACE_ENABLE, initial_enable_value))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Step 3: Set Device.Cellular.Interface.1.Enable to false and confirm
+            # Step 3: Set Cellular Interface Enable to false and confirm
             print("\nTEST STEP %d: Set %s to false and confirm set operation" % (step, DM_CELLULAR_INTERFACE_ENABLE))
             print("EXPECTED RESULT %d: Set operation should succeed and value should be false" % step)
             tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Set')
@@ -74,28 +74,28 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 # Confirm the set operation by getting the value
                 tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
                 actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_INTERFACE_ENABLE)
-                if expectedresult in actualresult:
-                    current_value = details.split("VALUE:")[1].split(',')[0].strip() if "VALUE:" in details else details.strip()
-                    if current_value == EXPECTED_ENABLE_FALSE:
+                if expectedresult in actualresult and details != "":
+                    current_value = details.strip()
+                    if current_value == 'false':
                         tdkTestObj_tr181.setResultStatus("SUCCESS")
                         print("ACTUAL RESULT %d: Set operation succeeded, value is now %s" % (step, current_value))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
                         step += 1
-                        # Step 4: Check if Device.Cellular.X_RDK_Status is DEREGISTERED
-                        print("\nTEST STEP %d: Check if %s is DEREGISTERED" % (step, DM_CELLULAR_RDK_STATUS))
-                        print("EXPECTED RESULT %d: Status should be DEREGISTERED" % step)
+                        # Step 4: Check the value of Cellular Status DM as expected
+                        print("\nTEST STEP %d: Check if %s is %s" % (step, DM_CELLULAR_RDK_STATUS, EXPECTED_STATUS_DEREGISTERED))
+                        print("EXPECTED RESULT %d: Status should be %s" % (step, EXPECTED_STATUS_DEREGISTERED))
                         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
                         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_RDK_STATUS)
-                        if expectedresult in actualresult:
-                            rdk_status = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
+                        if expectedresult in actualresult and details != "":
+                            rdk_status = details.strip()
                             if rdk_status == EXPECTED_STATUS_DEREGISTERED:
                                 tdkTestObj_tr181.setResultStatus("SUCCESS")
                                 print("ACTUAL RESULT %d: Cellular status is %s" % (step, rdk_status))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                                 step += 1
-                                # Step 5: Toggle Device.Cellular.Interface.1.Enable back to true and confirm
+                                # Step 5: Toggle Cellular Interface Enable DM back to true and confirm
                                 print("\nTEST STEP %d: Toggle %s back to true and confirm set operation" % (step, DM_CELLULAR_INTERFACE_ENABLE))
                                 print("EXPECTED RESULT %d: Set operation should succeed and value should be true" % step)
                                 tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Set')
@@ -104,22 +104,25 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                                     # Confirm the set operation by getting the value
                                     tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
                                     actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_INTERFACE_ENABLE)
-                                    if expectedresult in actualresult:
-                                        current_value = details.split("VALUE:")[1].split(',')[0].strip() if "VALUE:" in details else details.strip()
-                                        if current_value == EXPECTED_ENABLE_TRUE:
+                                    if expectedresult in actualresult and details != "":
+                                        current_value = details.strip()
+                                        if current_value == 'true':
                                             tdkTestObj_tr181.setResultStatus("SUCCESS")
                                             print("ACTUAL RESULT %d: Set operation succeeded, value is now %s" % (step, current_value))
                                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
+                                            #Wait for 10s
+                                            print("Sleeping for 10 seconds..")
+                                            sleep(10)
                                             step += 1
-                                            # Step 6: Check if Device.Cellular.X_RDK_Status is REGISTERED
-                                            print("\nTEST STEP %d: Check if %s is REGISTERED" % (step, DM_CELLULAR_RDK_STATUS))
-                                            print("EXPECTED RESULT %d: Status should be REGISTERED" % step)
+                                            # Step 6: Check if Cellular Status is as Expected when RNDIS is active
+                                            print("\nTEST STEP %d: Check if %s is %s" % (step, DM_CELLULAR_RDK_STATUS, EXPECTED_STATUS_CONNECTED))
+                                            print("EXPECTED RESULT %d: Status should be %s" % (step, EXPECTED_STATUS_CONNECTED))
                                             tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
                                             actualresult, details = getTR181Value(tdkTestObj_tr181, DM_CELLULAR_RDK_STATUS)
-                                            if expectedresult in actualresult:
-                                                rdk_status = details.split("VALUE:")[1].split(' ')[0].strip() if "VALUE:" in details else details.strip()
-                                                if rdk_status == EXPECTED_STATUS_REGISTERED:
+                                            if expectedresult in actualresult and details != "":
+                                                rdk_status = details.strip()
+                                                if rdk_status == EXPECTED_STATUS_CONNECTED:
                                                     tdkTestObj_tr181.setResultStatus("SUCCESS")
                                                     print("ACTUAL RESULT %d: Cellular status is %s" % (step, rdk_status))
                                                     print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -128,10 +131,8 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                                                     # Step 7: Monitor cellular status for 5 minutes
                                                     print("\nTEST STEP %d: Monitor %s for %d seconds (checking every %d seconds)" % 
                                                           (step, DM_CELLULAR_RDK_STATUS, MONITORING_DURATION, MONITORING_INTERVAL))
-                                                    print("EXPECTED RESULT %d: Status should remain REGISTERED throughout monitoring period" % step)
-                                                    tdkTestObj_tr181, actualresult, details = monitor_cellular_status(
-                                                        obj, DM_CELLULAR_RDK_STATUS, EXPECTED_STATUS_REGISTERED, 
-                                                        MONITORING_DURATION, MONITORING_INTERVAL)
+                                                    print("EXPECTED RESULT %d: Status should remain CONNECTED throughout monitoring period" % step)
+                                                    tdkTestObj_tr181, actualresult, details = monitor_cellular_status(obj)
                                                     if expectedresult in actualresult:
                                                         tdkTestObj_tr181.setResultStatus("SUCCESS")
                                                         print("ACTUAL RESULT %d: %s" % (step, details.split('\n')[0]))
@@ -143,7 +144,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                                                 else:
                                                     tdkTestObj_tr181.setResultStatus("FAILURE")
                                                     print("ACTUAL RESULT %d: Cellular status is %s (Expected: %s)" % 
-                                                          (step, rdk_status, EXPECTED_STATUS_REGISTERED))
+                                                          (step, rdk_status, EXPECTED_STATUS_CONNECTED))
                                                     print("[TEST EXECUTION RESULT] : FAILURE")
                                             else:
                                                 tdkTestObj_tr181.setResultStatus("FAILURE")

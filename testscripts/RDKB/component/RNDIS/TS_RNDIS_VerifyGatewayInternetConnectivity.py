@@ -28,11 +28,10 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyErouter0Inactive')
+sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyGatewayInternetConnectivity')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
-
 if "SUCCESS" in loadmodulestatus_sys.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
@@ -41,34 +40,25 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Check erouter0 interface status
-        print("\nTEST STEP %d: Check %s interface status" % (step, DEFAULT_WAN_INTERFACE))
-        print("EXPECTED RESULT %d: Should get %s interface details" % (step, DEFAULT_WAN_INTERFACE))
-        tdkTestObj, actualresult, erouter_details = check_interface_no_ip(sysobj, DEFAULT_WAN_INTERFACE)
-        # For this step, we just want to get the interface details, so we mark it SUCCESS
-        tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: Retrieved %s interface status" % (step, DEFAULT_WAN_INTERFACE))
-        print("Interface details: %s" % erouter_details.split('\n')[0] if erouter_details else "No output")
-        print("[TEST EXECUTION RESULT] : SUCCESS")
-
-        step += 1
-        # Step 3: Verify erouter0 does not have an IP address
-        print("\nTEST STEP %d: Verify %s does not have an IP address in RNDIS mode" % (step, DEFAULT_WAN_INTERFACE))
-        print("EXPECTED RESULT %d: %s should not have 'inet addr' assigned" % (step, DEFAULT_WAN_INTERFACE))
-        if actualresult == "SUCCESS":
+        # Step 2: Perform ping test and verify 0% packet loss
+        print("\nTEST STEP %d: Perform ping test to %s and verify 0%% packet loss" % (step, PING_TARGET))
+        print("EXPECTED RESULT %d: Ping should be successful with 0%% packet loss" % step)
+        tdkTestObj, actualresult, ping_output = perform_ping_test(sysobj, PING_TARGET, PING_COUNT)
+        if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: %s does not have an IP address (as expected in RNDIS mode)" % (step, DEFAULT_WAN_INTERFACE))
+            print("ACTUAL RESULT %d: %s" % (step, ping_output.strip()))
             print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: %s has an IP address (unexpected in RNDIS mode)" % (step, DEFAULT_WAN_INTERFACE))
+            print("ACTUAL RESULT %d: Ping test failed or packet loss detected" % step)
+            print("Details: %s" % ping_output)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")

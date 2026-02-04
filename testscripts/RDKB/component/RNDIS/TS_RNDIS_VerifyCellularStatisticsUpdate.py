@@ -45,10 +45,10 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
@@ -64,7 +64,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
 
         step += 1
         # Step 3: Generate network traffic
-        print("\nTEST STEP %d: Generate network traffic using ping -c %d www.google.com" % (step, PING_COUNT))
+        print("\nTEST STEP %d: Generate network traffic using ping -c %d %s" % (step, PING_COUNT, PING_TARGET))
         print("EXPECTED RESULT %d: Traffic generation should complete successfully" % step)
         tdkTestObj, actualresult, ping_details = perform_ping_test(sysobj, PING_TARGET, PING_COUNT)
         if expectedresult in actualresult:
@@ -87,9 +87,9 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("PacketsReceived: %d (Initial: %d, Increase: %d)" % 
                   (final_packets_received, initial_packets_received, final_packets_received - initial_packets_received))
             # Verify statistics have increased
-            stats_increased = (final_bytes_sent > initial_bytes_sent or 
-                             final_bytes_received > initial_bytes_received or 
-                             final_packets_sent > initial_packets_sent or 
+            stats_increased = (final_bytes_sent > initial_bytes_sent and 
+                             final_bytes_received > initial_bytes_received and 
+                             final_packets_sent > initial_packets_sent and 
                              final_packets_received > initial_packets_received)
 
             if stats_increased:

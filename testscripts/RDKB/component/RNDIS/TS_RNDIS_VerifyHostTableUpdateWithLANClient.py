@@ -45,25 +45,24 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     # Step 1: Verify the target WAN interface is up with active IP (Prerequisite)
     print("\nTEST STEP %d: Verify the target WAN interface %s has active IP address" % (step, ANDROID_WAN_INTERFACE))
     print("EXPECTED RESULT %d: Interface %s should have inet addr" % (step, ANDROID_WAN_INTERFACE))
-    tdkTestObj, actualresult, interface_name = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
+    tdkTestObj, actualresult, details = get_target_wan_interface(sysobj, ANDROID_WAN_INTERFACE)
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: WAN interface %s has active IP address" % (step, interface_name))
+        print("ACTUAL RESULT %d: WAN interface %s has active IP address: %s" % (step, ANDROID_WAN_INTERFACE, details))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        # Step 2: Get the number of Host entries using Device.Hosts.HostNumberOfEntries
-        print("\nTEST STEP %d: Get the number of Host entries using Device.Hosts.HostNumberOfEntries" % step)
-        print("EXPECTED RESULT %d: Should successfully retrieve Device.Hosts.HostNumberOfEntries" % step)
+        # Step 2: Get the number of Host entries
+        print("\nTEST STEP %d: Get the number of Host entries" % step)
+        print("EXPECTED RESULT %d: Should successfully retrieve HostNumberOfEntries DM value" % step)
         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, details = getTR181Value(tdkTestObj_tr181, DM_HOSTS_HOST_NUMBER_OF_ENTRIES)
-
-        if expectedresult in actualresult:
-            hostEntries = details.split("VALUE:")[1].split(',')[0].strip() if "VALUE:" in details else details.strip()
+        if expectedresult in actualresult and details != "":
+            hostEntries = details.strip()
             if hostEntries.isdigit():
                 hostEntries = int(hostEntries)
                 tdkTestObj_tr181.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: Device.Hosts.HostNumberOfEntries : %d" % (step, hostEntries))
+                print("ACTUAL RESULT %d: HostNumberOfEntries : %d" % (step, hostEntries))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 # Step 3 & 4: Iterate through the Host Table and find LAN client entry
@@ -79,11 +78,11 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Device.Hosts.HostNumberOfEntries is not a valid number: %s" % (step, hostEntries))
+                print("ACTUAL RESULT %d: HostNumberOfEntries DM value is not a valid number: %s" % (step, hostEntries))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj_tr181.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to get Device.Hosts.HostNumberOfEntries. Details: %s" % (step, details))
+            print("ACTUAL RESULT %d: Failed to get HostNumberOfEntries value Details: %s" % (step, details))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
