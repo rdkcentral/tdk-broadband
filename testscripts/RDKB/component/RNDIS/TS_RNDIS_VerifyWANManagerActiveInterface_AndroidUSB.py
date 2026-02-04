@@ -29,8 +29,8 @@ obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyWANManagerActiveInterface')
-obj.configureTestCase(ip,port,'TS_RNDIS_VerifyWANManagerActiveInterface')
+sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyWANManagerActiveInterface_AndroidUSB')
+obj.configureTestCase(ip,port,'TS_RNDIS_VerifyWANManagerActiveInterface_AndroidUSB')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()

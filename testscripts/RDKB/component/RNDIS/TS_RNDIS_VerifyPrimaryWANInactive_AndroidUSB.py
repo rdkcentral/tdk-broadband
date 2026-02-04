@@ -29,7 +29,7 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyPrimaryWANInactive')
+sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyPrimaryWANInactive_AndroidUSB')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
@@ -62,22 +62,14 @@ if "SUCCESS" in loadmodulestatus_sys.upper():
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Step 3: Check Primary WAN interface status
-            print("\nTEST STEP %d: Check %s interface status" % (step, default_wan_interface))
-            print("EXPECTED RESULT %d: Should get %s interface details" % (step, default_wan_interface))
-            tdkTestObj, actualresult, erouter_details = check_interface_no_ip(sysobj, default_wan_interface)
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: Retrieved %s interface status" % (step, default_wan_interface))
-            print("Interface details: %s" % erouter_details.split('\n')[0] if erouter_details else "No output")
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-            step += 1
-            # Step 4: Verify Primary WAN interface does not have an IP address when RNDIS is active
+            # Step 3: Verify Primary WAN interface does not have an IP address when RNDIS is active
             print("\nTEST STEP %d: Verify %s does not have an IP address in RNDIS mode" % (step, default_wan_interface))
             print("EXPECTED RESULT %d: %s should not have %s assigned" % (step, default_wan_interface, INET_ADDR_PATTERN))
-            if actualresult == "SUCCESS":
+            tdkTestObj, actualresult = check_interface_no_ip(sysobj, default_wan_interface)
+            if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: %s does not have an IP address (as expected in RNDIS mode)" % (step, default_wan_interface))
+                print("Interface %s has no valid IP" % default_wan_interface)
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")

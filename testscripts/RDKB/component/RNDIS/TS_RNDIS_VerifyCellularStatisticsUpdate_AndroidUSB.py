@@ -29,8 +29,8 @@ obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyCellularStatisticsUpdate')
-obj.configureTestCase(ip,port,'TS_RNDIS_VerifyCellularStatisticsUpdate')
+sysobj.configureTestCase(ip,port,'TS_RNDIS_VerifyCellularStatisticsUpdate_AndroidUSB')
+obj.configureTestCase(ip,port,'TS_RNDIS_VerifyCellularStatisticsUpdate_AndroidUSB')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
