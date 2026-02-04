@@ -65,7 +65,7 @@ if expectedresult in loadmodulestatus.upper():
                 print("Call has been initiated successfully between the SIP clients in the same WAN network")
 
                 step += 1
-                sleep(10)
+                sleep(5)
                 #Get the active call count after call initiation
                 print(f"\nTEST STEP {step}: Get the active call count from the asterisk server after call initiation.")
                 print(f"EXPECTED RESULT {step}: Active call count should be incremented by 1 after call initiation.")

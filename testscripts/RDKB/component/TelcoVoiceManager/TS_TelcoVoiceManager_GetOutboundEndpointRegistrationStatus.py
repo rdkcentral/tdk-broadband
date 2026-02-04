@@ -19,7 +19,6 @@
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
-from time import sleep
 from tdkbTelcoVoiceManagerVariables import *
 from tdkbTelcoVoiceManagerUtility import *
 
@@ -56,7 +55,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
         set_flag = setTelcoOutboundConfigs(tr181obj, valueList, step)
 
         if set_flag:
-            sleep(10)
             #Get the Registration status of external SIP client
             step += 1
             print(f"\nTEST STEP {step}: Get the registration status of the external SIP client")
