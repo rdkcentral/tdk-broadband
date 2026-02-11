@@ -35,6 +35,9 @@ port = <port>
 obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateOutboundClientDetailsInSavedContacts')
 tr181obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateOutboundClientDetailsInSavedContacts')
 
+print(f"Prerequisite : One external SIP client endpoint needs to be configured in subscribe.linphone.org.")
+
+
 # Get the result of connection with test component and DUT
 expectedresult = "SUCCESS"
 step = 1
@@ -65,6 +68,16 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
                 print("The outbound Client details are saved in contact list.")
             else:
                 print("The outbound Client details are NOT saved in contact list.")
+
+            #Revert the outbound call configurations to initial values
+            step += 1
+            print(f"Reverting the outbound call configurations to initial values.")
+            revert_flag = setTelcoOutboundConfigs(tr181obj, initial_values, step)
+            if revert_flag:
+                print("Successfully reverted the outbound call configurations to initial values.")
+            else:
+                print("Failed to revert the outbound call configurations to initial values.")
+
         else:
             print(f"The outbound call configurations are not updated properly.")
     else:

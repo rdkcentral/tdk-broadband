@@ -43,7 +43,7 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     obj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
-    print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
+    print(f"Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in {pjsip_conf_file}.")
 
     #Initiate Factory Reset
     step = 'A'

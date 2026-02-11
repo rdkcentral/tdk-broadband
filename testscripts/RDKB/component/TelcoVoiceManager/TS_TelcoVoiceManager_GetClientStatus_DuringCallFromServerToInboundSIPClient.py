@@ -36,7 +36,7 @@ step = 1
 loadmodulestatus = obj.getLoadModuleResult()
 if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
-    print("Prerequisite : One SIP client need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
+    print(f"Prerequisite : One SIP client need to be activated within the same WAN network using the default usernames and passwords specified in {pjsip_conf_file}.")
 
     #Cleaning up the existing calls if any before starting the test execution
     print("\nCleaning up the existing calls if any before starting the test execution")
@@ -74,7 +74,7 @@ if expectedresult in loadmodulestatus.upper():
                 print(f"ACTUAL RESULT {step}: Failed to connect the call and the SIP client status is {status}")
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            print("Failed to initiate the call between the SIP clients in the same WAN network")
+            print("Failed to initiate the call from the asterisk server to the inbound SIP client.")
     else:
         print("Failed to clean up the existing calls if any before starting the test execution")
     obj.unloadModule("sysutil")

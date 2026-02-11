@@ -46,8 +46,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
     obj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
-    print("Prerequisite : One SIP client need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.\n Another external SIP client endpoint needs to be configured in subscribe.linphone.org")
-
     #Get the outbound call configurations
     get_flag, initial_values = getTelcoOutboundConfigs(tr181obj, step)
     if get_flag:

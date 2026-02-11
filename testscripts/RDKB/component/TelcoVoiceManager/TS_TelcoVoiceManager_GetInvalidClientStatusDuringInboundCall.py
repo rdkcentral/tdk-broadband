@@ -37,7 +37,7 @@ step = 1
 loadmodulestatus = obj.getLoadModuleResult()
 if expectedresult in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
-    print("Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in /etc/asterisk/pjsip.conf.")
+    print(f"Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in {pjsip_conf_file}.")
 
     #Cleaning up the existing calls if any before starting the test execution
     print("\nCleaning up the existing calls if any before starting the test execution")
@@ -46,12 +46,12 @@ if expectedresult in loadmodulestatus.upper():
         print("Existing calls if any are cleaned up successfully before starting the test execution")
 
         step += 1
-        # Call Initiation between inbound SIP Clients
-        print("\nInitiating a call between the SIP clients configured in the same WAN network")
+        # Call Initiation between valid to invalid inbound SIP Clients
+        print("\nInitiating a call the valid inbound SIP client to the invalid inbound SIP client")
         dialplan_context = "internal"
         initiate_call_status = initiateCall(obj, client1_username, invalid_client, dialplan_context, step)
         if initiate_call_status:
-            print("Call has been initiated successfully between the SIP clients in the same WAN network")
+            print("Call has been initiated successfully between the SIP clients.")
 
             step += 1
             # Client1 Status after connecting client
