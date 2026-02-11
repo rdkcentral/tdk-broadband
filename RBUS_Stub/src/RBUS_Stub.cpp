@@ -706,8 +706,8 @@ void RBUS::RBUS_GetElementInfo(IN const Json::Value& req, OUT Json::Value& respo
         return;
     }
 
-    strcpy(pathName, req["pathName"].asCString());
-    strcpy(compName, req["compName"].asCString());
+    snprintf(pathName, MAX_PARAM_SIZE, "%s", req["pathName"].asCString());
+    snprintf(compName, MAX_PARAM_SIZE, "%s", req["compName"].asCString());
     depth = req["depth"].asInt();
 
     returnValue = ssp_rbus_getElementInfo(pathName, depth, &elementList, &elemCount);

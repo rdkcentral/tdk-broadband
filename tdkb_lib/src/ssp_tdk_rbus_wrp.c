@@ -1336,7 +1336,7 @@ int ssp_rbus_table_row_apis(char* operation, char *table_row, int* ins_num)
     int result = RETURN_ERR;
     int ret = RBUS_ERROR_SUCCESS;
     int instanceNum = 0;
-    rbusRowName_t* rows;
+    rbusRowName_t* rows = NULL;
 
     if (strcmp(operation,"rbusTable_addRow") == 0)
     {
@@ -1459,15 +1459,18 @@ int ssp_rbus_getElementInfo(char* pathName, int depth, rbusElementInfoStruct_t *
         *elementList = (rbusElementInfoStruct_t*)malloc(sizeof(rbusElementInfoStruct_t) * count);
 
         if (!*elementList)
-	{
-            DEBUG_PRINT(DEBUG_ERROR, "Memory allocation failed\n");
-            return RETURN_ERR;
+	{   
+            if (count != 0)
+	    {
+                DEBUG_PRINT(DEBUG_ERROR, "Memory allocation failed\n");
+                return RETURN_ERR;
+            }
         }
 
         for (rbusElementInfo_t* current = elems; current != NULL; current = current->next, iter++)
 	{
-            strcpy((*elementList)[iter].name, current->name);
-            strcpy((*elementList)[iter].component, current->component);
+	    snprintf((*elementList)[iter].name, sizeof((*elementList)[iter].name), "%s", current->name);
+	    snprintf((*elementList)[iter].component, sizeof((*elementList)[iter].component), "%s", current->component);
         }
 
         result = RETURN_OK;
