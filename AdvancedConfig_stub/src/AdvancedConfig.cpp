@@ -24,7 +24,7 @@
 extern "C"
 {
     int ssp_register(bool);
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     GETPARAMATTR* ssp_getParameterAttr(char *pParamAttr,int *pParamAttrSize);
     int ssp_setParameterAttr(char *pParamName,char *pAttrNotify,char *pAttrAccess);
@@ -140,11 +140,12 @@ void AdvancedConfig::AdvancedConfig_Get(IN const Json::Value& req, OUT Json::Val
 	GETPARAMVALUES *resultDetails;
 	int	paramsize=0;
 	char details[100] = {'\0'};
+	int getRet = 0;
 	strcpy(ParamNames,req["paramName"].asCString());
 
 	DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
 
-	resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+	resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 	DEBUG_PRINT(DEBUG_TRACE,"\nresultDetails is %s",resultDetails[0].pParamValues);
 	sprintf(details, "Get Parameter Value API Validation is Succeeded,Value: %s",resultDetails[0].pParamValues);
 
@@ -242,6 +243,7 @@ void AdvancedConfig::AdvancedConfig_Set_Get(IN const Json::Value& req, OUT Json:
     GETPARAMVALUES *resultDetails;
     int	paramsize=0;
     int commit = 1;
+    int getRet = 0;
 
     //Set Param
     strcpy(ParamName,req["paramName"].asCString());
@@ -268,7 +270,7 @@ void AdvancedConfig::AdvancedConfig_Set_Get(IN const Json::Value& req, OUT Json:
 	}
 
 
-	resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+	resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
 	if(resultDetails == NULL)
 	{

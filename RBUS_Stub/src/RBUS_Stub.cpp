@@ -22,6 +22,7 @@
 #define MAX_PARAM_SIZE 1024
 #define RETURN_SUCCESS 0
 #define RETURN_FAILURE 1
+
 /********************************************************************************************
  *Function name : testmodulepre_requisites
  *Description   : testmodulepre_requisites will  be used for registering TDK with the CR
@@ -594,7 +595,8 @@ void RBUS::RBUS_ObjectCommands(IN const Json::Value& req, OUT Json::Value& respo
  * Function Name : RBUS_TableRowCommands
  * Description   : This function will invokes the wrapper function ssp_rbus_table_row_apis
  * @param [in]   : operation     - operation to be performed
-                 : table_row     - Table Row to be added (DML Parameter value)
+                 : table_row     - Table Row to be added (DML Parameter value) in case of add-del operation;
+		   Table name in case of getRowNames operation
  * @param [out]  : Filled with SUCCESS or FAILURE based on the output status of operation
  **************************************************************************************************************/
 void RBUS::RBUS_TableRowCommands(IN const Json::Value& req, OUT Json::Value& response)
@@ -621,7 +623,7 @@ void RBUS::RBUS_TableRowCommands(IN const Json::Value& req, OUT Json::Value& res
 
     if(returnValue == RETURN_SUCCESS)
     {
-        if ((strcmp(operation,"rbusTable_addRow") == 0))
+        if ((strcmp(operation,"rbusTable_addRow") == 0) or (strcmp(operation,"rbusTable_getRowNames") == 0))
             sprintf(details, "%d", ins_num);
         else
             sprintf(details, "%s", "RBUS_TableRowCommands function was success");
@@ -675,6 +677,82 @@ void RBUS::RBUS_SetLogLevel(IN const Json::Value& req, OUT Json::Value& response
     DEBUG_PRINT(DEBUG_TRACE,"\n RBUS_SetLogLevel --->Exit\n");
     return;
 }
+
+/*****************************************************************************************************************
+ * Function Name : RBUS_GetElementInfo
+ * Description   : This function will invoke the wrapper function  ssp_rbus_getElementInfo
+ * @param [in]   : pathName - The name of the element to start from
+ *               : compName - The name of the component to which element belong
+ *               : depth - Depth control flag
+ * @param [out]  : Filled with SUCCESS or FAILURE based on the output status of operation
+ **************************************************************************************************************/
+
+void RBUS::RBUS_GetElementInfo(IN const Json::Value& req, OUT Json::Value& response)
+{
+    DEBUG_PRINT(DEBUG_TRACE,"\n RBUS_GetElementInfo  --->Entry \n");
+    int returnValue = RETURN_FAILURE;
+    char pathName[MAX_PARAM_SIZE] = {'\0'};
+    char compName[MAX_PARAM_SIZE] = {'\0'};
+    char elem[200] = {'\0'};
+    char details[20000]= {'\0'};
+    int depth = 0;
+    int elemCount = 0;
+    rbusElementInfoStruct_t * elementList = NULL;
+
+    if(&req["pathName"]==NULL || &req["compName"]==NULL)
+    {
+        response["result"]="FAILURE";
+        response["details"]="NULL parameter as input argument";
+        return;
+    }
+
+    strcpy(pathName, req["pathName"].asCString());
+    strcpy(compName, req["compName"].asCString());
+    depth = req["depth"].asInt();
+
+    returnValue = ssp_rbus_getElementInfo(pathName, depth, &elementList, &elemCount);
+
+    if(returnValue == RETURN_SUCCESS)
+    {
+        if(elementList)
+	{
+            for (int i = 0; i < elemCount; i++)
+	    {
+                if (strcmp(elementList[i].component, compName) == 0)
+		{
+		    printf("\n Element: %s\n", elementList[i].name);
+		    snprintf(elem, sizeof(elem), "%s, ", elementList[i].name);
+
+                    if (strlen(details) + strlen(elem) < sizeof(details))
+                    {
+                        strcat(details, elem);
+                    }
+                    else
+                    {
+                        DEBUG_PRINT(DEBUG_ERROR, "Buffer overflow prevented\n");
+                        response["result"]="FAILURE";
+			response["details"]="Buffer Overflow. Please check logs.";
+			free(elementList);
+			return;
+                    }
+		}
+	    }
+	}
+
+	free(elementList);
+        response["result"]="SUCCESS";
+        response["details"]=details;
+    }
+    else
+    {
+        response["result"]="FAILURE";
+        response["details"]="RBUS_GetElementInfo function has failed. Please check logs.";
+    }
+
+    DEBUG_PRINT(DEBUG_TRACE,"\n RBUS_GetElementInfo --->Exit\n");
+    return;
+}
+
 
 /***************************************************************************************************
  *Function Name   : CreateObject

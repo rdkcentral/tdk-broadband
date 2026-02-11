@@ -20,7 +20,7 @@
 #include "ssp_tdk_wrp.h"
 
 extern "C" {
-   GETPARAMVALUES* ssp_getParameterValue(char* pParamName,int* pParamsize);
+   GETPARAMVALUES* ssp_getParameterValue(char* pParamName,int* pParamsize,int *pRet);
     int ssp_register(bool);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     GETPARAMNAMES *ssp_getParameterNames(char* pPathName,int recursive,int* pParamSize);
@@ -122,9 +122,10 @@ void TR069Agent::TR069Agent_GetParameterValues(IN const Json::Value& req, OUT Js
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function GetParamValues \n");
     int size_ret=0,i=0;
     GETPARAMVALUES *DataParamValue;
+    int getRet = 0;
 
     string ParamName=req["ParamName"].asCString();
-    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret);
+    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     if((DataParamValue == NULL))
     {
         printf("GetParamValue funtion returns NULL as o/p\n");
@@ -166,7 +167,7 @@ void TR069Agent::TR069Agent_GetParameterValues(IN const Json::Value& req, OUT Js
 void TR069Agent::TR069Agent_SetParameterValues(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function SetParamValues \n");
-    int size_ret=0,i=0,setResult=0;
+    int size_ret=0,i=0,setResult=0, getRet=0;
     GETPARAMVALUES *DataParamValue1;
     string ParamName=req["ParamName"].asCString();
     string ParamValue=req["ParamValue"].asCString();
@@ -176,7 +177,7 @@ void TR069Agent::TR069Agent_SetParameterValues(IN const Json::Value& req, OUT Js
     if(setResult==0)
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {

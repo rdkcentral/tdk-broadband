@@ -64,6 +64,7 @@ class RBUS : public RDKTestStubInterface, public AbstractServer<RBUS>
             this->bindAndAddMethod(Procedure("RBUS_ObjectCommands", PARAMS_BY_NAME, JSON_STRING, "operation", JSON_STRING, "obj_count",JSON_INTEGER,  "object_name", JSON_STRING, NULL), &RBUS::RBUS_ObjectCommands);
             this->bindAndAddMethod(Procedure("RBUS_TableRowCommands", PARAMS_BY_NAME, JSON_STRING, "operation", JSON_STRING, "table_row", JSON_STRING, NULL), &RBUS::RBUS_TableRowCommands);
             this->bindAndAddMethod(Procedure("RBUS_SetLogLevel", PARAMS_BY_NAME, JSON_STRING, "level", JSON_INTEGER, NULL), &RBUS::RBUS_SetLogLevel);
+	    this->bindAndAddMethod(Procedure("RBUS_GetElementInfo", PARAMS_BY_NAME, JSON_STRING, "pathName", JSON_STRING, "compName", JSON_STRING, "depth", JSON_INTEGER, NULL), &RBUS::RBUS_GetElementInfo);
         }
 
         bool initialize(IN const char* szVersion);
@@ -85,6 +86,7 @@ class RBUS : public RDKTestStubInterface, public AbstractServer<RBUS>
         void RBUS_ObjectCommands(IN const Json::Value& req, OUT Json::Value& response);
         void RBUS_TableRowCommands(IN const Json::Value& req, OUT Json::Value& response);
         void RBUS_SetLogLevel(IN const Json::Value& req, OUT Json::Value& response);
+	void RBUS_GetElementInfo(IN const Json::Value& req, OUT Json::Value& response);
 };
 #endif
 

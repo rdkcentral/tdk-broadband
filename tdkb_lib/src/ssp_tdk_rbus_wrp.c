@@ -1000,7 +1000,7 @@ int ssp_rbus_property_apis(char* operation, int prop_count, char *property_name,
         char *pRet = NULL;
         char *stream_buf;
         size_t len;
-               
+
         stream = open_memstream(&stream_buf, &len);
 
         if (prop_count == 1)
@@ -1324,7 +1324,8 @@ int ssp_rbus_object_apis(char* operation, int obj_count, char *object_name, char
 * Function Name : ssp_rbus_table_row_apis
 * Description   : This function will invoke the different RBUS Table APIs
 * @param [in]   : Operation     : Operation to be Performed
-                : table_row     : Table Row to be added or removed
+                : table_row     : Table Row to be added/removed in case of add-del operation; Table name in case
+				  of getRowNames operation
                 : ins_num       : Instance Number
 * @param [out]  : return status an integer value 0-success and 1-Failure
 ******************************************************************************************************************/
@@ -1335,6 +1336,7 @@ int ssp_rbus_table_row_apis(char* operation, char *table_row, int* ins_num)
     int result = RETURN_ERR;
     int ret = RBUS_ERROR_SUCCESS;
     int instanceNum = 0;
+    rbusRowName_t* rows;
 
     if (strcmp(operation,"rbusTable_addRow") == 0)
     {
@@ -1365,6 +1367,30 @@ int ssp_rbus_table_row_apis(char* operation, char *table_row, int* ins_num)
             result = RETURN_ERR;
         }
     }
+    if (strcmp(operation,"rbusTable_getRowNames") == 0)
+    {
+        ret = rbusTable_getRowNames(bus_handle, table_row, &rows);
+        if (ret == RBUS_ERROR_SUCCESS)
+        {
+            DEBUG_PRINT(DEBUG_ERROR, "%s success with return code [%d]\n", operation, ret);
+	    rbusRowName_t* row = rows;
+	    while(row)
+	    {
+                DEBUG_PRINT(DEBUG_ERROR, "Instance=%u, RowName=%s\n\r", row->instNum, row->name);
+		instanceNum++;
+		row = row->next;
+	    }
+	    *ins_num = instanceNum;
+            result = RETURN_OK;
+        }
+        else
+        {
+            DEBUG_PRINT(DEBUG_ERROR, "%s failed with error [%d]\n", operation, ret);
+            result = RETURN_ERR;
+        }
+
+	rbusTable_freeRowNames(bus_handle, rows);
+    }
 
     DEBUG_PRINT(DEBUG_ERROR, "Exit from ssp_rbus_table_row_apis wrapper\n");
     return result;
@@ -1390,5 +1416,70 @@ int ssp_rbus_set_log_level(rbusLogLevel_t level)
         DEBUG_PRINT(DEBUG_TRACE, "rbus_setLogLevel function success\n");
     }
     DEBUG_PRINT(DEBUG_TRACE, "Exit from ssp_rbus_set_log_level wrapper\n");
+    return result;
+}
+
+/*****************************************************************************************************************
+ * Function Name : ssp_rbus_getElementInfo
+ * Description   : This function will invoke the rbus api rbusElementInfo_get which gets the info about all
+                 : data elements provided under a path with a specified depth
+ * @param [in]   : pathName - The name of the element to start from
+ *               : depth - Depth control flag
+ *               : elementList - Output element info list
+ *               : elemCount - Number of output elements
+ * @param [out]  : return status an integer value 0-success and 1-Failure
+ ******************************************************************************************************************/
+
+int ssp_rbus_getElementInfo(char* pathName, int depth, rbusElementInfoStruct_t ** elementList, int * elemCount)
+{
+    DEBUG_PRINT(DEBUG_ERROR, "Entering the ssp_rbus_getElementInfo wrapper\n");
+    rbusElementInfo_t* elems = NULL;
+    int iter = 0;
+    int count = 0;
+    int result = RETURN_ERR;
+    int ret = RBUS_ERROR_SUCCESS;
+
+    *elemCount = 0;
+
+    ret = rbusElementInfo_get(bus_handle, pathName, depth, &elems);
+
+    if(RBUS_ERROR_SUCCESS == ret)
+    {
+        DEBUG_PRINT(DEBUG_ERROR, "\n rbusElementInfo_get invoked successfully\n");
+
+        // Count the elements in elems
+        for (rbusElementInfo_t* current = elems; current != NULL; current = current->next)
+	{
+            count++;
+        }
+
+	DEBUG_PRINT(DEBUG_ERROR, "\n Parameters found under path: %s\n", pathName);
+
+        // Allocate memory
+        *elementList = (rbusElementInfoStruct_t*)malloc(sizeof(rbusElementInfoStruct_t) * count);
+
+        if (!*elementList)
+	{
+            DEBUG_PRINT(DEBUG_ERROR, "Memory allocation failed\n");
+            return RETURN_ERR;
+        }
+
+        for (rbusElementInfo_t* current = elems; current != NULL; current = current->next, iter++)
+	{
+            strcpy((*elementList)[iter].name, current->name);
+            strcpy((*elementList)[iter].component, current->component);
+        }
+
+        result = RETURN_OK;
+        *elemCount = count;
+        rbusElementInfo_free(bus_handle, elems);
+    }
+    else
+    {
+        DEBUG_PRINT(DEBUG_ERROR, "ssp_rbus_getElementInfo invocation failed. Error Code = %d\n", ret);
+        result = RETURN_ERR;
+    }
+
+    DEBUG_PRINT(DEBUG_ERROR, "Exit from ssp_rbus_getElementInfo wrapper\n");
     return result;
 }

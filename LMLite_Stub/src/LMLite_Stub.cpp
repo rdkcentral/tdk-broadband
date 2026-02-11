@@ -24,7 +24,7 @@ extern "C"
 {
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     void free_Memory_val(int size,GETPARAMVALUES *Freestruct);
 
@@ -104,13 +104,13 @@ void LMLiteStub::LMLiteStub_Get(IN const Json::Value& req, OUT Json::Value& resp
 
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
-    int paramsize=0;
+    int paramsize=0, getRet = 0;
 
     strcpy(ParamNames,req["paramName"].asCString());
 
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
@@ -147,7 +147,7 @@ void LMLiteStub::LMLiteStub_Set(IN const Json::Value& req, OUT Json::Value& resp
 {
     DEBUG_PRINT(DEBUG_TRACE,"LMLiteStub_Set --->Entry \n");
 
-    int size_ret=0,i=0,setResult=0;
+    int size_ret=0,i=0,setResult=0,getRet=0;
     char ParamName[MAX_PARAM_SIZE];
     char ParamValue[MAX_PARAM_SIZE];
     char Type[MAX_PARAM_SIZE];
@@ -161,7 +161,7 @@ void LMLiteStub::LMLiteStub_Set(IN const Json::Value& req, OUT Json::Value& resp
     if(setResult==0)
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to be cross checked with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {
@@ -217,6 +217,7 @@ void LMLiteStub::LMLiteStub_Set_Get(IN const Json::Value& req, OUT Json::Value& 
     GETPARAMVALUES *resultDetails;
     int paramsize=0;
     int commit = 1;
+    int getRet = 0;
 
     if(&req["ParamName"] == NULL || &req["ParamValue"] == NULL || &req["ParamType"] == NULL)
     {
@@ -250,7 +251,7 @@ void LMLiteStub::LMLiteStub_Set_Get(IN const Json::Value& req, OUT Json::Value& 
     }
 
     //Getting the parameter value
-    resultDetails = ssp_getParameterValue(&ParamName[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamName[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {

@@ -57,8 +57,9 @@ GETPARAMATTR *GetAttr;
  *			  Component
  * @param [in]  pParamName - Pointer to Parameter Name
  * @param [out] pParamsize - To hold the size of number of parameters fetched from component
+ * @param [out] pRet - Retrun value of base interface function
  ********************************************************************************************/
-GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
+GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet)
 {
     char dst_pathname_cr[64] = {0};
     componentStruct_t **ppComponents = NULL;
@@ -96,6 +97,7 @@ GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
          &size2
         );
 
+    *pRet = ret;
 
     if ( ret == CCSP_SUCCESS )
     {
@@ -128,6 +130,8 @@ GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize)
                 &size ,
                 &parameterVal
                 );
+
+	*pRet = ret;
         GetValues=(GETPARAMVALUES *)malloc(size*sizeof(GETPARAMVALUES));
         if(NULL==GetValues)
         {
@@ -547,7 +551,7 @@ int ssp_addTableRow(char *pObjTbl,int *pInstanceNumber)
         return 1;
     }
 
-    return 0;
+    return ret;
 }
 
 /*******************************************************************************************
@@ -637,7 +641,7 @@ int ssp_deleteTableRow(char *pObjTbl)
         printf("\nssp_deleteTableRow::Failed to delete a row from the table object(error code:(%d)).\n",ret);
         return 1;
     }
-    return 0;
+    return ret;
 }
 
 /*******************************************************************************************

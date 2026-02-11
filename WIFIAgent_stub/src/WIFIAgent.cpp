@@ -25,7 +25,7 @@
 extern "C"
 {
     int ssp_register(bool);
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType,int commit);
     GETPARAMATTR* ssp_getParameterAttr(char *pParamAttr,int *pParamAttrSize);
     int ssp_setParameterAttr(char *pParamName,char *pAttrNotify,char *pAttrAccess);
@@ -154,14 +154,14 @@ void WIFIAgent::WIFIAgent_Get(IN const Json::Value& req, OUT Json::Value& respon
     bool bReturn = TEST_FAILURE;
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
-    int	paramsize=0;
+    int	paramsize=0, getRet = 0;
     char paramDetails[MAX_BUFFER_SIZE] = {0};
 
     strcpy(ParamNames,req["paramName"].asCString());
 
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
@@ -449,6 +449,7 @@ void WIFIAgent::WIFIAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& re
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
     int     paramsize=0;
+    int getRet = 0;
 
     //Set Param
     strcpy(ParamName,req["paramName"].asCString());
@@ -520,7 +521,7 @@ void WIFIAgent::WIFIAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& re
         return;
     }
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
@@ -1040,6 +1041,7 @@ void WIFIAgent::WIFIAgent_Get_LargeValue(IN const Json::Value& req, OUT Json::Va
     char ParamName[MAX_PARAM_SIZE] = {'\0'};
     GETPARAMVALUES *resultDetails;
     int paramsize = 0;
+    int getRet = 0;
     char paramDetails[10000] = {'\0'};
 
     if(&req["ParamName"] == NULL)
@@ -1052,7 +1054,7 @@ void WIFIAgent::WIFIAgent_Get_LargeValue(IN const Json::Value& req, OUT Json::Va
     strcpy(ParamName,req["ParamName"].asCString());
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamName input is %s",ParamName);
 
-    resultDetails = ssp_getParameterValue(&ParamName[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamName[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {

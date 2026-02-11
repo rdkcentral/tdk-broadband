@@ -24,7 +24,7 @@ extern "C"
 {
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType);
     GETPARAMATTR* ssp_getParameterAttr(char *pParamAttr,int *pParamAttrSize);
     int ssp_setParameterAttr(char *pParamName,char *pAttrNotify,char *pAttrAccess);
@@ -111,12 +111,13 @@ void CMAgent::CMAgent_Get(IN const Json::Value& req, OUT Json::Value& response)
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
     int	paramsize=0;
+    int getRet = 0;
 
     strcpy(ParamNames,req["paramName"].asCString());
 
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
@@ -215,6 +216,7 @@ void CMAgent::CMAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& respon
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
     int	paramsize=0;
+    int getRet = 0;
 
     //Set Param
     strcpy(ParamName,req["paramName"].asCString());
@@ -239,7 +241,7 @@ void CMAgent::CMAgent_Set_Get(IN const Json::Value& req, OUT Json::Value& respon
     }
 
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
