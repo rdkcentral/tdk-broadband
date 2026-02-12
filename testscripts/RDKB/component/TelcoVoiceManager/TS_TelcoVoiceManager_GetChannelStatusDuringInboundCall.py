@@ -72,17 +72,18 @@ if expectedresult in loadmodulestatus.upper():
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"ACTUAL RESULT {step}: The call is in progress and SIP client channel status is {status}")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    step += 1
+                    print("\nDisconnecting the call between the SIP clients in the same WAN network")
+                    hangup_status = hangupChannel(obj, channel_name_client1, step)
+                    if hangup_status:
+                        print("Call has been disconnected successfully.")
+                    else:
+                        print("Failed to disconnect the call.")
+
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print(f"ACTUAL RESULT {step}: Failed to get the channel name or the channel status for client {client2_username} is {status}")
-
-                step += 1
-                print("\nDisconnecting the call between the SIP clients in the same WAN network")
-                hangup_status = hangupChannel(obj, channel_name_client1, step)
-                if hangup_status:
-                    print("Call has been disconnected successfully.")
-                else:
-                    print("Failed to disconnect the call.")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print(f"ACTUAL RESULT {step}: Failed to get the channel name or the channel status for client {client1_username} is {status}")

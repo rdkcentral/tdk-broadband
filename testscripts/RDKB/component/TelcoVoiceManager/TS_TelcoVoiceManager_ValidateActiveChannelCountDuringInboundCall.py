@@ -49,7 +49,7 @@ if expectedresult in loadmodulestatus.upper():
         step += 1
         #Get the initial active channel count
         print(f"\nTEST STEP {step}: Get the initial active channel count from the asterisk server.")
-        print(f"EXPECTED RESULT {step}: Should get the active channel count from the asterisk server.")
+        print(f"EXPECTED RESULT {step}: Should get the active channel count from the asterisk server as zero.")
         tdkTestObj, actualresult, initial_channel_count = getActiveChannelCount(obj)
         if expectedresult in actualresult and type(initial_channel_count) is int and initial_channel_count == 0:
             tdkTestObj.setResultStatus("SUCCESS")
@@ -104,7 +104,7 @@ if expectedresult in loadmodulestatus.upper():
                 print("Failed to initiate the call between the SIP clients in the same WAN network")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT {step}: Failed to get the initial active channel count from the asterisk server. Details: {initial_channel_count}")
+            print(f"ACTUAL RESULT {step}: The initial active channel count is not same as the expected value. Details: {initial_channel_count}")
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         print("Failed to clean up the existing calls if any before starting the test execution")

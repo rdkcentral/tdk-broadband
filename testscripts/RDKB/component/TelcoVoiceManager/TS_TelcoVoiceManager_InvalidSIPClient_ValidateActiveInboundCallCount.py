@@ -62,8 +62,6 @@ if expectedresult in loadmodulestatus.upper():
             dialplan_context = "internal"
             initiate_call_status = initiateCall(obj, client1_username, invalid_client, dialplan_context, step)
             if initiate_call_status:
-                print("Call has been initiated successfully between valid to invalid inbound SIP Clients.")
-
                 step += 1
                 sleep(5)
                 #Get the active call count after call initiation

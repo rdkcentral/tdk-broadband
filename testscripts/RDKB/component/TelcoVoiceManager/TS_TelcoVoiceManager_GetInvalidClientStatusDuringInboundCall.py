@@ -51,8 +51,6 @@ if expectedresult in loadmodulestatus.upper():
         dialplan_context = "internal"
         initiate_call_status = initiateCall(obj, client1_username, invalid_client, dialplan_context, step)
         if initiate_call_status:
-            print("Call has been initiated successfully between the SIP clients.")
-
             step += 1
             # Client1 Status after connecting client
             print(f"\nTEST STEP {step}: Check whether the call between SIP clients failed in client 1 - {client1_username}.")
@@ -66,7 +64,7 @@ if expectedresult in loadmodulestatus.upper():
                 step += 1
                 #Check whether invalid client failed to exist the endpoint list
                 print(f"\nTEST STEP {step}: Check whether the client 2 - {invalid_client} is listed as an endpoint.")
-                print(f"EXPECTED RESULT {step}: The invalid SIP client, {invalid_client} is not listed as an endpoint.")
+                print(f"EXPECTED RESULT {step}: The invalid SIP client, {invalid_client} should not listed as an endpoint.")
                 tdkTestObj, actualresult, status = clientStatus(obj, invalid_client)
                 if expectedresult in actualresult and "" in status:
                     tdkTestObj.setResultStatus("SUCCESS")
