@@ -65,17 +65,8 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 print("ACTUAL RESULT %d: HostNumberOfEntries : %d" % (step, hostEntries))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                # Step 3 & 4: Iterate through the Host Table and find WiFi 2.4G client entry
-                tdkTestObj_tr181, actualresult, clientDetected, clientIndex, detectedInfo, step = traverse_host_table_for_client(obj, hostEntries, "WiFi_2.4G", step)
-
-                # Step 5: Check if client was detected
-                if clientDetected != 1:
-                    step += 1
-                    tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("\nTEST STEP %d: Verify WiFi 2.4GHz client entry exists in Host Table" % step)
-                    print("EXPECTED RESULT %d: At least one Host Table entry should have Layer1Interface as %s" % (step, EXPECTED_LAYER1_INTERFACE_WIFI_2_4G))
-                    print("ACTUAL RESULT %d: None of the Host Table entries show %s as Layer 1 Interface" % (step, EXPECTED_LAYER1_INTERFACE_WIFI_2_4G))
-                    print("[TEST EXECUTION RESULT] : FAILURE")
+                # Step 3 : Iterate through the Host Table and find WiFi 2.4G client entry and check if the host is active
+                tdkTestObj_tr181, actualresult, clientDetected, clientIndex, step = traverse_host_table_for_client(obj, hostEntries, "WiFi_2.4G", step)
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
                 print("ACTUAL RESULT %d: HostNumberOfEntries DM value is not a valid number: %s" % (step, hostEntries))
