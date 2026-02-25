@@ -548,10 +548,10 @@ int ssp_addTableRow(char *pObjTbl,int *pInstanceNumber)
     else
     {
         printf("\nssp_addTableRow::Failed to add a row to the table object(error code:(%d)).\n",ret);
-        return 1;
+        return ret;
     }
 
-    return ret;
+    return 0;
 }
 
 /*******************************************************************************************
@@ -639,9 +639,9 @@ int ssp_deleteTableRow(char *pObjTbl)
     else
     {
         printf("\nssp_deleteTableRow::Failed to delete a row from the table object(error code:(%d)).\n",ret);
-        return 1;
+        return ret;
     }
-    return ret;
+    return 0;
 }
 
 /*******************************************************************************************
