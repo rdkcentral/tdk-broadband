@@ -32,8 +32,8 @@ tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 ip = <ipaddress>
 port = <port>
 
-obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateMultipleCallCountProcessed_AfterFactoryReset')
-tr181obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateMultipleCallCountProcessed_AfterFactoryReset')
+obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateMultipleCallCountProcessed')
+tr181obj.configureTestCase(ip,port,'TS_TelcoVoiceManager_ValidateMultipleCallCountProcessed')
 
 # Get the result of connection with test component and DUT
 expectedresult = "SUCCESS"
@@ -45,22 +45,15 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
 
     print(f"Prerequisite : Two SIP clients need to be activated within the same WAN network using the default usernames and passwords specified in {pjsip_conf_file}.")
 
-    #Initiate Factory Reset
+    # Get the current total number of calls processed before multiple call attempts
     step = 'A'
-    print(f"\nTEST STEP {step}: Initiate Factory Reset on the DUT.")
-    print(f"EXPECTED RESULT {step}: Factory Reset should be triggered successfully.")
-    obj.saveCurrentState()
-    tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly')
-    actualresult, details = setTR181Value(tdkTestObj, "Device.X_CISCO_COM_DeviceControl.FactoryReset", "Router,Wifi,VoIP,Dect,MoCA", "string")
-    if expectedresult in actualresult:
+    print(f"\nTEST STEP {step}: Get the total number of calls processed from the asterisk server before multiple call attempts.")
+    print(f"EXPECTED RESULT {step}: Should get the total number of calls processed from the asterisk server and it should be an integer value.")
+    tdkTestObj, actualresult, initial_call_count = getTotalCallsProcessed(obj)
+    if expectedresult in actualresult and type(initial_call_count) is int:
         tdkTestObj.setResultStatus("SUCCESS")
-        print(f"ACTUAL RESULT {step}: Factory Reset triggered successfully. Details : {details}.")
+        print(f"ACTUAL RESULT {step}: Initial number of calls processed before multiple call attempts is {initial_call_count}.")
         print("[TEST EXECUTION RESULT] : SUCCESS")
-
-        print("\nWaiting for 300 seconds for the device to be up...")
-        sleep(300)
-        #Restore the device state saved before reboot
-        obj.restorePreviousStateAfterReboot()
 
         for attempt in range(1, max_call_attempt+1):
             # Call Initiation between inbound SIP Clients
@@ -69,7 +62,6 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
             initiate_call_status = initiateCall(obj, client1_username, client2_username, dialplan_context, attempt)
             if initiate_call_status:
                 print("Call has been initiated successfully between the SIP clients in the same WAN network")
-
                 sleep(5)
                 print("\nDisconnecting the call between the SIP clients in the same WAN network")
                 hangup_status = callHangup(obj, attempt)
@@ -83,19 +75,20 @@ if expectedresult in loadmodulestatus.upper() and expectedresult in loadmodulest
         step = 'B'
         print(f"\nTEST STEP {step}: Get the total number of calls processed from the asterisk server after multiple call attempts.")
         print(f"EXPECTED RESULT {step}: Should get the total number of calls processed from the asterisk server and it should be equal to the number of call attempts.")
-        tdkTestObj, actualresult, total_calls_processed = getTotalCallsProcessed(obj)
+        tdkTestObj, actualresult, final_call_count = getTotalCallsProcessed(obj)
+        total_calls_processed = final_call_count - initial_call_count
         if expectedresult in actualresult and type(total_calls_processed) is int and total_calls_processed == max_call_attempt:
             tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: Total number of calls processed is {total_calls_processed} which is equal to the number of call attempts.")
+            print(f"ACTUAL RESULT {step}: Total number of calls processed after multiple call attempts is {total_calls_processed} which is equal to the number of call attempts.")
             print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT {step}: Failed to get the total number of calls processed or the total calls processed is {total_calls_processed} which is not equal to the number of call attempts.")
+            print(f"ACTUAL RESULT {step}: Total number of calls processed after multiple call attempts is {total_calls_processed} which is not equal to the number of call attempts.")
             print("[TEST EXECUTION RESULT] : FAILURE")
 
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print(f"ACTUAL RESULT {step}: Failed to trigger Factory Reset. Details : {details}.")
+        print(f"ACTUAL RESULT {step}: Failed to get the total number of calls processed from the asterisk server before multiple call attempts. Details: {initial_call_count}")
         print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("sysutil")
     tr181obj.unloadModule("tdkbtr181")
