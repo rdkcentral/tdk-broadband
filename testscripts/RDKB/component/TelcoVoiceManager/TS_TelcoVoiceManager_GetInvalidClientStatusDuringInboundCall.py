@@ -62,9 +62,9 @@ if expectedresult in loadmodulestatus.upper():
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
-                #Check whether invalid client failed to exist the endpoint list
+                #Check whether invalid client failed to exist in the endpoint list
                 print(f"\nTEST STEP {step}: Check whether the client 2 - {invalid_client} is listed as an endpoint.")
-                print(f"EXPECTED RESULT {step}: The invalid SIP client, {invalid_client} should not listed as an endpoint.")
+                print(f"EXPECTED RESULT {step}: The invalid SIP client, {invalid_client} should not be listed as an endpoint.")
                 tdkTestObj, actualresult, status = clientStatus(obj, invalid_client)
                 if expectedresult in actualresult and "" in status:
                     tdkTestObj.setResultStatus("SUCCESS")
