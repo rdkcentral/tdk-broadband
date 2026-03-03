@@ -36,7 +36,7 @@ sysobj.configureTestCase(ip,port,'TS_TR069PA_GetMultipleValues_ACS')
 loadmodulestatus=tr181obj.getLoadModuleResult()
 loadmodulestatus1=sysobj.getLoadModuleResult()
 
-if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
@@ -49,7 +49,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         #Perform get task request and search query to get the value of multiple parameters
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
         if getValues:
-            #Get the multiple paremeter values from DUT
+            #Get the multiple parameter values from DUT
             tdkTestObj,getTr181Values,step = getTr181DMValue(tr181obj,queryParam,step)
             if getTr181Values:
                 for getValue ,getTr181Value,name in zip(getValues, getTr181Values,parameters):

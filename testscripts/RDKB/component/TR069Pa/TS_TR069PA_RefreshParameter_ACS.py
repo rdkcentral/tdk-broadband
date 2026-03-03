@@ -37,7 +37,7 @@ sysobj.configureTestCase(ip,port,'TS_TR069PA_RefreshParameter_ACS')
 loadmodulestatus=tr181obj.getLoadModuleResult()
 loadmodulestatus1=sysobj.getLoadModuleResult()
 
-if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
@@ -53,27 +53,27 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         print("\n TEST STEP %d: Send RefreshObject task on %s  via ACS." %(step,name))
         print("EXPECTED RESULT %d: Send RefreshObject task on %s  via ACS successfully." %(step,name))
         status, queryResponse = tr069ACSQuery(username, queryParam, method="RefreshObject")
-        if status == 200 or queryResponse:
-            print("ACTUAL RESULT %d: RefreshObject Task successful for %s via ACS server." % (step, name))
+        if status == 200 and queryResponse:
+            print("ACTUAL RESULT %d: RefreshObject Task successful for %s via ACS server." % (step,name))
             if queryResponse.get("objectName") == name:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("Refresh object name matches.")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                print("Wait for 1 minute to complete the refreshing of the parameter.")
+                sleep(60)
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print("Refresh object name failed to  match.")
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: RefreshObject Task failed to get %s with status %d . " % (step, name, status))
+            print("ACTUAL RESULT %d: RefreshObject Task failed to get %s with status %d . " % (step,name,status))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in device or configuration is proper or connection is established.")
         print("[TEST EXECUTION RESULT] : FAILURE")
-
-    print("Wait for 1 minute to complete the refreshing of the parameter.")
-    sleep(60)
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

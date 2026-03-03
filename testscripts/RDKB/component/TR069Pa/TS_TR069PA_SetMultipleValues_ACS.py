@@ -36,7 +36,7 @@ sysobj.configureTestCase(ip,port,'TS_TR069PA_SetMultipleValues_ACS')
 loadmodulestatus=tr181obj.getLoadModuleResult()
 loadmodulestatus1=sysobj.getLoadModuleResult()
 
-if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
@@ -44,7 +44,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
         step = 0
-        queryParam = {"name":["Device.ManagementServer.UpgradesManaged","Device.Time.Enable","Device.Time.NTPServer1"],"value":[True,False, "pool.ntp.org"]}
+        queryParam = {"name":["Device.ManagementServer.UpgradesManaged","Device.Time.Enable","Device.Time.NTPServer1"],"value":[True,False,"pool.ntp.org"]}
         parameters = queryParam.get("name")
         values = queryParam.get("value")
         #Perform GET task request to get value of parameters
@@ -56,7 +56,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 #Perform get task request and search query to get the value of parameters after set
                 newValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
                 if newValues:
-                    for setValue ,newValue,name in zip(values,newValues,parameters):
+                    for setValue,newValue,name in zip(values,newValues,parameters):
                         step += 1
                         print("\nTEST STEP %d : Check if get and set value of %s will match or not." %(step,name))
                         print("EXPECTED RESULT %d : Get and set value of %s should match." %(step,name))
@@ -76,11 +76,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                     status,queryResponse = tr069ACSQuery(username,queryParam,"set")
                     if status == 200 and queryResponse:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d : Reverted %s to original value successfully" % (step,parameters))
+                        print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,parameters))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d : Failed to revert %s to original value " % (step,parameters))
+                        print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     print("Value retrieved after set  is empty or None.")

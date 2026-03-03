@@ -36,7 +36,7 @@ sysobj.configureTestCase(ip,port,'TS_TR069PA_GetLanMode_ACS')
 loadmodulestatus=tr181obj.getLoadModuleResult()
 loadmodulestatus1=sysobj.getLoadModuleResult()
 
-if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upper():
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
@@ -54,14 +54,14 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 name = queryParam.get("name")
                 step += 1
                 print("TEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
-                print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match" % (step,name))
+                print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
                 if getValue  == getTr181Value:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches" % (step, name))
+                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT" % (step, name))
+                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT." % (step, name))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 print("Value retrieved from DUT is empty or None.")
@@ -69,12 +69,12 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
             print("Value retrieved from ACS server is empty or None.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established")
+        print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established.")
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
 else:
-    print("FAILURE to load module")
+    print("FAILURE to load module.")
     tr181obj.setLoadModuleStatus("FAILURE")
     sysobj.setLoadModuleStatus("FAILURE")

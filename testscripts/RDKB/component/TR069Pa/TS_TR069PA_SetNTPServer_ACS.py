@@ -39,7 +39,6 @@ loadmodulestatus1=sysobj.getLoadModuleResult()
 if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
-    step = 1
 
     #Check for prerequisites
     tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
@@ -78,11 +77,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                             print("[TEST EXECUTION RESULT] : SUCCESS")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,name))
+                            print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d : Failed to match the get and set values of  %s." % (step, name))
+                        print("ACTUAL RESULT %d : Failed to match the get and set values of %s." % (step, name))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     print("Value retrieved after set  is empty or None.")
