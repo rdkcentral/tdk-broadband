@@ -49,7 +49,7 @@ if load_flag == 1:
 
     step = 1
     #get erouter IP address
-    erouter_ip, step = getErouterIP(obj, step)
+    tdkTestObj, erouter_ip, step = getErouterIP(obj, step)
 
     step += 1
     #get details of the current firmware in the device
