@@ -42,8 +42,6 @@ def loadAndUnloadModules():
 load_flag, obj = loadAndUnloadModules()
 expectedresult = "SUCCESS"
 
-XCONF_CMD_WAIT = 30
-
 if load_flag == 1:
     obj.setLoadModuleStatus("SUCCESS")
 
