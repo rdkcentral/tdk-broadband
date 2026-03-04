@@ -47,7 +47,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         queryParam = {"name":"Device.Time.NTPServer1"}
         name = queryParam.get("name")
 
-       #Perform get task request and search query to get the value of the parameter
+        #Perform get task request and search query to get the value of the parameter
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
         if getValues:
             # Toggle NTP server
