@@ -53,7 +53,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             if getTr181Value:
                 name = queryParam.get("name")
                 step += 1
-                print("TEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
+                print("\nTEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
                 print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
                 if getValue  == getTr181Value:
                     tdkTestObj.setResultStatus("SUCCESS")

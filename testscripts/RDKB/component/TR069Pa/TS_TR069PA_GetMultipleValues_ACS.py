@@ -44,7 +44,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
         step = 0
-        queryParam = {"name":["Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode","Device.DeviceInfo.Manufacturer"]}
+        queryParam = {"name":["Device.DeviceInfo.ProductClass","Device.DeviceInfo.Manufacturer"]}
         parameters = queryParam.get("name")
         #Perform get task request and search query to get the value of multiple parameters
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
@@ -65,7 +65,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT." % (step, name))
                         print("[TEST EXECUTION RESULT] : FAILURE")
             else:
-                print("Value retrieved from DUT is empty or None.")
+                print("Failed to fetch values of the parameters.")
         else:
             print("Value retrieved from ACS server is empty or None.")
     else:

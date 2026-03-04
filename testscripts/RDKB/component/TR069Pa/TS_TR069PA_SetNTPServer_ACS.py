@@ -44,13 +44,18 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
         step = 0
-        setValue = "pool.ntp.org"
-        queryParam = {"name":"Device.Time.NTPServer1","value":setValue}
+        queryParam = {"name":"Device.Time.NTPServer1"}
         name = queryParam.get("name")
 
        #Perform get task request and search query to get the value of the parameter
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
         if getValues:
+            # Toggle NTP server
+            if getValues[0] == "pool.ntp.org":
+                setValue = "time.nist.gov"
+            else:
+                setValue = "pool.ntp.org"
+            queryParam = {"name":"Device.Time.NTPServer1","value":setValue}
             #Perform set task request  to set the value of the parameter
             queryResponse,step = settr069ACS(tdkTestObj,username,queryParam,step)
             if queryResponse:
@@ -58,7 +63,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 newValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
                 if newValues:
                     step += 1
-                    print("\n TEST STEP %d : Check if get and set value of %s will match or not." %(step,name))
+                    print("\nTEST STEP %d : Check if get and set value of %s will match or not." %(step,name))
                     print("EXPECTED RESULT %d : Get and set value of %s should match." %(step,name))
                     if newValues[0] == setValue:
                         tdkTestObj.setResultStatus("SUCCESS")
@@ -84,11 +89,11 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                         print("ACTUAL RESULT %d : Failed to match the get and set values of %s." % (step, name))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    print("Value retrieved after set  is empty or None.")
+                    print("Failed to fetch value of the parameter after SET operation.")
             else:
-                print("Response retrieved from set is empty or None.")
+                print("Failed to set value of the parameter.")
         else:
-            print("Value retrieved before set  is empty or None.")
+            print("Failed to fetch value of the parameter before SET operation.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in device or configuration is proper or connection is established.")

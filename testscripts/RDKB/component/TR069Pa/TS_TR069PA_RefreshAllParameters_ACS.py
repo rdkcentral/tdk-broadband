@@ -59,8 +59,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("Object Name is empty as expected.")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                print("Wait for 4 minutes to complete the refreshing of all parameters.")
-                sleep(240)
+                print("Wait for 5 minutes to complete the refreshing of all parameters.")
+                sleep(300)
 
             else:
                 tdkTestObj.setResultStatus("FAILURE")

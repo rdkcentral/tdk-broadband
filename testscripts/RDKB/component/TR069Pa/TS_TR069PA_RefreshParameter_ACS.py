@@ -50,7 +50,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         #Perform Refresh task request for the parameter
         step += 1
-        print("\n TEST STEP %d: Send RefreshObject task on %s  via ACS." %(step,name))
+        print("\nTEST STEP %d: Send RefreshObject task on %s  via ACS." %(step,name))
         print("EXPECTED RESULT %d: Send RefreshObject task on %s  via ACS successfully." %(step,name))
         status, queryResponse = tr069ACSQuery(username, queryParam, method="RefreshObject")
         if status == 200 and queryResponse:
