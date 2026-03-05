@@ -23,7 +23,7 @@ extern "C"
 {
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     void free_Memory_val(int size,GETPARAMVALUES *Freestruct);
 };
@@ -91,10 +91,10 @@ void Mocastub::Mocastub_Get(IN const Json::Value& req, OUT Json::Value& response
     DEBUG_PRINT(DEBUG_TRACE,"\n Mocastub_Get --->Entry\n");
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
-    int paramsize=0;
+    int paramsize=0, getRet = 0;
     strcpy(ParamNames,req["paramName"].asCString());
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
     if(resultDetails == NULL)
     {
         response["result"]="FAILURE";

@@ -84,10 +84,11 @@ void TDKB_E2E::tdkb_e2e_Get(IN const Json::Value& req, OUT Json::Value& response
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
     int paramsize=0;
+    int getRet = 0;
     char paramDetails[200] = {0};
     strcpy(ParamNames,req["paramName"].asCString());
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
     if(resultDetails == NULL)
     {
         response["result"]="FAILURE";

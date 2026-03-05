@@ -22,6 +22,14 @@
 #include "rbus.h"
 #define SSP_SUCCESS       0
 #define SSP_FAILURE       1
+
+typedef struct _rbusElementInfoStruct
+{
+    char name[200];
+    char component[200];
+    unsigned int access;
+} rbusElementInfoStruct_t;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -41,6 +49,7 @@ extern "C"
         int ssp_rbus_object_apis(char* operation, int obj_count, char *object_name, char* name_value, int* output);
         int ssp_rbus_table_row_apis(char* operation, char *table_row, int* output);
         int ssp_rbus_set_log_level(rbusLogLevel_t level);
+	int ssp_rbus_getElementInfo(char* pathName, int depth, rbusElementInfoStruct_t ** elementList, int * elemCount);
 #ifdef __cplusplus
 }
 #endif

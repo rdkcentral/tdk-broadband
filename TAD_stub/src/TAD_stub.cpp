@@ -26,7 +26,7 @@ extern "C"
 {
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize, int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     void free_Memory_val(int size,GETPARAMVALUES *Freestruct);
     int ssp_Diag_Init();
@@ -113,12 +113,13 @@ void TADstub::TADstub_Get(IN const Json::Value& req, OUT Json::Value& response)
     char ParamNames[MAX_PARAM_SIZE];
     GETPARAMVALUES *resultDetails;
     int paramsize=0;
+    int getRet = 0;
 
     strcpy(ParamNames,req["paramName"].asCString());
 
     DEBUG_PRINT(DEBUG_TRACE,"\n ParamNames input is %s",ParamNames);
 
-    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize);
+    resultDetails = ssp_getParameterValue(&ParamNames[0],&paramsize,&getRet);
 
     if(resultDetails == NULL)
     {
@@ -167,12 +168,13 @@ void TADstub::TADstub_Set(IN const Json::Value& req, OUT Json::Value& response)
     char oldParamValue[50] = {0};
     char newParamValue[50] = {0};
     int src, dst=0;
+    int getRet = 0;
 
     setResult=ssp_setParameterValue(&ParamName[0],&ParamValue[0],&Type[0],1);
     if(setResult==0)
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {

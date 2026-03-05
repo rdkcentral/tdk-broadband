@@ -140,15 +140,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("\n*****************For TRACE LEVEL : %d*******************" %traceLevel);
 
                 #Get the set log line count
-                print("\nGet the current number of log lines of \"rdk_dyn_log_validateComponentName(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
+                print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
                 step = step + 1;
-                search_string_loglevelSet = "rdk_dyn_log_validateComponentName(): Set TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted";
+                search_string_loglevelSet = "rdk_dyn_log_validate_component_name(): Set TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted";
                 count_loglevelSet_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
 
                 #Get the disable log line count
-                print("\nGet the current number of log lines of \"rdk_dyn_log_validateComponentName(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
+                print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
                 step = step + 1;
-                search_string_loglevelReset = "rdk_dyn_log_validateComponentName(): Set !TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted"
+                search_string_loglevelReset = "rdk_dyn_log_validate_component_name(): Set !TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted"
                 count_loglevelReset_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
 
                 #Execute the set rtmessage log level command
@@ -171,7 +171,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     #Wait for 120s before checking the rtrouted.log
                     sleep(120);
                     #Check the final log lines of log level set in rtrouted.log
-                    print("\nGet the final number of log lines of \"rdk_dyn_log_validateComponentName(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
+                    print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
                     step = step + 1;
                     count_loglevelSet_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
 
@@ -213,7 +213,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         #Wait for 120s before checking the rtrouted.log
                         sleep(120);
                         #Get the reset log line count
-                        print("\nGet the final number of log lines of \"rdk_dyn_log_validateComponentName(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
+                        print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
                         step = step + 1;
                         count_loglevelReset_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
 
