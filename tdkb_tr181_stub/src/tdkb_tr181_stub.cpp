@@ -23,12 +23,13 @@ extern "C"
 {
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     int ssp_addTableRow(char *pObjTbl,int *pInstanceNumber);
     int ssp_deleteTableRow(char *pObjTbl);
     int ssp_setMultipleParameterValue(char **paramList, int size);
     void free_Memory_val(int size,GETPARAMVALUES *Freestruct);
+    GETPARAMNAMES* ssp_getParameterNames(char *pPathName,int recursive,int *pParamSize);
 };
 /***************************************************************************
  *Function name : initialize
@@ -88,10 +89,11 @@ bool TDKB_TR181Stub::testmodulepost_requisites()
 void TDKB_TR181Stub::TDKB_TR181Stub_Get(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function TDKB_TR181Stub_Get \n");
-    int size_ret=0;
+    int size_ret=0, getRet = 0;
+    char details[80] = {'\0'};
     GETPARAMVALUES *DataParamValue;
     string ParamName=req["ParamName"].asCString();
-    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret);
+    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     if((DataParamValue == NULL))
     {
         printf("TDKB_TR181Stub_Get funtion returns NULL as o/p\n");
@@ -108,7 +110,8 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Get(IN const Json::Value& req, OUT Json::Val
             return;
     }
     response["result"] = "FAILURE";
-    response["details"] = "Failed to get the value of parameter";
+    sprintf(details, "Failed to get the value of parameter, Errorcode: %d", getRet);
+    response["details"] = details;
     return;
 }
 
@@ -132,6 +135,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Set(IN const Json::Value& req, OUT Json::Val
     GETPARAMVALUES *DataParamValue1 = NULL;
     int apRet = 0;
     int commit = 1;
+    int getRet = 0;
 
     setResult=ssp_setParameterValue(&ParamName[0],&ParamValue[0],&Type[0],1);
     if(setResult==0)
@@ -166,7 +170,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Set(IN const Json::Value& req, OUT Json::Val
        if(apRet == 0)
        {
             DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
-            DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+            DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
        }
        else
        {
@@ -176,7 +180,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_Set(IN const Json::Value& req, OUT Json::Val
             return;
         }
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {
@@ -244,8 +248,9 @@ void TDKB_TR181Stub::TDKB_TR181Stub_AddObject(IN const Json::Value& req, OUT Jso
     }
     else
     {
+        sprintf(Details, "TDKB_TR181Stub::ADD OBJECT API Validation is Failure. Errorcode: %d", returnValue);
         response["result"]="FAILURE";
-        response["details"]="TDKB_TR181Stub::ADD OBJECT API Validation is Failure";
+        response["details"]=Details;
         DEBUG_PRINT(DEBUG_TRACE,"\n TDKB_TR181Stub_AddObject --->Error in adding object !!! \n");
     }
     DEBUG_PRINT(DEBUG_TRACE,"\n TDKB_TR181Stub_AddObject --->Exit\n");
@@ -326,6 +331,7 @@ void TDKB_TR181Stub::TDKB_TR181Stub_DelObject(IN const Json::Value& req, OUT Jso
     char paramName[MAX_PARAM_SIZE];
     int instanceNumber=0;
     int apitest=0;
+    char Details[100] = {'\0'};
     std::ostringstream sin;
     if(&req["paramName"]==NULL)
     {
@@ -359,7 +365,8 @@ void TDKB_TR181Stub::TDKB_TR181Stub_DelObject(IN const Json::Value& req, OUT Jso
     else
     {
         response["result"]="FAILURE";
-        response["details"]="TDKB_TR181Stub::Delete Object API Validation is Failure";
+	sprintf(Details, "TDKB_TR181Stub::Delete Object API Validation is Failure. Errorcode: %d", returnValue);
+	response["details"]=Details;
         DEBUG_PRINT(DEBUG_TRACE,"\n TDKB_TR181Stub_DelObject --->Error in deleting object !!! \n");
     }
     DEBUG_PRINT(DEBUG_TRACE,"\n TDKB_TR181Stub_DelObject --->Exit\n");
@@ -434,11 +441,11 @@ void TDKB_TR181Stub::TDKB_TR181Stub_SetOnly(IN const Json::Value& req, OUT Json:
        return;
     }
 
+    sprintf(Details, "FAILURE : Parameter Value has not been set. Errorcode: %d", setResult);
     response["result"] = "FAILURE";
-    response["details"] = "FAILURE : Parameter Value has not been set";
+    response["details"] = Details;
     return;
 }
-
 
 /**************************************************************************
  * Function Name        : CreateObject

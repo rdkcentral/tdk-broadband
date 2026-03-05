@@ -45,7 +45,7 @@
 extern "C"
 {
     int ssp_register(bool);
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *pParamsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType,int commit);
     int ssp_setMultipleParameterValue(char **paramList, int size);
 };

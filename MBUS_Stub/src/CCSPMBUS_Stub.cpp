@@ -26,7 +26,7 @@ extern "C"
     /* Wrapper Functions to invoke RDKB API's */
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *paramsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *paramsize, int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     GETPARAMATTR* ssp_getParameterAttr(char *pParamAttr,int *pParamAttrSize);
     int ssp_setParameterAttr(char *pParamName,char *pAttrNotify,char *pAttrAccess);
@@ -134,6 +134,7 @@ void CCSPMBUS::CCSPMBUS_GetParamValues(IN const Json::Value& req, OUT Json::Valu
     int paramSize = 0;
     int loop = 0;
     GETPARAMVALUES *paramValue;
+    int getRet = 0;
 
     /* Validate the input arguments */
     if(&req["paramName"]==NULL)
@@ -164,7 +165,7 @@ void CCSPMBUS::CCSPMBUS_GetParamValues(IN const Json::Value& req, OUT Json::Valu
     }
 
     /* Retrieve the specified parameter value */
-    paramValue = ssp_getParameterValue(&paramName[0],&paramSize);
+    paramValue = ssp_getParameterValue(&paramName[0],&paramSize,&getRet);
     if(paramValue == NULL)
     {
         response["result"]="FAILURE";
@@ -230,6 +231,7 @@ void CCSPMBUS::CCSPMBUS_SetParamValues(IN const Json::Value& req, OUT Json::Valu
     int commit = 0;
     GETPARAMVALUES *getParamValue;
     int returnVal=0;
+    int getRet = 0;
 
     /* Validate the input arguments */
     if(&req["paramName"]==NULL)
@@ -289,7 +291,7 @@ void CCSPMBUS::CCSPMBUS_SetParamValues(IN const Json::Value& req, OUT Json::Valu
     if(0 == returnValue)
     {
         /* Retrieve the specified parameter value */
-        getParamValue = ssp_getParameterValue(&paramName[0],&paramSize);
+        getParamValue = ssp_getParameterValue(&paramName[0],&paramSize,&getRet);
         if(getParamValue == NULL)
         {
             response["result"]="FAILURE";

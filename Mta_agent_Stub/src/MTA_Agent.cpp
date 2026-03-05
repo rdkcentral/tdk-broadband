@@ -22,7 +22,7 @@
 
 extern "C" {
 
-GETPARAMVALUES* ssp_getParameterValue(char* pParamName,int* pParamsize);
+GETPARAMVALUES* ssp_getParameterValue(char* pParamName,int* pParamsize,int *pRet);
 int ssp_register(bool);
 int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
 GETPARAMNAMES *ssp_getParameterNames(char* pPathName,int recursive,int* pParamSize);
@@ -126,10 +126,10 @@ void MTA_Agent::MTA_agent_Init(IN const Json::Value& req, OUT Json::Value& respo
 void MTA_Agent::MTA_agent_GetParameterValues(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function GetParamValues \n");
-    int size_ret=0,i=0;
+    int size_ret=0,i=0, getRet = 0;
     GETPARAMVALUES *DataParamValue;
     string ParamName=req["ParamName"].asCString();
-    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret);
+    DataParamValue=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     if((DataParamValue == NULL))
     {
         printf("GetParamValue funtion returns NULL as o/p\n");
@@ -172,7 +172,7 @@ void MTA_Agent::MTA_agent_GetParameterValues(IN const Json::Value& req, OUT Json
 void MTA_Agent::MTA_agent_SetParameterValues(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function SetParamValues \n");
-    int size_ret=0,i=0,setResult=0;
+    int size_ret=0,i=0,setResult=0,getRet=0;
     string ParamName=req["ParamName"].asCString();
     string ParamValue=req["ParamValue"].asCString();
     string Type=req["Type"].asCString();
@@ -181,7 +181,7 @@ void MTA_Agent::MTA_agent_SetParameterValues(IN const Json::Value& req, OUT Json
     if(setResult==0)
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {
@@ -437,7 +437,7 @@ void MTA_Agent::MTA_agent_SetParameterAttr(IN const Json::Value& req, OUT Json::
 void MTA_Agent::MTA_agent_Commit(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Inside Function SetParamValues \n");
-    int size_ret=0,i=0,setResult=0,commit=0;
+    int size_ret=0,i=0,setResult=0,commit=0,getRet=0;
     string ParamName=req["ParamName"].asCString();
     string ParamValue=req["ParamValue"].asCString();
     string Type=req["Type"].asCString();
@@ -448,7 +448,7 @@ void MTA_Agent::MTA_agent_Commit(IN const Json::Value& req, OUT Json::Value& res
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to cross be checked with Get Parameter Names\n");
 
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {
@@ -481,7 +481,7 @@ void MTA_Agent::MTA_agent_Commit(IN const Json::Value& req, OUT Json::Value& res
     commit=ssp_setCommit(&ParamName[0]); //Calling commit function to commit the Values
     if(commit==0)
     {
-        DataParamValue2=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue2=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {

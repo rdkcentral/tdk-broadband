@@ -26,7 +26,7 @@ extern "C"
     /* Wrapper Functions to invoke RDKB API's */
     int ssp_register(bool);
     int ssp_terminate();
-    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *paramsize);
+    GETPARAMVALUES* ssp_getParameterValue(char *pParamName,int *paramsize,int *pRet);
     int ssp_setParameterValue(char *pParamName,char *pParamValue,char *pParamType, int commit);
     GETPARAMATTR* ssp_getParameterAttr(char *pParamAttr,int *pParamAttrSize);
     int ssp_setParameterAttr(char *pParamName,char *pAttrNotify,char *pAttrAccess);
@@ -236,6 +236,7 @@ void WECB::WECB_GetParamValues(IN const Json::Value& req, OUT Json::Value& respo
     int paramSize = 0;
     int loop = 0;
     GETPARAMVALUES *paramValue;
+    int getRet = 0;
 
     /* Validate the input arguments */
     if(&req["paramName"]==NULL)
@@ -251,7 +252,7 @@ void WECB::WECB_GetParamValues(IN const Json::Value& req, OUT Json::Value& respo
     DEBUG_PRINT(DEBUG_TRACE,"\n Input parameter is %s",paramName);
 
     /* Retrieve the specified parameter value */
-    paramValue = ssp_getParameterValue(&paramName[0],&paramSize);
+    paramValue = ssp_getParameterValue(&paramName[0],&paramSize,&getRet);
     if(paramValue == NULL)
     {
         response["result"]="FAILURE";
@@ -363,6 +364,7 @@ void WECB::WECB_SetParamValues(IN const Json::Value& req, OUT Json::Value& respo
     int paramSize = 0;
     int commit = 0;
     GETPARAMVALUES *getParamValue;
+    int getRet = 0;
 
     /* Validate the input arguments */
     if(&req["paramName"]==NULL)
@@ -409,7 +411,7 @@ void WECB::WECB_SetParamValues(IN const Json::Value& req, OUT Json::Value& respo
     if(0 == returnValue)
     {
         /* Retrieve the specified parameter value */
-        getParamValue = ssp_getParameterValue(&paramName[0],&paramSize);
+        getParamValue = ssp_getParameterValue(&paramName[0],&paramSize,&getRet);
         if(getParamValue == NULL)
         {
             response["result"]="FAILURE";
