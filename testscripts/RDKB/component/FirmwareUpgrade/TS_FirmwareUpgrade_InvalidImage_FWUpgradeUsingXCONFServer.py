@@ -2,7 +2,7 @@
 # If not stated otherwise in this file or this component's Licenses.txt
 # file the following copyright and licenses apply:
 #
-# Copyright 2026 RDK Management
+# Copyright 2025 RDK Management
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,6 @@ if load_flag == 1:
 
     Old_FirmwareVersion, Old_FirmwareFilename = getCurrentFirmware(obj, step)
 
-    step += 1
     #get target firmware details
     FirmwareVersion = "dummy_version"
     FirmwareFilename = "dummy_version.bin.wic.bz2"
