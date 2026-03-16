@@ -55,7 +55,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 step += 1
                 print("\nTEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
                 print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
-                if getValue == getTr181Value:
+                if getValue.get(name)== getTr181Value.get(name):
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")

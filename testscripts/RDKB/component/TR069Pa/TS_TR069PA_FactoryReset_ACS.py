@@ -20,7 +20,6 @@
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 from tr69ACSUtility import *
-from time import sleep
 
 #Test component to be tested
 tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");

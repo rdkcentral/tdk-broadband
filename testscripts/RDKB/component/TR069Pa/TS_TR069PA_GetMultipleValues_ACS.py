@@ -52,10 +52,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Get the multiple parameter values from DUT
             tdkTestObj,getTr181Values,step = getTr181DMValue(tr181obj,queryParam,step)
             if getTr181Values:
-                for name in getValues.keys() & getTr181Values.keys():   # common keys
+                for name in parameters:
                     step += 1
                     print("\nTEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
                     print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
+                    if name not in getValues or name not in getTr181Values:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d : Parameter %s is missing in %s." % (step, name, "ACS response" if name not in getValues else "DUT response"))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        continue
                     if getValues.get(name) == getTr181Values.get(name):
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))

@@ -48,7 +48,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         parameters = queryParam.get("name")
         #Perform GET task request to get value of parameters
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
-        if isinstance(getValues, dict) and len(getValues) >= 2:
+        if isinstance(getValues, dict) and len(getValues) >= 3:
             values = list(getValues.values())
             setValue1 = not values[0] if isinstance(values[0], bool) else False
             setValue2 = not values[1] if isinstance(values[1], bool) else False
@@ -65,7 +65,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 #Perform get task request and search query to get the value of parameters after set
                 newValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
                 if newValues:
-                    for setValue,newValue,name in zip(values, newValues.values(),newValues.keys()):
+                    for name, setValue in zip(parameters, values):
+                        newValue = newValues.get(name)
                         step += 1
                         print("\nTEST STEP %d : Check if get and set value of %s will match or not." %(step,name))
                         print("EXPECTED RESULT %d : Get and set value of %s should match." %(step,name))

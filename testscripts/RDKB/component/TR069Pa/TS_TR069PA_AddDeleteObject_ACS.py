@@ -49,8 +49,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         sysobj.saveCurrentState()
         #Perform FactoryReset task request to reset the writable tables.
         step += 1
-        print("\nTEST STEP %d : Peform FactoryReset task request to reset the writable tables via ACS." %step)
-        print("EXPECTED RESULT %d : Peform FactoryReset task request to reset the writable tables via ACS successfully." %step)
+        print("\nTEST STEP %d : Perform FactoryReset task request to reset the writable tables via ACS." %step)
+        print("EXPECTED RESULT %d : Perform FactoryReset task request to reset the writable tables via ACS successfully." %step)
         status, queryResponse = tr069ACSQuery(username,queryParam,method="FactoryReset")
         if status == 200 and queryResponse:
             #Restore the device state saved before reboot
@@ -126,7 +126,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: AddObject Task failed to delete %s with status %d." % (step,name2,status1))
+                        print("ACTUAL RESULT %d: AddObject Task failed to add object %s with status %d." % (step,name2,status1))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     print("Value retrieved from ACS server is empty or None.")
