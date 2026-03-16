@@ -52,11 +52,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Get the multiple parameter values from DUT
             tdkTestObj,getTr181Values,step = getTr181DMValue(tr181obj,queryParam,step)
             if getTr181Values:
-                for getValue ,getTr181Value,name in zip(getValues, getTr181Values,parameters):
+                for name in getValues.keys() & getTr181Values.keys():   # common keys
                     step += 1
                     print("\nTEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
                     print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
-                    if getValue  == getTr181Value:
+                    if getValues.get(name) == getTr181Values.get(name):
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
