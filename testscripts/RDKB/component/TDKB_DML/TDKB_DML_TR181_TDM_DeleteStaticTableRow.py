@@ -42,7 +42,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     obj.setLoadModuleStatus("SUCCESS")
     rbusobj.setLoadModuleStatus("SUCCESS")
 
-    print("\nThe module to test is: PAM ");
+    print("\nThe module to test is: TDM ");
     setup_type = "TDK"
     factoryReset = "false"
     #Invoke the utility function to check if deleting rows from static table returns failure

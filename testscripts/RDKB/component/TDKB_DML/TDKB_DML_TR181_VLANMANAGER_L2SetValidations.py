@@ -42,7 +42,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     obj.setLoadModuleStatus("SUCCESS")
     rbusobj.setLoadModuleStatus("SUCCESS")
 
-    print("\nThe module to test is: ADVSEC ");
+    print("\nThe module to test is: VLANMANAGER ");
     setup_type = "TDK"
     #Invoke the utility function to validate the L2 SET use cases
     failedParams, moduleStatus = tdkbDmlUtility.setParams_module(tdkbDmlModuleList.VLANMANAGER, setup_type, obj, rbusobj, testtype = "L2-set")
