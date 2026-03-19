@@ -126,7 +126,7 @@ void Mocastub::Mocastub_Get(IN const Json::Value& req, OUT Json::Value& response
 void Mocastub::Mocastub_Set(IN const Json::Value& req, OUT Json::Value& response)
 {
     DEBUG_PRINT(DEBUG_TRACE,"Mocastub_Set --->Entry \n");
-    int size_ret=0,i=0,setResult=0;
+    int size_ret=0,i=0,setResult=0,getRet=0;
     char ParamName[MAX_PARAM_SIZE];
     char ParamValue[MAX_PARAM_SIZE];
     char Type[MAX_PARAM_SIZE];
@@ -138,7 +138,7 @@ void Mocastub::Mocastub_Set(IN const Json::Value& req, OUT Json::Value& response
     if(setResult==0)
     {
         DEBUG_PRINT(DEBUG_TRACE,"Parameter Values have been set.Needs to be cross check with Get Parameter Names\n");
-        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret);
+        DataParamValue1=ssp_getParameterValue(&ParamName[0],&size_ret,&getRet);
     }
     else
     {
@@ -241,9 +241,9 @@ void Mocastub::Mocastub_SetOnly(IN const Json::Value& req, OUT Json::Value& resp
         response["details"] = details;
         return;
     }
-     
+
 }
-	
+
 
 /**************************************************************************
  * Function Name        : CreateObject
