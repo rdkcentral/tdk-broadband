@@ -55,7 +55,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
             print(f"Successfully obtained the initial value of RDKRemoteDebugger CDL Module URL {cdl_url}")
             # Set the value of RDKRemoteDebugger CDL Module URL to the download server
             step += 1
-            set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, step, server_url)
+            set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, server_url, step)
             if set_flag:
                 print(f"Successfully set the value of RDKRemoteDebugger CDL Module URL to {server_url}.")
 
@@ -69,6 +69,8 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     step += 1
                     tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "dynamic", step)
                     if report_flag:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("TEST EXECUTION RESULT : SUCCESS")
                         print("Successfully verified that the dynamic debug report is generated.")
 
                         # Set the value of RDKRemoteDebugger IssueType again to trigger the debug report upload
@@ -79,7 +81,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
                             # Check if the dynamic debug report is uploaded to the server
                             step += 1
-                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "dynamic", server_url, step)
+                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "dynamic", server_url, rrd_log_file, step)
                             if upload_flag:
                                 tdkTestObj.setResultStatus("SUCCESS")
                                 print("TEST EXECUTION RESULT : SUCCESS")
@@ -91,10 +93,13 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
                         else:
                             print("Failed to set the value of RDKRemoteDebugger IssueType again to trigger the debug report upload.")
-
                     else:
-                        print("Failed to verify that the dynamic debug report is generated.")
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("TEST EXECUTION RESULT : FAILURE")
+                        print("Failed to generate the dynamic debug report.")
+
                     #Revert the value of RDKRemoteDebugger IssueType to its initial value
+                    print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
                     step += 1
                     set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
                     if set_flag:
@@ -106,8 +111,10 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     print("Failed to set the value of RDKRemoteDebugger IssueType to trigger the debug report generation.")
 
             #Revert the value of RDKRemoteDebugger CDL Module URL to its initial value
+            print("\nReverting the value of RDKRemoteDebugger CDL Module URL to its initial value.")
+
             step += 1
-            set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, step, cdl_url)
+            set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, cdl_url, step)
             if set_flag:
                 print("Successfully reverted the value of RDKRemoteDebugger CDL Module URL to its initial value.")
             else:

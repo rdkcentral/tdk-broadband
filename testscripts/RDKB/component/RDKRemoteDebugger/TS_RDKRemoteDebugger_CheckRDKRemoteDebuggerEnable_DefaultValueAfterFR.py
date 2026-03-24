@@ -44,8 +44,8 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
     step = 1
     #Factory Reset the device
-    print("\nTEST STEP %d: Initiate Factory Reset on the DUT" %step)
-    print("EXPECTED RESULT %d: Factory Reset should be triggered successfully" %step)
+    print(f"\nTEST STEP {step}: Initiate Factory Reset on the DUT")
+    print(f"EXPECTED RESULT {step}: Factory Reset should be triggered successfully")
     sysobj.saveCurrentState()
 
     tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly')
@@ -53,7 +53,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: Factory Reset triggered successfully. Details : %s" %(step, details))
+        print(f"ACTUAL RESULT {step}: Factory Reset triggered successfully. Details : {details}")
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         sleep(300)
@@ -64,12 +64,21 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         step += 1
         #Get the default value of RDKRemoteDebugger Enable
         tdkTestObj, get_flag, default_value = getRDKRemoteDebuggerEnable(tr181obj, step)
-        if get_flag:
-            print(f"Successfully got the default value of RDKRemoteDebugger Enable: {default_value}.")
+        print(f"Value Obtained : {default_value}")
+        step += 1
+        print(f"\nTEST STEP {step}:Check whether the obtained value matches the expected default value.")
+        print(f"EXPECTED RESULT {step}: The default value obtained should be true")
+        if get_flag and default_value == "true":
+            tdkTestObj.setResultStatus("SUCCESS")
+            print(f"ACTUAL RESULT {step}: The obtained value matches the expected default value")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
         else:
-            print("Failed to get the default value of RDKRemoteDebugger Enable")
+            tdkTestObj.setResultStatus("FAILURE")
+            print(f"ACTUAL RESULT {step}: The obtained value doesn't match the expected default value.")
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-        print("ACTUAL RESULT %d: Factory Reset could not be triggered. Details : %s" %(step, details))
+        tdkTestObj.setResultStatus("FAILURE")
+        print(f"ACTUAL RESULT {step}: Factory Reset could not be triggered. Details : {details}" )
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     tr181obj.unloadModule("tdkbtr181")

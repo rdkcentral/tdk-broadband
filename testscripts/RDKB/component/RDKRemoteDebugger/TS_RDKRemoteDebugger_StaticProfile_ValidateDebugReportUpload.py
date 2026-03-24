@@ -48,7 +48,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     tdkTestObj = sysobj.createTestStep('ExecuteCmd')
     print(f"\nTEST STEP {step} : Assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
     print(f"EXPECTED RESULT {step} : Should assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
-    command = f"sed -i 's|<UPSTREAM_RRD_URL>|{server_url}|g' {upstream_rrd_url_path}"
+    command = f"sed -i 's|^UPSTREAM_RRD_URL=.*|UPSTREAM_RRD_URL={server_url}|' {upstream_rrd_url_path}"
     print(f"Command : {command}")
     actualresult, details = doSysutilExecuteCommand(tdkTestObj, command)
     print(f"Command Output : {details}")
@@ -79,7 +79,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
                     step += 1
                     # Check if the static debug report is uploaded to the server
-                    tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", server_url, step)
+                    tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", server_url, rrd_log_file, step)
                     if upload_flag:
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("TEST EXECUTION RESULT : SUCCESS")
@@ -95,6 +95,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     print("The static debug report is not generated as expected.")
 
                 # Revert the value of RDKRemoteDebugger IssueType to its initial value
+                print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
                 step += 1
                 set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
                 if set_flag:

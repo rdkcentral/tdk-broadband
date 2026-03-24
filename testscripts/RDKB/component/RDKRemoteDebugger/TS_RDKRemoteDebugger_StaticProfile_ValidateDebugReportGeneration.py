@@ -67,6 +67,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 print("The static debug report is not generated as expected.")
 
             # Revert the value of RDKRemoteDebugger IssueType to its initial value
+            print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
             step += 1
             set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
             if set_flag:

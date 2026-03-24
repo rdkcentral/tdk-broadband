@@ -50,6 +50,7 @@ if expectedresult in loadmodulestatus_tr181.upper():
         if set_flag:
             print(f"Successfully set the value of RDKRemoteDebugger Enable to {new_value}.")
             #Revert the value of RDKRemoteDebugger Enable to its initial value
+            print("\nReverting the value of RDKRemoteDebugger Enable to its initial value.")
             step += 1
             set_flag = setRDKRemoteDebuggerEnable(tr181obj, initial_value, step)
             if set_flag:
