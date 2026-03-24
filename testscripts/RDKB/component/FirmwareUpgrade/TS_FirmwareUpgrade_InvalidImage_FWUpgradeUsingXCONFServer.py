@@ -47,19 +47,14 @@ if load_flag == 1:
     print("\nPrerequisites: Ensure a Python HTTP server is running in a WAN machine accessible from the DUT, hosting current and target firmware images for upgrade.\n The local http server location should be configured in rdkcentral Xconf server to override the default location.\n")
 
     step = 1
-    #get erouter IP address
-    tdkTestObj, erouter_ip, step = getErouterIP(obj, step)
-
-    step += 1
     #get details of the current firmware in the device
-
     Old_FirmwareVersion, Old_FirmwareFilename = getCurrentFirmware(obj, step)
 
     #get target firmware details
     FirmwareVersion = "dummy_version"
     FirmwareFilename = "dummy_version.bin.wic.bz2"
 
-    if FirmwareFilename != Old_FirmwareFilename and FirmwareFilename and erouter_ip != "":
+    if FirmwareFilename != Old_FirmwareFilename and FirmwareFilename:
         step += 1
         #Configure the Xconf server config and rules. "POST" - Create Config and "PUT" - Update Config
         FW_VERSION_CHECKSUM = FirmwareFilename + checksum_suffix

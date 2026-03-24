@@ -50,11 +50,9 @@ if load_flag == 1:
 
     step = 1
     #Get the required config values from tdk_platform.properties file
-    config_keys = ["FW_UPGRADE_BINARY", "FW_DOWNLOAD_PATH", "DEVICETYPE", "FW_NAME_SUFFIX"]
+    config_keys = ["DEVICETYPE", "FW_NAME_SUFFIX"]
 
     tdkTestObj, actualresult_all ,config_values = GetPlatformProperties(obj, config_keys)
-    FWUPGRADE_BINARY = config_values["FW_UPGRADE_BINARY"]
-    FW_DOWNLOAD_PATH = config_values["FW_DOWNLOAD_PATH"]
     platform = config_values["DEVICETYPE"]
     suffix = config_values["FW_NAME_SUFFIX"]
 
@@ -68,12 +66,7 @@ if load_flag == 1:
         print("[TEST EXECUTION RESULT] : SUCCESS\n")
 
         step += 1
-        #get erouter IP address
-        tdkTestObj, erouter_ip, step = getErouterIP(obj, step)
-
-        step += 1
         #get details of the current firmware in the device
-
         Old_FirmwareVersion, Old_FirmwareFilename = getCurrentFirmware(obj, step)
 
         step += 1
@@ -88,7 +81,7 @@ if load_flag == 1:
             tdkTestObj.setResultStatus("SUCCESS")
             print("[TEST EXECUTION RESULT] : SUCCESS\n")
 
-            if FirmwareFilename != Old_FirmwareFilename and erouter_ip != "":
+            if FirmwareFilename != Old_FirmwareFilename:
                 step += 1
                 #Configure the Xconf server config and rules. "POST" - Create Config and "PUT" - Update Config
                 FW_VERSION_CHECKSUM = FirmwareFilename + checksum_suffix
