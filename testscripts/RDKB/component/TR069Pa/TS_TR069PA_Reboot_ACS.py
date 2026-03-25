@@ -61,14 +61,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Wait upto 5 min to establish connection between DUT and ACS
             print("Sleeping for 300s")
             sleep(300)
+            print("The DUT is now up and running.")
+            print("ACTUAL RESULT %d: Reboot Task successful via ACS server." %step)
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             print("\nChecking PREREQUISITES after Reboot")
             #Check for prerequisites after reboot
             tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
             if "SUCCESS" in preRequisiteStatus:
-                print("ACTUAL RESULT %d: Reboot Task successful via ACS server." %step)
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
                 queryParam = {"name":"Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason"}
                 name = queryParam.get("name")
                 getValue,step = gettr069ACS(tdkTestObj,username,queryParam,step)

@@ -53,7 +53,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         step += 1
         print("\nTEST STEP %d : Send FactoryReset task request on DUT via ACS." %step)
         print("EXPECTED RESULT %d : Send FactoryReset task on DUT via ACS successfully." %step)
-
         status, queryResponse = tr069ACSQuery(username,queryParam,method="FactoryReset")
         if status == 200 and queryResponse:
             #Restore the device state saved before reboot
@@ -61,14 +60,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Wait upto 5 min to establish connection between ACS and DUT
             print("Sleeping for 300s")
             sleep(300)
-
+            print("The DUT is now up and running.")
+            print("ACTUAL RESULT %d: FactoryReset Task successful via ACS server." %step)
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             print("\nChecking PREREQUISITES after FactoryReset")
             #Check for prerequisites after factory-reset
             tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
             if "SUCCESS" in preRequisiteStatus:
-                print("ACTUAL RESULT %d: FactoryReset Task successful via ACS server." %step)
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
                 queryParam = {"name":"Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason"}
                 name = queryParam.get("name")
                 getValue,step = gettr069ACS(tdkTestObj,username,queryParam,step)

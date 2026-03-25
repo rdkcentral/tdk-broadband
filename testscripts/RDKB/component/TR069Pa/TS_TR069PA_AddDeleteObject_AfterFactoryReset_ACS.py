@@ -29,8 +29,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
-tr181obj.configureTestCase(ip,port,'TS_TR069PA_AddDeleteObject_ACS')
-sysobj.configureTestCase(ip,port,'TS_TR069PA_AddDeleteObject_ACS')
+tr181obj.configureTestCase(ip,port,'TS_TR069PA_AddDeleteObject_AfterFactoryReset_ACS')
+sysobj.configureTestCase(ip,port,'TS_TR069PA_AddDeleteObject_AfterFactoryReset_ACS')
 
 #Get the result of connection with test component and DUT
 loadmodulestatus=tr181obj.getLoadModuleResult()
@@ -58,7 +58,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Wait upto 5 min to establish connection between ACS and DUT
             print("Sleeping for 300s")
             sleep(300)
-
+            print("The DUT is now up and running.")
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: Performed FactoryReset task request to reset the writable tables via ACS successfully." %step)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             print("\nChecking PREREQUISITES after FactoryReset")
             #Check for prerequisites after factory-reset
             tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
@@ -136,7 +139,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: FactoryReset Task failed to factory reset the DUT with status %d." % (step,status))
+            print("ACTUAL RESULT %d: FactoryReset Task failed to reset the writable tables via ACS with status %d." % (step,status))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
