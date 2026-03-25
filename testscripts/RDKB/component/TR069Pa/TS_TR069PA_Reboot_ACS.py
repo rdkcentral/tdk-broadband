@@ -84,7 +84,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Got a different last reboot reason as %s than expected but ACS-DUT connection restored via ACS" %(step,getValue.get(name)))
+                    print("ACTUAL RESULT %d: Got the last reboot reason as %s, which does not match the expected value 'tr069-reboot' but ACS-DUT connection restored via ACS" %(step,getValue.get(name)))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
@@ -92,7 +92,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Reboot Task failed to restart the DUT with status %d ." % (step,status))
+            print("ACTUAL RESULT %d: Reboot Task failed to restart the DUT with status %d." % (step,status))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")

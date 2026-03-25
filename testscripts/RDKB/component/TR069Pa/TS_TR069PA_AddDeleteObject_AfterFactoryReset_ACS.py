@@ -106,7 +106,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 print("ACTUAL RESULT %d: DeleteObject Task successful for %s via ACS server." % (step,name3))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                #Perform get task request and search query to get the value of the parameter after AddObject task
+                                #Perform get task request and search query to get the value of the parameter after DeleteObject task
                                 getValue2,step = gettr069ACS(tdkTestObj,username,queryParam1,step)
                                 step += 1
                                 print("\nTEST STEP %d: Check if number of port mapping entries is restored to original value after DeleteObject."%step)
@@ -125,7 +125,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: Failed to verify the number of port mapping entries after DeleteObject."%step)
+                            print("ACTUAL RESULT %d: Failed to verify the number of port mapping entries after AddObject."%step)
                             print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
