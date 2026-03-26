@@ -41,7 +41,6 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     tr181obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
 
-    print("Pre-requisite : Install the Download Server and host the static profile in Download server path  ")
     step = 1
     # Get the value of RDKRemoteDebugger IssueType
     tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)

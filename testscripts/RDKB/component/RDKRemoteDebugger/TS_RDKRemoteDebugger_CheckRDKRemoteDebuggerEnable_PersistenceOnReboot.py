@@ -23,23 +23,23 @@ from tdkbRRDUtility import *
 from time import sleep
 
 # Test component to be tested
-tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
+tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 # IP and Port of box, No need to change,
 # This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 
-tr181obj.configureTestCase(ip,port,'TS_RDKRemoteDebugger_CheckRDKRemoteDebuggerEnable_PersistenceOnReboot')
 sysobj.configureTestCase(ip,port,'TS_RDKRemoteDebugger_CheckRDKRemoteDebuggerEnable_PersistenceOnReboot')
+tr181obj.configureTestCase(ip,port,'TS_RDKRemoteDebugger_CheckRDKRemoteDebuggerEnable_PersistenceOnReboot')
 # Get the result of connection with test component and DUT
 expectedresult = "SUCCESS"
-loadmodulestatus_tr181 = tr181obj.getLoadModuleResult()
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
+loadmodulestatus_tr181 = tr181obj.getLoadModuleResult()
 
 if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmodulestatus_sys.upper():
-    tr181obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
+    tr181obj.setLoadModuleStatus("SUCCESS")
 
     step = 1
     #Get the value of RDKRemoteDebugger Enable
@@ -47,20 +47,18 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     if get_flag:
         print(f"Successfully got the initial value of RDKRemoteDebugger Enable: {initial_value}")
 
-        # Set the value of RDKRemoteDebugger Enable to true
-        pre_reboot_value = "true"
-        set_flag = 1
-        if initial_value.lower() != pre_reboot_value:
-            print(f"Setting the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
-            set_flag = setRDKRemoteDebuggerEnable(tr181obj, "true", step)
-            if set_flag:
-                print(f"Successfully set the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
-            else:
-                print(f"Failed to set the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
+        # Set the value of RDKRemoteDebugger Enable to a different value
+        step += 1
+        if initial_value.lower() == "true":
+            pre_reboot_value = "false"
         else:
-            print("RDKRemoteDebugger Enable is already set to true")
+            pre_reboot_value = "true"
+        set_flag = 0
+        print(f"Setting the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
+        set_flag = setRDKRemoteDebuggerEnable(tr181obj, pre_reboot_value, step)
 
-        if set_flag == 1:
+        if set_flag:
+            print(f"Successfully set the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
             print("\n********************Rebooting the Device********************")
             sysobj.initiateReboot()
             print("Sleeping for 300s")
@@ -78,34 +76,34 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 print(f"\nTEST STEP {step} : Check whether the value of RDKRemoteDebugger Enable is persistent across reboot")
                 print(f"EXPECTED RESULT {step} : The value of RDKRemoteDebugger Enable should be persistent across reboot")
                 if pre_reboot_value.lower() == post_reboot_value.lower():
+                    print(f"ACTUAL RESULT {step} : The value of RDKRemoteDebugger Enable is persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"TEST EXECUTION RESULT : SUCCESS")
-                    print(f"The value of RDKRemoteDebugger Enable is persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
                 else:
+                    print(f"ACTUAL RESULT {step} : The value of RDKRemoteDebugger Enable is not persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
                     tdkTestObj.setResultStatus("FAILURE")
                     print(f"TEST EXECUTION RESULT : FAILURE")
-                    print(f"The value of RDKRemoteDebugger Enable is not persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
 
                 #Revert the value of RDKRemoteDebugger Enable to its initial value
                 step += 1
-                if post_reboot_value.lower() != initial_value.lower():
-                    print(f"Reverting the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
-                    set_flag = setRDKRemoteDebuggerEnable(tr181obj, initial_value, step)
-                    if set_flag:
-                        print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
-                    else:
-                        print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
-
+                print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
+                set_flag = setRDKRemoteDebuggerEnable(tr181obj, initial_value, step)
+                if set_flag:
+                    print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
+                else:
+                    print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
             else:
                 print(f"Failed to get the value of RDKRemoteDebugger Enable after reboot")
         else:
-            print("Failed to set the value of RDKRemoteDebugger Enable to true.")
+            print(f"Failed to set the value of RDKRemoteDebugger Enable to {pre_reboot_value}.")
     else:
         print("Failed to get the initial value of RDKRemoteDebugger Enable")
 
-
+    sysobj.unloadModule("sysutil")
     tr181obj.unloadModule("tdkbtr181")
+
 else:
     print("\nFailed to load the module")
+    sysobj.setLoadModuleStatus("FAILURE")
     tr181obj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")

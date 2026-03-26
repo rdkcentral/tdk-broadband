@@ -61,7 +61,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
                 step += 1
                 # Set the value of RDKRemoteDebugger IssueType to trigger the debug report generation
-                set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, "Device.Uptime")
+                set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, "Device.wifi")
                 if set_flag:
                     print("Successfully set the value of RDKRemoteDebugger IssueType to trigger the debug report generation.")
 
