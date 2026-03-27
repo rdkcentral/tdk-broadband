@@ -40,7 +40,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     # Step 1: Enable DFS RFC
     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
     sleep(2)
-    print(f"TEST STEP {step}: Enable DFS RFC")
+    print(f"\nTEST STEP {step}: Enable DFS RFC")
     print(f"EXPECTED RESULT {step}: DFS RFC should be enabled")
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
@@ -51,7 +51,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step += 1
         tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.AutoChannelEnable", "false", "boolean")
         sleep(2)
-        print(f"TEST STEP {step}: Disable Auto Channel Selection on Radio 2")
+        print(f"\nTEST STEP {step}: Disable Auto Channel Selection on Radio 2")
         print(f"EXPECTED RESULT {step}: AutoChannelEnable should be false")
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
@@ -63,7 +63,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             dfs_channel = str(random.choice(DFS_CHANNELS))
             tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.Channel", dfs_channel, "unsignedint")
             sleep(2)
-            print(f"TEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel}")
+            print(f"\nTEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel}")
             print(f"EXPECTED RESULT {step}: Channel should be set to {dfs_channel}")
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
@@ -74,7 +74,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step += 1
                 tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.ApplyRadioSettings", "true", "boolean")
                 sleep(5)
-                print(f"TEST STEP {step}: Apply radio settings")
+                print(f"\nTEST STEP {step}: Apply radio settings")
                 print(f"EXPECTED RESULT {step}: Radio settings should be applied")
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: ApplyRadioSettings result: {actualresult}")
@@ -83,7 +83,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 # Step 5: Verify channel is set to dfs_channel
                 step += 1
                 tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
-                print(f"TEST STEP {step}: Verify channel is set to DFS channel {dfs_channel}")
+                print(f"\nTEST STEP {step}: Verify channel is set to DFS channel {dfs_channel}")
                 print(f"EXPECTED RESULT {step}: Channel should be {dfs_channel}")
                 if expectedresult in actualresult and current_channel == dfs_channel:
                     tdkTestObj.setResultStatus("SUCCESS")
@@ -94,7 +94,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                     step += 1
                     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "false", "boolean")
                     sleep(5)
-                    print(f"TEST STEP {step}: Disable DFS RFC")
+                    print(f"\nTEST STEP {step}: Disable DFS RFC")
                     print(f"EXPECTED RESULT {step}: DFS RFC should be disabled")
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS")
@@ -104,7 +104,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                         # Step 7: Verify channel reverted to non-DFS
                         step += 1
                         tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
-                        print(f"TEST STEP {step}: Verify channel has switched back to a non-DFS channel")
+                        print(f"\nTEST STEP {step}: Verify channel has switched back to a non-DFS channel")
                         print(f"EXPECTED RESULT {step}: Channel should NOT be in DFS range (52-144)")
                         if expectedresult in actualresult and int(current_channel) not in DFS_CHANNELS:
                             tdkTestObj.setResultStatus("SUCCESS")

@@ -20,97 +20,62 @@
 import tdklib
 from tdkutility import *
 from time import sleep
-
+ 
 obj = tdklib.TDKScriptingLibrary("wifiagent", "1")
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_5GHZ_DFS_Default_State_After_FactoryReset')
-
+ 
 loadmodulestatus = obj.getLoadModuleResult()
 print("[LIB LOAD STATUS]  :  %s" % loadmodulestatus)
-
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
     step = 1
-
-    # Step 1: Enable DFS RFC
-    tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
-    sleep(2)
-    print(f"TEST STEP {step}: Enable DFS RFC")
-    print(f"EXPECTED RESULT {step}: DFS RFC should be enabled successfully")
+ 
+    paramNames = [
+        "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable",
+        "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"
+    ]
+ 
+    # Step 1: Perform Factory Reset
+    obj.saveCurrentState()
+    tdkTestObj, actualresult = wifi_SetParam(obj, "Device.X_CISCO_COM_DeviceControl.FactoryReset", "Router,Wifi,VoIP,Dect,MoCA", "string")
+    print(f"\nTEST STEP {step}: Perform Factory Reset")
+    print(f"EXPECTED RESULT {step}: Factory Reset should be initiated successfully")
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
-        print(f"ACTUAL RESULT {step}: SET operation SUCCESS")
+        print(f"ACTUAL RESULT {step}: Factory Reset initiated successfully")
         print("TEST EXECUTION RESULT : SUCCESS")
+        obj.restorePreviousStateAfterReboot()
+        sleep(300)
 
-        # Step 2: Confirm both DFS DMs are true
+        # Step 2: Verify both DMs are false after Factory Reset
         step += 1
-        paramNames = [
-            "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable",
-            "Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"
-        ]
         paramResults = {}
         actualresult_all = []
         for paramName in paramNames:
             tdkTestObj, actualresult, paramValue = wifi_GetParam(obj, paramName)
             actualresult_all.append(actualresult)
             paramResults[paramName] = paramValue
+
         dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
         dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-        print(f"TEST STEP {step}: Confirm both DFS DMs are true before Factory Reset")
-        print(f"EXPECTED RESULT {step}: Both DMs should be true")
-        if "FAILURE" not in actualresult_all and dfs_rfc == "true" and dfs_enable == "true":
+        print(f"\nTEST STEP {step}: Verify both DMS are false after Factory Reset")
+        print(f"EXPECTED RESULT {step}: Both DMs should be false confirming default state restored")
+        if "FAILURE" not in actualresult_all and dfs_rfc == "false" and dfs_enable == "false":
             tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable}")
+            print(f"ACTUAL RESULT {step}: Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable is {dfs_rfc} and Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable is {dfs_enable}")
             print("TEST EXECUTION RESULT : SUCCESS")
-
-            # Step 3: Perform Factory Reset
-            step += 1
-            obj.saveCurrentState()
-            tdkTestObj, actualresult = wifi_SetParam(obj, "Device.X_CISCO_COM_DeviceControl.FactoryReset", "Router,Wifi,VoIP,Dect,MoCA", "string")
-            print(f"TEST STEP {step}: Perform Factory Reset")
-            print(f"EXPECTED RESULT {step}: Factory Reset should be initiated successfully")
-            if expectedresult in actualresult:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: Factory Reset initiated successfully")
-                print("TEST EXECUTION RESULT : SUCCESS")
-                obj.restorePreviousStateAfterReboot()
-                sleep(300)
-
-                # Step 4: Verify both DMs are false after Factory Reset
-                step += 1
-                paramResults = {}
-                actualresult_all = []
-                for paramName in paramNames:
-                    tdkTestObj, actualresult, paramValue = wifi_GetParam(obj, paramName)
-                    actualresult_all.append(actualresult)
-                    paramResults[paramName] = paramValue
-                dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
-                dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-                print(f"TEST STEP {step}: Verify both DMS are false after Factory Reset")
-                print(f"EXPECTED RESULT {step}: Both DMs should be false confirming default state restored")
-                if "FAILURE" not in actualresult_all and dfs_rfc == "false" and dfs_enable == "false":
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable}")
-                    print("TEST EXECUTION RESULT : SUCCESS")
-                else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable} - Expected both false")
-                    print("TEST EXECUTION RESULT : FAILURE")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print(f"ACTUAL RESULT {step}: Factory Reset FAILURE")
-                print("TEST EXECUTION RESULT : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable} - Expected both true")
+            print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable} - Expected both false")
             print("TEST EXECUTION RESULT : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print(f"ACTUAL RESULT {step}: Enable DFS RFC FAILURE")
+        print(f"ACTUAL RESULT {step}: Factory Reset FAILURE")
         print("TEST EXECUTION RESULT : FAILURE")
-
+ 
     obj.unloadModule("wifiagent")
 else:
     print("Failed to load the module")

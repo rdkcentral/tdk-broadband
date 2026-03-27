@@ -38,7 +38,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     # Step 1: Enable DFS RFC
     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
     sleep(2)
-    print(f"TEST STEP {step}: Enable DFS RFC")
+    print(f"\nTEST STEP {step}: Enable DFS RFC")
     print(f"EXPECTED RESULT {step}: DFS RFC should be enabled successfully")
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
@@ -59,7 +59,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             paramResults[paramName] = paramValue
         dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
         dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-        print(f"TEST STEP {step}: Confirm both DFS RFC and DFSEnable are true")
+        print(f"\nTEST STEP {step}: Confirm both DFS RFC and DFSEnable are true")
         print(f"EXPECTED RESULT {step}: Both DMs should be true")
         if "FAILURE" not in actualresult_all and dfs_rfc == "true" and dfs_enable == "true":
             tdkTestObj.setResultStatus("SUCCESS")
@@ -69,7 +69,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             # Step 3: Get PossibleChannels and extract available DFS channels
             step += 1
             tdkTestObj, actualresult, possible_channels_str = wifi_GetParam(obj, "Device.WiFi.Radio.2.PossibleChannels")
-            print(f"TEST STEP {step}: Get Device.WiFi.Radio.2.PossibleChannels and extract DFS channels")
+            print(f"\nTEST STEP {step}: Get Device.WiFi.Radio.2.PossibleChannels and extract DFS channels")
             print(f"EXPECTED RESULT {step}: PossibleChannels should include DFS channels (52-144)")
             if expectedresult in actualresult:
                 possible_channels_list = [int(ch.strip()) for ch in possible_channels_str.split(",") if ch.strip().isdigit()]
@@ -86,7 +86,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step += 1
                 tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.AutoChannelEnable", "false", "boolean")
                 sleep(2)
-                print(f"TEST STEP {step}: Disable Auto Channel Selection")
+                print(f"\nTEST STEP {step}: Disable Auto Channel Selection")
                 print(f"EXPECTED RESULT {step}: AutoChannelEnable should be false")
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")

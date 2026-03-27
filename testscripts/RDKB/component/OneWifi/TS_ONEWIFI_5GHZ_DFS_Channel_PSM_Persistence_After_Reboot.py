@@ -43,7 +43,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     # Step 1: Enable DFS RFC
     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
     sleep(2)
-    print(f"TEST STEP {step}: Enable DFS RFC")
+    print(f"\nTEST STEP {step}: Enable DFS RFC")
     print(f"EXPECTED RESULT {step}: DFS RFC should be enabled")
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
@@ -54,7 +54,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step += 1
         tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.AutoChannelEnable", "false", "boolean")
         sleep(2)
-        print(f"TEST STEP {step}: Disable Auto Channel Selection")
+        print(f"\nTEST STEP {step}: Disable Auto Channel Selection")
         print(f"EXPECTED RESULT {step}: AutoChannelEnable should be false")
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
@@ -67,7 +67,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             sleep(2)
             wifi_SetParam(obj, "Device.WiFi.ApplyRadioSettings", "true", "boolean")
             sleep(5)
-            print(f"TEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel_to_set} and apply")
+            print(f"\nTEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel_to_set} and apply")
             print(f"EXPECTED RESULT {step}: Channel should be set to {dfs_channel_to_set}")
             tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
             if expectedresult in actualresult and current_channel == dfs_channel_to_set:
@@ -77,7 +77,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 # Step 4: Reboot
                 step += 1
-                print(f"TEST STEP {step}: Reboot the device")
+                print(f"\nTEST STEP {step}: Reboot the device")
                 print(f"EXPECTED RESULT {step}: Device should reboot and come back online")
                 doRebootDUT(sysobj)
                 tdkTestObj.setResultStatus("SUCCESS")
@@ -100,7 +100,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 channel_after = paramResults["Device.WiFi.Radio.2.Channel"]
                 dfs_enable_after = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
                 dfs_rfc_after = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
-                print(f"TEST STEP {step}: Verify DFS channel and DFS DMs after reboot")
+                print(f"\nTEST STEP {step}: Verify DFS channel and DFS DMs after reboot")
                 print(f"EXPECTED RESULT {step}: Channel should be {dfs_channel_to_set}, DFS RFC and DFSEnable should be true")
                 if "FAILURE" not in actualresult_all and channel_after == dfs_channel_to_set and dfs_rfc_after == "true" and dfs_enable_after == "true":
                     tdkTestObj.setResultStatus("SUCCESS")

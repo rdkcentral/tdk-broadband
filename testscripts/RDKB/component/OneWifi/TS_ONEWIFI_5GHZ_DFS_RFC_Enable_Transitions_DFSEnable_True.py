@@ -46,7 +46,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         paramResults[paramName] = paramValue
     dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
     dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-    print(f"TEST STEP {step}: Get initial values of DFS RFC and DFSEnable DMs")
+    print(f"\nTEST STEP {step}: Get initial values of DFS RFC and DFSEnable DMs")
     print(f"EXPECTED RESULT {step}: Both DMs should be false by default")
     if "FAILURE" not in actualresult_all and dfs_rfc == "false" and dfs_enable == "false":
         tdkTestObj.setResultStatus("SUCCESS")
@@ -57,7 +57,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step += 1
         tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
         sleep(2)
-        print(f"TEST STEP {step}: Enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable")
+        print(f"\nTEST STEP {step}: Enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable")
         print(f"EXPECTED RESULT {step}: DFS RFC should be set to true successfully")
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
@@ -74,7 +74,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 paramResults[paramName] = paramValue
             dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
             dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-            print(f"TEST STEP {step}: Verify both DFS RFC and DFSEnable are now true")
+            print(f"\nTEST STEP {step}: Verify both DFS RFC and DFSEnable are now true")
             print(f"EXPECTED RESULT {step}: Both DMs should be true after enabling DFS RFC")
             if "FAILURE" not in actualresult_all and dfs_rfc == "true" and dfs_enable == "true":
                 tdkTestObj.setResultStatus("SUCCESS")
@@ -85,7 +85,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step += 1
                 tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "false", "boolean")
                 sleep(2)
-                print(f"TEST STEP {step}: Revert Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable to false")
+                print(f"\nTEST STEP {step}: Revert Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable to false")
                 print(f"EXPECTED RESULT {step}: DFS RFC should be reverted to false successfully")
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
@@ -102,7 +102,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                         paramResults[paramName] = paramValue
                     dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
                     dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-                    print(f"TEST STEP {step}: Confirm both DMs are reverted to false")
+                    print(f"\nTEST STEP {step}: Confirm both DMs are reverted to false")
                     print(f"EXPECTED RESULT {step}: Both DMs should be false after revert")
                     if "FAILURE" not in actualresult_all and dfs_rfc == "false" and dfs_enable == "false":
                         tdkTestObj.setResultStatus("SUCCESS")

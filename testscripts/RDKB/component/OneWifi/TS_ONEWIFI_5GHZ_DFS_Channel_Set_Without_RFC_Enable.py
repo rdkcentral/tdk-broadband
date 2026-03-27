@@ -50,8 +50,9 @@ if "SUCCESS" in loadmodulestatus.upper():
         paramResults[paramName] = paramValue
     dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
     dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-    print(f"TEST STEP {step}: Confirm DFS RFC and DFSEnable are disabled")
+    print(f"\nTEST STEP {step}: Confirm DFS RFC and DFSEnable are disabled")
     print(f"EXPECTED RESULT {step}: Both DMs should be false")
+
     if "FAILURE" not in actualresult_all and dfs_rfc == "false" and dfs_enable == "false":
         tdkTestObj.setResultStatus("SUCCESS")
         print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable}")
@@ -61,7 +62,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         step += 1
         tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.AutoChannelEnable", "false", "boolean")
         sleep(2)
-        print(f"TEST STEP {step}: Disable Auto Channel Selection on Radio 2")
+        print(f"\nTEST STEP {step}: Disable Auto Channel Selection on Radio 2")
         print(f"EXPECTED RESULT {step}: AutoChannelEnable should be set to false")
         if expectedresult in actualresult:
             tdkTestObj.setResultStatus("SUCCESS")
@@ -73,34 +74,44 @@ if "SUCCESS" in loadmodulestatus.upper():
             dfs_channel = str(random.choice(DFS_CHANNELS))
             tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.Channel", dfs_channel, "unsignedint")
             sleep(2)
-            print(f"TEST STEP {step}: Attempt to set DFS channel {dfs_channel} without enabling DFS RFC")
-            print(f"EXPECTED RESULT {step}: Channel set attempt executed (may succeed or fail at DM level)")
-            tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: SET operation result: {actualresult}")
-            print("TEST EXECUTION RESULT : SUCCESS")
-
-            # Step 4: Apply radio settings
-            step += 1
-            tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.ApplyRadioSettings", "true", "boolean")
-            sleep(5)
-            print(f"TEST STEP {step}: Apply radio settings")
-            print(f"EXPECTED RESULT {step}: Radio settings applied")
-            tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: ApplyRadioSettings result: {actualresult}")
-            print("TEST EXECUTION RESULT : SUCCESS")
-
-            # Step 5: Verify channel is not a DFS channel
-            step += 1
-            tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
-            print(f"TEST STEP {step}: Verify radio is NOT operating on a DFS channel")
-            print(f"EXPECTED RESULT {step}: Channel should NOT be in DFS range (52-144), should be a non-DFS channel")
-            if expectedresult in actualresult and int(current_channel) not in DFS_CHANNELS:
+            print(f"\nTEST STEP {step}: Attempt to set DFS channel {dfs_channel} without enabling DFS RFC")
+            print(f"EXPECTED RESULT {step}: Channel set attempt should return SUCCESS at DM level")
+            if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: Channel is {current_channel} - correctly NOT a DFS channel")
+                print(f"ACTUAL RESULT {step}: SET operation result: {actualresult}")
                 print("TEST EXECUTION RESULT : SUCCESS")
+
+                # Step 4: Apply radio settings
+                step += 1
+                tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.ApplyRadioSettings", "true", "boolean")
+                sleep(5)
+                print(f"\nTEST STEP {step}: Apply radio settings")
+                print(f"EXPECTED RESULT {step}: Radio settings should be applied successfully")
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print(f"ACTUAL RESULT {step}: ApplyRadioSettings SUCCESS")
+                    print("TEST EXECUTION RESULT : SUCCESS")
+
+                    # Step 5: Verify channel is not a DFS channel
+                    step += 1
+                    tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
+                    print(f"\nTEST STEP {step}: Verify radio is NOT operating on a DFS channel")
+                    print(f"EXPECTED RESULT {step}: Channel should NOT be in DFS range (52-144), should be a non-DFS channel")
+                    if expectedresult in actualresult and int(current_channel) not in DFS_CHANNELS:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: Channel is {current_channel} - correctly NOT a DFS channel")
+                        print("TEST EXECUTION RESULT : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: Channel is {current_channel} - INCORRECTLY set to a DFS channel without RFC enable")
+                        print("TEST EXECUTION RESULT : FAILURE")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print(f"ACTUAL RESULT {step}: ApplyRadioSettings FAILURE")
+                    print("TEST EXECUTION RESULT : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print(f"ACTUAL RESULT {step}: Channel is {current_channel} - INCORRECTLY set to a DFS channel without RFC enable")
+                print(f"ACTUAL RESULT {step}: SET operation result: {actualresult}")
                 print("TEST EXECUTION RESULT : FAILURE")
 
             # Revert: Re-enable Auto Channel Selection to initial value
@@ -115,6 +126,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.setResultStatus("FAILURE")
         print(f"ACTUAL RESULT {step}: DFS RFC is {dfs_rfc} and DFSEnable is {dfs_enable} - Expected both false")
         print("TEST EXECUTION RESULT : FAILURE")
+
     obj.unloadModule("wifiagent")
 else:
     print("Failed to load the module")

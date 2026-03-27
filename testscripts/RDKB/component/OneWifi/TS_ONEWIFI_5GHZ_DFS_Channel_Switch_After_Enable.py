@@ -40,7 +40,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     # Step 1: Enable DFS RFC
     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable", "true", "boolean")
     sleep(2)
-    print(f"TEST STEP {step}: Enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable")
+    print(f"\nTEST STEP {step}: Enable Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable")
     print(f"EXPECTED RESULT {step}: DFS RFC should be enabled successfully")
     if expectedresult in actualresult:
         tdkTestObj.setResultStatus("SUCCESS")
@@ -61,7 +61,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             paramResults[paramName] = paramValue
         dfs_rfc = paramResults["Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.DFS.Enable"]
         dfs_enable = paramResults["Device.WiFi.Radio.2.X_COMCAST_COM_DFSEnable"]
-        print(f"TEST STEP {step}: Confirm both DFS RFC and DFSEnable are true")
+        print(f"\nTEST STEP {step}: Confirm both DFS RFC and DFSEnable are true")
         print(f"EXPECTED RESULT {step}: Both DMs should be true")
         if "FAILURE" not in actualresult_all and dfs_rfc == "true" and dfs_enable == "true":
             tdkTestObj.setResultStatus("SUCCESS")
@@ -71,7 +71,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             # Step 3: Get current channel
             step += 1
             tdkTestObj, actualresult, initial_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
-            print(f"TEST STEP {step}: Get current 5 GHz radio channel")
+            print(f"\nTEST STEP {step}: Get current 5 GHz radio channel")
             print(f"EXPECTED RESULT {step}: Should get the current channel value")
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
@@ -82,7 +82,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step += 1
                 tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.AutoChannelEnable", "false", "boolean")
                 sleep(2)
-                print(f"TEST STEP {step}: Disable Auto Channel Selection on Radio 2")
+                print(f"\nTEST STEP {step}: Disable Auto Channel Selection on Radio 2")
                 print(f"EXPECTED RESULT {step}: AutoChannelEnable should be set to false")
                 if expectedresult in actualresult:
                     tdkTestObj.setResultStatus("SUCCESS")
@@ -94,7 +94,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                     dfs_channel = str(random.choice(DFS_CHANNELS))
                     tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.Radio.2.Channel", dfs_channel, "unsignedint")
                     sleep(2)
-                    print(f"TEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel}")
+                    print(f"\nTEST STEP {step}: Set 5 GHz radio channel to DFS channel {dfs_channel}")
                     print(f"EXPECTED RESULT {step}: Channel should be set to {dfs_channel}")
                     if expectedresult in actualresult:
                         tdkTestObj.setResultStatus("SUCCESS")
@@ -105,7 +105,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                         step += 1
                         tdkTestObj, actualresult = wifi_SetParam(obj, "Device.WiFi.ApplyRadioSettings", "true", "boolean")
                         sleep(5)
-                        print(f"TEST STEP {step}: Apply radio settings")
+                        print(f"\nTEST STEP {step}: Apply radio settings")
                         print(f"EXPECTED RESULT {step}: Radio settings should be applied successfully")
                         if expectedresult in actualresult:
                             tdkTestObj.setResultStatus("SUCCESS")
@@ -115,7 +115,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                             # Step 7: Verify channel is updated
                             step += 1
                             tdkTestObj, actualresult, current_channel = wifi_GetParam(obj, "Device.WiFi.Radio.2.Channel")
-                            print(f"TEST STEP {step}: Verify 5 GHz radio channel is updated to {dfs_channel}")
+                            print(f"\nTEST STEP {step}: Verify 5 GHz radio channel is updated to {dfs_channel}")
                             print(f"EXPECTED RESULT {step}: Channel should be {dfs_channel}")
                             if expectedresult in actualresult and current_channel == dfs_channel:
                                 tdkTestObj.setResultStatus("SUCCESS")
