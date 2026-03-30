@@ -41,7 +41,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     expectedresult = "SUCCESS"
     step = 1
 
-    # Step 1: Get the number of Host entries before client connection
+    # Step 1: Get the number of Host entries
     print("\nTEST STEP %d: Get the number of Host entries" % step)
     print("EXPECTED RESULT %d: Should successfully retrieve Device.Hosts.HostNumberOfEntries DM value" % step)
     tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
@@ -71,8 +71,8 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                 actualresult = tdkTestObj_tr181.getResult()
                 layer1Interface = tdkTestObj_tr181.getResultDetails().strip().strip('\\n').strip()
 
-                print("\nTEST STEP %d: Get Layer1Interface for Host entry %d" % (step, i))
-                print("EXPECTED RESULT %d: Should retrieve Device.Hosts.Host.%d.Layer1Interface" % (step, i))
+                print("\nTEST STEP %d: Get the value of Device.Hosts.Host.%d.Layer1Interface and verify it contains a valid interface path" % (step, i))
+                print("EXPECTED RESULT %d: Device.Hosts.Host.%d.Layer1Interface should contain a valid interface path" % (step, i))
                 if expectedresult in actualresult and layer1Interface:
                     tdkTestObj_tr181.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d: Host.%d Layer1Interface: %s" % (step, i, layer1Interface))
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                         actualresult = tdkTestObj_tr181.getResult()
                         activeStatus = tdkTestObj_tr181.getResultDetails().strip().strip('\\n').strip()
 
-                        print("\nTEST STEP %d: Get Active status for WiFi client at Host entry %d" % (step, clientIndex))
+                        print("\nTEST STEP %d: Get the value of Device.Hosts.Host.%d.Active and verify the value as true" % (step, clientIndex))
                         print("EXPECTED RESULT %d: Device.Hosts.Host.%d.Active should be true" % (step, clientIndex))
                         if expectedresult in actualresult and activeStatus:
                             if activeStatus.lower() == "true":
@@ -114,12 +114,16 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("ACTUAL RESULT %d: Failed to get Layer1Interface for Host.%d" % (step, i))
                     print("[TEST EXECUTION RESULT] : FAILURE")
 
-            # Final check: Report if no WiFi client was found in the host table
-            if not clientDetected:
-                step += 1
+            # Report if WiFi client was found or not in the host table
+            step += 1
+            print("\nTEST STEP %d: Check if any WiFi client is present in Host table" % step)
+            print("EXPECTED RESULT %d: At least one WiFi client should be present in Host table" % step)
+            if clientDetected:
+                tdkTestObj_tr181.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: WiFi client found in Host table at Host.%d" % (step, clientIndex))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
-                print("\nTEST STEP %d: Check if any WiFi client is present in Host table" % step)
-                print("EXPECTED RESULT %d: At least one WiFi client should be present in Host table" % step)
                 print("ACTUAL RESULT %d: No WiFi client found in Host table - ensure MLD/non-MLD client is connected as prerequisite" % step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:

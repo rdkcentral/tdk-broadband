@@ -33,7 +33,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     # Step 1: Get MLD interface bridge and state info
     tdkTestObj = obj.createTestStep('ExecuteCmd')
-    tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDInterfaceBridgeStatus" % tdkbVariables.TDK_PATH)
+    tdkTestObj.addParameter("command", "sh %s tdk_platform_utility.sh getMLDInterfaceBridgeStatus" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     bridgeOutput = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
@@ -42,7 +42,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     print("EXPECTED RESULT %d: Should retrieve ip link show output for mld0 with bridge and state info" % step)
     if expectedresult in actualresult and bridgeOutput:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: ip link show output: %s" % (step, bridgeOutput))
+        print("ACTUAL RESULT %d: MLD interface bridge and state info retrieved\n ip link show output: %s" % (step, bridgeOutput))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         # Step 2: Check if mld0 is mastered to brlan0
@@ -72,7 +72,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to get ip link show output for mld0" % step)
+        print("ACTUAL RESULT %d: Failed to get MLD interface bridge and state info" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil")

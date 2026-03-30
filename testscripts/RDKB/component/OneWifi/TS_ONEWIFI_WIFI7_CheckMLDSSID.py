@@ -29,24 +29,22 @@ loadmodulestatus = obj.getLoadModuleResult()
 if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
-    step = 1
 
+    step = 1
     # Step 1: Get SSID from iw mld0 info
     tdkTestObj = obj.createTestStep('ExecuteCmd')
     tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDSSID" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     ssidOutput = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
-
     print("\nTEST STEP %d: Get SSID configured on mld0 interface" % step)
     print("EXPECTED RESULT %d: A valid SSID should be configured on mld0" % step)
     if expectedresult in actualresult and ssidOutput:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: SSID line found: %s" % (step, ssidOutput))
-        print("[TEST EXECUTION RESULT] : SUCCESS")
-
         # Extract SSID value
         ssidValue = ssidOutput.replace("ssid", "").strip()
+        print("ACTUAL RESULT %d: SSID configured on mld0 interface: %s" % (step, ssidValue))
+        print("[TEST EXECUTION RESULT] : SUCCESS")
 
         # Step 2: Get mld0 HWaddr to extract last 6 digits of MAC
         step += 1
@@ -55,14 +53,12 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult)
         actualresult = tdkTestObj.getResult()
         mldHWAddr = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
-
         print("\nTEST STEP %d: Get mld0 HWaddr to derive expected SSID suffix" % step)
         print("EXPECTED RESULT %d: Should retrieve HWaddr from ifconfig mld0" % step)
         if expectedresult in actualresult and mldHWAddr:
             tdkTestObj.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: mld0 HWaddr: %s" % (step, mldHWAddr))
             print("[TEST EXECUTION RESULT] : SUCCESS")
-
             # Derive last 6 hex digits from MAC (last 3 octets without colons)
             macParts = mldHWAddr.replace("-", ":").split(":")
             last6Digits = "".join(macParts[-3:]).lower()
@@ -74,11 +70,11 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("EXPECTED RESULT %d: SSID should be %s" % (step, expectedSSID))
             if ssidValue.lower() == expectedSSID.lower():
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: SSID matches expected format - SSID: %s, Expected: %s" % (step, ssidValue, expectedSSID))
+                print("ACTUAL RESULT %d: SSID matches expected format - %s" % (step, ssidValue))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: SSID does NOT match expected format - SSID: %s, Expected: %s" % (step, ssidValue, expectedSSID))
+                print("ACTUAL RESULT %d: SSID does NOT match expected format - %s" % (step, ssidValue))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
@@ -88,7 +84,6 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get SSID from iw mld0 info" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
-
     obj.unloadModule("sysutil")
 else:
     print("Failed to load sysutil module")

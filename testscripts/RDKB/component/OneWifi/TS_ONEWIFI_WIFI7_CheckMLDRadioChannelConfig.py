@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+
 import tdklib
 import tdkbVariables
 import re
@@ -92,17 +93,17 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
                     print("ACTUAL RESULT %d: iw channel for link ID %d: %s" % (step, linkId, iwChannel))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                    # Step: Compare channels
+                    # Step: Compare and Validate dmcli output channel matches iw output channel
                     step += 1
                     print("\nTEST STEP %d: Validate dmcli channel matches iw channel for Radio %d / link ID %d" % (step, dmcliIndex, linkId))
                     print("EXPECTED RESULT %d: Device.WiFi.Radio.%d.Channel and iw channel should match" % (step, dmcliIndex))
                     if dmcliChannel == iwChannel:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: Channel match for Radio %d - dmcli: %s, iw: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
+                        print("ACTUAL RESULT %d: Channel match for Radio %d - dmcli output: %s, iw output: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Channel MISMATCH for Radio %d - dmcli: %s, iw: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
+                        print("ACTUAL RESULT %d: Channel MISMATCH for Radio %d - dmcli output: %s, iw output: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
