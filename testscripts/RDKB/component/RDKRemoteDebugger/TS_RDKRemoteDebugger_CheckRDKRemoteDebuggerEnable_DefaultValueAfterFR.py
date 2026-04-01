@@ -64,18 +64,21 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         step += 1
         #Get the default value of RDKRemoteDebugger Enable
         tdkTestObj, get_flag, default_value = getRDKRemoteDebuggerEnable(tr181obj, step)
-        print(f"Value Obtained : {default_value}")
-        step += 1
-        print(f"\nTEST STEP {step}:Check whether the obtained value matches the expected default value.")
-        print(f"EXPECTED RESULT {step}: The default value obtained should be true")
-        if get_flag and default_value == "true":
-            tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: The obtained value matches the expected default value")
-            print("[TEST EXECUTION RESULT] : SUCCESS")
+        if get_flag:
+            print(f"Successfully got the default value of RDKRemoteDebugger Enable: {default_value}")
+            step += 1
+            print(f"\nTEST STEP {step}:Check whether the obtained value matches the expected default value.")
+            print(f"EXPECTED RESULT {step}: The default value obtained should be true")
+            if default_value == "true":
+                tdkTestObj.setResultStatus("SUCCESS")
+                print(f"ACTUAL RESULT {step}: The obtained value matches the expected default value")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print(f"ACTUAL RESULT {step}: The obtained value doesn't match the expected default value.")
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT {step}: The obtained value doesn't match the expected default value.")
-            print("[TEST EXECUTION RESULT] : FAILURE")
+            print(f"Failed to get the default value of RDKRemoteDebugger Enable. Details : {details}")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print(f"ACTUAL RESULT {step}: Factory Reset could not be triggered. Details : {details}" )

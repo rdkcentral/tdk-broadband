@@ -43,11 +43,13 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     tr181obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
 
-    # Prerequisite check: Clear the RRD log file and delete the existing debug reports before starting the test execution
-    prereq_flag = clearLogsAndDebugReports(sysobj)
+    step = 1
+    profile_type = "static"
+    # Prerequisite checks
+    prereq_flag, revert_flag, step = checkRRDPrerequisites(tr181obj, sysobj, step, profile_type)
     if prereq_flag:
-        print("Successfully cleared the RRD log file and deleted the existing debug reports. Proceeding with the test execution.")
-        step = 1
+        print("Successfully completed the prerequisite checks.")
+        step += 1
         # Get the value of RDKRemoteDebugger IssueType
         tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
         if get_flag:
@@ -69,6 +71,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     print("The static json profile is available as expected.")
 
                     # Check if the static debug report is generated
+                    step +=1
                     tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "static", step)
                     if report_flag:
                         tdkTestObj.setResultStatus("SUCCESS")
@@ -97,7 +100,17 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         else:
             print("Failed to get RDKRemoteDebugger IssueType")
     else:
-        print("Failed to clear the RRD log file and delete the existing debug reports. Cannot proceed with the test execution.")
+        print("Failed to complete the prerequisite checks. Cannot proceed with the test execution.")
+    if revert_flag:
+        #Revert the value of RDKRemoteDebugger Enable to its initial value
+        step += 1
+        value = "false"
+        print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        set_flag = setRDKRemoteDebuggerEnable(tr181obj, value, step)
+        if set_flag:
+            print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        else:
+            print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {value}.")
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

@@ -46,93 +46,109 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
     print("Pre-requisite : Set up the upload server(Ex:Apache server) on the local Machine for BPIR4 to upload the debug reports")
 
-    # Prerequisite check: Clear the RRD log file and delete the existing debug reports before starting the test execution
-    prereq_flag = clearLogsAndDebugReports(sysobj)
+    step = 1
+    profile_type = "static"
+    # Prerequisite checks
+    prereq_flag, revert_flag, step = checkRRDPrerequisites(tr181obj, sysobj, step, profile_type)
     if prereq_flag:
-        print("Successfully cleared the RRD log file and deleted the existing debug reports. Proceeding with the test execution.")
-
-        step = 1
-        #Assign the upload server URL to UPSTREAM_RRD_URL in upstream_rrd_url_path
-        tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-        print(f"\nTEST STEP {step} : Assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
-        print(f"EXPECTED RESULT {step} : Should assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
-        command = f"sed -i 's|^UPSTREAM_RRD_URL=.*|UPSTREAM_RRD_URL={server_url}|' {upstream_rrd_url_path}"
-        print(f"Command : {command}")
-        actualresult, details = doSysutilExecuteCommand(tdkTestObj, command)
-        print(f"Command Output : {details}")
-        if expectedresult in actualresult:
-            print(f"ACTUAL RESULT {step} : Successfully assigned the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
-            tdkTestObj.setResultStatus("SUCCESS")
-            print(f"TEST EXECUTION RESULT : SUCCESS")
+        print("Successfully completed the prerequisite checks.")
+        step += 1
+        #Get the value of UPSTREAM_RRD_URL in upstream_rrd_url_path
+        get_flag, initial_server_url = getUpstreamRRDURL(sysobj, upstream_rrd_url_path, step)
+        if get_flag:
+            print(f"Successfully obtained the UPSTREAM_RRD_URL: {initial_server_url}")
 
             step += 1
-            # Get the value of RDKRemoteDebugger IssueType
-            tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
-            if get_flag:
-                print("Successfully obtained the value of RDKRemoteDebugger IssueType")
+            #Assign the upload server URL to UPSTREAM_RRD_URL in upstream_rrd_url_path
+            set_flag = setUpstreamRRDURL(sysobj, server_url, upstream_rrd_url_path, step)
+            if set_flag:
+                print(f"Successfully assigned the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
 
                 step += 1
-                # Set the value of RDKRemoteDebugger IssueType
-                set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, issueType)
-                if set_flag:
-                    print("Successfully set the value of RDKRemoteDebugger IssueType.")
+                # Get the value of RDKRemoteDebugger IssueType
+                tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
+                if get_flag:
+                    print("Successfully obtained the value of RDKRemoteDebugger IssueType")
 
-                    sleep(5)
                     step += 1
-                    # Check whether json file is available in the designated location
-                    tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "static", issueType, step)
-                    if file_flag:
-                        tdkTestObj.setResultStatus("SUCCESS")
-                        print("TEST EXECUTION RESULT : SUCCESS")
-                        print("The static json profile is available as expected.")
+                    # Set the value of RDKRemoteDebugger IssueType
+                    set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, issueType)
+                    if set_flag:
+                        print("Successfully set the value of RDKRemoteDebugger IssueType.")
+
+                        sleep(5)
                         step += 1
-                        # Check if the static debug report is generated
-                        tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "static", step)
-                        if report_flag:
+                        # Check whether json file is available in the designated location
+                        tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "static", issueType, step)
+                        if file_flag:
                             tdkTestObj.setResultStatus("SUCCESS")
                             print("TEST EXECUTION RESULT : SUCCESS")
-                            print("The static debug report is generated successfully.")
-
-                            sleep(5)
+                            print("The static json profile is available as expected.")
                             step += 1
-                            # Check if the static debug report is uploaded to the server
-                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", server_url, rrd_log_file, step)
-                            if upload_flag:
+                            # Check if the static debug report is generated
+                            tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "static", step)
+                            if report_flag:
                                 tdkTestObj.setResultStatus("SUCCESS")
                                 print("TEST EXECUTION RESULT : SUCCESS")
-                                print("The static debug report is uploaded to the server successfully.")
+                                print("The static debug report is generated successfully.")
+
+                                sleep(5)
+                                step += 1
+                                # Check if the static debug report is uploaded to the server
+                                tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", server_url, rrd_log_file, step)
+                                if upload_flag:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print("TEST EXECUTION RESULT : SUCCESS")
+                                    print("The static debug report is uploaded to the server successfully.")
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print("TEST EXECUTION RESULT : FAILURE")
+                                    print("The static debug report is not uploaded to the server as expected.")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
                                 print("TEST EXECUTION RESULT : FAILURE")
-                                print("The static debug report is not uploaded to the server as expected.")
+                                print("The static debug report is not generated as expected.")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
                             print("TEST EXECUTION RESULT : FAILURE")
-                            print("The static debug report is not generated as expected.")
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print("TEST EXECUTION RESULT : FAILURE")
-                        print("The static json profile is not available as expected.")
+                            print("The static json profile is not available as expected.")
 
-                    # Revert the value of RDKRemoteDebugger IssueType to its initial value
-                    print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
-                    step += 1
-                    set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
-                    if set_flag:
-                        print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                        # Revert the value of RDKRemoteDebugger IssueType to its initial value
+                        print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
+                        step += 1
+                        set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
+                        if set_flag:
+                            print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                        else:
+                            print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
                     else:
-                        print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
-
+                        print("Failed to set the value of RDKRemoteDebugger IssueType.")
                 else:
-                    print("Failed to set the value of RDKRemoteDebugger IssueType.")
+                    print("Failed to get RDKRemoteDebugger IssueType")
+                # Revert the value of UPSTREAM_RRD_URL to its initial value
+                print("\nReverting the value of UPSTREAM_RRD_URL to its initial value.")
+                step += 1
+                set_flag = setUpstreamRRDURL(sysobj, initial_server_url, upstream_rrd_url_path, step)
+                if set_flag:
+                    print("Successfully reverted the value of UPSTREAM_RRD_URL to its initial value.")
+                else:
+                    print("Failed to revert the value of UPSTREAM_RRD_URL to its initial value.")
             else:
-                print("Failed to get RDKRemoteDebugger IssueType")
+                print(f"Failed to assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
         else:
-            print(f"ACTUAL RESULT {step} : Failed to assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
-            tdkTestObj.setResultStatus("FAILURE")
-            print(f"TEST EXECUTION RESULT : FAILURE")
+            print(f"Failed to get the UPSTREAM_RRD_URL")
     else:
-        print("Failed to clear the RRD log file and delete the existing debug reports. Cannot proceed with the test execution.")
+        print("Failed to complete the prerequisite checks. Cannot proceed with the test execution.")
+    if revert_flag:
+        #Revert the value of RDKRemoteDebugger Enable to its initial value
+        step += 1
+        value = "false"
+        print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        set_flag = setRDKRemoteDebuggerEnable(tr181obj, value, step)
+        if set_flag:
+            print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        else:
+            print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {value}.")
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

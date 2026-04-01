@@ -44,12 +44,16 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     sysobj.setLoadModuleStatus("SUCCESS")
 
     print("Pre-requisite : Install the Download Server and host the dynamic profile in Download server path  ")
-    # Prerequisite check: Clear the RRD log file and delete the existing debug reports before starting the test execution
-    prereq_flag = clearLogsAndDebugReports(sysobj)
-    if prereq_flag:
-        print("Successfully cleared the RRD log file and deleted the existing debug reports. Proceeding with the test execution.")
 
-        step = 1
+    step = 1
+    profile_type = "dynamic"
+    # Prerequisite checks before starting the test execution
+    prereq_flag, revert_flag, step = checkRRDPrerequisites(tr181obj, sysobj, step, profile_type)
+
+    if prereq_flag:
+        print("Successfully completed the prerequisite checks.")
+
+        step += 1
         # Get the value of RDKRemoteDebugger IssueType
         tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
         if get_flag:
@@ -145,7 +149,19 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         else:
             print(f"Failed to obtain the initial value of RDKRemoteDebugger IssueType")
     else:
-        print("Failed to clear the RRD log file and delete the existing debug reports. Cannot proceed with the test execution.")
+        print("Failed to complete the prerequisite checks. Cannot proceed with the test execution.")
+
+    if revert_flag:
+        #Revert the value of RDKRemoteDebugger Enable to its initial value
+        value = "false"
+        step += 1
+        print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        set_flag = setRDKRemoteDebuggerEnable(tr181obj, value, step)
+        if set_flag:
+            print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {value}.")
+        else:
+            print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {valuealue}.")
+
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")

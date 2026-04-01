@@ -49,7 +49,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
 
         # Set the value of RDKRemoteDebugger Enable to a different value
         step += 1
-        if initial_value.lower() == "true":
+        if initial_value == "true":
             pre_reboot_value = "false"
         else:
             pre_reboot_value = "true"
@@ -75,23 +75,23 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 step += 1
                 print(f"\nTEST STEP {step} : Check whether the value of RDKRemoteDebugger Enable is persistent across reboot")
                 print(f"EXPECTED RESULT {step} : The value of RDKRemoteDebugger Enable should be persistent across reboot")
-                if pre_reboot_value.lower() == post_reboot_value.lower():
+                if pre_reboot_value == post_reboot_value:
                     print(f"ACTUAL RESULT {step} : The value of RDKRemoteDebugger Enable is persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"TEST EXECUTION RESULT : SUCCESS")
+
+                    #Revert the value of RDKRemoteDebugger Enable to its initial value
+                    step += 1
+                    print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
+                    set_flag = setRDKRemoteDebuggerEnable(tr181obj, initial_value, step)
+                    if set_flag:
+                        print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
+                    else:
+                        print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
                 else:
                     print(f"ACTUAL RESULT {step} : The value of RDKRemoteDebugger Enable is not persistent across reboot. Value before reboot: {pre_reboot_value} and Value after reboot: {post_reboot_value}")
                     tdkTestObj.setResultStatus("FAILURE")
                     print(f"TEST EXECUTION RESULT : FAILURE")
-
-                #Revert the value of RDKRemoteDebugger Enable to its initial value
-                step += 1
-                print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
-                set_flag = setRDKRemoteDebuggerEnable(tr181obj, initial_value, step)
-                if set_flag:
-                    print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
-                else:
-                    print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {initial_value}.")
             else:
                 print(f"Failed to get the value of RDKRemoteDebugger Enable after reboot")
         else:
