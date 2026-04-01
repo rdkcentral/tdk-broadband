@@ -126,7 +126,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                             print("[TEST EXECUTION RESULT] : FAILURE")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
-                                        print("Value of number of port mapping entries retrieved from ACS server is empty or None after DeleteObect")
+                                        print("Value of number of port mapping entries retrieved from ACS server is empty or None after DeleteObject.")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
                                     print("ACTUAL RESULT %d: DeleteObject Task failed to delete %s with status %d." % (step,name3,status2))
@@ -137,7 +137,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print("Value of number of port mapping entries retrieved from ACS server is empty or None after AddObect")
+                            print("Value of number of port mapping entries retrieved from ACS server is empty or None after AddObject.")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: AddObject Task failed to add object %s with status %d." % (step,name2,status1))

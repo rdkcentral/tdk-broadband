@@ -48,7 +48,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         parameters = queryParam.get("name")
         #Perform GET task request to get value of parameters
         getValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
-        if isinstance(getValues, dict) and len(getValues) >= 3:
+        if isinstance(getValues, dict) and len(getValues) == 3:
             values = list(getValues.values())
             setValue1 = not values[0] if isinstance(values[0], bool) else False
             setValue2 = not values[1] if isinstance(values[1], bool) else False
