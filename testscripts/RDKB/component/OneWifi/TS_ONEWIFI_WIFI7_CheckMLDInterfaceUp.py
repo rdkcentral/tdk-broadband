@@ -37,39 +37,27 @@ if "SUCCESS" in loadmodulestatus.upper():
     actualresult = tdkTestObj.getResult()
     ipLinkOutput = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
 
-    print("\nTEST STEP 1: Get MLD interface status of mld0")
-    print("EXPECTED RESULT 1: Should retrieve MLD interface status from ip link show output for mld0")
+    print("\nTEST STEP 1: Get MLD Interface status")
+    print("EXPECTED RESULT 1: Should retrieve MLD Interface status")
     if expectedresult in actualresult and ipLinkOutput:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT 1: MLD interface status retrieved - ip link show output: %s" % ipLinkOutput)
+        print("ACTUAL RESULT 1: MLD Interface status retrieved: %s" % ipLinkOutput)
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        # Step 2: Check if UP flag is present
-        print("\nTEST STEP 2: Check if MLD interface mld0 is UP")
-        print("EXPECTED RESULT 2: UP flag should be present in mld0 interface flags")
-        if "UP" in ipLinkOutput:
+        # Step 2: Check if UP,LOWER_UP flags are present to confirm operational status
+        print("\nTEST STEP 2: Check if MLD Interface is operationally UP")
+        print("EXPECTED RESULT 2: 'UP,LOWER_UP' flags should be present in MLD Interface status")
+        if "UP,LOWER_UP" in ipLinkOutput:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT 2: UP flag found in mld0 interface output")
+            print("ACTUAL RESULT 2: UP,LOWER_UP flags found - MLD Interface is operationally UP")
             print("[TEST EXECUTION RESULT] : SUCCESS")
-
-            # Step 3: Check if LOWER_UP flag is present
-            print("\nTEST STEP 3: Check if MLD interface mld0 has LOWER_UP flag")
-            print("EXPECTED RESULT 3: LOWER_UP flag should be present in mld0 interface flags")
-            if "LOWER_UP" in ipLinkOutput:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT 3: LOWER_UP flag found - mld0 has an active physical connection")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT 3: LOWER_UP flag NOT found in mld0 interface output")
-                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT 2: UP flag NOT found in mld0 interface output")
+            print("ACTUAL RESULT 2: UP,LOWER_UP flags NOT found in MLD Interface status")
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT 1: Failed to get MLD interface status for mld0")
+        print("ACTUAL RESULT 1: Failed to get MLD Interface status")
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil")

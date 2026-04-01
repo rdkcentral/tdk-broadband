@@ -19,6 +19,7 @@
 
 import tdklib
 import tdkbVariables
+from tdkutility import *
 
 obj = tdklib.TDKScriptingLibrary("sysutil", "1")
 tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181", "1")
@@ -37,94 +38,91 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
     expectedresult = "SUCCESS"
     step = 1
 
-    # Step 1: Get mld0 HWaddr from ifconfig via sysutil
+    # Step 1: Get MLD Interface Hardware address
     tdkTestObj = obj.createTestStep('ExecuteCmd')
     tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDIfconfigHWAddr" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     mldHWAddr = tdkTestObj.getResultDetails().strip().strip('\\n').strip()
 
-    print("\nTEST STEP %d: Get mld0 HWaddr from ifconfig" % step)
-    print("EXPECTED RESULT %d: Should retrieve HWaddr from ifconfig mld0" % step)
+    print("\nTEST STEP %d: Get the hardware address of MLD Interface" % step)
+    print("EXPECTED RESULT %d: Should retrieve hardware address from MLD Interface" % step)
     if expectedresult in actualresult and mldHWAddr:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: mld0 HWaddr: %s" % (step, mldHWAddr))
+        print("ACTUAL RESULT %d: MLD Interface hardware adress: %s" % (step, mldHWAddr))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         # Step 2: Get RadioNumberOfEntries via tr181 object
         step += 1
-        tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
-        tdkTestObj.addParameter("ParamName", "Device.WiFi.RadioNumberOfEntries")
-        tdkTestObj.executeTestCase(expectedresult)
-        actualresult = tdkTestObj.getResult()
-        radioCountOutput = tdkTestObj.getResultDetails().strip()
+        tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get')
+        actualresult, radioCountOutput = getTR181Value(tdkTestObj_Tr181_Get, "Device.WiFi.RadioNumberOfEntries")
+        radioCountOutput = radioCountOutput.strip()
 
         print("\nTEST STEP %d: Get number of WiFi radios from Device.WiFi.RadioNumberOfEntries" % step)
         print("EXPECTED RESULT %d: Should retrieve Device.WiFi.RadioNumberOfEntries" % step)
         if expectedresult in actualresult and radioCountOutput:
-            try:
+            if not radioCountOutput.isdigit():
+                tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Invalid value for RadioNumberOfEntries: %s" % (step, radioCountOutput))
+                print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
                 radioCount = int(radioCountOutput)
-            except ValueError:
-                radioCount = 0
-
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: RadioNumberOfEntries = %s" % (step, radioCountOutput))
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-            # Step 3: Get MLD AP index list from platform utility via sysutil
-            step += 1
-            tdkTestObj = obj.createTestStep('ExecuteCmd')
-            tdkTestObj.addParameter("command", "sh %s/tdk_utility.sh parseConfigFile MLD_AP_INDICES" % tdkbVariables.TDK_PATH)
-            tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()
-            apIndexOutput = tdkTestObj.getResultDetails().strip()
-
-            print("\nTEST STEP %d: Get MLD AccessPoint indices from platform properties" % step)
-            print("EXPECTED RESULT %d: Should retrieve MLD_AP_INDICES from platform properties" % step)
-            if expectedresult in actualresult and apIndexOutput:
-                tdkTestObj.setResultStatus("SUCCESS")
-                allIndexList = [idx.strip().strip('\\n').strip() for idx in apIndexOutput.split(",") if idx.strip()]
-
-                # Select only as many indices as there are radios
-                apIndexList = allIndexList[:radioCount]
-                print("ACTUAL RESULT %d: MLD_AP_INDICES from properties: %s, RadioNumberOfEntries: %d, Using indices: %s" % (step, allIndexList, radioCount, apIndexList))
+                tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: RadioNumberOfEntries = %s" % (step, radioCountOutput))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                # Step per AP: Get MLD_Addr via tr181 object and compare with mld0 HWaddr
-                for apIndex in apIndexList:
-                    step += 1
-                    tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
-                    tdkTestObj.addParameter("ParamName", "Device.WiFi.AccessPoint.%s.MLD_Addr" % apIndex)
-                    tdkTestObj.executeTestCase(expectedresult)
-                    actualresult = tdkTestObj.getResult()
-                    mldAddr = tdkTestObj.getResultDetails().strip().strip('\\n').strip()
+                # Step 3: Get MLD AP index list from platform utility via sysutil
+                step += 1
+                tdkTestObj = obj.createTestStep('ExecuteCmd')
+                tdkTestObj.addParameter("command", "sh %s/tdk_utility.sh parseConfigFile MLD_AP_INDICES" % tdkbVariables.TDK_PATH)
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                apIndexOutput = tdkTestObj.getResultDetails().strip()
 
-                    print("\nTEST STEP %d: Check MLD_Addr for AccessPoint.%s matches mld0 HWaddr" % (step, apIndex))
-                    print("EXPECTED RESULT %d: Device.WiFi.AccessPoint.%s.MLD_Addr should match mld0 HWaddr %s" % (step, apIndex, mldHWAddr))
-                    if expectedresult in actualresult and mldAddr:
-                        if mldAddr.upper() == mldHWAddr.upper():
-                            tdkTestObj.setResultStatus("SUCCESS")
-                            print("ACTUAL RESULT %d: MLD_Addr for AP.%s matches mld0 HWaddr: %s" % (step, apIndex, mldAddr))
-                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                print("\nTEST STEP %d: Get Private AccessPoint indices from platform properties" % step)
+                print("EXPECTED RESULT %d: Should retrieve MLD_AP_INDICES from platform properties" % step)
+                if expectedresult in actualresult and apIndexOutput:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    allIndexList = [idx.strip().strip('\\n').strip() for idx in apIndexOutput.split(",") if idx.strip()]
+
+                    # Select only as many indices as there are radios
+                    apIndexList = allIndexList[:radioCount]
+                    print("ACTUAL RESULT %d: MLD_AP_INDICES from properties: %s, RadioNumberOfEntries: %d, Using indices: %s" % (step, allIndexList, radioCount, apIndexList))
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    # Step per AP: Get MLD Address via tr181 object and compare with MLD Interface hardware address
+                    for apIndex in apIndexList:
+                        step += 1
+                        tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get')
+                        actualresult, mldAddr = getTR181Value(tdkTestObj_Tr181_Get, "Device.WiFi.AccessPoint.%s.MLD_Addr" % apIndex)
+                        mldAddr = mldAddr.strip().strip('\\n').strip()
+
+                        print("\nTEST STEP %d: Check Device.WiFi.AccessPoint.%s.MLD_Addr matches MLD Interface hardware address" % (step, apIndex))
+                        print("EXPECTED RESULT %d: Device.WiFi.AccessPoint.%s.MLD_Addr should match MLD Interface hardware address %s" % (step, apIndex, mldHWAddr))
+                        if expectedresult in actualresult and mldAddr:
+                            if mldAddr.upper() == mldHWAddr.upper():
+                                tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: Device.WiFi.AccessPoint.%s.MLD_Addr matches MLD Interface hardware address: %s" % (step, apIndex, mldAddr))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+                                print("ACTUAL RESULT %d: Device.WiFi.AccessPoint.%s.MLD_Addr MISMATCH - TR-181: %s, MLD Interface hardware address: %s" % (step, apIndex, mldAddr, mldHWAddr))
+                                print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: MLD_Addr MISMATCH for AP.%s - dmcli: %s, mld0 HWaddr: %s" % (step, apIndex, mldAddr, mldHWAddr))
+                            tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Failed to get Device.WiFi.AccessPoint.%s.MLD_Addr" % (step, apIndex))
                             print("[TEST EXECUTION RESULT] : FAILURE")
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Failed to get MLD_Addr for AP.%s" % (step, apIndex))
-                        print("[TEST EXECUTION RESULT] : FAILURE")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get MLD_AP_INDICES from platform properties" % step)
-                print("[TEST EXECUTION RESULT] : FAILURE")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to get MLD_AP_INDICES from platform properties" % step)
+                    print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            tdkTestObj.setResultStatus("FAILURE")
+            tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: Failed to get RadioNumberOfEntries" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to get mld0 HWaddr from ifconfig" % step)
+        print("ACTUAL RESULT %d: Failed to get hardware address of MLD Interface" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil")

@@ -20,6 +20,7 @@
 import tdklib
 import tdkbVariables
 import re
+from tdkutility import *
 
 obj = tdklib.TDKScriptingLibrary("sysutil", "1")
 tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181", "1")
@@ -39,82 +40,79 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
     step = 1
 
     # Step 1: Get number of radios via tr181 object
-    tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
-    tdkTestObj.addParameter("ParamName", "Device.WiFi.RadioNumberOfEntries")
-    tdkTestObj.executeTestCase(expectedresult)
-    actualresult = tdkTestObj.getResult()
-    radioCountOutput = tdkTestObj.getResultDetails().strip()
+    tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get')
+    actualresult, radioCountOutput = getTR181Value(tdkTestObj_Tr181_Get, "Device.WiFi.RadioNumberOfEntries")
+    radioCountOutput = radioCountOutput.strip()
 
     print("\nTEST STEP %d: Get number of WiFi radios from Device.WiFi.RadioNumberOfEntries" % step)
     print("EXPECTED RESULT %d: Should retrieve Device.WiFi.RadioNumberOfEntries" % step)
     if expectedresult in actualresult and radioCountOutput:
-        try:
+        if not radioCountOutput.isdigit():
+            tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Invalid value for RadioNumberOfEntries: %s" % (step, radioCountOutput))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
             radioCount = int(radioCountOutput)
-        except ValueError:
-            radioCount = 0
+            tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: RadioNumberOfEntries = %s" % (step, radioCountOutput))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: RadioNumberOfEntries = %s" % (step, radioCountOutput))
-        print("[TEST EXECUTION RESULT] : SUCCESS")
+            for radioIdx in range(radioCount):
+                linkId = radioIdx
+                radioIndex = radioIdx + 1
 
-        for radioIdx in range(radioCount):
-            linkId = radioIdx
-            dmcliIndex = radioIdx + 1
-
-            # Step: Get channel for this radio from tr181 get
-            step += 1
-            tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
-            tdkTestObj.addParameter("ParamName", "Device.WiFi.Radio.%d.Channel" % dmcliIndex)
-            tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()
-            dmcliChannel = tdkTestObj.getResultDetails().strip()
-
-            print("\nTEST STEP %d: Get channel for Radio %d from Device.WiFi.Radio.%d.Channel" % (step, dmcliIndex, dmcliIndex))
-            print("EXPECTED RESULT %d: Should retrieve Device.WiFi.Radio.%d.Channel" % (step, dmcliIndex))
-            if expectedresult in actualresult and dmcliChannel:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: Channel for Radio %d: %s" % (step, dmcliIndex, dmcliChannel))
-                print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                # Step: Get channel for this link from iw mld0 info via sysutil
+                # Step: Get channel for this radio from TR-181
                 step += 1
-                tdkTestObj = obj.createTestStep('ExecuteCmd')
-                tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDLinkChannel x x %d" % (tdkbVariables.TDK_PATH, linkId))
-                tdkTestObj.executeTestCase(expectedresult)
-                actualresult = tdkTestObj.getResult()
-                iwChannelRaw = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
-                match = re.search(r'\b(\d+)\b', iwChannelRaw)
-                iwChannel = match.group(1) if match else ""
+                tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get')
+                actualresult, tr181Channel = getTR181Value(tdkTestObj_Tr181_Get, "Device.WiFi.Radio.%d.Channel" % radioIndex)
+                tr181Channel = tr181Channel.strip()
 
-                print("\nTEST STEP %d: Get channel for MLD link ID %d from iw mld0 info" % (step, linkId))
-                print("EXPECTED RESULT %d: Should retrieve channel for link ID %d" % (step, linkId))
-                if expectedresult in actualresult and iwChannel:
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: iw channel for link ID %d: %s" % (step, linkId, iwChannel))
+                print("\nTEST STEP %d: Get channel for Radio %d from Device.WiFi.Radio.%d.Channel" % (step, radioIndex, radioIndex))
+                print("EXPECTED RESULT %d: Should retrieve Device.WiFi.Radio.%d.Channel" % (step, radioIndex))
+                if expectedresult in actualresult and tr181Channel:
+                    tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: Device.WiFi.Radio.%d.Channel: %s" % (step, radioIndex, tr181Channel))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                    # Step: Compare and Validate dmcli output channel matches iw output channel
+                    # Step: Get channel for this link from MLD Interface info via sysutil
                     step += 1
-                    print("\nTEST STEP %d: Validate dmcli channel matches iw channel for Radio %d / link ID %d" % (step, dmcliIndex, linkId))
-                    print("EXPECTED RESULT %d: Device.WiFi.Radio.%d.Channel and iw channel should match" % (step, dmcliIndex))
-                    if dmcliChannel == iwChannel:
+                    tdkTestObj = obj.createTestStep('ExecuteCmd')
+                    tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDLinkChannel x x %d" % (tdkbVariables.TDK_PATH, linkId))
+                    tdkTestObj.executeTestCase(expectedresult)
+                    actualresult = tdkTestObj.getResult()
+                    mldLinkChannelRaw = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
+                    match = re.search(r'\b(\d+)\b', mldLinkChannelRaw)
+                    mldLinkChannel = match.group(1) if match else ""
+
+                    print("\nTEST STEP %d: Get channel for MLD link ID %d from MLD Interface info" % (step, linkId))
+                    print("EXPECTED RESULT %d: Should retrieve channel for MLD link ID %d" % (step, linkId))
+                    if expectedresult in actualresult and mldLinkChannel:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print("ACTUAL RESULT %d: Channel match for Radio %d - dmcli output: %s, iw output: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
+                        print("ACTUAL RESULT %d: Channel for MLD link ID %d: %s" % (step, linkId, mldLinkChannel))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                        # Step: Compare TR-181 channel with MLD Interface info channel
+                        step += 1
+                        print("\nTEST STEP %d: Validate Device.WiFi.Radio.%d.Channel matches MLD link ID %d channel" % (step, radioIndex, linkId))
+                        print("EXPECTED RESULT %d: Device.WiFi.Radio.%d.Channel and MLD link ID %d channel should match" % (step, radioIndex, linkId))
+                        if tr181Channel == mldLinkChannel:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print("ACTUAL RESULT %d: Channel match for Radio %d - TR-181: %s, MLD Interface info: %s" % (step, radioIndex, tr181Channel, mldLinkChannel))
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print("ACTUAL RESULT %d: Channel MISMATCH for Radio %d - TR-181: %s, MLD Interface info: %s" % (step, radioIndex, tr181Channel, mldLinkChannel))
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("ACTUAL RESULT %d: Channel MISMATCH for Radio %d - dmcli output: %s, iw output: %s" % (step, dmcliIndex, dmcliChannel, iwChannel))
+                        print("ACTUAL RESULT %d: Failed to get channel for MLD link ID %d" % (step, linkId))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Failed to get iw channel for link ID %d" % (step, linkId))
+                    tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to get Device.WiFi.Radio.%d.Channel" % (step, radioIndex))
                     print("[TEST EXECUTION RESULT] : FAILURE")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get channel for Radio %d" % (step, dmcliIndex))
-                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-        tdkTestObj.setResultStatus("FAILURE")
+        tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get RadioNumberOfEntries" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 

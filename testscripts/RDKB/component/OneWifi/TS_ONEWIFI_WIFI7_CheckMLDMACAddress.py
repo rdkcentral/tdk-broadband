@@ -31,54 +31,54 @@ if "SUCCESS" in loadmodulestatus.upper():
     expectedresult = "SUCCESS"
     step = 1
 
-    # Step 1: Get MLD interface HW MAC address from ifconfig
+    # Step 1: Get MLD Interface hardware address
     tdkTestObj = obj.createTestStep('ExecuteCmd')
     tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDIfconfigHWAddr" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
-    ifconfigMAC = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
+    mldHWAddr = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
 
-    print("\nTEST STEP %d: Get MLD interface HW MAC address from ifconfig" % step)
-    print("EXPECTED RESULT %d: Should retrieve HWaddr from ifconfig mld0" % step)
-    if expectedresult in actualresult and ifconfigMAC:
+    print("\nTEST STEP %d: Get the hardware address of MLD Interface" % step)
+    print("EXPECTED RESULT %d: Should retrieve hardware address of MLD Interface" % step)
+    if expectedresult in actualresult and mldHWAddr:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: ifconfig HWaddr: %s" % (step, ifconfigMAC))
+        print("ACTUAL RESULT %d: MLD Interface hardware address: %s" % (step, mldHWAddr))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        # Step 2: Get MLD addr from iw dev
+        # Step 2: Get MLD addr from wireless interface info
         step += 1
         tdkTestObj = obj.createTestStep('ExecuteCmd')
         tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDIwAddr" % tdkbVariables.TDK_PATH)
         tdkTestObj.executeTestCase(expectedresult)
         actualresult = tdkTestObj.getResult()
-        iwMAC = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
+        mldWirelessAddr = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
 
-        print("\nTEST STEP %d: Get MLD addr from iw mld0 info" % step)
-        print("EXPECTED RESULT %d: Should retrieve addr from iw mld0 info" % step)
-        if expectedresult in actualresult and iwMAC:
+        print("\nTEST STEP %d: Get MLD Interface addr from wireless interface info" % step)
+        print("EXPECTED RESULT %d: Should retrieve addr from MLD Interface wireless info" % step)
+        if expectedresult in actualresult and mldWirelessAddr:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: iw addr: %s" % (step, iwMAC))
+            print("ACTUAL RESULT %d: MLD Interface wireless addr: %s" % (step, mldWirelessAddr))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             # Step 3: Validate both MACs match (case-insensitive)
             step += 1
-            print("\nTEST STEP %d: Validate ifconfig HWaddr matches iw addr" % step)
+            print("\nTEST STEP %d: Validate MLD Interface hardware address matches wireless interface addr" % step)
             print("EXPECTED RESULT %d: Both MAC addresses should match" % step)
-            if ifconfigMAC.upper() == iwMAC.upper():
+            if mldHWAddr.upper() == mldWirelessAddr.upper():
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: MAC addresses match - ifconfig: %s, iw: %s" % (step, ifconfigMAC, iwMAC))
+                print("ACTUAL RESULT %d: MAC addresses match - hardware address: %s, wireless addr: %s" % (step, mldHWAddr, mldWirelessAddr))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: MAC addresses DO NOT match - ifconfig: %s, iw: %s" % (step, ifconfigMAC, iwMAC))
+                print("ACTUAL RESULT %d: MAC addresses DO NOT match - hardware address: %s, wireless addr: %s" % (step, mldHWAddr, mldWirelessAddr))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to get iw addr for mld0" % step)
+            print("ACTUAL RESULT %d: Failed to get wireless addr for MLD Interface" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to get ifconfig HWaddr for mld0" % step)
+        print("ACTUAL RESULT %d: Failed to get hardware address of MLD Interface" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil")

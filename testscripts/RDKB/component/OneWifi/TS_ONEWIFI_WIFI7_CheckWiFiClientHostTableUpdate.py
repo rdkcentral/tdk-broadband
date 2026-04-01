@@ -28,8 +28,8 @@ obj = tdklib.TDKScriptingLibrary("tdkbtr181", "1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-sysobj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckMLDClientHostTableUpdate')
-obj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckMLDClientHostTableUpdate')
+sysobj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckWiFiClientHostTableUpdate')
+obj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckWiFiClientHostTableUpdate')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()
@@ -45,10 +45,8 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
     print("\nTEST STEP %d: Get the number of Host entries" % step)
     print("EXPECTED RESULT %d: Should successfully retrieve Device.Hosts.HostNumberOfEntries DM value" % step)
     tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
-    tdkTestObj_tr181.addParameter("ParamName", "Device.Hosts.HostNumberOfEntries")
-    tdkTestObj_tr181.executeTestCase(expectedresult)
-    actualresult = tdkTestObj_tr181.getResult()
-    hostEntriesOutput = tdkTestObj_tr181.getResultDetails().strip().strip('\\n').strip()
+    actualresult, hostEntriesOutput = getTR181Value(tdkTestObj_tr181, "Device.Hosts.HostNumberOfEntries")
+    hostEntriesOutput = hostEntriesOutput.strip().strip('\\n').strip()
 
     if expectedresult in actualresult and hostEntriesOutput:
         if hostEntriesOutput.isdigit():
@@ -57,7 +55,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("ACTUAL RESULT %d: HostNumberOfEntries: %d" % (step, hostEntries))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            # Step 2 onwards: Iterate through the Host Table and find any WiFi client entry
+            # Step 2 onwards: Iterate through the Host Table and find any active WiFi client entry
             clientDetected = False
             clientIndex = None
 
@@ -66,10 +64,8 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
 
                 # Get Layer1Interface for this host entry
                 tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
-                tdkTestObj_tr181.addParameter("ParamName", "Device.Hosts.Host.%d.Layer1Interface" % i)
-                tdkTestObj_tr181.executeTestCase(expectedresult)
-                actualresult = tdkTestObj_tr181.getResult()
-                layer1Interface = tdkTestObj_tr181.getResultDetails().strip().strip('\\n').strip()
+                actualresult, layer1Interface = getTR181Value(tdkTestObj_tr181, "Device.Hosts.Host.%d.Layer1Interface" % i)
+                layer1Interface = layer1Interface.strip().strip('\\n').strip()
 
                 print("\nTEST STEP %d: Get the value of Device.Hosts.Host.%d.Layer1Interface and verify it contains a valid interface path" % (step, i))
                 print("EXPECTED RESULT %d: Device.Hosts.Host.%d.Layer1Interface should contain a valid interface path" % (step, i))
@@ -79,52 +75,50 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("[TEST EXECUTION RESULT] : SUCCESS")
 
                     # Check if this is a WiFi client (Layer1Interface contains WiFi SSID path)
-                    if "WiFi.SSID" in layer1Interface:
-                        clientDetected = True
-                        clientIndex = i
+                    if "Device.WiFi.SSID." in layer1Interface:
 
                         # Step: Get Active status for this WiFi client
                         step += 1
                         tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
-                        tdkTestObj_tr181.addParameter("ParamName", "Device.Hosts.Host.%d.Active" % clientIndex)
-                        tdkTestObj_tr181.executeTestCase(expectedresult)
-                        actualresult = tdkTestObj_tr181.getResult()
-                        activeStatus = tdkTestObj_tr181.getResultDetails().strip().strip('\\n').strip()
+                        actualresult, activeStatus = getTR181Value(tdkTestObj_tr181, "Device.Hosts.Host.%d.Active" % i)
+                        activeStatus = activeStatus.strip().strip('\\n').strip()
 
-                        print("\nTEST STEP %d: Get the value of Device.Hosts.Host.%d.Active and verify the value as true" % (step, clientIndex))
-                        print("EXPECTED RESULT %d: Device.Hosts.Host.%d.Active should be true" % (step, clientIndex))
+                        print("\nTEST STEP %d: Get the value of Device.Hosts.Host.%d.Active" % (step, i))
+                        print("EXPECTED RESULT %d: Device.Hosts.Host.%d.Active should be true" % (step, i))
                         if expectedresult in actualresult and activeStatus:
                             if activeStatus.lower() == "true":
                                 tdkTestObj_tr181.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: WiFi client at Host.%d is Active - Layer1Interface: %s, Active: %s" % (step, clientIndex, layer1Interface, activeStatus))
+                                print("ACTUAL RESULT %d: WiFi client at Host.%d is Active - Layer1Interface: %s, Active: %s" % (step, i, layer1Interface, activeStatus))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
+                                clientDetected = True
+                                clientIndex = i
+                                # Break out once an active WiFi client is found
+                                break
                             else:
-                                tdkTestObj_tr181.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: WiFi client at Host.%d is NOT Active - Layer1Interface: %s, Active: %s" % (step, clientIndex, layer1Interface, activeStatus))
-                                print("[TEST EXECUTION RESULT] : FAILURE")
+                                # Host table refreshes periodically; inactive client is not a failure - continue loop
+                                tdkTestObj_tr181.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: WiFi client at Host.%d is not currently active (host table may not have refreshed) - Layer1Interface: %s, Active: %s" % (step, i, layer1Interface, activeStatus))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
                         else:
                             tdkTestObj_tr181.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: Failed to get Active status for Host.%d" % (step, clientIndex))
+                            print("ACTUAL RESULT %d: Failed to get Active status for Host.%d" % (step, i))
                             print("[TEST EXECUTION RESULT] : FAILURE")
-
-                        # Stop after finding the first WiFi client
-                        break
                 else:
                     tdkTestObj_tr181.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d: Failed to get Layer1Interface for Host.%d" % (step, i))
                     print("[TEST EXECUTION RESULT] : FAILURE")
 
-            # Report if WiFi client was found or not in the host table
+            # Report if an active WiFi client was found in the host table
             step += 1
-            print("\nTEST STEP %d: Check if any WiFi client is present in Host table" % step)
-            print("EXPECTED RESULT %d: At least one WiFi client should be present in Host table" % step)
+            print("\nTEST STEP %d: Check if any active WiFi client is present in Host table" % step)
+            print("EXPECTED RESULT %d: At least one active WiFi client should be present in Host table" % step)
             if clientDetected:
                 tdkTestObj_tr181.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: WiFi client found in Host table at Host.%d" % (step, clientIndex))
+                print("ACTUAL RESULT %d: Active WiFi client found in Host table at Host.%d" % (step, clientIndex))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj_tr181.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: No WiFi client found in Host table - ensure MLD/non-MLD client is connected as prerequisite" % step)
+                print("ACTUAL RESULT %d: No active WiFi client found in Host table - ensure MLD/non-MLD client is connected as prerequisite" % step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj_tr181.setResultStatus("FAILURE")

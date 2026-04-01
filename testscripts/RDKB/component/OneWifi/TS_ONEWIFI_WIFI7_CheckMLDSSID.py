@@ -19,72 +19,78 @@
 
 import tdklib
 import tdkbVariables
+from tdkutility import *
 
 obj = tdklib.TDKScriptingLibrary("sysutil", "1")
+tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181", "1")
+
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckMLDSSID')
+tr181obj.configureTestCase(ip,port,'TS_ONEWIFI_WIFI7_CheckMLDSSID')
 
 loadmodulestatus = obj.getLoadModuleResult()
-if "SUCCESS" in loadmodulestatus.upper():
-    obj.setLoadModuleStatus("SUCCESS")
-    expectedresult = "SUCCESS"
+tr181loadstatus = tr181obj.getLoadModuleResult()
 
+if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper():
+    obj.setLoadModuleStatus("SUCCESS")
+    tr181obj.setLoadModuleStatus("SUCCESS")
+    expectedresult = "SUCCESS"
     step = 1
-    # Step 1: Get SSID from iw mld0 info
+
+    # Step 1: Get SSID from MLD Interface wireless info
     tdkTestObj = obj.createTestStep('ExecuteCmd')
     tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDSSID" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     ssidOutput = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
-    print("\nTEST STEP %d: Get SSID configured on mld0 interface" % step)
-    print("EXPECTED RESULT %d: A valid SSID should be configured on mld0" % step)
+
+    print("\nTEST STEP %d: Get SSID configured on MLD Interface" % step)
+    print("EXPECTED RESULT %d: A valid non-empty SSID should be configured on MLD Interface" % step)
     if expectedresult in actualresult and ssidOutput:
         tdkTestObj.setResultStatus("SUCCESS")
         # Extract SSID value
         ssidValue = ssidOutput.replace("ssid", "").strip()
-        print("ACTUAL RESULT %d: SSID configured on mld0 interface: %s" % (step, ssidValue))
+        print("ACTUAL RESULT %d: SSID configured on MLD Interface: %s" % (step, ssidValue))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        # Step 2: Get mld0 HWaddr to extract last 6 digits of MAC
+        # Step 2: Get configured SSID from Device.WiFi.SSID.1.SSID via TR-181
         step += 1
-        tdkTestObj = obj.createTestStep('ExecuteCmd')
-        tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getCMMACAddress" % tdkbVariables.TDK_PATH)
-        tdkTestObj.executeTestCase(expectedresult)
-        actualresult = tdkTestObj.getResult()
-        mldHWAddr = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
-        print("\nTEST STEP %d: Get mld0 HWaddr to derive expected SSID suffix" % step)
-        print("EXPECTED RESULT %d: Should retrieve HWaddr from ifconfig mld0" % step)
-        if expectedresult in actualresult and mldHWAddr:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: mld0 HWaddr: %s" % (step, mldHWAddr))
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-            # Derive last 6 hex digits from MAC (last 3 octets without colons)
-            macParts = mldHWAddr.replace("-", ":").split(":")
-            last6Digits = "".join(macParts[-3:]).lower()
-            expectedSSID = "BPI-RDKB-MLO-AP-%s" % last6Digits
+        tdkTestObj_Tr181_Get = tr181obj.createTestStep('TDKB_TR181Stub_Get')
+        actualresult, tr181SSID = getTR181Value(tdkTestObj_Tr181_Get, "Device.WiFi.SSID.1.SSID")
+        tr181SSID = tr181SSID.strip().strip('\\n').strip()
 
-            # Step 3: Validate SSID format matches BPI-RDKB-MLO-AP-<last6ofMAC>
+        print("\nTEST STEP %d: Get configured SSID from Device.WiFi.SSID.1.SSID" % step)
+        print("EXPECTED RESULT %d: Should retrieve Device.WiFi.SSID.1.SSID" % step)
+        if expectedresult in actualresult and tr181SSID:
+            tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: Device.WiFi.SSID.1.SSID: %s" % (step, tr181SSID))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            # Step 3: Validate SSID from MLD Interface matches Device.WiFi.SSID.1.SSID
             step += 1
-            print("\nTEST STEP %d: Validate SSID format is BPI-RDKB-MLO-AP-<last 6 digits of MAC>" % step)
-            print("EXPECTED RESULT %d: SSID should be %s" % (step, expectedSSID))
-            if ssidValue.lower() == expectedSSID.lower():
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: SSID matches expected format - %s" % (step, ssidValue))
+            print("\nTEST STEP %d: Validate MLD Interface SSID matches Device.WiFi.SSID.1.SSID" % step)
+            print("EXPECTED RESULT %d: MLD Interface SSID should match Device.WiFi.SSID.1.SSID" % step)
+            if ssidValue == tr181SSID:
+                tdkTestObj_Tr181_Get.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: SSID matches - MLD Interface: %s, Device.WiFi.SSID.1.SSID: %s" % (step, ssidValue, tr181SSID))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: SSID does NOT match expected format - %s" % (step, ssidValue))
+                tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: SSID MISMATCH - MLD Interface: %s, Device.WiFi.SSID.1.SSID: %s" % (step, ssidValue, tr181SSID))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Failed to get HWaddr from ifconfig mld0" % step)
+            tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to get Device.WiFi.SSID.1.SSID" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to get SSID from iw mld0 info" % step)
+        print("ACTUAL RESULT %d: Failed to get SSID from MLD Interface" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
+
     obj.unloadModule("sysutil")
+    tr181obj.unloadModule("tdkbtr181")
 else:
-    print("Failed to load sysutil module")
+    print("Failed to load sysutil or tdkbtr181 module")
     obj.setLoadModuleStatus("FAILURE")
+    tr181obj.setLoadModuleStatus("FAILURE")

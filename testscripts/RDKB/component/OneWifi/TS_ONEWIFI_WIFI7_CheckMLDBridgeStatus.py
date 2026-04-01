@@ -33,46 +33,46 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     # Step 1: Get MLD interface bridge and state info
     tdkTestObj = obj.createTestStep('ExecuteCmd')
-    tdkTestObj.addParameter("command", "sh %s tdk_platform_utility.sh getMLDInterfaceBridgeStatus" % tdkbVariables.TDK_PATH)
+    tdkTestObj.addParameter("command", "sh %s/tdk_platform_utility.sh getMLDInterfaceStatus" % tdkbVariables.TDK_PATH)
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     bridgeOutput = tdkTestObj.getResultDetails().strip().replace("\\n", "").strip()
 
-    print("\nTEST STEP %d: Get MLD interface bridge and state info" % step)
-    print("EXPECTED RESULT %d: Should retrieve ip link show output for mld0 with bridge and state info" % step)
+    print("\nTEST STEP %d: Get MLD Interface bridge and state info" % step)
+    print("EXPECTED RESULT %d: Should retrieve bridge and state info for MLD Interface" % step)
     if expectedresult in actualresult and bridgeOutput:
         tdkTestObj.setResultStatus("SUCCESS")
-        print("ACTUAL RESULT %d: MLD interface bridge and state info retrieved\n ip link show output: %s" % (step, bridgeOutput))
+        print("ACTUAL RESULT %d: MLD Interface bridge and state info retrieved: %s" % (step, bridgeOutput))
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        # Step 2: Check if mld0 is mastered to brlan0
+        # Step 2: Check if MLD interface is mastered to brlan0
         step += 1
-        print("\nTEST STEP %d: Check if MLD interface is added to brlan0 bridge" % step)
-        print("EXPECTED RESULT %d: 'master brlan0' should be present in mld0 interface output" % step)
+        print("\nTEST STEP %d: Check if MLD Interface is added to brlan0 bridge" % step)
+        print("EXPECTED RESULT %d: 'master brlan0' should be present in MLD Interface output" % step)
         if "master brlan0" in bridgeOutput:
             tdkTestObj.setResultStatus("SUCCESS")
-            print("ACTUAL RESULT %d: mld0 is mastered to brlan0 bridge" % step)
+            print("ACTUAL RESULT %d: MLD Interface is mastered to brlan0 bridge" % step)
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             # Step 3: Check state is UP
             step += 1
-            print("\nTEST STEP %d: Check if MLD interface state is UP" % step)
-            print("EXPECTED RESULT %d: 'state UP' should be present in mld0 interface output" % step)
+            print("\nTEST STEP %d: Check if MLD Interface state is UP" % step)
+            print("EXPECTED RESULT %d: 'state UP' should be present in MLD Interface output" % step)
             if "state UP" in bridgeOutput:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: mld0 state is UP" % step)
+                print("ACTUAL RESULT %d: MLD Interface state is UP" % step)
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: mld0 state is NOT UP" % step)
+                print("ACTUAL RESULT %d: MLD Interface state is NOT UP" % step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: mld0 is NOT mastered to brlan0 bridge" % step)
+            print("ACTUAL RESULT %d: MLD Interface is NOT mastered to brlan0 bridge" % step)
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
-        print("ACTUAL RESULT %d: Failed to get MLD interface bridge and state info" % step)
+        print("ACTUAL RESULT %d: Failed to get MLD Interface bridge and state info" % step)
         print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("sysutil")
