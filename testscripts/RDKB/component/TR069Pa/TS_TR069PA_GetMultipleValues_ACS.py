@@ -70,8 +70,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT." % (step, name))
                         print("[TEST EXECUTION RESULT] : FAILURE")
             else:
+                tdkTestObj.setResultStatus("FAILURE")
                 print("Failed to fetch values of the parameters.")
         else:
+            tdkTestObj.setResultStatus("FAILURE")
             print("Value retrieved from ACS server is empty or None.")
     else:
         tdkTestObj.setResultStatus("FAILURE")

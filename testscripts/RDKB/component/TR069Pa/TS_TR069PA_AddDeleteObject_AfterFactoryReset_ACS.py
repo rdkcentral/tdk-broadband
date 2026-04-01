@@ -75,6 +75,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     step += 1
                     queryParam2 = {"name":"Device.NAT.PortMapping"}
                     name2 = queryParam2.get("name")
+                    orgvalue = orgValue.get(name1)
                     print("\nTEST STEP %d: Send AddObject task to add an object instance for %s via ACS." %(step,name2))
                     print("EXPECTED RESULT %d: Send AddObject task to add an object instance for %s via ACS successfully." %(step,name2))
                     status1, queryResponse = tr069ACSQuery(username, queryParam2, method="AddObject")
@@ -85,54 +86,65 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
                         #Perform get task request and search query to get the value of the parameter after AddObject task
                         getValue1,step = gettr069ACS(tdkTestObj,username,queryParam1,step)
-                        step += 1
-                        print("\nTEST STEP %d: Check if number of port mapping entries is incremented by 1 after AddObject."%step)
-                        print("EXPECTED RESULT %d : Number of user entries should be incremented by 1 after AddObject." %step)
-                        if getValue1 and  getValue1.get(name1) == orgValue.get(name1)+1:
-                            tdkTestObj.setResultStatus("SUCCESS")
-                            print("ACTUAL RESULT %d: Number of port mapping entries incremented by 1 as expected after AddObject."%step)
-                            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                            #Perform DeleteObject task request for the parameter
-                            newObject = f"Device.NAT.PortMapping.{getValue1.get(name1)}"
-                            queryParam3 = {"name": newObject}
-                            name3 = queryParam3.get("name")
+                        if getValue1 :
+                            value1 = getValue1.get(name1)
                             step += 1
-                            print("\nTEST STEP %d: Send DeleteObject task to delete an object instance for %s via ACS." %(step,name3))
-                            print("EXPECTED RESULT %d: Send DeleteObject task to delete an object instance for %s via ACS successfully." %(step,name3))
-                            status2, queryResponse = tr069ACSQuery(username, queryParam3, method="DeleteObject")
-                            if status2 == 200 and queryResponse:
+                            print("\nTEST STEP %d: Check if number of port mapping entries is incremented by 1 after AddObject."%step)
+                            print("EXPECTED RESULT %d : Number of user entries should be incremented by 1 after AddObject." %step)
+                            if  isinstance(value1, int) and isinstance(orgvalue, int) and value1 == orgvalue+1:
                                 tdkTestObj.setResultStatus("SUCCESS")
-                                print("ACTUAL RESULT %d: DeleteObject Task successful for %s via ACS server." % (step,name3))
+                                print("ACTUAL RESULT %d: Number of port mapping entries incremented by 1 as expected after AddObject."%step)
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                                #Perform get task request and search query to get the value of the parameter after DeleteObject task
-                                getValue2,step = gettr069ACS(tdkTestObj,username,queryParam1,step)
+                                #Perform DeleteObject task request for the parameter
+                                newObject = f"Device.NAT.PortMapping.{value1}"
+                                queryParam3 = {"name": newObject}
+                                name3 = queryParam3.get("name")
                                 step += 1
-                                print("\nTEST STEP %d: Check if number of port mapping entries is restored to original value after DeleteObject."%step)
-                                print("EXPECTED RESULT %d : Number of port mapping entries should be restored to original value after DeleteObject." %step)
-                                if getValue2 and getValue2.get(name1) == orgValue.get(name1):
+                                print("\nTEST STEP %d: Send DeleteObject task to delete an object instance for %s via ACS." %(step,name3))
+                                print("EXPECTED RESULT %d: Send DeleteObject task to delete an object instance for %s via ACS successfully." %(step,name3))
+                                status2, queryResponse = tr069ACSQuery(username, queryParam3, method="DeleteObject")
+                                if status2 == 200 and queryResponse:
                                     tdkTestObj.setResultStatus("SUCCESS")
-                                    print("ACTUAL RESULT %d: Number of port mapping entries restored to original value after DeleteObject."%step)
+                                    print("ACTUAL RESULT %d: DeleteObject Task successful for %s via ACS server." % (step,name3))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                    #Perform get task request and search query to get the value of the parameter after DeleteObject task
+                                    getValue2,step = gettr069ACS(tdkTestObj,username,queryParam1,step)
+                                    if getValue2 :
+                                        value2 = getValue2.get(name1)
+                                        step += 1
+                                        print("\nTEST STEP %d: Check if number of port mapping entries is decremented by 1 after DeleteObject."%step)
+                                        print("EXPECTED RESULT %d : Number of port mapping entries should be decremented by 1 after DeleteObject." %step)
+                                        if isinstance(value1, int) and isinstance(value2, int) and  value2== value1-1:
+                                            tdkTestObj.setResultStatus("SUCCESS")
+                                            print("ACTUAL RESULT %d: Number of port mapping entries decremented by 1 after DeleteObject."%step)
+                                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                                        else:
+                                            tdkTestObj.setResultStatus("FAILURE")
+                                            print("ACTUAL RESULT %d: Failed to decrement the number of port mapping entries by 1 after DeleteObject."%step)
+                                            print("[TEST EXECUTION RESULT] : FAILURE")
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE")
+                                        print("Value of number of port mapping entries retrieved from ACS server is empty or None after DeleteObect")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: Failed to verify the number of port mapping entries after DeleteObject."%step)
+                                    print("ACTUAL RESULT %d: DeleteObject Task failed to delete %s with status %d." % (step,name3,status2))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: DeleteObject Task failed to delete %s with status %d." % (step,name3,status2))
+                                print("ACTUAL RESULT %d:  Failed to increment the number of port mapping entries by 1 after AddObject."%step)
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print("ACTUAL RESULT %d: Failed to verify the number of port mapping entries after AddObject."%step)
-                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print("Value of number of port mapping entries retrieved from ACS server is empty or None after AddObect")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: AddObject Task failed to add object %s with status %d." % (step,name2,status1))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    print("Value retrieved from ACS server is empty or None.")
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("Value of number of port mapping entries retrieved from ACS server is empty or None after Factory Reset.")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print("tr069pa Pre-requisite failed after factory reset of DUT. Please check if tr069 process is running in device or configuration is proper or connection is established.")

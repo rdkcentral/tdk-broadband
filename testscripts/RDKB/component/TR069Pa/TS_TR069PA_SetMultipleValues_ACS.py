@@ -79,7 +79,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                             print("ACTUAL RESULT %d : Failed to match the get and set values of  %s." % (step, name))
                             print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
+                    tdkTestObj.setResultStatus("FAILURE")
                     print("Failed to fetch values of the parameters after SET operation.")
+
                 #Revert to original value
                 step += 1
                 names = list(getValues.keys())
@@ -97,8 +99,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
+                tdkTestObj.setResultStatus("FAILURE")
                 print("Failed to set values of the parameters.")
         else:
+            tdkTestObj.setResultStatus("FAILURE")
             print("Failed to fetch values of the parameters before SET operation.")
     else:
         tdkTestObj.setResultStatus("FAILURE")

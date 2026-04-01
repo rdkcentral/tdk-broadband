@@ -74,7 +74,9 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                         print("ACTUAL RESULT %d : Failed to match the get and set values of %s." % (step, name))
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
+                    tdkTestObj.setResultStatus("FAILURE")
                     print("Failed to fetch value of the parameter after SET operation.")
+
                 #Revert to original value
                 step += 1
                 print("\nTEST STEP %d: Revert to the original value of %s as %s via ACS server."  % (step,name, getValues.get(name)))
@@ -90,8 +92,10 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                     print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
+                tdkTestObj.setResultStatus("FAILURE")
                 print("Failed to set value of the parameter.")
         else:
+            tdkTestObj.setResultStatus("FAILURE")
             print("Failed to fetch value of the parameter before SET operation.")
     else:
         tdkTestObj.setResultStatus("FAILURE")
