@@ -57,25 +57,39 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
             print("ACTUAL RESULT %d: RadioNumberOfEntries = %s" % (step, radioCountOutput))
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-            # Step 2: Get radio interface prefix from platform properties
-            step += 1
-            tdkTestObj = obj.createTestStep('ExecuteCmd')
-            tdkTestObj.addParameter("command", "sh %s/tdk_utility.sh parseConfigFile RADIO_IF_PREFIX" % tdkbVariables.TDK_PATH)
-            tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()
-            radioIfPrefix = tdkTestObj.getResultDetails().strip().strip('\\n').strip()
+            # Step 2 onwards: Get per-band radio interface names from platform properties
+            radioIfKeys = ["RADIO_IF_2G", "RADIO_IF_5G", "RADIO_IF_6G"]
+            radioIfList = []
+            allIfFetched = True
 
-            print("\nTEST STEP %d: Get radio interface prefix from platform properties" % step)
-            print("EXPECTED RESULT %d: Should retrieve RADIO_IF_PREFIX from platform properties" % step)
-            if expectedresult in actualresult and radioIfPrefix:
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: RADIO_IF_PREFIX: %s" % (step, radioIfPrefix))
-                print("[TEST EXECUTION RESULT] : SUCCESS")
+            for radioIfKey in radioIfKeys[:radioCount]:
+                step += 1
+                tdkTestObj = obj.createTestStep('ExecuteCmd')
+                tdkTestObj.addParameter("command", "sh %s/tdk_utility.sh parseConfigFile %s" % (tdkbVariables.TDK_PATH, radioIfKey))
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                radioIfVal = tdkTestObj.getResultDetails().strip().strip('\\n').strip()
 
+                print("\nTEST STEP %d: Get radio interface name for %s from platform properties" % (step, radioIfKey))
+                print("EXPECTED RESULT %d: Should retrieve %s from platform properties" % (step, radioIfKey))
+                if expectedresult in actualresult and radioIfVal:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: %s: %s" % (step, radioIfKey, radioIfVal))
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    radioIfList.append(radioIfVal)
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to get %s from platform properties" % (step, radioIfKey))
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    allIfFetched = False
+                    break
+
+            if allIfFetched:
                 for radioIdx in range(radioCount):
                     linkId = radioIdx
+                    radioIf = radioIfList[radioIdx]
 
-                    # Step 3: Get link addr from MLD Interface info for this link ID
+                    # Step: Get link addr from MLD Interface info for this link ID
                     step += 1
                     tdkTestObj = obj.createTestStep('ExecuteCmd')
                     tdkTestObj.addParameter("command",
@@ -92,9 +106,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
                         print("ACTUAL RESULT %d: Link addr for MLD link ID %d: %s" % (step, linkId, mldLinkAddr))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                        # Step 4: Get HWaddr of radio interface from platform properties prefix
+                        # Step: Get HWaddr of radio interface from platform properties
                         step += 1
-                        radioIf = "%s%d" % (radioIfPrefix, radioIdx)
                         tdkTestObj = obj.createTestStep('ExecuteCmd')
                         tdkTestObj.addParameter("command",
                             "sh %s/tdk_platform_utility.sh getRadioIfHWAddr x x %s" % (tdkbVariables.TDK_PATH, radioIf))
@@ -110,7 +123,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
                             print("ACTUAL RESULT %d: Hardware address for radio interface %s: %s" % (step, radioIf, radioIfHWAddr))
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                            # Step 5: Compare link addr with radio interface HWaddr
+                            # Step: Compare link addr with radio interface HWaddr
                             step += 1
                             print("\nTEST STEP %d: Validate MLD link ID %d addr matches radio interface %s hardware address" % (step, linkId, radioIf))
                             print("EXPECTED RESULT %d: MLD link addr and radio interface hardware address should match for link ID %d" % (step, linkId))
@@ -131,10 +144,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in tr181loadstatus.upper(
                         tdkTestObj.setResultStatus("FAILURE")
                         print("ACTUAL RESULT %d: Failed to get link addr for MLD link ID %d" % (step, linkId))
                         print("[TEST EXECUTION RESULT] : FAILURE")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get RADIO_IF_PREFIX from platform properties" % step)
-                print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj_Tr181_Get.setResultStatus("FAILURE")
         print("ACTUAL RESULT %d: Failed to get RadioNumberOfEntries" % step)
