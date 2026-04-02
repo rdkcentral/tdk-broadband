@@ -55,18 +55,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 step += 1
                 print("\nTEST STEP %d : Check if get values of %s from ACS server and DUT will match or not." % (step,name))
                 print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
-                if getValue  == getTr181Value:
+                if getValue.get(name)== getTr181Value.get(name):
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))
+                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches.\n" % (step, name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT." % (step, name))
+                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT.\n" % (step, name))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 print("Value retrieved from DUT is empty or None.")
+                tdkTestObj.setResultStatus("FAILURE")
         else:
             print("Value retrieved from ACS server is empty or None.")
+            tdkTestObj.setResultStatus("FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established.")

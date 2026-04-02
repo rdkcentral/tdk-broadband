@@ -50,8 +50,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         #Perform Refresh task request for the parameter
         step += 1
-        print("\nTEST STEP %d: Send RefreshObject task on %s  via ACS." %(step,name))
-        print("EXPECTED RESULT %d: Send RefreshObject task on %s  via ACS successfully." %(step,name))
+        print("\nTEST STEP %d: Send RefreshObject task on %s via ACS." %(step,name))
+        print("EXPECTED RESULT %d: Send RefreshObject task on %s via ACS successfully." %(step,name))
         status, queryResponse = tr069ACSQuery(username, queryParam, method="RefreshObject")
         if status == 200 and queryResponse:
             print("ACTUAL RESULT %d: RefreshObject Task successful for %s via ACS server." % (step,name))
@@ -68,7 +68,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: RefreshObject Task failed to get %s with status %d . " % (step,name,status))
+            print("ACTUAL RESULT %d: RefreshObject Task failed to get %s with status %d." % (step,name,status))
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
