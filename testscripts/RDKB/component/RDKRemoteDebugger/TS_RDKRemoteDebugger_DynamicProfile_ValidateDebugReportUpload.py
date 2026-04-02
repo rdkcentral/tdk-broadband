@@ -160,7 +160,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         if set_flag:
             print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {value}.")
         else:
-            print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {valuealue}.")
+            print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {value}.")
 
 
     tr181obj.unloadModule("tdkbtr181")
