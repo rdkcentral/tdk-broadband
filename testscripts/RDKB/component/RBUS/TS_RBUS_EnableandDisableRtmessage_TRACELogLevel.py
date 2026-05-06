@@ -25,7 +25,7 @@
   <primitive_test_name>RBUS_DoNothing</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>To check if setting rtmessage to TRACE log level is success and the required log lines are seen in the rtrouted.log file for any two randomly selected TRACE levels in the range 1-9. The resetting of log level from TRACE level should also be success and the corresponding log lines should be present in rtrouted.log file.</synopsis>
+  <synopsis>To check if setting rtmessage to TRACE log level is success and the required log lines are seen in the rtrouted.log file for TRACE level. The resetting of log level from TRACE level should also be success and the corresponding log lines should be present in rtrouted.log file.</synopsis>
   <groups_id/>
   <execution_time>30</execution_time>
   <long_duration>false</long_duration>
@@ -41,7 +41,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_RBUS_88</test_case_id>
-    <test_objective>To check if setting rtmessage to TRACE log level is success and the required log lines are seen in the rtrouted.log file for any two randomly selected TRACE levels in the range 1-9. The resetting of log level from TRACE level should also be success and the corresponding log lines should be present in rtrouted.log file.</test_objective>
+    <test_objective>To check if setting rtmessage to TRACE log level is success and the required log lines are seen in the rtrouted.log file for TRACE level. The resetting of log level from TRACE level should also be success and the corresponding log lines should be present in rtrouted.log file.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1. Ccsp Components  should be in a running state of DUT
@@ -51,7 +51,7 @@
     <automation_approch>1. Load the modules
 2. Check if the device is in RBUS mode using Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.RBUS.Enable and if not, enable this parameter and reboot the device and check if the device comes up in RBUS mode.
 3. Check if the file rtrouted.log is present under /rdklogs/logs
-4. Chose any two TRACE levels randomly from the applicable range of 1 to 9
+4. Choose TRACE log level
 5. Check the initial line count of Set TRACE loglevel log lines and Reset TRACE loglevel log lines in rtrouted.log and store it
 6. Set the rtmessage log level to TRACE using the command "rdklogctrl rtrouted LOG.RDK.RTMESSAGE TRACE"
 7. Wait for 2 minutes and then check for the presence of set TRACE log level log lines are verify if it is incremented by 1 after the set operation.
@@ -133,56 +133,93 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             print("[TEST EXECUTION RESULT] : SUCCESS");
 
             step = 2;
-            #Considering any 2 TRACE levels randomly
-            for iteration in range(0,2):
-                #Get a TRACE level randomly in the available range of 1-9
-                traceLevel = randint(1,9);
-                print("\n*****************For TRACE LEVEL : %d*******************" %traceLevel);
+            #Considering any  TRACE level
+            #Get the set log line count
+            print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"");
+            step = step + 1;
+            search_string_loglevelSet = "rdk_dyn_log_validate_component_name(): Set TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted";
+            count_loglevelSet_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
 
-                #Get the set log line count
-                print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
-                step = step + 1;
-                search_string_loglevelSet = "rdk_dyn_log_validate_component_name(): Set TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted";
-                count_loglevelSet_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
+            #Get the disable log line count
+            print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"");
+            step = step + 1;
+            search_string_loglevelReset = 'rdk_dyn_log_validate_component_name(): Set !TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted'
+            count_loglevelReset_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
 
-                #Get the disable log line count
-                print("\nGet the current number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
-                step = step + 1;
-                search_string_loglevelReset = "rdk_dyn_log_validate_component_name(): Set !TRACE" + str(traceLevel) + " loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted"
-                count_loglevelReset_initial = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
+            #Execute the set rtmessage log level command
+            step = step + 1;
+            cmd = "rdklogctrl rtrouted LOG.RDK.RTMESSAGE TRACE";
+            print("\nCommand : %s" %cmd);
+            tdkTestObj.addParameter("command",cmd);
+            tdkTestObj.executeTestCase(expectedresult);
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails().strip();
+            print("TEST STEP %d: Set the rtmessage log level to TRACE" %(step));
+            print("EXPECTED RESULT %d: Should successfully set the rtmessage log level to TRACE" %step);
 
-                #Execute the set rtmessage log level command
+            if expectedresult in actualresult and "Sent message to update log level of LOG.RDK.RTMESSAGE for rtrouted process" in details:
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT %d: The rtmessage log level is set to TRACE successfully; Details : %s" %(step, details));
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                #Wait for 120s before checking the rtrouted.log
+                sleep(120);
+                #Check the final log lines of log level set in rtrouted.log
+                print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"");
                 step = step + 1;
-                cmd = "rdklogctrl rtrouted LOG.RDK.RTMESSAGE TRACE" + str(traceLevel);
+                count_loglevelSet_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
+
+                #Check if the final log line number is incremented by 1
+                step = step + 1;
+                print("\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step);
+                print("EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step);
+                print("Initial Count : %d" %count_loglevelSet_initial);
+                print("Final Count : %d" %count_loglevelSet_final);
+
+                if count_loglevelSet_final == (count_loglevelSet_initial + 1):
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step);
+                    #Get the result of execution
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                #Execute the disable rtmessage log level command
+                step = step + 1;
+                cmd = "rdklogctrl rtrouted LOG.RDK.RTMESSAGE ~TRACE";
                 print("\nCommand : %s" %cmd);
                 tdkTestObj.addParameter("command",cmd);
                 tdkTestObj.executeTestCase(expectedresult);
                 actualresult = tdkTestObj.getResult();
                 details = tdkTestObj.getResultDetails().strip();
-                print("TEST STEP %d: Set the rtmessage log level to TRACE%d" %(step, traceLevel));
-                print("EXPECTED RESULT %d: Should successfully set the rtmessage log level to TRACE%d" %(step, traceLevel));
+                print("TEST STEP %d: Reset the rtmessage log level from TRACE" %(step));
+                print("EXPECTED RESULT %d: Should successfully Disable the rtmessage log level from TRACE" %step);
 
                 if expectedresult in actualresult and "Sent message to update log level of LOG.RDK.RTMESSAGE for rtrouted process" in details:
                     tdkTestObj.setResultStatus("SUCCESS");
-                    print("ACTUAL RESULT %d: The rtmessage log level is set to TRACE%d successfully; Details : %s" %(step, traceLevel, details));
+                    print("ACTUAL RESULT %d: The rtmessage log level TRACE is disabled successfully; Details : %s" %(step, details));
                     #Get the result of execution
                     print("[TEST EXECUTION RESULT] : SUCCESS");
 
                     #Wait for 120s before checking the rtrouted.log
                     sleep(120);
-                    #Check the final log lines of log level set in rtrouted.log
-                    print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
+                    #Get the reset log line count
+                    print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" );
                     step = step + 1;
-                    count_loglevelSet_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelSet, step);
+                    count_loglevelReset_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
 
                     #Check if the final log line number is incremented by 1
                     step = step + 1;
                     print("\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step);
                     print("EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step);
-                    print("Initial Count : %d" %count_loglevelSet_initial);
-                    print("Final Count : %d" %count_loglevelSet_final);
+                    print("Initial Count : %d" %count_loglevelReset_initial)
+                    print("Final Count : %d" %count_loglevelReset_final);
 
-                    if count_loglevelSet_final == (count_loglevelSet_initial + 1):
+                    if count_loglevelReset_final == (count_loglevelReset_initial + 1):
                         tdkTestObj.setResultStatus("SUCCESS");
                         print("ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step);
                         #Get the result of execution
@@ -192,58 +229,16 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                         print("ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step);
                         #Get the result of execution
                         print("[TEST EXECUTION RESULT] : FAILURE");
-
-                    #Execute the disable rtmessage log level command
-                    step = step + 1;
-                    cmd = "rdklogctrl rtrouted LOG.RDK.RTMESSAGE ~TRACE" + str(traceLevel);
-                    print("\nCommand : %s" %cmd);
-                    tdkTestObj.addParameter("command",cmd);
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    details = tdkTestObj.getResultDetails().strip();
-                    print("TEST STEP %d: Reset the rtmessage log level from TRACE%d" %(step, traceLevel));
-                    print("EXPECTED RESULT %d: Should successfully Disable the rtmessage log level from TRACE%d" %(step, traceLevel));
-
-                    if expectedresult in actualresult and "Sent message to update log level of LOG.RDK.RTMESSAGE for rtrouted process" in details:
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print("ACTUAL RESULT %d: The rtmessage log level TRACE%d is disabled successfully; Details : %s" %(step, traceLevel, details));
-                        #Get the result of execution
-                        print("[TEST EXECUTION RESULT] : SUCCESS");
-
-                        #Wait for 120s before checking the rtrouted.log
-                        sleep(120);
-                        #Get the reset log line count
-                        print("\nGet the final number of log lines of \"rdk_dyn_log_validate_component_name(): Set !TRACE%d loglevel for the component LOG.RDK.RTMESSAGE of the process rtrouted\"" %traceLevel);
-                        step = step + 1;
-                        count_loglevelReset_final = getLogFileTotalLinesCount(tdkTestObj, file, search_string_loglevelReset, step);
-
-                        #Check if the final log line number is incremented by 1
-                        step = step + 1;
-                        print("\nTEST STEP %d : Check if the final number of log lines is incremented by 1" %step);
-                        print("EXPECTED RESULT %d : The final number of log lines should be incremented by 1" %step);
-                        print("Initial Count : %d" %count_loglevelReset_initial)
-                        print("Final Count : %d" %count_loglevelReset_final);
-
-                        if count_loglevelReset_final == (count_loglevelReset_initial + 1):
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print("ACTUAL RESULT %d:The final number of log lines is incremented by 1" %step);
-                            #Get the result of execution
-                            print("[TEST EXECUTION RESULT] : SUCCESS");
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print("ACTUAL RESULT %d:The final number of log lines is not incremented by 1" %step);
-                            #Get the result of execution
-                            print("[TEST EXECUTION RESULT] : FAILURE");
-                    else :
-                        tdkTestObj.setResultStatus("FAILURE");
-                        print("ACTUAL RESULT %d: The rtmessage log level TRACE%d is not disabled successfully; Details : %s" %(step, traceLevel, details));
-                        #Get the result of execution
-                        print("[TEST EXECUTION RESULT] : FAILURE");
                 else :
                     tdkTestObj.setResultStatus("FAILURE");
-                    print("ACTUAL RESULT %d: The rtmessage log level is not set to TRACE%d successfully; Details : %s" %(step, traceLevel, details));
+                    print("ACTUAL RESULT %d: The rtmessage log level TRACE is not disabled successfully; Details : %s" %(step, details));
                     #Get the result of execution
                     print("[TEST EXECUTION RESULT] : FAILURE");
+            else :
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT %d: The rtmessage log level is not set to TRACE successfully; Details : %s" %(step, details));
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE");
         else:
             tdkTestObj.setResultStatus("FAILURE");
             print("ACTUAL RESULT 2: %s file is not present" %(file));
