@@ -241,6 +241,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 applicable_6G = 1;
                 print("\nFetching the WiFi SSID Status for 6G...");
                 param = "Device.WiFi.SSID.17.Status";
+                tdkTestObj = obj.createTestStep('WIFIAgent_Get');
                 actualresult3, ssid_17_status = getParameter(tdkTestObj, param);
 
                 if expectedresult in actualresult3:
