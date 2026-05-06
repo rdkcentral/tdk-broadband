@@ -66,7 +66,7 @@
 3.DUT should be in RBUS mode</pre_requisite>
     <api_or_interface_used>rbus_set
 rbusValue_SetInt32</api_or_interface_used>
-    <input_parameters>Device.WiFi.AccessPoint.1.Security.X_CISCO_COM_RadiusReAuthInterval</input_parameters>
+    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval</input_parameters>
     <automation_approch>1. Load the rbus module
 2. Open the rbus connection using rbus_open RBUS API
 3. Get the initial value of the DML parameter using rbusValue_GetInt32 and store it
@@ -106,7 +106,7 @@ print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 if "SUCCESS" in loadmodulestatus.upper() :
     obj.setLoadModuleStatus("SUCCESS");
 
-    parameterName = "Device.WiFi.AccessPoint.1.Security.X_CISCO_COM_RadiusReAuthInterval"
+    parameterName = "Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval"
 
     tdkTestObj = obj.createTestStep('RBUS_Open');
     expectedresult = "SUCCESS";
@@ -144,10 +144,10 @@ if "SUCCESS" in loadmodulestatus.upper() :
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : %s" %actualresult) ;
 
-            new_value_to_set = "0";
+            new_value_to_set = "300";
 
-            if initial_Value == "0":
-                new_value_to_set = "10";
+            if initial_Value == "300":
+                new_value_to_set = "3600";
 
             print("New value to be set is: ",new_value_to_set)
 
