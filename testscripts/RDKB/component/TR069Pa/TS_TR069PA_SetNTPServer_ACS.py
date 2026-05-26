@@ -41,7 +41,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
     tr181obj.setLoadModuleStatus("SUCCESS")
 
     #Check for prerequisites
-    tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
+    tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
         step = 0
         queryParam = {"name":"Device.Time.NTPServer1"}
@@ -102,8 +102,12 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in device or configuration is proper or connection is established.")
         print("[TEST EXECUTION RESULT] : FAILURE")
 
+    revertPrerequisite(tr181obj,initialValues,step)
+
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
+
+
 else:
     print("FAILURE to load module.")
     tr181obj.setLoadModuleStatus("FAILURE")
