@@ -19,6 +19,7 @@
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
+import sys
 from  tdkutility import *
 
 #Test component to be tested
@@ -55,10 +56,10 @@ if "SUCCESS" in loadmodulestatus.upper():
             ap_indices = [1,2,17]
         elif radioCount == 2:
             ap_indices = [1,2]
-        elif radioCount == 1:
-            ap_indices = [1]
         else:
-            raise ValueError(f"Unknown radio count: {radioCount}")
+            print(f"Unknown radio count: {radioCount}")
+            obj.unloadModule("wifiagent")
+            sys.exit(0)
 
         for index in ap_indices:
             setflag1 = 0

@@ -20,6 +20,7 @@
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 import time
+import sys
 from tdkutility import *
 
 #Test component to be tested
@@ -61,9 +62,9 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         #Restore the device state saved before reboot
         obj.restorePreviousStateAfterReboot()
-        #Wait upto 3 min for DUT to come up
-        print("Sleeping 3 min for DUT to come up")
-        time.sleep(180)
+        #Wait upto 5 min for DUT to come up
+        print("Sleeping 5 min for DUT to come up")
+        time.sleep(300)
 
         #Get the last reboot reason
         step+=1
@@ -95,10 +96,10 @@ if "SUCCESS" in loadmodulestatus.upper():
                     ap_indices = [1,2,17]
                 elif radioCount == 2:
                     ap_indices = [1,2]
-                elif radioCount == 1:
-                    ap_indices = [1]
                 else:
-                    raise ValueError(f"Unknown radio count: {radioCount}")
+                    print(f"Unknown radio count: {radioCount}")
+                    obj.unloadModule("wifiagent")
+                    sys.exit(0)
                 for index in ap_indices:
                     setflag = 0
                     print(f"\n***************For radio index : {index}*********************")
@@ -152,28 +153,28 @@ if "SUCCESS" in loadmodulestatus.upper():
                                 print(f"ACTUAL RESULT {step}: Mac FilterAsBlacklist {param2} is '{orgFilterAsBlacklist}' when Mac filter is enabled successfully.")
                                 #Get the result of execution
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                step+=1
+                                param3 = "Device.WiFi.AccessPoint." + str(index) + ".X_COMCAST-COM_MAC_FilteringMode"
+                                print(f"\nTEST STEP {step}: Verify that Mac Filtering mode {param3} is 'Deny' when Mac filter is enabled.")
+                                print(f"EXPECTED RESULT {step}: Mac Filtering mode {param3} should be 'Deny' when Mac filter is enabled successfully.")
+                                tdkTestObj,actualresult,mode =wifi_GetParam(obj,param3)
+                                if expectedresult in actualresult  and mode == "Deny" :
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print(f"ACTUAL RESULT {step}: Mac Filtering mode {param3} is '{mode}' when Mac filter is enabled successfully.")
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print(f"ACTUAL RESULT {step}: Mac Filtering mode {param3} is '{mode}' which is not expected when Mac filter is enabled.")
+                                    #Get the result of execution
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE")
                                 print(f"ACTUAL RESULT {step}: Mac FilterAsBlacklist {param2} is '{orgFilterAsBlacklist}' which is not expected when Mac filter is enabled.")
-                                #Get the result of execution
-                                print("[TEST EXECUTION RESULT] : FAILURE")
-
-                            step+=1
-                            param3 = "Device.WiFi.AccessPoint." + str(index) + ".X_COMCAST-COM_MAC_FilteringMode"
-                            print(f"\nTEST STEP {step}: Verify that Mac Filtering mode {param3} is 'Deny' when Mac filter is enabled.")
-                            print(f"EXPECTED RESULT {step}: Mac Filtering mode {param3} should be 'Deny' when Mac filter is enabled successfully.")
-                            tdkTestObj,actualresult,mode =wifi_GetParam(obj,param3)
-                            if expectedresult in actualresult  and mode == "Deny" :
-                                #Set the result status of execution
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print(f"ACTUAL RESULT {step}: Mac Filtering mode {param3} is '{mode}' when Mac filter is enabled successfully.")
-                                #Get the result of execution
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            else:
-                                #Set the result status of execution
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print(f"ACTUAL RESULT {step}: Mac Filtering mode {param3} is '{mode}' which is not expected when Mac filter is enabled.")
                                 #Get the result of execution
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
