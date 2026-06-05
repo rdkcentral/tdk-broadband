@@ -116,7 +116,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                         #Get the result of execution
                         print("[TEST EXECUTION RESULT] : SUCCESS")
                         if orgFilterAsBlacklist == "false":
-                            print("\n Mac Filter Enable is already 'false', so skipping the set operation of Mac FilterAsBlacklist to 'false'.")
+                            print("\n Mac FilterAsBlacklist is already 'false', so skipping the set operation of Mac FilterAsBlacklist to 'false'.")
                             setflag2 = 1
                         else:
                             step+=1
