@@ -68,7 +68,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
             print("\nChecking PREREQUISITES after Reboot")
             #Check for prerequisites after reboot
-            tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
+            tdkTestObj,username,_,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
             if "SUCCESS" in preRequisiteStatus:
                 queryParam = {"name":"Device.DeviceInfo.X_RDKCENTRAL-COM_LastRebootReason"}
                 name = queryParam.get("name")
