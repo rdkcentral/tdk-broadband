@@ -41,9 +41,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tr181obj.setLoadModuleStatus("SUCCESS")
 
     #Check for prerequisites
-    tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
+    tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
+    step = 0
     if "SUCCESS" in preRequisiteStatus:
-        step = 0
         #Perform get task request and search query to get the value of the parameter
         queryParam = {"name":"Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode"}
         getValue,step = gettr069ACS(tdkTestObj,username,queryParam,step)
@@ -57,11 +57,11 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print( "EXPECTED RESULT %d : Get values of %s from ACS server and DUT should match." % (step,name))
                 if getValue.get(name)== getTr181Value.get(name):
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches.\n" % (step, name))
+                    print("ACTUAL RESULT %d : Get values of %s from ACS server and DUT matches." % (step, name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT.\n" % (step, name))
+                    print("ACTUAL RESULT %d : Failed to match the Get values of %s from ACS server and DUT." % (step, name))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 print("Value retrieved from DUT is empty or None.")
@@ -73,6 +73,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established.")
         print("[TEST EXECUTION RESULT] : FAILURE")
+
+    revertPrerequisite(tr181obj,initialValues,step)
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
