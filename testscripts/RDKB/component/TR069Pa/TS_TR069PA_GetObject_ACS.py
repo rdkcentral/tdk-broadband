@@ -41,7 +41,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     tr181obj.setLoadModuleStatus("SUCCESS")
 
     #Check for prerequisites
-    tdkTestObj,username,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
+    tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
         step = 0
         #Perform get task request and search query to get the parameter values of the object
@@ -51,6 +51,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established.")
         print("[TEST EXECUTION RESULT] : FAILURE")
+
+    revertPrerequisite(tr181obj,initialValues,step)
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
