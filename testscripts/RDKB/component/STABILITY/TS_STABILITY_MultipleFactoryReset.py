@@ -70,7 +70,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_SetOnly')
             actualresult ,details = setTR181Value(tdkTestObj,"Device.X_CISCO_COM_DeviceControl.FactoryReset","Router,Wifi,VoIP,Dect,MoCA","string")
             if expectedresult in actualresult:
-                print("Factory resetted the device successfully")
+                print("Factory reset the device successfully")
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 

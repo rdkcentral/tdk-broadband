@@ -68,7 +68,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             print("=" * 90)
             #Reboot the DUT
             doRebootDUT(obj1)
-            print("\n ******* Device Health checks post Factory Reset *******")
+            print("\n ******* Device Health checks post Reboot *******")
             #Get uptime of the device
             step,upTime,iterationFailed,failureReason = get_device_uptime(obj2,step)
             if iterationFailed:

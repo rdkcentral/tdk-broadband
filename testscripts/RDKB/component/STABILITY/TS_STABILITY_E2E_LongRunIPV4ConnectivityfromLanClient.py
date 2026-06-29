@@ -27,7 +27,7 @@ from tdkbStabilityUtility import *
 #Test component to be tested
 obj1 = tdklib.TDKScriptingLibrary("sysutil","1")
 obj2 = tdklib.TDKScriptingLibrary("tdkb_e2e","1")
-obj3 = tdklib.TDKScriptingLibrary("tdkb_e2e","1")
+obj3 = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
@@ -155,7 +155,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 break
                             health_check_phase = "pre"
                         #compare pre and post values of CPU Usage
-                        if iteration == 50:
+                        if iteration % 50 == 0:
                             if cpu_check_phase == "pre":
                                 print(f"Periodic pre CPU Usage check at iteration {iteration}")
                                 step, testFailed, failureReason, preCpuUsage = get_device_CPUUsage(obj1, step)

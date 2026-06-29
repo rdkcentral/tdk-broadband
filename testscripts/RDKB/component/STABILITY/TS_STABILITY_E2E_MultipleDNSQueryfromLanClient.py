@@ -135,12 +135,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     step+=1
                     step,testFailed,failureReason,postPid = get_process_status(obj1,step,dnsprocess)
                     if testFailed:
-                        failureReason = f"pre_{failureReason}"
+                        failureReason = f"post_{failureReason}"
                         break
                     #Get the free memory of the device
                     step,testFailed,failureReason,postFreeMemory = get_freeMemory(obj1,step)
                     if testFailed:
-                        failureReason = f"pre_{failureReason}"
+                        failureReason = f"post_{failureReason}"
                         break
                     #Check if all critical processes are up
                     step+=1
@@ -208,7 +208,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         testFailed = True
                         failureReason = "memory_leak_detected"
                         tdkTestObj.setResultStatus("FAILURE")
-                        print("Failed to confirm that there's no memory leak(memory loss > 10%: {memoryLoss}MB lost)")
+                        print(f"Failed to confirm that there's no memory leak(memory loss > 10%: {memoryLoss}MB lost)")
                         print("[TEST EXECUTION RESULT] : FAILURE")
                         break
                 else:
@@ -220,7 +220,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     break
         #On first failure, upload the device artifact to the upload server
         if testFailed:
-            stability_type = "MutipleDNSQueryStability"
+            stability_type = "MultipleDNSQueryStability"
             print("\n[ITERATION FAILURE] iteration=%d reason=%s" % (iteration, failureReason))
             status, artifact_details = collect_failure_artifacts(obj1, stability_type, iteration, failureReason, UPLOAD_SERVER_URL, FAILURE_ARTIFACT_ROOT)
             print("[ARTIFACT] Result: %s" % artifact_details['summary'])
