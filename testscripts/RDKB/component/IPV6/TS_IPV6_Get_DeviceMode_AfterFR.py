@@ -99,18 +99,18 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     if flag:
                         print("Successfully verified that DUT has IPv6 WAN IP Address")
 
-                        #Get the default value of Device Mode - Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceMode
+                        #Get the default value of Device Mode - Device.X_CISCO_COM_DeviceControl.DeviceMode
                         step += 1
-                        print(f"\nTEST STEP {step} : Get the default value of Device Mode - Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceMode")
+                        print(f"\nTEST STEP {step} : Get the default value of Device Mode - Device.X_CISCO_COM_DeviceControl.DeviceMode")
                         print(f"EXPECTED RESULT {step} : Should get the default value of Device Mode successfully")
                         tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
-                        actualresult, device_mode = getTR181Value(tdkTestObj, "Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceMode")
+                        actualresult, device_mode = getTR181Value(tdkTestObj, "Device.X_CISCO_COM_DeviceControl.DeviceMode")
                         if expectedresult in actualresult and device_mode == "Dualstack":
-                            print(f"ACTUAL RESULT {step} : Successfully got the value of Device Mode - Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceMode. Device Mode is {device_mode}")
+                            print(f"ACTUAL RESULT {step} : Successfully got the value of Device Mode - Device.X_CISCO_COM_DeviceControl.DeviceMode. Device Mode is {device_mode}")
                             tdkTestObj.setResultStatus("SUCCESS")
                             print("[TEST EXECUTION RESULT] : SUCCESS\n")
                         else:
-                            print(f"ACTUAL RESULT {step}: Failed to get the value of Device Mode - Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceMode. Device Mode is {device_mode}")
+                            print(f"ACTUAL RESULT {step}: Failed to get the value of Device Mode - Device.X_CISCO_COM_DeviceControl.DeviceMode. Device Mode is {device_mode}")
                             tdkTestObj.setResultStatus("FAILURE")
                             print("[TEST EXECUTION RESULT] : FAILURE\n")
                     else:
