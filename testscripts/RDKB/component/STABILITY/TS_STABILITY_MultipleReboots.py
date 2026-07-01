@@ -74,20 +74,18 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             if iterationFailed:
                 break
             #Check if the uptime matches with the wait time , else wait till the wait time
-            if not iterationFailed and int(upTime) < int(waitTime):
+            if int(upTime) < int(waitTime):
                 sleepTime = (int(waitTime) - int(upTime))
                 print(f" *********Sleeping for {sleepTime}sec to check if the processes are up to reach a wait time of {waitTime} sec ****")
                 sleep(sleepTime)
             #Check the status of interfaces
-            if not iterationFailed:
-                step,iterationFailed,failureReason = get_status_interfaces(obj1,step,interfaceList)
-                if iterationFailed:
-                    break
+            step,iterationFailed,failureReason = get_status_interfaces(obj1,step,interfaceList)
+            if iterationFailed:
+                break
             #Check the status of critical processes
-            if not iterationFailed:
-                step,iterationFailed,failureReason = get_status_processes(obj1,obj2,step,processList)
-                if iterationFailed:
-                    break
+            step,iterationFailed,failureReason = get_status_processes(obj1,obj2,step,processList)
+            if iterationFailed:
+                break
     #On first failure, upload the device artifact to the upload server
     if iterationFailed:
         stability_type ="MultipleRebootStability"

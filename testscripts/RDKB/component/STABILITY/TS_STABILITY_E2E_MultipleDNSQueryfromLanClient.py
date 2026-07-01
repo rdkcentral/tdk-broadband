@@ -52,14 +52,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     expectedresult = "SUCCESS"
 
     #Parse the device configuration file
-    status = parseDeviceConfig(obj1)
+    status = parseDeviceConfig(obj2)
     if expectedresult in status:
-        obj1.setLoadModuleStatus("SUCCESS")
+        obj2.setLoadModuleStatus("SUCCESS")
         print("Parsed the device configuration file successfully")
         step = 0
         testFailed = False
         failureReason = ""
-        dnsprocess = "dnsmasq"
         configFailed = False
         iteration = 0
 
@@ -84,7 +83,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 print(f"ACTUAL RESULT {step} : Failed to get current value of DNS Server")
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
-        if not configFailed and not testFailed :
+        if not testFailed :
             for iteration in range(1, CONNECTIVITY_ITERATIONS + 1):
                 #Check the device health before test
                 print("\n *****Pre checks on Device Health*****")
@@ -98,7 +97,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         break
                 #Get the status of dns process
                 step+=1
-                step,testFailed,failureReason,prePid = get_process_status(obj1,step,dnsprocess)
+                step,testFailed,failureReason,prePid = get_process_status(obj1,step,DNS_PROCESS)
                 if testFailed:
                     failureReason = f"pre_{failureReason}"
                     break
@@ -133,7 +132,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             break
                     #Get the status of dns process
                     step+=1
-                    step,testFailed,failureReason,postPid = get_process_status(obj1,step,dnsprocess)
+                    step,testFailed,failureReason,postPid = get_process_status(obj1,step,DNS_process)
                     if testFailed:
                         failureReason = f"post_{failureReason}"
                         break
@@ -233,7 +232,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         else:
             print("\n[ITERATION PASS] iteration=%d completed successfully" % iteration)
     else:
-        obj1.setLoadModuleStatus("FAILURE")
+        obj2.setLoadModuleStatus("FAILURE")
         print("Failed to parse the device configuration file")
     obj1.unloadModule("sysutil")
     obj2.unloadModule("tdkb_e2e")

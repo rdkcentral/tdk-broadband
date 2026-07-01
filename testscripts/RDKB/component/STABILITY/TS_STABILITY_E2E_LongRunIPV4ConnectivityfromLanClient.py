@@ -52,9 +52,9 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     expectedresult = "SUCCESS"
 
     #Parse the device configuration file
-    status = parseDeviceConfig(obj1)
+    status = parseDeviceConfig(obj2)
     if expectedresult in status:
-        obj1.setLoadModuleStatus("SUCCESS")
+        obj2.setLoadModuleStatus("SUCCESS")
         print("Parsed the device configuration file successfully")
         step = 0
         testFailed = False
@@ -83,20 +83,19 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 tdkTestObj.setResultStatus("FAILURE")
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
-        if not configFailed and not testFailed:
+        if not testFailed:
             print("\n" + "=" * 90)
-            print(f"\nPing a IPV4 IP for {CONNECTIVITY_DURATION}\n")
+            print(f"\nPing a IPV4 IP for {CONNECTIVITY_DURATION} seconds\n")
             print("=" * 90)
-            pingOutputFile = "/tmp/tdkb_longrun_ping_ipv4.log"
 
             #Send the ping command from lan client
             step += 1
             print(f"TEST STEP {step}: Start IPV4 ping from lan client for {CONNECTIVITY_DURATION} seconds")
             print(f"EXPECTED RESULT {step}: Ping should start successfully and run in background")
-            status = verifyLongRunNetworkConnectivity(PUBLIC_IPV4,"PING_TO_IPV4",tdkbE2EUtility.lan_ip,curIPAddress,CONNECTIVITY_DURATION,"START",pingOutputFile)
+            status = verifyLongRunNetworkConnectivity(PUBLIC_IPV4,"PING_TO_IPV4",tdkbE2EUtility.lan_ip,curIPAddress)
             if expectedresult in status:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: Ping started and output will be written to {pingOutputFile}")
+                print(f"ACTUAL RESULT {step}: Ping started and output will be written to {PING_OUTPUT_FILE}")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 cpu_check_phase = "pre"
@@ -196,14 +195,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     # Keep loop duration aligned with CONNECTIVITY_DURATION seconds.
                     time.sleep(1)
 
-                time.sleep(1)
-
                 if not testFailed:
                     # validate the output of ping command
                     step += 1
                     print(f"\nTEST STEP {step}: Validate long-run IPV4 ping output file")
                     print(f"EXPECTED RESULT {step}: 0% packet loss in ping output")
-                    status = verifyLongRunNetworkConnectivity(PUBLIC_IPV4,"PING_TO_IPV4",tdkbE2EUtility.lan_ip,curIPAddress,CONNECTIVITY_DURATION,"CHECK",pingOutputFile)
+                    status = verifyLongRunNetworkConnectivity(PUBLIC_IPV4,"PING_TO_IPV4",tdkbE2EUtility.lan_ip,curIPAddress,"CHECK")
                     if expectedresult in status:
                         tdkTestObj.setResultStatus("SUCCESS")
                         print(f"ACTUAL RESULT {step}: Ping output validation passed - {status}")
@@ -235,7 +232,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         else:
             print("\n[ITERATION PASS] iteration=%d completed successfully" % iteration)
     else:
-        obj1.setLoadModuleStatus("FAILURE")
+        obj2.setLoadModuleStatus("FAILURE")
         print("Failed to parse the device configuration file")
     obj1.unloadModule("sysutil")
     obj2.unloadModule("tdkb_e2e")

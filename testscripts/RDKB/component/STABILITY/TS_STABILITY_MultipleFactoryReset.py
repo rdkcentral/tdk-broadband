@@ -48,7 +48,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     testFailed = False
     iterationFailed = False
     iteration = 0
-
+    failureReason = ""
     #Get the max wait time of any process from configuration file
     step,waitTime,testFailed = get_waitTime_configFile(obj1,step)
     if not testFailed:
@@ -60,7 +60,6 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 
     if not testFailed:
         for iteration in range(1, TOTAL_ITERATIONS + 1):
-            failureReason = ""
             #save device's current state before it goes for reboot
             obj1.saveCurrentState()
             print("\n" + "=" * 90)
@@ -70,7 +69,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_SetOnly')
             actualresult ,details = setTR181Value(tdkTestObj,"Device.X_CISCO_COM_DeviceControl.FactoryReset","Router,Wifi,VoIP,Dect,MoCA","string")
             if expectedresult in actualresult:
-                print("Factory reset the device successfully")
+                print("Factory resetted the device successfully")
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
@@ -84,20 +83,18 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 if iterationFailed:
                     break
                 #Check if the uptime matches with the wait time , else wait till the wait time
-                if not iterationFailed and int(upTime) < int(waitTime):
+                if int(upTime) < int(waitTime):
                     sleepTime = (int(waitTime) - int(upTime))
                     print(f" *********Sleeping for {sleepTime}sec to check if the processes are up to reach a wait time of {waitTime} sec ****")
                     sleep(sleepTime)
                 #Check the status of interfaces
-                if not iterationFailed:
-                    step,iterationFailed,failureReason = get_status_interfaces(obj1,step,interfaceList)
-                    if iterationFailed:
-                        break
+                step,iterationFailed,failureReason = get_status_interfaces(obj1,step,interfaceList)
+                if iterationFailed:
+                    break
                 #Check the status of critical processes
-                if not iterationFailed:
-                    step,iterationFailed,failureReason = get_status_processes(obj1,obj2,step,processList)
-                    if iterationFailed:
-                        break
+                step,iterationFailed,failureReason = get_status_processes(obj1,obj2,step,processList)
+                if iterationFailed:
+                    break
             else:
                 iterationFailed = True
                 print("Failed to factory reset the device")

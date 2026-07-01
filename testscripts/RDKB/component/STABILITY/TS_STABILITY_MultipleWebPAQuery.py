@@ -139,8 +139,6 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     testFailed = False
     failureReason = ""
     currentIteration = 0
-    webpaProcess = "webpa"
-    parodusProcess = "parodus"
     originalValues = {}
     iteration = 0
     dmConfigList = [
@@ -198,12 +196,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         break
 
                 #Periodic pre webpa process check
-                step,testFailed,failureReason,prePid1 = get_process_status(obj1,step,webpaProcess)
+                step,testFailed,failureReason,prePid1 = get_process_status(obj1,step,WEBPA_PROCESS)
                 if testFailed:
                     failureReason = f"pre_{failureReason}"
                     break
                 #Periodic pre parodus process check
-                step,testFailed,failureReason,prePid2 = get_process_status(obj1,step,parodusProcess)
+                step,testFailed,failureReason,prePid2 = get_process_status(obj1,step,PARODUS_PROCESS)
                 if testFailed:
                     failureReason = f"pre_{failureReason}"
                     break
@@ -244,12 +242,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         failureReason = f"post_{failureReason}"
                         break
                 #Periodic specific process check
-                step,testFailed,failureReason,postPid1 = get_process_status(obj1,step,webpaProcess)
+                step,testFailed,failureReason,postPid1 = get_process_status(obj1,step,WEBPA_PROCESS)
                 if testFailed:
                     failureReason = f"post_{failureReason}"
                     break
                 #Periodic specific process check
-                step,testFailed,failureReason,postPid2 = get_process_status(obj1,step,parodusProcess)
+                step,testFailed,failureReason,postPid2 = get_process_status(obj1,step,PARODUS_PROCESS)
                 if testFailed:
                     failureReason = f"post_{failureReason}"
                     break
@@ -267,32 +265,32 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 tdkTestObj = create_webpa_test_step(obj1)
                 #Check the status of specific processes
                 step += 1
-                print(f"\nTEST STEP {step}: Verify that {webpaProcess} process didn't crash")
-                print(f"EXPECTED RESULT {step}: {webpaProcess} process should not crash")
+                print(f"\nTEST STEP {step}: Verify that {WEBPA_PROCESS} process didn't crash")
+                print(f"EXPECTED RESULT {step}: {WEBPA_PROCESS} process should not crash")
                 if prePid1 == postPid1:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"Same PID confirms that there's no {webpaProcess} process crash")
+                    print(f"Same PID confirms that there's no {WEBPA_PROCESS} process crash")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     testFailed = True
-                    failureReason = f"{webpaProcess}_processPID_compare_failed"
+                    failureReason = f"{WEBPA_PROCESS}_processPID_compare_failed"
                     tdkTestObj.setResultStatus("FAILURE")
-                    print(f"Failed to confirm that {webpaProcess} process didn't crash")
+                    print(f"Failed to confirm that {WEBPA_PROCESS} process didn't crash")
                     print("[TEST EXECUTION RESULT] : FAILURE")
                     break
 
                 step += 1
-                print(f"\nTEST STEP {step}: Verify that {parodusProcess} process didn't crash")
-                print(f"EXPECTED RESULT {step}: {parodusProcess} process should not crash")
+                print(f"\nTEST STEP {step}: Verify that {PARODUS_PROCESS} process didn't crash")
+                print(f"EXPECTED RESULT {step}: {PARODUS_PROCESS} process should not crash")
                 if prePid2 == postPid2:
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"Same PID confirms that there's no {parodusProcess} process crash")
+                    print(f"Same PID confirms that there's no {PARODUS_PROCESS} process crash")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     testFailed = True
-                    failureReason = f"{parodusProcess}_processPID_compare_failed"
+                    failureReason = f"{PARODUS_PROCESS}_processPID_compare_failed"
                     tdkTestObj.setResultStatus("FAILURE")
-                    print(f"Failed to confirm that {parodusProcess} process didn't crash")
+                    print(f"Failed to confirm that {PARODUS_PROCESS} process didn't crash")
                     print("[TEST EXECUTION RESULT] : FAILURE")
                     break
 
