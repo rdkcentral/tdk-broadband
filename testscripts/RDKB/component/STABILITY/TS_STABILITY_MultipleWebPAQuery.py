@@ -345,18 +345,6 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     print("[TEST EXECUTION RESULT] : FAILURE")
                     break
 
-        if testFailed:
-            stability_type = "MultipleWebpaQueryStability"
-            print("\n[ITERATION FAILURE] iteration=%d reason=%s" % (iteration, failureReason))
-            status, artifact_details = collect_failure_artifacts(obj1, stability_type, iteration, failureReason, UPLOAD_SERVER_URL, FAILURE_ARTIFACT_ROOT)
-            print("[ARTIFACT] Result: %s" % artifact_details['summary'])
-            if status:
-                print("[ARTIFACT] Tar file uploaded: %s" % artifact_details['tar_file'])
-            else:
-                print("[ARTIFACT] Collection or upload failed: %s" % artifact_details.get('details', 'No additional details'))
-                print("[ARTIFACT] Failed command: %s" % artifact_details.get('failed_command', 'NA'))
-            print("[STOP POLICY] Stopping test on first failure after artifact upload")
-
         if originalValues:
             print("\n*****Reverting WebPA parameters to original values*****")
             step, revertFailed, revertFailureReason = revert_original_values(obj1, step, dmConfigList, originalValues)
@@ -364,15 +352,28 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 if not testFailed:
                     testFailed = True
                     failureReason = revertFailureReason
-                    upload_failure_artifacts(obj1, currentIteration, failureReason)
+                    iteration = 0
                 else:
                     print(f"Failed to revert parameters after primary failure. Reason: {revertFailureReason}")
     else:
+        iteration = 0
         testFailed = True
         failureReason = "webpa_prerequisite_failed"
         tdkTestObj.setResultStatus("FAILURE")
         print("Webpa Pre-requisite failed. Please check parodus and webpa processes are running in device")
-        upload_failure_artifacts(obj1, currentIteration, failureReason)
+
+    if testFailed:
+        stability_type = "MultipleWebpaQueryStability"
+        print("\n[ITERATION FAILURE] iteration=%d reason=%s" % (iteration, failureReason))
+        status, artifact_details = collect_failure_artifacts(obj1, stability_type, iteration, failureReason, UPLOAD_SERVER_URL, FAILURE_ARTIFACT_ROOT)
+        print("[ARTIFACT] Result: %s" % artifact_details['summary'])
+        if status:
+            print("[ARTIFACT] Tar file uploaded: %s" % artifact_details['tar_file'])
+        else:
+            print("[ARTIFACT] Collection or upload failed: %s" % artifact_details.get('details', 'No additional details'))
+            print("[ARTIFACT] Failed command: %s" % artifact_details.get('failed_command', 'NA'))
+        print("[STOP POLICY] Stopping test on first failure after artifact upload")
+
     obj1.unloadModule("sysutil")
     obj2.unloadModule("tdkbtr181")
 else:

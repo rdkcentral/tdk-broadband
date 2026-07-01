@@ -132,7 +132,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                             break
                     #Get the status of dns process
                     step+=1
-                    step,testFailed,failureReason,postPid = get_process_status(obj1,step,DNS_process)
+                    step,testFailed,failureReason,postPid = get_process_status(obj1,step,DNS_PROCESS)
                     if testFailed:
                         failureReason = f"post_{failureReason}"
                         break
@@ -193,7 +193,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         tdkTestObj.setResultStatus("FAILURE")
                         print(f"ACTUAL RESULT {step}: Memory parsing failed (pre={preFreeMemory}, post={postFreeMemory})")
                         print("[TEST EXECUTION RESULT] : FAILURE")
-                        iterationFailed = True
+                        testFailed = True
                         failureReason = "memory_parse_failed"
                         break
                     memoryThreshold = preFreeMemory * 0.90
