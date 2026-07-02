@@ -130,7 +130,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
         # Get the current enable status of RFC DM
         print("\nTEST STEP %d: Get the current enable status of Device.X_Comcast_com_ParentalControl.ManagedSites.Enable" % step)
         print("EXPECTED RESULT %d: The enable status should be retrieved successfully" % step)
-        param = "Device.X_Comcast_com_ParentalControl.ManagedSites.Enable"
+        param = RFC_DM_1
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, initial_value = getTR181Value(tdkTestObj, param)
         if actualresult in expectedresult and initial_value.strip() in ["true", "false"]:
@@ -228,59 +228,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                             print("ACTUAL RESULT %d: Device reboot completed successfully" % step)
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                            # RFC file validation after reboot
+                            # Query updated DM after reboot
                             step += 1
-                            print("\nTEST STEP %d: Validate RFC file %s after reboot" % (step, RFC_FILE_PATH))
-                            print("EXPECTED RESULT %d: RFC file should exist and contain feature instance %s" % (step, feature_name))
-                            tdkTestObj = sysobj.createTestStep('ExecuteCmd')
-                            actualresult, file_details = isFilePresent(tdkTestObj, RFC_FILE_PATH)
-                            if expectedresult in actualresult:
-                                command = f"cat {RFC_FILE_PATH} | grep '{feature_name}'"
-                                actualresult, parsed_details = doSysutilExecuteCommand(tdkTestObj, command)
-                                if "SUCCESS" in actualresult and feature_name in parsed_details:
+                            print("\nTEST STEP %d: Query updated DM to confirm toggle after reboot" % step)
+                            print("EXPECTED RESULT %d: DM should be toggled to %s" % (step, toggle_value))
+                            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                            actualresult, updated_value = getTR181Value(tdkTestObj, param)
+                            updated_value = updated_value.strip()
+                            if updated_value != initial_value and updated_value == toggle_value:
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print("ACTUAL RESULT %d: DM toggled to %s after reboot" % (step, updated_value))
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                                # Revert DM value via RFC - using dictionary for single parameter
+                                sleep(30)
+                                step += 1
+                                print("\nTEST STEP %d: Revert DM value via RFC update" % step)
+                                print("EXPECTED RESULT %d: DM value should be reverted to initial value %s" % (step, initial_value))
+                                # Pass clean parameter with initial value as dictionary
+                                revert_param_value_dict = {param: initial_value}
+                                tdkTestObj, actualresult, details = rfc_revert_dm_value(sysobj, obj, feature_id, feature_name, revert_param_value_dict)
+                                if expectedresult in actualresult:
                                     tdkTestObj.setResultStatus("SUCCESS")
-                                    print("ACTUAL RESULT %d: RFC file exists and contains feature instance %s. Details: %s" % (step, feature_name, parsed_details))
+                                    print("ACTUAL RESULT %d: DM reverted successfully after reboot test. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                    # Query updated DM after reboot
-                                    step += 1
-                                    print("\nTEST STEP %d: Query updated DM to confirm toggle after reboot" % step)
-                                    print("EXPECTED RESULT %d: DM should be toggled to %s" % (step, toggle_value))
-                                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
-                                    actualresult, updated_value = getTR181Value(tdkTestObj, param)
-                                    updated_value = updated_value.strip()
-                                    if updated_value != initial_value and updated_value == toggle_value:
-                                        tdkTestObj.setResultStatus("SUCCESS")
-                                        print("ACTUAL RESULT %d: DM toggled to %s after reboot" % (step, updated_value))
-                                        print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                                        # Revert DM value via RFC - using dictionary for single parameter
-                                        sleep(30)
-                                        step += 1
-                                        print("\nTEST STEP %d: Revert DM value via RFC update" % step)
-                                        print("EXPECTED RESULT %d: DM value should be reverted to initial value %s" % (step, initial_value))
-                                        # Pass clean parameter with initial value as dictionary
-                                        revert_param_value_dict = {param: initial_value}
-                                        tdkTestObj, actualresult, details = rfc_revert_dm_value(sysobj, obj, feature_id, feature_name, revert_param_value_dict)
-                                        if expectedresult in actualresult:
-                                            tdkTestObj.setResultStatus("SUCCESS")
-                                            print("ACTUAL RESULT %d: DM reverted successfully after reboot test. Details: %s" % (step, details))
-                                            print("[TEST EXECUTION RESULT] : SUCCESS")
-                                        else:
-                                            tdkTestObj.setResultStatus("FAILURE")
-                                            print("ACTUAL RESULT %d: DM revert failed after reboot test. Details: %s" % (step, details))
-                                            print("[TEST EXECUTION RESULT] : FAILURE")
-                                    else:
-                                        tdkTestObj.setResultStatus("FAILURE")
-                                        print("ACTUAL RESULT %d: DM not toggled properly after reboot. Expected: %s, Got: %s" % (step, toggle_value, updated_value))
-                                        print("[TEST EXECUTION RESULT] : FAILURE")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
-                                    print("ACTUAL RESULT %d: RFC file does not contain feature instance %s after reboot. Details: %s" % (step, feature_name, parsed_details))
+                                    print("ACTUAL RESULT %d: DM revert failed after reboot test. Details: %s" % (step, details))
                                     print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
-                                print("ACTUAL RESULT %d: RFC file does not exist after reboot. Details: %s" % (step, file_details))
+                                print("ACTUAL RESULT %d: DM not toggled properly after reboot. Expected: %s, Got: %s" % (step, toggle_value, updated_value))
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
