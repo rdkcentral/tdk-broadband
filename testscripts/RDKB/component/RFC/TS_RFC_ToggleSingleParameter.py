@@ -16,83 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>45</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_RFC_ToggleParentalControlManagedSitesEnable</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>RFC_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>BPI</box_type>
-    <!--  -->
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_RFC_1</test_case_id>
-    <test_objective>To validate that restarting the RFC service updates the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable with the new value configured in the corresponding RFC feature rule in XConf server</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband,RPI,BPI</test_setup>
-    <pre_requisite>1. Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2. TDK Agent should be in running state or invoke it through StartTdk.sh script
-3. Xconf server should be up and running. </pre_requisite>
-    <api_or_interface_used></api_or_interface_used>
-    <input_parameters>Device.X_Comcast_com_ParentalControl.ManagedSites.Enable</input_parameters>
-    <automation_approch>1. Load the modules
-    2. Get the initial DM value
-    3. Verify XConf server URL
-    4. Delete existing RFC log file dcmrfc.log for clean logging
-    5. Configure RFC feature with MAC
-    6. Set feature rule with MAC
-    7. Validate feature rule with MAC
-    8. Restart RFC service
-    9. Query updated DM to confirm toggle
-    10. Revert DM value via RFC
-    11. Delete feature rule
-    12. Delete feature
-    13. Unload the modules</automation_approch>
-    <expected_output>Restarting RFC service should update the value of the DM Device.X_Comcast_com_ParentalControl.ManagedSites.Enable.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_RFC_ToggleParentalControlManagedSitesEnable</test_script>
-    <skipped>No</skipped>
-    <release_version>M140</release_version>
-    <remarks></remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -107,8 +31,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil", "1")
 # IP and Port of box, No need to change, will be replaced with DUT details
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
-sysobj.configureTestCase(ip,port,'TS_RFC_ToggleParentalControlManagedSitesEnable')
+obj.configureTestCase(ip,port,'TS_RFC_ToggleSingleParameter')
+sysobj.configureTestCase(ip,port,'TS_RFC_ToggleSingleParameter')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus = obj.getLoadModuleResult()
@@ -129,7 +53,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
         step += 1
         # Get the current enable status of RFC DM
-        print("\nTEST STEP %d: Get the current enable status of Device.X_Comcast_com_ParentalControl.ManagedSites.Enable" % step)
+        print("\nTEST STEP %d: Get the current enable status of the RFC DM parameter" % step)
         print("EXPECTED RESULT %d: The enable status should be retrieved successfully" % step)
         param = RFC_DM_1
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
@@ -237,7 +161,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                                 tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
                                 actualresult, updated_value = getTR181Value(tdkTestObj, param)
                                 updated_value = updated_value.strip()
-                                if updated_value != initial_value:
+                                if actualresult in expectedresult and updated_value in ["true", "false"] and updated_value != initial_value:
                                     tdkTestObj.setResultStatus("SUCCESS")
                                     print("ACTUAL RESULT %d: DM toggled to %s" % (step, updated_value))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")

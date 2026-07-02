@@ -16,86 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>48</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_RFC_ToggleMultipleParameters</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>RFC_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>To validate that restarting the RFC service updates mutiple DMs with the new values configured in the corresponding RFC feature rule in XConf server.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>BPI</box_type>
-    <!--  -->
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_RFC_2</test_case_id>
-    <test_objective>validate that restarting the RFC service updates mutiple DMs with the new values configured in the corresponding RFC feature rule in XConf server</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband,RPI,BPI</test_setup>
-    <pre_requisite>1. Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2. TDK Agent should be in running state or invoke it through StartTdk.sh script
-3. Xconf server should be up and running.</pre_requisite>
-    <api_or_interface_used></api_or_interface_used>
-    <input_parameters></input_parameters>
-    <automation_approch>1. Load the modules
-    2. Get initial DM values for multiple parameters
-    3. Verify XConf server URL
-    4. Delete existing dcmrfc.log for clean logging
-    5. Configure RFC features with MAC for multiple parameters
-    6. Set feature rule with MAC
-    7. Validate feature rule with MAC
-    8. Restart RFC service
-    9. Validate RFC file creation
-    10. Verify feature instance in RFC file
-    11. Query updated DM parameters to confirm toggle
-    12. Validate logs for DM updates
-    13. Revert DM values to initial values
-    14. Delete feature rule
-    15. Delete feature
-    16. Unload the modules</automation_approch>
-    <expected_output>RFC validation with multiple feature updates should be successful.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_RFC_ToggleMultipleParameters</test_script>
-    <skipped>No</skipped>
-    <release_version>M140</release_version>
-    <remarks></remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -262,7 +183,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                                     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
                                     actualresult, updated_value = getTR181Value(tdkTestObj, param)
                                     updated_value = updated_value.strip()
-                                    if updated_value != initial_value:
+                                    if actualresult in expectedresult and updated_value in ["true", "false"] and updated_value != initial_value:
                                         print("Parameter %s: Initial=%s, Updated=%s - TOGGLED" % (param, initial_value, updated_value))
                                     else:
                                         print("Parameter %s: Initial=%s, Updated=%s - NOT TOGGLED" % (param, initial_value, updated_value))
