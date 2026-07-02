@@ -21,13 +21,13 @@ import tdklib
 import time
 import tdkbE2EUtility
 from tdkbE2EUtility import *
+from tdkutility import *
 from tdkbStabilityVariables import *
 from tdkbStabilityUtility import *
 
 #Test component to be tested
 obj1 = tdklib.TDKScriptingLibrary("sysutil","1")
-obj2 = tdklib.TDKScriptingLibrary("tdkb_e2e","1")
-obj3 = tdklib.TDKScriptingLibrary("tdkbtr181","1")
+obj2 = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 
 #IP and Port of box, No need to change,
 #This will be replaced with correspoing Box Ip and port while executing script
@@ -35,26 +35,22 @@ ip = <ipaddress>
 port = <port>
 obj1.configureTestCase(ip,port,'TS_STABILITY_E2E_LongRunIPV4ConnectivityfromLanClient')
 obj2.configureTestCase(ip,port,'TS_STABILITY_E2E_LongRunIPV4ConnectivityfromLanClient')
-obj3.configureTestCase(ip,port,'TS_STABILITY_E2E_LongRunIPV4ConnectivityfromLanClient')
 
 #Get the result of connection with test component
 loadmodulestatus1 = obj1.getLoadModuleResult()
 loadmodulestatus2 = obj2.getLoadModuleResult()
-loadmodulestatus3 = obj3.getLoadModuleResult()
 print("[LIB LOAD STATUS]  :  %s" % loadmodulestatus1)
 print("[LIB LOAD STATUS]  :  %s" % loadmodulestatus2)
-print("[LIB LOAD STATUS]  :  %s" % loadmodulestatus3)
 
-if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper() and "SUCCESS" in loadmodulestatus3.upper():
+if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upper():
     obj1.setLoadModuleStatus("SUCCESS")
     obj2.setLoadModuleStatus("SUCCESS")
-    obj3.setLoadModuleStatus("SUCCESS")
     expectedresult = "SUCCESS"
 
     #Parse the device configuration file
-    status = parseDeviceConfig(obj2)
+    status = parseDeviceConfig(obj1)
     if expectedresult in status:
-        obj2.setLoadModuleStatus("SUCCESS")
+        obj1.setLoadModuleStatus("SUCCESS")
         print("Parsed the device configuration file successfully")
         step = 0
         testFailed = False
@@ -71,7 +67,8 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             print(f"TEST STEP {step}: Get the current GW IP address")
             print(f"EXPECTED RESULT {step}: Should get the current GW IP address")
             param = "Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress"
-            tdkTestObj,status,curIPAddress = getParameterValue(obj2,param)
+            tdkTestObj = obj2.createTestStep('TDKB_TR181Stub_Get')
+            status,curIPAddress = getTR181Value(tdkTestObj,param)
             if expectedresult in status and curIPAddress:
                 print(f"ACTUAL RESULT {step}: Got the current GW IP address : {curIPAddress}")
                 tdkTestObj.setResultStatus("SUCCESS")
@@ -108,7 +105,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     if iteration % 10 == 0:
                         #Check if all critical processes are up
                         print(f"Check if all critical processes are up at iteration {iteration}")
-                        step, testFailed, failureReason = get_status_processes(obj1, obj3, step, processList)
+                        step, testFailed, failureReason = get_status_processes(obj1, obj2, step, processList)
                         if testFailed:
                             break
 
@@ -232,14 +229,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         else:
             print("\n[ITERATION PASS] iteration=%d completed successfully" % iteration)
     else:
-        obj2.setLoadModuleStatus("FAILURE")
+        obj1.setLoadModuleStatus("FAILURE")
         print("Failed to parse the device configuration file")
     obj1.unloadModule("sysutil")
-    obj2.unloadModule("tdkb_e2e")
-    obj3.unloadModule("tdkbtr181")
+    obj2.unloadModule("tdkbtr181")
 else:
-    print("Failed to load sysutil, tdkb_e2e and tdkbtr181 module")
+    print("Failed to load sysutil and tdkbtr181 module")
     obj1.setLoadModuleStatus("FAILURE")
     obj2.setLoadModuleStatus("FAILURE")
-    obj3.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
