@@ -93,9 +93,14 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("\nTEST STEP %d: Check container status using DobbyTool list" % step)
                     print("EXPECTED RESULT %d: Container should be listed" % step)
                     tdkTestObj, actualresult, details = list_dobby_containers(sysobj)
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: DobbyTool list output: %s" % (step, details))
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d: DobbyTool list output: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d: Container not listed. Details: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
 
                     step += 1
                     # Verify ExecutionUnit.1.Status
