@@ -24,7 +24,6 @@ from tdkutility import *
 
 # Test component to be tested
 tr181obj = tdklib.TDKScriptingLibrary("tdkbtr181", "1")
-sysobj = tdklib.TDKScriptingLibrary("sysutil", "1")
 
 # IP and Port of box, No need to change,
 # This will be replaced with corresponding DUT Ip and port while executing script

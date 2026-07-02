@@ -30,8 +30,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 ip = <ipaddress>
 port = <port>
 
-tr181obj.configureTestCase(ip,port,'TS_IPV6_CheckIPV6Address_PersistenceAfterFR')
-sysobj.configureTestCase(ip,port,'TS_IPV6_CheckIPV6Address_PersistenceAfterFR')
+tr181obj.configureTestCase(ip,port,'TS_IPV6_CheckIPV6Address_AfterReboot')
+sysobj.configureTestCase(ip,port,'TS_IPV6_CheckIPV6Address_AfterReboot')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_tr181 = tr181obj.getLoadModuleResult()
@@ -49,38 +49,20 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     if flag:
         print(f"IPv6 address obtained from TR-181 DM is {ipv6_tr181}")
 
+        #Reboot the DUT
+        print("\nRebooting the DUT")
+        sysobj.initiateReboot()
+        sleep(300)
+
+        #Get the IPv6 address of the WAN interface after reboot
         step += 1
-        #Factory Reset the device
-        print(f"\nTEST STEP {step}: Initiate Factory Reset on the DUT")
-        print(f"EXPECTED RESULT {step}: Factory Reset should be triggered successfully")
-        sysobj.saveCurrentState()
-
-        tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_SetOnly')
-        actualresult, details = setTR181Value(tdkTestObj, "Device.X_CISCO_COM_DeviceControl.FactoryReset", "Router,Wifi,VoIP,Dect,MoCA", "string")
-
-        if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print(f"ACTUAL RESULT {step}: Factory Reset triggered successfully. Details : {details}")
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-            sleep(300)
-            #Restore the device state saved before FR
-            sysobj.restorePreviousStateAfterReboot()
-            print("Device is UP after Factory Reset...")
-
-            #Get the IPv6 address of the WAN interface after Factory Reset
-            step += 1
-            print("\nGetting the IPv6 address of the WAN interface after Factory Reset")
-            tdkTestObj, ipv6_tr181_after_reboot, flag, step = getWANIPv6Address(tr181obj, step, validity_check=True)
-            if flag:
-                print(f"IPv6 address obtained from TR-181 DM after Factory Reset is {ipv6_tr181_after_reboot}")
-            else:
-                print("Failed to get the IPv6 address using Device.DeviceInfo.X_COMCAST-COM_WAN_IPv6 after Factory Reset")
-
+        print("\nGetting the IPv6 address of the WAN interface after reboot")
+        tdkTestObj, ipv6_tr181_after_reboot, flag, step = getWANIPv6Address(tr181obj, step, validity_check=True)
+        if flag:
+            print(f"IPv6 address obtained from TR-181 DM after reboot is {ipv6_tr181_after_reboot}")
         else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print(f"ACTUAL RESULT {step}: Failed to trigger Factory Reset. Details : {details}")
-            print("[TEST EXECUTION RESULT] : FAILURE")
+            print("Failed to get the IPv6 address using Device.DeviceInfo.X_COMCAST-COM_WAN_IPv6 after reboot")
+
     else:
         print("Failed to get the IPv6 address using Device.DeviceInfo.X_COMCAST-COM_WAN_IPv6")
 

@@ -105,7 +105,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                         print(f"EXPECTED RESULT {step} : Should get the default value of Device Mode successfully")
                         tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
                         actualresult, device_mode = getTR181Value(tdkTestObj, "Device.X_CISCO_COM_DeviceControl.DeviceMode")
-                        if expectedresult in actualresult and device_mode == "Dualstack":
+                        if expectedresult in actualresult and device_mode == SUPPORTED_DEVICE_MODE:
                             print(f"ACTUAL RESULT {step} : Successfully got the value of Device Mode - Device.X_CISCO_COM_DeviceControl.DeviceMode. Device Mode is {device_mode}")
                             tdkTestObj.setResultStatus("SUCCESS")
                             print("[TEST EXECUTION RESULT] : SUCCESS\n")
@@ -125,6 +125,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 print("[TEST EXECUTION RESULT] : FAILURE\n")
         else:
             print(f"ACTUAL RESULT {step}: Failed to get the IPv6 capability of the device using Device.IP.IPv6Capable. IPv6 capable is {ipv6_capable}")
+            tdkTestObj.setResultStatus("FAILURE")
             print("[TEST EXECUTION RESULT] : FAILURE\n")
     else:
         tdkTestObj.setResultStatus("FAILURE")

@@ -29,7 +29,7 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 ip = <ipaddress>
 port = <port>
 
-sysobj.configureTestCase(ip,port,'TS_IPV6_Get_Brlan0IPv6Address')
+sysobj.configureTestCase(ip,port,'TS_IPV6_Get_Brlan0_IPv6Address')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_sys = sysobj.getLoadModuleResult()

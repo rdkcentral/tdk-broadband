@@ -30,8 +30,8 @@ sysobj = tdklib.TDKScriptingLibrary("sysutil","1")
 ip = <ipaddress>
 port = <port>
 
-tr181obj.configureTestCase(ip,port,'TS_IPV6_Check_WLANClientReachabilityFromDUT')
-sysobj.configureTestCase(ip,port,'TS_IPV6_Check_WLANClientReachabilityFromDUT')
+tr181obj.configureTestCase(ip,port,'TS_IPV6_Check_PingToLANClientGlobalIPv6')
+sysobj.configureTestCase(ip,port,'TS_IPV6_Check_PingToLANClientGlobalIPv6')
 
 # Get the result of connection with test component and DUT
 loadmodulestatus_tr181 = tr181obj.getLoadModuleResult()
@@ -59,39 +59,38 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
             step += 1
             interface = DUT_LAN_INTERFACE
 
-            step += 1
             flag = verifyIPv6Address(sysobj, interface, step)
 
             if flag:
-                print("WLAN interface has inet6 address with global scope")
+                print("LAN interface has inet6 address with global scope")
 
-                #Get the index of the active WLAN client
+
+                # Get the index of the active LAN client
                 step += 1
-                index, step = getActiveClientIndex(tr181obj, LAYER1_INTERFACE_WLAN, step)
-
+                index, step = getActiveClientIndex(tr181obj, LAYER1_INTERFACE_LAN, step)
                 if index is not None:
-                    #Get the IPv6 address of the WLAN interface
+                    #Get the IPv6 address of the LAN interface Device.Hosts.Host.<index>.IPv6Address.3.IPAddress
                     step += 1
-                    print(f"\nTEST STEP {step} : Get the IPv6 address of the WLAN client")
-                    print(f"EXPECTED RESULT {step} : Should get the IPv6 address of the WLAN client")
+                    print(f"\nTEST STEP {step} : Get the IPv6 address of the LAN client")
+                    print(f"EXPECTED RESULT {step} : Should get the IPv6 address of the LAN client")
                     tdkTestObj = tr181obj.createTestStep('TDKB_TR181Stub_Get')
                     actualresult, ipv6_address = getTR181Value(tdkTestObj, f"Device.Hosts.Host.{index}.IPv6Address.3.IPAddress")
                     if expectedresult in actualresult and ipv6_address != "":
-                        print(f"ACTUAL RESULT {step} : Successfully got the IPv6 address of the WLAN client. Details : {ipv6_address}")
+                        print(f"ACTUAL RESULT {step} : Successfully got the IPv6 address of the LAN client. Details : {ipv6_address}")
                         print("[TEST EXECUTION RESULT] : SUCCESS\n")
                         tdkTestObj.setResultStatus("SUCCESS")
 
-                        #Ping the WLAN client from the DUT using the IPv6 address obtained
+                        #Ping the LAN client from the DUT using the IPv6 address obtained
                         step += 1
-                        print("Pinging WLAN client from the DUT using the IPv6 address obtained")
+                        print("Pinging LAN client from the DUT using the IPv6 address obtained")
                         connectivity_flag = checkInternetConnectivity(sysobj, ipv6_address, PING_COUNT, step)
 
                         if connectivity_flag:
-                            print("Successfully pinged the WLAN client from the DUT using the IPv6 address obtained")
+                            print("Successfully pinged the LAN client from the DUT using the IPv6 address obtained")
                         else:
-                            print("Failed to ping the WLAN client from the DUT using the IPv6 address obtained")
+                            print("Failed to ping the LAN client from the DUT using the IPv6 address obtained")
                     else:
-                        print(f"ACTUAL RESULT {step} : Failed to get the IPv6 address of the WLAN client")
+                        print(f"ACTUAL RESULT {step} : Failed to get the IPv6 address of the LAN client")
                         print("[TEST EXECUTION RESULT] : FAILURE\n")
                         tdkTestObj.setResultStatus("FAILURE")
             else:

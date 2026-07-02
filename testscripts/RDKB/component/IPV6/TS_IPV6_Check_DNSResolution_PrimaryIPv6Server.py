@@ -64,7 +64,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 print(f"TEST EXECUTION RESULT : SUCCESS")
                 print(f"Successfully resolved the domain {DOMAIN_NAME} using Primary DNS server {primary_dns}")
 
-                #Validae whether the resolved IP address is a valid IPv6 address.
+                #Validate whether the resolved IP address is a valid IPv6 address.
                 step += 1
                 is_valid_ipv6 = False
                 print(f"\nTEST STEP {step}: Validate whether the resolved IP address is a valid IPv6 address")
