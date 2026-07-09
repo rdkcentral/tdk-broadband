@@ -104,7 +104,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
         if expectedresult in actualresult:
-            countryCode = details.split(":")[1].strip()
+            countryCode = details.split(":")[1].replace('\\n','').replace('\n','').strip().upper()
 
             expectedresult="SUCCESS";
             radioIndex = idx;
@@ -124,7 +124,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj, actualresult, details = ExecuteWIFIHalCallMethod(obj, primitive, radioIndex, "0", getMethod)
 
                 if expectedresult in actualresult:
-                    setCode = details.split(":")[1].strip()
+                    setCode = details.split(":")[1].replace('\\n','').replace('\n','').strip().upper()
                     if setCode == countryCode:
                         tdkTestObj.setResultStatus("SUCCESS");
                         print("TEST STEP: Compare the set and get Radio Country Codes for 2.4GHz")
