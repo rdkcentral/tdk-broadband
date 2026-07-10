@@ -125,6 +125,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
                 if expectedresult in actualresult:
                     setCode = details.split(":", 1)[1].replace("\\n", "").replace("\r", "").replace("\n", "").strip().upper()
+
                     if setCode == countryCode:
                         tdkTestObj.setResultStatus("SUCCESS");
                         print("TEST STEP: Compare the set and get Radio Country Codes for 2.4GHz")
