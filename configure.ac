@@ -174,6 +174,6 @@ AC_CONFIG_FILES([Makefile
 	 LMLite_Stub/Makefile
 	 tdkb_e2e_stub/Makefile
 	 tdkb_tr181_stub/Makefile
-         RBUS_Stub/Makefile
+         RBUS_Stub/Makefile])
 AC_OUTPUT
 
