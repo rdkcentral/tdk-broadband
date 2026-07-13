@@ -41,7 +41,7 @@
 //#include "ccsp_base_api.h"
 #include "ccsp_trace.h"
 #include "tdk_custom.h"
-#include "dslh_cpeco_interface.h"
+//#include "dslh_cpeco_interface.h"
 #include "dslh_cpeco_exported_api.h"
 #include "ccsp_component_helper.h"
 #include "slap_vco_exported_api.h"
