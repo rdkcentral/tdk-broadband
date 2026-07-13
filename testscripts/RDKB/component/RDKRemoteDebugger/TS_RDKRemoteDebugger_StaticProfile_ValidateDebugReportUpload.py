@@ -77,53 +77,57 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                         step += 1
                         # Set the value of RDKRemoteDebugger IssueType
                         set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, issueType)
-                    else:
-                        set_flag = False
-                    if set_flag:
-                        print("Successfully set the value of RDKRemoteDebugger IssueType.")
+                        if set_flag:
+                            print("Successfully set the value of RDKRemoteDebugger IssueType.")
 
-                        sleep(5)
-                        step += 1
-                        # Check whether json file is available in the designated location
-                        tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "static", issueType, step)
-                        if file_flag:
-                            print("The static json profile is available as expected.")
-
-                            sleep(20)
+                            sleep(5)
                             step += 1
-                            print("Checking whether the tracker captured the *.tgz report file name after the trigger.")
-                            tdkTestObj, tar_flag, report_name = isDebugReportTarFileCreated(sysobj, "static", step)
-                            if tar_flag:
-                                print(f"A debug report tar(.tgz) file was created successfully with file name {report_name}.")
+                            # Check whether json file is available in the designated location
+                            tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "static", issueType, step)
+                            if file_flag:
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print("TEST EXECUTION RESULT : SUCCESS")
+                                print("The static json profile is available as expected.")
 
+                                sleep(20)
                                 step += 1
-                                # Check if the static debug report exists in the upload server
-                                tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", upload_server_url, report_name, step)
-                                if upload_flag:
-                                    tdkTestObj.setResultStatus("SUCCESS")
-                                    print("TEST EXECUTION RESULT : SUCCESS")
-                                    print(f"The static debug report tar(.tgz) file {report_name} exists in the upload server successfully.")
+                                print("Checking whether the tracker captured the *.tgz report file name after the trigger.")
+                                tdkTestObj, tar_flag, report_name = isDebugReportTarFileCreated(sysobj, "static", step)
+                                if tar_flag:
+                                    print(f"A debug report tar(.tgz) file was created successfully with file name {report_name}.")
+
+                                    step += 1
+                                    # Check if the static debug report exists in the upload server
+                                    tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "static", upload_server_url, report_name, step)
+                                    if upload_flag:
+                                        tdkTestObj.setResultStatus("SUCCESS")
+                                        print("TEST EXECUTION RESULT : SUCCESS")
+                                        print(f"The static debug report tar(.tgz) file {report_name} exists in the upload server successfully.")
+                                    else:
+                                        tdkTestObj.setResultStatus("FAILURE")
+                                        print("TEST EXECUTION RESULT : FAILURE")
+                                        print(f"The static debug report tar(.tgz) file {report_name} is not present in the upload server as expected.")
                                 else:
                                     tdkTestObj.setResultStatus("FAILURE")
                                     print("TEST EXECUTION RESULT : FAILURE")
-                                    print(f"The static debug report tar(.tgz) file {report_name} is not present in the upload server as expected.")
+                                    print("The debug report tar(.tgz) file is not created as expected.")
                             else:
                                 tdkTestObj.setResultStatus("FAILURE")
                                 print("TEST EXECUTION RESULT : FAILURE")
-                                print("The debug report tar(.tgz) file is not created as expected.")
-                        else:
-                            print("The static json profile is not available as expected.")
+                                print("The static json profile is not available as expected.")
 
-                        # Revert the value of RDKRemoteDebugger IssueType to its initial value
-                        print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
-                        step += 1
-                        set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
-                        if set_flag:
-                            print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                            # Revert the value of RDKRemoteDebugger IssueType to its initial value
+                            print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
+                            step += 1
+                            set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
+                            if set_flag:
+                                print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                            else:
+                                print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
                         else:
-                            print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
+                            print("Failed to set the value of RDKRemoteDebugger IssueType.")
                     else:
-                        print("Failed to set the value of RDKRemoteDebugger IssueType.")
+                        print("Failed to start the debug report tar(.tgz) file tracker.")
                 else:
                     print("Failed to get RDKRemoteDebugger IssueType")
                 # Revert the value of UPSTREAM_RRD_URL to its initial value

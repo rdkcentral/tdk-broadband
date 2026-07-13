@@ -92,6 +92,8 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                                 # Check whether json file is available in the designated location
                                 tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "dynamic", issueType, step)
                                 if file_flag:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print("TEST EXECUTION RESULT : SUCCESS")
                                     print("The dynamic json profile is available as expected.")
 
                                     # Validate if the dynamic debug report is generated
@@ -106,6 +108,8 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                                         print("TEST EXECUTION RESULT : FAILURE")
                                         print("Failed to generate the dynamic debug report.")
                                 else:
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print("TEST EXECUTION RESULT : FAILURE")
                                     print("The dynamic json profile is not available as expected.")
 
                                 # Revert the value of RDKRemoteDebugger IssueType to its initial value
@@ -116,7 +120,6 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                                     print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
                                 else:
                                     print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
-
                             else:
                                 print("Failed to set the value of RDKRemoteDebugger IssueType to trigger the debug report generation.")
 
