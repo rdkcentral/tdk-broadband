@@ -25,7 +25,7 @@
   <primitive_test_name>onewifi_DoNothing</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Check if the operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards is "g,n" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</synopsis>
+  <synopsis>Check if the operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards is "g,n,be" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</synopsis>
   <groups_id/>
   <execution_time>1</execution_time>
   <long_duration>false</long_duration>
@@ -41,7 +41,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_ONEWIFI_190</test_case_id>
-    <test_objective>Check if the operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards is "g,n" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</test_objective>
+    <test_objective>Check if the operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards is "g,n,be" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
@@ -52,10 +52,10 @@ paramName : Device.WiFi.Radio.1.OperatingStandards</input_parameters>
     <automation_approch>1. Load the module
 2. Get the initial enable status of Device.WiFi.2G80211axEnable
 3. If it not initially false, set to false and cross check with GET
-4. Get the operating standards using Device.WiFi.Radio.1.OperatingStandards. When the 2G80211axEnable is in disabled state, the operating standards should be "g,n"
+4. Get the operating standards using Device.WiFi.Radio.1.OperatingStandards. When the 2G80211axEnable is in disabled state, the operating standards should be "g,n,be"
 5. Revert Device.WiFi.2G80211axEnable to initial value if required.
 6. Unload the module.</automation_approch>
-    <expected_output>The operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards should be "g,n" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</expected_output>
+    <expected_output>The operating standards retrieved using Device.WiFi.Radio.1.OperatingStandards should be "g,n,be" when the parameter Device.WiFi.2G80211axEnable is in disabled state.</expected_output>
     <priority>High</priority>
     <test_stub_interface>wifiagent</test_stub_interface>
     <test_script>TS_ONEWIFI_CheckOperatingStandards_With2G80211axDisabled</test_script>
@@ -170,15 +170,15 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS");
 
-                #Check if the operating standards are "g,n" when 2G80211axEnable is in disabled state
+                #Check if the operating standards are "g,n,be" when 2G80211axEnable is in disabled state
                 step = step + 1;
 
-                print("\nTEST STEP %d: Check if the Device.WiFi.Radio.1.OperatingStandards gives g,n as operating standards when 2G80211axEnable is in disabled state" %step);
-                print("EXPECTED RESULT %d: Device.WiFi.Radio.1.OperatingStandards should give g,n as operating standards when 2G80211axEnable is in disabled state" %(step));
-                print("Expected Operating Standards : g,n");
+                print("\nTEST STEP %d: Check if the Device.WiFi.Radio.1.OperatingStandards gives g,n,be as operating standards when 2G80211axEnable is in disabled state" %step);
+                print("EXPECTED RESULT %d: Device.WiFi.Radio.1.OperatingStandards should give g,n,be as operating standards when 2G80211axEnable is in disabled state" %(step));
+                print("Expected Operating Standards : g,n,be");
                 print("Actual Operating Standards : %s" %operating_standards);
 
-                if "g,n" == operating_standards:
+                if "g,n,be" == operating_standards:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS");
                     print("ACTUAL RESULT %d: The operating standards are as expected" %step);

@@ -25,7 +25,7 @@
   <primitive_test_name>onewifi_DoNothing</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Check if Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax</synopsis>
+  <synopsis>Check if Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax, be</synopsis>
   <groups_id/>
   <execution_time>10</execution_time>
   <long_duration>false</long_duration>
@@ -42,7 +42,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_ONEWIFI_26</test_case_id>
-    <test_objective>Check if Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax</test_objective>
+    <test_objective>Check if Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax, be</test_objective>
     <test_type>Positive</test_type>
     <test_setup>XB3, Emulator, Rpi</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
@@ -51,9 +51,9 @@
     <input_parameters>Device.WiFi.Radio.2.OperatingStandards</input_parameters>
     <automation_approch>1. Load wifiagent module
 2. Using WIFIAgent_Get, get and save Device.WiFi.Radio.2.OperatingStandards value
-3.Check if supported standard value is from the list a, n, ac, ax
+3.Check if supported standard value is from the list a, n, ac, ax, be
 4. Unload wifiagent module</automation_approch>
-    <except_output>Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax</except_output>
+    <except_output>Device.WiFi.Radio.2.OperatingStandards is a subset of a, n, ac, ax, be</except_output>
     <priority>High</priority>
     <test_stub_interface>WifiAgent</test_stub_interface>
     <test_script>TS_ONEWIFI_5GHZ_GetOperatingStandard</test_script>
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     details = tdkTestObj.getResultDetails();
-    expectedBand = "a, n, ac, ax"
+    expectedBand = "a, n, ac, ax, be"
     band = details.split("VALUE:")[1].split(' ')[0].split(',')
     flag = 1;
 
