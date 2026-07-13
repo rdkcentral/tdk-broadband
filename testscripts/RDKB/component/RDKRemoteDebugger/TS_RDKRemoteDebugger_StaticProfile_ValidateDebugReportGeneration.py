@@ -71,7 +71,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                     print("The static json profile is available as expected.")
 
                     # Check if the static debug report is generated
-                    step +=1
+                    step += 1
                     tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "static", step)
                     if report_flag:
                         tdkTestObj.setResultStatus("SUCCESS")
