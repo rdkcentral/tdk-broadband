@@ -34,8 +34,8 @@
 #include <netdb.h>
 #include "pthread.h"
 #include "ssp_tdk_wrp.h"
-#include "cosa_apis.h"
-#include "plugin_main_apis.h"
+//#include "cosa_apis.h"
+//#include "plugin_main_apis.h"
 //#if (!defined _COSA_INTEL_USG_ATOM_)
 //#include "diag_inter.h"
 //#include "diag.h"
