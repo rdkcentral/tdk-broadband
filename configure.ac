@@ -64,9 +64,9 @@ AM_CXXFLAGS="$AM_CXXFLAGS -DDEBUG_LEVEL_TRACE"
 AGENT_FLAGS=" "
 CONFIG_PREFIX="/etc/"
 RDK_VERSION="RDKB"
-SUBDIR_HYBRID=" "
-SUBDIR_CLIENT=" "
-SUBDIR_WANMANAGER= " "
+#SUBDIR_HYBRID=" "
+#SUBDIR_CLIENT=" "
+#SUBDIR_WANMANAGER= " "
 
 ERT_VALUE=0
 
@@ -84,14 +84,14 @@ AC_ARG_ENABLE([ert],
 
 AC_SUBST(ERT_VALUE)
 
-AC_ARG_ENABLE([platform],
-[  --enable-platform    Enable platform],
-[case "${enableval}" in
-  yes) platform=true ;;
-  no)  platform=false ;;
-  *) AC_MSG_ERROR([bad value ${enableval} for --enable-platform]) ;;
-esac],[platform=false])
-AM_CONDITIONAL([PLATFORM_ENABLED], [test x$platform = xtrue])
+#AC_ARG_ENABLE([platform],
+#[  --enable-platform    Enable platform],
+#[case "${enableval}" in
+#  yes) platform=true ;;
+#  no)  platform=false ;;
+#  *) AC_MSG_ERROR([bad value ${enableval} for --enable-platform]) ;;
+#esac],[platform=false])
+#AM_CONDITIONAL([PLATFORM_ENABLED], [test x$platform = xtrue])
 
 
 REDIRECT_FLAG=0
@@ -109,94 +109,71 @@ AC_ARG_ENABLE([redirect],
 
 AC_SUBST(REDIRECT_FLAG)
 
-AC_ARG_ENABLE([nonCM],
-        AS_HELP_STRING([--enable-nonCM],[enable nonCM]),
-        [
-          case "${enableval}" in
-             yes) nonCM=true
-                  echo dsl based platform;;
-             no) nonCM=false;;
-          *) AC_MSG_ERROR([bad value ${enableval} for --enable-dsl ]) ;;
-           esac
-           ],
-         [echo "DSL is not enabled"])
+#AC_ARG_ENABLE([nonCM],
+#        AS_HELP_STRING([--enable-nonCM],[enable nonCM]),
+#        [
+#          case "${enableval}" in
+#             yes) nonCM=true
+#                  echo dsl based platform;;
+#             no) nonCM=false;;
+#          *) AC_MSG_ERROR([bad value ${enableval} for --enable-dsl ]) ;;
+#           esac
+#           ],
+#         [echo "DSL is not enabled"])
 
-AM_CONDITIONAL([NON_CM], [test x$nonCM = xtrue])
-
-
-AC_ARG_ENABLE([rdkb_telcovoice_manager],
-        AS_HELP_STRING([--enable-rdkb_telcovoice_manager],[enable rdkb_telcovoice_manager]),
-        [
-          case "${enableval}" in
-             yes) rdkb_telcovoice_manager=true
-                  SUBDIR_WANMANAGER+=" jsonhal_lib TELCOVOICEMgrHal_Stub"
-                  echo Telco Voice Manager is enabled;;
-             no) rdkb_telcovoice_manager=false ;;
-          *) AC_MSG_ERROR([bad value ${enableval} for --enable-rdkb_telcovoice_manager ]) ;;
-           esac
-           ],
-         [echo "Telco Voice Manager is not enabled"])
-
-AM_CONDITIONAL([RDKB_TELCOVOICE_MANAGER], [test x$rdkb_telcovoice_manager = xtrue])
+#AM_CONDITIONAL([NON_CM], [test x$nonCM = xtrue])
 
 
-AC_ARG_ENABLE([rdkb_xdsl_ppp_manager],
-        AS_HELP_STRING([--enable-rdkb_xdsl_ppp_manager],[enable rdkb_xdsl_ppp_manager]),
-        [
-          case "${enableval}" in
-             yes) rdkb_xdsl_ppp_manager=true
-                  SUBDIR_WANMANAGER+=" jsonhal_lib DSLHAL_Stub "
-                  echo XDSL Manager is enabled;;
-             no) rdkb_xdsl_ppp_manager=false ;;
-          *) AC_MSG_ERROR([bad value ${enableval} for --enable-rdkb_xdsl_ppp_manager ]) ;;
-           esac
-           ],
-         [echo "XDSL Manager is not enabled"])
+#AC_ARG_ENABLE([rdkb_telcovoice_manager],
+#        AS_HELP_STRING([--enable-rdkb_telcovoice_manager],[enable rdkb_telcovoice_manager]),
+#        [
+#          case "${enableval}" in
+#             yes) rdkb_telcovoice_manager=true
+#                  SUBDIR_WANMANAGER+=" jsonhal_lib TELCOVOICEMgrHal_Stub"
+#                  echo Telco Voice Manager is enabled;;
+#             no) rdkb_telcovoice_manager=false ;;
+#          *) AC_MSG_ERROR([bad value ${enableval} for --enable-rdkb_telcovoice_manager ]) ;;
+#           esac
+#           ],
+#         [echo "Telco Voice Manager is not enabled"])
 
-AM_CONDITIONAL([RDKB_XDSL_PPP_MANAGER], [test x$rdkb_xdsl_ppp_manager = xtrue])
+#AM_CONDITIONAL([RDKB_TELCOVOICE_MANAGER], [test x$rdkb_telcovoice_manager = xtrue])
+
+
+#AC_ARG_ENABLE([rdkb_xdsl_ppp_manager],
+#        AS_HELP_STRING([--enable-rdkb_xdsl_ppp_manager],[enable rdkb_xdsl_ppp_manager]),
+#        [
+#          case "${enableval}" in
+#             yes) rdkb_xdsl_ppp_manager=true
+#                  SUBDIR_WANMANAGER+=" jsonhal_lib DSLHAL_Stub "
+#                  echo XDSL Manager is enabled;;
+#             no) rdkb_xdsl_ppp_manager=false ;;
+#          *) AC_MSG_ERROR([bad value ${enableval} for --enable-rdkb_xdsl_ppp_manager ]) ;;
+#           esac
+#           ],
+#         [echo "XDSL Manager is not enabled"])
+
+#AM_CONDITIONAL([RDKB_XDSL_PPP_MANAGER], [test x$rdkb_xdsl_ppp_manager = xtrue])
 
 AC_SUBST(COPTS)
 AC_SUBST(AGENT_FLAGS)
 AC_SUBST(CONFIG_PREFIX)
 AC_SUBST(RDK_VERSION)
-AC_SUBST(SUBDIR_HYBRID)
-AC_SUBST(SUBDIR_CLIENT)
-AC_SUBST(SUBDIR_WANMANAGER)
+#AC_SUBST(SUBDIR_HYBRID)
+#AC_SUBST(SUBDIR_CLIENT)
+#AC_SUBST(SUBDIR_WANMANAGER)
 AC_CONFIG_FILES([Makefile
 	 agent/Makefile
          tdkb_lib/Makefile
-         jsonhal_lib/Makefile
-         CMAgent_stub/Makefile
 	 WIFIAgent_stub/Makefile
-	 MBUS_Stub/Makefile
-	 WECB_Stub/Makefile
-	 Mta_agent_Stub/Makefile
-	 CosaCM_Stub/Makefile
-         CosaMTA_Stub/Makefile
 	 TR069Pa_Stub/Makefile
 	 AdvancedConfig_stub/Makefile
-	 SNMP_PA_Stub/Makefile
 	 pam_stub/Makefile
 	 SysUtil_stub/Makefile
 	 TAD_stub/Makefile
-	 Moca_Stub/Makefile
 	 LMLite_Stub/Makefile
-	 WIFIHAL_stub/Makefile
-	 CMHAL_Stub/Makefile
-	 ethsw_hal_stub/Makefile
-	 dhcp_hal_stub/Makefile
-	 platform_hal_stub/Makefile
 	 tdkb_e2e_stub/Makefile
 	 tdkb_tr181_stub/Makefile
-	 MoCAHAL_Stub/Makefile
-	 MTAHAL_Stub/Makefile
-         XUPNP_Stub/Makefile
-         EPONHAL_Stub/Makefile
-         mso_mgmt_hal_stub/Makefile
-         BLEHAL_Stub/Makefile
          RBUS_Stub/Makefile
-         DSLHAL_Stub/Makefile
-         FWUpgradeHAL_Stub/Makefile
-         TELCOVOICEMgrHal_Stub/Makefile])
 AC_OUTPUT
 
