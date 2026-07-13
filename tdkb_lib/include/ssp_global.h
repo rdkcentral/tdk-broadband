@@ -44,7 +44,7 @@
 #include "dslh_cpeco_interface.h"
 #include "dslh_cpeco_exported_api.h"
 #include "ccsp_component_helper.h"
-#include "slap_vco_exported_api.h"
+//#include "slap_vco_exported_api.h"
 #include "ssp_messagebus_interface.h"
 #include "dslh_ifo_mpa.h"
 #include "dslh_dmagnt_interface.h"
