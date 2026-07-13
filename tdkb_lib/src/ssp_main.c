@@ -42,7 +42,7 @@ limitations under the License.
 #include "stdlib.h"
 #include "ccsp_dm_api.h"
 //#include "ssp_tdk_mbus_wrp.h"
-//#include "ssp_tdk_wrp.h"
+#include "ssp_tdk_wrp.h"
 
 ANSC_HANDLE bus_handle_client;
 extern char subsystem_prefix[32];
