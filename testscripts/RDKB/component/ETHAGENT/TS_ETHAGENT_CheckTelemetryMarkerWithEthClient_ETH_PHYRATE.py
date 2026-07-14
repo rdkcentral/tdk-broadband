@@ -399,7 +399,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
         tdkTestObj.setResultStatus("FAILURE");
         print("TEST STEP 1: Get the number of hosts from Host Table");
         print("EXPECTED RESULT 1: Should get the number of hosts");
-        print("ACTUAL RESULT 1: Number of hosts :%s - No client connected" %NoOfHosts);
+        if expectedresult in actualresult:
+            print("ACTUAL RESULT 1: Number of hosts :%s - No client connected" %NoOfHosts);
+        else:
+            print("ACTUAL RESULT 1: Failed to get number of hosts. Result: %s" %actualresult);
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam")
