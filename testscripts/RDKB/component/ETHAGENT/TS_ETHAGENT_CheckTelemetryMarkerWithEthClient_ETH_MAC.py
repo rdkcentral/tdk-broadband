@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from  time import sleep;
@@ -380,7 +381,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
         if expectedresult in actualresult:
             print("ACTUAL RESULT 1: Number of hosts :%s - No client connected" %NoOfHosts);
         else:
-            print("ACTUAL RESULT 1: Failed to get number of hosts. Result: %s" %actualresult);
+            print("ACTUAL RESULT 1: Failed to get number of hosts. Result: %s, Details: %s" % (actualresult, NoOfHosts));
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam")
