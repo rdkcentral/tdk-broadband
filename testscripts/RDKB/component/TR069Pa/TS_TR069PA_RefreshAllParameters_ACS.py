@@ -53,19 +53,32 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print("EXPECTED RESULT %d: Send RefreshObject task for all device parameters via ACS successfully." %(step))
         status, queryResponse = tr069ACSQuery(username, queryParam, method="RefreshObject")
         if status == 200 and queryResponse:
+            # Task executed synchronously - proceed directly
             print("ACTUAL RESULT %d: RefreshObject Task successful for all device parameters via ACS server." % (step))
             if queryResponse.get("objectName")  == "":
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("Object Name is empty as expected.")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
-
                 print("Wait for 5 minutes to complete the refreshing of all parameters.")
                 sleep(300)
-
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print("Failed to get empty Object Name.")
                 print("[TEST EXECUTION RESULT] : FAILURE")
+        elif status == 202 and queryResponse:
+            # Task queued - poll to detect offline device, auth failure, or RPC fault
+            if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "RefreshObject", username):
+                print("ACTUAL RESULT %d: RefreshObject Task successful for all device parameters via ACS server." % (step))
+                if queryResponse.get("objectName")  == "":
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("Object Name is empty as expected.")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    print("Wait for 5 minutes to complete the refreshing of all parameters.")
+                    sleep(300)
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("Failed to get empty Object Name.")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: RefreshObject Task failed to refresh all device parameters with status %d ." % (step,status))

@@ -40,10 +40,10 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
 
+    step = 0
     #Check for prerequisites
     tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
-        step = 0
         queryParam = {"name":""}
 
         #save device's current state before it goes for reboot
@@ -55,14 +55,28 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print("EXPECTED RESULT %d : Send Reboot task on DUT via ACS successfully." %step)
 
         status, queryResponse = tr069ACSQuery(username,queryParam,method="Reboot")
+        proceedWithRebootVerification = False
         if status == 200 and queryResponse:
+            # Task completed synchronously
+            print("Reboot task accepted and completed in request window (HTTP 200).")
+            proceedWithRebootVerification = True
+        elif status == 202 and queryResponse:
+            # Task queued - need to handle normal queued success, offline and RPC fault paths.
+            if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "Reboot", username):
+                proceedWithRebootVerification = True
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Reboot task failed to restart the DUT with status %d" % (step, status))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+        if proceedWithRebootVerification:
             #Restore the device state saved before reboot
             sysobj.restorePreviousStateAfterReboot()
             #Wait upto 5 min to establish connection between DUT and ACS
             print("Sleeping for 300s")
             sleep(300)
             print("The DUT is now up and running.")
-            print("ACTUAL RESULT %d: Reboot Task successful via ACS server." %step)
+            print("ACTUAL RESULT %d: Reboot task request accepted; proceeding to verify reboot outcome via ACS-DUT checks." %step)
             tdkTestObj.setResultStatus("SUCCESS")
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
@@ -90,10 +104,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj.setResultStatus("FAILURE")
                 print("tr069pa Pre-requisite failed after reboot of DUT. Please check if tr069 process is running in device or configuration is proper or connection is established.")
                 print("[TEST EXECUTION RESULT] : FAILURE")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: Reboot Task failed to restart the DUT with status %d." % (step,status))
-            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in device or configuration is proper or connection is established.")

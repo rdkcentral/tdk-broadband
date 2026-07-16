@@ -91,9 +91,20 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 queryParam = {"name":names,"value": values}
                 status,queryResponse = tr069ACSQuery(username,queryParam,"set")
                 if status == 200 and queryResponse:
+                    # Task executed synchronously - proceed directly
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,parameters))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+                elif status == 202 and queryResponse:
+                    # Task queued - poll for terminal state
+                    if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "SET", username):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,parameters))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))

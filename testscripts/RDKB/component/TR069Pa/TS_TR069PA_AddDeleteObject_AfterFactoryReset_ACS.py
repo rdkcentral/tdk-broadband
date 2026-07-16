@@ -52,7 +52,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print("\nTEST STEP %d : Perform FactoryReset task request to reset the writable tables via ACS." %step)
         print("EXPECTED RESULT %d : Perform FactoryReset task request to reset the writable tables via ACS successfully." %step)
         status, queryResponse = tr069ACSQuery(username,queryParam,method="FactoryReset")
+        proceedWithFactoryResetVerification = False
         if status == 200 and queryResponse:
+            # Task completed synchronously - proceed directly
+            print("FactoryReset task accepted and completed in request window (HTTP 200).")
+            proceedWithFactoryResetVerification = True
+        elif status == 202 and queryResponse:
+            # Task queued - need to handle normal queued success, offline and RPC fault paths.
+            if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "FactoryReset", username):
+                proceedWithFactoryResetVerification = True
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: FactoryReset task failed to factory reset the DUT with status %d" % (step, status))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+        if proceedWithFactoryResetVerification:
             #Restore the device state saved before reboot
             sysobj.restorePreviousStateAfterReboot()
             #Wait upto 5 min to establish connection between ACS and DUT
@@ -79,7 +93,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                     print("\nTEST STEP %d: Send AddObject task to add an object instance for %s via ACS." %(step,name2))
                     print("EXPECTED RESULT %d: Send AddObject task to add an object instance for %s via ACS successfully." %(step,name2))
                     status1, queryResponse = tr069ACSQuery(username, queryParam2, method="AddObject")
-                    if status1 == 200 and queryResponse:
+                    if (status1 == 200 and queryResponse) or (status1 == 202 and waitForTaskCompletionIfQueued(tdkTestObj, status1, queryResponse, step, "AddObject", username)):
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("ACTUAL RESULT %d: AddObject Task successful for %s via ACS server." % (step,name2))
                         print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -104,7 +118,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                                 print("\nTEST STEP %d: Send DeleteObject task to delete an object instance for %s via ACS." %(step,name3))
                                 print("EXPECTED RESULT %d: Send DeleteObject task to delete an object instance for %s via ACS successfully." %(step,name3))
                                 status2, queryResponse = tr069ACSQuery(username, queryParam3, method="DeleteObject")
-                                if status2 == 200 and queryResponse:
+                                if (status2 == 200 and queryResponse) or (status2 == 202 and waitForTaskCompletionIfQueued(tdkTestObj, status2, queryResponse, step, "DeleteObject", username)):
                                     tdkTestObj.setResultStatus("SUCCESS")
                                     print("ACTUAL RESULT %d: DeleteObject Task successful for %s via ACS server." % (step,name3))
                                     print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -149,10 +163,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj.setResultStatus("FAILURE")
                 print("tr069pa Pre-requisite failed after factory reset of DUT. Please check if tr069 process is running in device or configuration is proper or connection is established.")
                 print("[TEST EXECUTION RESULT] : FAILURE")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: FactoryReset Task failed to reset the writable tables via ACS with status %d." % (step,status))
-            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in DUT or configuration is proper or connection is established.")

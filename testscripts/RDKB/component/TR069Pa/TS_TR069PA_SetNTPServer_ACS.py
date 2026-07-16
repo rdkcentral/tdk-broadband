@@ -84,9 +84,20 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 queryParam = {"name":"Device.Time.NTPServer1","value":getValues.get(name)}
                 status,queryResponse = tr069ACSQuery(username,queryParam,"set")
                 if status == 200 and queryResponse:
+                    # Task executed synchronously
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+                elif status == 202 and queryResponse:
+                    # Task queued - poll for terminal state
+                    if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "SET", username):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,name))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
@@ -106,8 +117,6 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
-
-
 else:
     print("FAILURE to load module.")
     tr181obj.setLoadModuleStatus("FAILURE")
