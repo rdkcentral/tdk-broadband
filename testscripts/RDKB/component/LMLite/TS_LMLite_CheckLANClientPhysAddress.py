@@ -132,7 +132,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 print(f"\nTEST STEP {step}: Compare the physical address")
                                 print(f"EXPECTED RESULT {step}: Both physical address should match")
                                 print(f"Physical Address in Device.Hosts.: {MAC1}")
-                                print(f"Physical Address using ARP command: {MAC1}")
+                                print(f"Physical Address using ARP command: {MAC}")
                                 if MAC1 in MAC:
                                     #Set the result status of execution
                                     tdkTestObj.setResultStatus("SUCCESS")
@@ -182,5 +182,5 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
 else:
     print("Failed to load modules")
     obj.setLoadModuleStatus("FAILURE")
-    sysobj.setLoadModuleStatus("FAILURE")
+    sysObj.setLoadModuleStatus("FAILURE")
     print("Modules loading failed")

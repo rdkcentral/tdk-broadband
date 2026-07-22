@@ -111,13 +111,12 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         if expectedresult in actualresult and "true" in Status.lower():
                             tdkTestObj.setResultStatus("SUCCESS")
                             print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
+                            Interface = "ether"
                             print("[TEST EXECUTION RESULT] : SUCCESS")
 
                             step += 1
                             print(f"\nTEST STEP {step}: Compare the interface names obtained")
                             print(f"EXPECTED RESULT {step}: Both interface names should match")
-                            if "Ethernet" in Layer1Interface:
-                                Interface = "ether"
                             if Interface in IP:
                                 #Set the result status of execution
                                 tdkTestObj.setResultStatus("SUCCESS")
