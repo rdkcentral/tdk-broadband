@@ -62,7 +62,6 @@ if "SUCCESS" in loadmodulestatus.upper():
             Layer1Interface = tdkTestObj.getResultDetails()
 
             if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
-                ethernetHostFound = 1
                 tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
                 #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult)
@@ -73,6 +72,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 print(f"\nTEST STEP {step}: Check Active status for Ethernet host {i}")
                 print(f"EXPECTED RESULT {step}: Ethernet host should be active")
                 if expectedresult in actualresult and "true" in Status.lower():
+                    ethernetHostFound = 1
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
