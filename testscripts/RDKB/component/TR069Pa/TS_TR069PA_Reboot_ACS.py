@@ -56,14 +56,18 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         status, queryResponse = tr069ACSQuery(username,queryParam,method="Reboot")
         proceedWithRebootVerification = False
-        if status == 200 and queryResponse:
+        if status == 200 and queryResponse is not None:
             # Task completed synchronously
             print("Reboot task accepted and completed in request window (HTTP 200).")
             proceedWithRebootVerification = True
-        elif status == 202 and queryResponse:
+        elif status == 202 and queryResponse is not None:
             # Task queued - need to handle normal queued success, offline and RPC fault paths.
             if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "Reboot", username):
                 proceedWithRebootVerification = True
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Reboot task failed during queued execution validation." % step)
+                print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: Reboot task failed to restart the DUT with status %d" % (step, status))

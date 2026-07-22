@@ -40,8 +40,8 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     sysobj.setLoadModuleStatus("SUCCESS")
     expectedresult ="SUCCESS"
     step = 1
-    print(f"\nTEST STEP {step}: Get the TR069 Managment Server URL")
-    print(f"EXPECTED RESULT {step}: Should get the TR069 Managment Server URL")
+    print(f"\nTEST STEP {step}: Get the TR069 Management Server URL")
+    print(f"EXPECTED RESULT {step}: Should get the TR069 Management Server URL")
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
     actualresult,serverURL = getTR181Value(tdkTestObj,"Device.ManagementServer.URL")
     if expectedresult in actualresult:
@@ -52,7 +52,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
 
         step+=1
         print(f"\nTEST STEP {step}: Check if the Server URL is present in partners_defaults.json file")
-        print(f"EXPECTED RESULT {step}: partners_defaults.json file should have Managment Server URL entry")
+        print(f"EXPECTED RESULT {step}: partners_defaults.json file should have Management Server URL entry")
         tdkTestObj = sysobj.createTestStep("ExecuteCmd")
         cmd = "cat /nvram/partners_defaults.json |  grep -i \"%s\"" %serverURL
         tdkTestObj.addParameter("command", cmd)
