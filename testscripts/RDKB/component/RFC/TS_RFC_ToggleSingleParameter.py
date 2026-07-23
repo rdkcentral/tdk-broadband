@@ -53,9 +53,9 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
         step += 1
         # Get the current enable status of RFC DM
-        print("\nTEST STEP %d: Get the current enable status of the RFC DM parameter" % step)
-        print("EXPECTED RESULT %d: The enable status should be retrieved successfully" % step)
         param = RFC_DM_1
+        print("\nTEST STEP %d: Get the current enable status of %s" % (step, param))
+        print("EXPECTED RESULT %d: The enable status of %s should be retrieved successfully" % (step, param))
         tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
         actualresult, initial_value = getTR181Value(tdkTestObj, param)
         if actualresult in expectedresult and initial_value.strip() in ["true", "false"]:

@@ -17,6 +17,7 @@
 # limitations under the License.
 ##########################################################################
 
+
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -60,7 +61,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
 
         step += 1
         # Get initial values for all DM parameters
-        print("\nTEST STEP %d: Get initial values for all DM parameters" % step)
+        print("\nTEST STEP %d: Get initial values for all DM parameters: %s" % (step, ', '.join(dm_params)))
         print("EXPECTED RESULT %d: All initial DM values should be retrieved successfully" % step)
         initial_values_success = True
         for param in dm_params:
