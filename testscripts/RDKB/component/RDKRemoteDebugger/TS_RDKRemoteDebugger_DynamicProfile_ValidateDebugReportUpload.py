@@ -43,10 +43,10 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     tr181obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
 
-    print("Pre-requisite : Install the Download Server and host the dynamic profile in Download server path  ")
+    profile_type = "dynamic"
+    print(f"Pre-requisite : Install the Download Server and host the {profile_type} profile in Download server path  ")
 
     step = 1
-    profile_type = "dynamic"
     # Prerequisite checks before starting the test execution
     prereq_flag, revert_flag, step = checkRRDPrerequisites(tr181obj, sysobj, step, profile_type)
 
@@ -95,27 +95,27 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                                     sleep(5)
                                     step += 1
                                     # Check whether json file is available in the designated location
-                                    tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "dynamic", issueType, step)
+                                    tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, profile_type, issueType, step)
                                     if file_flag:
                                         tdkTestObj.setResultStatus("SUCCESS")
                                         print("TEST EXECUTION RESULT : SUCCESS")
-                                        print("The dynamic json profile is available as expected.")
+                                        print(f"The {profile_type} json profile is available as expected.")
                                         sleep(20)
                                         step += 1
                                         print("Checking whether the tracker captured the *.tgz report file name after the trigger.")
-                                        tdkTestObj, tar_flag, report_name = isDebugReportTarFileCreated(sysobj, "dynamic", step)
+                                        tdkTestObj, tar_flag, report_name = isDebugReportTarFileCreated(sysobj, profile_type, step)
                                         if tar_flag:
                                             print(f"A debug report tar(.tgz) file was created successfully with file name {report_name}.")
                                             step += 1
-                                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "dynamic", upload_server_url, report_name, step)
+                                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, profile_type, upload_server_url, report_name, step)
                                             if upload_flag:
                                                 tdkTestObj.setResultStatus("SUCCESS")
                                                 print("TEST EXECUTION RESULT : SUCCESS")
-                                                print(f"The dynamic debug report tar(.tgz) file {report_name} exists in the upload server successfully.")
+                                                print(f"The {profile_type} debug report tar(.tgz) file {report_name} exists in the upload server successfully.")
                                             else:
                                                 tdkTestObj.setResultStatus("FAILURE")
                                                 print("TEST EXECUTION RESULT : FAILURE")
-                                                print(f"The dynamic debug report tar(.tgz) file {report_name} is not present in the upload server as expected.")
+                                                print(f"The {profile_type} debug report tar(.tgz) file {report_name} is not present in the upload server as expected.")
                                         else:
                                             tdkTestObj.setResultStatus("FAILURE")
                                             print("TEST EXECUTION RESULT : FAILURE")
@@ -123,7 +123,7 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
                                         print("TEST EXECUTION RESULT : FAILURE")
-                                        print("The dynamic json profile is not available as expected.")
+                                        print(f"The {profile_type} json profile is not available as expected.")
 
                                     # Revert the value of RDKRemoteDebugger IssueType to its initial value
                                     print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
