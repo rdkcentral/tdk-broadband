@@ -16,75 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>21</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_CellularManager_X_RDK_Enable_PersistenceOnReboot</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>CellularManager_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>Check "Device.Cellular.X_RDK_Enable" persistence across reboot.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_CellularManager_17</test_case_id>
-    <test_objective>Check "Device.Cellular.X_RDK_Enable" persistence across reboot.
-</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI</test_setup>
-    <pre_requisite>1. TDK agent should be running in the DUT and DUT should be online in TDK test manager.
-2. Cellular Manager setup should be up and running.</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>Device.Cellular.Interface.1.Enable
-</input_parameters>
-    <automation_approch>.1.Load the tdkb-tr181 and sysutil modules
-2. Get Device.Cellular.X_RDK_Enable and store its value
-3.Set Device.Cellular.X_RDK_Enable to new value
-4. Initiate reboot
-5. Check whether value of Device.Cellular.X_RDK_Enable persists
-6.Unload the tdkbtr181 and sysutil modules</automation_approch>
-    <expected_output>.Value persistence on reboot : Success</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
-    <test_script>TS_CellularManager_X_RDK_Enable_PersistenceOnReboot</test_script>
-    <skipped>No</skipped>
-    <release_version>M128</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
@@ -113,6 +45,71 @@ if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
     obj.setLoadModuleStatus("SUCCESS");
 
     step = 1;
+
+############################################################
+# STEP 1 : Verify Device.Cellular.Interface.1.Enable
+############################################################
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.Interface.1.Enable"
+    );
+
+    expectedresult = "SUCCESS";
+
+    tdkTestObj.executeTestCase(expectedresult);
+
+    actualresult = tdkTestObj.getResult();
+    interfaceEnable = tdkTestObj.getResultDetails().strip();
+
+    print("TEST STEP %d: Get Device.Cellular.Interface.1.Enable" %step);
+    print("EXPECTED RESULT %d: Device.Cellular.Interface.1.Enable should be true" %step);
+    print("ACTUAL RESULT %d: Value is %s" %(step,interfaceEnable));
+
+    if expectedresult in actualresult and interfaceEnable == "true":
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+    else:
+
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+
+    step = step + 1;
+
+############################################################
+# STEP 2 : Verify Device.Cellular.X_RDK_Status
+############################################################
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.X_RDK_Status"
+    );
+
+    tdkTestObj.executeTestCase(expectedresult);
+
+    actualresult = tdkTestObj.getResult();
+    status = tdkTestObj.getResultDetails();
+
+    print("TEST STEP %d: Verify Device.Cellular.X_RDK_Status" %step);
+    print("EXPECTED RESULT %d: Device.Cellular.X_RDK_Status should be CONNECTED" %step);
+    print("ACTUAL RESULT %d: Status is %s" %(step,status));
+
+    if expectedresult in actualresult and status == "CONNECTED":
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+    else:
+
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+
+    step = step + 1;
+
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
     tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Enable");
     expectedresult="SUCCESS";

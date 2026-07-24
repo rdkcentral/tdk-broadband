@@ -16,148 +16,311 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>4</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_CellularManager_CheckIPAddressandInterfaceStatus</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>CellularManager_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>Check whether wwan0 interface is up and obtain ip address when the primary ethwan connection is lost.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_CellularManager_4</test_case_id>
-    <test_objective>Check whether wwan0 interface is up and obtain ip address when the primary ethwan connection is lost.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI</test_setup>
-    <pre_requisite>1. TDK agent should be running in the DUT and DUT should be online in TDK test manager.
-2. Cellular Manager setup should be up and running.</pre_requisite>
-    <api_or_interface_used>Nil</api_or_interface_used>
-    <input_parameters>nil</input_parameters>
-    <automation_approch>1. Load tdkbtr181 and sysutil module.
-2. Check if wwan0 interface is up
-3.Get wwan0 IP
-4.Unload the sysutil and tdkbtr181 module.</automation_approch>
-    <expected_output>wwan0 interface will be up and wwan0 IP address will be available</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
-    <test_script>TS_CellularManager_CheckIPAddressandInterfaceStatus</test_script>
-    <skipped>No</skipped>
-    <release_version>M128</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
+# use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+from time import sleep;
 
 #Test component to be tested
 sysobj = tdklib.TDKScriptingLibrary("sysutil","1");
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
+
 #IP and Port of box, No need to change,
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
+
 obj.configureTestCase(ip,port,'TS_CellularManager_CheckIPAddressandInterfaceStatus');
 sysobj.configureTestCase(ip,port,'TS_CellularManager_CheckIPAddressandInterfaceStatus');
 
 #load cellular manager,sysutil and tdkb-tr181 modules
-loadmodulestatus_sys =sysobj.getLoadModuleResult();
-loadmodulestatus =obj.getLoadModuleResult();
+loadmodulestatus_sys = sysobj.getLoadModuleResult();
+loadmodulestatus = obj.getLoadModuleResult();
+
 print ("[LIB LOAD STATUS]  :  %s" %loadmodulestatus_sys);
 print ("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
-#Prmitive test case which associated to this Script
-#tdkTestObj = obj.createTestStep('CellularManager_DoNothing');
 
 print("Loading module")
-if "SUCCESS" in loadmodulestatus.upper() and loadmodulestatus_sys.upper():
+
+if "SUCCESS" in loadmodulestatus.upper() and \
+   "SUCCESS" in loadmodulestatus_sys.upper():
+
+    obj.setLoadModuleStatus("SUCCESS");
     sysobj.setLoadModuleStatus("SUCCESS");
-    #Fetch IP address from CellularManagerLog.txt.0
-    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-    tdkTestObj.addParameter("command", "ip link show | grep 'wwan0' | grep 'UP'");
-    expectedresult="SUCCESS";
-    #Execute the test case in STB
+
+    step = 1;
+    enableModified = False;
+
+    ############################################################
+    # STEP 1 : Get Device.Cellular.Interface.1.Enable
+    ############################################################
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.Interface.1.Enable"
+    );
+
+    expectedresult = "SUCCESS";
+
     tdkTestObj.executeTestCase(expectedresult);
+
     actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    print("TEST STEP 1: Check whether interface wwan0 is UP");
-    print("EXPECTED RESULT 1: wwan0 inteface should be up");
+    initialEnable = tdkTestObj.getResultDetails().strip();
 
-    if expectedresult in actualresult and details != "":
-        print("ACTUAL RESULT 1: wwan0 interface is UP");
+    print("TEST STEP %d: Get Device.Cellular.Interface.1.Enable" %step);
+    print("EXPECTED RESULT %d: Should get Device.Cellular.Interface.1.Enable" %step);
+    print("ACTUAL RESULT %d: Value is %s" %(step,initialEnable));
 
-        #Set the result status of execution
+    if expectedresult in actualresult:
+
         tdkTestObj.setResultStatus("SUCCESS");
-        #Get the result of execution
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
     else:
-        print("ACTUAL RESULT 2:Error: Failed to obtain wwan0 interface ")
-        #Set the result status of execution
+
         tdkTestObj.setResultStatus("FAILURE");
-        #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
 
-    tdkTestObj = sysobj.createTestStep('ExecuteCmd');
-    tdkTestObj.addParameter("command", "ifconfig wwan0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1");
-    expectedresult="SUCCESS";
-    #Execute the test case in STB
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    ip_wwan0 = details[:-2];
+    ############################################################
+    # STEP 2 : Enable Interface if Required
+    ############################################################
 
-    print("TEST STEP 2: Get the wwan0 IP address");
-    print("EXPECTED RESULT 2: Should obtain the wwan0 IP address");
-    print("ACTUAL RESULT 2:wwan0 IP : %s" %ip_wwan0);
+    step = step + 1;
 
-    if expectedresult in actualresult and ip_wwan0 != "":
-        tdkTestObj.setResultStatus("SUCCESS");
-        #Get the result of execution
-        print("ACTUAL RESULT 2: Successfully obtained wwan0 IP : %s" %ip_wwan0);
-        print("[TEST EXECUTION RESULT] : SUCCESS");
+    if initialEnable == "false":
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.Enable"
+        );
+        tdkTestObj.addParameter(
+            "ParamValue",
+            "true"
+        );
+        tdkTestObj.addParameter(
+            "Type",
+            "bool"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+
+        print("TEST STEP %d: Enable Device.Cellular.Interface.1.Enable" %step);
+        print("EXPECTED RESULT %d: Interface should be enabled" %step);
+
+        if expectedresult in actualresult:
+
+            enableModified = True;
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            sleep(20);
+
+        else:
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
 
     else:
-        #Set the result status of execution
-        print("ACTUAL RESULT 2:Failed to obtain wwan0 ip");
+
+        print("TEST STEP %d: Interface already enabled" %step);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+    ############################################################
+    # STEP 3 : Verify CONNECTED Status
+    ############################################################
+
+    step = step + 1;
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.X_RDK_Status"
+    );
+
+    tdkTestObj.executeTestCase(expectedresult);
+
+    actualresult = tdkTestObj.getResult();
+    status = tdkTestObj.getResultDetails();
+
+    print("TEST STEP %d: Get Device.Cellular.X_RDK_Status" %step);
+    print("EXPECTED RESULT %d: Status should be CONNECTED or REGISTERED" %step);
+    print("ACTUAL RESULT %d: Status is %s" %(step,status));
+
+    if expectedresult in actualresult and \
+       status in ["CONNECTED", "REGISTERED"]:
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+        ############################################################
+        # STEP 4 : Verify wwan0 Interface Status
+        ############################################################
+
+        step = step + 1;
+
+        tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+        tdkTestObj.addParameter(
+            "command",
+            "ip link show | grep 'wwan0' | grep 'UP'"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails();
+
+        print("TEST STEP %d: Check whether interface wwan0 is UP" %step);
+        print("EXPECTED RESULT %d: wwan0 interface should be UP" %step);
+
+        if expectedresult in actualresult and details != "":
+
+            print("ACTUAL RESULT %d: wwan0 interface is UP" %step);
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            ############################################################
+            # STEP 5 : Get wwan0 IP Address
+            ############################################################
+
+            step = step + 1;
+
+            tdkTestObj = sysobj.createTestStep('ExecuteCmd');
+            tdkTestObj.addParameter(
+                "command",
+                "ifconfig wwan0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1"
+            );
+
+            tdkTestObj.executeTestCase(expectedresult);
+
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            ip_wwan0 = details[:-2];
+
+            print("TEST STEP %d: Get the wwan0 IP address" %step);
+            print("EXPECTED RESULT %d: Should obtain the wwan0 IP address" %step);
+            print("ACTUAL RESULT %d: wwan0 IP : %s" %(step,ip_wwan0));
+
+            if expectedresult in actualresult and ip_wwan0 != "":
+
+                tdkTestObj.setResultStatus("SUCCESS");
+
+                print("ACTUAL RESULT %d: Successfully obtained wwan0 IP : %s"
+                      %(step,ip_wwan0));
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            else:
+
+                print("ACTUAL RESULT %d: Failed to obtain wwan0 IP" %step);
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
+
+            print("ACTUAL RESULT %d: Error: Failed to obtain wwan0 interface"
+                  %step);
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
+    else:
+
         tdkTestObj.setResultStatus("FAILURE");
-        #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
+
+    ############################################################
+    # STEP 6 : Restore Original Interface State
+    ############################################################
+
+    if enableModified:
+
+        step = step + 1;
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.Enable"
+        );
+        tdkTestObj.addParameter(
+            "ParamValue",
+            initialEnable
+        );
+        tdkTestObj.addParameter(
+            "Type",
+            "bool"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+
+        print("TEST STEP %d: Revert Device.Cellular.Interface.1.Enable" %step);
+        print("EXPECTED RESULT %d: Original value should be restored" %step);
+
+        if expectedresult in actualresult:
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            sleep(20);
+
+            ############################################################
+            # STEP 7 : Verify Status After Revert
+            ############################################################
+
+            step = step + 1;
+
+            expectedRestoreStatus = \
+                "CONNECTED" if initialEnable == "true" else "DEREGISTERED";
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.X_RDK_Status"
+            );
+
+            tdkTestObj.executeTestCase(expectedresult);
+
+            actualresult = tdkTestObj.getResult();
+            restoreStatus = tdkTestObj.getResultDetails().strip();
+
+            print("TEST STEP %d: Verify Device.Cellular.X_RDK_Status after revert"
+                  %step);
+
+            print("EXPECTED RESULT %d: Status should be %s"
+                  %(step,expectedRestoreStatus));
+
+            print("ACTUAL RESULT %d: Status is %s"
+                  %(step,restoreStatus));
+
+            if expectedresult in actualresult and \
+               restoreStatus == expectedRestoreStatus:
+
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
     sysobj.unloadModule("sysutil");
     obj.unloadModule("tdkbtr181");
+
 else:
+
     print("Failed to load module");
     sysobj.setLoadModuleStatus("FAILURE");
     obj.setLoadModuleStatus("FAILURE");

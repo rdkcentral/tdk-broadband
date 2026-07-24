@@ -16,152 +16,229 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>7</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_CellularManager_GetCurrentAccessTechnology</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>CellularManager_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>Check if current Access Technology Device.Cellular.Interface.1.CurrentAccessTechnology is within supported access Technologies Device.Cellular.Interface.1.SupportedAccessTechnologies.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_CellularManager_17</test_case_id>
-    <test_objective>Check if current Access Technology Device.Cellular.Interface.1.CurrentAccessTechnology is within supported access Technologies Device.Cellular.Interface.1.SupportedAccessTechnologies.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup> Broadband, RPI</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state.
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script.
-3. Cellular manager should be UP and status should be CONNECTED .</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>ParamName : Device.Cellular.Interface.1.SupportedAccessTechnologies
-ParamValue : not empty
-Type : string
-ParamName : Device.Cellular.Interface.1.CurrentAccessTechnology
-ParamValue : not empty
-Type : string</input_parameters>
-    <automation_approch>1. Load the modules.
-2. Get the Device.Cellular.Interface.1.SupportedAccessTechnologies.
-3.Get the Device.Cellular.Interface.1.CurrentAccessTechnology.
-4. Check if current technology is within Supported access technology.
-5. Unload the modules.</automation_approch>
-    <expected_output>current Access Technology Device.Cellular.Interface.1.CurrentAccessTechnology should be within supported access Technologies Device.Cellular.Interface.1.SupportedAccessTechnologies.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
-    <test_script>TS_CellularManager_GetCurrentAccessTechnology</test_script>
-    <skipped>No</skipped>
-    <release_version>M128</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
-import tdklib;
+import tdklib
+from time import sleep
 
-#Test component to be tested
-obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
+# Test component to be tested
+obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
 
-#IP and Port of box, No need to change,
-#This will be replaced with corresponding DUT Ip and port while executing script
+# IP and Port of box
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_CellularManager_GetCurrentAccessTechnology');
 
-#Get the result of connection with test component and DUT
-result =obj.getLoadModuleResult();
-print ("[LIB LOAD STATUS]  :  %s" %result);
+obj.configureTestCase(ip,port,'TS_CellularManager_GetCurrentAccessTechnology')
+
+# Get the result of connection with test component and DUT
+result = obj.getLoadModuleResult()
+print("[LIB LOAD STATUS] : %s" % result)
 
 if "SUCCESS" in result.upper():
-    step = 1;
-    obj.setLoadModuleStatus("SUCCESS");
-    #Prmitive test case which associated to this Script
-    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.SupportedAccessTechnologies");
-    expectedresult="SUCCESS";
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    print("\nTEST STEP %d : Get the supported Access Technologies using Device.Cellular.Interface.1.SupportedAccessTechnologies" %step);
-    print("EXPECTED RESULT %d : Should successfully get Device.Cellular.Interface.1.SupportedAccessTechnologies" %step);
-    if expectedresult in actualresult:
-        supported_technologies = details.split(",");
-        tdkTestObj.setResultStatus("SUCCESS");
-        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,supported_technologies));
-        print("TEST EXECUTION RESULT :SUCCESS");
 
-        step = step + 1;
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.CurrentAccessTechnology");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        accessTechnology = tdkTestObj.getResultDetails();
-        print("\nTEST STEP %d : Get the current Access Technology using Device.Cellular.Interface.1.CurrentAccessTechnology" %step);
-        print("EXPECTED RESULT %d : Should successfully get Device.Cellular.Interface.1.CurrentAccessTechnology" %step);
+    step = 1
+    enableModified = False
+
+    ############################################################
+    # STEP 1 : Get Device.Cellular.Interface.1.Enable
+    ############################################################
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.Interface.1.Enable"
+    )
+
+    expectedresult = "SUCCESS"
+    tdkTestObj.executeTestCase(expectedresult)
+
+    actualresult = tdkTestObj.getResult()
+    initialEnable = tdkTestObj.getResultDetails().strip()
+
+    print("\nTEST STEP %d : Get Device.Cellular.Interface.1.Enable" % step)
+    print("EXPECTED RESULT %d : Should get Device.Cellular.Interface.1.Enable" % step)
+    print("ACTUAL RESULT %d : Device.Cellular.Interface.1.Enable is %s"
+          % (step, initialEnable))
+
+    step += 1
+
+    ############################################################
+    # STEP 2 : Enable Interface if Required
+    ############################################################
+
+    if initialEnable == "false":
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.Enable"
+        )
+        tdkTestObj.addParameter(
+            "ParamValue",
+            "true"
+        )
+        tdkTestObj.addParameter(
+            "Type",
+            "bool"
+        )
+
+        tdkTestObj.executeTestCase(expectedresult)
+
+        actualresult = tdkTestObj.getResult()
+
         if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,accessTechnology));
-            print("TEST EXECUTION RESULT :SUCCESS");
 
-            step = step + 1;
-            print("\nTEST STEP %d : Check if current access Technology is within the supported access technologies" %step);
-            print("EXPECTED RESULT %d : Current access Technology should be within the supported access technologies" %step);
-            if accessTechnology in supported_technologies :
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("ACTUAL RESULT %d: Current access Technology is within the supported access technologies" %step);
-                print("TEST EXECUTION RESULT :SUCCESS");
+            enableModified = True
+            sleep(20)
 
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("ACTUAL RESULT %d: Current access Technology is not within the supported access technologies" %step);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
+    step += 1
 
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,accessTechnology));
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : FAILURE");
-    else:
-        tdkTestObj.setResultStatus("FAILURE");
-        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,supported_technologies));
-        #Get the result of execution
-        print("[TEST EXECUTION RESULT] : FAILURE");
+    ############################################################
+    # STEP 3 : Verify CONNECTED Status
+    ############################################################
 
-    obj.unloadModule("tdkbtr181");
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.X_RDK_Status"
+    )
+
+    tdkTestObj.executeTestCase(expectedresult)
+
+    actualresult = tdkTestObj.getResult()
+    status = tdkTestObj.getResultDetails()
+
+    print("\nTEST STEP %d : Verify Device.Cellular.X_RDK_Status" % step)
+    print("EXPECTED RESULT %d : Device.Cellular.X_RDK_Status should be CONNECTED" % step)
+
+    if expectedresult in actualresult and status == "CONNECTED":
+
+        tdkTestObj.setResultStatus("SUCCESS")
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+
+        step += 1
+
+        ############################################################
+        # ORIGINAL SCRIPT STARTS HERE
+        ############################################################
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.SupportedAccessTechnologies"
+        )
+
+        tdkTestObj.executeTestCase(expectedresult)
+
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("\nTEST STEP %d : Get SupportedAccessTechnologies" % step)
+
+        if expectedresult in actualresult:
+
+            supported_technologies = details.split(",")
+
+            step += 1
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.CurrentAccessTechnology"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            accessTechnology = tdkTestObj.getResultDetails()
+
+            print("\nTEST STEP %d : Get CurrentAccessTechnology" % step)
+
+            if expectedresult in actualresult:
+
+                step += 1
+
+                print("\nTEST STEP %d : Verify CurrentAccessTechnology" % step)
+
+                if accessTechnology in supported_technologies:
+
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+
+        ############################################################
+        # REVERT
+        ############################################################
+
+        if enableModified:
+
+            step += 1
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.Enable"
+            )
+            tdkTestObj.addParameter(
+                "ParamValue",
+                initialEnable
+            )
+            tdkTestObj.addParameter(
+                "Type",
+                "bool"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+
+            print("TEST STEP %d : Revert Device.Cellular.Interface.1.Enable"
+                  % step)
+
+            if expectedresult in actualresult:
+
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                sleep(20)
+
+                step += 1
+
+                expectedRestoreStatus = \
+                    "CONNECTED" if initialEnable == "true" else "DEREGISTERED"
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                tdkTestObj.addParameter(
+                    "ParamName",
+                    "Device.Cellular.X_RDK_Status"
+                )
+
+                tdkTestObj.executeTestCase(expectedresult)
+
+                actualresult = tdkTestObj.getResult()
+                restoreStatus = tdkTestObj.getResultDetails().strip()
+
+                print("TEST STEP %d : Verify Device.Cellular.X_RDK_Status after revert"
+                      % step)
+
+                if expectedresult in actualresult and \
+                   restoreStatus == expectedRestoreStatus:
+
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+
+    obj.unloadModule("tdkbtr181")
+
 else:
-    print("Failed to load the module");
-    obj.setLoadModuleStatus("FAILURE");
+
+    print("Failed to load the module")
+    obj.setLoadModuleStatus("FAILURE")
