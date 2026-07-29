@@ -1,0 +1,192 @@
+##########################################################################
+# If not stated otherwise in this file or this component's Licenses.txt
+# file the following copyright and licenses apply:
+#
+# Copyright 2025 RDK Management
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##########################################################################
+
+# use tdklib library, which provides a wrapper for tdk testcase script
+import tdklib
+from tdkbVariables import *
+from tdkutility import *
+
+# Test component to be tested
+obj = tdklib.TDKScriptingLibrary("wifiagent", "RDKB")
+
+# IP and Port of box, No need to change,
+# This will be replaced with corresponding Box IP and port while executing script
+ip = <ipaddress>
+port = <port>
+obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckHostActiveStatus_WithConnectedClient')
+
+# Get the result of connection with test component and DUT
+loadmodulestatus = obj.getLoadModuleResult()
+print(f"[LIB LOAD STATUS]  :  {loadmodulestatus}")
+
+
+def get_param_value(result_details):
+    value = ""
+    if "VALUE:" in result_details:
+        value = result_details.split("VALUE:", 1)[1].strip()
+        if value != "":
+            value = value.split()[0]
+    return value
+
+
+if "SUCCESS" in loadmodulestatus.upper():
+    # Set the load module status
+    obj.setLoadModuleStatus("SUCCESS")
+    expectedresult = "SUCCESS"
+
+    # Get the number of host table entries
+    step = 1
+    tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+    tdkTestObj.addParameter("paramName", "Device.Hosts.HostNumberOfEntries")
+    tdkTestObj.executeTestCase(expectedresult)
+    actualresult = tdkTestObj.getResult()
+    value = tdkTestObj.getResultDetails()
+
+    print(f"\nTEST STEP {step} : Get the number of Host entries using Device.Hosts.HostNumberOfEntries")
+    print(f"EXPECTED RESULT {step} : Should successfully retrieve Device.Hosts.HostNumberOfEntries")
+
+    if expectedresult in actualresult and value != "":
+        hostEntries = get_param_value(value)
+
+        if hostEntries != "":
+            hostEntries = int(hostEntries)
+            tdkTestObj.setResultStatus("SUCCESS")
+            print(f"ACTUAL RESULT {step} : Device.Hosts.HostNumberOfEntries : {hostEntries}")
+            print(f"[TEST EXECUTION RESULT] : SUCCESS")
+
+            clientDetected = 0
+
+            # Iterate through the host table and check for any active connected client
+            for index in range(1, hostEntries + 1):
+                print(f"\n**********For Host Table Entry {index}**********")
+
+                # Get Active status of Host entry
+                step += 1
+                paramName = f"Device.Hosts.Host.{index}.Active"
+                tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+                tdkTestObj.addParameter("paramName", paramName)
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                value = tdkTestObj.getResultDetails()
+
+                print(f"\nTEST STEP {step} : Get the value of {paramName}")
+                print(f"EXPECTED RESULT {step} : Should successfully retrieve {paramName}")
+
+                if expectedresult in actualresult and value != "":
+                    activeStatus = get_param_value(value)
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print(f"ACTUAL RESULT {step} : {paramName} : {activeStatus}")
+                    print(f"[TEST EXECUTION RESULT] : SUCCESS")
+
+                    if activeStatus == "true":
+                        # Get HostName of active client
+                        step += 1
+                        paramName = f"Device.Hosts.Host.{index}.HostName"
+                        tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+                        tdkTestObj.addParameter("paramName", paramName)
+                        tdkTestObj.executeTestCase(expectedresult)
+                        actualresult = tdkTestObj.getResult()
+                        value = tdkTestObj.getResultDetails()
+
+                        print(f"\nTEST STEP {step} : Get the HostName of active connected client at host index {index}")
+                        print(f"EXPECTED RESULT {step} : Should successfully retrieve {paramName}")
+
+                        if expectedresult in actualresult:
+                            hostName = get_param_value(value)
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step} : {paramName} : {hostName}")
+                            print(f"[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            hostName = ""
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step} : Failed to retrieve {paramName}")
+                            print(f"[TEST EXECUTION RESULT] : FAILURE")
+
+                        # Get PhysAddress of active client
+                        step += 1
+                        paramName = f"Device.Hosts.Host.{index}.PhysAddress"
+                        tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+                        tdkTestObj.addParameter("paramName", paramName)
+                        tdkTestObj.executeTestCase(expectedresult)
+                        actualresult = tdkTestObj.getResult()
+                        value = tdkTestObj.getResultDetails()
+
+                        print(f"\nTEST STEP {step} : Get the PhysAddress of active connected client at host index {index}")
+                        print(f"EXPECTED RESULT {step} : Should successfully retrieve {paramName}")
+
+                        if expectedresult in actualresult:
+                            physAddress = get_param_value(value)
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step} : {paramName} : {physAddress}")
+                            print(f"[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            physAddress = ""
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step} : Failed to retrieve {paramName}")
+                            print(f"[TEST EXECUTION RESULT] : FAILURE")
+
+                        # Validate active connected client
+                        step += 1
+                        print(f"\nTEST STEP {step} : Validate active connected client is present in Host table")
+                        print(f"EXPECTED RESULT {step} : At least one Host table entry should be active")
+
+                        if activeStatus == "true":
+                            clientDetected = 1
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step} : Active connected client found at Host index {index}")
+                            print(f"HostName : {hostName}")
+                            print(f"PhysAddress : {physAddress}")
+                            print(f"[TEST EXECUTION RESULT] : SUCCESS")
+                            break
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step} : No active connected client found at Host index {index}")
+                            print(f"[TEST EXECUTION RESULT] : FAILURE")
+                    else:
+                        print(f"Host Table Entry {index} is not active")
+                        continue
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print(f"ACTUAL RESULT {step} : Get operation failed for {paramName}")
+                    print(f"[TEST EXECUTION RESULT] : FAILURE")
+                    break
+
+            # Final validation
+            if clientDetected == 1:
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("\nActive connected client is detected successfully in Host table")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("\nNo active connected client is detected in Host table")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print(f"ACTUAL RESULT {step} : Device.Hosts.HostNumberOfEntries value is empty")
+            print(f"[TEST EXECUTION RESULT] : FAILURE")
+    else:
+        tdkTestObj.setResultStatus("FAILURE")
+        print(f"ACTUAL RESULT {step} : Get Operation Failed")
+        print(f"[TEST EXECUTION RESULT] : FAILURE")
+
+    obj.unloadModule("wifiagent")
+else:
+    print("Failed to load wifi agent module")
+    obj.setLoadModuleStatus("FAILURE")
+    print("Module loading failed")
