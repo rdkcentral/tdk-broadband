@@ -16,71 +16,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>4</version>
-  <name>TS_FirmwareUpgrade_UsingFWUpgradeManager</name>
-  <primitive_test_id/>
-  <primitive_test_name>FirmwareUpgrade_DoNothing</primitive_test_name>
-  <primitive_test_version>2</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>Validate firmware upgrade by setting rules via FirmwireUpgrade TR-181 commands.</synopsis>
-  <groups_id/>
-  <execution_time>30</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_FirmwareUpgrade_1</test_case_id>
-    <test_objective>Validate firmware image upgradation using firmware manager TR-181 commands</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband,RPI</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script
-3.A Python HTTP server should be running on a WAN machine accessible from the DUT, hosting current and target firmware images for upgrade.</pre_requisite>
-    <api_or_interface_used></api_or_interface_used>
-    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadProtocol
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadURL
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareToDownload
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadAndFactoryReset
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadStatus</input_parameters>
-    <automation_approch>1. Load the modules
-2. Get the erouter IP address.
-3. Get the current and target firmware details.
-4. Check whether the target and initial firmware is available in the HTTP server deployed.
-5. Get the required Firmware Download Protocol, Firmware Upgrade URL and FirmwaretoDownload values.
-6. Set the required Firmware Download Protocol, Firmware Upgrade URL and FirmwaretoDownload values and trigger FirmwareDownloadAndFactoryReset.
-7. Check whether the image is being downloaded in /mnt/bootpart.
-8. Get the current firmware name and check if it matches the target firmware.
-9. Revert the firmware to initial version using the fwupgrade recover flow.
-10. Unload the modules.</automation_approch>
-    <expected_output>Firmware Upgrade using FirmwareUpgrade Manager TR-181 commands should be successful.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>tdkbtr181</test_stub_interface>
-    <test_script>TS_FirmwareUpgrade_UsingFWUpgradeManager</test_script>
-    <skipped>No</skipped>
-    <release_version>M141</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 from firmwareUpgradeVariables import *
 from firmwareUpgradeUtility import *
 from tdkutility import *
 import FirmwareUpgradeMonitor
-
 
 def loadAndUnloadModules():
     # Test component to be tested
@@ -130,6 +72,9 @@ if load_flag == 1:
             getflag, fw_values = getFWUpgradeConfig(obj, step)
 
             if getflag == 1:
+                fw_protocol = fw_values[FW_DOWNLOAD_PROTOCOL_DM]
+                fw_url = fw_values[FW_DOWNLOAD_URL_DM]
+                old_firmware_to_download = fw_values[FW_TO_DOWNLOAD_DM]
                 # Get the initial FirmwareDownloadStatus
                 step += 1
                 tdkTestObj, details, status_ok = getFirmwareDownloadStatus(obj, step)
@@ -165,6 +110,14 @@ if load_flag == 1:
                                         tdkTestObj.setResultStatus("SUCCESS")
                                         print(f"ACTUAL RESULT {step}: Reverted to initial firmware {Old_FirmwareVersion} successfully.")
                                         print("[TEST EXECUTION RESULT] : SUCCESS \n")
+
+                                        step += 1
+                                        print("Reverting the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values")
+                                        set_flag = setFWUpgradeConfig(obj, step, old_firmware_to_download, fw_url, fw_protocol, trigger_download=False)
+                                        if set_flag == 1:
+                                            print("Successfully reverted the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
+                                        else:
+                                            print("Failed to revert the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
                                         print(f"ACTUAL RESULT {step}: Failed to revert the image. Current Firmware Version : {FirmwareVersionAfterRecover}")

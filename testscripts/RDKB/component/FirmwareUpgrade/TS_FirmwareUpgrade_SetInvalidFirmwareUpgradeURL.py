@@ -16,61 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>4</version>
-  <name>TS_FirmwareUpgrade_SetInvalidFirmwareUpgradeURL</name>
-  <primitive_test_id/>
-  <primitive_test_name>FirmwareUpgrade_DoNothing</primitive_test_name>
-  <primitive_test_version>2</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To verify that setting an invalid firmware upgrade url results in the firmware download status remaining "Not Started".</synopsis>
-  <groups_id/>
-  <execution_time>10</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_FirmwareUpgrade_3</test_case_id>
-    <test_objective>To verify that setting an invalid firmware upgrade url results in the firmware download status remaining "Not Started".</test_objective>
-    <test_type>Negative</test_type>
-    <test_setup>Broadband,RPI</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component.
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script.</pre_requisite>
-    <api_or_interface_used></api_or_interface_used>
-    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadProtocol
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadURL
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareToDownload
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadAndFactoryReset
-Device.DeviceInfo.X_RDKCENTRAL-COM_FirmwareDownloadStatus</input_parameters>
-    <automation_approch>1. Load the modules
-2. Get the tdk_platform.properties config values.
-3. Get the current firmware name and store it.
-4. Get the initial FirmwareDownloadStatus.
-5. Set an invalid FirmwareUpgradeURL value, valid FirmwaretoDownload value and trigger FirmwareDownloadAndFactoryReset.
-6. Get the FirmwareDownloadStatus and verify if it remains as Not Started.
-7. Revert the Firmware Download Protocol, Firmware Upgrade URL and FirmwaretoDownload values.
-8. Unload the modules.</automation_approch>
-    <expected_output>The firmware download status remains "Not Started"</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>tdkbtr181</test_stub_interface>
-    <test_script>TS_FirmwareUpgrade_SetInvalidFirmwareUpgradeURL</test_script>
-    <skipped>No</skipped>
-    <release_version>M141</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib
 from firmwareUpgradeUtility import *
