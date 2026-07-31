@@ -47,7 +47,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     NoOfClients = tdkTestObj.getResultDetails()
-    if expectedresult in actualresult and int(NoOfClients)>0:
+    if expectedresult in actualresult and NoOfClients.isdigit() and int(NoOfClients)>0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
         print(f"ACTUAL RESULT {step}: Number of active clients connected :{NoOfClients}")
@@ -63,7 +63,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj.executeTestCase(expectedresult)
         actualresult = tdkTestObj.getResult()
         NoOfHosts = tdkTestObj.getResultDetails()
-        if expectedresult in actualresult and int(NoOfHosts)>0:
+        if expectedresult in actualresult and NoOfHosts.isdigit() and int(NoOfHosts)>0:
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS")
             print(f"ACTUAL RESULT {step}: Number of hosts: {NoOfHosts}")
@@ -71,18 +71,42 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("[TEST EXECUTION RESULT] : SUCCESS")
             #Find the active hosts among the listed Hosts. List will contains the ids of active hosts
             List=[]
+            activeClientFound = 0
             for i in range(1,int(NoOfHosts)+1):
                 tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
                 #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
                 Status = tdkTestObj.getResultDetails()
-                if expectedresult in actualresult and "true" in Status.lower():
-                    List.append(str(i))
+                if expectedresult in actualresult and Status == "true":
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult)
+                    actualresult = tdkTestObj.getResult()
+                    Layer1Interface = tdkTestObj.getResultDetails()
+                    step += 1
+                    print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                    print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                    if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                        List.append(str(i))
+                        activeClientFound = 1
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping")
+                else:
+                    print(f"\nHost {i} is inactive (Active={Status}), skipping")
             step += 1
             print(f"\nTEST STEP {step}: Check if the number of active client list is same as ConnectedDeviceNumber")
             print(f"EXPECTED RESULT {step}: The number of active client list should be same as ConnectedDeviceNumber")
-            if len(List)== int(NoOfClients):
+            if activeClientFound == 0:
+                #Set the result status of execution
+                tdkTestObj.setResultStatus("FAILURE")
+                print(f"ACTUAL RESULT {step}: No active clients found in the host table even though ConnectedDeviceNumber={NoOfClients} and HostNumberOfEntries={NoOfHosts}")
+                #Get the result of execution
+                print("[TEST EXECUTION RESULT] : FAILURE")
+            elif len(List)== int(NoOfClients):
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: Number of active client list is same as ConnectedDeviceNumber and Active clients are :{List}")

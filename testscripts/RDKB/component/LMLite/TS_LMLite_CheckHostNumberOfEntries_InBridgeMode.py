@@ -48,9 +48,9 @@ if "SUCCESS" in loadmodulestatus.upper():
     #Execute the test case in DUT
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
-    Current_Mode = tdkTestObj.getResultDetails()
-    if expectedresult in actualresult and Current_Mode:
-        if "router" not in Current_Mode:
+    Initial_Mode = tdkTestObj.getResultDetails()
+    if expectedresult in actualresult and Initial_Mode:
+        if "router" not in Initial_Mode:
             Mode = "bridge mode"
         else:
             Mode = "Router mode"
@@ -61,8 +61,8 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("[TEST EXECUTION RESULT] : SUCCESS")
 
         step += 1
-        print(f"\nTEST STEP {step}: Set the lan mode to 'bridge mode' if not already")
-        print(f"EXPECTED RESULT {step}: Should set the lan mode to 'bridge mode' if not already")
+        print(f"\nTEST STEP {step}: Set the lan mode to 'bridge-static' if not already")
+        print(f"EXPECTED RESULT {step}: Should set the lan mode to 'bridge-static' if not already")
         if "bridge mode" not in Mode:
             tdkTestObj = obj.createTestStep('LMLiteStub_Set')
             tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
@@ -113,7 +113,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 step += 1
                 print(f"\nTEST STEP {step}:Check if the number of hosts is zero in bridge mode")
                 print(f"EXPECTED RESULT {step}: The number of hosts should be zero if device is in bridge mode")
-                if int(NoOfHosts) == 0:
+                if NoOfHosts.isdigit() and int(NoOfHosts) == 0:
                     #Set the result status of execution
                     tdkTestObj.setResultStatus("SUCCESS")
                     print(f"ACTUAL RESULT {step}: Number of Hosts is zero as expected")
@@ -138,7 +138,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #set original LanMode
             tdkTestObj = obj.createTestStep('LMLiteStub_Set')
             tdkTestObj.addParameter("ParamName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode")
-            tdkTestObj.addParameter("ParamValue",Current_Mode)
+            tdkTestObj.addParameter("ParamValue",Initial_Mode)
             tdkTestObj.addParameter("Type","string")
             #Execute the test case in DUT
             tdkTestObj.executeTestCase(expectedresult)
@@ -164,7 +164,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     else:
         #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE")
-        print(f"ACTUAL RESULT {step}: LanMode is {Current_Mode}")
+        print(f"ACTUAL RESULT {step}: LanMode is {Initial_Mode}")
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE")
     obj.unloadModule("lmlite")

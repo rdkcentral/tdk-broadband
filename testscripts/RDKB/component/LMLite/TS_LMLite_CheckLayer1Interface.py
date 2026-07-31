@@ -50,7 +50,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     NoOfClients = tdkTestObj.getResultDetails()
-    if expectedresult in actualresult and int(NoOfClients)>0:
+    if expectedresult in actualresult and NoOfClients.isdigit() and int(NoOfClients)>0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
         print(f"ACTUAL RESULT {step}: Number of active LAN clients connected :{NoOfClients}")
@@ -70,8 +70,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             #Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS")
             #get the interface names of active LAN clients as list from obtained string. len(IP) will be the number of active clients
-            IP = [p.split(']')[0] for p in IP_details.split('[') if ']' in p]
+            try:
+                IP = [p.split(']')[0] for p in IP_details.split('[') if ']' in p]
+            except Exception as e:
+                IP = []
+                print(f"Warning: Failed to parse interface details: {e}")
             print(f"ACTUAL RESULT {step}: {IP}")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
             print(f"\nTEST STEP {step}: Get the number of hosts")
@@ -83,59 +88,66 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             actualresult = tdkTestObj.getResult();
             NoOfHosts = tdkTestObj.getResultDetails()
 
-            if expectedresult in actualresult and int(NoOfHosts)>0:
+            if expectedresult in actualresult and NoOfHosts.isdigit() and int(NoOfHosts)>0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: Number of hosts :{NoOfHosts}")
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                ethernetHostFound = 0
+                activeClientFound = 0
+                activeHostCount = 0
                 for i in range(1,int(NoOfHosts)+1):
-                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
                     #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult)
                     actualresult = tdkTestObj.getResult()
-                    Layer1Interface = tdkTestObj.getResultDetails()
-
-                    if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
-                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
+                    Status = tdkTestObj.getResultDetails()
+                    if Status == "true":
+                        activeClientFound = 1
+                        activeHostCount += 1
+                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                         #Execute the test case in DUT
                         tdkTestObj.executeTestCase(expectedresult)
                         actualresult = tdkTestObj.getResult()
-                        Status = tdkTestObj.getResultDetails()
+                        Layer1Interface = tdkTestObj.getResultDetails()
                         step += 1
-                        print(f"\nTEST STEP {step}: Check Active status for Ethernet host {i}")
-                        print(f"EXPECTED RESULT {step}: Ethernet host should be active")
-                        if expectedresult in actualresult and "true" in Status.lower():
-                            ethernetHostFound = 1
+                        print(f"\nTEST STEP {step}: Compare the interface names obtained for active host {i}")
+                        print(f"EXPECTED RESULT {step}: Layer1Interface of active host {i} should be present in ARP interface list")
+                        #Derive interface type: ethernet maps to 'ether' in ARP output
+                        Interface = "ether" if "ethernet" in Layer1Interface.lower() else Layer1Interface.lower()
+                        if Interface in IP:
+                            #Set the result status of execution
                             tdkTestObj.setResultStatus("SUCCESS")
-                            print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
-                            Interface = "ether"
+                            print(f"ACTUAL RESULT {step}: Interface name of host instance {i} matches (Layer1Interface={Layer1Interface})")
+                            #Get the result of execution
                             print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                            step += 1
-                            print(f"\nTEST STEP {step}: Compare the interface names obtained")
-                            print(f"EXPECTED RESULT {step}: Both interface names should match")
-                            if Interface in IP:
-                                #Set the result status of execution
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print(f"ACTUAL RESULT {step}: Interface name of host instance {i} matches")
-                                #Get the result of execution
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            else:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print(f"ACTUAL RESULT {step}: Interface name of host instance {i} doesnt match")
-                                print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
                             tdkTestObj.setResultStatus("FAILURE")
-                            print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
+                            print(f"ACTUAL RESULT {step}: Interface name of host instance {i} doesnt match (Layer1Interface={Layer1Interface})")
                             print("[TEST EXECUTION RESULT] : FAILURE")
+                    else:
+                        print(f"\nHost {i} is inactive (Active={Status}), skipping interface check")
 
-                if ethernetHostFound == 0:
+                if activeClientFound == 0:
+                    step += 1
+                    print(f"\nTEST STEP {step}: Check if any active clients were found")
+                    print(f"EXPECTED RESULT {step}: At least one active client should be found")
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("\nNo active Ethernet host found in the host table")
+                    print(f"ACTUAL RESULT {step}: No active clients found in the host table even though ConnectedDeviceNumber={NoOfClients} and HostNumberOfEntries={NoOfHosts}")
                     print("[TEST EXECUTION RESULT] : FAILURE")
+                else:
+                    step += 1
+                    print(f"\nTEST STEP {step}: Verify active host count matches ConnectedDeviceNumber")
+                    print(f"EXPECTED RESULT {step}: Active host count should equal ConnectedDeviceNumber")
+                    if activeHostCount == int(NoOfClients):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} matches ConnectedDeviceNumber {NoOfClients}")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} does not match ConnectedDeviceNumber {NoOfClients}")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 #Set the result status ofexecution
                 tdkTestObj.setResultStatus("FAILURE")

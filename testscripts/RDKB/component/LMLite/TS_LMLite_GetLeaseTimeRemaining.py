@@ -37,112 +37,124 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS")
     expectedresult="SUCCESS"
 
-    #Get the number of hosts
+    step = 1
+    print(f"\nTEST STEP {step}: Get the number of connected devices")
+    print(f"EXPECTED RESULT {step}: Should get the number of connected devices as greater than zero")
+    #Get the number of currently connected (active) devices
     tdkTestObj = obj.createTestStep('LMLiteStub_Get')
-    tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries")
+    tdkTestObj.addParameter("paramName","Device.Hosts.X_CISCO_COM_ConnectedDeviceNumber")
     #Execute the test case in DUT
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
-    NoOfHosts = tdkTestObj.getResultDetails()
-    step = 1
-    print(f"\nTEST STEP {step}: Get the number of hosts")
-    print(f"EXPECTED RESULT {step}: Should get the number of hosts")
-    if expectedresult in actualresult and int(NoOfHosts)>0:
+    NoOfConnected = tdkTestObj.getResultDetails()
+    if expectedresult in actualresult and NoOfConnected.isdigit() and int(NoOfConnected) > 0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
-        print(f"ACTUAL RESULT {step}: Number of hosts:{NoOfHosts}")
+        print(f"ACTUAL RESULT {step}: Number of connected devices: {NoOfConnected}")
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : SUCCESS")
-        ethernetHostFound = 0
-        for i in range(1,int(NoOfHosts)+1):
-            tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
-            #Execute the test case in DUT
-            tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()
-            Layer1Interface = tdkTestObj.getResultDetails()
 
-            if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+        step += 1
+        print(f"\nTEST STEP {step}: Get the number of hosts")
+        print(f"EXPECTED RESULT {step}: Should get the number of hosts")
+        #Get the total host table entries (includes active, inactive, static devices)
+        tdkTestObj = obj.createTestStep('LMLiteStub_Get')
+        tdkTestObj.addParameter("paramName","Device.Hosts.HostNumberOfEntries")
+        #Execute the test case in DUT
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        NoOfHosts = tdkTestObj.getResultDetails()
+        if expectedresult in actualresult and NoOfHosts.isdigit() and int(NoOfHosts) > 0:
+            #Set the result status of execution
+            tdkTestObj.setResultStatus("SUCCESS")
+            print(f"ACTUAL RESULT {step}: Number of hosts: {NoOfHosts}")
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            activeHostCount = 0
+            activeClientFound = 0
+            for i in range(1, int(NoOfHosts)+1):
+                #Get the Active status for host i of any interface types
                 tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
                 #Execute the test case in DUT
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
                 Status = tdkTestObj.getResultDetails()
 
+                #Get the AddressSource for host i
+                tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.AddressSource" %i)
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                Addr_src = tdkTestObj.getResultDetails()
+
+                #Get the LeaseTimeRemaining for host i
+                tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.LeaseTimeRemaining" %i)
+                #Execute the test case in DUT
+                tdkTestObj.executeTestCase(expectedresult)
+                actualresult = tdkTestObj.getResult()
+                LeaseTime = tdkTestObj.getResultDetails()
                 step += 1
-                print(f"\nTEST STEP {step}: Check Active status for Ethernet host {i}")
-                print(f"EXPECTED RESULT {step}: Ethernet host should be active")
-                if expectedresult in actualresult and "true" in Status.lower():
-                    ethernetHostFound = 1
+                print(f"\nTEST STEP {step}: Check if any active clients were found")
+                print(f"EXPECTED RESULT {step}: At least one active client should be found")
+                if Status == "true":
+                    activeHostCount += 1
+                    activeClientFound = 1
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
+                    print(f"ACTUAL RESULT {step}: Host {i} is active client")
                     print("[TEST EXECUTION RESULT] : SUCCESS")
-
                     step += 1
-                    print(f"\nTEST STEP {step}: Get the Address source for Ethernet host {i}")
-                    print(f"EXPECTED RESULT {step}: Should get the Address source for Ethernet host {i}")
-                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.AddressSource" %i)
-                    #Execute the test case in DUT
-                    tdkTestObj.executeTestCase(expectedresult)
-                    actualresult = tdkTestObj.getResult()
-                    Addr_src = tdkTestObj.getResultDetails()
-                    if expectedresult in actualresult and Addr_src !="":
+                    print(f"\nTEST STEP {step}: Check AddressSource and LeaseTimeRemaining for active host {i}")
+                    print(f"EXPECTED RESULT {step}: If AddressSource is DHCP, LeaseTimeRemaining should be greater than zero; otherwise it should be zero")
+                    if not LeaseTime.isdigit():
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: Active host {i} returned invalid LeaseTimeRemaining value: {LeaseTime}")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+                    elif "DHCP" in Addr_src and int(LeaseTime) > 0:
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: Address source of host number {i} is {Addr_src}")
+                        print(f"ACTUAL RESULT {step}: DHCP host {i} has valid lease time remaining {LeaseTime}")
                         print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                        step += 1
-                        print(f"\nTEST STEP {step}: Get the Lease time remaining for Ethernet host {i}")
-                        print(f"EXPECTED RESULT {step}: Should get the Lease time remaining for Ethernet host {i}")
-                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.LeaseTimeRemaining" %i)
-                        #Execute the test case in DUT
-                        tdkTestObj.executeTestCase(expectedresult)
-                        actualresult = tdkTestObj.getResult()
-                        LeaseTime = tdkTestObj.getResultDetails()
-                        if expectedresult in actualresult and LeaseTime.isdigit():
-                            tdkTestObj.setResultStatus("SUCCESS")
-                            print(f"ACTUAL RESULT {step}: Lease time remaining of host number {i} is {LeaseTime}")
-                            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                            step += 1
-                            print(f"\nTEST STEP {step}: Check AddressSource and LeaseTimeRemaining for Ethernet host {i}")
-                            print(f"EXPECTED RESULT {step}: If AddressSource is DHCP, LeaseTimeRemaining should be greater than zero; otherwise it should be zero")
-                            if "DHCP" in Addr_src and int(LeaseTime) > 0:
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print(f"ACTUAL RESULT {step}: DHCP host {i} has valid lease time remaining {LeaseTime}")
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            elif "DHCP" in Addr_src and int(LeaseTime) <= 0:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print(f"ACTUAL RESULT {step}: DHCP host {i} has invalid lease time remaining {LeaseTime}")
-                                print("[TEST EXECUTION RESULT] : FAILURE")
-                            elif int(LeaseTime) == 0:
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has valid lease time remaining {LeaseTime}")
-                                print("[TEST EXECUTION RESULT] : SUCCESS")
-                            else:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has invalid lease time remaining {LeaseTime}")
-                                print("[TEST EXECUTION RESULT] : FAILURE")
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print(f"ACTUAL RESULT {step}: Failure in getting Lease time for Ethernet host {i}")
-                            print("[TEST EXECUTION RESULT] : FAILURE")
+                    elif "DHCP" in Addr_src and int(LeaseTime) <= 0:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: DHCP host {i} has invalid lease time remaining {LeaseTime}")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+                    elif "Static" in Addr_src and int(LeaseTime) == 0:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has valid lease time remaining {LeaseTime}")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: Failure in getting address source for Ethernet host {i}")
+                        print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has invalid lease time remaining {LeaseTime}")
                         print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    tdkTestObj.setResultStatus("FAILURE")
-                    print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
-                    print("[TEST EXECUTION RESULT] : FAILURE")
+                    print(f"\nHost {i} is inactive (Active={Status}), skipping lease time check")
 
-        if ethernetHostFound == 0:
+            if activeClientFound == 0:
+                tdkTestObj.setResultStatus("FAILURE")
+                print(f"No active clients found in the host table even though ConnectedDeviceNumber={NoOfConnected} and HostNumberOfEntries={NoOfHosts}")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
+                step += 1
+                print(f"\nTEST STEP {step}: Verify active host count matches ConnectedDeviceNumber")
+                print(f"EXPECTED RESULT {step}: Active host count should equal ConnectedDeviceNumber")
+                if activeHostCount == int(NoOfConnected):
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} matches ConnectedDeviceNumber {NoOfConnected}")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} does not match ConnectedDeviceNumber {NoOfConnected}")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            #Set the result status of execution
             tdkTestObj.setResultStatus("FAILURE")
-            print(" No active Ethernet host found in the host table")
+            print(f"ACTUAL RESULT {step}: Failed to get valid number of hosts: {NoOfHosts}")
+            #Get the result of execution
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-        #Set the result status ofexecution
+        #Set the result status of execution
         tdkTestObj.setResultStatus("FAILURE")
-        print(f"ACTUAL RESULT {step}: Number of hosts:{NoOfHosts}")
+        print(f"ACTUAL RESULT {step}: Failed to get valid number of connected devices: {NoOfConnected}")
         #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE")
 

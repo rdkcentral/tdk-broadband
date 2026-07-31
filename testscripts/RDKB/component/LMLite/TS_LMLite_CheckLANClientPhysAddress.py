@@ -51,7 +51,7 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     NoOfClients = tdkTestObj.getResultDetails()
-    if expectedresult in actualresult and int(NoOfClients)>0:
+    if expectedresult in actualresult and NoOfClients.isdigit() and int(NoOfClients)>0:
         #Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS")
         print(f"ACTUAL RESULT {step}: Number of active clients connected : {NoOfClients}")
@@ -86,34 +86,36 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
             tdkTestObj.executeTestCase(expectedresult)
             actualresult = tdkTestObj.getResult()
             NoOfHosts = tdkTestObj.getResultDetails()
-            if expectedresult in actualresult and int(NoOfHosts)>0:
+            if expectedresult in actualresult and NoOfHosts.isdigit() and int(NoOfHosts)>0:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS")
                 print(f"ACTUAL RESULT {step}: Number of hosts : {NoOfHosts}")
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
-                ethernetHostFound = 0
+                activeClientFound = 0
+                activeHostCount = 0
                 for i in range(1,int(NoOfHosts)+1):
-                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
                     #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult)
                     actualresult = tdkTestObj.getResult()
-                    Layer1Interface = tdkTestObj.getResultDetails()
-
-                    if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
-                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
+                    Status = tdkTestObj.getResultDetails()
+                    if Status == "true":
+                        activeHostCount += 1
+                        #Verify this is a LAN (ethernet) client before doing LAN-specific check
+                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                         #Execute the test case in DUT
                         tdkTestObj.executeTestCase(expectedresult)
                         actualresult = tdkTestObj.getResult()
-                        Status = tdkTestObj.getResultDetails()
+                        Layer1Interface = tdkTestObj.getResultDetails()
                         step += 1
-                        print(f"\nTEST STEP {step}: Check Active status for Ethernet host {i}")
-                        print(f"EXPECTED RESULT {step}: Ethernet host should be active")
-                        if expectedresult in actualresult and "true" in Status.lower():
-                            ethernetHostFound = 1
+                        print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                        print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                        if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                            activeClientFound = 1
                             tdkTestObj.setResultStatus("SUCCESS")
-                            print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
+                            print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
                             print("[TEST EXECUTION RESULT] : SUCCESS")
                             step += 1
                             print(f"\nTEST STEP {step}: Get the Physical address in Device.Hosts.")
@@ -150,14 +152,26 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                                 print(f"ACTUAL RESULT {step}: Failed to get the physical address as {MAC1}")
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print(f"ACTUAL RESULT {step}: Host {i} has Layer1Interface={Layer1Interface} and Active={Status}")
-                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping physical address check")
+                    else:
+                        print(f"\nHost {i} is inactive (Active={Status}), skipping physical address check")
 
-                if ethernetHostFound == 0:
+                if activeClientFound == 0:
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("\nNo active Ethernet host found in the host table")
+                    print(f"ACTUAL RESULT {step}: No active clients found in the host table even though ConnectedDeviceNumber={NoOfClients} and HostNumberOfEntries={NoOfHosts}")
                     print("[TEST EXECUTION RESULT] : FAILURE")
+                else:
+                    step += 1
+                    print(f"\nTEST STEP {step}: Verify active host count matches ConnectedDeviceNumber")
+                    print(f"EXPECTED RESULT {step}: Active host count should equal ConnectedDeviceNumber ")
+                    if activeHostCount == int(NoOfClients):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} matches ConnectedDeviceNumber {NoOfClients}")
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} does not match ConnectedDeviceNumber {NoOfClients}")
+                        print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE")
