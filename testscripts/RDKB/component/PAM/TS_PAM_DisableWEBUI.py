@@ -16,248 +16,234 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>1</version>
-  <name>TS_PAM_DisableWEBUI</name>
-  <primitive_test_id/>
-  <primitive_test_name>pam_GetParameterNames</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To test the Disable feature for WEBUI Enable tr181 parameter.</synopsis>
-  <groups_id/>
-  <execution_time>10</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_PAM_238</test_case_id>
-    <test_objective>To test the Disable feature for WEBUI Enable tr181 parameter</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>none</api_or_interface_used>
-    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable
-Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable</input_parameters>
-    <automation_approch>1.Load the module
-2.Get the current http enable status and enable it
-3.Now Disable the WEBUI feature enable parameter
-4.This set should cause http enable to be disabled
-5.verify the same and print the result status accordingly
-6.Revert the set values
-7.Unload the module</automation_approch>
-    <expected_output>With WEBUI feature being disabled , http should also be disabled</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>PAM</test_stub_interface>
-    <test_script>TS_PAM_DisableWEBUI</test_script>
-    <skipped>No</skipped>
-    <release_version>M96</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-</xml>
 
-'''
-import tdklib;
-from tdkbVariables import *;
-from time import sleep;
-#Test component to be tested
-pamObj = tdklib.TDKScriptingLibrary("pam","RDKB");
-#IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+# Use tdklib library, which provides a wrapper for TDK test case scripts
+import tdklib
+from time import sleep
+
+# Test component to be tested
+pamObj = tdklib.TDKScriptingLibrary("pam", "RDKB")
+
+# IP and Port of box, no need to change
+# These values will be replaced with the corresponding DUT IP and port
 ip = <ipaddress>
 port = <port>
-pamObj.configureTestCase(ip,port,'TS_PAM_DisableWEBUI');
-#Get the result of connection with test component and DUT
-loadmodulestatus =pamObj.getLoadModuleResult();
+
+pamObj.configureTestCase(ip,port, "TS_PAM_DisableWEBUI")
+
+expectedresult = "SUCCESS"
+
+WEBUI_PARAM = "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable"
+HTTP_ENABLE_PARAM = "Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable"
+
+
+def getParameterValue(pamObj, paramName):
+    tdkTestObj = pamObj.createTestStep("pam_GetParameterValues")
+    tdkTestObj.addParameter("ParamName", paramName)
+    tdkTestObj.executeTestCase(expectedresult)
+
+    actualresult = tdkTestObj.getResult()
+    details = tdkTestObj.getResultDetails().strip()
+
+    return tdkTestObj, actualresult, details
+
+
+def setParameterValue(pamObj, paramName, paramValue, paramType):
+    tdkTestObj = pamObj.createTestStep("pam_SetParameterValues")
+    tdkTestObj.addParameter("ParamName", paramName)
+    tdkTestObj.addParameter("ParamValue", paramValue)
+    tdkTestObj.addParameter("Type", paramType)
+    tdkTestObj.executeTestCase(expectedresult)
+
+    actualresult = tdkTestObj.getResult()
+    details = tdkTestObj.getResultDetails()
+
+    return tdkTestObj, actualresult, details
+
+
+# Get the result of connection with the test component and DUT
+loadmodulestatus = pamObj.getLoadModuleResult()
+print("[LIB LOAD STATUS]  :  %s" % loadmodulestatus)
+
 if "SUCCESS" in loadmodulestatus.upper():
+    pamObj.setLoadModuleStatus("SUCCESS")
 
-    #Set the result status of execution
-    pamObj.setLoadModuleStatus("SUCCESS");
+    proceed_flag = 1
+    http_revert_flag = 0
+    webui_revert_flag = 0
+    default_webui = ""
+    default_http = ""
 
-    tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-    tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable")
-    expectedresult="SUCCESS";
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    default = tdkTestObj.getResultDetails().strip();
+    # Get the initial WEBUI Enable value
+    tdkTestObj, webui_result, default_webui = getParameterValue(
+        pamObj,
+        WEBUI_PARAM
+    )
 
+    # Get the initial Remote Access HTTP Enable value
+    tdkTestObj, http_result, default_http = getParameterValue(
+        pamObj,
+        HTTP_ENABLE_PARAM
+    )
 
-    tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-    tdkTestObj.addParameter("ParamName" ,"Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable")
-    expectedresult="SUCCESS";
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult1 = tdkTestObj.getResult();
-    defHttp = tdkTestObj.getResultDetails().strip();
+    print("TEST STEP 1: Get the current WEBUI config and HTTP Enable status")
+    print("EXPECTED RESULT 1: Should get the WEBUI config and HTTP Enable status")
 
-    if expectedresult in (actualresult and actualresult1):
-        tdkTestObj.setResultStatus("SUCCESS");
-        print("TEST STEP 1: Get the current WEBUI config and http enable status")
-        print("EXPECTED RESULT 1: Should get the WEBUI config and http enable status");
-        print("ACTUAL RESULT 1: WEBUI config is :%s  , HTTP enable status is %s"%(default,defHttp));
-        #Get the result of execution
-        print("[TEST EXECUTION RESULT] : SUCCESS");
-        revertflag =0;
-        print("TEST STEP 2: Check  if Remote Access Http Enable status is true else enable it");
-        if defHttp != "true":
-            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-            tdkTestObj.addParameter("ParamName","Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable")
-            tdkTestObj.addParameter("ParamValue","true");
-            tdkTestObj.addParameter("Type","bool");
-            expectedresult="SUCCESS";
-            #Execute testcase on DUT
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details= tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-                revertflag=1;
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("EXPECTED RESULT 2 :  Enabling Remote Access Http Enable status is success");
-                print("ACTUAL RESULT 2 : %s " %details)
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : SUCCESS");
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("EXPECTED RESULT 2 :  Enabling Remote Access Http Enable status failed");
-                print("ACTUAL RESULT 2 : %s " %details)
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
-
-        tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-        tdkTestObj.addParameter("ParamName" ,"Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable")
-        expectedresult="SUCCESS";
-        #Execute the test case in DUT
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult1 = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails().strip();
-        if expectedresult in actualresult and details=="true":
-            print(" Remote Access Http Enable status is now true");
-
-            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-            tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable")
-            tdkTestObj.addParameter("ParamValue","Disable");
-            tdkTestObj.addParameter("Type","string");
-            expectedresult="SUCCESS";
-            #Execute testcase on DUT
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details= tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("TEST STEP 3 : Set the WEBUI enable status to Disable");
-                print("EXPECTED RESULT 3 : should set the WEBUI enable status to Disable");
-                print("ACTUAL RESULT :%s" %details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : SUCCESS");
-
-                sleep(10);
-
-                tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
-                tdkTestObj.addParameter("ParamName" ,"Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable")
-                expectedresult="SUCCESS";
-                #Execute the test case in DUT
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult1 = tdkTestObj.getResult();
-                details= tdkTestObj.getResultDetails().strip();
-                if expectedresult in actualresult1 and details == "false":
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print("TEST STEP 4:Check if Remote Access Http Enable is disabled  after WEBUI being disabled")
-                    print("EXPECTED RESULT 4: Should get Remote Access Http Enable as  disabled after WEBUI being disabled");
-                    print("ACTUAL RESULT 4:%s"%details);
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : SUCCESS");
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print("TEST STEP 4:Check if Remote Access Http Enable is disabled  after WEBUI being disabled")
-                    print("EXPECTED RESULT 4: Should get Remote Access Http Enable as  disabled after WEBUI being disabled");
-                    print("ACTUAL RESULT 4:%s"%details);
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : FAILURE");
-
-                tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-                tdkTestObj.addParameter("ParamName","Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable")
-                tdkTestObj.addParameter("ParamValue",default);
-                tdkTestObj.addParameter("Type","string");
-                expectedresult="SUCCESS";
-                #Execute testcase on DUT
-                tdkTestObj.executeTestCase(expectedresult);
-                actualresult = tdkTestObj.getResult();
-                details= tdkTestObj.getResultDetails();
-                if expectedresult in actualresult:
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print("TEST STEP 5: Revert the WEBUI enable feature");
-                    print("EXPECTED RESULT 5: Revert operation should be successful");
-                    print("ACTUAL RESULT 5: %s"%details);
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : SUCCESS");
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print("TEST STEP 5: Revert the  WEBUI enable feature");
-                    print("EXPECTED RESULT 5: Revert operation should be successful");
-                    print("ACTUAL RESULT 5: %s"%details);
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : FAILURE");
-            else:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print("TEST STEP 3 : Set the WEBUI enable status to Disable");
-                print("EXPECTED RESULT 3 : should set the WEBUI enable status to Disable");
-                print("ACTUAL RESULT :%s" %details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("EXPECTED RESULT 2 :  Enabling Remote Access Http Enable status failed");
-            print("ACTUAL RESULT 2 : %s " %details)
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-        if revertflag==1:
-            tdkTestObj = pamObj.createTestStep('pam_SetParameterValues');
-            tdkTestObj.addParameter("ParamName","Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable")
-            tdkTestObj.addParameter("ParamValue",defHttp);
-            tdkTestObj.addParameter("Type","bool");
-            expectedresult="SUCCESS";
-            #Execute testcase on DUT
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details= tdkTestObj.getResultDetails();
-            if expectedresult in actualresult:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("TEST STEP 6: Revert the  Remote Access Http Enable status")
-                print("EXPECTED RESULT 6: Revert operation should be successful");
-                print("ACTUAL RESULT 6: %s"%details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : SUCCESS");
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("TEST STEP 6: Revert the  Remote Access Http Enable status")
-                print("EXPECTED RESULT 6: Revert operation should be successful");
-                print("ACTUAL RESULT 6: %s"%details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
+    if (
+        expectedresult in webui_result
+        and expectedresult in http_result
+    ):
+        tdkTestObj.setResultStatus("SUCCESS")
+        print(
+            "ACTUAL RESULT 1: WEBUI config is %s, HTTP Enable status is %s"
+            % (default_webui, default_http)
+        )
+        print("[TEST EXECUTION RESULT] : SUCCESS")
     else:
-        tdkTestObj.setResultStatus("FAILURE");
-        print("TEST STEP 1: Get the current WEBUI config and http enable status")
-        print("EXPECTED RESULT 1: Should get the WEBUI config and http enable status");
-        print("ACTUAL RESULT 1: WEBUI config is :%s  , HTTP enable status is %s"%(default,defHttp));
-        #Get the result of execution
-        print("[TEST EXECUTION RESULT] : FAILURE");
+        tdkTestObj.setResultStatus("FAILURE")
+        print(
+            "ACTUAL RESULT 1: WEBUI config is %s, HTTP Enable status is %s"
+            % (default_webui, default_http)
+        )
+        print("[TEST EXECUTION RESULT] : FAILURE")
+        proceed_flag = 0
 
-    pamObj.unloadModule("pam");
+    # Enable Remote Access HTTP if it is disabled
+    if proceed_flag == 1:
+        print("TEST STEP 2: Check if Remote Access HTTP Enable status is true, else enable it")
+        print("EXPECTED RESULT 2: Remote Access HTTP Enable status should be true")
+
+        if default_http != "true":
+            tdkTestObj, actualresult, details = setParameterValue(
+                pamObj,
+                HTTP_ENABLE_PARAM,
+                "true",
+                "bool"
+            )
+
+            if expectedresult in actualresult:
+                http_revert_flag = 1
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT 2: Remote Access HTTP Enable status was enabled successfully. Details: %s" % details)
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT 2: Failed to enable Remote Access HTTP Enable status. Details: %s" % details)
+                print("[TEST EXECUTION RESULT] : FAILURE")
+                proceed_flag = 0
+        else:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT 2: Remote Access HTTP Enable status is already true")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+
+    # Validate that Remote Access HTTP Enable is true
+    if proceed_flag == 1:
+        tdkTestObj, actualresult, current_http = getParameterValue(
+            pamObj,
+            HTTP_ENABLE_PARAM
+        )
+
+        if expectedresult in actualresult and current_http == "true":
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("Remote Access HTTP Enable status is now true")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("Remote Access HTTP Enable status is not true. Current value: %s" % current_http)
+            proceed_flag = 0
+
+    # Set WEBUI Enable to Disable
+    if proceed_flag == 1:
+        tdkTestObj, actualresult, details = setParameterValue(
+            pamObj,
+            WEBUI_PARAM,
+            "Disable",
+            "string"
+        )
+
+        print("TEST STEP 3: Set the WEBUI Enable status to Disable")
+        print("EXPECTED RESULT 3: Should set the WEBUI Enable status to Disable")
+
+        if expectedresult in actualresult:
+            webui_revert_flag = 1
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT 3: %s" % details)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT 3: %s" % details)
+            print("[TEST EXECUTION RESULT] : FAILURE")
+            proceed_flag = 0
+
+    # Verify that Remote Access HTTP Enable becomes false
+    if proceed_flag == 1:
+        sleep(10)
+
+        tdkTestObj, actualresult, current_http = getParameterValue(
+            pamObj,
+            HTTP_ENABLE_PARAM
+        )
+
+        print("TEST STEP 4: Check if Remote Access HTTP Enable is disabled after WEBUI is disabled")
+        print("EXPECTED RESULT 4: Should get Remote Access HTTP Enable as disabled after WEBUI is disabled")
+
+        if expectedresult in actualresult and current_http == "false":
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT 4: Remote Access HTTP Enable status is %s" % current_http)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT 4: Remote Access HTTP Enable status is %s" % current_http)
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Revert WEBUI Enable to the initial value
+    if webui_revert_flag == 1:
+        tdkTestObj, actualresult, details = setParameterValue(
+            pamObj,
+            WEBUI_PARAM,
+            default_webui,
+            "string"
+        )
+
+        print("TEST STEP 5: Revert the WEBUI Enable feature")
+        print("EXPECTED RESULT 5: Revert operation should be successful")
+
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT 5: %s" % details)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT 5: %s" % details)
+            print("[TEST EXECUTION RESULT] : FAILURE")
+    else:
+        print("Reverting the WEBUI Enable feature is not required")
+
+    # Revert Remote Access HTTP Enable to the initial value
+    if http_revert_flag == 1:
+        tdkTestObj, actualresult, details = setParameterValue(
+            pamObj,
+            HTTP_ENABLE_PARAM,
+            default_http,
+            "bool"
+        )
+
+        print("TEST STEP 6: Revert the Remote Access HTTP Enable status")
+        print("EXPECTED RESULT 6: Revert operation should be successful")
+
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT 6: %s" % details)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT 6: %s" % details)
+            print("[TEST EXECUTION RESULT] : FAILURE")
+    else:
+        print("Reverting the Remote Access HTTP Enable status is not required")
+
+    pamObj.unloadModule("pam")
+
 else:
-    print("Failed to load pam  module");
-    pamObj.setLoadModuleStatus("FAILURE");
-    print("Module loading failed");
+    print("Failed to load pam module")
+    pamObj.setLoadModuleStatus("FAILURE")
+    print("Module loading failed")

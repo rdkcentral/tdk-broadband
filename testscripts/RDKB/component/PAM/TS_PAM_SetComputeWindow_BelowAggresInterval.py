@@ -16,56 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>1</version>
-  <name>TS_PAM_SetComputeWindow_BelowAggresInterval</name>
-  <primitive_test_id/>
-  <primitive_test_name>pam_GetParameterValues</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To set compute window less than aggressive interval</synopsis>
-  <groups_id/>
-  <execution_time>10</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_PAM_188</test_case_id>
-    <test_objective>This test case is to set compute window less than aggressive interval</test_objective>
-    <test_type>Negative</test_type>
-    <test_setup>Broaband</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state of DUT
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>TDKB_TR181Stub_Set
-TDKB_TR181Stub_Get</api_or_interface_used>
-    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.SoftwareProcessManager.SelfHeal.AggressiveInterval
-Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow</input_parameters>
-    <automation_approch>1.Load the module
-2.Get the current compute window and self heal aggressive interval
-3.Set compute window to a value less than self heal aggressive interval and set should fail
-4.Revert in case of failure
-5.Unload the module</automation_approch>
-    <expected_output>Compute window  should not accept a value less than self heal aggressive interval</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>PAM</test_stub_interface>
-    <test_script>TS_PAM_SetComputeWindow_BelowAggresInterval</test_script>
-    <skipped>No</skipped>
-    <release_version>M84</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-</xml>
 
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 #Test component to be tested
@@ -156,7 +107,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.addParameter("ParamName","Device.SelfHeal.ResourceMonitor.X_RDKCENTRAL-COM_UsageComputeWindow")
                 tdkTestObj.addParameter("ParamValue",defCompuWindow);
                 tdkTestObj.addParameter("Type","unsignedint");
-                expectedresult= "FAILURE";
+                expectedresult= "SUCCESS";
 
                 #Execute testcase on DUT
                 tdkTestObj.executeTestCase(expectedresult);
