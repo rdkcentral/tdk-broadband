@@ -17,7 +17,6 @@
 # limitations under the License.
 ##########################################################################
 
-
 import tdklib
 from time import sleep
 from RFCVariables import *
@@ -169,7 +168,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                             print("\nTEST STEP %d: Restart RFC service" % step)
                             print("EXPECTED RESULT %d: RFC service should restart successfully" % step)
                             tdkTestObj, actualresult, details = rfc_restart_service(sysobj)
-                            if "active" in details:
+                            if "Active: active" in details:
                                 tdkTestObj.setResultStatus("SUCCESS")
                                 print("ACTUAL RESULT %d: RFC service restarted successfully. Details: %s" % (step, details))
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
