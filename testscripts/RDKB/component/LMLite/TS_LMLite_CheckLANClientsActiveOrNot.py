@@ -71,6 +71,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("[TEST EXECUTION RESULT] : SUCCESS")
             #Find the active hosts among the listed Hosts. List will contains the ids of active hosts
             List=[]
+            activeHostCount = 0
             activeClientFound = 0
             for i in range(1,int(NoOfHosts)+1):
                 tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Active" %i)
@@ -79,6 +80,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 actualresult = tdkTestObj.getResult()
                 Status = tdkTestObj.getResultDetails()
                 if expectedresult in actualresult and Status == "true":
+                    activeHostCount += 1
                     tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                     #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult)
@@ -106,16 +108,16 @@ if "SUCCESS" in loadmodulestatus.upper():
                 print(f"ACTUAL RESULT {step}: No active clients found in the host table even though ConnectedDeviceNumber={NoOfClients} and HostNumberOfEntries={NoOfHosts}")
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : FAILURE")
-            elif len(List)== int(NoOfClients):
+            elif activeHostCount == int(NoOfClients):
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}: Number of active client list is same as ConnectedDeviceNumber and Active clients are :{List}")
+                print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} is same as ConnectedDeviceNumber {NoOfClients} and LAN active clients are :{List}")
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS")
             else:
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE")
-                print(f"ACTUAL RESULT {step}: The number of items in the active client list is not same as ConnectedDeviceNumber : {List}" )
+                print(f"ACTUAL RESULT {step}: Active host count {activeHostCount} is not same as ConnectedDeviceNumber {NoOfClients}. LAN active clients are : {List}" )
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:

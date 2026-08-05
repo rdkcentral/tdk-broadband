@@ -94,38 +94,46 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
                 LeaseTime = tdkTestObj.getResultDetails()
-                step += 1
-                print(f"\nTEST STEP {step}: Check if any active clients were found")
-                print(f"EXPECTED RESULT {step}: At least one active client should be found")
                 if Status == "true":
                     activeHostCount += 1
-                    activeClientFound = 1
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"ACTUAL RESULT {step}: Host {i} is active client")
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
+                    #Execute the test case in DUT
+                    tdkTestObj.executeTestCase(expectedresult)
+                    actualresult = tdkTestObj.getResult()
+                    Layer1Interface = tdkTestObj.getResultDetails()
                     step += 1
-                    print(f"\nTEST STEP {step}: Check AddressSource and LeaseTimeRemaining for active host {i}")
-                    print(f"EXPECTED RESULT {step}: If AddressSource is DHCP, LeaseTimeRemaining should be greater than zero; otherwise it should be zero")
-                    if not LeaseTime.isdigit():
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: Active host {i} returned invalid LeaseTimeRemaining value: {LeaseTime}")
-                        print("[TEST EXECUTION RESULT] : FAILURE")
-                    elif "DHCP" in Addr_src and int(LeaseTime) > 0:
+                    print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                    print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                    if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                        activeClientFound = 1
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: DHCP host {i} has valid lease time remaining {LeaseTime}")
+                        print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
                         print("[TEST EXECUTION RESULT] : SUCCESS")
-                    elif "DHCP" in Addr_src and int(LeaseTime) <= 0:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: DHCP host {i} has invalid lease time remaining {LeaseTime}")
-                        print("[TEST EXECUTION RESULT] : FAILURE")
-                    elif "Static" in Addr_src and int(LeaseTime) == 0:
-                        tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has valid lease time remaining {LeaseTime}")
-                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                        step += 1
+                        print(f"\nTEST STEP {step}: Check AddressSource and LeaseTimeRemaining for active LAN host {i}")
+                        print(f"EXPECTED RESULT {step}: If AddressSource is DHCP, LeaseTimeRemaining should be greater than zero; otherwise it should be zero")
+                        if not LeaseTime.isdigit():
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step}: Active LAN host {i} returned invalid LeaseTimeRemaining value: {LeaseTime}")
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                        elif "DHCP" in Addr_src and int(LeaseTime) > 0:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step}: DHCP LAN host {i} has valid lease time remaining {LeaseTime}")
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        elif "DHCP" in Addr_src and int(LeaseTime) <= 0:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step}: DHCP LAN host {i} has invalid lease time remaining {LeaseTime}")
+                            print("[TEST EXECUTION RESULT] : FAILURE")
+                        elif "Static" in Addr_src and int(LeaseTime) == 0:
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step}: Non-DHCP LAN host {i} has valid lease time remaining {LeaseTime}")
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step}: Non-DHCP LAN host {i} has invalid lease time remaining {LeaseTime}")
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: Non-DHCP host {i} has invalid lease time remaining {LeaseTime}")
-                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping lease time check")
                 else:
                     print(f"\nHost {i} is inactive (Active={Status}), skipping lease time check")
 

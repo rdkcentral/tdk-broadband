@@ -101,39 +101,53 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     actualresult = tdkTestObj.getResult()
                     Status = tdkTestObj.getResultDetails()
                     if Status == "true":
-                        activeClientFound = 1
                         activeHostCount += 1
-                        step += 1
-                        print(f"\nTEST STEP {step}: Get the Wan MAC Address for active host {i}")
-                        print(f"EXPECTED RESULT {step}: Should get the Wan MAC Address")
-                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.X_RDKCENTRAL-COM_Parent" %i)
+                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                         #Execute the test case in DUT
                         tdkTestObj.executeTestCase(expectedresult)
                         actualresult = tdkTestObj.getResult()
-                        wanMac = tdkTestObj.getResultDetails()
-                        if wanMac and (re.match("^[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", wanMac.lower()) is not None):
-                            wanMac = wanMac.upper()
+                        Layer1Interface = tdkTestObj.getResultDetails()
+                        step += 1
+                        print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                        print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                        if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                            activeClientFound = 1
                             tdkTestObj.setResultStatus("SUCCESS")
-                            print(f"ACTUAL RESULT {step}: Got Wan MAC Address as {wanMac}")
+                            print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
                             print("[TEST EXECUTION RESULT] : SUCCESS")
                             step += 1
-                            print(f"\nTEST STEP {step}: Compare the WAN MACs obtained")
-                            print(f"EXPECTED RESULT {step}: Both MACs should match")
-                            print(f"WAN Address in Device.Hosts.: {wanMac}")
-                            print(f"WAN Address retrieved via Cable Modem: {macaddress}")
-                            if wanMac in macaddress:
+                            print(f"\nTEST STEP {step}: Get the Wan MAC Address for active LAN host {i}")
+                            print(f"EXPECTED RESULT {step}: Should get the Wan MAC Address")
+                            tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.X_RDKCENTRAL-COM_Parent" %i)
+                            #Execute the test case in DUT
+                            tdkTestObj.executeTestCase(expectedresult)
+                            actualresult = tdkTestObj.getResult()
+                            wanMac = tdkTestObj.getResultDetails()
+                            if wanMac and (re.match("^[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", wanMac.lower()) is not None):
+                                wanMac = wanMac.upper()
                                 tdkTestObj.setResultStatus("SUCCESS")
-                                print(f"ACTUAL RESULT {step}: Wan MAC of host instance {i} matches")
+                                print(f"ACTUAL RESULT {step}: Got Wan MAC Address as {wanMac}")
                                 print("[TEST EXECUTION RESULT] : SUCCESS")
+                                step += 1
+                                print(f"\nTEST STEP {step}: Compare the WAN MACs obtained")
+                                print(f"EXPECTED RESULT {step}: Both MACs should match")
+                                print(f"WAN Address in Device.Hosts.: {wanMac}")
+                                print(f"WAN Address retrieved via Cable Modem: {macaddress}")
+                                if wanMac in macaddress:
+                                    tdkTestObj.setResultStatus("SUCCESS")
+                                    print(f"ACTUAL RESULT {step}: Wan MAC of host instance {i} matches")
+                                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                                else:
+                                    #Set the result status of execution
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print(f"ACTUAL RESULT {step}: Wan MAC of host instance {i} doesnt match")
+                                    print("[TEST EXECUTION RESULT] : FAILURE")
                             else:
-                                #Set the result status of execution
                                 tdkTestObj.setResultStatus("FAILURE")
-                                print(f"ACTUAL RESULT {step}: Wan MAC of host instance {i} doesnt match")
+                                print(f"ACTUAL RESULT {step}: Failed to get Wan Mac Address")
                                 print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print(f"ACTUAL RESULT {step}: Failed to get Wan Mac Address")
-                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping WAN MAC check")
                     else:
                         print(f"\nHost {i} is inactive (Active={Status}), skipping WAN MAC check")
                 if activeClientFound == 0:

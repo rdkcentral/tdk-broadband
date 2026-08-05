@@ -76,35 +76,43 @@ if "SUCCESS" in loadmodulestatus.upper():
                 tdkTestObj.executeTestCase(expectedresult)
                 actualresult = tdkTestObj.getResult()
                 Status = tdkTestObj.getResultDetails()
-                step += 1
-                print(f"\nTEST STEP {step}: Check if any active clients were found")
-                print(f"EXPECTED RESULT {step}: At least one active client should be found")
                 if expectedresult in actualresult and Status == "true":
-                    activeClientFound = 1
                     activeHostCount += 1
-                    tdkTestObj.setResultStatus("SUCCESS")
-                    print(f"ACTUAL RESULT {step}: Host {i} is active client")
-                    print("[TEST EXECUTION RESULT] : SUCCESS")
-                    step += 1
-                    print(f"\nTEST STEP {step}: Get the IPv4AddressNumberOfEntries for active client {i}")
-                    print(f"EXPECTED RESULT {step}: Should get the IPv4AddressNumberOfEntries as one for active client {i}")
-                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.IPv4AddressNumberOfEntries" %i)
+                    tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                     #Execute the test case in DUT
                     tdkTestObj.executeTestCase(expectedresult)
                     actualresult = tdkTestObj.getResult()
-                    Details = tdkTestObj.getResultDetails()
-                    if expectedresult in actualresult and Details.isdigit() and int(Details) == 1:
-                        #Set the result status of execution
+                    Layer1Interface = tdkTestObj.getResultDetails()
+                    step += 1
+                    print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                    print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                    if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                        activeClientFound = 1
                         tdkTestObj.setResultStatus("SUCCESS")
-                        print(f"ACTUAL RESULT {step}: IPv4AddressNumberOfEntries of host number {i} is 1 as expected")
-                        #Get the result of execution
+                        print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
                         print("[TEST EXECUTION RESULT] : SUCCESS")
+                        step += 1
+                        print(f"\nTEST STEP {step}: Get the IPv4AddressNumberOfEntries for active LAN client {i}")
+                        print(f"EXPECTED RESULT {step}: Should get the IPv4AddressNumberOfEntries as one for active LAN client {i}")
+                        tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.IPv4AddressNumberOfEntries" %i)
+                        #Execute the test case in DUT
+                        tdkTestObj.executeTestCase(expectedresult)
+                        actualresult = tdkTestObj.getResult()
+                        Details = tdkTestObj.getResultDetails()
+                        if expectedresult in actualresult and Details.isdigit() and int(Details) == 1:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("SUCCESS")
+                            print(f"ACTUAL RESULT {step}: IPv4AddressNumberOfEntries of host number {i} is 1 as expected")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : SUCCESS")
+                        else:
+                            #Set the result status of execution
+                            tdkTestObj.setResultStatus("FAILURE")
+                            print(f"ACTUAL RESULT {step}: Failed to get IPv4AddressNumberOfEntries as expected : {Details}")
+                            #Get the result of execution
+                            print("[TEST EXECUTION RESULT] : FAILURE")
                     else:
-                        #Set the result status of execution
-                        tdkTestObj.setResultStatus("FAILURE")
-                        print(f"ACTUAL RESULT {step}: Failed to get IPv4AddressNumberOfEntries as expected : {Details}")
-                        #Get the result of execution
-                        print("[TEST EXECUTION RESULT] : FAILURE")
+                        print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping IPv4AddressNumberOfEntries check")
                 else:
                     print(f"\nHost {i} is inactive (Active={Status}), skipping IPv4AddressNumberOfEntries check")
             if activeClientFound == 0:

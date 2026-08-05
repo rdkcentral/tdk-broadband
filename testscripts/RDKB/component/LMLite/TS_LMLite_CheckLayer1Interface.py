@@ -104,7 +104,6 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                     actualresult = tdkTestObj.getResult()
                     Status = tdkTestObj.getResultDetails()
                     if Status == "true":
-                        activeClientFound = 1
                         activeHostCount += 1
                         tdkTestObj.addParameter("paramName","Device.Hosts.Host.%d.Layer1Interface" %i)
                         #Execute the test case in DUT
@@ -112,20 +111,30 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                         actualresult = tdkTestObj.getResult()
                         Layer1Interface = tdkTestObj.getResultDetails()
                         step += 1
-                        print(f"\nTEST STEP {step}: Compare the interface names obtained for active host {i}")
-                        print(f"EXPECTED RESULT {step}: Layer1Interface of active host {i} should be present in ARP interface list")
-                        #Derive interface type: ethernet maps to 'ether' in ARP output
-                        Interface = "ether" if "ethernet" in Layer1Interface.lower() else Layer1Interface.lower()
-                        if Interface in IP:
-                            #Set the result status of execution
+                        print(f"\nTEST STEP {step}: Verify active host {i} is a LAN client")
+                        print(f"EXPECTED RESULT {step}: Host {i} should have Layer1Interface indicating Ethernet/LAN")
+                        if expectedresult in actualresult and "ethernet" in Layer1Interface.lower():
+                            activeClientFound = 1
                             tdkTestObj.setResultStatus("SUCCESS")
-                            print(f"ACTUAL RESULT {step}: Interface name of host instance {i} matches (Layer1Interface={Layer1Interface})")
-                            #Get the result of execution
+                            print(f"ACTUAL RESULT {step}: Host {i} is a LAN client (Layer1Interface={Layer1Interface})")
                             print("[TEST EXECUTION RESULT] : SUCCESS")
+                            step += 1
+                            print(f"\nTEST STEP {step}: Compare the interface names obtained for active LAN host {i}")
+                            print(f"EXPECTED RESULT {step}: Layer1Interface of active LAN host {i} should be present in ARP interface list")
+                            #Derive interface type: ethernet maps to 'ether' in ARP output
+                            Interface = "ether"
+                            if Interface in IP:
+                                #Set the result status of execution
+                                tdkTestObj.setResultStatus("SUCCESS")
+                                print(f"ACTUAL RESULT {step}: Interface name of host instance {i} matches (Layer1Interface={Layer1Interface})")
+                                #Get the result of execution
+                                print("[TEST EXECUTION RESULT] : SUCCESS")
+                            else:
+                                tdkTestObj.setResultStatus("FAILURE")
+                                print(f"ACTUAL RESULT {step}: Interface name of host instance {i} doesnt match (Layer1Interface={Layer1Interface})")
+                                print("[TEST EXECUTION RESULT] : FAILURE")
                         else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print(f"ACTUAL RESULT {step}: Interface name of host instance {i} doesnt match (Layer1Interface={Layer1Interface})")
-                            print("[TEST EXECUTION RESULT] : FAILURE")
+                            print(f"\nHost {i} is active but not a LAN client (Layer1Interface={Layer1Interface}), skipping interface check")
                     else:
                         print(f"\nHost {i} is inactive (Active={Status}), skipping interface check")
 
