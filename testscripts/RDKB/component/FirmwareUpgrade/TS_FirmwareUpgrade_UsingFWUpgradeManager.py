@@ -122,6 +122,10 @@ if load_flag == 1:
                                         tdkTestObj.setResultStatus("FAILURE")
                                         print(f"ACTUAL RESULT {step}: Failed to revert the image. Current Firmware Version : {FirmwareVersionAfterRecover}")
                                         print("[TEST EXECUTION RESULT] : FAILURE \n")
+                                else:
+                                    tdkTestObj.setResultStatus("FAILURE")
+                                    print(f"ACTUAL RESULT {step}: The image is not upgraded to target image. Current Firmware Version : {upgraded_FirmwareVersion}")
+                                    print("[TEST EXECUTION RESULT] : FAILURE \n")
                             else:
                                 sysobj.setLoadModuleStatus("FAILURE")
                                 obj.setLoadModuleStatus("FAILURE")

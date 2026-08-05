@@ -81,15 +81,14 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus_sys.u
                 if flag == 1:
                     step += 1
                     tdkTestObj, details, status_ok = getFirmwareDownloadStatus(obj, step, expected_status="Not Started")
-                    if status_ok:
-                        # Revert the firmware download config values without triggering a download
-                        print("Reverting the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values")
-                        step += 1
-                        setflag = setFWUpgradeConfig(obj, step, FirmwaretoDownload, fw_url, fw_protocol, trigger_download=False)
-                        if setflag == 1:
-                            print("Successfully reverted the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
-                        else:
-                            print("Failed to revert the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
+                    # Revert the firmware download config values without triggering a download
+                    print("Reverting the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values")
+                    step += 1
+                    setflag = setFWUpgradeConfig(obj, step, FirmwaretoDownload, fw_url, fw_protocol, trigger_download=False)
+                    if setflag == 1:
+                        print("Successfully reverted the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
+                    else:
+                        print("Failed to revert the FirmwareDownloadProtocol, FirmwareUpgradeURL and FirmwareToDownload values\n")
                 else:
                     print("Failed to set the FWUpgrade values \n")
         else:
