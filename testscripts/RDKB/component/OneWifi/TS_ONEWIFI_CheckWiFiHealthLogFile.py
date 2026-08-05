@@ -29,8 +29,8 @@ obj1 = tdklib.TDKScriptingLibrary("sysutil","1")
 # This will be replaced with corresponding DUT IP and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile')
-obj1.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile')
+obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthLogFile')
+obj1.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthLogFile')
 
 # Get the result of connection with test components and DUT
 loadmodulestatus = obj.getLoadModuleResult()
