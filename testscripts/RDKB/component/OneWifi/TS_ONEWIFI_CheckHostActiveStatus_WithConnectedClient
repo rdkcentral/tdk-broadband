@@ -19,8 +19,6 @@
 
 # use tdklib library, which provides a wrapper for tdk testcase script
 import tdklib
-from tdkbVariables import *
-from tdkutility import *
 
 # Test component to be tested
 obj = tdklib.TDKScriptingLibrary("wifiagent", "RDKB")
