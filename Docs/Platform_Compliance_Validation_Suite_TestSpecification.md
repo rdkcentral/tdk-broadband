@@ -1194,7 +1194,7 @@ None
 |-------------|----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
 | <small>1</small> | <small>Check if the CcspPandMSsp process is running and retrieve its PID</small> | <small>If the process is running and a valid PID is returned, CONTINUE, else FAIL</small> |
 | <small>2</small> | <small>Get the count of .dmp files present in /minidumps before the process crash</small> | <small>If the count is retrieved successfully, CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>Send signal SIGKILL (-11) to the CcspPandMSsp process to induce a crash</small> | <small>If the crash command executes successfully, CONTINUE, else FAIL</small> |
+| <small>3</small> | <small>Send signal SIGSEGV (-11) to the CcspPandMSsp process to induce a crash</small> | <small>If the crash command executes successfully, CONTINUE, else FAIL</small> |
 | <small>4</small> | <small>Get the count of .dmp files present in /minidumps after the process crash and list the dump files</small> | <small>If the dump file count after crash is greater than the count before crash, CONTINUE, else FAIL</small> |
 | <small>5</small> | <small>Poll for CcspPandMSsp process to restart (retry every 10 seconds up to 6 times; if not up, retry every 5 minutes up to 6 times)</small> | <small>If the CcspPandMSsp process is running again with a valid PID, PASS, else FAIL</small> |
 
