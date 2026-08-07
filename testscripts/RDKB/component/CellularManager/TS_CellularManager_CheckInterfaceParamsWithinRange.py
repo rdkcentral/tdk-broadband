@@ -33,15 +33,16 @@ obj.configureTestCase(ip,port,'TS_CellularManager_CheckInterfaceParamsWithinRang
 
 #load cellular manager and tdkbtr181 modules
 loadmodulestatus = obj.getLoadModuleResult();
-print ("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
-print("Loading TDKB-TR181 module")
+print("Loading TDKB-TR181 module");
 
 if "SUCCESS" in loadmodulestatus.upper():
 
     obj.setLoadModuleStatus("SUCCESS");
 
     step = 1;
+    expectedresult = "SUCCESS";
     enableModified = False;
 
     ############################################################
@@ -49,12 +50,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     ############################################################
 
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter(
-        "ParamName",
-        "Device.Cellular.Interface.1.Enable"
-    );
-
-    expectedresult = "SUCCESS";
+    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.Enable");
 
     tdkTestObj.executeTestCase(expectedresult);
 
@@ -63,286 +59,238 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     print("TEST STEP %d: Get Device.Cellular.Interface.1.Enable" %step);
     print("EXPECTED RESULT %d: Should get Device.Cellular.Interface.1.Enable" %step);
-    print("ACTUAL RESULT %d: Value is %s" %(step, initialEnable));
+    print("ACTUAL RESULT %d: Value is %s" %(step,initialEnable));
 
-    if expectedresult in actualresult:
-
-        tdkTestObj.setResultStatus("SUCCESS");
-        print("[TEST EXECUTION RESULT] : SUCCESS");
-
-    else:
-
-        tdkTestObj.setResultStatus("FAILURE");
-        print("[TEST EXECUTION RESULT] : FAILURE");
-
-    step = step + 1;
-
-    ############################################################
-    # STEP 2 : Enable Interface if Required
-    ############################################################
-
-    if initialEnable == "false":
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.Enable"
-        );
-        tdkTestObj.addParameter(
-            "ParamValue",
-            "true"
-        );
-        tdkTestObj.addParameter(
-            "Type",
-            "bool"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-
-        print("TEST STEP %d: Enable Device.Cellular.Interface.1.Enable" %step);
-        print("EXPECTED RESULT %d: Interface should be enabled" %step);
-
-        if expectedresult in actualresult:
-
-            enableModified = True;
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-            sleep(20);
-
-        else:
-
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-    else:
-
-        print("TEST STEP %d: Device.Cellular.Interface.1.Enable already true" %step);
-
-    step = step + 1;
-
-    ############################################################
-    # STEP 3 : Verify Cellular Status
-    ############################################################
-
-    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter(
-        "ParamName",
-        "Device.Cellular.X_RDK_Status"
-    );
-
-    tdkTestObj.executeTestCase(expectedresult);
-
-    actualresult = tdkTestObj.getResult();
-    status = tdkTestObj.getResultDetails();
-
-    print("TEST STEP %d: Get Device.Cellular.X_RDK_Status" %step);
-    print("EXPECTED RESULT %d: Status should be CONNECTED" %step);
-    print("ACTUAL RESULT %d: Status is %s" %(step, status));
-
-    if expectedresult in actualresult and status == "CONNECTED":
+    if expectedresult in actualresult and initialEnable in ["true","false"]:
 
         tdkTestObj.setResultStatus("SUCCESS");
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
         ############################################################
-        # STEP 4 : Verify RSSI
+        # STEP 2 : Enable Interface if Required
         ############################################################
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.RSSI"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-        rssi_value = tdkTestObj.getResultDetails();
 
         step = step + 1;
 
-        print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSSI" %step);
-        print("EXPECTED RESULT %d: Value should be within range of -117 dBm to -25 dBm" %step);
-        print("ACTUAL RESULT %d: Value is %s" %(step, rssi_value));
+        if initialEnable == "false":
 
-        if expectedresult in actualresult and (-117 < int(rssi_value) < -25):
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-        else:
-
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-        ############################################################
-        # STEP 5 : Verify SNR
-        ############################################################
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.X_RDK_SNR"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-        snr_value = tdkTestObj.getResultDetails();
-
-        step = step + 1;
-
-        print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.X_RDK_SNR" %step);
-        print("EXPECTED RESULT %d: Value should be within range of 0 dB to 20 dB" %step);
-        print("ACTUAL RESULT %d: Value is %s" %(step, snr_value));
-
-        if expectedresult in actualresult and (0 < int(snr_value) < 20):
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-        else:
-
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-        ############################################################
-        # STEP 6 : Verify RSRP
-        ############################################################
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.RSRP"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-        rsrp_value = tdkTestObj.getResultDetails();
-
-        step = step + 1;
-
-        print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRP" %step);
-        print("EXPECTED RESULT %d: Value should be within range of -155 dBm to -44 dBm" %step);
-        print("ACTUAL RESULT %d: Value is %s" %(step, rsrp_value));
-
-        if expectedresult in actualresult and (-155 < int(rsrp_value) < -44):
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-        else:
-
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-        ############################################################
-        # STEP 7 : Verify RSRQ
-        ############################################################
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.RSRQ"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-        rsrq_value = tdkTestObj.getResultDetails();
-
-        step = step + 1;
-
-        print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRQ" %step);
-        print("EXPECTED RESULT %d: Value should be within range of -43 dB to 20 dB" %step);
-        print("ACTUAL RESULT %d: Value is %s" %(step, rsrq_value));
-
-        if expectedresult in actualresult and (-43 < int(rsrq_value) < 20):
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-        else:
-
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
-
-    else:
-
-        tdkTestObj.setResultStatus("FAILURE");
-        print("[TEST EXECUTION RESULT] : FAILURE");
-
-    ############################################################
-    # STEP 8 : Revert Interface State
-    ############################################################
-
-    if enableModified:
-
-        step = step + 1;
-
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
-        tdkTestObj.addParameter(
-            "ParamName",
-            "Device.Cellular.Interface.1.Enable"
-        );
-        tdkTestObj.addParameter(
-            "ParamValue",
-            initialEnable
-        );
-        tdkTestObj.addParameter(
-            "Type",
-            "bool"
-        );
-
-        tdkTestObj.executeTestCase(expectedresult);
-
-        actualresult = tdkTestObj.getResult();
-
-        print("TEST STEP %d: Revert Device.Cellular.Interface.1.Enable" %step);
-        print("EXPECTED RESULT %d: Original value should be restored" %step);
-
-        if expectedresult in actualresult:
-
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-            sleep(20);
-
-            ############################################################
-            # STEP 9 : Verify Status After Revert
-            ############################################################
-
-            step = step + 1;
-
-            expectedRestoreStatus = \
-                "CONNECTED" if initialEnable == "true" else "DEREGISTERED";
-
-            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-            tdkTestObj.addParameter(
-                "ParamName",
-                "Device.Cellular.X_RDK_Status"
-            );
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.Enable");
+            tdkTestObj.addParameter("ParamValue","true");
+            tdkTestObj.addParameter("Type","bool");
 
             tdkTestObj.executeTestCase(expectedresult);
 
             actualresult = tdkTestObj.getResult();
-            restoreStatus = tdkTestObj.getResultDetails().strip();
+            details = tdkTestObj.getResultDetails();
 
-            print("TEST STEP %d: Verify Device.Cellular.X_RDK_Status after revert" %step);
-            print("EXPECTED RESULT %d: Status should be %s"
-                  %(step, expectedRestoreStatus));
-            print("ACTUAL RESULT %d: Status is %s"
-                  %(step, restoreStatus));
+            print("TEST STEP %d: Enable Device.Cellular.Interface.1.Enable" %step);
+            print("EXPECTED RESULT %d: Interface should be enabled" %step);
+            print("ACTUAL RESULT %d: Details : %s" %(step,details));
 
-            if expectedresult in actualresult and \
-               restoreStatus == expectedRestoreStatus:
+            if expectedresult in actualresult:
 
+                enableModified = True;
                 tdkTestObj.setResultStatus("SUCCESS");
                 print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                sleep(20);
+
+                ############################################################
+                # STEP 3 : Verify Cellular Status
+                ############################################################
+
+                step = step + 1;
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                status = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Get Device.Cellular.X_RDK_Status" %step);
+                print("EXPECTED RESULT %d: Status should be CONNECTED" %step);
+                print("ACTUAL RESULT %d: Status is %s" %(step,status));
+
+                if expectedresult in actualresult and status == "CONNECTED":
+
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                    ############################################################
+                    # STEP 4 : Verify RSSI
+                    ############################################################
+
+                    step = step + 1;
+
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSSI");
+
+                    tdkTestObj.executeTestCase(expectedresult);
+
+                    actualresult = tdkTestObj.getResult();
+                    rssi_value = tdkTestObj.getResultDetails().strip();
+
+                    print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSSI" %step);
+                    print("EXPECTED RESULT %d: Value should be within range of -117 dBm to -25 dBm" %step);
+                    print("ACTUAL RESULT %d: Value is %s" %(step,rssi_value));
+
+                    if expectedresult in actualresult:
+
+                        try:
+
+                            if -117 < int(rssi_value) < -25:
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            else:
+
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        except ValueError:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    ############################################################
+                    # STEP 5 : Verify SNR
+                    ############################################################
+
+                    step = step + 1;
+
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_SNR");
+
+                    tdkTestObj.executeTestCase(expectedresult);
+
+                    actualresult = tdkTestObj.getResult();
+                    snr_value = tdkTestObj.getResultDetails().strip();
+
+                    print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.X_RDK_SNR" %step);
+                    print("EXPECTED RESULT %d: Value should be within range of 0 dB to 20 dB" %step);
+                    print("ACTUAL RESULT %d: Value is %s" %(step,snr_value));
+
+                    if expectedresult in actualresult:
+
+                        try:
+
+                            if 0 < int(snr_value) < 20:
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            else:
+
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        except ValueError:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    ############################################################
+                    # STEP 6 : Verify RSRP
+                    ############################################################
+
+                    step = step + 1;
+
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSRP");
+
+                    tdkTestObj.executeTestCase(expectedresult);
+
+                    actualresult = tdkTestObj.getResult();
+                    rsrp_value = tdkTestObj.getResultDetails().strip();
+
+                    print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRP" %step);
+                    print("EXPECTED RESULT %d: Value should be within range of -155 dBm to -44 dBm" %step);
+                    print("ACTUAL RESULT %d: Value is %s" %(step,rsrp_value));
+
+                    if expectedresult in actualresult:
+
+                        try:
+
+                            if -155 < int(rsrp_value) < -44:
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            else:
+
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        except ValueError:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    ############################################################
+                    # STEP 7 : Verify RSRQ
+                    ############################################################
+
+                    step = step + 1;
+
+                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSRQ");
+
+                    tdkTestObj.executeTestCase(expectedresult);
+
+                    actualresult = tdkTestObj.getResult();
+                    rsrq_value = tdkTestObj.getResultDetails().strip();
+
+                    print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRQ" %step);
+                    print("EXPECTED RESULT %d: Value should be within range of -43 dB to 20 dB" %step);
+                    print("ACTUAL RESULT %d: Value is %s" %(step,rsrq_value));
+
+                    if expectedresult in actualresult:
+
+                        try:
+
+                            if -43 < int(rsrq_value) < 20:
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            else:
+
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        except ValueError:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
 
             else:
 
@@ -351,8 +299,274 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         else:
 
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
+            print("TEST STEP %d: Verify Device.Cellular.Interface.1.Enable is already true" %step);
+            print("EXPECTED RESULT %d: Device.Cellular.Interface.1.Enable should be true" %step);
+            print("ACTUAL RESULT %d: Device.Cellular.Interface.1.Enable is true" %step);
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            ############################################################
+            # STEP 3 : Verify Cellular Status
+            ############################################################
+
+            step = step + 1;
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
+
+            tdkTestObj.executeTestCase(expectedresult);
+
+            actualresult = tdkTestObj.getResult();
+            status = tdkTestObj.getResultDetails().strip();
+
+            print("TEST STEP %d: Get Device.Cellular.X_RDK_Status" %step);
+            print("EXPECTED RESULT %d: Status should be CONNECTED" %step);
+            print("ACTUAL RESULT %d: Status is %s" %(step,status));
+
+            if expectedresult in actualresult and status == "CONNECTED":
+
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                ############################################################
+                # STEP 4 : Verify RSSI
+                ############################################################
+
+                step = step + 1;
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSSI");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                rssi_value = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSSI" %step);
+                print("EXPECTED RESULT %d: Value should be within range of -117 dBm to -25 dBm" %step);
+                print("ACTUAL RESULT %d: Value is %s" %(step,rssi_value));
+
+                if expectedresult in actualresult:
+
+                    try:
+
+                        if -117 < int(rssi_value) < -25:
+
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        else:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    except ValueError:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                ############################################################
+                # STEP 5 : Verify SNR
+                ############################################################
+
+                step = step + 1;
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_SNR");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                snr_value = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.X_RDK_SNR" %step);
+                print("EXPECTED RESULT %d: Value should be within range of 0 dB to 20 dB" %step);
+                print("ACTUAL RESULT %d: Value is %s" %(step,snr_value));
+
+                if expectedresult in actualresult:
+
+                    try:
+
+                        if 0 < int(snr_value) < 20:
+
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        else:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    except ValueError:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                ############################################################
+                # STEP 6 : Verify RSRP
+                ############################################################
+
+                step = step + 1;
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSRP");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                rsrp_value = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRP" %step);
+                print("EXPECTED RESULT %d: Value should be within range of -155 dBm to -44 dBm" %step);
+                print("ACTUAL RESULT %d: Value is %s" %(step,rsrp_value));
+
+                if expectedresult in actualresult:
+
+                    try:
+
+                        if -155 < int(rsrp_value) < -44:
+
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        else:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    except ValueError:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+                ############################################################
+                # STEP 7 : Verify RSRQ
+                ############################################################
+
+                step = step + 1;
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSRQ");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                rsrq_value = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Get the value of Device.Cellular.Interface.1.RSRQ" %step);
+                print("EXPECTED RESULT %d: Value should be within range of -43 dB to 20 dB" %step);
+                print("ACTUAL RESULT %d: Value is %s" %(step,rsrq_value));
+
+                if expectedresult in actualresult:
+
+                    try:
+
+                        if -43 < int(rsrq_value) < 20:
+
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        else:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    except ValueError:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        ############################################################
+        # STEP 8 : Revert Interface State
+        ############################################################
+
+        if enableModified:
+
+            step = step + 1;
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+            tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.Enable");
+            tdkTestObj.addParameter("ParamValue",initialEnable);
+            tdkTestObj.addParameter("Type","bool");
+
+            tdkTestObj.executeTestCase(expectedresult);
+
+            actualresult = tdkTestObj.getResult();
+            details = tdkTestObj.getResultDetails();
+
+            print("TEST STEP %d: Revert Device.Cellular.Interface.1.Enable" %step);
+            print("EXPECTED RESULT %d: Original value should be restored" %step);
+            print("ACTUAL RESULT %d: Details : %s" %(step,details));
+
+            if expectedresult in actualresult:
+
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                sleep(20);
+
+                ############################################################
+                # STEP 9 : Verify Status After Revert
+                ############################################################
+
+                step = step + 1;
+                expectedRestoreStatus = "CONNECTED" if initialEnable == "true" else "DEREGISTERED";
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                restoreStatus = tdkTestObj.getResultDetails().strip();
+
+                print("TEST STEP %d: Verify Device.Cellular.X_RDK_Status after revert" %step);
+                print("EXPECTED RESULT %d: Status should be %s" %(step,expectedRestoreStatus));
+                print("ACTUAL RESULT %d: Status is %s" %(step,restoreStatus));
+
+                if expectedresult in actualresult and restoreStatus == expectedRestoreStatus:
+
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+    else:
+
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("tdkbtr181");
 
