@@ -67,41 +67,62 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("[TEST EXECUTION RESULT] : SUCCESS")
 
             step += 1
-            # Activate ExecutionUnit
-            print("\nTEST STEP %d: Activate ExecutionUnit via USP-PA" % step)
-            print("EXPECTED RESULT %d: ExecutionUnit should be activated successfully" % step)
-            tdkTestObj, actualresult, details = usppa_set_eu_state(sysobj, EU_SET_STATE_PARAM, EXPECTED_EU_STATUS_ACTIVE)
+            # Update iperf3 server IP in bundle config.json
+            print("\nTEST STEP %d: Update iperf3 server IP in bundle config.json" % step)
+            print("EXPECTED RESULT %d: config.json should be updated with iperf3 server IP %s" % (step, IPERF3_SERVER_IP))
+            config_json_path = f"{DESTINATION_DIR}/{bundle_name}/config.json"
+            tdkTestObj, actualresult, details = update_iperf3_server_ip(sysobj, config_json_path, IPERF3_SERVER_IP)
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: ExecutionUnit activated. Details: %s" % (step, details))
+                print("ACTUAL RESULT %d: config.json updated with server IP %s. Details: %s" % (step, IPERF3_SERVER_IP, details))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 step += 1
-                # Check container status
-                print("\nTEST STEP %d: Check container status using DobbyTool list" % step)
-                print("EXPECTED RESULT %d: Container should be listed" % step)
-                tdkTestObj, actualresult, details = list_dobby_containers(sysobj)
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("ACTUAL RESULT %d: DobbyTool list output: %s" % (step, details))
-                print("[TEST EXECUTION RESULT] : SUCCESS")
-
-                step += 1
-                # Verify ExecutionUnit.1.Status
-                print("\nTEST STEP %d: Verify ExecutionUnit.1.Status changed to Active" % step)
-                print("EXPECTED RESULT %d: Status should be Active" % step)
-                tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
-                actualresult, details = getTR181Value(tdkTestObj_tr181, EU1_STATUS_PARAM)
-                if expectedresult in actualresult and EXPECTED_EU_STATUS_ACTIVE in details:
-                    tdkTestObj_tr181.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: ExecutionUnit status is Active: %s" % (step, details))
+                # Activate ExecutionUnit
+                print("\nTEST STEP %d: Activate ExecutionUnit via USP-PA" % step)
+                print("EXPECTED RESULT %d: ExecutionUnit should be activated successfully" % step)
+                tdkTestObj, actualresult, details = usppa_set_eu_state(sysobj, EU_SET_STATE_PARAM, EXPECTED_EU_STATUS_ACTIVE)
+                sleep(10) #Wait for activation to take effect
+                if expectedresult in actualresult:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("ACTUAL RESULT %d: ExecutionUnit activated. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    step += 1
+                    # Check container status
+                    print("\nTEST STEP %d: Check container status using DobbyTool list" % step)
+                    print("EXPECTED RESULT %d: Container should be listed" % step)
+                    tdkTestObj, actualresult, details = list_dobby_containers(sysobj)
+                    if expectedresult in actualresult:
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d: DobbyTool list output: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d: Container not listed. Details: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
+
+                    step += 1
+                    # Verify ExecutionUnit.1.Status
+                    print("\nTEST STEP %d: Verify ExecutionUnit.1.Status changed to Active" % step)
+                    print("EXPECTED RESULT %d: Status should be Active" % step)
+                    tdkTestObj_tr181 = obj.createTestStep('TDKB_TR181Stub_Get')
+                    actualresult, details = getTR181Value(tdkTestObj_tr181, EU1_STATUS_PARAM)
+                    if expectedresult in actualresult and EXPECTED_EU_STATUS_ACTIVE in details:
+                        tdkTestObj_tr181.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d: ExecutionUnit status is Active: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj_tr181.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d: ExecutionUnit status check failed. Details: %s" % (step, details))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
-                    tdkTestObj_tr181.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: ExecutionUnit status check failed. Details: %s" % (step, details))
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("ACTUAL RESULT %d: Failed to activate ExecutionUnit. Details: %s" % (step, details))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to activate ExecutionUnit. Details: %s" % (step, details))
+                print("ACTUAL RESULT %d: Failed to update iperf3 server IP in config.json. Details: %s" % (step, details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
