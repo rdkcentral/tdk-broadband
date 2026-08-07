@@ -58,7 +58,7 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
             queryParam = {"name":"Device.Time.NTPServer1","value":setValue}
             #Perform set task request to set the value of the parameter
             queryResponse,step = settr069ACS(tdkTestObj,username,queryParam,step)
-            if queryResponse:
+            if queryResponse is not None:
                 #Perform get task request and search query to get the value of the parameter after set
                 newValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
                 if newValues:
@@ -83,10 +83,21 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
                 print("EXPECTED RESULT %d: The value of %s should be reverted successfully via ACS server." % (step,name))
                 queryParam = {"name":"Device.Time.NTPServer1","value":getValues.get(name)}
                 status,queryResponse = tr069ACSQuery(username,queryParam,"set")
-                if status == 200 and queryResponse:
+                if status == 200 and queryResponse is not None:
+                    # Task executed synchronously
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,name))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+                elif status == 202 and queryResponse is not None:
+                    # Task queued - poll for terminal state
+                    if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "SET", username):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,name))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d : Failed to revert %s to original value." % (step,name))
@@ -106,8 +117,6 @@ if "SUCCESS" in loadmodulestatus.upper() and  "SUCCESS" in loadmodulestatus1.upp
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
-
-
 else:
     print("FAILURE to load module.")
     tr181obj.setLoadModuleStatus("FAILURE")

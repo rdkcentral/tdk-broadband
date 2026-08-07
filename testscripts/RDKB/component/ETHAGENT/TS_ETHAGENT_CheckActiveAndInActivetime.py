@@ -16,62 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>2</version>
-  <name>TS_ETHAGENT_CheckActiveAndInActivetime</name>
-  <primitive_test_id/>
-  <primitive_test_name>ETHAgent_DoNothing</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To check if the active LAN client is having valid active and inactive time </synopsis>
-  <groups_id/>
-  <execution_time>15</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>RPI</box_type>
-    <box_type>BPI</box_type><box_type>Broadband</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ETHAGENT_10</test_case_id>
-    <test_objective>This test case is to check if the active LAN client is having valid active and inactive time</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>TDKB_TR181Stub_Get</api_or_interface_used>
-    <input_parameters>Device.Hosts.HostNumberOfEntries
-Device.Hosts.Host.{i}.Layer1Interface
-Device.Hosts.Host.{i}.Active
-Device.Hosts.Host.{i}.X_CISCO_COM_ActiveTime
-Device.Hosts.Host.{i}.X_CISCO_COM_InactiveTime</input_parameters>
-    <automation_approch>1.Load the module
-2.Get the number of clients connected using Device.Hosts.HostNumberOfEntries
-3.Check if the client is Ethernet using Device.Hosts.Host.{i}.Layer1Interface
-4.Check if the device is active
-5.Get the active and inactive time of client using Device.Hosts.Host.{i}.X_CISCO_COM_ActiveTime and
-Device.Hosts.Host.{i}.X_CISCO_COM_InactiveTime and the value recieved  should be greater than zero
-6.Unload the module</automation_approch>
-    <expected_output>Device.Hosts.Host.{i}.X_CISCO_COM_ActiveTime and
-Device.Hosts.Host.{i}.X_CISCO_COM_InactiveTime should not hold a negative value of time</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>ETHAGENT</test_stub_interface>
-    <test_script>TS_ETHAGENT_CheckActiveAndInActivetime</test_script>
-    <skipped>No</skipped>
-    <release_version>M83</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
 
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 
