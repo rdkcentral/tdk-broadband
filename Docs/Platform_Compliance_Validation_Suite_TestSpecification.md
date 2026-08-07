@@ -334,11 +334,11 @@ Positive
 | <small>1</small> | <small>GET Device.WiFi.SSID.1.SSID and save the current SSID name</small> | <small>&nbsp;</small> | <small>Verify the SSID name is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
 | <small>2</small> | <small>Wait 60 seconds</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
 | <small>3</small> | <small>&nbsp;</small> | <small>Scan for available WiFi networks and check if the configured SSID name is listed</small> | <small>If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>&nbsp;</small> | <small>Connect to the configured WiFi SSID using the configured credentials</small> | <small>Verify WLAN client connected to the SSID successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>6</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the WLAN client interface</small> | <small>Verify WLAN client obtained a valid IP address. If the condition is met CONTINUE, else FAIL</small> |
-| <small>7</small> | <small>GET Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>&nbsp;</small> | <small>Verify the Gateway LAN IP address is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>8</small> | <small>&nbsp;</small> | <small>Verify the WLAN client IP address is within the DHCP range defined by Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>Verify WLAN IP is in the DHCP range. If the condition is met CONTINUE, else FAIL</small> |
-| <small>9</small> | <small>&nbsp;</small> | <small>Disconnect from the 2.4GHz WiFi SSID</small> | <small>Verify WLAN client disconnected successfully. If the condition is met CONTINUE, else FAIL</small> |
+| <small>4</small> | <small>&nbsp;</small> | <small>Connect to the configured WiFi SSID using the configured credentials</small> | <small>Verify WLAN client connected to the SSID successfully. If the condition is met CONTINUE, else FAIL</small> |
+| <small>5</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the WLAN client interface</small> | <small>Verify WLAN client obtained a valid IP address. If the condition is met CONTINUE, else FAIL</small> |
+| <small>6</small> | <small>GET Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>&nbsp;</small> | <small>Verify the Gateway LAN IP address is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
+| <small>7</small> | <small>&nbsp;</small> | <small>Verify the WLAN client IP address is within the DHCP range defined by Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>Verify WLAN IP is in the DHCP range. If the condition is met CONTINUE, else FAIL</small> |
+| <small>8</small> | <small>&nbsp;</small> | <small>Disconnect from the 2.4GHz WiFi SSID</small> | <small>Verify WLAN client disconnected successfully. If the condition is met CONTINUE, else FAIL</small> |
 
 </details>
 
