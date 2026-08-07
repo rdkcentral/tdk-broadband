@@ -53,18 +53,37 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print("\nTEST STEP %d: Send RefreshObject task on %s via ACS." %(step,name))
         print("EXPECTED RESULT %d: Send RefreshObject task on %s via ACS successfully." %(step,name))
         status, queryResponse = tr069ACSQuery(username, queryParam, method="RefreshObject")
-        if status == 200 and queryResponse:
+        if status == 200 and queryResponse is not None:
+            # Task executed synchronously - proceed directly
             print("ACTUAL RESULT %d: RefreshObject Task successful for %s via ACS server." % (step,name))
             if queryResponse.get("objectName") == name:
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("Refresh object name matches.")
                 print("[TEST EXECUTION RESULT] : SUCCESS")
-
                 print("Wait for 1 minute to complete the refreshing of the parameter.")
                 sleep(60)
             else:
                 tdkTestObj.setResultStatus("FAILURE")
                 print("Refresh object name failed to  match.")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        elif status == 202 and queryResponse is not None:
+            # Task queued - poll to detect offline device, auth failure, or RPC fault
+            if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "RefreshObject", username):
+                print("ACTUAL RESULT %d: RefreshObject Task successful for %s via ACS server." % (step,name))
+                if queryResponse.get("objectName") == name:
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("Refresh object name matches.")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                    print("Wait for 1 minute to complete the refreshing of the parameter.")
+                    sleep(60)
+                else:
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("Refresh object name failed to  match.")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: RefreshObject task failed during queued execution validation." % step)
                 print("[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE")
