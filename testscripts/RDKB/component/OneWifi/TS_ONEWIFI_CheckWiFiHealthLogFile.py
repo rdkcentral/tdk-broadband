@@ -16,108 +16,147 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+'''
+<?xml version='1.0' encoding='utf-8'?>
+<xml>
+  <id></id>
+  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
+  <version>8</version>
+  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
+  <name>TS_ONEWIFI_CheckWiFiHealthLogFile</name>
+  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
+  <primitive_test_id> </primitive_test_id>
+  <!-- Do not change primitive_test_id if you are editing an existing script. -->
+  <primitive_test_name>onewifi_DoNothing</primitive_test_name>
+  <!--  -->
+  <primitive_test_version>2</primitive_test_version>
+  <!--  -->
+  <status>FREE</status>
+  <!--  -->
+  <synopsis>Validate if the file wifihealth.txt is created within 10 minutes of uptime after a factory reset.</synopsis>
+  <!--  -->
+  <groups_id />
+  <!--  -->
+  <execution_time>30</execution_time>
+  <!--  -->
+  <long_duration>false</long_duration>
+  <!--  -->
+  <advanced_script>false</advanced_script>
+  <!-- execution_time is the time out time for test execution -->
+  <remarks></remarks>
+  <!-- Reason for skipping the tests if marked to skip -->
+  <skip>false</skip>
+  <!--  -->
+  <box_types>
+    <box_type>Broadband</box_type>
+    <box_type>RPI</box_type>
+  <box_type>BPI</box_type></box_types>
+  <rdk_versions>
+    <rdk_version>RDKB</rdk_version>
+    <!--  -->
+  </rdk_versions>
+  <test_cases>
+    <test_case_id>TC_ONEWIFI_98</test_case_id>
+    <test_objective>Validate if the file wifihealth.txt  is created within 10 minutes of uptime after a factory reset.</test_objective>
+    <test_type>Positive</test_type>
+    <test_setup>Broadband</test_setup>
+    <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
+2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
+    <api_or_interface_used>N/A</api_or_interface_used>
+    <input_parameters>N/A</input_parameters>
+    <automation_approch>1. Load the Module
+2. Factory reset the DUT
+2. Wait for 10 min then check whether wifihealth.txt file is presnt or not
+3. Unload the Module</automation_approch>
+    <expected_output>wifihealth.txt file should be created within 10 minutes of uptime after a factory reset.</expected_output>
+    <priority>High</priority>
+    <test_stub_interface>ONEWIFI</test_stub_interface>
+    <test_script>TS_ONEWIFI_CheckWiFiHealthLogFile</test_script>
+    <skipped>No</skipped>
+    <release_version>M75</release_version>
+    <remarks></remarks>
+  </test_cases>
+  <script_tags />
+</xml>
+'''
+import tdklib;
+from time import sleep;
 
-# use tdklib library, which provides a wrapper for tdk testcase script
-import tdklib
-from time import sleep
-
-# Test components to be tested
-obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB")
-obj1 = tdklib.TDKScriptingLibrary("sysutil","1")
-
-# IP and Port of box, No need to change
-# This will be replaced with corresponding DUT IP and port while executing script
+#Test component to be tested
+obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
+obj1 = tdklib.TDKScriptingLibrary("sysutil","1");
+#IP and Port of box, No need to change,
+#This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile')
-obj1.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile')
+obj.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile');
+obj1.configureTestCase(ip,port,'TS_ONEWIFI_CheckWiFiHealthFile');
 
-# Get the result of connection with test components and DUT
-loadmodulestatus = obj.getLoadModuleResult()
-loadmodulestatus1 = obj1.getLoadModuleResult()
+#Get the result of connection with test component and DUT
+loadmodulestatus=obj.getLoadModuleResult();
+loadmodulestatus1=obj1.getLoadModuleResult();
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
+    #Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS")
     obj1.setLoadModuleStatus("SUCCESS")
-    expectedresult = "SUCCESS"
+    obj.saveCurrentState();
 
-    # Save device's current state before it goes for reboot
-    obj.saveCurrentState()
-
-    # Initiate Factory Reset before checking the default value
-    tdkTestObj = obj.createTestStep('WIFIAgent_Set')
-    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.FactoryReset")
-    tdkTestObj.addParameter("paramValue","Router,Wifi,VoIP,Dect,MoCA")
-    tdkTestObj.addParameter("paramType","string")
-    tdkTestObj.executeTestCase(expectedresult)
-    actualresult = tdkTestObj.getResult()
-    details = tdkTestObj.getResultDetails()
+    #Initiate Factory reset before checking the default value
+    expectedresult="SUCCESS";
+    tdkTestObj = obj.createTestStep('WIFIAgent_Set');
+    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.FactoryReset");
+    tdkTestObj.addParameter("paramValue","Router,Wifi,VoIP,Dect,MoCA");
+    tdkTestObj.addParameter("paramType","string");
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
 
     if expectedresult in actualresult:
-        tdkTestObj.setResultStatus("SUCCESS")
-        print("TEST STEP 1: Initiate factory reset")
-        print("EXPECTED RESULT 1: Should initiate factory reset")
-        print("ACTUAL RESULT 1: %s" %details)
-        print("[TEST EXECUTION RESULT] : SUCCESS")
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        # Restore the device state saved before reboot
-        obj.restorePreviousStateAfterReboot()
+        #Restore the device state saved before reboot
+        obj.restorePreviousStateAfterReboot();
         print("Wait till box comes up - 10 Min")
-        sleep(600)
-
-        # Set WiFi telemetry LogInterval after Factory Reset
-        tdkTestObj = obj.createTestStep('WIFIAgent_Set')
-        tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.LogInterval")
-        tdkTestObj.addParameter("paramValue","300")
-        tdkTestObj.addParameter("paramType","int")
-        tdkTestObj.executeTestCase(expectedresult)
-        actualresult = tdkTestObj.getResult()
-        details = tdkTestObj.getResultDetails()
-
-        if expectedresult in actualresult:
-            tdkTestObj.setResultStatus("SUCCESS")
-            print("TEST STEP 2: Set the WiFi telemetry LogInterval after factory reset")
-            print("EXPECTED RESULT 2: Should set the WiFi telemetry LogInterval to 300 seconds")
-            print("ACTUAL RESULT 2: %s" %details)
-            print("[TEST EXECUTION RESULT] : SUCCESS")
-
-            # Check whether the wifihealth.txt file is present
-            tdkTestObj = obj1.createTestStep('ExecuteCmd')
-            cmd = "[ -f /rdklogs/logs/wifihealth.txt ] && echo \"File exist\" || echo \"File does not exist\""
-            tdkTestObj.addParameter("command",cmd)
-            tdkTestObj.executeTestCase(expectedresult)
-            actualresult = tdkTestObj.getResult()
-            details = tdkTestObj.getResultDetails().strip().replace("\\n","")
-
-            if expectedresult in actualresult and details == "File exist":
-                tdkTestObj.setResultStatus("SUCCESS")
-                print("TEST STEP 3: Check for wifihealth log file presence")
-                print("EXPECTED RESULT 3: wifihealth log file should be present")
-                print("ACTUAL RESULT 3: wifihealth log file is present")
-                print("[TEST EXECUTION RESULT] : SUCCESS")
-            else:
-                tdkTestObj.setResultStatus("FAILURE")
-                print("TEST STEP 3: Check for wifihealth log file presence")
-                print("EXPECTED RESULT 3: wifihealth log file should be present")
-                print("ACTUAL RESULT 3: wifihealth log file is not present")
-                print("[TEST EXECUTION RESULT] : FAILURE")
+        sleep(600);
+        tdkTestObj = obj1.createTestStep('ExecuteCmd');
+        cmd = "[ -f /rdklogs/logs/wifihealth.txt ] && echo \"File exist\" || echo \"File does not exist\"";
+        tdkTestObj.addParameter("command",cmd);
+        tdkTestObj.executeTestCase(expectedresult);
+        actualresult = tdkTestObj.getResult();
+        details = tdkTestObj.getResultDetails().strip().replace("\\n", "");
+        if details == "File exist":
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("TEST STEP 2: Check for wifihealth log file presence");
+            print("EXPECTED RESULT 2:wifihealth log file should be present");
+            print("ACTUAL RESULT 2:wifihealth log file is present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : SUCCESS");
         else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("TEST STEP 2: Set the WiFi telemetry LogInterval after factory reset")
-            print("EXPECTED RESULT 2: Should set the WiFi telemetry LogInterval to 300 seconds")
-            print("ACTUAL RESULT 2: %s" %details)
-            print("[TEST EXECUTION RESULT] : FAILURE")
+            tdkTestObj.setResultStatus("FAILURE");
+            print("TEST STEP 2: Check for wifihealth log file presence");
+            print("EXPECTED RESULT 2:wifihealth log file should be present");
+            print("ACTUAL RESULT 2:wifihealth log file is not present");
+            #Get the result of execution
+            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
-        tdkTestObj.setResultStatus("FAILURE")
-        print("TEST STEP 1: Initiate factory reset")
-        print("EXPECTED RESULT 1: Should initiate factory reset")
-        print("ACTUAL RESULT 1: %s" %details)
-        print("[TEST EXECUTION RESULT] : FAILURE")
+        #Set the result status of execution
+        tdkTestObj.setResultStatus("FAILURE");
+        print("TEST STEP 1: Initiate factory reset ");
+        print("EXPECTED RESULT 1: Should initiate factory reset");
+        print("ACTUAL RESULT 1: %s" %details);
+        #Get the result of execution
+        print("[TEST EXECUTION RESULT] : FAILURE");
 
-    obj.unloadModule("wifiagent")
-    obj1.unloadModule("sysutil")
+    obj.unloadModule("wifiagent");
+    obj1.unloadModule("sysutil");
 else:
-    print("Failed to load wifiagent/sysutil module")
-    obj.setLoadModuleStatus("FAILURE")
-    obj1.setLoadModuleStatus("FAILURE")
-    print("Module loading failed")
+    print("FAILURE to load wifiagent module");
+    obj.setLoadModuleStatus("FAILURE");
+    print("Module loading FAILURE");
