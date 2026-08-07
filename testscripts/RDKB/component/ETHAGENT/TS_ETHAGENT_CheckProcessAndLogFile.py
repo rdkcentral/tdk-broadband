@@ -16,71 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>2</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_ETHAGENT_CheckProcessAndLogFile</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>ETHAgent_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>To check whether EthAgent is running and ETHAGENTLog.txt.0 log file is created</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>5</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ETHAGENT_01</test_case_id>
-    <test_objective>To check whether EthAgent is running and ETHAGENTLog.txt.0 log file is created</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>RPI,Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state of DUT
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>None</input_parameters>
-    <automation_approch>1. Load module
-2. Check whether EthAgent process is running
-3. Check whether ETHAGENTLog.txt.0 log file is created
-4. Unload module</automation_approch>
-    <except_output>ETHAGENTLog.txt.0 should be created</except_output>
-    <priority>High</priority>
-    <test_stub_interface>None</test_stub_interface>
-    <test_script>TS_ETHAGENT_CheckProcessAndLogFile</test_script>
-    <skipped>No</skipped>
-    <release_version>M68</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkbVariables import *;
