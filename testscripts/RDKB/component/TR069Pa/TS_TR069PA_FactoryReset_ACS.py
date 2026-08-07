@@ -54,7 +54,25 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         print("\nTEST STEP %d : Send FactoryReset task request on DUT via ACS." %step)
         print("EXPECTED RESULT %d : Send FactoryReset task on DUT via ACS successfully." %step)
         status, queryResponse = tr069ACSQuery(username,queryParam,method="FactoryReset")
-        if status == 200 and queryResponse:
+        proceedWithFactoryResetVerification = False
+        if status == 200 and queryResponse is not None:
+            # Task completed synchronously
+            print("FactoryReset task accepted and completed in request window (HTTP 200).")
+            proceedWithFactoryResetVerification = True
+        elif status == 202 and queryResponse is not None:
+            # Task queued - need to handle normal queued success, offline and RPC fault paths.
+            if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "FactoryReset", username):
+                proceedWithFactoryResetVerification = True
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: FactoryReset task failed during queued execution validation." % step)
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: FactoryReset task failed to factory reset the DUT with status %d" % (step, status))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+        if proceedWithFactoryResetVerification:
             #Restore the device state saved before reboot
             sysobj.restorePreviousStateAfterReboot()
             #Wait upto 5 min to establish connection between ACS and DUT
@@ -88,10 +106,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 tdkTestObj.setResultStatus("FAILURE")
                 print("tr069pa Pre-requisite failed after factory reset of DUT. Please check if tr069 process is running in device or configuration is proper or connection is established.")
                 print("[TEST EXECUTION RESULT] : FAILURE")
-        else:
-            tdkTestObj.setResultStatus("FAILURE")
-            print("ACTUAL RESULT %d: FactoryReset Task failed to factory reset the DUT with status %d." % (step,status))
-            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE")
         print("tr069pa Pre-requisite failed. Please check if tr069 process is running in device or configuration is proper or connection is established.")
