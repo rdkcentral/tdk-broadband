@@ -16,59 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>3</version>
-  <name>TS_ETHAGENT_CheckAssociatedDeviceNumberOfEntries</name>
-  <primitive_test_id/>
-  <primitive_test_name>ETHAgent_DoNothing</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To check if lan client connected interface AssociatedDeviceNumberOfEntries
-should return the number of  client connected to that ethernet port</synopsis>
-  <groups_id/>
-  <execution_time>15</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>RPI</box_type>
-    <box_type>BPI</box_type><box_type>Broadband</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ETHAGENT_05</test_case_id>
-    <test_objective>To check if lan client connected interface AssociatedDeviceNumberOfEntries
-should return the number of  client connected to that ethernet port</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state of DUT
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script
-3.LAN Client should be connected</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>Device.Ethernet.Interface.{i}.X_RDKCENTRAL-COM_AssociatedDeviceNumberOfEntries</input_parameters>
-    <automation_approch>1. Load module
-2. Get the MAC Address of client via Device.Hosts.Host.
-3. Check which interface Associated device MAC Address equals to MAC address retrived via Device.Hosts.Host.{i}.PhysAddress
-4. Check that interface's AssociatedDeviceNumberOfEntries return the number of  client connected to that ethernet port
-5. Unload module</automation_approch>
-    <except_output>lan client connected interface AssociatedDeviceNumberOfEntries
-should return the number of  client connected to that ethernet port</except_output>
-    <priority>High</priority>
-    <test_stub_interface>None</test_stub_interface>
-    <test_script>TS_ETHAGENT_CheckAssociatedDeviceNumberOfEntries</test_script>
-    <skipped>No</skipped>
-    <release_version>M68</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
 
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkbVariables import *;
