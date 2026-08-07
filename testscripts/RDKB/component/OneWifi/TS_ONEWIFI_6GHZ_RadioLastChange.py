@@ -244,3 +244,4 @@ else:
     print("Failed to load wifi module")
     obj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
+
