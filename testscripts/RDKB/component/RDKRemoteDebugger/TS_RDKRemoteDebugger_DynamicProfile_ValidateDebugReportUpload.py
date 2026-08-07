@@ -43,10 +43,10 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
     tr181obj.setLoadModuleStatus("SUCCESS")
     sysobj.setLoadModuleStatus("SUCCESS")
 
-    print("Pre-requisite : Install the Download Server and host the dynamic profile in Download server path  ")
+    profile_type = "dynamic"
+    print(f"Pre-requisite : Install the Download Server and host the {profile_type} profile in Download server path  ")
 
     step = 1
-    profile_type = "dynamic"
     # Prerequisite checks before starting the test execution
     prereq_flag, revert_flag, step = checkRRDPrerequisites(tr181obj, sysobj, step, profile_type)
 
@@ -54,105 +54,122 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
         print("Successfully completed the prerequisite checks.")
 
         step += 1
-        # Get the value of RDKRemoteDebugger IssueType
-        tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
+        # Get the value of UPSTREAM_RRD_URL in upstream_rrd_url_path
+        get_flag, initial_upload_server_url = getUpstreamRRDURL(sysobj, upstream_rrd_url_path, step)
         if get_flag:
-            print(f"Successfully obtained the initial value of RDKRemoteDebugger IssueType {initial_value}")
+            print(f"Successfully obtained the UPSTREAM_RRD_URL: {initial_upload_server_url}")
 
-            #Get the value of RDKRemoteDebugger CDL Module URL
             step += 1
-            tdkTestObj, get_flag, cdl_url = getRDKRemoteDebuggerCDLModuleURL(tr181obj, step)
-            if get_flag:
-                print(f"Successfully obtained the initial value of RDKRemoteDebugger CDL Module URL {cdl_url}")
-                # Set the value of RDKRemoteDebugger CDL Module URL to the download server
+            # Assign the upload server URL to UPSTREAM_RRD_URL in upstream_rrd_url_path
+            set_flag = setUpstreamRRDURL(sysobj, upload_server_url, upstream_rrd_url_path, step)
+            if set_flag:
+                print(f"Successfully assigned the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
+
                 step += 1
-                set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, server_url, step)
-                if set_flag:
-                    print(f"Successfully set the value of RDKRemoteDebugger CDL Module URL to {server_url}.")
+                # Get the value of RDKRemoteDebugger IssueType
+                tdkTestObj, get_flag, initial_value = getRDKRemoteDebuggerIssueType(tr181obj, step)
+                if get_flag:
+                    print(f"Successfully obtained the initial value of RDKRemoteDebugger IssueType {initial_value}")
 
+                    # Get the value of RDKRemoteDebugger CDL Module URL
                     step += 1
-                    # Set the value of RDKRemoteDebugger IssueType to trigger the debug report generation
-                    set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, issueType)
-                    if set_flag:
-                        print("Successfully set the value of RDKRemoteDebugger IssueType to trigger the debug report generation.")
-
-                        sleep(5)
+                    tdkTestObj, get_flag, cdl_url = getRDKRemoteDebuggerCDLModuleURL(tr181obj, step)
+                    if get_flag:
+                        print(f"Successfully obtained the initial value of RDKRemoteDebugger CDL Module URL {cdl_url}")
+                        # Set the value of RDKRemoteDebugger CDL Module URL to the download server
                         step += 1
-                        # Check whether json file is available in the designated location
-                        tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "dynamic", issueType, step)
-                        if file_flag:
-                            tdkTestObj.setResultStatus("SUCCESS")
-                            print("TEST EXECUTION RESULT : SUCCESS")
-                            print("The dynamic json profile is available as expected.")
+                        set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, download_server_url, step)
+                        if set_flag:
+                            print(f"Successfully set the value of RDKRemoteDebugger CDL Module URL to {download_server_url}.")
 
-
-                            #Validate if the dynamic debug report is generated
                             step += 1
-                            tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "dynamic", step)
-                            if report_flag:
-                                tdkTestObj.setResultStatus("SUCCESS")
-                                print("TEST EXECUTION RESULT : SUCCESS")
-                                print("Successfully verified that the dynamic debug report is generated.")
-
-                                # Set the value of RDKRemoteDebugger IssueType again to trigger the debug report upload
+                            print("Before profile creation and upload trigger, starting tracking of *.tgz files expected to be created after trigger.")
+                            tdkTestObj, tracker_flag = startDebugReportTarFileTracker(sysobj, profile_type, step)
+                            if tracker_flag:
                                 step += 1
+                                # Set the value of RDKRemoteDebugger IssueType to trigger the profile processing and upload
                                 set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, issueType)
                                 if set_flag:
-                                    print("Successfully set the value of RDKRemoteDebugger IssueType again to trigger the debug report upload.")
+                                    print("Successfully set the value of RDKRemoteDebugger IssueType to trigger the profile processing and upload.")
 
-                                    # Check if the dynamic debug report is uploaded to the server
+                                    sleep(5)
                                     step += 1
-                                    tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, "dynamic", server_url, rrd_log_file, step)
-                                    if upload_flag:
+                                    # Check whether json file is available in the designated location
+                                    tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, profile_type, issueType, step)
+                                    if file_flag:
                                         tdkTestObj.setResultStatus("SUCCESS")
                                         print("TEST EXECUTION RESULT : SUCCESS")
-                                        print("The dynamic debug report is uploaded to the server successfully.")
+                                        print(f"The {profile_type} json profile is available as expected.")
+                                        sleep(20)
+                                        step += 1
+                                        print("Checking whether the tracker captured the *.tgz report file name after the trigger.")
+                                        tdkTestObj, tar_flag, report_name = isDebugReportTarFileCreated(sysobj, profile_type, step)
+                                        if tar_flag:
+                                            print(f"A debug report tar(.tgz) file was created successfully with file name {report_name}.")
+                                            step += 1
+                                            tdkTestObj, upload_flag = validateDebugReportUpload(sysobj, profile_type, upload_server_url, report_name, step)
+                                            if upload_flag:
+                                                tdkTestObj.setResultStatus("SUCCESS")
+                                                print("TEST EXECUTION RESULT : SUCCESS")
+                                                print(f"The {profile_type} debug report tar(.tgz) file {report_name} exists in the upload server successfully.")
+                                            else:
+                                                tdkTestObj.setResultStatus("FAILURE")
+                                                print("TEST EXECUTION RESULT : FAILURE")
+                                                print(f"The {profile_type} debug report tar(.tgz) file {report_name} is not present in the upload server as expected.")
+                                        else:
+                                            tdkTestObj.setResultStatus("FAILURE")
+                                            print("TEST EXECUTION RESULT : FAILURE")
+                                            print("The debug report tar(.tgz) file is not created as expected.")
                                     else:
                                         tdkTestObj.setResultStatus("FAILURE")
                                         print("TEST EXECUTION RESULT : FAILURE")
-                                        print("The dynamic debug report is not uploaded to the server as expected.")
+                                        print(f"The {profile_type} json profile is not available as expected.")
+
+                                    # Revert the value of RDKRemoteDebugger IssueType to its initial value
+                                    print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
+                                    step += 1
+                                    set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
+                                    if set_flag:
+                                        print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                                    else:
+                                        print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
 
                                 else:
-                                    print("Failed to set the value of RDKRemoteDebugger IssueType again to trigger the debug report upload.")
+                                    print("Failed to set the value of RDKRemoteDebugger IssueType to trigger the profile processing and upload.")
+
                             else:
-                                tdkTestObj.setResultStatus("FAILURE")
-                                print("TEST EXECUTION RESULT : FAILURE")
-                                print("Failed to generate the dynamic debug report.")
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE")
-                            print("TEST EXECUTION RESULT : FAILURE")
-                            print("The dynamic json profile is not available as expected.")
+                                print("Failed to start the debug report tar(.tgz) file tracker.")
+                        # Revert the value of RDKRemoteDebugger CDL Module URL to its initial value
+                        print("\nReverting the value of RDKRemoteDebugger CDL Module URL to its initial value.")
 
-                        #Revert the value of RDKRemoteDebugger IssueType to its initial value
-                        print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
                         step += 1
-                        set_flag = setRDKRemoteDebuggerIssueType(tr181obj, step, initial_value)
+                        set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, cdl_url, step)
                         if set_flag:
-                            print("Successfully reverted the value of RDKRemoteDebugger IssueType to its initial value.")
+                            print("Successfully reverted the value of RDKRemoteDebugger CDL Module URL to its initial value.")
                         else:
-                            print("Failed to revert the value of RDKRemoteDebugger IssueType to its initial value.")
-
+                            print("Failed to revert the value of RDKRemoteDebugger CDL Module URL to its initial value.")
                     else:
-                        print("Failed to set the value of RDKRemoteDebugger IssueType to trigger the debug report generation.")
-
-                #Revert the value of RDKRemoteDebugger CDL Module URL to its initial value
-                print("\nReverting the value of RDKRemoteDebugger CDL Module URL to its initial value.")
-
-                step += 1
-                set_flag = setRDKRemoteDebuggerCDLModuleURL(tr181obj, cdl_url, step)
-                if set_flag:
-                    print("Successfully reverted the value of RDKRemoteDebugger CDL Module URL to its initial value.")
+                        print(f"Failed to obtain the initial value of RDKRemoteDebugger CDL Module URL")
                 else:
-                    print("Failed to revert the value of RDKRemoteDebugger CDL Module URL to its initial value.")
+                    print(f"Failed to obtain the initial value of RDKRemoteDebugger IssueType")
+                # Revert the value of UPSTREAM_RRD_URL to its initial value
+                print("\nReverting the value of UPSTREAM_RRD_URL to its initial value.")
+                step += 1
+                set_flag = setUpstreamRRDURL(sysobj, initial_upload_server_url, upstream_rrd_url_path, step)
+                if set_flag:
+                    print("Successfully reverted the value of UPSTREAM_RRD_URL to its initial value.")
+                else:
+                    print("Failed to revert the value of UPSTREAM_RRD_URL to its initial value.")
             else:
-                print(f"Failed to obtain the initial value of RDKRemoteDebugger CDL Module URL")
+                print(f"Failed to assign the upload server URL to UPSTREAM_RRD_URL in {upstream_rrd_url_path}")
         else:
-            print(f"Failed to obtain the initial value of RDKRemoteDebugger IssueType")
+            print(f"Failed to get the UPSTREAM_RRD_URL")
+
     else:
         print("Failed to complete the prerequisite checks. Cannot proceed with the test execution.")
 
     if revert_flag:
-        #Revert the value of RDKRemoteDebugger Enable to its initial value
+        # Revert the value of RDKRemoteDebugger Enable to its initial value
         value = "false"
         step += 1
         print(f"\nReverting the value of RDKRemoteDebugger Enable to its initial value {value}.")
@@ -161,7 +178,6 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
             print(f"Successfully reverted the value of RDKRemoteDebugger Enable to its initial value {value}.")
         else:
             print(f"Failed to revert the value of RDKRemoteDebugger Enable to its initial value {value}.")
-
 
     tr181obj.unloadModule("tdkbtr181")
     sysobj.unloadModule("sysutil")
