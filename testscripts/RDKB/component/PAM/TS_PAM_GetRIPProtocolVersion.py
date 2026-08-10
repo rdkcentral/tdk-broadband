@@ -27,6 +27,7 @@ obj = tdklib.TDKScriptingLibrary("pam","RDKB");
 # This will be replaced with corresponding Box IP and port while executing script
 ip = <ipaddress>
 port = <port>
+
 obj.configureTestCase(ip,port,'TS_PAM_GetRIPProtocolVersion');
 
 # Get the result of connection with test component and DUT
@@ -34,11 +35,18 @@ loadmodulestatus = obj.getLoadModuleResult();
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
 
 if "SUCCESS" in loadmodulestatus.upper():
+
     # Set the result status of execution
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS";
 
-    # Get the RIP Send Version
+    # Supported RIP protocol versions
+    validVersions = ["RIP1","RIP2"];
+
+    ############################################################
+    # STEP 1 : Get the RIP Send Version
+    ############################################################
+
     tdkTestObj = obj.createTestStep('pam_GetParameterValues');
     tdkTestObj.addParameter(
         "ParamName",
@@ -47,19 +55,24 @@ if "SUCCESS" in loadmodulestatus.upper():
 
     # Execute the test case in DUT
     tdkTestObj.executeTestCase(expectedresult);
+
     actualresult = tdkTestObj.getResult();
     SendVersion = tdkTestObj.getResultDetails().strip();
 
     print("TEST STEP 1: Retrieve the RIP Send Version");
     print("EXPECTED RESULT 1: Should retrieve a valid RIP Send Version");
 
-    if expectedresult in actualresult and SendVersion != "":
+    if expectedresult in actualresult and SendVersion in validVersions:
+
         # Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
         print("ACTUAL RESULT 1: RIP Send Version is %s" %SendVersion);
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        # Get the RIP Receive Version
+        ############################################################
+        # STEP 2 : Get the RIP Receive Version
+        ############################################################
+
         tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter(
             "ParamName",
@@ -68,56 +81,71 @@ if "SUCCESS" in loadmodulestatus.upper():
 
         # Execute the test case in DUT
         tdkTestObj.executeTestCase(expectedresult);
+
         actualresult = tdkTestObj.getResult();
         ReceiveVersion = tdkTestObj.getResultDetails().strip();
 
         print("TEST STEP 2: Retrieve the RIP Receive Version");
         print("EXPECTED RESULT 2: Should retrieve a valid RIP Receive Version");
 
-        if expectedresult in actualresult and ReceiveVersion != "":
+        if expectedresult in actualresult and ReceiveVersion in validVersions:
+
             # Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
             print("ACTUAL RESULT 2: RIP Receive Version is %s" %ReceiveVersion);
             print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            # Compare the RIP Send and Receive Versions
+            ############################################################
+            # STEP 3 : Compare the RIP Send and Receive Versions
+            ############################################################
+
             print("TEST STEP 3: Compare the RIP Send and Receive Versions");
             print("EXPECTED RESULT 3: RIP Send and Receive Versions should match");
 
             if SendVersion == ReceiveVersion:
+
                 tdkTestObj.setResultStatus("SUCCESS");
                 print(
                     "ACTUAL RESULT 3: RIP Send Version %s and "
                     "Receive Version %s are matching"
-                    % (SendVersion, ReceiveVersion)
+                    %(SendVersion,ReceiveVersion)
                 );
                 print("[TEST EXECUTION RESULT] : SUCCESS");
+
             else:
+
                 tdkTestObj.setResultStatus("FAILURE");
                 print(
                     "ACTUAL RESULT 3: RIP Send Version %s and "
                     "Receive Version %s are not matching"
-                    % (SendVersion, ReceiveVersion)
+                    %(SendVersion,ReceiveVersion)
                 );
                 print("[TEST EXECUTION RESULT] : FAILURE");
+
         else:
+
             tdkTestObj.setResultStatus("FAILURE");
             print(
                 "ACTUAL RESULT 2: Failed to retrieve a valid RIP "
-                "Receive Version. Details: %s" %ReceiveVersion
+                "Receive Version. Received value: %s"
+                %ReceiveVersion
             );
             print("[TEST EXECUTION RESULT] : FAILURE");
+
     else:
+
         tdkTestObj.setResultStatus("FAILURE");
         print(
             "ACTUAL RESULT 1: Failed to retrieve a valid RIP "
-            "Send Version. Details: %s" %SendVersion
+            "Send Version. Received value: %s"
+            %SendVersion
         );
         print("[TEST EXECUTION RESULT] : FAILURE");
 
     obj.unloadModule("pam");
 
 else:
+
     print("Failed to load pam module");
     obj.setLoadModuleStatus("FAILURE");
     print("Module loading failed");

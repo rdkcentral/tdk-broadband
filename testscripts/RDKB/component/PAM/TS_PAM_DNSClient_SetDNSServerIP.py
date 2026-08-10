@@ -24,7 +24,7 @@ import tdklib;
 pamObj = tdklib.TDKScriptingLibrary("pam","RDKB");
 
 #IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+#This will be replaced with corresponding Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 pamObj.configureTestCase(ip,port,'TS_PAM_DNSClient_SetDNSServerIP');
@@ -54,7 +54,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         tdkTestObj = pamObj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter("ParamName","%sType" %interface);
         print("Parameter Name: %s" %interface)
-        tdkTestObj.executeTestCase("expectedresult");
+        tdkTestObj.executeTestCase(expectedresult);
         actualresult = tdkTestObj.getResult();
         details = tdkTestObj.getResultDetails().strip();
 
@@ -112,4 +112,3 @@ else:
     print("Failed to load pam module");
     pamObj.setLoadModuleStatus("FAILURE");
     print("Module loading failed");
-
