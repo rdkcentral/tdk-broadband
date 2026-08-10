@@ -267,6 +267,8 @@ if "SUCCESS" in loadmodulestatus.upper():
         if radio_restore_status == 1:
             tdkTestObj.setResultStatus("SUCCESS")
             print("ACTUAL RESULT %d: All WiFi radios were restored successfully" %step)
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
             tdkTestObj.setResultStatus("FAILURE")
             print("ACTUAL RESULT %d: One or more WiFi radios were not restored" %step)
             print("[TEST EXECUTION RESULT] : FAILURE")

@@ -64,38 +64,70 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("ACTUAL RESULT %d: %s" %(step,details))
         print("[TEST EXECUTION RESULT] : FAILURE")
 
-    # Check if Radio 1, Radio 2 and Radio 3 are disabled
+    # Get RadioNumberOfEntries
+    if proceed_flag == 1:
+        step += 1
+        tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+        tdkTestObj.addParameter("paramName","Device.WiFi.RadioNumberOfEntries")
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("TEST STEP %d: Get the number of WiFi radio entries" %step)
+        print("EXPECTED RESULT %d: Should get a valid number of WiFi radio entries" %step)
+
+        if expectedresult in actualresult and "VALUE:" in details:
+            radio_count_value = details.split("VALUE:")[1].split(" ")[0].strip()
+
+            if radio_count_value.isdigit() and int(radio_count_value) > 0:
+                radio_count = int(radio_count_value)
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: Number of WiFi radio entries is %d" %(step,radio_count))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                proceed_flag = 0
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Invalid RadioNumberOfEntries value. Details: %s" %(step,details))
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            proceed_flag = 0
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to get RadioNumberOfEntries. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Check if all applicable radios are disabled
     radio_names = {1:"2.4GHz",2:"5GHz",3:"6GHz"}
 
-    for radio_index in range(1,4):
+    for radio_index in range(1,radio_count + 1):
         if proceed_flag == 1:
             step += 1
             paramName = "Device.WiFi.Radio.%d.Enable" %radio_index
+            radio_name = radio_names.get(radio_index,"Radio %d" %radio_index)
             tdkTestObj = obj.createTestStep('WIFIAgent_Get')
             tdkTestObj.addParameter("paramName",paramName)
             tdkTestObj.executeTestCase(expectedresult)
             actualresult = tdkTestObj.getResult()
             details = tdkTestObj.getResultDetails()
 
-            print("TEST STEP %d: Get the Radio Enable status for %s as false" %(step,radio_names[radio_index]))
-            print("EXPECTED RESULT %d: Should get the Radio Enable status for %s as false" %(step,radio_names[radio_index]))
+            print("TEST STEP %d: Get the Radio Enable status for %s as false" %(step,radio_name))
+            print("EXPECTED RESULT %d: Should get the Radio Enable status for %s as false" %(step,radio_name))
 
             if expectedresult in actualresult and "VALUE:" in details:
                 radio_state = details.split("VALUE:")[1].split(" ")[0].strip()
 
                 if radio_state == "false":
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_names[radio_index],radio_state))
+                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_name,radio_state))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     proceed_flag = 0
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_names[radio_index],radio_state))
+                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_name,radio_state))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 proceed_flag = 0
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get the Radio Enable status for %s. Details: %s" %(step,radio_names[radio_index],details))
+                print("ACTUAL RESULT %d: Failed to get the Radio Enable status for %s. Details: %s" %(step,radio_name,details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
     # Initiate Factory Reset
@@ -163,36 +195,37 @@ if "SUCCESS" in loadmodulestatus.upper():
             print("ACTUAL RESULT %d: Failed to get WiFi Force Disable state. Details: %s" %(step,details))
             print("[TEST EXECUTION RESULT] : FAILURE")
 
-    # Check if Radio 1, Radio 2 and Radio 3 are enabled after Factory Reset
-    for radio_index in range(1,4):
+    # Check if all applicable radios are enabled after Factory Reset
+    for radio_index in range(1,radio_count + 1):
         if proceed_flag == 1:
             step += 1
             paramName = "Device.WiFi.Radio.%d.Enable" %radio_index
+            radio_name = radio_names.get(radio_index,"Radio %d" %radio_index)
             tdkTestObj = obj.createTestStep('WIFIAgent_Get')
             tdkTestObj.addParameter("paramName",paramName)
             tdkTestObj.executeTestCase(expectedresult)
             actualresult = tdkTestObj.getResult()
             details = tdkTestObj.getResultDetails()
 
-            print("TEST STEP %d: Check if Radio Enable status for %s is true after Factory Reset" %(step,radio_names[radio_index]))
-            print("EXPECTED RESULT %d: Radio Enable status for %s should be true after Factory Reset" %(step,radio_names[radio_index]))
+            print("TEST STEP %d: Check if Radio Enable status for %s is true after Factory Reset" %(step,radio_name))
+            print("EXPECTED RESULT %d: Radio Enable status for %s should be true after Factory Reset" %(step,radio_name))
 
             if expectedresult in actualresult and "VALUE:" in details:
                 radio_state = details.split("VALUE:")[1].split(" ")[0].strip()
 
                 if radio_state == "true":
                     tdkTestObj.setResultStatus("SUCCESS")
-                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_names[radio_index],radio_state))
+                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_name,radio_state))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
                 else:
                     proceed_flag = 0
                     tdkTestObj.setResultStatus("FAILURE")
-                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_names[radio_index],radio_state))
+                    print("ACTUAL RESULT %d: Radio Enable status for %s is %s" %(step,radio_name,radio_state))
                     print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 proceed_flag = 0
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get the Radio Enable status for %s. Details: %s" %(step,radio_names[radio_index],details))
+                print("ACTUAL RESULT %d: Failed to get the Radio Enable status for %s. Details: %s" %(step,radio_name,details))
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
     obj.unloadModule("wifiagent")
@@ -200,4 +233,3 @@ else:
     print("Failed to load wifiagent module")
     obj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
-

@@ -24,7 +24,7 @@ import tdklib
 obj = tdklib.TDKScriptingLibrary("wifiagent","1")
 
 #IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+#This will be replaced with corresponding Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_ONEWIFI_6GHZ_RadioLastChange')
@@ -91,7 +91,7 @@ if "SUCCESS" in loadmodulestatus.upper():
 
             if expectedresult in actualresult:
                 tdkTestObj.setResultStatus("SUCCESS")
-                print(f"ACTUAL RESULT {step}:Set operation is successfull. Details: {details}" )
+                print(f"ACTUAL RESULT {step}:Set operation is successful. Details: {details}" )
                 print("[TEST EXECUTION RESULT] : SUCCESS")
 
                 #check lastchange value after toggling

@@ -17,26 +17,6 @@
 # limitations under the License.
 ##########################################################################
 
-def getParameter(tdkTestObj, param):
-    tdkTestObj.addParameter("paramName",param);
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    getValue = tdkTestObj.getResultDetails().strip();
-    getValue = getValue.split("VALUE:")[1].split(" ")[0].strip();
-    return actualresult, getValue;
-
-def setLanMode(tdkTestObj, setValue):
-    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-    tdkTestObj.addParameter("paramValue",setValue);
-    tdkTestObj.addParameter("paramType","string");
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    sleep(120);
-    return actualresult, details;
-
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from tdkutility import *;
@@ -59,6 +39,26 @@ loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+
+def getParameter(tdkTestObj, param):
+    tdkTestObj.addParameter("paramName",param);
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    getValue = tdkTestObj.getResultDetails().strip();
+    getValue = getValue.split("VALUE:")[1].split(" ")[0].strip();
+    return actualresult, getValue;
+
+def setLanMode(tdkTestObj, setValue):
+    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+    tdkTestObj.addParameter("paramValue",setValue);
+    tdkTestObj.addParameter("paramType","string");
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    sleep(120);
+    return actualresult, details;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -145,7 +145,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if lanmodeInitial == "bridge-static" or currLanMode == "bridge-static":
             step = step + 1;
             print("\nTEST STEP %d: Check the WiFi SSID status corresponding to the all the applicable radios in bridge mode" %step);
-            print("EXPECTED RESULT %d: The WiFi SSID status corresponding to all the appliacable radios should be down in bridge mode" %step);
+            print("EXPECTED RESULT %d: The WiFi SSID status corresponding to all the applicable radios should be down in bridge mode" %step);
 
             #Get 2.4G WiFi SSID Status
             print("\nFetching the WiFi SSID Status for 2.4G...");
@@ -262,6 +262,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     sysobj.unloadModule("sysutil");
     obj.unloadModule("wifiagent");
 else:
-    print("Failed to load sysutil module");
+    print("Failed to load wifiagent/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");
