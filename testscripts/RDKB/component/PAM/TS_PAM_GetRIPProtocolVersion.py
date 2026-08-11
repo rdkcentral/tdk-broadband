@@ -70,7 +70,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         # STEP 2 : Get the RIP Receive Version
         ############################################################
 
-[O        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter(
             "ParamName",
             "Device.Routing.RIP.InterfaceSetting.1.X_CISCO_COM_ReceiveVersion"
