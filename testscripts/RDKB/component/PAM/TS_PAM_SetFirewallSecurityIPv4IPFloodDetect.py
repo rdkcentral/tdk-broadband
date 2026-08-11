@@ -25,7 +25,7 @@ obj = tdklib.TDKScriptingLibrary("pam","RDKB");
 sysobj = tdklib.TDKScriptingLibrary("sysutil","RDKB");
 
 #IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+#This will be replaced with corresponding Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_PAM_SetFirewallSecurityIPv4IPFloodDetect');
@@ -84,7 +84,7 @@ if "SUCCESS" in (loadmodulestatus.upper() and sysutilloadmodulestatus.upper()):
     expectedresult="SUCCESS";
 
     #Execute the test case in DUT
-    tdkTestObj.executeTestCase("expectedresult");
+    tdkTestObj.executeTestCase(expectedresult);
     actualresult = tdkTestObj.getResult();
     initial_value = tdkTestObj.getResultDetails().strip();
 

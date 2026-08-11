@@ -29,7 +29,7 @@ pamObj = tdklib.TDKScriptingLibrary("pam","RDKB")
 ip = <ipaddress>
 port = <port>
 
-pamObj.configureTestCase(ip,port,'TS_PAM_MSOonlyWEBUI')
+pamObj.configureTestCase(ip,port,'TS_PAM_MSOOnlyWEBUI')
 
 WEBUI_PARAM = "Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.WebUI.Enable"
 HTTP_ENABLE_PARAM = "Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable"

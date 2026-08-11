@@ -25,7 +25,7 @@ from time import sleep;
 obj = tdklib.TDKScriptingLibrary("pam","1");
 
 #IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+#This will be replaced with corresponding Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
 obj.configureTestCase(ip,port,'TS_PAM_GetUpTime_AfterReboot');

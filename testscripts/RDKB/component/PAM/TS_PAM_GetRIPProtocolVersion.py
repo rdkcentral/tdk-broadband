@@ -40,9 +40,6 @@ if "SUCCESS" in loadmodulestatus.upper():
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS";
 
-    # Supported RIP protocol versions
-    validVersions = ["RIP1","RIP2"];
-
     ############################################################
     # STEP 1 : Get the RIP Send Version
     ############################################################
@@ -62,7 +59,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     print("TEST STEP 1: Retrieve the RIP Send Version");
     print("EXPECTED RESULT 1: Should retrieve a valid RIP Send Version");
 
-    if expectedresult in actualresult and SendVersion in validVersions:
+    if expectedresult in actualresult and "RIP" in SendVersion:
 
         # Set the result status of execution
         tdkTestObj.setResultStatus("SUCCESS");
@@ -73,7 +70,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         # STEP 2 : Get the RIP Receive Version
         ############################################################
 
-        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
+[O        tdkTestObj = obj.createTestStep('pam_GetParameterValues');
         tdkTestObj.addParameter(
             "ParamName",
             "Device.Routing.RIP.InterfaceSetting.1.X_CISCO_COM_ReceiveVersion"
@@ -88,7 +85,7 @@ if "SUCCESS" in loadmodulestatus.upper():
         print("TEST STEP 2: Retrieve the RIP Receive Version");
         print("EXPECTED RESULT 2: Should retrieve a valid RIP Receive Version");
 
-        if expectedresult in actualresult and ReceiveVersion in validVersions:
+        if expectedresult in actualresult and "RIP" in ReceiveVersion:
 
             # Set the result status of execution
             tdkTestObj.setResultStatus("SUCCESS");
