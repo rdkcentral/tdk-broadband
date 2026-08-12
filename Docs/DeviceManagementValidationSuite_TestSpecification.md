@@ -5,7 +5,7 @@
 
 <strong>Version</strong>: 1.0<br>
 <strong>Date</strong>: August 2026<br>
-<strong>Purpose</strong>: Low-level test specification coverage for Device Management WEBPA, USP, TR069, RFC, WEBCONFIG<br>
+<strong>Purpose</strong>: Low-level test specification for Device Management WEBPA, USP, TR069, RFC, WEBCONFIG<br>
 <strong>Maintained by</strong>: TDKB Test Automation Team
 
 ### Table of Contents

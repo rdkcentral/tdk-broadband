@@ -3,8 +3,8 @@
 ## Test Specification Document for Data Model Validation Suite
 
 <strong>Version:</strong> 1.0  
-<strong>Date:</strong> 2026-08-07  
-<strong>Purpose:</strong> Low-level and high-level test specification coverage for Data Model validation.  
+<strong>Date:</strong> August 2026  
+<strong>Purpose:</strong> Low-level test specification for Data Model validation.  
 <strong>Maintained by:</strong> TDKB Test Automation Team
 
 | # | Category | Description | Number of Tests |

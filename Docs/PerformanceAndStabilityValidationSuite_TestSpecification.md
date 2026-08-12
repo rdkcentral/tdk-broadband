@@ -3,7 +3,7 @@
 ## Test Specification Document for Performance and Stability Validation Suite
 
 <strong>Version: 1.0</strong><br>
-<strong>Date: 2026-08-04</strong><br>
+<strong>Date: August 2026</strong><br>
 <strong>Purpose: Low-Level Test Specification for Performance and Stability Validation Suite</strong><br>
 <strong>Maintained by: TDKB Test Automation Team</strong><br>
 
@@ -13,15 +13,15 @@
 
 | # | Category | Description | Number of Tests |
 |---|---|---|---|
-| 1 | E2E | End-to-End throughput performance tests via iperf over wired and wireless paths | 6 |
+| 1 | Performance | End-to-End throughput performance tests via iperf over wired and wireless paths | 6 |
 | 2 | Stability | Long-duration stability tests covering reboots, factory resets, connectivity, DNS and WebPA load | 5 |
 
 ---
 
 <details>
-<summary><strong>E2E</strong></summary>
+<summary><strong>Performance</strong></summary>
 
-# E2E
+# Performance
 
 <details>
 <summary><strong>Test Case 1: Measure TCP Throughput from LAN to WAN</strong></summary>
