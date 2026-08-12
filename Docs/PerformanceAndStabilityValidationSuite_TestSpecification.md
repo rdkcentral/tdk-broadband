@@ -41,7 +41,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WAN - WAN system |
 
@@ -85,7 +85,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -134,7 +134,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -183,7 +183,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -234,7 +234,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WLAN Client - Wireless client |
 | WAN - WAN system |
 
@@ -283,7 +283,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WLAN Client - Wireless client |
 | WAN - WAN system |
 
@@ -343,7 +343,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -391,7 +391,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -440,7 +440,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 
 ## Test Configuration
@@ -491,7 +491,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 
 ## Test Configuration
@@ -544,7 +544,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 

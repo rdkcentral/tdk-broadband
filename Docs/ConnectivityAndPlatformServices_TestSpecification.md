@@ -13341,7 +13341,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13384,7 +13384,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13428,7 +13428,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13469,7 +13469,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13509,7 +13509,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13552,7 +13552,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13605,7 +13605,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13646,7 +13646,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13687,7 +13687,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13731,7 +13731,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13783,7 +13783,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13824,7 +13824,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13866,7 +13866,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13908,7 +13908,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -13950,7 +13950,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17344,7 +17344,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17385,7 +17385,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17435,7 +17435,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17476,7 +17476,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17526,7 +17526,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17575,7 +17575,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 | Local upload server running on the configured IP and port |
 
 ## Test Configuration
@@ -17630,7 +17630,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 | Local upload server running on the configured IP and port |
 
 ## Test Configuration
@@ -17705,7 +17705,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17746,7 +17746,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17796,7 +17796,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17834,7 +17834,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -17881,7 +17881,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 | Local HTTP file server - Hosts OCI bundle for download |
 
 ## Test Configuration
@@ -17927,7 +17927,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 | Local HTTP file server - Hosts multiple OCI bundles for download |
 
 ## Test Configuration
@@ -17975,7 +17975,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Broadband gateway under test |
+| DUT - Device under test |
 | Local HTTP file server - Hosts multiple OCI bundles for download |
 
 ## Test Configuration
