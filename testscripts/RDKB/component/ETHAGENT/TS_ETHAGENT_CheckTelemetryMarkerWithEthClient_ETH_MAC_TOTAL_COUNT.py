@@ -16,69 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>1</version>
-  <name>TS_ETHAGENT_CheckTelemetryMarkerWithEthClient_ETH_MAC_TOTAL_COUNT</name>
-  <primitive_test_id/>
-  <primitive_test_name>ETHAgent_DoNothing</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To check if marker  ETH_MAC_{i}_TOTAL_COUNT is present when EthLog Enabled with a connected LAN Client</synopsis>
-  <groups_id/>
-  <execution_time>25</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>RPI</box_type>
-    <box_type>BPI</box_type><box_type>Broadband</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ETHAGENT_8</test_case_id>
-    <test_objective>This test case is to check if marker ETH_MAC_{i}_TOTAL_COUNT is present when EthLog Enabled with a connected LAN Client</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script
-3. DUT must have a LAN client connected</pre_requisite>
-    <api_or_interface_used>
-N/A</api_or_interface_used>
-    <input_parameters>Device.Hosts.HostNumberOfEntries
-Device.Hosts.Host.{i}.Layer1Interface
-Device.Hosts.Host.{i}.PhysAddress
-Device.Ethernet.InterfaceNumberOfEntries
-Device.Ethernet.Interface.{i}.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress
-Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMEthLogEnabled
-Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMEthLogPeriod
-Device.Ethernet.Interface.{i}.X_RDKCENTRAL-COM_AssociatedDeviceNumberOfEntries</input_parameters>
-    <automation_approch>1.Load the pam and sysutil module
-2. Get the number of hosts connected using Device.Hosts.HostNumberOfEntries
-3. Check at what instance  the connected host is Ethernet using Device.Hosts.Host.{i}.Layer1Interface
-4. At the same instance get the devices Mac address using Device.Hosts.Host.{i}.PhysAddress
-5. Loop for the Device.Ethernet.InterfaceNumberOfEntries and  check at what instance the mac address equals to the one received from the Host table entry using Device.Ethernet.Interface,{i}.X_RDKCENTRAL-COM_AssociatedDevice.1.MACAddress to confirm on the active LAN client connected and at what interface was the client connected.
-6. Get the default value of  Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMEthLogEnabled  and Enable it.
-7. Get the default value of Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMEthLogPeriod and set it 10 sec .
-8. Now grep on /rdklogs/logs/eth_telemetry.txt and check for ETH_MAC_{i}_TOTAL_COUNT marker with polling logic of 15 min and retrieve the mac.
-9  Check if the count equals to the value present in Device.Ethernet.Interface.{i}.X_RDKCENTRAL-COM_AssociatedDeviceNumberOfEntries
-10.Revert the parameters set to their default
-11.Unload the module</automation_approch>
-    <expected_output>ETH_MAC_{i}_TOTAL_COUNT  marker should be present when Ethlog is enabled </expected_output>
-    <priority>High</priority>
-    <test_stub_interface>ETHAGENT</test_stub_interface>
-    <test_script>TS_ETHAGENT_CheckTelemetryMarkerWithEthClient_ETH_MAC_TOTAL_COUNT</test_script>
-    <skipped>No</skipped>
-    <release_version>M81</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-</xml>
 
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from  time import sleep;
@@ -458,12 +396,15 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in sysutilloadmodulestatu
                 print("No Ethernet Client Associated with DUT");
     else:
         #Set the result status of execution
-        tdkTestObj.setResultStatus("SUCCESS");
+        tdkTestObj.setResultStatus("FAILURE");
         print("TEST STEP 1: Get the number of hosts from Host Table");
         print("EXPECTED RESULT 1: Should get the number of hosts");
-        print("ACTUAL RESULT 1: Number of hosts :%s" %NoOfHosts);
+        if expectedresult in actualresult:
+            print("ACTUAL RESULT 1: Number of hosts :%s - No client connected" %NoOfHosts);
+        else:
+            print("ACTUAL RESULT 1: Failed to get number of hosts. Result: %s, Details: %s" % (actualresult, NoOfHosts));
         #Get the result of execution
-        print("[TEST EXECUTION RESULT] : SUCCESS");
+        print("[TEST EXECUTION RESULT] : FAILURE");
     obj.unloadModule("pam")
     sysObj.unloadModule("sysutil");
 else:

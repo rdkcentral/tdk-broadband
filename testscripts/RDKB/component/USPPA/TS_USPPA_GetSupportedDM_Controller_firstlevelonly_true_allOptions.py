@@ -16,58 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>40</version>
-  <name>TS_USPPA_GetSupportedDM_Controller_firstlevelonly_true_allOptions</name>
-  <primitive_test_id/>
-  <primitive_test_name>USPPA_Donothing</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To send a GET_SUPPORTED_DM request via the USP protocol to retrieve the supported data model details of the controller instance, with first_level_only set to true and options like return_params, return_commands and return_events are enabled.</synopsis>
-  <groups_id/>
-  <execution_time>10</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>BPI</box_type>
-    <box_type>Broadband</box_type>
-    <box_type>RPI</box_type>
-  </box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_USPPA_6</test_case_id>
-    <test_objective>This test case is to send a GET_SUPPORTED_DM request via the USP protocol to retrieve the supported data model details of the controller instance, with first_level_only set to true and options like return_params, return_commands and return_events are enabled.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband,RPI,BPI</test_setup>
-    <pre_requisite>1.Ccsp Components should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script
-3.USPPA should be enabled
-4. USP agent and controller are up and communicating with each other.</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>Device.LocalAgent.Controller.</input_parameters>
-    <automation_approch>1. Load sysutil module
-2. Check the prerequisite function is success.
-3. Configure USP controller to send GET_SUPPORTED_DM request for getting the  Device.LocalAgent.Controller. value with first_level_only as true and options like return_params, return_commands and return_events are enabled.
-4.Once request is success, parse the USP response and get the supported parameters, events and commands.
-5. Unload sysutil module</automation_approch>
-    <expected_output>Should get the supported DM details of Device.LocalAgent.Controller with first_level_only as true and options like return_params, return_commands and return_events are enabled via USP protocol successfully</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_USPPA_GetSupportedDM_Controller_firstlevelonly_true_allOptions</test_script>
-    <skipped>No</skipped>
-    <release_version>M140</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
-
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 from usppaUtility import *
