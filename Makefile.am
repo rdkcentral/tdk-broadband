@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-SUBDIRS = agent tdkb_lib WIFIAgent_stub TR069Pa_Stub AdvancedConfig_stub pam_stub SysUtil_stub TAD_stub LMLite_Stub tdkb_e2e_stub tdkb_tr181_stub RBUS_Stub
+SUBDIRS = agent tdkb_lib WIFIAgent_stub MBUS_Stub TR069Pa_Stub AdvancedConfig_stub pam_stub SysUtil_stub TAD_stub LMLite_Stub tdkb_e2e_stub tdkb_tr181_stub RBUS_Stub 
 
 #if NON_CM
 #SUBDIRS = agent tdkb_lib WIFIAgent_stub MBUS_Stub WECB_Stub TR069Pa_Stub AdvancedConfig_stub pam_stub SysUtil_stub TAD_stub LMLite_Stub WIFIHAL_stub ethsw_hal_stub dhcp_hal_stub tdkb_e2e_stub platform_hal_stub tdkb_tr181_stub XUPNP_Stub EPONHAL_Stub mso_mgmt_hal_stub BLEHAL_Stub RBUS_Stub FWUpgradeHAL_Stub $(SUBDIR_WANMANAGER)

@@ -94,18 +94,18 @@ AC_SUBST(ERT_VALUE)
 #AM_CONDITIONAL([PLATFORM_ENABLED], [test x$platform = xtrue])
 
 
-REDIRECT_FLAG=0
+#REDIRECT_FLAG=0
 
-AC_ARG_ENABLE([redirect],
-        AS_HELP_STRING([--enable-redirect],[enable redirect]),
-        [
-          case "${enableval}" in
-             yes) REDIRECT_FLAG=1 ;;
-           no) REDIRECT_FLAG=0 ;;
-          *) AC_MSG_ERROR([bad value ${enableval} for --enable-redirect ]) ;;
-           esac
-           ],
-         [echo "Redirect Flag enabled"])
+#AC_ARG_ENABLE([redirect],
+#        AS_HELP_STRING([--enable-redirect],[enable redirect]),
+#        [
+#          case "${enableval}" in
+#             yes) REDIRECT_FLAG=1 ;;
+#           no) REDIRECT_FLAG=0 ;;
+#          *) AC_MSG_ERROR([bad value ${enableval} for --enable-redirect ]) ;;
+#           esac
+#           ],
+#         [echo "Redirect Flag enabled"])
 
 AC_SUBST(REDIRECT_FLAG)
 
@@ -166,6 +166,7 @@ AC_CONFIG_FILES([Makefile
 	 agent/Makefile
          tdkb_lib/Makefile
 	 WIFIAgent_stub/Makefile
+         MBUS_Stub/Makefile
 	 TR069Pa_Stub/Makefile
 	 AdvancedConfig_stub/Makefile
 	 pam_stub/Makefile
