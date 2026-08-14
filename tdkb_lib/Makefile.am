@@ -32,7 +32,7 @@ hardware_platform = i686-linux-gnu
 lib_LTLIBRARIES = libtdkagentssp.la
 libtdkagentssp_la_CPPFLAGS = -I$(top_srcdir)/tdkb_lib/include \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/ \
-                                #-I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/ccsp \
+                                -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/ccsp \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/trower-base64 \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/rbus \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/rtmessage
