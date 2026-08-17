@@ -49,12 +49,6 @@ class TADstub : public RDKTestStubInterface, public AbstractServer<TADstub>
 			this->bindAndAddMethod(Procedure("TADstub_Get", PARAMS_BY_NAME, JSON_STRING, "paramName", JSON_STRING, NULL), &TADstub::TADstub_Get);
 			this->bindAndAddMethod(Procedure("TADstub_Set", PARAMS_BY_NAME, JSON_STRING, "ParamName", JSON_STRING, "ParamValue", JSON_STRING, "Type", JSON_STRING, NULL), &TADstub::TADstub_Set);
 			this->bindAndAddMethod(Procedure("TADstub_SetDiagnosticsState", PARAMS_BY_NAME, JSON_STRING, "ParamName", JSON_STRING, "ParamValue", JSON_STRING, "Type", JSON_STRING, NULL), &TADstub::TADstub_SetDiagnosticsState);
-			this->bindAndAddMethod(Procedure("TADstub_Init", PARAMS_BY_NAME, JSON_STRING,NULL), &TADstub::TADstub_Init);
-			this->bindAndAddMethod(Procedure("TADstub_Start", PARAMS_BY_NAME, JSON_STRING, "mode", JSON_INTEGER, NULL), &TADstub::TADstub_Start);
-			this->bindAndAddMethod(Procedure("TADstub_Stop", PARAMS_BY_NAME, JSON_STRING, "mode", JSON_INTEGER, NULL), &TADstub::TADstub_Stop);
-			this->bindAndAddMethod(Procedure("TADstub_SetCfg", PARAMS_BY_NAME, JSON_STRING, "mode", JSON_INTEGER, "host", JSON_STRING, NULL), &TADstub::TADstub_SetCfg);
-			this->bindAndAddMethod(Procedure("TADstub_GetCfg", PARAMS_BY_NAME, JSON_STRING, "mode", JSON_INTEGER, NULL), &TADstub::TADstub_GetCfg);
-			this->bindAndAddMethod(Procedure("TADstub_GetState", PARAMS_BY_NAME, JSON_STRING, "mode", JSON_INTEGER, NULL), &TADstub::TADstub_GetState);
                         this->bindAndAddMethod(Procedure("TADstub_SetOnly", PARAMS_BY_NAME, JSON_STRING, "ParamName", JSON_STRING, "ParamValue", JSON_STRING, "Type", JSON_STRING, NULL), &TADstub::TADstub_SetOnly);
 		}
 
@@ -68,12 +62,6 @@ class TADstub : public RDKTestStubInterface, public AbstractServer<TADstub>
         void TADstub_Get(IN const Json::Value& req, OUT Json::Value& response);
         void TADstub_Set(IN const Json::Value& req, OUT Json::Value& response);
         void TADstub_SetDiagnosticsState(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_Init(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_Start(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_Stop(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_SetCfg(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_GetCfg(IN const Json::Value& req, OUT Json::Value& response);
-        void TADstub_GetState(IN const Json::Value& req, OUT Json::Value& response);
         void TADstub_SetOnly(IN const Json::Value& req, OUT Json::Value& response);
 };
 #endif //__TAD_STUB_H__

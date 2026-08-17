@@ -37,6 +37,6 @@ libtdkagentssp_la_CPPFLAGS = -I$(top_srcdir)/tdkb_lib/include \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/rbus \
                                 -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)/rtmessage
 
-libtdkagentssp_la_SOURCES = src/ssp_messagebus_interface.c src/ssp_action.c src/ssp_main.c src/ssp_tdk_wrp.c src/ssp_tdk_rbus_wrp.c src/dm_pack_datamodel.c
+libtdkagentssp_la_SOURCES = src/ssp_messagebus_interface.c src/ssp_tdk_mbus_wrp.c src/ssp_tdk_mbus_lib.c src/ssp_action.c src/ssp_main.c src/ssp_tdk_wrp.c src/ssp_tdk_rbus_wrp.c src/dm_pack_datamodel.c
 
 libtdkagentssp_la_LDFLAGS =  -lccsp_common -ltr181 -lrbus
