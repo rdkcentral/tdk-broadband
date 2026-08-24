@@ -116,7 +116,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
             print("\nTEST STEP %d: Get %s and check whether it contains a WiFi SSID interface path" %(step,layer1Param))
             print("EXPECTED RESULT %d: The Layer1Interface value should be retrieved successfully" %step)
 
-            if expectedresult in actualresult:
+            if expectedresult in actualresult and layer1Interface != "":
                 tdkTestObj.setResultStatus("SUCCESS")
                 print("ACTUAL RESULT %d: %s is %s" %(step,layer1Param,layer1Interface))
                 print("[TEST EXECUTION RESULT] : SUCCESS")
@@ -131,7 +131,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                     print("\nTEST STEP %d: Get the Active status of the WiFi client at Host.%d" %(step,hostIndex))
                     print("EXPECTED RESULT %d: %s should be true" %(step,activeParam))
 
-                    if expectedresult in actualresult and activeStatus.lower() == "true":
+                    if expectedresult in actualresult and activeStatus == "true":
                         clientDetected = True
                         clientIndex = hostIndex
                         clientLayer1Interface = layer1Interface
@@ -149,7 +149,7 @@ if "SUCCESS" in loadmodulestatus_sys.upper() and "SUCCESS" in loadmodulestatus.u
                         print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE")
-                print("ACTUAL RESULT %d: Failed to get %s. Details: %s" %(step,layer1Param,layer1Interface))
+                print("ACTUAL RESULT %d: Failed to get a valid value for %s. Details: %s" %(step,layer1Param,layer1Interface))
                 print("[TEST EXECUTION RESULT] : FAILURE")
 
         # Check whether an active WiFi client was found
@@ -173,4 +173,3 @@ else:
     obj.setLoadModuleStatus("FAILURE")
     sysobj.setLoadModuleStatus("FAILURE")
     print("Module loading failed")
-
