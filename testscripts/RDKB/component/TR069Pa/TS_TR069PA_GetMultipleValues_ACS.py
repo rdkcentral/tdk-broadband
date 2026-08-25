@@ -39,11 +39,10 @@ loadmodulestatus1=sysobj.getLoadModuleResult()
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
-
+    step = 0
     #Check for prerequisites
     tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
-        step = 0
         queryParam = {"name":["Device.DeviceInfo.ProductClass","Device.DeviceInfo.Manufacturer"]}
         parameters = queryParam.get("name")
         #Perform get task request and search query to get the value of multiple parameters
