@@ -566,7 +566,7 @@ None
 <details>
 <summary><strong>Test Case 15: Verify Dropbear SSH process is running on the DUT</strong></summary>
 
-## Test Case 15: TS_SANITY_Is_WEBPA_UP
+## Test Case 15: TS_SANITY_Is_DROPBEAR_UP
 
 ## Objectives
 This test verifies that the Dropbear SSH process is running on the DUT. It retrieves the list of Dropbear processes to be verified from the platform configuration and checks that each process is active and returns a valid PID.
