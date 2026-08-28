@@ -144,7 +144,7 @@ None
 <details>
 <summary><strong>Test Case 4: Verify wired LAN client has internet access through the gateway</strong></summary>
 
-## Test Case 4: E2E_WIFI_LAN_AccessInternet
+## Test Case 4: E2E_LAN_AccessInternet
 
 ## Objectives
 Verify that a wired LAN client connected to the gateway has internet access. The test validates end-to-end connectivity from the LAN client through the gateway to the internet, confirming that the LAN client is connected to the gateway with a valid IP address and can successfully reach external internet hosts.

@@ -8539,85 +8539,8 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 5: LAN client receives correct DNS server from DHCP lease</strong></summary>
+<summary><strong>Test Case 5: Ensure DHCP address re-assignment with active lease time</strong></summary>
 
-## Test Case 5: E2E_DHCP_Check_LANClient_DNS_Config
-
-## Objectives
-Verify that DHCPv4 clients receive the correct DNS server configuration from the wireless gateway. The test retrieves the gateway's primary DNS server address and confirms it matches the DNS server reported in the LAN client's DHCP lease.
-
-## Test Case ID
-TC_TDKB_E2E_278
-
-## Test Type
-Positive
-
-## Test Environment
-
-| Component |
-|-----------|
-| DUT - Device under test |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
-
-## Test Configuration
-
-None
-
-## Test Procedure and Expected Results
-
-| Step Number | DUT | LAN Client | TDK Validation and Expected Results |
-|---|------------------------------|------------------------------|------------------------------|
-| <small>1</small> | <small>GET Device.DNS.Client.Server.1.DNSServer and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress and save the retrieved values</small> | <small>&nbsp;</small> | <small>Verify both parameters are retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>2</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the LAN client interface</small> | <small>Verify the LAN client obtained a valid IP address. If the condition is met CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>&nbsp;</small> | <small>Verify the LAN client IP address is within the DHCP range defined by the DUT's LanIPAddress</small> | <small>Verify LAN client IP is in the gateway DHCP range. If the condition is met CONTINUE, else FAIL</small> |
-| <small>4</small> | <small>&nbsp;</small> | <small>Retrieve the DNS server address from the LAN client's DHCP lease information</small> | <small>Verify the DNS server information is retrieved from the LAN client DHCP lease. If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>&nbsp;</small> | <small>Verify the DNS server address reported in the LAN client DHCP lease contains the gateway's Device.DNS.Client.Server.1.DNSServer value</small> | <small>If the condition is met PASS, else FAIL</small> |
-
-</details>
-
----
-
-<details>
-<summary><strong>Test Case 6: LAN client receives correct domain name from DHCP lease</strong></summary>
-
-## Test Case 6: E2E_DHCP_Check_LANClient_DomainName_Config
-
-## Objectives
-Verify that DHCPv4 clients receive the correct domain name configuration from the wireless gateway. The test retrieves the gateway's configured DHCP domain name and confirms it exactly matches the domain name in the LAN client's DHCP lease.
-
-## Test Case ID
-TC_TDKB_E2E_279
-
-## Test Type
-Positive
-
-## Test Environment
-
-| Component |
-|-----------|
-| DUT - Device under test |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
-
-## Test Configuration
-
-None
-
-## Test Procedure and Expected Results
-
-| Step Number | DUT | LAN Client | TDK Validation and Expected Results |
-|---|------------------------------|------------------------------|------------------------------|
-| <small>1</small> | <small>GET Device.DHCPv4.Server.Pool.1.DomainName and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress and save the retrieved values</small> | <small>&nbsp;</small> | <small>Verify both parameters are retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>2</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the LAN client interface</small> | <small>Verify the LAN client obtained a valid IP address. If the condition is met CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>&nbsp;</small> | <small>Verify the LAN client IP address is within the DHCP range defined by the DUT's LanIPAddress</small> | <small>Verify LAN client IP is in the gateway DHCP range. If the condition is met CONTINUE, else FAIL</small> |
-| <small>4</small> | <small>&nbsp;</small> | <small>Retrieve the domain name from the LAN client's DHCP lease information</small> | <small>Verify the domain name information is retrieved from the LAN client DHCP lease. If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>&nbsp;</small> | <small>Verify the domain name reported in the LAN client DHCP lease exactly matches the gateway's Device.DHCPv4.Server.Pool.1.DomainName value</small> | <small>If the condition is met PASS, else FAIL</small> |
-
-</details>
-
----
-
-<details>
-<summary><strong>Test Case 7: LAN client retains same IP on reconnection while lease is active</strong></summary>
 
 ## Test Case 7: E2E_DHCP_GetLanIPAddress_OnReconnection_WithActiveLease
 
@@ -8670,7 +8593,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 8: LAN client retains same IP on reconnection after lease expiry</strong></summary>
+<summary><strong>Test Case 6: LAN client retains same IP on reconnection after lease expiry</strong></summary>
 
 ## Test Case 8: E2E_DHCP_GetLanIPAddress_OnReconnection_AfterLeaseTime
 
@@ -8723,58 +8646,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 9: Updated DHCP lease time is reflected on LAN client</strong></summary>
-
-## Test Case 9: E2E_DHCP_Update_ServerLeaseTime
-
-## Objectives
-Verify that the DHCPv4 server lease time can be updated on the wireless gateway and that the new lease time is reflected in the LAN client's DHCP lease information.
-
-## Test Case ID
-TC_TDKB_E2E_274
-
-## Test Type
-Positive
-
-## Test Environment
-
-| Component |
-|-----------|
-| DUT - Device under test |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
-
-## Test Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress | 10.0.0.1 |
-| Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask | 255.255.255.0 |
-| Device.DHCPv4.Server.Pool.1.MinAddress | 10.0.0.2 |
-| Device.DHCPv4.Server.Pool.1.MaxAddress | 10.0.0.253 |
-| Device.DHCPv4.Server.Pool.1.LeaseTime | 120 |
-
-## Test Procedure and Expected Results
-
-| Step Number | DUT | LAN Client | TDK Validation and Expected Results |
-|---|------------------------------|------------------------------|------------------------------|
-| <small>1</small> | <small>GET Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress, Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask, Device.DHCPv4.Server.Pool.1.MinAddress, Device.DHCPv4.Server.Pool.1.MaxAddress and Device.DHCPv4.Server.Pool.1.LeaseTime and save the original values</small> | <small>&nbsp;</small> | <small>Verify all parameters are retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>2</small> | <small>SET Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress to 10.0.0.1 and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to 255.255.255.0</small> | <small>&nbsp;</small> | <small>Verify SET operations are successful. If the condition is met CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>SET Device.DHCPv4.Server.Pool.1.MinAddress to 10.0.0.2, Device.DHCPv4.Server.Pool.1.MaxAddress to 10.0.0.253 and Device.DHCPv4.Server.Pool.1.LeaseTime to 120</small> | <small>&nbsp;</small> | <small>Verify SET operations are successful. If the condition is met CONTINUE, else FAIL</small> |
-| <small>4</small> | <small>GET all five parameters and verify the retrieved values match the SET values</small> | <small>&nbsp;</small> | <small>Verify all retrieved values match the configured values. If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>Wait 60 seconds for DHCP configuration changes to propagate to the LAN client</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-| <small>6</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the LAN client interface</small> | <small>Verify the LAN client obtained a valid IP address. If the condition is met CONTINUE, else FAIL</small> |
-| <small>7</small> | <small>&nbsp;</small> | <small>Verify the LAN client IP address is within the configured DHCP range</small> | <small>Verify LAN client IP is in the DHCP range. If the condition is met CONTINUE, else FAIL</small> |
-| <small>8</small> | <small>&nbsp;</small> | <small>Retrieve the lease time from the LAN client's DHCP lease information</small> | <small>Verify the DHCP lease time information is retrieved from the LAN client. If the condition is met CONTINUE, else FAIL</small> |
-| <small>9</small> | <small>&nbsp;</small> | <small>Verify the lease time reported in the LAN client DHCP lease equals 120 seconds</small> | <small>If the condition is met PASS, else FAIL</small> |
-| <small>10</small> | <small>Revert Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress and Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanSubnetMask to original values</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-| <small>11</small> | <small>Revert Device.DHCPv4.Server.Pool.1.MinAddress, Device.DHCPv4.Server.Pool.1.MaxAddress and Device.DHCPv4.Server.Pool.1.LeaseTime to original values</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-
-</details>
-
----
-
-<details>
-<summary><strong>Test Case 10: Updated DHCP subnet mask is reflected on LAN client</strong></summary>
+<summary><strong>Test Case 7: Updated DHCP subnet mask is reflected on LAN client</strong></summary>
 
 ## Test Case 10: E2E_DHCP_Validate_SetSubnetMask
 
@@ -8819,7 +8691,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 11: LAN client IP falls within narrow DHCP server pool range</strong></summary>
+<summary><strong>Test Case 8: LAN client IP falls within narrow DHCP server pool range</strong></summary>
 
 ## Test Case 11: E2E_DHCP_VerifyLANClientIP_InServerPoolRange
 
@@ -8872,7 +8744,7 @@ Positive
 # E2E - DHCP Invalid LAN IP Address
 
 <details>
-<summary><strong>Test Case 12: DUT rejects public IP address as LAN IP</strong></summary>
+<summary><strong>Test Case 9: DUT rejects public IP address as LAN IP</strong></summary>
 
 ## Test Case 12: E2E_DHCP_SetLanIPAddress_PublicAddress
 
@@ -8922,7 +8794,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 13: DUT rejects 0.0.0.0 as LAN IP address</strong></summary>
+<summary><strong>Test Case 10: DUT rejects 0.0.0.0 as LAN IP address</strong></summary>
 
 ## Test Case 13: E2E_DHCP_SetLanIPAddress_AnyAddress
 
@@ -8972,7 +8844,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 14: DUT rejects network address as LAN IP</strong></summary>
+<summary><strong>Test Case 11: DUT rejects network address as LAN IP</strong></summary>
 
 ## Test Case 14: E2E_DHCP_SetLanIPAddress_NetworkIP
 
@@ -9022,7 +8894,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 15: DUT rejects network broadcast address as LAN IP</strong></summary>
+<summary><strong>Test Case 12: DUT rejects network broadcast address as LAN IP</strong></summary>
 
 ## Test Case 15: E2E_DHCP_SetLanIPAddress_NetworkBroadcastIP
 
@@ -9072,7 +8944,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 16: DUT rejects multicast address as LAN IP</strong></summary>
+<summary><strong>Test Case 13: DUT rejects multicast address as LAN IP</strong></summary>
 
 ## Test Case 16: E2E_DHCP_SetLanIPAddress_MulticastIPRange
 
@@ -9122,7 +8994,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 17: DUT rejects limited broadcast address as LAN IP</strong></summary>
+<summary><strong>Test Case 14: DUT rejects limited broadcast address as LAN IP</strong></summary>
 
 ## Test Case 17: E2E_DHCP_SetLanIPAddress_BroadcastIP
 
@@ -9172,7 +9044,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 18: DUT rejects subnet mask value as LAN IP address</strong></summary>
+<summary><strong>Test Case 15: DUT rejects subnet mask value as LAN IP address</strong></summary>
 
 ## Test Case 18: E2E_DHCP_SetLanIPAddress_SubnetMask
 
@@ -9222,7 +9094,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 19: DUT rejects special characters as LAN IP address</strong></summary>
+<summary><strong>Test Case 16: DUT rejects special characters as LAN IP address</strong></summary>
 
 ## Test Case 19: E2E_DHCP_SetLanIPAddress_SpecialCharacters
 
@@ -9272,7 +9144,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 20: DUT rejects alphanumeric string as LAN IP address</strong></summary>
+<summary><strong>Test Case 17: DUT rejects alphanumeric string as LAN IP address</strong></summary>
 
 ## Test Case 20: E2E_DHCP_SetLanIPAddress_Alphanumeric
 
@@ -9322,7 +9194,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 21: DUT rejects hexadecimal string as LAN IP address</strong></summary>
+<summary><strong>Test Case 18: DUT rejects hexadecimal string as LAN IP address</strong></summary>
 
 ## Test Case 21: E2E_DHCP_SetLanIPAddress_Hexadecimal
 
@@ -9372,7 +9244,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 22: DUT rejects DHCP lease time less than 120 seconds</strong></summary>
+<summary><strong>Test Case 19: DUT rejects DHCP lease time less than 120 seconds</strong></summary>
 
 ## Test Case 22: E2E_DHCP_SetServerLeaseTime_LessThan120
 
@@ -9432,7 +9304,7 @@ Negative
 # E2E - DHCP Invalid Subnet Mask
 
 <details>
-<summary><strong>Test Case 23: DUT rejects public IP address as subnet mask</strong></summary>
+<summary><strong>Test Case 20: DUT rejects public IP address as subnet mask</strong></summary>
 
 ## Test Case 23: E2E_DHCP_SetSubnetMask_PublicAddress
 
@@ -9481,7 +9353,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 24: DUT rejects 0.0.0.0 as subnet mask</strong></summary>
+<summary><strong>Test Case 21: DUT rejects 0.0.0.0 as subnet mask</strong></summary>
 
 ## Test Case 24: E2E_DHCP_SetSubnetMask_AnyAddress
 
@@ -9530,7 +9402,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 25: DUT rejects network address as subnet mask</strong></summary>
+<summary><strong>Test Case 22: DUT rejects network address as subnet mask</strong></summary>
 
 ## Test Case 25: E2E_DHCP_SetSubnetMask_NetworkIP
 
@@ -9579,7 +9451,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 26: DUT rejects network broadcast address as subnet mask</strong></summary>
+<summary><strong>Test Case 23: DUT rejects network broadcast address as subnet mask</strong></summary>
 
 ## Test Case 26: E2E_DHCP_SetSubnetMask_NetworkBroadcastIP
 
@@ -9628,7 +9500,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 27: DUT rejects multicast address as subnet mask</strong></summary>
+<summary><strong>Test Case 24: DUT rejects multicast address as subnet mask</strong></summary>
 
 ## Test Case 27: E2E_DHCP_SetSubnetMask_MulticastIPRange
 
@@ -9677,7 +9549,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 28: DUT rejects limited broadcast address as subnet mask</strong></summary>
+<summary><strong>Test Case 25: DUT rejects limited broadcast address as subnet mask</strong></summary>
 
 ## Test Case 28: E2E_DHCP_SetSubnetMask_BroadcastIP
 
@@ -9726,7 +9598,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 29: DUT rejects special characters as subnet mask</strong></summary>
+<summary><strong>Test Case 26: DUT rejects special characters as subnet mask</strong></summary>
 
 ## Test Case 29: E2E_DHCP_SetSubnetMask_SpecialCharacters
 
@@ -9775,7 +9647,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 30: DUT rejects alphanumeric string as subnet mask</strong></summary>
+<summary><strong>Test Case 27: DUT rejects alphanumeric string as subnet mask</strong></summary>
 
 ## Test Case 30: E2E_DHCP_SetSubnetMask_Alphanumeric
 
@@ -9824,7 +9696,7 @@ Negative
 ---
 
 <details>
-<summary><strong>Test Case 31: DUT rejects hexadecimal string as subnet mask</strong></summary>
+<summary><strong>Test Case 28: DUT rejects hexadecimal string as subnet mask</strong></summary>
 
 ## Test Case 31: E2E_DHCP_SetSubnetMask_Hexadecimal
 
@@ -9879,61 +9751,9 @@ Negative
 
 # E2E - DHCP WLAN Configuration
 
-<details>
-<summary><strong>Test Case 32: WLAN client gets DHCP IP and accesses internet when DHCP server is enabled</strong></summary>
-
-## Test Case 32: E2E_DHCP_Enable_AccessInternetFromWlan
-
-## Objectives
-Verify that when the DHCPv4 server is enabled on the gateway, a WLAN client connecting to the configured WLAN SSID receives a valid IP address within the DHCP range and can access the internet.
-
-## Test Case ID
-TC_TDKB_E2E_49
-
-## Test Type
-Positive
-
-## Test Environment
-
-| Component |
-|-----------|
-| DUT - Device under test |
-| WLAN Client – Wi-Fi client connected to DUT wireless network |
-
-## Test Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Device.WiFi.SSID.{i}.SSID | Configured from test config |
-| Device.WiFi.AccessPoint.{i}.Security.KeyPassphrase | Configured from test config |
-| Device.WiFi.Radio.{i}.Enable | true |
-| Device.DHCPv4.Server.Enable | true |
-
-## Test Procedure and Expected Results
-
-| Step Number | DUT | WLAN Client | TDK Validation and Expected Results |
-|---|------------------------------|------------------------------|------------------------------|
-| <small>1</small> | <small>GET Device.WiFi.SSID.{i}.SSID, Device.WiFi.AccessPoint.{i}.Security.KeyPassphrase and Device.WiFi.Radio.{i}.Enable and save the original values</small> | <small>&nbsp;</small> | <small>Verify all parameters are retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>2</small> | <small>GET Device.DHCPv4.Server.Enable and save the original value</small> | <small>&nbsp;</small> | <small>Verify the parameter is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>SET Device.WiFi.SSID.{i}.SSID and Device.WiFi.AccessPoint.{i}.Security.KeyPassphrase to configured values and Device.WiFi.Radio.{i}.Enable to true</small> | <small>&nbsp;</small> | <small>Verify all SET operations are successful. If the condition is met CONTINUE, else FAIL</small> |
-| <small>4</small> | <small>SET Device.DHCPv4.Server.Enable to true</small> | <small>&nbsp;</small> | <small>Verify the SET operation is successful. If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>GET Device.WiFi.SSID.{i}.SSID, Device.WiFi.AccessPoint.{i}.Security.KeyPassphrase, Device.WiFi.Radio.{i}.Enable and Device.DHCPv4.Server.Enable and verify all values match the SET values</small> | <small>&nbsp;</small> | <small>Verify all retrieved values match the configured values and DHCP Enable is true. If the condition is met CONTINUE, else FAIL</small> |
-| <small>6</small> | <small>Wait 60 seconds for configuration changes to propagate</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-| <small>7</small> | <small>&nbsp;</small> | <small>Connect WLAN client to the configured SSID using the configured credentials</small> | <small>Verify the WLAN client connected successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>8</small> | <small>&nbsp;</small> | <small>Get the IP address assigned to the WLAN client interface</small> | <small>Verify the WLAN client obtained a valid IP address from the DHCP server. If the condition is met CONTINUE, else FAIL</small> |
-| <small>9</small> | <small>GET Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>&nbsp;</small> | <small>Verify the LAN IP address is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>10</small> | <small>&nbsp;</small> | <small>Verify the WLAN client IP address is within the DHCP range defined by Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress</small> | <small>Verify WLAN client IP is in the DHCP range. If the condition is met CONTINUE, else FAIL</small> |
-| <small>11</small> | <small>&nbsp;</small> | <small>Verify internet connectivity from the WLAN client by pinging an external host</small> | <small>If the condition is met PASS, else FAIL</small> |
-| <small>12</small> | <small>&nbsp;</small> | <small>Disconnect WLAN client from the configured SSID</small> | <small>&nbsp;</small> |
-| <small>13</small> | <small>Revert Device.WiFi.SSID.{i}.SSID, Device.WiFi.AccessPoint.{i}.Security.KeyPassphrase and Device.WiFi.Radio.{i}.Enable to original values</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-| <small>14</small> | <small>Revert Device.DHCPv4.Server.Enable to original value</small> | <small>&nbsp;</small> | <small>&nbsp;</small> |
-
-</details>
-
----
 
 <details>
-<summary><strong>Test Case 33: WLAN client obtains IP in Class A private DHCP range</strong></summary>
+<summary><strong>Test Case 29: WLAN client obtains IP in Class A private DHCP range</strong></summary>
 
 ## Test Case 33: E2E_DHCP_WLAN_ClassAPrivate_CheckIPAddress
 
@@ -9983,7 +9803,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 34: WLAN client obtains IP in Class B private DHCP range</strong></summary>
+<summary><strong>Test Case 30: WLAN client obtains IP in Class B private DHCP range</strong></summary>
 
 ## Test Case 34: E2E_DHCP_WLAN_ClassBPrivate_CheckIPAddress
 
@@ -10033,7 +9853,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 35: WLAN client obtains IP in Class C private DHCP range</strong></summary>
+<summary><strong>Test Case 31: WLAN client obtains IP in Class C private DHCP range</strong></summary>
 
 ## Test Case 35: E2E_DHCP_WLAN_ClassCPrivate_CheckIPAddress
 
@@ -10083,7 +9903,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 36: WLAN client receives 255.0.0.0 subnet mask from DHCP</strong></summary>
+<summary><strong>Test Case 32: WLAN client receives 255.0.0.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 36: E2E_DHCP_WLAN_SetSubnetMask_255.0.0.0
 
@@ -10133,7 +9953,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 37: WLAN client receives 255.255.0.0 subnet mask from DHCP</strong></summary>
+<summary><strong>Test Case 33: WLAN client receives 255.255.0.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 37: E2E_DHCP_WLAN_SetSubnetMask_255.255.0.0
 
@@ -10183,7 +10003,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 38: WLAN client receives 255.255.255.0 subnet mask from DHCP</strong></summary>
+<summary><strong>Test Case 34: WLAN client receives 255.255.255.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 38: E2E_DHCP_WLAN_SetSubnetMask_255.255.255.0
 
@@ -10233,7 +10053,7 @@ Positive
 ---
 
 <details>
-<summary><strong>Test Case 39: WLAN client receives 255.255.255.128 subnet mask from DHCP</strong></summary>
+<summary><strong>Test Case 35: WLAN client receives 255.255.255.128 subnet mask from DHCP</strong></summary>
 
 ## Test Case 39: E2E_DHCP_WLAN_SetSubnetMask_255.255.255.128
 
@@ -13756,10 +13576,6 @@ Positive
 
 ---
 
-</details>
-
----
-
 <details>
 <summary><strong>SIM, Access Technology, and Profile</strong></summary>
 
@@ -13927,55 +13743,6 @@ Positive
 | <small>5</small> | <small>GET Device.Cellular.X_RDK_Status from the DUT</small> | <small>Verify Device.Cellular.X_RDK_Status has transitioned to the expected value (CONNECTED if enabled, DEREGISTERED if disabled). If the condition is met CONTINUE, else FAIL</small> |
 | <small>6</small> | <small>GET Device.Cellular.Interface.1.X_RDK_ContextProfile.1.Status from the DUT</small> | <small>Verify context profile status has transitioned (ACTIVE if enabled, INACTIVE if disabled). If the condition is met PASS, else FAIL</small> |
 | <small>7</small> | <small>Cleanup: Revert Device.Cellular.Interface.1.Enable to original value</small> | <small>&nbsp;</small> |
-
-</details>
-
----
-
-<details>
-<summary><strong>Test Case 15: Verify Device.Cellular.X_RDK_Enable value persists after device reboot</strong></summary>
-
-## Test Case 15: TS_CellularManager_X_RDK_Enable_PersistenceOnReboot
-
-## Objectives
-Verify that Device.Cellular.X_RDK_Enable value persists as false after a device reboot. The test sets Device.Cellular.X_RDK_Enable to false, confirms the SET, triggers a device reboot, waits for recovery, and verifies the value remains false post-reboot.
-
-## Test Case ID
-TC_CellularManager_17
-
-## Test Type
-Positive
-
-## Test Environment
-
-| Component |
-|-----------|
-| DUT - Device under test |
-
-## Test Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Device.Cellular.X_RDK_Enable | false |
-
-## Test Procedure and Expected Results
-
-| Step Number | DUT | TDK Validation and Expected Results |
-|---|------------------------------|------------------------------|
-| <small>1</small> | <small>GET Device.Cellular.Interface.1.Enable from the DUT</small> | <small>Verify value is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>2</small> | <small>GET Device.Cellular.X_RDK_Status from the DUT</small> | <small>Verify status is retrieved successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>3</small> | <small>GET Device.Cellular.X_RDK_Enable from the DUT</small> | <small>Verify original value is retrieved and saved. If the condition is met CONTINUE, else FAIL</small> |
-| <small>4</small> | <small>SET Device.Cellular.X_RDK_Enable to false</small> | <small>Verify Device.Cellular.X_RDK_Enable is SET to false. If the condition is met CONTINUE, else FAIL</small> |
-| <small>5</small> | <small>Wait 10 seconds</small> | <small>&nbsp;</small> |
-| <small>6</small> | <small>GET Device.Cellular.X_RDK_Enable from the DUT</small> | <small>Verify Device.Cellular.X_RDK_Enable is false. If the condition is met CONTINUE, else FAIL</small> |
-| <small>7</small> | <small>Initiate reboot on the DUT; wait for DUT to come back online</small> | <small>Verify DUT reboots and recovers successfully. If the condition is met CONTINUE, else FAIL</small> |
-| <small>8</small> | <small>GET Device.Cellular.X_RDK_Enable from the DUT</small> | <small>Verify Device.Cellular.X_RDK_Enable is retrieved after reboot. If the condition is met CONTINUE, else FAIL</small> |
-| <small>9</small> | <small>&nbsp;</small> | <small>Verify Device.Cellular.X_RDK_Enable is false (matches the pre-reboot SET value), confirming persistence. If the condition is met PASS, else FAIL</small> |
-| <small>10</small> | <small>Cleanup: Revert Device.Cellular.X_RDK_Enable to original value</small> | <small>&nbsp;</small> |
-
-</details>
-
----
 
 </details>
 
