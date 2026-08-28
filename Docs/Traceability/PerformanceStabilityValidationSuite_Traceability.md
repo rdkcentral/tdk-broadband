@@ -1,0 +1,13 @@
+## Performance and Stability Validation Suite — Traceability
+
+| Req ID | Tests | Test Cases |
+|:-------|:-----:|:-----------|
+| `PS-PERF-001` | 1 | [E2E_TCPFromLanToWan_GetThroughput](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-1-e2e_tcpfromlantowan_getthroughput) |
+| `PS-PERF-002` | 1 | [E2E_WIFI_TCPFromLanToWlan_GetThroughput](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-2-e2e_wifi_tcpfromlantowlan_getthroughput) |
+| `PS-PERF-003` | 2 | [E2E_WIFI_TCPFromWlanToLan_GetThroughput](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-3-e2e_wifi_tcpfromwlantolan_getthroughput)<br>[E2E_WIFI_TCPFromWlanToLan_Perf](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-4-e2e_wifi_tcpfromwlantolan_perf) |
+| `PS-PERF-004` | 2 | [E2E_WIFI_TCPFromWlanToWan_GetThroughput](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-5-e2e_wifi_tcpfromwlantowan_getthroughput)<br>[E2E_WIFI_TCPFromWlanToWan_Perf](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-6-e2e_wifi_tcpfromwlantowan_perf) |
+| `PS-STBL-001` | 1 | [TS_STABILITY_MultipleReboots](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-7-ts_stability_multiplereboots) |
+| `PS-STBL-002` | 1 | [TS_STABILITY_MultipleFactoryReset](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-8-ts_stability_multiplefactoryreset) |
+| `PS-STBL-003` | 1 | [TS_STABILITY_E2E_LongRunIPV4ConnectivityfromLanClient](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-9-ts_stability_e2e_longrunipv4connectivityfromlanclient) |
+| `PS-STBL-004` | 1 | [TS_STABILITY_E2E_MultipleDNSQueryfromLanClient](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-10-ts_stability_e2e_multiplednsqueryfromlanclient) |
+| `PS-STBL-005` | 1 | [TS_STABILITY_MultipleWebPAQuery](https://github.com/rdkcentral/tdk-broadband/blob/develop/Docs/PerformanceAndStabilityValidationSuite_TestSpecification.md#test-case-11-ts_stability_multiplewebpaquery) |
