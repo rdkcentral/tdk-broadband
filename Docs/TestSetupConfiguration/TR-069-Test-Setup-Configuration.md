@@ -265,4 +265,4 @@ Transfer-Encoding: chunked
 ## 1.1.10. References
 - [TR-069 Support for RDKB RPI Reference Platform](https://wiki.rdkcentral.com/spaces/RDK/pages/137135549/TR-069+Support+for+RDKB+RPI+Reference+Platform)
 - [TR069 Support for Bananapi R4](https://wiki.rdkcentral.com/spaces/RDK/pages/355764044/TR069+Support+for+Bananapi+R4)
--[Genieacs API Reference](https://docs.genieacs.com/en/latest/api-reference.html)
+- [Genieacs API Reference](https://docs.genieacs.com/en/latest/api-reference.html)

@@ -10,7 +10,7 @@ EUT (Endpoint Under Test) is used to refer DUT in USPPA context. Here, we use Ok
 
 **Oktopus Controller (Community Edition) Installation**
 
-**General Requirements:** docker, docker compose, wget, unzip  
+**General Requirements:** docker, docker compose, wget, unzip
 **Port Requirements** : https://docs.oktopus.app.br/getting-started/requirements/network
 
 Please follow below steps:
@@ -29,10 +29,10 @@ Please follow below steps:
 lscpu | grep avx
 ```
 
-If empty, It means AVX not supported, in turn Mongo 5+ is not supported.  
+If empty, It means AVX not supported, in turn Mongo 5+ is not supported.
 **Workaround:**
 
-In docker-compose.yaml file, downgrade the Mongo version:  
+In docker-compose.yaml file, downgrade the Mongo version:
 Under mongo_usp details replace "image: mongo" with "image: mongo:4.4"
 
 6. To start the docker
@@ -69,7 +69,7 @@ False ( since we haven't set any credentials yet )
 Accessing UI for the first time will redirect to the admin Register page.
 Sign up with mail ID. Save the email address and password to be used with the REST API calls.
 
-![oktopus_register](images/Oktopus_register.png)
+![oktopus_register](images/oktopus_register.png)
 
 Once Logged in, Dashboard will having general details of Agents connected.
 
@@ -81,13 +81,13 @@ Under Devices, we can view details of configured devices, its active status. You
 
 Under Users, you can add users. Rest apis can be accessed via admin as well as user credentials.
 
-![oktopus_user_tab](images/Oktopus_userTab.png)
+![oktopus_user_tab](images/oktopus_userTab.png)
 
 **Configuration of Agent/ EUT**
 
 **Prerequisite:**
 
-USPPA should be supported in EUT ie, usppa should be up and running:  
+USPPA should be supported in EUT ie, usppa should be up and running:
 pid of obuspa
 
 **Modify below parameters in /etc/usp-pa/usp_factory_reset.conf file in EUT:**
