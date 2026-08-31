@@ -56,9 +56,9 @@ Use the following folder structure while building the Docker image:
 
 ![Docker Folder Structure](images/docker_folder_structure.png)
 
-**Setup files:** `Dockerfile`, `start-services.sh`, `telnet`, `tftp`, `xinetd.conf`
+**Setup files:** [Dockerfile](setup_files/Dockerfile), [start-services.sh](setup_files/start-services.sh), [telnet](setup_files/telnet), [tftp](setup_files/tftp), [xinetd.conf](setup_files/xinetd.conf)
 
-1. Place the `Dockerfile`, `start-service.sh`, `telnet`, `tftp`, `xinetd.conf`, and `tdkbE2EClientScripts` in the same folder as shown in the picture above.
+1. Place the `Dockerfile`, `start-service.sh`, `telnet`, `tftp`, `xinetd.conf`, and [`tdkbE2EClientScripts`](https://code.rdkcentral.com/r/plugins/gitiles/rdk/tools/tdk/+/refs/heads/rdk-next/framework/web-app/fileStore/tdkbE2EClientScripts/) in the same folder as shown in the picture above.
 
 2. Before building the image, specify the username and password for clients in the `start-service.sh` file.
 
@@ -194,3 +194,9 @@ nmcli device disconnect wlan0
 ---
 
 > **Note:** Device Configuration File (sampleDevice.config) details are covered separately in the Execution Guide.
+
+---
+
+## Note
+
+- If you see bulk failures in end to end scripts related to disabling WiFi SSID/Radio, please make sure your WiFi client machine's auto-connect feature is disabled. These test scripts try to disable the gateway's SSID/Radio interface and will then attempt to communicate with other clients of the gateway, from the WiFi client. Ideally, this connection attempt should fail, but if auto-connect is enabled in the client machine for the SSIDs of this gateway, the client machine will get an IP from the gateway and the test will fail.
