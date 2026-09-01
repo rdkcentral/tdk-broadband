@@ -16,7 +16,7 @@ EUT (Endpoint Under Test) is used to refer DUT in USPPA context. Here, we use Ok
 Please follow below steps:
 
 1. wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip
-2. unzip main
+2. unzip main.zip
 3. cd oktopus-main/deploy/compose
 4. chmod +x run.sh stop.sh
 5. Modify the docker-compose.yaml file:
@@ -68,6 +68,8 @@ False ( since we haven't set any credentials yet )
 
 Accessing UI for the first time will redirect to the admin Register page.
 Sign up with mail ID. Save the email address and password to be used with the REST API calls.
+
+NOTICE: Some screenshots from Oktopus (https://www.oktopus.app.br) application are included for training purposes only.
 
 ![oktopus_register](images/oktopus_register.png)
 
@@ -218,7 +220,7 @@ curl --location --request PUT 'http://localhost:8000/api/auth/login' --header 'C
 **Output**
 
 ```text
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbml5YSBzZWJhc3RpYW4iLCJlbWFpbCI6InNhbml5YXNlYmFzdGlhbkB0YXRhZWx4c2kuY28uaW4iLCJpc3MiOiJPa3RvcHVzIiwiZXhwIjoxNzUzMjUxNTYwfQ.kN1eB0o4paNyyxaFPBTslMsEmnIJ5nRGwuexzw_Uyso"
+"<JWT_TOKEN>"
 ```
 
 - **Get Request**

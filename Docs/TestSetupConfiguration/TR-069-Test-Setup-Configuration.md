@@ -72,6 +72,8 @@ Accessing the UI `http://<acs-server-ip>:3000` for the first time will prompt fo
 
 Login the UI `http://<acs-server-ip>:3000` using username and password.
 
+Some screenshots from GenieACS (https://genieacs.com) application are included for training purposes only.
+
 **Overview Tab**: Displays the online status of devices if any.
 
 ![genieacs_overview](images/genieacs_overview.png)
@@ -115,12 +117,6 @@ Once the device is connected to the genieacs server, it will get connection requ
 
 ```bash
 dmcli eRT getv Device.ManagementServer.ConnectionRequestUsername
-```
-
-Currently there is an open issue on accessing DUT from ACS server due to default firewall drop policy, added a firewall to allow packets through the 7547 port as workaround:
-
-```bash
-iptables -I INPUT 1 -i erouter0 -p tcp --dport 7547 -j ACCEPT
 ```
 
 ## 1.1.6. Sanity check : TDK TM and GenieACS server
@@ -263,6 +259,5 @@ Transfer-Encoding: chunked
 ```
 
 ## 1.1.10. References
-- [TR-069 Support for RDKB RPI Reference Platform](https://wiki.rdkcentral.com/spaces/RDK/pages/137135549/TR-069+Support+for+RDKB+RPI+Reference+Platform)
 - [TR069 Support for Bananapi R4](https://wiki.rdkcentral.com/spaces/RDK/pages/355764044/TR069+Support+for+Bananapi+R4)
 - [Genieacs API Reference](https://docs.genieacs.com/en/latest/api-reference.html)
