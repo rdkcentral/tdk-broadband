@@ -10,7 +10,6 @@
 	[Prerequisites](#prerequisites)  
 	[Step 1: Enable IPv6 Forwarding](#step-1-enable-ipv6-forwarding)  
 	[Step 2: Assign IPv6 Address to the Simulator Interface](#step-2-assign-ipv6-address-to-the-simulator-interface)  
-	[lan_interface_name: The interface connected to the BPI WAN port for providing IPv6 connectivity](#lan_interface_name-the-interface-connected-to-the-bpi-wan-port-for-providing-ipv6-connectivity)  
 	[Step 3: Configure Dibbler DHCPv6 Server](#step-3-configure-dibbler-dhcpv6-server)  
 	[Step 4: Clear Existing IPv6 Firewall Rules](#step-4-clear-existing-ipv6-firewall-rules)  
 	[Step 5: Set Default IPv6 Firewall Policies to ACCEPT](#step-5-set-default-ipv6-firewall-policies-to-accept)  
@@ -209,11 +208,14 @@ $ tail -10 /var/log/dibbler/dibbler-server.log
 2026.06.18 09:05:17 Server Notice    Accepting connections. Next event in 171919 second(s).
 ```
 
-## 6. IPv6 VALIDATION IN BPI ROUTER
+## 6. IPv6 VALIDATION
+
+Using Banana PI (BPI) as reference device to demonstrate the DUT side checkpoints.
 
 Verify that the BPI router receives IPv6 on the WAN interface from the Ubuntu simulator and assigns the delegated IPv6 prefix on the LAN interface.
 
 ```
+#WAN interface
 root@Filogic-GW:~# ifconfig erouter0
 erouter0  Link encap:Ethernet  HWaddr 02:01:XX:XX:XX:XX
           inet6 addr: fe80::1:ff:fe6a:6c09/64 Scope:Link
@@ -223,7 +225,7 @@ erouter0  Link encap:Ethernet  HWaddr 02:01:XX:XX:XX:XX
           TX packets:13649 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
           RX bytes:2188109 (2.0 MiB)  TX bytes:3114677 (2.9 MiB)
-
+#LAN interface
 root@Filogic-GW:~# ifconfig brlan0
 brlan0    Link encap:Ethernet  HWaddr 02:03:00:6A:6C:10
           inet addr:10.0.0.1  Bcast:10.0.0.255  Mask:255.255.255.0
@@ -246,6 +248,7 @@ PING google.com (2404:6800:4007:82f::200e): 56 data bytes
 4 packets transmitted, 4 packets received, 0% packet loss
 ```
 
+_Note: erouter0 is the WAN interface and brlan0 is the LAN interface of DUT_
 
 ## 7. IPv6 VALIDATION IN CONNECTED CLIENTS OF BPI
 

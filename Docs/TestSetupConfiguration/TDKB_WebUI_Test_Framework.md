@@ -9,11 +9,10 @@ TDKB WebUI test suite is developed to test the UI functionalities of the Gateway
 - The test scripts are developed with the assumptions that 
     1. All client machines are Linux machines with Ubuntu 22.04
     2. The UI is opening in the Firefox browser
-    3. All pre-requisites are satisfied
 
 ## 1.2. Steps to follow
 
-- In our current end-to-end WebUI setup, The test manager runs on the host system, while separate WLAN, LAN, and WAN clients are used for testing. All required software installations and configurations for clients are performed manually on the host system. In the updated setup, we are automating the software installation and configuration using a Dockerfile.
+- In the current end-to-end WebUI setup, WLAN, LAN, and WAN test clients are used for test execution. Unlike the earlier manual process, software installation and configuration on these clients are now automated using a Dockerfile.
 - Dockerfile will be used to create webui docker containers in the WLAN, LAN, and WAN clients.
 - Once webui setup(test manager and docker client container is running) is deployed in the host system to access test manager from another system use ```ssh -p 2222 username@host_ip``` command
 
@@ -21,25 +20,34 @@ TDKB WebUI test suite is developed to test the UI functionalities of the Gateway
 
     ![WEBUI Folder Structure](images/webui/webui_folder_structure.png)
 
-Setup files: [Download the setup files](downloads/webui/E2E_Webui_setup.tar)
+Setup files: [Download the setup files](downloads/webui/E2E_Webui_setup)
 
+- Download the required version of Firefox based on your system architecture(_firefox-133.0.tar.bz2_) for Linux from [Download Firefox](https://ftp.mozilla.org/pub/firefox/releases/133.0/linux-x86_64/en-US/).
+- Download the required version of Selenium Server (_selenium-server-4.9.0.jar_) from [Download Selenium Server](https://www.selenium.dev/downloads/).
+- Download the required version of geckodriver (release-v0.34.0) from [Download geckodriver](https://github.com/mozilla/geckodriver/releases#release-v0.34.0).
+- Place the [Dockerfile](downloads/webui/E2E_Webui_setup/Dockerfile) , [start-service.sh](downloads/webui/E2E_Webui_setup/start-services.sh), [telnet](downloads/webui/E2E_Webui_setup/telnet), [tftp](downloads/webui/E2E_Webui_setup/tftp), [xinetd.conf](downloads/webui/E2E_Webui_setup/xinetd.conf), [tdkbE2EClientScripts](https://github.com/rdkcentral/tdk-core/tree/main/framework/fileStore/tdkbE2EClientScripts) folder, firefox-133.0.tar.bz2, geckodriver and webui folder in the same directory as shown in the above picture.
+- Create the log files - lan_logs.txt, wan_logs.txt, wlan_logs.txt in the webui folder.
+- Selenium-server jar file (_selenium-server-4.9.0.jar_) is also placed in the webui folder.
+- Before building the image, specify the username and password for clients in [start-service.sh](downloads/webui/E2E_Webui_setup/start-services.sh) file.
 
-- Place the Dockerfile , start-service.sh, telnet, tftp, xinetd.conf, [tdkbE2EClientScripts](https://github.com/rdkcentral/tdk-core/tree/main/framework/fileStore/tdkbE2EClientScripts) folder, firefox-133.0.tar.bz2 and webui folder in the same folder as show in the above picture.
-- Selenium-server jar file and client log files are placed in webui folder
-- Download the latest version of Firefox based on your system architecture(_firefox-133.0.tar.bz2_) for Linux from [Download Firefox](https://www.mozilla.org/enUS/firefox/linux/) and place it in the same folder as shown in the above picture.
-- Before building the image specify the username and password for clients in start-service.sh file.
+    ```
+    # Set username and password
+    USERNAME=""
+    PASSWORD=""
+    ```
 
-    _Note: username to be configured in start_service.sh should not be the same as the host username. You can choose any username as it is username for clients._
+_Note: The username to be configured in start-service.sh should not be the same as the host username. You can choose any username as it is username for clients._
 
-    ```# Set username and password USERNAME="client_tdkb" PASSWORD="********"```
 
 - Now build the docker image with the below command: 
-
-    ```sudo docker build -t <name of the docker image> .```
-
+    ```
+    sudo docker build -t <name of the docker image> .
+    ```
 - After completing the build process, verify that the Docker image has been created using the following command:
     
-    ```sudo docker image .``` 
+    ```
+    sudo docker image ls
+    ``` 
 
 ### 1.2.1. Steps to create docker container in client system(WLAN,LAN,WAN)
 
@@ -55,17 +63,24 @@ sudo docker ps
 
 - After the container is created, log in to the container using the following command: 
     
-    ``` sudo docker exec –it <Container-ID> bash``` 
+    ```
+    sudo docker exec -it <Container-ID> bash
+    ``` 
 
 - After log in verify that ssh, Apache2, vsftpd, and xinetd services are running in the docker container. If not, start them using ```service <service-name> start``` command
 - After this, log in to the user created in the container using the following command:
     
-    ```su  <Username which is specified in start-services.sh>```
+    ```
+    su <Username which is specified in start-services.sh>
+    ```
 
 - After docker container is created on client system it will act as clients(wlan,lan,wan) in broadband end to end webui setup
 
     1. Fill the values for configurable variables in [sampleDevice.config](https://github.com/rdkcentral/tdk-core/blob/main/framework/fileStore/tdkbDeviceConfig/sampleDevice.config).
-    2. Make sure the default password of WebUI has changed before executing scripts.
+    2. Ensure the default WebUI password has been changed before executing the scripts.
+        - From a connected LAN client, access http://10.0.0.1/. During boot-up after image flashing, the page redirects to the Captive Portal.
+        - Complete the Captive Portal setup, then log in to the Admin UI (http://10.0.0.1/) and change the password from password to Password. Use admin as the username and log in with the updated credentials.
+        - Alternatively, the Captive Portal can be configured using TR-181 DMs from the DUT. Once configured, change the default password through the MSO UI at http://<dut_ip>/.
 
 ## 1.3. Test Framework Components
 
@@ -84,7 +99,8 @@ The main components of WebUI test framework are:
 2. The shell script start_hub_script.sh
     - This shell script contains the apis to start the hub using selenium-server-4.9.0.jar. This api is invoked from startHub() in tdkbWEBUIUtility.py.
 3. proxy.zip
-    - This zip file is needed only if the browser needs proxy to open the UI page.This zip file will contain 2 files - [geckodriver.log](downloads/webui/geckodriver.log) and [background.js](downloads/webui/background.js).
+    - This zip file is needed only if the browser needs proxy to open the UI page.This zip file will contain 2 files - geckodriver.log and [background.js](downloads/webui/background.js).
+    - Populate the variables host, username and password in [background.js](downloads/webui/background.js) as per requirement.
     - Place this proxy.zip in the same path where the browser executable is downloaded.
 
 
@@ -98,6 +114,6 @@ The main components of WebUI test framework are:
 6. Set profile of Firefox and open the browser in the client machine using the command _webdriver.Remote(browser_profile=profile)_.
 7. Open the url in the browser using _driver.get(url)_
 8. Validate if the UI has opened in the browser by checking an element in the UI page. For that we use xpath. 
-_driver.find_element_by_xpath("/html/body/div[1]/div[3]/div[3]/h1").text_ will give the string present in this particular xpath location. And we can compare this string with expected string.
+_driver.find_element_by_xpath("/html/body/div[1]/div[3]/h1").text_ will give the string present in this particular xpath location. And we can compare this string with expected string.
 9. Likewise we can do any operations like click in a button, get the value of a filed, insert values in some particular fields etc.
 10. After doing the testing and validation quit from the browser using _driver.quit()_.
