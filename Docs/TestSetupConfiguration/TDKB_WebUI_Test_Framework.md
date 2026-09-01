@@ -25,10 +25,14 @@ Setup files: [Download the setup files](downloads/webui/E2E_Webui_setup)
 - Download the required version of Firefox based on your system architecture(_firefox-133.0.tar.bz2_) for Linux from [Download Firefox](https://ftp.mozilla.org/pub/firefox/releases/133.0/linux-x86_64/en-US/).
 - Download the required version of Selenium Server (_selenium-server-4.9.0.jar_) from [Download Selenium Server](https://www.selenium.dev/downloads/).
 - Download the required version of geckodriver (release-v0.34.0) from [Download geckodriver](https://github.com/mozilla/geckodriver/releases#release-v0.34.0).
-- Place the [Dockerfile](downloads/webui/E2E_Webui_setup/Dockerfile) , [start-service.sh](downloads/webui/E2E_Webui_setup/start-services.sh), [telnet](downloads/webui/E2E_Webui_setup/telnet), [tftp](downloads/webui/E2E_Webui_setup/tftp), [xinetd.conf](downloads/webui/E2E_Webui_setup/xinetd.conf), [tdkbE2EClientScripts](https://github.com/rdkcentral/tdk-core/tree/main/framework/fileStore/tdkbE2EClientScripts) folder, firefox-133.0.tar.bz2, geckodriver and webui folder in the same directory as shown in the above picture.
+- Place the [Dockerfile](downloads/webui/E2E_Webui_setup/Dockerfile) , [start-services.sh](downloads/webui/E2E_Webui_setup/start-services.sh), [telnet](downloads/webui/E2E_Webui_setup/telnet), [tftp](downloads/webui/E2E_Webui_setup/tftp), [xinetd.conf](downloads/webui/E2E_Webui_setup/xinetd.conf), [tdkbE2EClientScripts](https://github.com/rdkcentral/tdk-core/tree/main/framework/fileStore/tdkbE2EClientScripts) folder, firefox-133.0.tar.bz2, geckodriver and webui folder in the same directory as shown in the above picture.
 - Create the log files - lan_logs.txt, wan_logs.txt, wlan_logs.txt in the webui folder.
 - Selenium-server jar file (_selenium-server-4.9.0.jar_) is also placed in the webui folder.
-- Before building the image, specify the username and password for clients in [start-service.sh](downloads/webui/E2E_Webui_setup/start-services.sh) file.
+- Before building the image, specify the username and password for clients in [start-services.sh](downloads/webui/E2E_Webui_setup/start-services.sh) file. Update the following lines.
+
+    ```
+    echo 'export PATH=$PATH:/usr/local/bin' >> /home/<username>/.bashrc
+    ```
 
     ```
     # Set username and password
@@ -36,7 +40,8 @@ Setup files: [Download the setup files](downloads/webui/E2E_Webui_setup)
     PASSWORD=""
     ```
 
-_Note: The username to be configured in start-service.sh should not be the same as the host username. You can choose any username as it is username for clients._
+    _Note: The username to be configured in start-services.sh should not be the same as the host username. You can choose any username as it is username for clients._
+
 
 
 - Now build the docker image with the below command: 

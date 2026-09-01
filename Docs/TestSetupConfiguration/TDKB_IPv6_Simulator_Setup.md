@@ -125,7 +125,7 @@ sudo ip6tables -t nat -F
 
 **Step 5: Set Default IPv6 Firewall Policies to ACCEPT**
 
-Set permissive IPv6 policies for the validation setup.
+Set permissive IPv6 policies for the validation setup. Restore once IPv6 validation is completed.
 
 ```
 sudo ip6tables -P INPUT ACCEPT

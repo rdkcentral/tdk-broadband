@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc
-echo 'export PATH=$PATH:/usr/local/bin' >> /home/client_tdkb/.bashrc
+echo 'export PATH=$PATH:/usr/local/bin' >> /home/<username>/.bashrc
 
 echo "Initial service start..."
 
