@@ -1,3 +1,27 @@
+# Connectivity and Platform Services Validation Suite - Section 2
+
+## Test Specification Document for Connectivity and Platform Services Validation Suite - Section 2
+
+<strong>Version</strong>: 1.0<br>
+<strong>Date</strong>: August 2026<br>
+<strong>Purpose</strong>: Low-level test specification coverage for Connectivity and Platform Services Validation.<br>
+<strong>Maintained by</strong>: TDKB Test Automation Team
+
+## Table of Contents
+
+| # | Category | Description | Number of Tests |
+|---|----------|-------------|:---:|
+| 11 | RNDIS | RNDIS validation tests using Android USB and iPhone USB | 26 | 
+| 12 | Telco Voice Manager | Telco voice manager feature validation scenarios | 21 |
+| 13 | Telemetry 2.0 | Process, single and multi profile validations, report generation | 16 | 
+| 14 | RDK Remote Debugger | Static and Dynamic profile JSON creation, debug report generation and upload | 7 | 
+| 15 | Crash Upload | Crash handling, minidump creation, crash upload | 7 | 
+| 16 | DAC | Bundle install, activation, service checks and multi-bundle management validations | 7 | 
+| 17 | WebUI | LAN, WLAN, WAN WebUI validations | 21 | 
+| 18 | Advanced Features | Port Forwarding, Port Triggering and Parental Control Validations | 158 | 
+
+---
+
 <details>
 <summary><strong>RNDIS</strong></summary>
 
