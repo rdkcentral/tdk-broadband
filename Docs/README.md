@@ -19,8 +19,7 @@ requirements established by the RDK-B specification.
 
 ## Test Setup Configuration
 
-Documents detailing the hardware and software setup bring-up (where external test
-components are involved). 
+Documents detailing the hardware and software setup bring-up (where external test components are involved). 
 
 ## Traceability 
 
