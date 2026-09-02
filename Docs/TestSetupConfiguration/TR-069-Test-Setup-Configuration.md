@@ -72,7 +72,7 @@ Accessing the UI `http://<acs-server-ip>:3000` for the first time will prompt fo
 
 Login the UI `http://<acs-server-ip>:3000` using username and password.
 
-Some screenshots from GenieACS (https://genieacs.com) application are included for training purposes only.
+NOTICE: Some screenshots from GenieACS (https://genieacs.com) application are included for training purposes only.
 
 **Overview Tab**: Displays the online status of devices if any.
 
