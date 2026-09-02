@@ -12,8 +12,8 @@ apache2ctl -D FOREGROUND
 echo "Start User creation..."
 
 # Set username and password
-USERNAME="client_tdkb"
-PASSWORD="asdfqwer"
+USERNAME="lan"
+PASSWORD="tel1234#"
 
 # User creation
 useradd -m -s /bin/bash $USERNAME
