@@ -69,8 +69,6 @@ False ( since we haven't set any credentials yet )
 Accessing UI for the first time will redirect to the admin Register page.
 Sign up with mail ID. Save the email address and password to be used with the REST API calls.
 
-NOTICE: Some screenshots from Oktopus (https://www.oktopus.app.br) application are included for training purposes only.
-
 ![oktopus_register](images/oktopus_register.png)
 
 Once Logged in, Dashboard will having general details of Agents connected.
