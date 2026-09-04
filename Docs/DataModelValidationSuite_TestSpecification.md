@@ -14,12 +14,12 @@
 
 ---
 
-<details>
+<details open>
 <summary><strong>TR181 Validation</strong></summary>
 
 # TR181 Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Validate TR-181 get all parameter values for ADVSEC.</strong></summary>
 
 ## Test Case 1: TDKB_DML_TR181_ADVSEC_GetAllParameterValues
@@ -50,7 +50,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Validate TR-181 perform L2 set validations for ADVSEC.</strong></summary>
 
 ## Test Case 2: TDKB_DML_TR181_ADVSEC_L2SetValidations
@@ -84,7 +84,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Validate TR-181 verify parameter existence for ADVSEC.</strong></summary>
 
 ## Test Case 3: TDKB_DML_TR181_ADVSEC_ParameterExistenceCheck
@@ -115,7 +115,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Validate TR-181 validate read-only set rejection for ADVSEC.</strong></summary>
 
 ## Test Case 4: TDKB_DML_TR181_ADVSEC_SetReadOnlyParameters
@@ -148,7 +148,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Validate TR-181 validate write-access compliance for ADVSEC.</strong></summary>
 
 ## Test Case 5: TDKB_DML_TR181_ADVSEC_WriteAccessComplianceCheck
@@ -182,7 +182,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Validate TR-181 validate write-type compliance for ADVSEC.</strong></summary>
 
 ## Test Case 6: TDKB_DML_TR181_ADVSEC_WriteTypeComplianceCheck
@@ -215,7 +215,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Validate TR-181 get all parameter values for CR.</strong></summary>
 
 ## Test Case 7: TDKB_DML_TR181_CR_GetAllParameterValues
@@ -246,7 +246,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Validate TR-181 verify parameter existence for CR.</strong></summary>
 
 ## Test Case 8: TDKB_DML_TR181_CR_ParameterExistenceCheck
@@ -277,7 +277,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Validate TR-181 validate read-only set rejection for CR.</strong></summary>
 
 ## Test Case 9: TDKB_DML_TR181_CR_SetReadOnlyParameters
@@ -310,7 +310,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Validate TR-181 validate write-access compliance for CR.</strong></summary>
 
 ## Test Case 10: TDKB_DML_TR181_CR_WriteAccessComplianceCheck
@@ -344,7 +344,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Validate TR-181 validate write-type compliance for CR.</strong></summary>
 
 ## Test Case 11: TDKB_DML_TR181_CR_WriteTypeComplianceCheck
@@ -377,7 +377,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Validate TR-181 add and delete writable table rows for ETHAGENT.</strong></summary>
 
 ## Test Case 12: TDKB_DML_TR181_ETHAGENT_AddAndDeleteWritableTableRow
@@ -411,7 +411,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Validate TR-181 validate dynamic table row add behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 13: TDKB_DML_TR181_ETHAGENT_AddDynamicTableRow
@@ -442,7 +442,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Validate TR-181 validate static table row add behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 14: TDKB_DML_TR181_ETHAGENT_AddStaticTableRow
@@ -473,7 +473,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Validate TR-181 validate dynamic table row delete behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 15: TDKB_DML_TR181_ETHAGENT_DeleteDynamicTableRow
@@ -504,7 +504,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Validate TR-181 validate static table row delete behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 16: TDKB_DML_TR181_ETHAGENT_DeleteStaticTableRow
@@ -535,7 +535,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Validate TR-181 get all parameter values for ETHAGENT.</strong></summary>
 
 ## Test Case 17: TDKB_DML_TR181_ETHAGENT_GetAllParameterValues
@@ -566,7 +566,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Validate TR-181 perform L2 set validations for ETHAGENT.</strong></summary>
 
 ## Test Case 18: TDKB_DML_TR181_ETHAGENT_L2SetValidations
@@ -600,7 +600,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Validate TR-181 verify parameter existence for ETHAGENT.</strong></summary>
 
 ## Test Case 19: TDKB_DML_TR181_ETHAGENT_ParameterExistenceCheck
@@ -631,7 +631,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Validate TR-181 validate read-only set rejection for ETHAGENT.</strong></summary>
 
 ## Test Case 20: TDKB_DML_TR181_ETHAGENT_SetReadOnlyParameters
@@ -664,7 +664,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Validate TR-181 validate write-access compliance for ETHAGENT.</strong></summary>
 
 ## Test Case 21: TDKB_DML_TR181_ETHAGENT_WriteAccessComplianceCheck
@@ -698,7 +698,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: Validate TR-181 validate write-type compliance for ETHAGENT.</strong></summary>
 
 ## Test Case 22: TDKB_DML_TR181_ETHAGENT_WriteTypeComplianceCheck
@@ -731,7 +731,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Validate TR-181 add and delete dynamic writable table rows for LMLITE.</strong></summary>
 
 ## Test Case 23: TDKB_DML_TR181_LMLITE_AddAndDeleteDynamicWritableTableRow
@@ -765,7 +765,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Validate TR-181 validate dynamic table row add behavior for LMLITE.</strong></summary>
 
 ## Test Case 24: TDKB_DML_TR181_LMLITE_AddDynamicTableRow
@@ -796,7 +796,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: Validate TR-181 validate static table row add behavior for LMLITE.</strong></summary>
 
 ## Test Case 25: TDKB_DML_TR181_LMLITE_AddStaticTableRow
@@ -827,7 +827,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Validate TR-181 validate dynamic table row delete behavior for LMLITE.</strong></summary>
 
 ## Test Case 26: TDKB_DML_TR181_LMLITE_DeleteDynamicTableRow
@@ -858,7 +858,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Validate TR-181 validate static table row delete behavior for LMLITE.</strong></summary>
 
 ## Test Case 27: TDKB_DML_TR181_LMLITE_DeleteStaticTableRow
@@ -889,7 +889,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: Validate TR-181 get all parameter values for LMLITE.</strong></summary>
 
 ## Test Case 28: TDKB_DML_TR181_LMLITE_GetAllParameterValues
@@ -920,7 +920,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: Validate TR-181 perform L2 set validations for LMLITE.</strong></summary>
 
 ## Test Case 29: TDKB_DML_TR181_LMLITE_L2SetValidations
@@ -954,7 +954,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: Validate TR-181 verify parameter existence for LMLITE.</strong></summary>
 
 ## Test Case 30: TDKB_DML_TR181_LMLITE_ParameterExistenceCheck
@@ -985,7 +985,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Validate TR-181 validate read-only set rejection for LMLITE.</strong></summary>
 
 ## Test Case 31: TDKB_DML_TR181_LMLITE_SetReadOnlyParameters
@@ -1018,7 +1018,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Validate TR-181 validate write-access compliance for LMLITE.</strong></summary>
 
 ## Test Case 32: TDKB_DML_TR181_LMLITE_WriteAccessComplianceCheck
@@ -1052,7 +1052,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Validate TR-181 validate write-type compliance for LMLITE.</strong></summary>
 
 ## Test Case 33: TDKB_DML_TR181_LMLITE_WriteTypeComplianceCheck
@@ -1085,7 +1085,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Validate TR-181 add and delete dynamic writable table rows for PAM.</strong></summary>
 
 ## Test Case 34: TDKB_DML_TR181_PAM_AddAndDeleteDynamicWritableTableRow
@@ -1119,7 +1119,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Validate TR-181 add and delete writable table rows for PAM.</strong></summary>
 
 ## Test Case 35: TDKB_DML_TR181_PAM_AddAndDeleteWritableTableRow
@@ -1153,7 +1153,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Validate TR-181 validate dynamic table row add behavior for PAM.</strong></summary>
 
 ## Test Case 36: TDKB_DML_TR181_PAM_AddDynamicTableRow
@@ -1184,7 +1184,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Validate TR-181 validate static table row add behavior for PAM.</strong></summary>
 
 ## Test Case 37: TDKB_DML_TR181_PAM_AddStaticTableRow
@@ -1215,7 +1215,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Validate TR-181 validate dynamic table row delete behavior for PAM.</strong></summary>
 
 ## Test Case 38: TDKB_DML_TR181_PAM_DeleteDynamicTableRow
@@ -1246,7 +1246,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 39: Validate TR-181 validate static table row delete behavior for PAM.</strong></summary>
 
 ## Test Case 39: TDKB_DML_TR181_PAM_DeleteStaticTableRow
@@ -1277,7 +1277,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: Validate TR-181 get all parameter values for PAM.</strong></summary>
 
 ## Test Case 40: TDKB_DML_TR181_PAM_GetAllParameterValues
@@ -1308,7 +1308,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: Validate TR-181 perform L2 set validations for PAM.</strong></summary>
 
 ## Test Case 41: TDKB_DML_TR181_PAM_L2SetValidations
@@ -1342,7 +1342,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 42: Validate TR-181 verify parameter existence for PAM.</strong></summary>
 
 ## Test Case 42: TDKB_DML_TR181_PAM_ParameterExistenceCheck
@@ -1373,7 +1373,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 43: Validate TR-181 validate read-only set rejection for PAM.</strong></summary>
 
 ## Test Case 43: TDKB_DML_TR181_PAM_SetReadOnlyParameters
@@ -1406,7 +1406,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 44: Validate TR-181 validate write-access compliance for PAM.</strong></summary>
 
 ## Test Case 44: TDKB_DML_TR181_PAM_WriteAccessComplianceCheck
@@ -1440,7 +1440,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 45: Validate TR-181 validate write-type compliance for PAM.</strong></summary>
 
 ## Test Case 45: TDKB_DML_TR181_PAM_WriteTypeComplianceCheck
@@ -1473,7 +1473,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 46: Validate TR-181 add and delete dynamic writable table rows for TDM.</strong></summary>
 
 ## Test Case 46: TDKB_DML_TR181_TDM_AddAndDeleteDynamicWritableTableRow
@@ -1507,7 +1507,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 47: Validate TR-181 add and delete writable table rows for TDM.</strong></summary>
 
 ## Test Case 47: TDKB_DML_TR181_TDM_AddAndDeleteWritableTableRow
@@ -1541,7 +1541,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 48: Validate TR-181 validate dynamic table row add behavior for TDM.</strong></summary>
 
 ## Test Case 48: TDKB_DML_TR181_TDM_AddDynamicTableRow
@@ -1572,7 +1572,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 49: Validate TR-181 validate static table row add behavior for TDM.</strong></summary>
 
 ## Test Case 49: TDKB_DML_TR181_TDM_AddStaticTableRow
@@ -1603,7 +1603,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 50: Validate TR-181 validate dynamic table row delete behavior for TDM.</strong></summary>
 
 ## Test Case 50: TDKB_DML_TR181_TDM_DeleteDynamicTableRow
@@ -1634,7 +1634,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 51: Validate TR-181 validate static table row delete behavior for TDM.</strong></summary>
 
 ## Test Case 51: TDKB_DML_TR181_TDM_DeleteStaticTableRow
@@ -1665,7 +1665,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 52: Validate TR-181 get all parameter values for TDM.</strong></summary>
 
 ## Test Case 52: TDKB_DML_TR181_TDM_GetAllParameterValues
@@ -1696,7 +1696,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 53: Validate TR-181 perform L2 set validations for TDM.</strong></summary>
 
 ## Test Case 53: TDKB_DML_TR181_TDM_L2SetValidations
@@ -1730,7 +1730,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 54: Validate TR-181 verify parameter existence for TDM.</strong></summary>
 
 ## Test Case 54: TDKB_DML_TR181_TDM_ParameterExistenceCheck
@@ -1761,7 +1761,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 55: Validate TR-181 validate read-only set rejection for TDM.</strong></summary>
 
 ## Test Case 55: TDKB_DML_TR181_TDM_SetReadOnlyParameters
@@ -1794,7 +1794,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 56: Validate TR-181 validate write-access compliance for TDM.</strong></summary>
 
 ## Test Case 56: TDKB_DML_TR181_TDM_WriteAccessComplianceCheck
@@ -1828,7 +1828,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 57: Validate TR-181 validate write-type compliance for TDM.</strong></summary>
 
 ## Test Case 57: TDKB_DML_TR181_TDM_WriteTypeComplianceCheck
@@ -1861,7 +1861,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 58: Validate TR-181 get all parameter values for TELEMETRY.</strong></summary>
 
 ## Test Case 58: TDKB_DML_TR181_TELEMETRY_GetAllParameterValues
@@ -1892,7 +1892,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 59: Validate TR-181 verify parameter existence for TELEMETRY.</strong></summary>
 
 ## Test Case 59: TDKB_DML_TR181_TELEMETRY_ParameterExistenceCheck
@@ -1923,7 +1923,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 60: Validate TR-181 validate read-only set rejection for TELEMETRY.</strong></summary>
 
 ## Test Case 60: TDKB_DML_TR181_TELEMETRY_SetReadOnlyParameters
@@ -1956,7 +1956,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 61: Validate TR-181 validate write-access compliance for TELEMETRY.</strong></summary>
 
 ## Test Case 61: TDKB_DML_TR181_TELEMETRY_WriteAccessComplianceCheck
@@ -1990,7 +1990,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 62: Validate TR-181 validate write-type compliance for TELEMETRY.</strong></summary>
 
 ## Test Case 62: TDKB_DML_TR181_TELEMETRY_WriteTypeComplianceCheck
@@ -2023,7 +2023,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 63: Validate TR-181 validate static table row add behavior for VLANMANAGER.</strong></summary>
 
 ## Test Case 63: TDKB_DML_TR181_VLANMANAGER_AddStaticTableRow
@@ -2054,7 +2054,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 64: Validate TR-181 validate static table row delete behavior for VLANMANAGER.</strong></summary>
 
 ## Test Case 64: TDKB_DML_TR181_VLANMANAGER_DeleteStaticTableRow
@@ -2085,7 +2085,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 65: Validate TR-181 get all parameter values for VLANMANAGER.</strong></summary>
 
 ## Test Case 65: TDKB_DML_TR181_VLANMANAGER_GetAllParameterValues
@@ -2116,7 +2116,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 66: Validate TR-181 perform L2 set validations for VLANMANAGER.</strong></summary>
 
 ## Test Case 66: TDKB_DML_TR181_VLANMANAGER_L2SetValidations
@@ -2150,7 +2150,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 67: Validate TR-181 verify parameter existence for VLANMANAGER.</strong></summary>
 
 ## Test Case 67: TDKB_DML_TR181_VLANMANAGER_ParameterExistenceCheck
@@ -2181,7 +2181,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 68: Validate TR-181 validate read-only set rejection for VLANMANAGER.</strong></summary>
 
 ## Test Case 68: TDKB_DML_TR181_VLANMANAGER_SetReadOnlyParameters
@@ -2214,7 +2214,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 69: Validate TR-181 validate write-access compliance for VLANMANAGER.</strong></summary>
 
 ## Test Case 69: TDKB_DML_TR181_VLANMANAGER_WriteAccessComplianceCheck
@@ -2248,7 +2248,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 70: Validate TR-181 validate write-type compliance for VLANMANAGER.</strong></summary>
 
 ## Test Case 70: TDKB_DML_TR181_VLANMANAGER_WriteTypeComplianceCheck
@@ -2281,7 +2281,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 71: Validate TR-181 add and delete writable table rows for WANMANAGER.</strong></summary>
 
 ## Test Case 71: TDKB_DML_TR181_WANMANAGER_AddAndDeleteWritableTableRow
@@ -2315,7 +2315,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 72: Validate TR-181 validate dynamic table row add behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 72: TDKB_DML_TR181_WANMANAGER_AddDynamicTableRow
@@ -2346,7 +2346,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 73: Validate TR-181 validate static table row add behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 73: TDKB_DML_TR181_WANMANAGER_AddStaticTableRow
@@ -2377,7 +2377,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 74: Validate TR-181 validate dynamic table row delete behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 74: TDKB_DML_TR181_WANMANAGER_DeleteDynamicTableRow
@@ -2408,7 +2408,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 75: Validate TR-181 validate static table row delete behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 75: TDKB_DML_TR181_WANMANAGER_DeleteStaticTableRow
@@ -2439,7 +2439,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 76: Validate TR-181 get all parameter values for WANMANAGER.</strong></summary>
 
 ## Test Case 76: TDKB_DML_TR181_WANMANAGER_GetAllParameterValues
@@ -2470,7 +2470,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 77: Validate TR-181 perform L2 set validations for WANMANAGER.</strong></summary>
 
 ## Test Case 77: TDKB_DML_TR181_WANMANAGER_L2SetValidations
@@ -2504,7 +2504,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 78: Validate TR-181 verify parameter existence for WANMANAGER.</strong></summary>
 
 ## Test Case 78: TDKB_DML_TR181_WANMANAGER_ParameterExistenceCheck
@@ -2535,7 +2535,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 79: Validate TR-181 validate read-only set rejection for WANMANAGER.</strong></summary>
 
 ## Test Case 79: TDKB_DML_TR181_WANMANAGER_SetReadOnlyParameters
@@ -2568,7 +2568,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 80: Validate TR-181 validate write-access compliance for WANMANAGER.</strong></summary>
 
 ## Test Case 80: TDKB_DML_TR181_WANMANAGER_WriteAccessComplianceCheck
@@ -2602,7 +2602,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 81: Validate TR-181 validate write-type compliance for WANMANAGER.</strong></summary>
 
 ## Test Case 81: TDKB_DML_TR181_WANMANAGER_WriteTypeComplianceCheck
@@ -2635,7 +2635,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 82: Validate TR-181 add and delete dynamic writable table rows for WIFI.</strong></summary>
 
 ## Test Case 82: TDKB_DML_TR181_WIFI_AddAndDeleteDynamicWritableTableRow
@@ -2669,7 +2669,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 83: Validate TR-181 add and delete writable table rows for WIFI.</strong></summary>
 
 ## Test Case 83: TDKB_DML_TR181_WIFI_AddAndDeleteWritableTableRow
@@ -2703,7 +2703,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 84: Validate TR-181 validate dynamic table row add behavior for WIFI.</strong></summary>
 
 ## Test Case 84: TDKB_DML_TR181_WIFI_AddDynamicTableRow
@@ -2734,7 +2734,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 85: Validate TR-181 validate static table row add behavior for WIFI.</strong></summary>
 
 ## Test Case 85: TDKB_DML_TR181_WIFI_AddStaticTableRow
@@ -2765,7 +2765,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 86: Validate TR-181 validate dynamic table row delete behavior for WIFI.</strong></summary>
 
 ## Test Case 86: TDKB_DML_TR181_WIFI_DeleteDynamicTableRow
@@ -2796,7 +2796,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 87: Validate TR-181 validate static table row delete behavior for WIFI.</strong></summary>
 
 ## Test Case 87: TDKB_DML_TR181_WIFI_DeleteStaticTableRow
@@ -2827,7 +2827,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 88: Validate TR-181 get all parameter values for WIFI.</strong></summary>
 
 ## Test Case 88: TDKB_DML_TR181_WIFI_GetAllParameterValues
@@ -2858,7 +2858,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 89: Validate TR-181 perform L2 set validations for WIFI.</strong></summary>
 
 ## Test Case 89: TDKB_DML_TR181_WIFI_L2SetValidations
@@ -2892,7 +2892,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 90: Validate TR-181 verify parameter existence for WIFI.</strong></summary>
 
 ## Test Case 90: TDKB_DML_TR181_WIFI_ParameterExistenceCheck
@@ -2923,7 +2923,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 91: Validate TR-181 validate read-only set rejection for WIFI.</strong></summary>
 
 ## Test Case 91: TDKB_DML_TR181_WIFI_SetReadOnlyParameters
@@ -2956,7 +2956,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 92: Validate TR-181 validate write-access compliance for WIFI.</strong></summary>
 
 ## Test Case 92: TDKB_DML_TR181_WIFI_WriteAccessComplianceCheck
@@ -2990,7 +2990,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 93: Validate TR-181 validate write-type compliance for WIFI.</strong></summary>
 
 ## Test Case 93: TDKB_DML_TR181_WIFI_WriteTypeComplianceCheck
@@ -3023,7 +3023,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 94: Validate TR-181 add and delete dynamic writable table rows for XDNS.</strong></summary>
 
 ## Test Case 94: TDKB_DML_TR181_XDNS_AddAndDeleteDynamicWritableTableRow
@@ -3057,7 +3057,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 95: Validate TR-181 get all parameter values for XDNS.</strong></summary>
 
 ## Test Case 95: TDKB_DML_TR181_XDNS_GetAllParameterValues
@@ -3088,7 +3088,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 96: Validate TR-181 perform L2 set validations for XDNS.</strong></summary>
 
 ## Test Case 96: TDKB_DML_TR181_XDNS_L2SetValidations
@@ -3122,7 +3122,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 97: Validate TR-181 verify parameter existence for XDNS.</strong></summary>
 
 ## Test Case 97: TDKB_DML_TR181_XDNS_ParameterExistenceCheck
@@ -3153,7 +3153,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 98: Validate TR-181 validate read-only set rejection for XDNS.</strong></summary>
 
 ## Test Case 98: TDKB_DML_TR181_XDNS_SetReadOnlyParameters
@@ -3186,7 +3186,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 99: Validate TR-181 validate write-access compliance for XDNS.</strong></summary>
 
 ## Test Case 99: TDKB_DML_TR181_XDNS_WriteAccessComplianceCheck
@@ -3220,7 +3220,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 100: Validate TR-181 validate write-type compliance for XDNS.</strong></summary>
 
 ## Test Case 100: TDKB_DML_TR181_XDNS_WriteTypeComplianceCheck
@@ -3257,12 +3257,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>WEBPA Validation</strong></summary>
 
 # WEBPA Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 101: Validate WEBPA get all parameter values for ADVSEC.</strong></summary>
 
 ## Test Case 101: TDKB_DML_WEBPA_ADVSEC_GetAllParameterValues
@@ -3294,7 +3294,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 102: Validate WEBPA validate read-only set rejection for ADVSEC.</strong></summary>
 
 ## Test Case 102: TDKB_DML_WEBPA_ADVSEC_SetReadOnlyParameters
@@ -3328,7 +3328,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 103: Validate WEBPA validate write-access compliance for ADVSEC.</strong></summary>
 
 ## Test Case 103: TDKB_DML_WEBPA_ADVSEC_WriteAccessComplianceCheck
@@ -3363,7 +3363,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 104: Validate WEBPA validate write-type compliance for ADVSEC.</strong></summary>
 
 ## Test Case 104: TDKB_DML_WEBPA_ADVSEC_WriteTypeComplianceCheck
@@ -3397,7 +3397,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 105: Validate WEBPA get all parameter values for CR.</strong></summary>
 
 ## Test Case 105: TDKB_DML_WEBPA_CR_GetAllParameterValues
@@ -3429,7 +3429,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 106: Validate WEBPA validate read-only set rejection for CR.</strong></summary>
 
 ## Test Case 106: TDKB_DML_WEBPA_CR_SetReadOnlyParameters
@@ -3463,7 +3463,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 107: Validate WEBPA validate write-access compliance for CR.</strong></summary>
 
 ## Test Case 107: TDKB_DML_WEBPA_CR_WriteAccessComplianceCheck
@@ -3498,7 +3498,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 108: Validate WEBPA validate write-type compliance for CR.</strong></summary>
 
 ## Test Case 108: TDKB_DML_WEBPA_CR_WriteTypeComplianceCheck
@@ -3532,7 +3532,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 109: Validate WEBPA validate dynamic table row add behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 109: TDKB_DML_WEBPA_ETHAGENT_AddDynamicTableRow
@@ -3564,7 +3564,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 110: Validate WEBPA validate static table row add behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 110: TDKB_DML_WEBPA_ETHAGENT_AddStaticTableRow
@@ -3596,7 +3596,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 111: Validate WEBPA validate dynamic table row delete behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 111: TDKB_DML_WEBPA_ETHAGENT_DeleteDynamicTableRow
@@ -3628,7 +3628,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 112: Validate WEBPA validate static table row delete behavior for ETHAGENT.</strong></summary>
 
 ## Test Case 112: TDKB_DML_WEBPA_ETHAGENT_DeleteStaticTableRow
@@ -3660,7 +3660,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 113: Validate WEBPA get all parameter values for ETHAGENT.</strong></summary>
 
 ## Test Case 113: TDKB_DML_WEBPA_ETHAGENT_GetAllParameterValues
@@ -3692,7 +3692,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 114: Validate WEBPA validate read-only set rejection for ETHAGENT.</strong></summary>
 
 ## Test Case 114: TDKB_DML_WEBPA_ETHAGENT_SetReadOnlyParameters
@@ -3726,7 +3726,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 115: Validate WEBPA validate write-access compliance for ETHAGENT.</strong></summary>
 
 ## Test Case 115: TDKB_DML_WEBPA_ETHAGENT_WriteAccessComplianceCheck
@@ -3761,7 +3761,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 116: Validate WEBPA validate write-type compliance for ETHAGENT.</strong></summary>
 
 ## Test Case 116: TDKB_DML_WEBPA_ETHAGENT_WriteTypeComplianceCheck
@@ -3795,7 +3795,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 117: Validate WEBPA validate dynamic table row add behavior for LMLITE.</strong></summary>
 
 ## Test Case 117: TDKB_DML_WEBPA_LMLITE_AddDynamicTableRow
@@ -3827,7 +3827,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 118: Validate WEBPA validate static table row add behavior for LMLITE.</strong></summary>
 
 ## Test Case 118: TDKB_DML_WEBPA_LMLITE_AddStaticTableRow
@@ -3859,7 +3859,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 119: Validate WEBPA validate dynamic table row delete behavior for LMLITE.</strong></summary>
 
 ## Test Case 119: TDKB_DML_WEBPA_LMLITE_DeleteDynamicTableRow
@@ -3891,7 +3891,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 120: Validate WEBPA validate static table row delete behavior for LMLITE.</strong></summary>
 
 ## Test Case 120: TDKB_DML_WEBPA_LMLITE_DeleteStaticTableRow
@@ -3923,7 +3923,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 121: Validate WEBPA get all parameter values for LMLITE.</strong></summary>
 
 ## Test Case 121: TDKB_DML_WEBPA_LMLITE_GetAllParameterValues
@@ -3955,7 +3955,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 122: Validate WEBPA validate read-only set rejection for LMLITE.</strong></summary>
 
 ## Test Case 122: TDKB_DML_WEBPA_LMLITE_SetReadOnlyParameters
@@ -3989,7 +3989,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 123: Validate WEBPA validate write-access compliance for LMLITE.</strong></summary>
 
 ## Test Case 123: TDKB_DML_WEBPA_LMLITE_WriteAccessComplianceCheck
@@ -4024,7 +4024,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 124: Validate WEBPA validate write-type compliance for LMLITE.</strong></summary>
 
 ## Test Case 124: TDKB_DML_WEBPA_LMLITE_WriteTypeComplianceCheck
@@ -4058,7 +4058,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 125: Validate WEBPA validate dynamic table row add behavior for PAM.</strong></summary>
 
 ## Test Case 125: TDKB_DML_WEBPA_PAM_AddDynamicTableRow
@@ -4090,7 +4090,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 126: Validate WEBPA validate static table row add behavior for PAM.</strong></summary>
 
 ## Test Case 126: TDKB_DML_WEBPA_PAM_AddStaticTableRow
@@ -4122,7 +4122,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 127: Validate WEBPA validate dynamic table row delete behavior for PAM.</strong></summary>
 
 ## Test Case 127: TDKB_DML_WEBPA_PAM_DeleteDynamicTableRow
@@ -4154,7 +4154,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 128: Validate WEBPA validate static table row delete behavior for PAM.</strong></summary>
 
 ## Test Case 128: TDKB_DML_WEBPA_PAM_DeleteStaticTableRow
@@ -4186,7 +4186,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 129: Validate WEBPA get all parameter values for PAM.</strong></summary>
 
 ## Test Case 129: TDKB_DML_WEBPA_PAM_GetAllParameterValues
@@ -4218,7 +4218,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 130: Validate WEBPA validate read-only set rejection for PAM.</strong></summary>
 
 ## Test Case 130: TDKB_DML_WEBPA_PAM_SetReadOnlyParameters
@@ -4252,7 +4252,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 131: Validate WEBPA validate write-access compliance for PAM.</strong></summary>
 
 ## Test Case 131: TDKB_DML_WEBPA_PAM_WriteAccessComplianceCheck
@@ -4287,7 +4287,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 132: Validate WEBPA validate write-type compliance for PAM.</strong></summary>
 
 ## Test Case 132: TDKB_DML_WEBPA_PAM_WriteTypeComplianceCheck
@@ -4321,7 +4321,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 133: Validate WEBPA validate dynamic table row add behavior for TDM.</strong></summary>
 
 ## Test Case 133: TDKB_DML_WEBPA_TDM_AddDynamicTableRow
@@ -4353,7 +4353,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 134: Validate WEBPA validate static table row add behavior for TDM.</strong></summary>
 
 ## Test Case 134: TDKB_DML_WEBPA_TDM_AddStaticTableRow
@@ -4385,7 +4385,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 135: Validate WEBPA validate dynamic table row delete behavior for TDM.</strong></summary>
 
 ## Test Case 135: TDKB_DML_WEBPA_TDM_DeleteDynamicTableRow
@@ -4417,7 +4417,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 136: Validate WEBPA validate static table row delete behavior for TDM.</strong></summary>
 
 ## Test Case 136: TDKB_DML_WEBPA_TDM_DeleteStaticTableRow
@@ -4449,7 +4449,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 137: Validate WEBPA get all parameter values for TDM.</strong></summary>
 
 ## Test Case 137: TDKB_DML_WEBPA_TDM_GetAllParameterValues
@@ -4481,7 +4481,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 138: Validate WEBPA validate read-only set rejection for TDM.</strong></summary>
 
 ## Test Case 138: TDKB_DML_WEBPA_TDM_SetReadOnlyParameters
@@ -4515,7 +4515,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 139: Validate WEBPA validate write-access compliance for TDM.</strong></summary>
 
 ## Test Case 139: TDKB_DML_WEBPA_TDM_WriteAccessComplianceCheck
@@ -4550,7 +4550,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 140: Validate WEBPA validate write-type compliance for TDM.</strong></summary>
 
 ## Test Case 140: TDKB_DML_WEBPA_TDM_WriteTypeComplianceCheck
@@ -4584,7 +4584,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 141: Validate WEBPA get all parameter values for TELEMETRY.</strong></summary>
 
 ## Test Case 141: TDKB_DML_WEBPA_TELEMETRY_GetAllParameterValues
@@ -4616,7 +4616,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 142: Validate WEBPA validate read-only set rejection for TELEMETRY.</strong></summary>
 
 ## Test Case 142: TDKB_DML_WEBPA_TELEMETRY_SetReadOnlyParameters
@@ -4650,7 +4650,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 143: Validate WEBPA validate write-access compliance for TELEMETRY.</strong></summary>
 
 ## Test Case 143: TDKB_DML_WEBPA_TELEMETRY_WriteAccessComplianceCheck
@@ -4685,7 +4685,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 144: Validate WEBPA validate write-type compliance for TELEMETRY.</strong></summary>
 
 ## Test Case 144: TDKB_DML_WEBPA_TELEMETRY_WriteTypeComplianceCheck
@@ -4719,7 +4719,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 145: Validate WEBPA validate static table row add behavior for VLANMANAGER.</strong></summary>
 
 ## Test Case 145: TDKB_DML_WEBPA_VLANMANAGER_AddStaticTableRow
@@ -4751,7 +4751,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 146: Validate WEBPA validate static table row delete behavior for VLANMANAGER.</strong></summary>
 
 ## Test Case 146: TDKB_DML_WEBPA_VLANMANAGER_DeleteStaticTableRow
@@ -4783,7 +4783,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 147: Validate WEBPA get all parameter values for VLANMANAGER.</strong></summary>
 
 ## Test Case 147: TDKB_DML_WEBPA_VLANMANAGER_GetAllParameterValues
@@ -4815,7 +4815,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 148: Validate WEBPA validate read-only set rejection for VLANMANAGER.</strong></summary>
 
 ## Test Case 148: TDKB_DML_WEBPA_VLANMANAGER_SetReadOnlyParameters
@@ -4849,7 +4849,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 149: Validate WEBPA validate write-access compliance for VLANMANAGER.</strong></summary>
 
 ## Test Case 149: TDKB_DML_WEBPA_VLANMANAGER_WriteAccessComplianceCheck
@@ -4884,7 +4884,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 150: Validate WEBPA validate write-type compliance for VLANMANAGER.</strong></summary>
 
 ## Test Case 150: TDKB_DML_WEBPA_VLANMANAGER_WriteTypeComplianceCheck
@@ -4918,7 +4918,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 151: Validate WEBPA validate dynamic table row add behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 151: TDKB_DML_WEBPA_WANMANAGER_AddDynamicTableRow
@@ -4950,7 +4950,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 152: Validate WEBPA validate static table row add behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 152: TDKB_DML_WEBPA_WANMANAGER_AddStaticTableRow
@@ -4982,7 +4982,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 153: Validate WEBPA validate dynamic table row delete behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 153: TDKB_DML_WEBPA_WANMANAGER_DeleteDynamicTableRow
@@ -5014,7 +5014,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 154: Validate WEBPA validate static table row delete behavior for WANMANAGER.</strong></summary>
 
 ## Test Case 154: TDKB_DML_WEBPA_WANMANAGER_DeleteStaticTableRow
@@ -5046,7 +5046,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 155: Validate WEBPA get all parameter values for WANMANAGER.</strong></summary>
 
 ## Test Case 155: TDKB_DML_WEBPA_WANMANAGER_GetAllParameterValues
@@ -5078,7 +5078,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 156: Validate WEBPA validate read-only set rejection for WANMANAGER.</strong></summary>
 
 ## Test Case 156: TDKB_DML_WEBPA_WANMANAGER_SetReadOnlyParameters
@@ -5112,7 +5112,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 157: Validate WEBPA validate write-access compliance for WANMANAGER.</strong></summary>
 
 ## Test Case 157: TDKB_DML_WEBPA_WANMANAGER_WriteAccessComplianceCheck
@@ -5147,7 +5147,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 158: Validate WEBPA validate write-type compliance for WANMANAGER.</strong></summary>
 
 ## Test Case 158: TDKB_DML_WEBPA_WANMANAGER_WriteTypeComplianceCheck
@@ -5181,7 +5181,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 159: Validate WEBPA get all parameter values for XDNS.</strong></summary>
 
 ## Test Case 159: TDKB_DML_WEBPA_XDNS_GetAllParameterValues
@@ -5213,7 +5213,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 160: Validate WEBPA validate read-only set rejection for XDNS.</strong></summary>
 
 ## Test Case 160: TDKB_DML_WEBPA_XDNS_SetReadOnlyParameters
@@ -5247,7 +5247,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 161: Validate WEBPA validate write-access compliance for XDNS.</strong></summary>
 
 ## Test Case 161: TDKB_DML_WEBPA_XDNS_WriteAccessComplianceCheck
@@ -5282,7 +5282,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 162: Validate WEBPA validate write-type compliance for XDNS.</strong></summary>
 
 ## Test Case 162: TDKB_DML_WEBPA_XDNS_WriteTypeComplianceCheck

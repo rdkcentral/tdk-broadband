@@ -24,17 +24,17 @@
 
 ---
 
-<details>
+<details open>
 <summary><strong>ETHERNET</strong></summary>
 
 # ETHERNET
 
-<details>
+<details open>
 <summary><strong>Process and Log Checks</strong></summary>
 
 # Process and Log Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify CcspEthAgent process is running and ETHAGENTLog.txt.0 log file exists</strong></summary>
 
 ## Test Case 1: TS_ETHAGENT_CheckProcessAndLogFile
@@ -75,12 +75,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Parameter Validation</strong></summary>
 
 # Parameter Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify Device.Ethernet.X_RDKCENTRAL-COM_WAN.Enabled rejects unauthorized SET operations</strong></summary>
 
 ## Test Case 2: TS_ETHAGENT_SetWANEnabled
@@ -121,12 +121,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Interface and Client Checks</strong></summary>
 
 # Interface and Client Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify MaxBitRate, CurrentBitRate are non-zero and DuplexMode is Full for LAN client interface</strong></summary>
 
 ## Test Case 3: TS_ETHAGENT_CheckBitRateAndDuplexMode
@@ -169,7 +169,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify LAN client connected Ethernet interface Enable status is true and Status is Up</strong></summary>
 
 ## Test Case 4: TS_ETHAGENT_CheckInterfaceStatus
@@ -211,7 +211,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify AssociatedDeviceNumberOfEntries matches the count of active Ethernet LAN clients</strong></summary>
 
 ## Test Case 5: TS_ETHAGENT_CheckAssociatedDeviceNumberOfEntries
@@ -251,7 +251,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify AssociatedDevice MAC address matches the active LAN client physical address</strong></summary>
 
 ## Test Case 6: TS_ETHAGENT_GetAssociatedDeviceMACAddress
@@ -291,7 +291,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify active and inactive time values are non-negative for the active Ethernet LAN client</strong></summary>
 
 ## Test Case 7: TS_ETHAGENT_CheckActiveAndInActivetime
@@ -335,12 +335,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Telemetry Checks</strong></summary>
 
 # Telemetry Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify ETH_MAC_{i} telemetry marker reports the correct client MAC address</strong></summary>
 
 ## Test Case 8: TS_ETHAGENT_CheckTelemetryMarkerWithEthClient_ETH_MAC
@@ -390,7 +390,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify ETH_MAC_{i}_TOTAL_COUNT telemetry marker reports the correct connected device count</strong></summary>
 
 ## Test Case 9: TS_ETHAGENT_CheckTelemetryMarkerWithEthClient_ETH_MAC_TOTAL_COUNT
@@ -440,7 +440,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify ETH_PHYRATE_{i} telemetry marker reports a valid physical link rate</strong></summary>
 
 ## Test Case 10: TS_ETHAGENT_CheckTelemetryMarkerWithEthClient_ETH_PHYRATE
@@ -498,12 +498,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>WIFI</strong></summary>
 
 # WIFI
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Validate 2.4GHZ channel is non-overlapping</strong></summary>
 
 ## Test Case 1: TS_ONEWIFI_2.4GHZ_CheckRadioChannel_WithinNonOverlappingChannels
@@ -535,7 +535,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Validate the 5GHz current channel is in PossibleChannels</strong></summary>
 
 ## Test Case 2: TS_ONEWIFI_5GHZ_CheckCurrentChannel
@@ -568,7 +568,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Validate 5GHZ channel is non-overlapping or a Non-DFS Channel</strong></summary>
 
 ## Test Case 3: TS_ONEWIFI_5GHZ_CheckRadioChannel_WithinNonOverlappingChannels
@@ -600,7 +600,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Validate Radio 5GHz LastChange updates on enable or disable</strong></summary>
 
 ## Test Case 4: TS_ONEWIFI_5GHZ_RadioLastChange
@@ -638,7 +638,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Validate LastChange value change on enabling/disabling 6ghz Radio</strong></summary>
 
 ## Test Case 5: TS_ONEWIFI_6GHZ_RadioLastChange
@@ -675,7 +675,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Validate filtering mode is Allow when MAC filter is enabled with blacklist disabled</strong></summary>
 
 ## Test Case 6: TS_ONEWIFI_ACL_CheckMacFilteringMode_DisabledFilterAsBlackList
@@ -709,7 +709,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Validate at least one connected host is active</strong></summary>
 
 ## Test Case 7: TS_ONEWIFI_CheckHostActiveStatus_WithConnectedClient
@@ -743,7 +743,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Validate radio reset count increments by 1 after ResetRadios</strong></summary>
 
 ## Test Case 8: TS_ONEWIFI_CheckResetCountIncrement_AfterResetRadios
@@ -781,7 +781,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Validate wifihealth.txt is created within 10 minutes after factory reset</strong></summary>
 
 ## Test Case 9: TS_ONEWIFI_CheckWiFiHealthLogFile
@@ -817,7 +817,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Validate all WiFi SSID statuses are down in bridge-static mode</strong></summary>
 
 ## Test Case 10: TS_ONEWIFI_CheckWiFiSSIDStatus_InBridgeMode
@@ -852,7 +852,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Validate bytes sent and received via telemetry marker is greater than zero</strong></summary>
 
 ## Test Case 11: TS_ONEWIFI_CheckTelemetryMarker_BytesSentAndReceived
@@ -897,7 +897,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Validate the macaddresses obtained from telemetry marker and host table are same</strong></summary>
 
 ## Test Case 12: TS_ONEWIFI_CheckTelemetryMarker_ConnectedClientMacaddress
@@ -932,7 +932,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Validate the error sent via telemetry marker is greater than or equal to zero</strong></summary>
 
 ## Test Case 13: TS_ONEWIFI_CheckTelemetryMarker_ErrorSent
@@ -975,7 +975,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Validate the Retrans and Failed Retrans count via telemetry marker is greater than zero</strong></summary>
 
 ## Test Case 14: TS_ONEWIFI_CheckTelemetryMarker_FailedAndReTransCount
@@ -1020,7 +1020,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Validate the packets sent and received via telemetry marker is greater than zero</strong></summary>
 
 ## Test Case 15: TS_ONEWIFI_CheckTelemetryMarker_PacketsSent_PacketsReceived
@@ -1065,7 +1065,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Validate the Retrans and Failed Retrans count via telemetry marker is greater than zero</strong></summary>
 
 ## Test Case 16: TS_ONEWIFI_CheckTelemetryMarker_RETRANSCOUNT_FAILEDRETRANSCOUNT
@@ -1110,7 +1110,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Validate Retry and Multiple Retry count via telemetry marker is greater than zero</strong></summary>
 
 ## Test Case 17: TS_ONEWIFI_CheckTelemetryMarker_RetryAndMultipleRetryCount
@@ -1155,7 +1155,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: To check WIFI_ACS_ is populating correctly in wifihealth.txt</strong></summary>
 
 ## Test Case 18: TS_ONEWIFI_CheckTelemetryMarker_WIFI_ACS
@@ -1196,7 +1196,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify WIFI_MAC_ telemetry marker in wifihealth matches the connected client MAC in the Host table</strong></summary>
 
 ## Test Case 19: TS_ONEWIFI_CheckTelemetryMarker_WIFI_MAC
@@ -1239,7 +1239,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Validate the telemetry marker WIFI_VAP_PERCENT_UP percent listed are within the range</strong></summary>
 
 ## Test Case 20: TS_ONEWIFI_CheckTelemetryMarkerVAPPERCENTUP
@@ -1282,7 +1282,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Test to disable SNR telemetry markers for all VAPs</strong></summary>
 
 ## Test Case 21: TS_ONEWIFI_DisableSNRMarker_FoAllVAP
@@ -1318,7 +1318,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: Validate setting the WiFi client MAC address to an invalid value is not allowed</strong></summary>
 
 ## Test Case 22: TS_ONEWIFI_SetInvalidReportWifiClientMacAddress
@@ -1354,7 +1354,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Test to enable SNR telemetry markers for all VAPs</strong></summary>
 
 ## Test Case 23: TS_ONEWIFI_SetSNRMarker_ForAllVAP
@@ -1391,7 +1391,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Enable Tx/Rx rate telemetry markers based on AP/radio entries</strong></summary>
 
 ## Test Case 24: TS_ONEWIFI_SetWiFiTelemetryTxRxRateList
@@ -1429,7 +1429,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: Verify ForceDisable reset behavior by confirming all radios return to default state after factory reset</strong></summary>
 
 ## Test Case 25: TS_ONEWIFI_ForceDisable_CheckRadioEnable_AfterFR
@@ -1467,7 +1467,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Validate all radios defined by RadioNumberOfEntries are disabled when WiFi Force Disable is enabled in bridge mode</strong></summary>
 
 ## Test Case 26: TS_ONEWIFI_ForceDisable_CheckRadioEnable_InBridgeMode
@@ -1511,7 +1511,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Validate all radios defined by RadioNumberOfEntries are disabled when WiFi Force Disable is enabled</strong></summary>
 
 ## Test Case 27: TS_ONEWIFI_ForceDisable_DisableAndCheckRadioEnable
@@ -1553,7 +1553,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: Verify 5GHz radio/AP/passphrase writes are blocked under ForceDisable and attempt logs are generated</strong></summary>
 
 ## Test Case 28: TS_ONEWIFI_ForceDisable_Set5GWiFiParams
@@ -1589,7 +1589,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: Verify 6GHz radio/AP/passphrase writes are blocked under ForceDisable and attempt logs are generated</strong></summary>
 
 ## Test Case 29: TS_ONEWIFI_ForceDisable_Set6GWiFiParams
@@ -1627,7 +1627,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: Verify SSID writes for VAP1-VAP6 are blocked under ForceDisable and original ForceDisable state is restored</strong></summary>
 
 ## Test Case 30: TS_ONEWIFI_ForceDisable_SetWiFiSSIDParams
@@ -1665,7 +1665,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Verify each MLD-capable AP MLD_Addr matches the MLD interface MAC address</strong></summary>
 
 ## Test Case 31: TS_ONEWIFI_WIFI7_CheckMLDAddrAlignment
@@ -1699,7 +1699,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Verify the MLD interface is bridged to brlan0 and remains in UP state</strong></summary>
 
 ## Test Case 32: TS_ONEWIFI_WIFI7_CheckMLDBridgeStatus
@@ -1732,7 +1732,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Verify MLD_Enable is true for all MLD-capable APs based on platform radio count</strong></summary>
 
 ## Test Case 33: TS_ONEWIFI_WIFI7_CheckMLDEnable
@@ -1765,7 +1765,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Verify the MLD interface reports UP and LOWER_UP operational flags</strong></summary>
 
 ## Test Case 34: TS_ONEWIFI_WIFI7_CheckMLDInterfaceUp
@@ -1797,7 +1797,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Verify each MLD link MAC matches its corresponding radio interface MAC</strong></summary>
 
 ## Test Case 35: TS_ONEWIFI_WIFI7_CheckMLDLinkMACs
@@ -1832,7 +1832,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Verify all expected MLD link IDs are present for the platform radio count</strong></summary>
 
 ## Test Case 36: TS_ONEWIFI_WIFI7_CheckMLDLinks
@@ -1864,7 +1864,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Verify MLD interface hardware MAC matches the wireless MLD MAC report</strong></summary>
 
 ## Test Case 37: TS_ONEWIFI_WIFI7_CheckMLDMACAddress
@@ -1897,7 +1897,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Verify each MLD link channel matches its corresponding TR-181 radio channel</strong></summary>
 
 ## Test Case 38: TS_ONEWIFI_WIFI7_CheckMLDRadioChannelConfig
@@ -1931,7 +1931,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 39: Verify MLD interface SSID matches Device.WiFi.SSID.1.SSID</strong></summary>
 
 ## Test Case 39: TS_ONEWIFI_WIFI7_CheckMLDSSID
@@ -1964,7 +1964,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: Verify a connected Wi-Fi client appears in the Host table with Active true</strong></summary>
 
 ## Test Case 40: TS_ONEWIFI_WIFI7_CheckWiFiClientHostTableUpdate
@@ -1999,7 +1999,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: LAN client Telnet to WLAN client through gateway</strong></summary>
 
 ## Test Case 41: E2E_WIFI_Telnet_FromLanToWlan
@@ -2043,7 +2043,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 42: WLAN client ping to LAN client through gateway</strong></summary>
 
 ## Test Case 42: E2E_WIFI_Ping_FromWlanToLan
@@ -2087,7 +2087,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 43: LAN client ping to WLAN client through gateway</strong></summary>
 
 ## Test Case 43: E2E_WIFI_Ping_FromLanToWlan
@@ -2131,7 +2131,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 44: WLAN client ping to gateway's public WAN IP</strong></summary>
 
 ## Test Case 44: E2E_WIFI_PingRouterPublicIP
@@ -2172,7 +2172,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 45: WLAN client HTTP to LAN server through gateway</strong></summary>
 
 ## Test Case 45: E2E_WIFI_Http_FromWlanToLan
@@ -2216,7 +2216,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 46: WLAN client HTTPS to LAN server through gateway</strong></summary>
 
 ## Test Case 46: E2E_WIFI_Https_FromWlanToLan
@@ -2260,7 +2260,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 47: WLAN client FTP download from LAN server through gateway</strong></summary>
 
 ## Test Case 47: E2E_WIFI_FTP_FromWlanToLan
@@ -2304,7 +2304,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 48: LAN client FTP download from WLAN server through gateway</strong></summary>
 
 ## Test Case 48: E2E_WIFI_FTP_FromLanToWLan
@@ -2348,7 +2348,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 49: UDP WLAN to LAN with firewall Medium</strong></summary>
 
 ## Test Case 49: E2E_WIFI_FirewallMedium_UDPFromWlanToLan
@@ -2397,7 +2397,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 50: UDP WLAN to LAN with firewall Low</strong></summary>
 
 ## Test Case 50: E2E_WIFI_FirewallLow_UDPFromWlanToLan
@@ -2446,7 +2446,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 51: TCP WLAN to LAN with firewall Low</strong></summary>
 
 ## Test Case 51: E2E_WIFI_FirewallLow_TCPFromWlanToLan
@@ -2495,7 +2495,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 52: UDP WLAN to LAN with firewall High</strong></summary>
 
 ## Test Case 52: E2E_WIFI_FirewallHigh_UDPFromWlanToLan
@@ -2544,7 +2544,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 53: TCP WLAN to LAN with firewall High</strong></summary>
 
 ## Test Case 53: E2E_WIFI_FirewallHigh_TCPFromWlanToLan
@@ -2593,7 +2593,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 54: UDP WLAN to LAN with firewall Custom</strong></summary>
 
 ## Test Case 54: E2E_WIFI_FirewallCustom_UDPFromWlanToLan
@@ -2642,7 +2642,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 55: TCP WLAN to LAN with firewall Custom</strong></summary>
 
 ## Test Case 55: E2E_WIFI_FirewallCustom_TCPFromWlanToLan
@@ -2691,7 +2691,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 56: WLAN client connection rejected with invalid passphrase</strong></summary>
 
 ## Test Case 56: E2E_WIFI_ConnectWithInvalidKey
@@ -2727,7 +2727,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 57: Verify MAC filter defaults after factory reset</strong></summary>
 
 ## Test Case 57: E2E_WIFI_ACL_VerifyMacFilterDefaultValues_FactoryReset
@@ -2775,7 +2775,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 58: MAC filter allows 2.4GHz connection only</strong></summary>
 
 ## Test Case 58: E2E_WIFI_ACL_MacFilterAllowOnly2.4GHZ
@@ -2823,7 +2823,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 59: MAC filter allows 5GHz connection only</strong></summary>
 
 ## Test Case 59: E2E_WIFI_ACL_MacFilterAllowOnly5GHZ
@@ -2871,7 +2871,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 60: MAC filter blocks 2.4GHz client in deny mode</strong></summary>
 
 ## Test Case 60: E2E_WIFI_ACL_MacFilterBlock2.4GHZ
@@ -2915,7 +2915,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 61: MAC filter blocks 5GHz client in deny mode</strong></summary>
 
 ## Test Case 61: E2E_WIFI_ACL_MacFilterBlock5GHZ
@@ -2959,7 +2959,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 62: MAC filter allows 2.4GHz and blocks 5GHz</strong></summary>
 
 ## Test Case 62: E2E_WIFI_ACL_MacFilterAllow2.4GHZ_Block5GHZ
@@ -3004,7 +3004,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 63: MAC filter allows 5GHz and blocks 2.4GHz</strong></summary>
 
 ## Test Case 63: E2E_WIFI_ACL_MacFilterAllow5GHZ_Block2.4GHZ
@@ -3049,7 +3049,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 64: Allow mode 2.4GHz blocks unlisted client</strong></summary>
 
 ## Test Case 64: E2E_WIFI_ACL_MacFilteringModeAllow2.4GHZ_WithInvalidMACFilterEntry
@@ -3092,7 +3092,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 65: Allow mode 5GHz blocks unlisted client</strong></summary>
 
 ## Test Case 65: E2E_WIFI_ACL_MacFilteringModeAllow5GHZ_WithInvalidMACFilterEntry
@@ -3135,7 +3135,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 66: Deny mode 2.4GHz allows unlisted client</strong></summary>
 
 ## Test Case 66: E2E_WIFI_ACL_MacFilteringModeDeny2.4GHZ_WithInvalidMACFilterEntry
@@ -3180,7 +3180,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 67: Deny mode 5GHz allows unlisted client</strong></summary>
 
 ## Test Case 67: E2E_WIFI_ACL_MacFilteringModeDeny5GHZ_WithInvalidMACFilterEntry
@@ -3229,12 +3229,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Provisioning and Management</strong></summary>
 
 # Provisioning and Management
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify admin user remote access capability can be toggled</strong></summary>
 
 ## Test Case 1: TS_PAM_DeviceUsers_EnableAdminRemoteAccess
@@ -3272,7 +3272,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify admin user account Enable status can be set to true</strong></summary>
 
 ## Test Case 2: TS_PAM_DeviceUsers_EnableAdminUser
@@ -3312,7 +3312,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify CusAdmin user remote access capability can be toggled</strong></summary>
 
 ## Test Case 3: TS_PAM_DeviceUsers_EnableCusAdminRemoteAccess
@@ -3350,7 +3350,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify CusAdmin user account Enable status can be set to true</strong></summary>
 
 ## Test Case 4: TS_PAM_DeviceUsers_EnableCusAdminUser
@@ -3390,7 +3390,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify MSO user remote access capability can be set to true</strong></summary>
 
 ## Test Case 5: TS_PAM_DeviceUsers_EnableMSORemoteAccess
@@ -3430,7 +3430,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify MSO user account Enable status can be set to true</strong></summary>
 
 ## Test Case 6: TS_PAM_DeviceUsers_EnableMSOUser
@@ -3470,7 +3470,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify admin user password can be changed successfully</strong></summary>
 
 ## Test Case 7: TS_PAM_DeviceUsers_SetAdminPassword
@@ -3509,7 +3509,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify CusAdmin user password can be changed successfully</strong></summary>
 
 ## Test Case 8: TS_PAM_DeviceUsers_SetCusAdminPassword
@@ -3549,7 +3549,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify all valid values can be set for the WEBUI Enable feature parameter</strong></summary>
 
 ## Test Case 9: TS_PAM_SetValidValues_WEBUI
@@ -3592,7 +3592,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify disabling WebUI.Enable causes HTTP remote access to be disabled</strong></summary>
 
 ## Test Case 10: TS_PAM_DisableWEBUI
@@ -3632,7 +3632,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify setting WebUI.Enable to MSOonly causes HTTP remote access to be disabled</strong></summary>
 
 ## Test Case 11: TS_PAM_MSOOnlyWEBUI
@@ -3672,7 +3672,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Verify syndication partner ID set and get values match after activation</strong></summary>
 
 ## Test Case 12: TS_PAM_SetSyndicationPartnerId
@@ -3712,7 +3712,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify syndication partner ID persists after device reboot</strong></summary>
 
 ## Test Case 13: TS_PAM_CheckSyndicationPartnerIdAfterReboot
@@ -3753,7 +3753,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Verify default admin IP equals the LAN IP address</strong></summary>
 
 ## Test Case 14: TS_PAM_CheckDefaultAdminIP_EqualToLANIP
@@ -3789,7 +3789,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Verify default local IPv4 subnet range equals the LAN subnet mask</strong></summary>
 
 ## Test Case 15: TS_PAM_CheckDefaultLocalIPv4SubnetRange_EqualToLanSubnetMask
@@ -3825,7 +3825,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Verify DNS server IP cannot be set when server type is not static</strong></summary>
 
 ## Test Case 16: TS_PAM_DNSClient_SetDNSServerIP
@@ -3861,7 +3861,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Verify DNS server interface cannot be set when server type is not static</strong></summary>
 
 ## Test Case 17: TS_PAM_DNSClient_SetServerInterface
@@ -3897,7 +3897,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Verify dnsmasq restart does not log DNS strict order message when DNSStrictOrder is enabled</strong></summary>
 
 ## Test Case 18: TS_PAM_CheckDnsmasqRestartLogs_DNSStrictOrderEnabled
@@ -3938,7 +3938,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify dnsmasq restart logs DNS strict order message when DNSStrictOrder is disabled</strong></summary>
 
 ## Test Case 19: TS_PAM_CheckDnsmasqRestartLogs_DNSStrictOrderDisabled
@@ -3979,7 +3979,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Verify LAN client lease entries in dnsmasq.leases persist after device reboot</strong></summary>
 
 ## Test Case 20: TS_PAM_DNSMasq_Lease
@@ -4019,7 +4019,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Verify DHCP pool start address cannot be set to the LAN gateway IP</strong></summary>
 
 ## Test Case 21: TS_PAM_SetDHCPBeginIPasLANGatewayIP
@@ -4054,7 +4054,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: Verify DHCP pool end address cannot be set beyond the subnet mask range</strong></summary>
 
 ## Test Case 22: TS_PAM_SetDHCPEndIPBeyondSubnetRange
@@ -4092,7 +4092,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Verify LAN gateway IP cannot be set beyond the allowed private address range</strong></summary>
 
 ## Test Case 23: TS_PAM_SetDHCPServerIPBeyondPrivateAddressRange
@@ -4126,7 +4126,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Verify MaxAddress out of range is rejected for subnet 255.255.255.0 with LAN IP 10.0.0.1</strong></summary>
 
 ## Test Case 24: TS_PAM_SetMaxAddressOutOfRange_SubnetMask255.255.255.0_LanIP10.0.0.1
@@ -4167,7 +4167,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: Verify MinAddress out of range is rejected for subnet 255.255.255.0 with LAN IP 10.0.0.4</strong></summary>
 
 ## Test Case 25: TS_PAM_SetMinAddressOutOfRange_SubnetMask255.255.255.0_LanIP10.0.0.4
@@ -4208,7 +4208,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Verify invalid MaxAddress with last octet less than 2 is rejected for subnet 255.255.0.0</strong></summary>
 
 ## Test Case 26: TS_PAM_SetInvalidMaxAddress_SubnetMask255.255.0.0_LanIP10.1.10.1
@@ -4249,7 +4249,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Verify MaxAddress equal to MinAddress is rejected for subnet 255.255.0.0 with LAN IP 10.1.10.1</strong></summary>
 
 ## Test Case 27: TS_PAM_SetEqualMinAndMaxAddress_SubnetMask255.255.0.0_LanIP10.1.10.1
@@ -4290,7 +4290,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: Verify MaxAddress lesser than MinAddress is rejected for subnet 255.255.255.0 with LAN IP 10.0.0.1</strong></summary>
 
 ## Test Case 28: TS_PAM_SetMaxAddrLesserThanMinAddr_SubnetMask255.255.255.0_LanIP10.0.0.1
@@ -4331,7 +4331,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: Verify MinAddress and MaxAddress derive correct defaults after LAN subnet and IP change with reboot</strong></summary>
 
 ## Test Case 29: TS_PAM_ValidateMinAndMaxAddress
@@ -4372,7 +4372,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: Verify RIP send and receive protocol version is RIP2</strong></summary>
 
 ## Test Case 30: TS_PAM_GetRIPProtocolVersion
@@ -4407,7 +4407,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Verify enabling Advanced Security OTM RFC logs the enable event</strong></summary>
 
 ## Test Case 31: TS_PAM_EnableRFC_AdvSecOTMEnable
@@ -4449,7 +4449,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Verify disabling Advanced Security OTM RFC logs the disable event</strong></summary>
 
 ## Test Case 32: TS_PAM_DisableRFC_AdvSecOTMEnable
@@ -4491,7 +4491,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Verify enabling DLCaStore RFC is reflected in TR181 GET and syscfg</strong></summary>
 
 ## Test Case 33: TS_PAM_EnableRFC_DLCaStoreEnable
@@ -4531,7 +4531,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Verify disabling DLCaStore RFC is reflected in TR181 GET and syscfg</strong></summary>
 
 ## Test Case 34: TS_PAM_DisableRFC_DLCaStoreEnable
@@ -4571,7 +4571,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Verify SNMP Onboard Reboot Enable cannot be disabled</strong></summary>
 
 ## Test Case 35: TS_PAM_SetSnmpOnboardRebootEnable
@@ -4606,7 +4606,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Verify LAN status is stopped when device is set to bridge-static mode</strong></summary>
 
 ## Test Case 36: TS_PAM_BridgeModeCheckLANStatus
@@ -4645,7 +4645,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Verify IPv4 BlockFragIPPkts iptables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 37: TS_PAM_SetFirewallSecurityIPv4BlockFragIPPkts
@@ -4685,7 +4685,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Verify IPv4 IPFloodDetect iptables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 38: TS_PAM_SetFirewallSecurityIPv4IPFloodDetect
@@ -4725,7 +4725,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 39: Verify IPv4 PortScanProtect iptables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 39: TS_PAM_SetFirewallSecurityIPv4PortScanProtect
@@ -4765,7 +4765,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: Verify IPv6 BlockFragIPPkts ip6tables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 40: TS_PAM_SetFirewallSecurityIPv6BlockFragIPPkts
@@ -4805,7 +4805,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: Verify IPv6 IPFloodDetect ip6tables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 41: TS_PAM_SetFirewallSecurityIPv6IPFloodDetect
@@ -4845,7 +4845,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 42: Verify IPv6 PortScanProtect ip6tables rules are added and removed on enable and disable</strong></summary>
 
 ## Test Case 42: TS_PAM_SetFirewallSecurityIPv6PortScanProtect
@@ -4885,7 +4885,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 43: Verify SelfHeal aggressive interval and compute window have correct default values after factory reset</strong></summary>
 
 ## Test Case 43: TS_PAM_CheckDefaultValues_SelfHealAggresInterval
@@ -4925,7 +4925,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 44: Verify SelfHeal aggressive interval rejects values below the minimum</strong></summary>
 
 ## Test Case 44: TS_PAM_SetInvalid_SelfHealAggresInterval
@@ -4960,7 +4960,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 45: Verify SelfHeal aggressive interval is rejected when greater than compute window and accepted when lesser</strong></summary>
 
 ## Test Case 45: TS_PAM_SetAggresInterval_GreaterAndlessthanComputeWindow
@@ -4997,7 +4997,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 46: Verify UsageComputeWindow cannot be set equal to AggressiveInterval</strong></summary>
 
 ## Test Case 46: TS_PAM_SetComputeWindow_EqualtoSetAggresInterval
@@ -5033,7 +5033,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 47: Verify UsageComputeWindow cannot be set below AggressiveInterval</strong></summary>
 
 ## Test Case 47: TS_PAM_SetComputeWindow_BelowAggresInterval
@@ -5069,7 +5069,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 48: Verify AutoReboot UpTime rejects values outside the valid range after factory reset</strong></summary>
 
 ## Test Case 48: TS_PAM_SetInvalidAutoRebootuptime
@@ -5111,7 +5111,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 49: Verify factory reset count increments by one after factory reset</strong></summary>
 
 ## Test Case 49: TS_PAM_CheckFactoryResetCount
@@ -5149,7 +5149,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 50: Verify last reboot reason is factory-reset after factory reset</strong></summary>
 
 ## Test Case 50: TS_PAM_GetLastRebootReasonAfterFactoryReset
@@ -5186,7 +5186,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 51: Verify admin user password is empty by default after factory reset</strong></summary>
 
 ## Test Case 51: TS_PAM_FRCheckDefaultPasswordisEmpty
@@ -5224,7 +5224,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 52: Verify device uptime resets to a lower value after reboot</strong></summary>
 
 ## Test Case 52: TS_PAM_GetUpTime_AfterReboot
@@ -5260,7 +5260,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 53: Verify device current local time parameter returns a non-empty value</strong></summary>
 
 ## Test Case 53: TS_PAM_GetCurrentLocalTime
@@ -5298,12 +5298,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Firmware Upgrade</strong></summary>
 
 # Firmware Upgrade
 
-<details>
+<details open>
 <summary><strong>Test Case 1: TS_FirmwareUpgrade_UsingFWUpgradeManager</strong></summary>
 
 ## Test Case 1: TS_FirmwareUpgrade_UsingFWUpgradeManager
@@ -5353,7 +5353,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: TS_FirmwareUpgrade_SetInvalidFirmwareToDownload</strong></summary>
 
 ## Test Case 2: TS_FirmwareUpgrade_SetInvalidFirmwareToDownload
@@ -5398,7 +5398,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: TS_FirmwareUpgrade_SetInvalidFirmwareUpgradeURL</strong></summary>
 
 ## Test Case 3: TS_FirmwareUpgrade_SetInvalidFirmwareUpgradeURL
@@ -5441,7 +5441,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: TS_FirmwareUpgrade_FWUpgradeUsingXCONFServer</strong></summary>
 
 ## Test Case 4: TS_FirmwareUpgrade_FWUpgradeUsingXCONFServer
@@ -5493,7 +5493,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: TS_FirmwareUpgrade_InvalidImage_FWUpgradeUsingXCONFServer</strong></summary>
 
 ## Test Case 5: TS_FirmwareUpgrade_InvalidImage_FWUpgradeUsingXCONFServer
@@ -5539,7 +5539,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: TS_FirmwareUpgrade_InvalidURL_FWUpgradeUsingXCONFServer</strong></summary>
 
 ## Test Case 6: TS_FirmwareUpgrade_InvalidURL_FWUpgradeUsingXCONFServer
@@ -5588,12 +5588,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Lan Manager Lite</strong></summary>
 
 # Lan Manager Lite
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Bridge mode reports ConnectedDeviceNumber as zero</strong></summary>
 
 ## Test Case 1: TS_LMLite_CheckConnectedDeviceNumber_InBridgeMode
@@ -5633,7 +5633,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Bridge mode reports HostNumberOfEntries as zero</strong></summary>
 
 ## Test Case 2: TS_LMLite_CheckHostNumberOfEntries_InBridgeMode
@@ -5673,7 +5673,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Active LAN client IP matches Device.Hosts value</strong></summary>
 
 ## Test Case 3: TS_LMLite_CheckLANClientIPAddress
@@ -5715,7 +5715,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Active LAN client MAC matches Device.Hosts value</strong></summary>
 
 ## Test Case 4: TS_LMLite_CheckLANClientPhysAddress
@@ -5757,7 +5757,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Connected LAN clients are marked active</strong></summary>
 
 ## Test Case 5: TS_LMLite_CheckLANClientsActiveOrNot
@@ -5796,7 +5796,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Layer1Interface matches ARP-detected interface</strong></summary>
 
 ## Test Case 6: TS_LMLite_CheckLayer1Interface
@@ -5837,7 +5837,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: WAN MAC matches Host Parent value</strong></summary>
 
 ## Test Case 7: TS_LMLite_CheckWANMacAddress
@@ -5880,7 +5880,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Each active host reports one IPv4 entry</strong></summary>
 
 ## Test Case 8: TS_LMLite_GetIPv4AddressNumberOfEntries
@@ -5920,7 +5920,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: LeaseTimeRemaining is valid for active hosts</strong></summary>
 
 ## Test Case 9: TS_LMLite_GetLeaseTimeRemaining
@@ -5961,7 +5961,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Reject higher polling period when status is enabled</strong></summary>
 
 ## Test Case 10: TS_LMLite_NWDeviceStatus_Enabled_SetHigherPollingPeriod
@@ -6001,7 +6001,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Reject higher reporting period when status is enabled</strong></summary>
 
 ## Test Case 11: TS_LMLite_NWDeviceStatus_Enabled_SetHigherReportingPeriod
@@ -6041,7 +6041,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: PollingPeriod reverts to default after OverrideTTL</strong></summary>
 
 ## Test Case 12: TS_LMLite_NWDeviceStatus_GetPollingPeriodAfterOverrideTTL
@@ -6088,7 +6088,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: ReportingPeriod reverts to default after OverrideTTL</strong></summary>
 
 ## Test Case 13: TS_LMLite_NWDeviceStatus_GetReportingPeriodAfterOverrideTTL
@@ -6137,7 +6137,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Reject invalid NetworkDevicesStatus polling period</strong></summary>
 
 ## Test Case 14: TS_LMLite_NWDeviceStatus_SetInvalidDevicesStatusPollingPeriod
@@ -6174,7 +6174,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Reject invalid NetworkDevicesStatus reporting period</strong></summary>
 
 ## Test Case 15: TS_LMLite_NWDeviceStatus_SetInvalidDevicesStatusReportingPeriod
@@ -6211,7 +6211,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Reject reporting period lower than polling period</strong></summary>
 
 ## Test Case 16: TS_LMLite_NWDeviceStatus_SetReportingPeriodLessThanPollingPeriod
@@ -6249,7 +6249,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Reject invalid NetworkDevicesTraffic polling period</strong></summary>
 
 ## Test Case 17: TS_LMLite_NWDevicesTraffic_SetInvalidPollingPeriod
@@ -6286,7 +6286,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Reject invalid NetworkDevicesTraffic reporting period</strong></summary>
 
 ## Test Case 18: TS_LMLite_NWDevicesTraffic_SetInvalidReportingPeriod
@@ -6323,7 +6323,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Reject traffic reporting period lower than polling period</strong></summary>
 
 ## Test Case 19: TS_LMLite_NWDevicesTraffic_SetReportingPeriodLessThanPollingPeriod
@@ -6365,12 +6365,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test And Diagnostics</strong></summary>
 
 # Test And Diagnostics
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify DownloadDiagnostics DiagnosticsState is a valid TR-181 state</strong></summary>
 
 ## Test Case 1: TS_TAD_GetDownloadDiagnosticsState
@@ -6405,7 +6405,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify IPPing DiagnosticsState is a valid TR-181 state</strong></summary>
 
 ## Test Case 2: TS_TAD_GetIPPingDiagnosticsState
@@ -6440,7 +6440,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify TraceRoute DiagnosticsState is a valid TR-181 state</strong></summary>
 
 ## Test Case 3: TS_TAD_GetTraceRouteDiagnosticsState
@@ -6475,7 +6475,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify UploadDiagnostics DiagnosticsState is a valid TR-181 state</strong></summary>
 
 ## Test Case 4: TS_TAD_GetUploadDiagnosticsState
@@ -6510,7 +6510,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify IPPing average response time is greater than zero after a successful ping</strong></summary>
 
 ## Test Case 5: TS_TAD_IPPing_CheckAvgResponseTime
@@ -6553,7 +6553,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify IPPing success count is greater than zero after a successful ping</strong></summary>
 
 ## Test Case 6: TS_TAD_IPPing_CheckSuccessCount
@@ -6596,7 +6596,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify IPPing DiagnosticsState cannot be set to an invalid value</strong></summary>
 
 ## Test Case 7: TS_TAD_IPPing_SetInvalidDiagnosticsState
@@ -6630,7 +6630,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify CPE uses routing policy when IPPing interface is set to an invalid value</strong></summary>
 
 ## Test Case 8: TS_TAD_IPPing_SetInvalidInterface
@@ -6673,7 +6673,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify IPPing DiagnosticsState error when no host name is set</strong></summary>
 
 ## Test Case 9: TS_TAD_IPPing_SetNoHostName
@@ -6714,7 +6714,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify IPPing DiagnosticsState changes to error value when invalid host is set</strong></summary>
 
 ## Test Case 10: TS_TAD_IPPing_CheckDiagnosticsState_ForInvalidHostName
@@ -6752,7 +6752,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify IPPing average response time is zero when invalid host name is set</strong></summary>
 
 ## Test Case 11: TS_TAD_IPPing_CheckAvgResponseTime_ForInvalidHostName
@@ -6790,7 +6790,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Verify IPPing DiagnosticsState after a successful ping</strong></summary>
 
 ## Test Case 12: TS_TAD_IPPing_GetDiagnosticsState
@@ -6833,7 +6833,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify IPPing DiagnosticsState clears to None after modifying a writable parameter</strong></summary>
 
 ## Test Case 13: TS_TAD_IPPing_ClearDiagnosticsState
@@ -6877,7 +6877,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Verify IPPing SuccessCount clears to zero after modifying a writable parameter</strong></summary>
 
 ## Test Case 14: TS_TAD_IPPing_ClearSuccessCount
@@ -6921,7 +6921,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Verify IPPing DiagnosticsState resets to None after reboot</strong></summary>
 
 ## Test Case 15: TS_TAD_IPPing_CheckDiagnosticsStateAfterReboot
@@ -6964,7 +6964,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Verify no DIAGNOSTICS COMPLETE log in TR069 when IPPing is triggered</strong></summary>
 
 ## Test Case 16: TS_TAD_IPPing_CheckTR069Logs
@@ -7011,7 +7011,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Verify all TraceRoute parameters can be set and the test runs successfully</strong></summary>
 
 ## Test Case 17: TS_TAD_SetTraceRoute
@@ -7054,7 +7054,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Verify TraceRoute average response time is greater than zero after a successful test</strong></summary>
 
 ## Test Case 18: TS_TAD_TraceRoute_CheckAvgResponseTime
@@ -7097,7 +7097,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify TraceRoute average response time is zero when invalid host name is set</strong></summary>
 
 ## Test Case 19: TS_TAD_TraceRoute_CheckAvgResponseTime_ForInvalidHostName
@@ -7138,7 +7138,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Verify TraceRoute round-trip times list contains no more than three items</strong></summary>
 
 ## Test Case 20: TS_TAD_TraceRoute_CheckRoundTripTimes
@@ -7181,7 +7181,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Verify previous TraceRoute result is cleared when parameters are set again</strong></summary>
 
 ## Test Case 21: TS_TAD_TraceRoute_ClearResult
@@ -7224,7 +7224,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: Verify TraceRoute reports error when max hop count is exceeded</strong></summary>
 
 ## Test Case 22: TS_TAD_TraceRoute_ExceedMaxHopCount
@@ -7268,7 +7268,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Verify TraceRoute DiagnosticsState cannot be set to an invalid value</strong></summary>
 
 ## Test Case 23: TS_TAD_TraceRoute_SetInvalidDiagnosticsState
@@ -7304,7 +7304,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Verify CPE uses routing policy when TraceRoute interface is set to an invalid value</strong></summary>
 
 ## Test Case 24: TS_TAD_TraceRoute_SetInvalidInterface
@@ -7344,7 +7344,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: Verify TraceRoute NumberOfTries cannot be set to an invalid value</strong></summary>
 
 ## Test Case 25: TS_TAD_TraceRoute_SetInvalidNumberOfTries
@@ -7380,7 +7380,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Verify TraceRoute reports error when triggered with no host name</strong></summary>
 
 ## Test Case 26: TS_TAD_TraceRoute_SetNoHostName
@@ -7420,7 +7420,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Verify no DIAGNOSTICS COMPLETE log in TR069 when TraceRoute is triggered</strong></summary>
 
 ## Test Case 27: TS_TAD_TraceRoute_CheckTR069Logs
@@ -7467,7 +7467,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: Verify NSLookup result parameters are cleared after modifying a writable parameter</strong></summary>
 
 ## Test Case 28: TS_TAD_NSLookup_ClearResult
@@ -7514,7 +7514,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: Verify NSLookup ResultNumberOfEntries equals NumberOfRepetitions after a successful test</strong></summary>
 
 ## Test Case 29: TS_TAD_NSLookup_CompareNumberOfRepetitionsandEntries
@@ -7557,7 +7557,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: Verify NSLookup succeeds when Interface is not set (CPE uses routing policy)</strong></summary>
 
 ## Test Case 30: TS_TAD_NSLookup_SetNoInterface
@@ -7600,7 +7600,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Verify all UDPEcho result details are updated after a successful test</strong></summary>
 
 ## Test Case 31: TS_TAD_UDPEchoConfig_CheckIfSuccess
@@ -7645,7 +7645,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Verify UDPEcho fails when an invalid port number is configured</strong></summary>
 
 ## Test Case 32: TS_TAD_UDPEchoConfig_InvalidPort
@@ -7686,7 +7686,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Verify UDPEchoConfig returns error when invalid interface is set</strong></summary>
 
 ## Test Case 33: TS_TAD_UDPEchoConfig_InvalidInterface
@@ -7722,7 +7722,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Verify UDPEcho result details are cleared after disable and re-enable</strong></summary>
 
 ## Test Case 34: TS_TAD_UDPEchoConfig_ClearResult
@@ -7765,7 +7765,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Verify UDPEcho fails when request comes from an IP other than the configured source</strong></summary>
 
 ## Test Case 35: TS_TAD_UDPEchoConfig_InvalidUDPRequest
@@ -7806,7 +7806,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Verify UDPEcho does not work when UDPEchoConfig is disabled</strong></summary>
 
 ## Test Case 36: TS_TAD_UDPEchoConfig_TestAfterDisable
@@ -7848,7 +7848,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Verify SuccessCount and all response metrics are greater than zero after a successful PingTest</strong></summary>
 
 ## Test Case 37: TS_TAD_IPPingTest_CheckSuccessAndResponse
@@ -7891,7 +7891,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Verify all ping metrics are zero when an invalid URI is set as host</strong></summary>
 
 ## Test Case 38: TS_TAD_IPPingTest_InvalidUri_CheckFailureAndResponse
@@ -7932,7 +7932,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 39: Verify DiagnosticsState is Error_Other when PingTest is triggered with no host</strong></summary>
 
 ## Test Case 39: TS_TAD_IPPingTest_NoHost_CheckStatus
@@ -7973,7 +7973,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: Verify DiagnosticsState is Complete when PingTest is triggered with a valid host</strong></summary>
 
 ## Test Case 40: TS_TAD_IPPingTest_ValidHostName
@@ -8014,7 +8014,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: Verify DiagnosticsState is Error_CannotResolveHostName when an invalid host name is set</strong></summary>
 
 ## Test Case 41: TS_TAD_IPPingTest_InvalidHostName
@@ -8055,7 +8055,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 42: Verify X_RDKCENTRAL-COM_PingTest.DeviceModel matches Device.DeviceInfo.ModelName</strong></summary>
 
 ## Test Case 42: TS_TAD_IPPingTest_GetDeviceModel
@@ -8091,7 +8091,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 43: Verify X_RDKCENTRAL-COM_PingTest.DeviceID matches Device.DeviceInfo.SerialNumber</strong></summary>
 
 ## Test Case 43: TS_TAD_IPPingTest_GetDeviceID
@@ -8127,7 +8127,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 44: Verify PingTest succeeds even when an invalid interface is set</strong></summary>
 
 ## Test Case 44: TS_TAD_IPPingTest_InvalidInterface_CheckSuccessAndResponse
@@ -8170,7 +8170,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 45: Verify X_RDKCENTRAL-COM_PingTest.ecmMAC matches Device.DeviceInfo.X_CISCO_COM_BaseMacAddress</strong></summary>
 
 ## Test Case 45: TS_TAD_IPPingTest_GetEcmMAC
@@ -8206,7 +8206,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 46: Verify DiagnosticsState is Error_CannotResolveHostName after timeout when invalid host is set</strong></summary>
 
 ## Test Case 46: TS_TAD_IPPingTest_GetDiagnosticState_AfterTimeout
@@ -8248,7 +8248,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 47: Verify ARPTableNumberOfEntries matches the count from ip neigh command</strong></summary>
 
 ## Test Case 47: TS_TAD_IPPingTest_GetARPEntries
@@ -8284,7 +8284,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 48: Verify DiagnosticsState reflects timeout error after configuring IPPing timeout</strong></summary>
 
 ## Test Case 48: TS_TAD_IPPingTest_ConfigureTimeout
@@ -8333,19 +8333,19 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>DHCPv4</strong></summary>
 
 # DHCPv4
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - DHCP LAN Configuration</strong></summary>
 
 # E2E - DHCP LAN Configuration
 
-<details>
+<details open>
 <summary><strong>Test Case 1: LAN client obtains IP in Class A private DHCP range</strong></summary>
 
 ## Test Case 1: E2E_DHCP_ClassAPrivate_CheckLanIPAddress
@@ -8391,7 +8391,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: LAN client obtains IP in Class B private DHCP range</strong></summary>
 
 ## Test Case 2: E2E_DHCP_ClassBPrivate_CheckLanIPAddress
@@ -8437,7 +8437,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: LAN client obtains IP in Class C private DHCP range</strong></summary>
 
 ## Test Case 3: E2E_DHCP_ClassCPrivate_CheckLanIPAddress
@@ -8483,7 +8483,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: DHCP config updates are reflected on LAN client without reboot</strong></summary>
 
 ## Test Case 4: E2E_DHCP_Check_ConfigUpdate_InLANClient
@@ -8530,7 +8530,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Ensure DHCP address re-assignment with active lease time</strong></summary>
 
 
@@ -8584,7 +8584,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: LAN client retains same IP on reconnection after lease expiry</strong></summary>
 
 ## Test Case 6: E2E_DHCP_GetLanIPAddress_OnReconnection_AfterLeaseTime
@@ -8637,7 +8637,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Updated DHCP subnet mask is reflected on LAN client</strong></summary>
 
 ## Test Case 7: E2E_DHCP_Validate_SetSubnetMask
@@ -8682,7 +8682,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: LAN client IP falls within narrow DHCP server pool range</strong></summary>
 
 ## Test Case 8: E2E_DHCP_VerifyLANClientIP_InServerPoolRange
@@ -8730,12 +8730,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - DHCP Invalid LAN IP Address</strong></summary>
 
 # E2E - DHCP Invalid LAN IP Address
 
-<details>
+<details open>
 <summary><strong>Test Case 9: DUT rejects public IP address as LAN IP</strong></summary>
 
 ## Test Case 9: E2E_DHCP_SetLanIPAddress_PublicAddress
@@ -8785,7 +8785,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: DUT rejects 0.0.0.0 as LAN IP address</strong></summary>
 
 ## Test Case 10: E2E_DHCP_SetLanIPAddress_AnyAddress
@@ -8835,7 +8835,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: DUT rejects network address as LAN IP</strong></summary>
 
 ## Test Case 11: E2E_DHCP_SetLanIPAddress_NetworkIP
@@ -8885,7 +8885,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: DUT rejects network broadcast address as LAN IP</strong></summary>
 
 ## Test Case 12: E2E_DHCP_SetLanIPAddress_NetworkBroadcastIP
@@ -8935,7 +8935,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: DUT rejects multicast address as LAN IP</strong></summary>
 
 ## Test Case 13: E2E_DHCP_SetLanIPAddress_MulticastIPRange
@@ -8985,7 +8985,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: DUT rejects limited broadcast address as LAN IP</strong></summary>
 
 ## Test Case 14: E2E_DHCP_SetLanIPAddress_BroadcastIP
@@ -9035,7 +9035,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: DUT rejects subnet mask value as LAN IP address</strong></summary>
 
 ## Test Case 15: E2E_DHCP_SetLanIPAddress_SubnetMask
@@ -9085,7 +9085,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: DUT rejects special characters as LAN IP address</strong></summary>
 
 ## Test Case 16: E2E_DHCP_SetLanIPAddress_SpecialCharacters
@@ -9135,7 +9135,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: DUT rejects alphanumeric string as LAN IP address</strong></summary>
 
 ## Test Case 17: E2E_DHCP_SetLanIPAddress_Alphanumeric
@@ -9185,7 +9185,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: DUT rejects hexadecimal string as LAN IP address</strong></summary>
 
 ## Test Case 18: E2E_DHCP_SetLanIPAddress_Hexadecimal
@@ -9235,7 +9235,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: DUT rejects DHCP lease time less than 120 seconds</strong></summary>
 
 ## Test Case 19: E2E_DHCP_SetServerLeaseTime_LessThan120
@@ -9290,12 +9290,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - DHCP Invalid Subnet Mask</strong></summary>
 
 # E2E - DHCP Invalid Subnet Mask
 
-<details>
+<details open>
 <summary><strong>Test Case 20: DUT rejects public IP address as subnet mask</strong></summary>
 
 ## Test Case 20: E2E_DHCP_SetSubnetMask_PublicAddress
@@ -9344,7 +9344,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: DUT rejects 0.0.0.0 as subnet mask</strong></summary>
 
 ## Test Case 21: E2E_DHCP_SetSubnetMask_AnyAddress
@@ -9393,7 +9393,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: DUT rejects network address as subnet mask</strong></summary>
 
 ## Test Case 22: E2E_DHCP_SetSubnetMask_NetworkIP
@@ -9442,7 +9442,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: DUT rejects network broadcast address as subnet mask</strong></summary>
 
 ## Test Case 23: E2E_DHCP_SetSubnetMask_NetworkBroadcastIP
@@ -9491,7 +9491,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: DUT rejects multicast address as subnet mask</strong></summary>
 
 ## Test Case 24: E2E_DHCP_SetSubnetMask_MulticastIPRange
@@ -9540,7 +9540,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: DUT rejects limited broadcast address as subnet mask</strong></summary>
 
 ## Test Case 25: E2E_DHCP_SetSubnetMask_BroadcastIP
@@ -9589,7 +9589,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: DUT rejects special characters as subnet mask</strong></summary>
 
 ## Test Case 26: E2E_DHCP_SetSubnetMask_SpecialCharacters
@@ -9638,7 +9638,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: DUT rejects alphanumeric string as subnet mask</strong></summary>
 
 ## Test Case 27: E2E_DHCP_SetSubnetMask_Alphanumeric
@@ -9687,7 +9687,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: DUT rejects hexadecimal string as subnet mask</strong></summary>
 
 ## Test Case 28: E2E_DHCP_SetSubnetMask_Hexadecimal
@@ -9738,13 +9738,13 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - DHCP WLAN Configuration</strong></summary>
 
 # E2E - DHCP WLAN Configuration
 
 
-<details>
+<details open>
 <summary><strong>Test Case 29: WLAN client obtains IP in Class A private DHCP range</strong></summary>
 
 ## Test Case 29: E2E_DHCP_WLAN_ClassAPrivate_CheckIPAddress
@@ -9794,7 +9794,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: WLAN client obtains IP in Class B private DHCP range</strong></summary>
 
 ## Test Case 30: E2E_DHCP_WLAN_ClassBPrivate_CheckIPAddress
@@ -9844,7 +9844,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: WLAN client obtains IP in Class C private DHCP range</strong></summary>
 
 ## Test Case 31: E2E_DHCP_WLAN_ClassCPrivate_CheckIPAddress
@@ -9894,7 +9894,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: WLAN client receives 255.0.0.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 32: E2E_DHCP_WLAN_SetSubnetMask_255.0.0.0
@@ -9944,7 +9944,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: WLAN client receives 255.255.0.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 33: E2E_DHCP_WLAN_SetSubnetMask_255.255.0.0
@@ -9994,7 +9994,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: WLAN client receives 255.255.255.0 subnet mask from DHCP</strong></summary>
 
 ## Test Case 34: E2E_DHCP_WLAN_SetSubnetMask_255.255.255.0
@@ -10044,7 +10044,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: WLAN client receives 255.255.255.128 subnet mask from DHCP</strong></summary>
 
 ## Test Case 35: E2E_DHCP_WLAN_SetSubnetMask_255.255.255.128
@@ -10102,17 +10102,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>IPv6</strong></summary>
 
 # IPv6
 
-<details>
+<details open>
 <summary><strong>E2E</strong></summary>
 
 # E2E
 
-<details>
+<details open>
 <summary><strong>Test Case 1: E2E_IPV6_CheckDNSResolutionViaPrimaryDNSServerFromLANClient</strong></summary>
 
 ## Test Case 1: E2E_IPV6_CheckDNSResolutionViaPrimaryDNSServerFromLANClient
@@ -10154,7 +10154,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: E2E_IPV6_CheckInternetConnectivityFromLANClient</strong></summary>
 
 ## Test Case 2: E2E_IPV6_CheckInternetConnectivityFromLANClient
@@ -10197,7 +10197,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: E2E_IPV6_CheckInternetConnectivityFromWLANClient</strong></summary>
 
 ## Test Case 3: E2E_IPV6_CheckInternetConnectivityFromWLANClient
@@ -10248,7 +10248,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: E2E_IPV6_DNSResolutionViaPrimaryDNSServerFromWLANClient</strong></summary>
 
 ## Test Case 4: E2E_IPV6_DNSResolutionViaPrimaryDNSServerFromWLANClient
@@ -10301,12 +10301,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>IPV6 - Status Checks</strong></summary>
 
 # IPV6 - Status Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 5: TS_IPV6_Get_WANIPv6Address</strong></summary>
 
 ## Test Case 5: TS_IPV6_Get_WANIPv6Address
@@ -10350,7 +10350,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: TS_IPV6_Get_Brlan0_IPv6Address</strong></summary>
 
 ## Test Case 6: TS_IPV6_Get_Brlan0_IPv6Address
@@ -10390,7 +10390,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: TS_IPV6_CheckDibblerServerStatus</strong></summary>
 
 ## Test Case 7: TS_IPV6_CheckDibblerServerStatus
@@ -10429,7 +10429,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: TS_IPV6_Check_ActiveLANClient_IPv6Address</strong></summary>
 
 ## Test Case 8: TS_IPV6_Check_ActiveLANClient_IPv6Address
@@ -10471,7 +10471,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: TS_IPV6_Check_ActiveWLANClient_IPv6Address</strong></summary>
 
 ## Test Case 9: TS_IPV6_Check_ActiveWLANClient_IPv6Address
@@ -10513,7 +10513,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: TS_IPV6_CheckInternetConnectivity</strong></summary>
 
 ## Test Case 10: TS_IPV6_CheckInternetConnectivity
@@ -10553,7 +10553,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: TS_IPV6_Check_RouterAdvertisement_LANPrefixConfiguration</strong></summary>
 
 ## Test Case 11: TS_IPV6_Check_RouterAdvertisement_LANPrefixConfiguration
@@ -10595,7 +10595,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: TS_IPV6_Check_DNSResolution_PrimaryIPv6Server</strong></summary>
 
 ## Test Case 12: TS_IPV6_Check_DNSResolution_PrimaryIPv6Server
@@ -10636,7 +10636,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: TS_IPV6_Get_Brlan0IPv6LinkLocalAddress</strong></summary>
 
 ## Test Case 13: TS_IPV6_Get_Brlan0IPv6LinkLocalAddress
@@ -10676,7 +10676,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: TS_IPV6_Get_WANIPv6LinkLocalAddress</strong></summary>
 
 ## Test Case 14: TS_IPV6_Get_WANIPv6LinkLocalAddress
@@ -10717,7 +10717,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: TS_IPV6_Check_DHCPv6ClientStatus</strong></summary>
 
 ## Test Case 15: TS_IPV6_Check_DHCPv6ClientStatus
@@ -10760,12 +10760,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>IPV6 - Behavioral Checks</strong></summary>
 
 # IPV6 - Behavioral Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 16: TS_IPV6_CheckIPV6Address_AfterReboot</strong></summary>
 
 ## Test Case 16: TS_IPV6_CheckIPV6Address_AfterReboot
@@ -10807,7 +10807,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: TS_IPV6_CheckIPV6Address_AfterFR</strong></summary>
 
 ## Test Case 17: TS_IPV6_CheckIPV6Address_AfterFR
@@ -10851,7 +10851,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: TS_IPV6_Get_DeviceMode_AfterFR</strong></summary>
 
 ## Test Case 18: TS_IPV6_Get_DeviceMode_AfterFR
@@ -10896,7 +10896,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: TS_IPV6_Check_Brlan0LinkLocalNeighborConnectivity_LANInterface</strong></summary>
 
 ## Test Case 19: TS_IPV6_Check_Brlan0LinkLocalNeighborConnectivity_LANInterface
@@ -10939,7 +10939,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: TS_IPV6_Check_Brlan0LinkLocalNeighborConnectivity_WLANInterface</strong></summary>
 
 ## Test Case 20: TS_IPV6_Check_Brlan0LinkLocalNeighborConnectivity_WLANInterface
@@ -10982,7 +10982,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: TS_IPV6_Check_PingToLANClientGlobalIPv6</strong></summary>
 
 ## Test Case 21: TS_IPV6_Check_PingToLANClientGlobalIPv6
@@ -11027,7 +11027,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: TS_IPV6_Check_PingToWLANClientGlobalIPv6</strong></summary>
 
 ## Test Case 22: TS_IPV6_Check_PingToWLANClientGlobalIPv6
@@ -11080,12 +11080,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Firewall</strong></summary>
 
 # FIREWALL
 
-<details>
+<details open>
 <summary><strong>Test Case 1: FTP from LAN to WAN with Custom Firewall</strong></summary>
 
 ## Test Case 1: E2E_Firewall_Custom_FtpFromLanToWan
@@ -11124,7 +11124,7 @@ To check if the PT rule doesn't take effect and inbound traffic is not let throu
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: HTTP from LAN to WAN with Custom Firewall</strong></summary>
 
 ## Test Case 2: E2E_Firewall_Custom_HttpFromLanToWan
@@ -11161,7 +11161,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 3: HTTPS from LAN to WAN with Custom Firewall</strong></summary>
 
 ## Test Case 3: E2E_Firewall_Custom_HttpsFromLanToWan
@@ -11198,7 +11198,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 4: Ping from LAN to WAN with Custom Firewall</strong></summary>
 
 ## Test Case 4: E2E_Firewall_Custom_PingFromLanToWan
@@ -11233,7 +11233,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 5: SSH to WAN from LAN and WLAN with Custom Firewall</strong></summary>
 
 ## Test Case 5: E2E_Firewall_Custom_SSHToWAN_FromLANAndWLAN
@@ -11280,7 +11280,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 6: Telnet from LAN to WAN with Custom Firewall</strong></summary>
 
 ## Test Case 6: E2E_Firewall_Custom_TelnetFromLanToWan
@@ -11317,7 +11317,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 7: FTP from LAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 7: E2E_Firewall_High_FtpFromLanToWan
@@ -11354,7 +11354,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 8: FTP from WLAN to LAN with High Firewall</strong></summary>
 
 ## Test Case 8: E2E_Firewall_High_FtpFromWlanToLan
@@ -11395,7 +11395,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 9: FTP from WLAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 9: E2E_Firewall_High_FtpFromWlanToWan
@@ -11437,7 +11437,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 10: HTTP from LAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 10: E2E_Firewall_High_HttpFromLanToWan
@@ -11474,7 +11474,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 11: HTTP from WLAN to LAN with High Firewall</strong></summary>
 
 ## Test Case 11: E2E_Firewall_High_HttpFromWlanToLan
@@ -11515,7 +11515,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 12: HTTP from WLAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 12: E2E_Firewall_High_HttpFromWlanToWan
@@ -11557,7 +11557,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 13: HTTPS from LAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 13: E2E_Firewall_High_HttpsFromLanToWan
@@ -11594,7 +11594,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 14: HTTPS from WLAN to LAN with High Firewall</strong></summary>
 
 ## Test Case 14: E2E_Firewall_High_HttpsFromWlanToLan
@@ -11635,7 +11635,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 15: HTTPS from WLAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 15: E2E_Firewall_High_HttpsFromWlanToWan
@@ -11677,7 +11677,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 16: Ping from LAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 16: E2E_Firewall_High_PingFromLanToWan
@@ -11712,7 +11712,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 17: Ping from WLAN to LAN with High Firewall</strong></summary>
 
 ## Test Case 17: E2E_Firewall_High_PingFromWlanToLan
@@ -11753,7 +11753,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 18: Ping from WLAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 18: E2E_Firewall_High_PingFromWlanToWan
@@ -11793,7 +11793,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 19: SSH to WAN from LAN and WLAN with High Firewall</strong></summary>
 
 ## Test Case 19: E2E_Firewall_High_SSHToWAN_FromLANAndWLAN
@@ -11840,7 +11840,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 20: Telnet from LAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 20: E2E_Firewall_High_TelnetFromLanToWan
@@ -11877,7 +11877,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 21: Telnet from WLAN to LAN with High Firewall</strong></summary>
 
 ## Test Case 21: E2E_Firewall_High_TelnetFromWlanToLan
@@ -11918,7 +11918,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 22: Telnet from WLAN to WAN with High Firewall</strong></summary>
 
 ## Test Case 22: E2E_Firewall_High_TelnetFromWlanToWan
@@ -11960,7 +11960,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 23: FTP from LAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 23: E2E_Firewall_Low_FtpFromLanToWan
@@ -11997,7 +11997,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 24: FTP from WLAN to LAN with Low Firewall</strong></summary>
 
 ## Test Case 24: E2E_Firewall_Low_FtpFromWlanToLan
@@ -12038,7 +12038,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 25: FTP from WLAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 25: E2E_Firewall_Low_FtpFromWlanToWan
@@ -12080,7 +12080,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 26: HTTP from LAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 26: E2E_Firewall_Low_HttpFromLanToWan
@@ -12117,7 +12117,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 27: HTTP from WLAN to LAN with Low Firewall</strong></summary>
 
 ## Test Case 27: E2E_Firewall_Low_HttpFromWlanToLan
@@ -12158,7 +12158,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 28: HTTP from WLAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 28: E2E_Firewall_Low_HttpFromWlanToWan
@@ -12200,7 +12200,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 29: HTTPS from LAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 29: E2E_Firewall_Low_HttpsFromLanToWan
@@ -12237,7 +12237,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 30: HTTPS from WLAN to LAN with Low Firewall</strong></summary>
 
 ## Test Case 30: E2E_Firewall_Low_HttpsFromWlanToLan
@@ -12278,7 +12278,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 31: HTTPS from WLAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 31: E2E_Firewall_Low_HttpsFromWlanToWan
@@ -12320,7 +12320,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 32: Ping from LAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 32: E2E_Firewall_Low_PingFromLanToWan
@@ -12355,7 +12355,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 33: Ping from WLAN to LAN with Low Firewall</strong></summary>
 
 ## Test Case 33: E2E_Firewall_Low_PingFromWlanToLan
@@ -12396,7 +12396,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 34: Ping from WLAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 34: E2E_Firewall_Low_PingFromWlanToWan
@@ -12436,7 +12436,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 35: SSH to WAN from LAN and WLAN with Low Firewall</strong></summary>
 
 ## Test Case 35: E2E_Firewall_Low_SSHToWAN_FromLANAndWLAN
@@ -12483,7 +12483,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 36: Telnet from LAN to WAN with Low Firewall</strong></summary>
 
 ## Test Case 36: E2E_Firewall_Low_TelnetFromLanToWan
@@ -12520,7 +12520,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 37: Telnet from WLAN to LAN with Low Firewall</strong></summary>
 
 ## Test Case 37: E2E_Firewall_Low_TelnetFromWlanToLan
@@ -12561,7 +12561,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 38: FTP from LAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 38: E2E_Firewall_Medium_FtpFromLanToWan
@@ -12598,7 +12598,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 39: FTP from WLAN to LAN with Medium Firewall</strong></summary>
 
 ## Test Case 39: E2E_Firewall_Medium_FtpFromWlanToLan
@@ -12639,7 +12639,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 40: HTTP from LAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 40: E2E_Firewall_Medium_HttpFromLanToWan
@@ -12676,7 +12676,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 41: HTTP from WLAN to LAN with Medium Firewall</strong></summary>
 
 ## Test Case 41: E2E_Firewall_Medium_HttpFromWlanToLan
@@ -12717,7 +12717,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 42: HTTP from WLAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 42: E2E_Firewall_Medium_HttpFromWlanToWan
@@ -12759,7 +12759,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 43: HTTPS from LAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 43: E2E_Firewall_Medium_HttpsFromLanToWan
@@ -12796,7 +12796,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 44: HTTPS from WLAN to LAN with Medium Firewall</strong></summary>
 
 ## Test Case 44: E2E_Firewall_Medium_HttpsFromWlanToLan
@@ -12837,7 +12837,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 45: HTTPS from WLAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 45: E2E_Firewall_Medium_HttpsFromWlanToWan
@@ -12879,7 +12879,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 46: Ping from LAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 46: E2E_Firewall_Medium_PingFromLanToWan
@@ -12914,7 +12914,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 47: Ping from WLAN to LAN with Medium Firewall</strong></summary>
 
 ## Test Case 47: E2E_Firewall_Medium_PingFromWlanToLan
@@ -12955,7 +12955,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 48: Ping from WLAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 48: E2E_Firewall_Medium_PingFromWlanToWan
@@ -12995,7 +12995,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 49: SSH to WAN from LAN and WLAN with Medium Firewall</strong></summary>
 
 ## Test Case 49: E2E_Firewall_Medium_SSHToWAN_FromLANAndWLAN
@@ -13042,7 +13042,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 50: Telnet from LAN to WAN with Medium Firewall</strong></summary>
 
 ## Test Case 50: E2E_Firewall_Medium_TelnetFromLanToWan
@@ -13079,7 +13079,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 51: Telnet from WLAN to LAN with Medium Firewall</strong></summary>
 
 ## Test Case 51: E2E_Firewall_Medium_TelnetFromWlanToLan
@@ -13125,17 +13125,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Cellular Manager</strong></summary>
 
 # Cellular Manager
 
-<details>
+<details open>
 <summary><strong>Status and Parameter Validation</strong></summary>
 
 # Status and Parameter Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify X_RDK_Status transitions to DEREGISTERED/CONNECTED on interface disable/enable</strong></summary>
 
 ## Test Case 1: TS_CellularManager_CheckCellularX_RDK_Status
@@ -13178,7 +13178,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify key cellular parameters report expected values when CONNECTED</strong></summary>
 
 ## Test Case 2: TS_CellularManager_CheckParametersValue_CONNECTED
@@ -13222,7 +13222,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify RadioEnvConditions matches RSRP signal level when CONNECTED</strong></summary>
 
 ## Test Case 3: TS_CellularManager_CheckRadioEnvConditions_CONNECTED
@@ -13263,7 +13263,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify RadioEnvConditions reports UNAVAILABLE when interface is disabled</strong></summary>
 
 ## Test Case 4: TS_CellularManager_CheckRadioEnvConditions_DEREGISTERED
@@ -13303,7 +13303,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify BytesSent and BytesReceived are non-zero when CONNECTED</strong></summary>
 
 ## Test Case 5: TS_CellularManager_GetStatistics_CONNECTED
@@ -13346,7 +13346,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify BytesSent and BytesReceived are zero when DEREGISTERED</strong></summary>
 
 ## Test Case 6: TS_CellularManager_GetStatistics_DEREGISTERED
@@ -13394,12 +13394,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Interface and Connectivity</strong></summary>
 
 # Interface and Connectivity
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify wwan0 interface is UP and has a valid IP when cellular is enabled</strong></summary>
 
 ## Test Case 7: TS_CellularManager_CheckIPAddressandInterfaceStatus
@@ -13440,7 +13440,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify internet connectivity via wwan0 with zero packet loss when CONNECTED</strong></summary>
 
 ## Test Case 8: TS_CellularManager_CheckInternetConnectivity
@@ -13481,7 +13481,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify internet connectivity is present only when cellular interface is enabled</strong></summary>
 
 ## Test Case 9: TS_CellularManager_GetIPAddressandCheckInternetConnectivity
@@ -13525,7 +13525,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify RSSI, SNR, RSRP, and RSRQ are within valid ranges when CONNECTED</strong></summary>
 
 ## Test Case 10: TS_CellularManager_CheckInterfaceParamsWithinRange
@@ -13568,12 +13568,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>SIM, Access Technology, and Profile</strong></summary>
 
 # SIM, Access Technology, and Profile
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify SIM card slot is active and operator name is retrievable</strong></summary>
 
 ## Test Case 11: TS_CellularManager_GetSimcard_Status
@@ -13614,7 +13614,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Verify X_RDK_Status transitions to DEREGISTERED on SIM power-off and REGISTERED on power-on</strong></summary>
 
 ## Test Case 12: TS_CellularManager_CheckStatusAfterSimPowerOffandOn
@@ -13656,7 +13656,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify CurrentAccessTechnology is within the list of SupportedAccessTechnologies</strong></summary>
 
 ## Test Case 13: TS_CellularManager_GetCurrentAccessTechnology
@@ -13698,7 +13698,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Verify RDK context profile status transitions with cellular interface enable state</strong></summary>
 
 ## Test Case 14: TS_CellularManager_CheckRDKContextProfileStatus

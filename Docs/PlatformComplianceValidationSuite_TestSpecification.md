@@ -19,12 +19,12 @@
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E</strong></summary>
 
 # E2E
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify LAN IP address change is reflected on wired LAN client DHCP range</strong></summary>
 
 ## Test Case 1: E2E_ChangeLanManagementEntry_LanIPAddress
@@ -69,7 +69,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify primary DNS server resolves domain names from the LAN client</strong></summary>
 
 ## Test Case 2: E2E_DNS_ResolveDomainName_PrimaryDNS
@@ -105,7 +105,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify secondary DNS server resolves domain names from the LAN client</strong></summary>
 
 ## Test Case 3: E2E_DNS_ResolveDomainName_SecondaryDNS
@@ -141,7 +141,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify wired LAN client has internet access through the gateway</strong></summary>
 
 ## Test Case 4: E2E_LAN_AccessInternet
@@ -177,7 +177,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify LAN client obtains IP from DUT DHCP server in router mode</strong></summary>
 
 ## Test Case 5: E2E_RouterMode_CheckLANIPAddress
@@ -221,7 +221,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify LAN client IP address falls within the configured DHCP range</strong></summary>
 
 ## Test Case 6: E2E_SANITY_CheckLANIPAddress
@@ -258,7 +258,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify configured SSID(s) are broadcasted and visible to WLAN client</strong></summary>
 
 ## Test Case 7: E2E_SANITY_WIFI_CheckSSIDBroadcast
@@ -298,7 +298,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify WLAN client connects to SSID(s) and obtains valid IP address</strong></summary>
 
 ## Test Case 8: E2E_SANITY_WIFI_ConnectTo_SSID
@@ -342,7 +342,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify WLAN client connects to MLO SSID and accesses the internet</strong></summary>
 
 ## Test Case 9: E2E_WIFI_WLAN_AccessInternet
@@ -387,12 +387,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>SANITY - Status Checks</strong></summary>
 
 # SANITY - Status Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify brlan0 LAN bridge interface is up and its IP matches the TR-181 parameter</strong></summary>
 
 ## Test Case 10: TS_SANITY_Is_brlan0_Up
@@ -426,7 +426,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify all CCSP processes are running on the DUT</strong></summary>
 
 ## Test Case 11: TS_SANITY_Is_CCSPProcesses_UP
@@ -460,7 +460,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Verify core CCSP components CR, PandM, and PSM are running</strong></summary>
 
 ## Test Case 12: TS_SANITY_Is_CoreCCSP_UP
@@ -494,7 +494,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify DUT WAN interface obtains an IP address after reboot</strong></summary>
 
 ## Test Case 13: TS_SANITY_Is_DeviceUp_AfterReboot
@@ -529,7 +529,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Verify dnsmasq configuration file is present and the process is running</strong></summary>
 
 ## Test Case 14: TS_SANITY_Is_DNSMASQ_UP
@@ -563,7 +563,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Verify Dropbear SSH process is running on the DUT</strong></summary>
 
 ## Test Case 15: TS_SANITY_Is_DROPBEAR_UP
@@ -596,7 +596,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Verify erouter0 WAN interface is up and its IP matches the TR-181 parameter</strong></summary>
 
 ## Test Case 16: TS_SANITY_Is_erouter0_Up
@@ -630,7 +630,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Verify Lighttpd web server process is running on the DUT</strong></summary>
 
 ## Test Case 17: TS_SANITY_Is_LIGHTTPD_UP
@@ -663,7 +663,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Verify SNMP process is running on the DUT</strong></summary>
 
 ## Test Case 18: TS_SANITY_Is_SNMP_UP
@@ -696,7 +696,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify WEBPA process is running on the DUT</strong></summary>
 
 ## Test Case 19: TS_SANITY_Is_WEBPA_UP
@@ -729,7 +729,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Verify /minidumps directory is present on the DUT</strong></summary>
 
 ## Test Case 20: TS_SANITY_IsMinidumpsPresent
@@ -765,12 +765,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>SANITY - Behavioral Checks</strong></summary>
 
 # SANITY - Behavioral Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Verify brlan0 obtains an IPv6 global address when DUT is in router mode</strong></summary>
 
 ## Test Case 21: TS_SANITY_CheckBrlan0IPV6_InRouterMode
@@ -810,7 +810,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: Verify brlan0 IPv6 address assignment behaviour across LAN mode transitions</strong></summary>
 
 ## Test Case 22: TS_SANITY_CheckBrlan0IPV6_WithLanModeTransition
@@ -853,7 +853,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Verify SelfHeal restores brlan0 interface within 15 minutes after it goes down</strong></summary>
 
 ## Test Case 23: TS_SANITY_CheckBrlan0SelfHeal
@@ -902,7 +902,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Verify dnsmasq process is not running in bridge-static mode</strong></summary>
 
 ## Test Case 24: TS_SANITY_CheckDNSMasqInBridgeMode
@@ -942,7 +942,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: Verify no services are stuck in activating state after device boot</strong></summary>
 
 ## Test Case 25: TS_SANITY_CheckForAnyActivatingServices
@@ -978,7 +978,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Verify no failed services are present after device reboot</strong></summary>
 
 ## Test Case 26: TS_SANITY_CheckForAnyFailedServices
@@ -1012,7 +1012,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Verify no duplicate instances of critical system processes are running</strong></summary>
 
 ## Test Case 27: TS_SANITY_CheckForDuplicateProcess
@@ -1053,7 +1053,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: Verify no zombie (defunct) processes are present on the DUT</strong></summary>
 
 ## Test Case 28: TS_SANITY_CheckForZombieProcess
@@ -1086,7 +1086,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: Verify bridge-static LAN mode setting persists after device reboot</strong></summary>
 
 ## Test Case 29: TS_SANITY_CheckLanMode_AfterReboot
@@ -1126,7 +1126,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: Verify Lighttpd process remains running across LAN mode transitions</strong></summary>
 
 ## Test Case 30: TS_SANITY_CheckLighttpdProcess_OnLanModeTransition
@@ -1164,7 +1164,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Verify minidump file is created and process recovers after a crash</strong></summary>
 
 ## Test Case 31: TS_SANITY_CheckMinidumpsAfterProcessCrash
@@ -1200,7 +1200,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Verify all critical processes are running within expected uptime after factory reset</strong></summary>
 
 ## Test Case 32: TS_SANITY_CheckProcessUptimeAfterFactoryReset
@@ -1239,7 +1239,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Verify all critical processes are running within expected uptime after reboot</strong></summary>
 
 ## Test Case 33: TS_SANITY_CheckProcessUptimeAfterReboot
@@ -1276,7 +1276,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Verify TR-069 RFC parameter is consistent with syscfg and controls CcspTr069PaSsp process</strong></summary>
 
 ## Test Case 34: TS_SANITY_CheckTR069RFC_AndTR069Process
@@ -1317,7 +1317,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Verify UDHCPC zombie process is not present before and after reboot</strong></summary>
 
 ## Test Case 35: TS_SANITY_CheckUDHCPCZombie
@@ -1352,7 +1352,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Verify LAN IP address set via TR-181 is reflected in brlan0 ifconfig output</strong></summary>
 
 ## Test Case 36: TS_SANITY_SetLanManagementEntryLanIPAddress
@@ -1393,12 +1393,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>CCSP Common - MBUS</strong></summary>
 
 # CCSP Common - MBUS
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Verify CcspBaseIf_busCheck returns CCSP_Message_Bus_OK via the message bus</strong></summary>
 
 ## Test Case 37: TS_CCSPCOMMON_MBUS_BusCheck
@@ -1434,7 +1434,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Verify CcspBaseIf_isSystemReady returns OK and confirms all components are ready via message bus</strong></summary>
 
 ## Test Case 38: TS_CCSPCOMMON_MBUS_IsSystemReady
@@ -1474,12 +1474,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>RBUS</strong></summary>
 
 # RBUS
 
-<details>
+<details open>
 <summary><strong>Test Case 39: Verify RBUS session creation and closure complete successfully</strong></summary>
 
 ## Test Case 39: TS_RBUS_CreateAndCloseSession
@@ -1514,7 +1514,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: Verify rbus_open and rbus_close APIs complete successfully</strong></summary>
 
 ## Test Case 40: TS_RBUS_OpenAndClose
@@ -1547,7 +1547,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: Verify rbus_openBrokerConnection and rbus_closeBrokerConnection APIs complete successfully</strong></summary>
 
 ## Test Case 41: TS_RBUS_OpenAndCloseBrokerConnection

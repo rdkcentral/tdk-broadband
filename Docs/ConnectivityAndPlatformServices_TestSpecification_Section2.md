@@ -22,17 +22,17 @@
 
 ---
 
-<details>
+<details open>
 <summary><strong>RNDIS</strong></summary>
 
 # RNDIS
 
-<details>
+<details open>
 <summary><strong>RNDIS - Android USB</strong></summary>
 
 # RNDIS - Android USB
 
-<details>
+<details open>
 <summary><strong>Test Case 1: WAN IP and MAC match Android RNDIS interface values</strong></summary>
 
 ## Test Case 1: TS_RNDIS_VerifyWANIPAndMAC_AndroidUSB
@@ -74,7 +74,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Gateway internet connectivity via Android USB tethering with zero packet loss</strong></summary>
 
 ## Test Case 2: TS_RNDIS_VerifyGatewayInternetConnectivity_AndroidUSB
@@ -112,7 +112,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Cellular interface toggling transitions status between DEREGISTERED and CONNECTED via Android USB</strong></summary>
 
 ## Test Case 3: TS_RNDIS_VerifyCellularInterfaceToggling_AndroidUSB
@@ -155,7 +155,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Cellular data interface DM matches Android RNDIS WAN interface name</strong></summary>
 
 ## Test Case 4: TS_RNDIS_VerifyCellularDataInterface_AndroidUSB
@@ -194,7 +194,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Cellular device type identified as RNDIS via Android USB</strong></summary>
 
 ## Test Case 5: TS_RNDIS_VerifyCellularDeviceType_AndroidUSB
@@ -233,7 +233,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Cellular control interface status is OPENED when Android RNDIS is active</strong></summary>
 
 ## Test Case 6: TS_RNDIS_VerifyControlInterfaceStatus_AndroidUSB
@@ -272,7 +272,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Cellular statistics counters increase after traffic generation via Android USB</strong></summary>
 
 ## Test Case 7: TS_RNDIS_VerifyCellularStatisticsUpdate_AndroidUSB
@@ -312,7 +312,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Primary WAN interface has no IP when Android RNDIS is the active WAN</strong></summary>
 
 ## Test Case 8: TS_RNDIS_VerifyPrimaryWANInactive_AndroidUSB
@@ -351,7 +351,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: WAN Manager active interface and status reflect Android RNDIS correctly</strong></summary>
 
 ## Test Case 9: TS_RNDIS_VerifyWANManagerActiveInterface_AndroidUSB
@@ -392,7 +392,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: WAN Manager InterfaceActiveStatus is LTE,1|WanOE,0 when Android RNDIS is active</strong></summary>
 
 ## Test Case 10: TS_RNDIS_VerifyInterfaceActiveStatus_AndroidUSB
@@ -431,7 +431,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: WAN Manager virtual interface IPv4 address matches Android RNDIS interface IP</strong></summary>
 
 ## Test Case 11: TS_RNDIS_VerifyVirtualInterfaceIPv4Address_AndroidUSB
@@ -470,7 +470,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Host table reflects active LAN client while Android RNDIS is the active WAN</strong></summary>
 
 ## Test Case 12: TS_RNDIS_VerifyHostTableUpdateWithLANClient_AndroidUSB
@@ -511,7 +511,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Host table reflects active WiFi client while Android RNDIS is the active WAN</strong></summary>
 
 ## Test Case 13: TS_RNDIS_VerifyHostTableUpdateWithWiFiClient_AndroidUSB
@@ -556,12 +556,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>RNDIS - iPhone USB</strong></summary>
 
 # RNDIS - iPhone USB
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Cellular statistics counters increase after traffic generation via iPhone USB</strong></summary>
 
 ## Test Case 14: TS_RNDIS_VerifyCellularStatisticsUpdate_iPhoneUSB
@@ -601,7 +601,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Cellular control interface status is OPENED when iPhone RNDIS is active</strong></summary>
 
 ## Test Case 15: TS_RNDIS_VerifyControlInterfaceStatus_iPhoneUSB
@@ -640,7 +640,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Cellular interface toggling transitions status between DEREGISTERED and CONNECTED via iPhone USB</strong></summary>
 
 ## Test Case 16: TS_RNDIS_VerifyCellularInterfaceToggling_iPhoneUSB
@@ -683,7 +683,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Cellular data interface DM matches iPhone USB tethering WAN interface name</strong></summary>
 
 ## Test Case 17: TS_RNDIS_VerifyCellularDataInterface_iPhoneUSB
@@ -722,7 +722,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Cellular device type identified as RNDIS via iPhone USB</strong></summary>
 
 ## Test Case 18: TS_RNDIS_VerifyCellularDeviceType_iPhoneUSB
@@ -761,7 +761,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Primary WAN interface has no IP when iPhone RNDIS is the active WAN</strong></summary>
 
 ## Test Case 19: TS_RNDIS_VerifyPrimaryWANInactive_iPhoneUSB
@@ -800,7 +800,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: WAN Manager active interface and status reflect iPhone RNDIS correctly</strong></summary>
 
 ## Test Case 20: TS_RNDIS_VerifyWANManagerActiveInterface_iPhoneUSB
@@ -841,7 +841,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: WAN IP and MAC match iPhone USB tethering interface values</strong></summary>
 
 ## Test Case 21: TS_RNDIS_VerifyWANIPAndMAC_iPhoneUSB
@@ -883,7 +883,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: WAN Manager InterfaceActiveStatus is LTE,1|WanOE,0 when iPhone RNDIS is active</strong></summary>
 
 ## Test Case 22: TS_RNDIS_VerifyInterfaceActiveStatus_iPhoneUSB
@@ -922,7 +922,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: Host table reflects active LAN client while iPhone RNDIS is the active WAN</strong></summary>
 
 ## Test Case 23: TS_RNDIS_VerifyHostTableUpdateWithLANClient_iPhoneUSB
@@ -963,7 +963,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: Gateway internet connectivity via iPhone USB tethering with zero packet loss</strong></summary>
 
 ## Test Case 24: TS_RNDIS_VerifyGatewayInternetConnectivity_iPhoneUSB
@@ -1001,7 +1001,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: WAN Manager virtual interface IPv4 address matches iPhone USB tethering interface IP</strong></summary>
 
 ## Test Case 25: TS_RNDIS_VerifyVirtualInterfaceIPv4Address_iPhoneUSB
@@ -1040,7 +1040,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: Host table reflects active WiFi client while iPhone RNDIS is the active WAN</strong></summary>
 
 ## Test Case 26: TS_RNDIS_VerifyHostTableUpdateWithWiFiClient_iPhoneUSB
@@ -1089,12 +1089,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Telco Voice Manager</strong></summary>
 
 # Telco Voice Manager 
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Get Asterisk Server and TelcoVoiceManager status after factory reset.</strong></summary>
 
 ## Test Case 1: TS_TelcoVoiceManager_GetAsteriskServerAndTelcoVoiceManagerStatusAfterFR
@@ -1138,7 +1138,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Get channel status during inbound call as Up.</strong></summary>
 
 ## Test Case 2: TS_TelcoVoiceManager_GetChannelStatusDuringInboundCall
@@ -1186,7 +1186,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify client status after a local network call between two inbound SIP clients ends.</strong></summary>
 
 ## Test Case 3: TS_TelcoVoiceManager_GetClientStatusAfterInboundCallHangUp
@@ -1232,7 +1232,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify client status during a local network call between two inbound SIP clients.</strong></summary>
 
 ## Test Case 4: TS_TelcoVoiceManager_GetClientStatusDuringInboundCall
@@ -1280,7 +1280,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify client status after a server-side call is ended.</strong></summary>
 
 ## Test Case 5: TS_TelcoVoiceManager_GetClientStatus_AfterCallHangUpFromServerToInboundSIPClient
@@ -1326,7 +1326,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify client status while the DUT places a call to the inbound SIP client.</strong></summary>
 
 ## Test Case 6: TS_TelcoVoiceManager_GetClientStatus_DuringCallFromServerToInboundSIPClient
@@ -1372,7 +1372,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify behavior when a call is placed to a non-existent SIP client.</strong></summary>
 
 ## Test Case 7: TS_TelcoVoiceManager_GetInvalidClientStatusDuringInboundCall
@@ -1418,7 +1418,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify rejection of invalid outbound SIP registration settings.</strong></summary>
 
 ## Test Case 8: TS_TelcoVoiceManager_GetInvalidOutboundEndpointRegistrationStatus
@@ -1469,7 +1469,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify successful registration with the configured outbound SIP settings.</strong></summary>
 
 ## Test Case 9: TS_TelcoVoiceManager_GetOutboundEndpointRegistrationStatus
@@ -1520,7 +1520,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify line status after applying invalid outbound SIP settings.</strong></summary>
 
 ## Test Case 10: TS_TelcoVoiceManager_GetVoiceProfileLineStatusAfterInvalidOutboundCallConfiguration
@@ -1569,7 +1569,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify line status after applying valid outbound SIP settings.</strong></summary>
 
 ## Test Case 11: TS_TelcoVoiceManager_GetVoiceProfileLineStatusAfterOutboundCallConfiguration
@@ -1620,7 +1620,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Verify active call count when a call is placed to a non-existent SIP client.</strong></summary>
 
 ## Test Case 12: TS_TelcoVoiceManager_InvalidSIPClient_ValidateActiveInboundCallCount
@@ -1666,7 +1666,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify active channel count during a local network call between two SIP clients.</strong></summary>
 
 ## Test Case 13: TS_TelcoVoiceManager_ValidateActiveChannelCountDuringInboundCall
@@ -1715,7 +1715,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Verify active call count during a local network call between two SIP clients.</strong></summary>
 
 ## Test Case 14: TS_TelcoVoiceManager_ValidateActiveInboundCallCount
@@ -1764,7 +1764,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Verify active call count during an outbound SIP call.</strong></summary>
 
 ## Test Case 15: TS_TelcoVoiceManager_ValidateActiveOutboundCallCount
@@ -1820,7 +1820,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Verify that inbound SIP usernames from pjsip.conf are saved in Asterisk contacts.</strong></summary>
 
 ## Test Case 16: TS_TelcoVoiceManager_ValidateInboundClientDetailsInSavedContacts
@@ -1866,7 +1866,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Verify processed call count for repeated inbound SIP calls.</strong></summary>
 
 ## Test Case 17: TS_TelcoVoiceManager_ValidateMultipleCallCountProcessed
@@ -1912,7 +1912,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Verify handling of two simultaneous inbound SIP calls.</strong></summary>
 
 ## Test Case 18: TS_TelcoVoiceManager_ValidateMultipleInboundCalls
@@ -1962,7 +1962,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify that the configured outbound SIP client is saved in Asterisk contacts.</strong></summary>
 
 ## Test Case 19: TS_TelcoVoiceManager_ValidateOutboundClientDetailsInSavedContacts
@@ -2012,7 +2012,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Verify line status after enabling the voice profile line.</strong></summary>
 
 ## Test Case 20: TS_TelcoVoiceManager_ValidateVoiceProfileLineStatusEnabled
@@ -2056,7 +2056,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Verify that the SIP configuration and dialplan files are available on the DUT.</strong></summary>
 
 ## Test Case 21: TS_TelcoVoiceManager_VerifytheExistenceOfSIPConfigurationAndDialplanFiles
@@ -2104,17 +2104,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Telemetry 2.0</strong></summary>
 
 # Telemetry 2.0
 
-<details>
+<details open>
 <summary><strong>Process Validation</strong></summary>
 
 # Process Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 1: TS_Telemetry2_0_CheckTelemetryProcessAfterDisable</strong></summary>
 
 ## Test Case 1: TS_Telemetry2_0_CheckTelemetryProcessAfterDisable
@@ -2158,7 +2158,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: TS_Telemetry2_0_CheckTelemetryProcessAfterFR</strong></summary>
 
 ## Test Case 2: TS_Telemetry2_0_CheckTelemetryProcessAfterFR
@@ -2203,12 +2203,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Single Profile Validation</strong></summary>
 
 # Single Profile Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 3: TS_Telemetry2_0_SingleprofileValidation_Using_ReportProfiles</strong></summary>
 
 ## Test Case 3: TS_Telemetry2_0_SingleprofileValidation_Using_ReportProfiles
@@ -2257,7 +2257,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: TS_Telemetry2_0_SingleprofileValidation_JSON_ReportUpload</strong></summary>
 
 ## Test Case 4: TS_Telemetry2_0_SingleprofileValidation_JSON_ReportUpload
@@ -2314,7 +2314,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: TS_Telemetry2_0_SingleprofileValidation_MsgPackReportProfiles</strong></summary>
 
 ## Test Case 5: TS_Telemetry2_0_SingleprofileValidation_MsgPackReportProfiles
@@ -2363,7 +2363,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: TS_Telemetry2_0_SingleprofileValidation_MsgPackReportUpload</strong></summary>
 
 ## Test Case 6: TS_Telemetry2_0_SingleprofileValidation_MsgPackReportUpload
@@ -2424,12 +2424,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Multi Profile Validation</strong></summary>
 
 # Multi Profile Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 7: TS_Telemetry2_0_MultiprofileValidation_Using_ReportProfiles</strong></summary>
 
 ## Test Case 7: TS_Telemetry2_0_MultiprofileValidation_Using_ReportProfiles
@@ -2478,7 +2478,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: TS_Telemetry2_0_MultiprofileValidation_JSON_ReportUpload</strong></summary>
 
 ## Test Case 8: TS_Telemetry2_0_MultiprofileValidation_JSON_ReportUpload
@@ -2535,7 +2535,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: TS_Telemetry2_0_MultiprofileValidation_MsgPackReportProfiles</strong></summary>
 
 ## Test Case 9: TS_Telemetry2_0_MultiprofileValidation_MsgPackReportProfiles
@@ -2584,7 +2584,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: TS_Telemetry2_0_MultiprofileValidation_MsgPackReportUpload</strong></summary>
 
 ## Test Case 10: TS_Telemetry2_0_MultiprofileValidation_MsgPackReportUpload
@@ -2645,12 +2645,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Report Generation Validation</strong></summary>
 
 # Report Generation Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 11: TS_Telemetry2_0_ValidateReportGeneration_PerReportingInterval</strong></summary>
 
 ## Test Case 11: TS_Telemetry2_0_ValidateReportGeneration_PerReportingInterval
@@ -2703,7 +2703,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: TS_Telemetry2_0_ValidateReportCount_AgainstIntervalAndTimeout</strong></summary>
 
 ## Test Case 12: TS_Telemetry2_0_ValidateReportCount_AgainstIntervalAndTimeout
@@ -2756,7 +2756,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: TS_Telemetry2_0_ValidateReportGeneration_InvalidReportingInterval</strong></summary>
 
 ## Test Case 13: TS_Telemetry2_0_ValidateReportGeneration_InvalidReportingInterval
@@ -2807,7 +2807,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: TS_Telemetry2_0_ValidateReportGeneration_ReportingIntervalExceedsTimeout</strong></summary>
 
 ## Test Case 14: TS_Telemetry2_0_ValidateReportGeneration_ReportingIntervalExceedsTimeout
@@ -2862,12 +2862,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Negative Configuration Validation</strong></summary>
 
 # Negative Configuration Validation
 
-<details>
+<details open>
 <summary><strong>Test Case 15: TS_Telemetry2_0_ReportProfile_InvalidMsgPack</strong></summary>
 
 ## Test Case 15: TS_Telemetry2_0_ReportProfile_InvalidMsgPack
@@ -2917,7 +2917,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: TS_Telemetry2_0_T2Report_InvalidLogUploadURL</strong></summary>
 
 ## Test Case 16: TS_Telemetry2_0_T2Report_InvalidLogUploadURL
@@ -2975,17 +2975,17 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>RDK Remote Debugger</strong></summary>
 
 # RDK Remote Debugger 
 
-<details>
+<details open>
 <summary><strong>RFC Enable Checks</strong></summary>
 
 # RFC Enable Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Validate toggling of RDKRemoteDebugger Enable RFC parameter</strong></summary>
 
 ## Test Case 1: TS_RDKRemoteDebugger_ValidateRDKRemoteDebuggerEnable_Toggling
@@ -3026,7 +3026,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Validate RDKRemoteDebugger Enable RFC value persists across reboot</strong></summary>
 
 ## Test Case 2: TS_RDKRemoteDebugger_CheckRDKRemoteDebuggerEnable_PersistenceOnReboot
@@ -3070,7 +3070,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Validate default value of RDKRemoteDebugger Enable after Factory Reset</strong></summary>
 
 ## Test Case 3: TS_RDKRemoteDebugger_CheckRDKRemoteDebuggerEnable_DefaultValueAfterFR
@@ -3116,12 +3116,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Static Profile</strong></summary>
 
 # Static Profile
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Validate static profile debug report generation</strong></summary>
 
 ## Test Case 4: TS_RDKRemoteDebugger_StaticProfile_ValidateDebugReportGeneration
@@ -3167,7 +3167,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Validate static profile debug report upload to server</strong></summary>
 
 ## Test Case 5: TS_RDKRemoteDebugger_StaticProfile_ValidateDebugReportUpload
@@ -3225,12 +3225,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Dynamic Profile</strong></summary>
 
 # Dynamic Profile
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Validate dynamic JSON profile creation on CPE</strong></summary>
 
 ## Test Case 6: TS_RDKRemoteDebugger_DynamicProfile_ValidateDynamicJsonProfileCreation
@@ -3286,7 +3286,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Validate dynamic profile debug report upload to server</strong></summary>
 
 ## Test Case 7: TS_RDKRemoteDebugger_DynamicProfile_ValidateDebugReportUpload
@@ -3353,17 +3353,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Crash Upload</strong></summary>
 
 # Crash Upload
 
-<details>
+<details open>
 <summary><strong>Systemd Unit Verification</strong></summary>
 
 # Systemd Unit Verification
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify coredump-upload.path is loaded, enabled, active (waiting), and triggers the service</strong></summary>
 
 ## Test Case 1: TS_CrashUpload_VerifyCoredumpUploadPath
@@ -3404,7 +3404,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify coredump-upload.service is loaded, enabled, inactive (dead) when idle, and triggered by the path unit</strong></summary>
 
 ## Test Case 2: TS_CrashUpload_VerifyCoredumpUploadService
@@ -3449,12 +3449,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Crash Handling and Recovery</strong></summary>
 
 # Crash Handling and Recovery
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify SIGSEGV on non-CCSP process creates a minidump and the process self-recovers</strong></summary>
 
 ## Test Case 3: TS_CrashUpload_NonCCSPProcessCrash
@@ -3495,7 +3495,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify SIGSEGV on CCSP process creates a minidump and the process self-recovers</strong></summary>
 
 ## Test Case 4: TS_CrashUpload_CCSPProcessCrash
@@ -3540,12 +3540,12 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Crash Upload Verification</strong></summary>
 
 # Crash Upload Verification
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify end-to-end crash upload to default portal with HTTP 200 and minidump cleanup</strong></summary>
 
 ## Test Case 5: TS_CrashUpload_VerifyDefaultPortalUpload
@@ -3594,7 +3594,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify crash upload to a custom local server with HTTP 200 and minidump cleanup</strong></summary>
 
 ## Test Case 6: TS_CrashUpload_VerifyLocalServerUpload
@@ -3649,7 +3649,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify concurrent crash uploads from multiple processes all succeed with HTTP 200 and minidump cleanup</strong></summary>
 
 ## Test Case 7: TS_CrashUpload_VerifyMultipleCrashUpload
@@ -3714,17 +3714,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>DAC</strong></summary>
 
 # DAC
 
-<details>
+<details open>
 <summary><strong>Service Status Checks</strong></summary>
 
 # Service Status Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify Dobby service status and DobbyDaemon process after factory reset</strong></summary>
 
 ## Test Case 1: TS_DAC_VerifyDobbyServiceStatus
@@ -3765,7 +3765,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify DSM service status and dsm process after factory reset</strong></summary>
 
 ## Test Case 2: TS_DAC_VerifyDSMServiceStatus
@@ -3810,12 +3810,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Binary Availability Checks</strong></summary>
 
 # Binary Availability Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Verify crun runtime binary availability after factory reset</strong></summary>
 
 ## Test Case 3: TS_DAC_VerifyCrunAvailability
@@ -3853,7 +3853,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify DobbyTool binary availability after factory reset</strong></summary>
 
 ## Test Case 4: TS_DAC_VerifyDobbyToolAvailability
@@ -3895,12 +3895,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>DAC - Bundle Management</strong></summary>
 
 # DAC - Bundle Management
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify DAC bundle install and ExecutionUnit activation via USP-PA</strong></summary>
 
 ## Test Case 5: TS_DAC_VerifyUSPPABundleInstallAndActivation
@@ -3946,7 +3946,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify independent installation of multiple DAC bundles via USP-PA</strong></summary>
 
 ## Test Case 6: TS_DAC_VerifyUSPPAMultipleBundleInstallation
@@ -3994,7 +3994,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify unique ExecutionUnit name assignment for multiple DAC bundles via USP-PA</strong></summary>
 
 ## Test Case 7: TS_DAC_VerifyUSPPAUniqueExecutionUnitNames
@@ -4047,17 +4047,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>WebUI</strong></summary>
 
 # WebUI
 
-<details>
+<details open>
 <summary><strong>E2E - LAN WebUI</strong></summary>
 
 # E2E - LAN WebUI
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Verify default destination address in LAN connectivity test.</strong></summary>
 
 ## Test Case 1: E2E_WEBUI_LAN_CheckConnectivityTest_DestinationAddress
@@ -4095,7 +4095,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Verify LAN internet connectivity status and packet counters.</strong></summary>
 
 ## Test Case 2: E2E_WEBUI_LAN_CheckInternetConnectivity
@@ -4133,7 +4133,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Disable WiFi from LAN WebUI and verify SSID stops broadcasting.</strong></summary>
 
 ## Test Case 3: E2E_WEBUI_LAN_DisableWiFi
@@ -4171,7 +4171,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Enable MoCA from LAN WebUI and verify confirmation message.</strong></summary>
 
 ## Test Case 4: E2E_WEBUI_LAN_EnableMoCA
@@ -4207,7 +4207,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Read LAN WebUI firewall level and verify against DUT value.</strong></summary>
 
 ## Test Case 5: E2E_WEBUI_LAN_GetFirewallLevel
@@ -4244,7 +4244,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Verify Advanced options visibility behavior across bridge mode change.</strong></summary>
 
 ## Test Case 6: E2E_WEBUI_LAN_IsAdvancedDisplayed_InBridgeMode
@@ -4282,7 +4282,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify gateway WebUI page is accessible from LAN client.</strong></summary>
 
 ## Test Case 7: E2E_WEBUI_LAN_IsUIAccessible
@@ -4319,7 +4319,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify admin WebUI accessibility while DUT is in bridge mode.</strong></summary>
 
 ## Test Case 8: E2E_WEBUI_LAN_IsUIAccessible_OnBridgeMode
@@ -4357,7 +4357,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify successful login to gateway WebUI from LAN client.</strong></summary>
 
 ## Test Case 9: E2E_WEBUI_LAN_LoginToUI
@@ -4394,7 +4394,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify successful logout from gateway WebUI on LAN access.</strong></summary>
 
 ## Test Case 10: E2E_WEBUI_LAN_LogoutFromUI
@@ -4431,7 +4431,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Set firewall level from LAN flow and verify reflected in WebUI.</strong></summary>
 
 ## Test Case 11: E2E_WEBUI_LAN_SetFirewallLevel
@@ -4470,7 +4470,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Run WiFi Analyzer scan and verify SSID report fields.</strong></summary>
 
 ## Test Case 12: E2E_WEBUI_LAN_WifiAnalyzer_ScanSSID
@@ -4512,12 +4512,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - WAN WebUI</strong></summary>
 
 # E2E - WAN WebUI
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Verify default destination address in WAN/MSO connectivity test.</strong></summary>
 
 ## Test Case 13: E2E_WEBUI_WAN_CheckConnectivityTest_DestinationAddress
@@ -4555,7 +4555,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Enable MoCA from WAN/MSO WebUI and verify confirmation message.</strong></summary>
 
 ## Test Case 14: E2E_WEBUI_WAN_EnableMoCA
@@ -4591,7 +4591,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: Verify connected device details are shown in WAN/MSO WebUI.</strong></summary>
 
 ## Test Case 15: E2E_WEBUI_WAN_GetConnectedDeviceDetails
@@ -4631,12 +4631,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>E2E - WLAN WebUI</strong></summary>
 
 # E2E - WLAN WebUI
 
-<details>
+<details open>
 <summary><strong>Test Case 16: Read WLAN WebUI firewall level and verify against DUT value.</strong></summary>
 
 ## Test Case 16: E2E_WEBUI_WLAN_GetFirewallLevel
@@ -4677,7 +4677,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: Verify WLAN connected-client count matches DUT parameter value.</strong></summary>
 
 ## Test Case 17: E2E_WEBUI_WLAN_GetNoOfClientsConnected
@@ -4717,7 +4717,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: Verify gateway WebUI page is accessible from WLAN client.</strong></summary>
 
 ## Test Case 18: E2E_WEBUI_WLAN_IsUIAccessible
@@ -4755,7 +4755,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: Verify successful login to gateway WebUI from WLAN client.</strong></summary>
 
 ## Test Case 19: E2E_WEBUI_WLAN_LoginToUI
@@ -4793,7 +4793,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: Verify successful logout from gateway WebUI on WLAN access.</strong></summary>
 
 ## Test Case 20: E2E_WEBUI_WLAN_LogoutFromUI
@@ -4831,7 +4831,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: Set firewall level from WLAN flow and verify reflected in WebUI.</strong></summary>
 
 ## Test Case 21: E2E_WEBUI_WLAN_SetFirewallLevel
@@ -4880,17 +4880,17 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Advanced Features</strong></summary>
 
 # Advanced Features
 
-<details>
+<details open>
 <summary><strong>Behavioral Checks</strong></summary>
 
 # Behavioral Checks
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Validate DMZ host cannot be gateway IP</strong></summary>
 
 ## Test Case 1: TS_ADVANCEDCONFIG_DMZHostAsGatewayIP
@@ -4925,7 +4925,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Validate DMZ host cannot be out of LAN range</strong></summary>
 
 ## Test Case 2: TS_ADVANCEDCONFIG_DMZHostIPRange
@@ -4960,7 +4960,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Reject duplicate Port Triggering rules</strong></summary>
 
 ## Test Case 3: TS_ADVANCEDCONFIG_DuplicatePortTriggeringRulesNotAllowed
@@ -5004,7 +5004,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Validate HNS port number checks</strong></summary>
 
 ## Test Case 4: TS_ADVANCEDCONFIG_HNSValidationForPortNumbers
@@ -5049,7 +5049,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Edit existing Port Forwarding rule</strong></summary>
 
 ## Test Case 5: TS_ADVANCEDCONFIG_PFChangeExistingRule
@@ -5096,7 +5096,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Validate add-rule behavior when PF disabled</strong></summary>
 
 ## Test Case 6: TS_ADVANCEDCONFIG_PFDisabledAddRule
@@ -5132,7 +5132,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Reject duplicate Port Forwarding rules</strong></summary>
 
 ## Test Case 7: TS_ADVANCEDCONFIG_PFDuplicateRule
@@ -5177,7 +5177,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Reject PF rule with blank description</strong></summary>
 
 ## Test Case 8: TS_ADVANCEDCONFIG_PortForwardingRuleWithSpaceAndBlank
@@ -5222,7 +5222,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Reject PF rule with gateway as server IP</strong></summary>
 
 ## Test Case 9: TS_ADVANCEDCONFIG_PortMappingRuleforHTTPWithDefaultGatewayIPAsServerIP
@@ -5265,7 +5265,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Reject PT rule with blank alias</strong></summary>
 
 ## Test Case 10: TS_ADVANCEDCONFIG_PortTriggeringRuleWithSpaceAndBlank
@@ -5308,7 +5308,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Edit existing Port Triggering rule</strong></summary>
 
 ## Test Case 11: TS_ADVANCEDCONFIG_PTChangeExistingRule
@@ -5354,7 +5354,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: Reject out-of-range InternalClient above DHCP max</strong></summary>
 
 ## Test Case 12: TS_ADVANCEDCONFIG_RuleforHTTPDownloadOutOfRangeIPAfterEnd
@@ -5397,7 +5397,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: Reject out-of-range InternalClient below DHCP min</strong></summary>
 
 ## Test Case 13: TS_ADVANCEDCONFIG_RuleforHTTPDownloadOutOfRangeIPBeforeStart
@@ -5440,7 +5440,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: Reject invalid InternalClient 10.1.10.255</strong></summary>
 
 ## Test Case 14: TS_ADVANCEDCONFIG_RuleforHTTPDownloadWithInvalidIPAddress10.1.10.255
@@ -5485,12 +5485,12 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Port Forwarding</strong></summary>
 
 # Port Forwarding
 
-<details>
+<details open>
 <summary><strong>Test Case 15: FTP WAN-to-WLAN traffic is blocked after disabling port forwarding at Low firewall level.</strong></summary>
 
 ## Test Case 15: E2E_DisablePF_FirewallLow_FTPFromWanToWlan
@@ -5559,7 +5559,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 16: HTTP WAN-to-WLAN traffic is blocked after disabling port forwarding at Low firewall level.</strong></summary>
 
 ## Test Case 16: E2E_DisablePF_FirewallLow_HTTPFromWanToWlan
@@ -5628,7 +5628,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 17: HTTPS WAN-to-WLAN traffic is blocked after disabling port forwarding at Low firewall level.</strong></summary>
 
 ## Test Case 17: E2E_DisablePF_FirewallLow_HTTPSFromWanToWlan
@@ -5697,7 +5697,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 18: FTP WAN-to-WLAN traffic succeeds with port forwarding enabled at High firewall level.</strong></summary>
 
 ## Test Case 18: E2E_PF_FirewallHigh_FTPFromWanToWlan
@@ -5764,7 +5764,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 19: HTTP WAN-to-WLAN traffic succeeds with port forwarding enabled at High firewall level.</strong></summary>
 
 ## Test Case 19: E2E_PF_FirewallHigh_HTTPFromWanToWlan
@@ -5831,7 +5831,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 20: HTTPS WAN-to-WLAN traffic succeeds with port forwarding enabled at High firewall level.</strong></summary>
 
 ## Test Case 20: E2E_PF_FirewallHigh_HTTPSFromWanToWlan
@@ -5898,7 +5898,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 21: FTP WAN-to-WLAN traffic succeeds with port forwarding enabled at Low firewall level.</strong></summary>
 
 ## Test Case 21: E2E_PF_FirewallLow_FTPFromWanToWlan
@@ -5965,7 +5965,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 22: HTTP WAN-to-WLAN traffic succeeds with port forwarding enabled at Low firewall level.</strong></summary>
 
 ## Test Case 22: E2E_PF_FirewallLow_HTTPFromWanToWlan
@@ -6032,7 +6032,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 23: HTTPS WAN-to-WLAN traffic succeeds with port forwarding enabled at Low firewall level.</strong></summary>
 
 ## Test Case 23: E2E_PF_FirewallLow_HTTPSFromWanToWlan
@@ -6099,7 +6099,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 24: FTP WAN-to-WLAN traffic succeeds with port forwarding enabled at Medium firewall level.</strong></summary>
 
 ## Test Case 24: E2E_PF_FirewallMedium_FTPFromWanToWlan
@@ -6166,7 +6166,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 25: HTTP WAN-to-WLAN traffic succeeds with port forwarding enabled at Medium firewall level.</strong></summary>
 
 ## Test Case 25: E2E_PF_FirewallMedium_HTTPFromWanToWlan
@@ -6233,7 +6233,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 26: HTTPS WAN-to-WLAN traffic succeeds with port forwarding enabled at Medium firewall level.</strong></summary>
 
 ## Test Case 26: E2E_PF_FirewallMedium_HTTPSFromWanToWlan
@@ -6303,12 +6303,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Port Triggering</strong></summary>
 
 # Port Triggering 
 
-<details>
+<details open>
 <summary><strong>Test Case 27: Port Trigger WAN to LAN (BOTH): FTP Target</strong></summary>
 
 ## Test Case 27: E2E_PortTriggering_WANtoLAN_BOTH_TargetFTP
@@ -6356,7 +6356,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 28: Port Trigger WAN to LAN (BOTH): IPERF Target with TCP Trigger</strong></summary>
 
 ## Test Case 28: E2E_PortTriggering_WANtoLAN_BOTH_TargetIPERF_TriggerTCP
@@ -6406,7 +6406,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 29: Port Trigger WAN to LAN (BOTH): IPERF Target with UDP Trigger</strong></summary>
 
 ## Test Case 29: E2E_PortTriggering_WANtoLAN_BOTH_TargetIPERF_TriggerUDP
@@ -6456,7 +6456,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 30: Port Trigger WAN to LAN (BOTH): NETCAT Target with TCP Trigger</strong></summary>
 
 ## Test Case 30: E2E_PortTriggering_WANtoLAN_BOTH_TargetNETCAT_TriggerTCP
@@ -6506,7 +6506,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 31: Port Trigger WAN to LAN (BOTH): NETCAT Target with UDP Trigger</strong></summary>
 
 ## Test Case 31: E2E_PortTriggering_WANtoLAN_BOTH_TargetNETCAT_TriggerUDP
@@ -6556,7 +6556,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 32: Port Trigger WAN to LAN (BOTH): TFTP Target with UDP Trigger</strong></summary>
 
 ## Test Case 32: E2E_PortTriggering_WANtoLAN_BOTH_TargetTFTP_TriggerUDP
@@ -6604,7 +6604,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 33: Port Trigger WAN to LAN (TCP): FTP Target</strong></summary>
 
 ## Test Case 33: E2E_PortTriggering_WANtoLAN_TCP_TargetFTP
@@ -6652,7 +6652,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 34: Port Trigger WAN to LAN (TCP): FTP Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 34: E2E_PortTriggering_WANtoLAN_TCP_TargetFTPWithPTRuleDisabled
@@ -6700,7 +6700,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 35: Port Trigger WAN to LAN (TCP): FTP Target with UDP Trigger</strong></summary>
 
 ## Test Case 35: E2E_PortTriggering_WANtoLAN_TCP_TargetFTPWithUDPTrigger
@@ -6748,7 +6748,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 36: Port Trigger WAN to LAN (TCP): FTP Target with Trigger In Range</strong></summary>
 
 ## Test Case 36: E2E_PortTriggering_WANtoLAN_TCP_TargetFTP_TriggerInRange
@@ -6796,7 +6796,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 37: Port Trigger WAN to LAN (TCP): FTP Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 37: E2E_PortTriggering_WANtoLAN_TCP_TargetFTP_TriggerOutOfRange
@@ -6844,7 +6844,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 38: Port Trigger WAN to LAN (TCP): FTP Target with Invalid Port</strong></summary>
 
 ## Test Case 38: E2E_PortTriggering_WANtoLAN_TCP_TargetFTP_WithInvalidPort
@@ -6892,7 +6892,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 39: Port Trigger WAN to LAN (TCP): IPERF Target</strong></summary>
 
 ## Test Case 39: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERF
@@ -6942,7 +6942,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 40: Port Trigger WAN to LAN (TCP): IPERF Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 40: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERFWithPTRuleDisabled
@@ -6992,7 +6992,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 41: Port Trigger WAN to LAN (TCP): IPERF Target with UDP Trigger</strong></summary>
 
 ## Test Case 41: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERFWithUDPTrigger
@@ -7042,7 +7042,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 42: Port Trigger WAN to LAN (TCP): IPERF Target with Trigger In Range</strong></summary>
 
 ## Test Case 42: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERF_TriggerInRange
@@ -7092,7 +7092,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 43: Port Trigger WAN to LAN (TCP): IPERF Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 43: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERF_TriggerOutOfRange
@@ -7142,7 +7142,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 44: Port Trigger WAN to LAN (TCP): IPERF Target with Invalid Port</strong></summary>
 
 ## Test Case 44: E2E_PortTriggering_WANtoLAN_TCP_TargetIPERF_WithInvalidPort
@@ -7192,7 +7192,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 45: Port Trigger WAN to LAN (TCP): FTP Target with Invalid FTP Port</strong></summary>
 
 ## Test Case 45: E2E_PortTriggering_WANtoLAN_TCP_TargetInvalidFTPPort
@@ -7240,7 +7240,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 46: Port Trigger WAN to LAN (TCP): IPERF Target with Invalid IPERF Port</strong></summary>
 
 ## Test Case 46: E2E_PortTriggering_WANtoLAN_TCP_TargetInvalidIPERFPort
@@ -7290,7 +7290,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 47: Port Trigger WAN to LAN (TCP): NETCAT Target with Invalid NETCAT Port</strong></summary>
 
 ## Test Case 47: E2E_PortTriggering_WANtoLAN_TCP_TargetInvalidNETCATPort
@@ -7340,7 +7340,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 48: Port Trigger WAN to LAN (TCP): NETCAT Target</strong></summary>
 
 ## Test Case 48: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCAT
@@ -7390,7 +7390,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 49: Port Trigger WAN to LAN (TCP): NETCAT Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 49: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCATWithPTRuleDisabled
@@ -7440,7 +7440,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 50: Port Trigger WAN to LAN (TCP): NETCAT Target with UDP Trigger</strong></summary>
 
 ## Test Case 50: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCATWithUDPTrigger
@@ -7490,7 +7490,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 51: Port Trigger WAN to LAN (TCP): NETCAT Target with Trigger In Range</strong></summary>
 
 ## Test Case 51: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCAT_TriggerInRange
@@ -7540,7 +7540,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 52: Port Trigger WAN to LAN (TCP): NETCAT Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 52: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCAT_TriggerOutOfRange
@@ -7590,7 +7590,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 53: Port Trigger WAN to LAN (TCP): NETCAT Target with Invalid Port</strong></summary>
 
 ## Test Case 53: E2E_PortTriggering_WANtoLAN_TCP_TargetNETCAT_WithInvalidPort
@@ -7640,7 +7640,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 54: Port Trigger WAN to LAN (UDP): IPERF Target</strong></summary>
 
 ## Test Case 54: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERF
@@ -7690,7 +7690,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 55: Port Trigger WAN to LAN (UDP): IPERF Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 55: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERFWithPTRuleDisabled
@@ -7740,7 +7740,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 56: Port Trigger WAN to LAN (UDP): IPERF Target with TCP Trigger</strong></summary>
 
 ## Test Case 56: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERFWithTCPTrigger
@@ -7790,7 +7790,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 57: Port Trigger WAN to LAN (UDP): IPERF Target with Trigger In Range</strong></summary>
 
 ## Test Case 57: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERF_TriggerInRange
@@ -7840,7 +7840,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 58: Port Trigger WAN to LAN (UDP): IPERF Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 58: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERF_TriggerOutOfRange
@@ -7890,7 +7890,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 59: Port Trigger WAN to LAN (UDP): IPERF Target with Invalid Port</strong></summary>
 
 ## Test Case 59: E2E_PortTriggering_WANtoLAN_UDP_TargetIPERF_WithInvalidPort
@@ -7940,7 +7940,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 60: Port Trigger WAN to LAN (UDP): IPERF Target with Invalid IPERF Port</strong></summary>
 
 ## Test Case 60: E2E_PortTriggering_WANtoLAN_UDP_TargetInvalidIPERFPort
@@ -7990,7 +7990,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 61: Port Trigger WAN to LAN (UDP): NETCAT Target with Invalid NETCAT Port</strong></summary>
 
 ## Test Case 61: E2E_PortTriggering_WANtoLAN_UDP_TargetInvalidNETCATPort
@@ -8040,7 +8040,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 62: Port Trigger WAN to LAN (UDP): TFTP Target with Invalid TFTP Port</strong></summary>
 
 ## Test Case 62: E2E_PortTriggering_WANtoLAN_UDP_TargetInvalidTFTPPort
@@ -8088,7 +8088,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 63: Port Trigger WAN to LAN (UDP): NETCAT Target</strong></summary>
 
 ## Test Case 63: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCAT
@@ -8138,7 +8138,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 64: Port Trigger WAN to LAN (UDP): NETCAT Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 64: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCATWithPTRuleDisabled
@@ -8188,7 +8188,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 65: Port Trigger WAN to LAN (UDP): NETCAT Target with TCP Trigger</strong></summary>
 
 ## Test Case 65: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCATWithTCPTrigger
@@ -8238,7 +8238,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 66: Port Trigger WAN to LAN (UDP): NETCAT Target with Trigger In Range</strong></summary>
 
 ## Test Case 66: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCAT_TriggerInRange
@@ -8288,7 +8288,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 67: Port Trigger WAN to LAN (UDP): NETCAT Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 67: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCAT_TriggerOutOfRange
@@ -8338,7 +8338,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 68: Port Trigger WAN to LAN (UDP): NETCAT Target with Invalid Port</strong></summary>
 
 ## Test Case 68: E2E_PortTriggering_WANtoLAN_UDP_TargetNETCAT_WithInvalidPort
@@ -8388,7 +8388,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 69: Port Trigger WAN to LAN (UDP): TFTP Target</strong></summary>
 
 ## Test Case 69: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTP
@@ -8436,7 +8436,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 70: Port Trigger WAN to LAN (UDP): TFTP Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 70: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTPWithPTRuleDisabled
@@ -8484,7 +8484,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 71: Port Trigger WAN to LAN (UDP): TFTP Target with TCP Trigger</strong></summary>
 
 ## Test Case 71: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTPWithTCPTrigger
@@ -8532,7 +8532,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 72: Port Trigger WAN to LAN (UDP): TFTP Target with Trigger In Range</strong></summary>
 
 ## Test Case 72: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTP_TriggerInRange
@@ -8580,7 +8580,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 73: Port Trigger WAN to LAN (UDP): TFTP Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 73: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTP_TriggerOutOfRange
@@ -8628,7 +8628,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 74: Port Trigger WAN to LAN (UDP): TFTP Target with Invalid Port</strong></summary>
 
 ## Test Case 74: E2E_PortTriggering_WANtoLAN_UDP_TargetTFTP_WithInvalidPort
@@ -8676,7 +8676,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 75: Port Trigger WAN to WLAN (BOTH): FTP Target</strong></summary>
 
 ## Test Case 75: E2E_PortTriggering_WANtoWLAN_BOTH_TargetFTP
@@ -8731,7 +8731,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 76: Port Trigger WAN to WLAN (BOTH): IPERF Target with TCP Trigger</strong></summary>
 
 ## Test Case 76: E2E_PortTriggering_WANtoWLAN_BOTH_TargetIPERF_TriggerTCP
@@ -8788,7 +8788,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 77: Port Trigger WAN to WLAN (BOTH): IPERF Target with UDP Trigger</strong></summary>
 
 ## Test Case 77: E2E_PortTriggering_WANtoWLAN_BOTH_TargetIPERF_TriggerUDP
@@ -8845,7 +8845,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 78: Port Trigger WAN to WLAN (BOTH): NETCAT Target with TCP Trigger</strong></summary>
 
 ## Test Case 78: E2E_PortTriggering_WANtoWLAN_BOTH_TargetNETCAT_TriggerTCP
@@ -8902,7 +8902,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 79: Port Trigger WAN to WLAN (BOTH): NETCAT Target with UDP Trigger</strong></summary>
 
 ## Test Case 79: E2E_PortTriggering_WANtoWLAN_BOTH_TargetNETCAT_TriggerUDP
@@ -8959,7 +8959,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 80: Port Trigger WAN to WLAN (BOTH): TFTP Target with UDP Trigger</strong></summary>
 
 ## Test Case 80: E2E_PortTriggering_WANtoWLAN_BOTH_TargetTFTP_TriggerUDP
@@ -9014,7 +9014,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 81: Port Trigger WAN to WLAN (TCP): FTP Target</strong></summary>
 
 ## Test Case 81: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTP
@@ -9069,7 +9069,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 82: Port Trigger WAN to WLAN (TCP): FTP Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 82: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTPWithPTRuleDisabled
@@ -9124,7 +9124,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 83: Port Trigger WAN to WLAN (TCP): FTP Target with UDP Trigger</strong></summary>
 
 ## Test Case 83: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTPWithUDPTrigger
@@ -9179,7 +9179,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 84: Port Trigger WAN to WLAN (TCP): FTP Target with Trigger In Range</strong></summary>
 
 ## Test Case 84: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTP_TriggerInRange
@@ -9234,7 +9234,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 85: Port Trigger WAN to WLAN (TCP): FTP Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 85: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTP_TriggerOutOfRange
@@ -9289,7 +9289,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 86: Port Trigger WAN to WLAN (TCP): FTP Target with Invalid Port</strong></summary>
 
 ## Test Case 86: E2E_PortTriggering_WANtoWLAN_TCP_TargetFTP_WithInvalidPort
@@ -9344,7 +9344,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 87: Port Trigger WAN to WLAN (TCP): IPERF Target</strong></summary>
 
 ## Test Case 87: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERF
@@ -9401,7 +9401,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 88: Port Trigger WAN to WLAN (TCP): IPERF Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 88: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERFWithPTRuleDisabled
@@ -9458,7 +9458,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 89: Port Trigger WAN to WLAN (TCP): IPERF Target with UDP Trigger</strong></summary>
 
 ## Test Case 89: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERFWithUDPTrigger
@@ -9515,7 +9515,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 90: Port Trigger WAN to WLAN (TCP): IPERF Target with Trigger In Range</strong></summary>
 
 ## Test Case 90: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERF_TriggerInRange
@@ -9572,7 +9572,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 91: Port Trigger WAN to WLAN (TCP): IPERF Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 91: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERF_TriggerOutOfRange
@@ -9629,7 +9629,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 92: Port Trigger WAN to WLAN (TCP): IPERF Target with Invalid Port</strong></summary>
 
 ## Test Case 92: E2E_PortTriggering_WANtoWLAN_TCP_TargetIPERF_WithInvalidPort
@@ -9686,7 +9686,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 93: Port Trigger WAN to WLAN (TCP): FTP Target with Invalid FTP Port</strong></summary>
 
 ## Test Case 93: E2E_PortTriggering_WANtoWLAN_TCP_TargetInvalidFTPPort
@@ -9741,7 +9741,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 94: Port Trigger WAN to WLAN (TCP): IPERF Target with Invalid IPERF Port</strong></summary>
 
 ## Test Case 94: E2E_PortTriggering_WANtoWLAN_TCP_TargetInvalidIPERFPort
@@ -9798,7 +9798,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 95: Port Trigger WAN to WLAN (TCP): NETCAT Target with Invalid NETCAT Port</strong></summary>
 
 ## Test Case 95: E2E_PortTriggering_WANtoWLAN_TCP_TargetInvalidNETCATPort
@@ -9855,7 +9855,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 96: Port Trigger WAN to WLAN (TCP): NETCAT Target</strong></summary>
 
 ## Test Case 96: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCAT
@@ -9912,7 +9912,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 97: Port Trigger WAN to WLAN (TCP): NETCAT Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 97: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCATWithPTRuleDisabled
@@ -9969,7 +9969,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 98: Port Trigger WAN to WLAN (TCP): NETCAT Target with UDP Trigger</strong></summary>
 
 ## Test Case 98: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCATWithUDPTrigger
@@ -10026,7 +10026,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 99: Port Trigger WAN to WLAN (TCP): NETCAT Target with Trigger In Range</strong></summary>
 
 ## Test Case 99: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCAT_TriggerInRange
@@ -10083,7 +10083,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 100: Port Trigger WAN to WLAN (TCP): NETCAT Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 100: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCAT_TriggerOutOfRange
@@ -10140,7 +10140,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 101: Port Trigger WAN to WLAN (TCP): NETCAT Target with Invalid Port</strong></summary>
 
 ## Test Case 101: E2E_PortTriggering_WANtoWLAN_TCP_TargetNETCAT_WithInvalidPort
@@ -10197,7 +10197,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 102: Port Trigger WAN to WLAN (UDP): IPERF Target</strong></summary>
 
 ## Test Case 102: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERF
@@ -10254,7 +10254,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 103: Port Trigger WAN to WLAN (UDP): IPERF Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 103: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERFWithPTRuleDisabled
@@ -10311,7 +10311,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 104: Port Trigger WAN to WLAN (UDP): IPERF Target with TCP Trigger</strong></summary>
 
 ## Test Case 104: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERFWithTCPTrigger
@@ -10368,7 +10368,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 105: Port Trigger WAN to WLAN (UDP): IPERF Target with Trigger In Range</strong></summary>
 
 ## Test Case 105: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERF_TriggerInRange
@@ -10425,7 +10425,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 106: Port Trigger WAN to WLAN (UDP): IPERF Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 106: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERF_TriggerOutOfRange
@@ -10482,7 +10482,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 107: Port Trigger WAN to WLAN (UDP): IPERF Target with Invalid Port</strong></summary>
 
 ## Test Case 107: E2E_PortTriggering_WANtoWLAN_UDP_TargetIPERF_WithInvalidPort
@@ -10539,7 +10539,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 108: Port Trigger WAN to WLAN (UDP): IPERF Target with Invalid IPERF Port</strong></summary>
 
 ## Test Case 108: E2E_PortTriggering_WANtoWLAN_UDP_TargetInvalidIPERFPort
@@ -10596,7 +10596,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 109: Port Trigger WAN to WLAN (UDP): NETCAT Target with Invalid NETCAT Port</strong></summary>
 
 ## Test Case 109: E2E_PortTriggering_WANtoWLAN_UDP_TargetInvalidNETCATPort
@@ -10653,7 +10653,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 110: Port Trigger WAN to WLAN (UDP): TFTP Target with Invalid TFTP Port</strong></summary>
 
 ## Test Case 110: E2E_PortTriggering_WANtoWLAN_UDP_TargetInvalidTFTPPort
@@ -10708,7 +10708,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 111: Port Trigger WAN to WLAN (UDP): NETCAT Target</strong></summary>
 
 ## Test Case 111: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCAT
@@ -10765,7 +10765,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 112: Port Trigger WAN to WLAN (UDP): NETCAT Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 112: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCATWithPTRuleDisabled
@@ -10822,7 +10822,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 113: Port Trigger WAN to WLAN (UDP): NETCAT Target with TCP Trigger</strong></summary>
 
 ## Test Case 113: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCATWithTCPTrigger
@@ -10879,7 +10879,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 114: Port Trigger WAN to WLAN (UDP): NETCAT Target with Trigger In Range</strong></summary>
 
 ## Test Case 114: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCAT_TriggerInRange
@@ -10936,7 +10936,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 115: Port Trigger WAN to WLAN (UDP): NETCAT Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 115: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCAT_TriggerOutOfRange
@@ -10993,7 +10993,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 116: Port Trigger WAN to WLAN (UDP): NETCAT Target with Invalid Port</strong></summary>
 
 ## Test Case 116: E2E_PortTriggering_WANtoWLAN_UDP_TargetNETCAT_WithInvalidPort
@@ -11050,7 +11050,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 117: Port Trigger WAN to WLAN (UDP): TFTP Target</strong></summary>
 
 ## Test Case 117: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTP
@@ -11105,7 +11105,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 118: Port Trigger WAN to WLAN (UDP): TFTP Target with PT Rule Disabled</strong></summary>
 
 ## Test Case 118: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTPWithPTRuleDisabled
@@ -11160,7 +11160,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 119: Port Trigger WAN to WLAN (UDP): TFTP Target with TCP Trigger</strong></summary>
 
 ## Test Case 119: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTPWithTCPTrigger
@@ -11215,7 +11215,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 120: Port Trigger WAN to WLAN (UDP): TFTP Target with Trigger In Range</strong></summary>
 
 ## Test Case 120: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTP_TriggerInRange
@@ -11270,7 +11270,7 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 121: Port Trigger WAN to WLAN (UDP): TFTP Target with Trigger Out of Range</strong></summary>
 
 ## Test Case 121: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTP_TriggerOutOfRange
@@ -11325,7 +11325,7 @@ Negative
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>Test Case 122: Port Trigger WAN to WLAN (UDP): TFTP Target with Invalid Port</strong></summary>
 
 ## Test Case 122: E2E_PortTriggering_WANtoWLAN_UDP_TargetTFTP_WithInvalidPort
@@ -11385,17 +11385,17 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Parental Control</strong></summary>
 
 # Parental Control
 
-<details>
+<details open>
 <summary><strong>Managed Devices</strong></summary>
 
 # Managed Devices
 
-<details>
+<details open>
 <summary><strong>Test Case 123: Allow WLAN client internet access via MAC-based parental control</strong></summary>
 
 ## Test Case 123: E2E_ParentalControl_ManagedDevices_Allow_WLAN
@@ -11477,7 +11477,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 124: Block WLAN client internet access via MAC-based parental control</strong></summary>
 
 ## Test Case 124: E2E_ParentalControl_ManagedDevices_Block_WLAN
@@ -11559,7 +11559,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 125: Block specific LAN client in AllowAll mode via parental control</strong></summary>
 
 ## Test Case 125: E2E_ParentalControl_ManagedDevices_AllowAll_Block_LAN
@@ -11634,7 +11634,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 126: Allow specific LAN client in BlockAll mode via parental control</strong></summary>
 
 ## Test Case 126: E2E_ParentalControl_ManagedDevices_BlockAll_Allow_LAN
@@ -11713,12 +11713,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Managed Services - LAN</strong></summary>
 
 # Managed Services - LAN
 
-<details>
+<details open>
 <summary><strong>Test Case 127: Block HTTP service for LAN client via parental control</strong></summary>
 
 ## Test Case 127: E2E_ParentalControl_ManagedServices_Block_LAN_HTTP
@@ -11776,7 +11776,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 128: Block HTTPS service for LAN client via parental control</strong></summary>
 
 ## Test Case 128: E2E_ParentalControl_ManagedServices_Block_LAN_HTTPS
@@ -11834,7 +11834,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 129: Block FTP service for LAN client via parental control</strong></summary>
 
 ## Test Case 129: E2E_ParentalControl_ManagedServices_Block_LAN_FTP
@@ -11892,7 +11892,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 130: Block HTTP service for LAN client during scheduled time period</strong></summary>
 
 ## Test Case 130: E2E_ParentalControl_ManagedServices_Block_LAN_HTTP_ForGivenTime
@@ -11953,7 +11953,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 131: Block HTTPS service for LAN client during scheduled time period</strong></summary>
 
 ## Test Case 131: E2E_ParentalControl_ManagedServices_Block_LAN_HTTPS_ForGivenTime
@@ -12014,7 +12014,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 132: Block FTP service for LAN client during scheduled time period</strong></summary>
 
 ## Test Case 132: E2E_ParentalControl_ManagedServices_Block_LAN_FTP_ForGivenTime
@@ -12075,7 +12075,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 133: Allow HTTP access for trusted LAN client despite HTTP block rule</strong></summary>
 
 ## Test Case 133: E2E_ParentalControl_ManagedServices_Block_HTTP_TrustedLANClient
@@ -12142,7 +12142,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 134: Verify HTTPS allowed when only HTTP is blocked for LAN client</strong></summary>
 
 ## Test Case 134: E2E_ParentalControl_ManagedServices_LAN_BlockHTTP_AllowHTTPS
@@ -12200,7 +12200,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 135: Verify HTTP allowed when only HTTPS is blocked for LAN client</strong></summary>
 
 ## Test Case 135: E2E_ParentalControl_ManagedServices_LAN_BlockHTTPS_AllowHTTP
@@ -12258,7 +12258,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 136: Verify HTTP allowed when only FTP is blocked for LAN client</strong></summary>
 
 ## Test Case 136: E2E_ParentalControl_ManagedServices_LAN_BlockFTP_AllowHTTP
@@ -12320,12 +12320,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Managed Services - WLAN</strong></summary>
 
 # Managed Services - WLAN
 
-<details>
+<details open>
 <summary><strong>Test Case 137: Block HTTP service for WLAN client via parental control</strong></summary>
 
 ## Test Case 137: E2E_ParentalControl_ManagedServices_WLAN_Block_HTTP
@@ -12402,7 +12402,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 138: Block HTTPS service for WLAN client via parental control</strong></summary>
 
 ## Test Case 138: E2E_ParentalControl_ManagedServices_WLAN_Block_HTTPS
@@ -12479,7 +12479,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 139: Block FTP service for WLAN client via parental control</strong></summary>
 
 ## Test Case 139: E2E_ParentalControl_ManagedServices_WLAN_Block_FTP
@@ -12556,7 +12556,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 140: Block HTTP service for WLAN client during scheduled time period</strong></summary>
 
 ## Test Case 140: E2E_ParentalControl_ManagedServices_WLAN_Block_HTTP_ForGivenTime
@@ -12636,7 +12636,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 141: Block HTTPS service for WLAN client during scheduled time period</strong></summary>
 
 ## Test Case 141: E2E_ParentalControl_ManagedServices_WLAN_Block_HTTPS_ForGivenTime
@@ -12716,7 +12716,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 142: Block FTP service for WLAN client during scheduled time period</strong></summary>
 
 ## Test Case 142: E2E_ParentalControl_ManagedServices_WLAN_Block_FTP_ForGivenTime
@@ -12796,7 +12796,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 143: Verify HTTPS allowed when only HTTP is blocked for WLAN client</strong></summary>
 
 ## Test Case 143: E2E_ParentalControl_ManagedServices_WLAN_BlockHTTP_AllowHTTPS
@@ -12873,7 +12873,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 144: Verify HTTP allowed when only HTTPS is blocked for WLAN client</strong></summary>
 
 ## Test Case 144: E2E_ParentalControl_ManagedServices_WLAN_BlockHTTPS_AllowHTTP
@@ -12950,7 +12950,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 145: Verify HTTP allowed when only FTP is blocked for WLAN client</strong></summary>
 
 ## Test Case 145: E2E_ParentalControl_ManagedServices_WLAN_BlockFTP_AllowHTTP
@@ -13031,12 +13031,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Managed Sites - LAN</strong></summary>
 
 # Managed Sites - LAN
 
-<details>
+<details open>
 <summary><strong>Test Case 146: Block website by URL for LAN client via parental control</strong></summary>
 
 ## Test Case 146: E2E_ParentalControl_ManagedSites_LAN_Block_WebsiteURL
@@ -13086,7 +13086,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 147: Block website by keyword for LAN client via parental control</strong></summary>
 
 ## Test Case 147: E2E_ParentalControl_ManagedSites_LAN_Block_WebsiteKeyword
@@ -13136,7 +13136,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 148: Allow non-blocked websites for LAN client when URL block is active</strong></summary>
 
 ## Test Case 148: E2E_ParentalControl_ManagedSites_LAN_Allow_WebsiteURL
@@ -13186,7 +13186,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 149: Allow non-blocked websites for LAN client when keyword block is active</strong></summary>
 
 ## Test Case 149: E2E_ParentalControl_ManagedSites_LAN_Allow_WebsiteKeyword
@@ -13236,7 +13236,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 150: Block website by URL for LAN client during scheduled time period</strong></summary>
 
 ## Test Case 150: E2E_ParentalControl_ManagedSites_LAN_BlockForGivenTime_WebsiteURL
@@ -13289,7 +13289,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 151: Block website by keyword for LAN client during scheduled time period</strong></summary>
 
 ## Test Case 151: E2E_ParentalControl_ManagedSites_LAN_BlockForGivenTime_WebsiteKeyword
@@ -13342,7 +13342,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 152: Allow trusted LAN client to access keyword-blocked website</strong></summary>
 
 ## Test Case 152: E2E_ParentalControl_ManagedSites_Block_WebsiteKeyword_TrustedLANClient
@@ -13404,12 +13404,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Managed Sites - WLAN</strong></summary>
 
 # Managed Sites - WLAN
 
-<details>
+<details open>
 <summary><strong>Test Case 153: Block website by URL for WLAN client via parental control</strong></summary>
 
 ## Test Case 153: E2E_ParentalControl_ManagedSites_WLAN_Block_WebsiteURL
@@ -13469,7 +13469,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 154: Block website by keyword for WLAN client via parental control</strong></summary>
 
 ## Test Case 154: E2E_ParentalControl_ManagedSites_WLAN_Block_WebsiteKeyword
@@ -13528,7 +13528,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 155: Allow non-blocked websites for WLAN client when URL block is active</strong></summary>
 
 ## Test Case 155: E2E_ParentalControl_ManagedSites_WLAN_Allow_WebsiteURL
@@ -13587,7 +13587,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 156: Allow non-blocked websites for WLAN client when keyword block is active</strong></summary>
 
 ## Test Case 156: E2E_ParentalControl_ManagedSites_WLAN_Allow_WebsiteKeyword
@@ -13646,7 +13646,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 157: Block website by URL for WLAN client during scheduled time period</strong></summary>
 
 ## Test Case 157: E2E_ParentalControl_ManagedSites_WLAN_BlockForGivenTime_WebsiteURL
@@ -13708,7 +13708,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 158: Block website by keyword for WLAN client during scheduled time period</strong></summary>
 
 ## Test Case 158: E2E_ParentalControl_ManagedSites_WLAN_BlockForGivenTime_WebsiteKeyword
