@@ -64,27 +64,27 @@ if expectedresult in loadmodulestatus_tr181.upper() and expectedresult in loadmo
                 sleep(5)
                 step += 1
                 # Check whether json file is available in the designated location
-                tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, "static", issueType, step)
+                tdkTestObj, file_flag = checkJsonProfileAvailable(sysobj, profile_type, issueType, step)
                 if file_flag:
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("TEST EXECUTION RESULT : SUCCESS")
-                    print("The static json profile is available as expected.")
+                    print(f"The {profile_type} json profile is available as expected.")
 
-                    # Check if the static debug report is generated
-                    step +=1
-                    tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, "static", step)
+                    # Check if the debug report is generated
+                    step += 1
+                    tdkTestObj, report_flag = checkDebugReportGenerated(sysobj, profile_type, step)
                     if report_flag:
                         tdkTestObj.setResultStatus("SUCCESS")
                         print("TEST EXECUTION RESULT : SUCCESS")
-                        print("The static debug report is generated successfully.")
+                        print(f"The {profile_type} debug report is generated successfully.")
                     else:
                         tdkTestObj.setResultStatus("FAILURE")
                         print("TEST EXECUTION RESULT : FAILURE")
-                        print("The static debug report is not generated as expected.")
+                        print(f"The {profile_type} debug report is not generated as expected.")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("TEST EXECUTION RESULT : FAILURE")
-                    print("The static json profile is not available as expected.")
+                    print(f"The {profile_type} json profile is not available as expected.")
 
                 # Revert the value of RDKRemoteDebugger IssueType to its initial value
                 print("\nReverting the value of RDKRemoteDebugger IssueType to its initial value.")
