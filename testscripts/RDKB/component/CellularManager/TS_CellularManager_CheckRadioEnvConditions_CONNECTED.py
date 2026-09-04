@@ -16,92 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>12</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_CellularManager_CheckRadioEnvConditions_CONNECTED</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>CellularManager_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>Check if Device.Cellular.Interface.1.X_RDK_RadioEnvConditions is EXCELLENT/GOOD/FAIR/POOR matches the expected RSRP value Device.Cellular.Interface.1.RSRP when cellular manager status Device.Cellular.X_RDK_Status is CONNECTED or REGISTERED.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_CellularManager_7</test_case_id>
-    <test_objective>Check if Device.Cellular.Interface.1.X_RDK_RadioEnvConditions is EXCELLENT/GOOD/FAIR/POOR matches the expected RSRP value Device.Cellular.Interface.1.RSRP when cellular manager status Device.Cellular.X_RDK_Status is CONNECTED or REGISTERED.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state.
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script.
-3. Cellular manager should be UP and status should be CONNECTED.</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>ParamName : Device.Cellular.X_RDK_Status
-ParamValue : CONNECTED
-Type : string
-ParamName : Device.Cellular.Interface.1.X_RDK_RadioEnvConditions
-ParamValue : FAIR/EXCELLENT/POOR/GOOD
-Type : string
-ParamName : Device.Cellular.Interface.1.RSRP
-ParamValue :
-EXCELLENT : ( RSRP &gt; -85 )
-GOOD:   (-85  &gt;=  RSRP &gt;  -95)
-FAIR:   (-95  &gt;=  RSRP &gt;  -105)
-POOR:    (-105 &gt;= RSRP &gt; -115)
-Type : int</input_parameters>
-    <automation_approch>1. Load the module.
-2. Check if Device.Cellular.X_RDK_Status be CONNECTED.
-3. Check if Device.Cellular.Interface.1.X_RDK_RadioEnvConditions be FAIR/EXCELLENT/POOR/GOOD.
-4.Get the RSRP value Device.Cellular.Interface.1.RSRP.
-5. Check if the RSRP value matches the respective RadioEnvConditions:
-EXCELLENT : ( RSRP &gt; -85 )
-GOOD:   (-85  &gt;=  RSRP &gt;  -95)
-FAIR:   (-95  &gt;=  RSRP &gt;  -105)
-POOR:    (-105 &gt;= RSRP &gt; -115)
-6. Unload the module.</automation_approch>
-    <expected_output>Device.Cellular.Interface.1.X_RDK_RadioEnvConditions  should be  EXCELLENT/GOOD/FAIR/POOR and should match the expected RSRP value Device.Cellular.Interface.1.RSRP when cellular manager status Device.Cellular.X_RDK_Status is CONNECTED or REGISTERED.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
-    <test_script>TS_CellularManager_CheckRadioEnvConditions_CONNECTED</test_script>
-    <skipped>No</skipped>
-    <release_version>M128</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+from time import sleep;
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
@@ -110,133 +27,405 @@ obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
 #This will be replaced with corresponding DUT Ip and port while executing script
 ip = <ipaddress>
 port = <port>
+
 obj.configureTestCase(ip,port,'TS_CelllularManager_GetRadioEnvConditions_CONNECTED');
 
 #Get the result of connection with test component and DUT
-result =obj.getLoadModuleResult();
+result = obj.getLoadModuleResult();
 print ("[LIB LOAD STATUS]  :  %s" %result);
 
 if "SUCCESS" in result.upper():
-    step = 1;
+
     obj.setLoadModuleStatus("SUCCESS");
-    #Prmitive test case which associated to this Script
+
+    step = 1;
+    enableModified = False;
+
+    ############################################################
+    # STEP 1 : Get Device.Cellular.Interface.1.Enable
+    ############################################################
+
     tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
-    expectedresult="SUCCESS";
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.Interface.1.Enable"
+    );
+
+    expectedresult = "SUCCESS";
+
     tdkTestObj.executeTestCase(expectedresult);
+
     actualresult = tdkTestObj.getResult();
-    status = tdkTestObj.getResultDetails();
-    print("\nTEST STEP %d : Get the cellular manager status using Device.Cellular.X_RDK_Status" %step);
-    print("EXPECTED RESULT %d : Should successfully get Device.Cellular.X_RDK_Status" %step);
+    initialEnable = tdkTestObj.getResultDetails().strip();
+
+    print("\nTEST STEP %d : Get Device.Cellular.Interface.1.Enable" %step);
+    print("EXPECTED RESULT %d : Should successfully get Device.Cellular.Interface.1.Enable" %step);
+    print("ACTUAL RESULT %d : Value is %s" %(step, initialEnable));
+
     if expectedresult in actualresult:
+
         tdkTestObj.setResultStatus("SUCCESS");
-        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,status));
-        print("TEST EXECUTION RESULT :SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
 
-        step = step + 1;
-        print("\nTEST STEP %d : Check if the cellular manager status as CONNECTED or REGISTERED" %step);
-        print("EXPECTED RESULT %d : Should get the cellular manager status as CONNECTED or REGISTERED " %step);
-        if status == "CONNECTED" or status == "REGISTERED":
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("ACTUAL RESULT %d : %s" %(step,status));
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-
-            #get the current Radio conditions and save it
-            valid_conditions = {'EXCELLENT', 'GOOD', 'FAIR', 'POOR'};
-            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-            tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_RadioEnvConditions");
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            RadioEnvCondition = tdkTestObj.getResultDetails();
-
-            step = step + 1;
-            print("\nTEST STEP %d : Get the RadioEnvCondition using Device.Cellular.Interface.1.X_RDK_RadioEnvConditions" %step);
-            print("EXPECTED RESULT %d : Should successfully get Device.Cellular.Interface.1.X_RDK_RadioEnvConditions" %step);
-            if expectedresult in actualresult :
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,RadioEnvCondition));
-                print("TEST EXECUTION RESULT :SUCCESS");
-
-                step = step + 1;
-                print("TEST STEP %d: Get the valid RadioEnvConditions for CONNECTED or REGISTERED cellular manager status" %step);
-                print("EXPECTED RESULT %d: Should get the valid RadioEnvConditions for CONNECTED or REGISTERED cellular manager status " %step);
-                if RadioEnvCondition in valid_conditions:
-                    #Set the result status of execution
-                    tdkTestObj.setResultStatus("SUCCESS");
-                    print("ACTUAL RESULT %d : %s" %(step,RadioEnvCondition));
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : SUCCESS" );
-
-                    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-                    tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.RSRP");
-                    tdkTestObj.executeTestCase(expectedresult);
-                    actualresult = tdkTestObj.getResult();
-                    RSRP = tdkTestObj.getResultDetails();
-
-                    step = step + 1;
-                    print("TEST STEP %d: Get the RSRP value using Device.Cellular.Interface.1.RSRP" %step);
-                    print("EXPECTED RESULT %d: Should get the RSRP value using Device.Cellular.Interface.1.RSRP" %step);
-                    if expectedresult in actualresult :
-                        tdkTestObj.setResultStatus("SUCCESS");
-                        print("ACTUAL RESULT %d: Get operation success; Details : %s" %(step,RSRP));
-                        print("TEST EXECUTION RESULT :SUCCESS");
-
-                        print("TEST STEP %d: Check if the RSRP value matches the respective RadioEnvConditions" %step);
-                        print("EXPECTED RESULT %d: Should get the RSRP value that matches the respective RadioEnvConditions " %step);
-                        if RadioEnvCondition == "EXCELLENT" and (int(RSRP) > -85) :
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print("ACTUAL RESULT %d: RadioEnvConditions: %s matches RSRP : %s" %(step,RadioEnvCondition,RSRP));
-                            print("TEST EXECUTION RESULT :SUCCESS");
-
-                        elif RadioEnvCondition == "GOOD" and (-85  >=  int(RSRP) >  -95) :
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print("ACTUAL RESULT %d: RadioEnvConditions: %s matches RSRP : %s" %(step,RadioEnvCondition,RSRP));
-                            print("TEST EXECUTION RESULT :SUCCESS");
-
-                        elif RadioEnvCondition == "FAIR" and (-95  >=  int(RSRP) >  -105) :
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print("ACTUAL RESULT %d: RadioEnvConditions: %s matches RSRP : %s" %(step,RadioEnvCondition,RSRP));
-                            print("TEST EXECUTION RESULT :SUCCESS");
-
-                        elif RadioEnvCondition == "POOR" and (-105 >= int(RSRP) > -115) :
-                            tdkTestObj.setResultStatus("SUCCESS");
-                            print("ACTUAL RESULT %d: RadioEnvConditions: %s matches RSRP : %s" %(step,RadioEnvCondition,RSRP));
-                            print("TEST EXECUTION RESULT :SUCCESS");
-
-                        else:
-                            tdkTestObj.setResultStatus("FAILURE");
-                            print("ACTUAL RESULT %d: RadioEnvConditions: %s is not matching expected RSRP range : %s" %(step,RadioEnvCondition,RSRP));
-                            print("TEST EXECUTION RESULT :FAILURE");
-                    else:
-                        tdkTestObj.setResultStatus("FAILURE");
-                        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,RSRP));
-                        #Get the result of execution
-                        print("[TEST EXECUTION RESULT] : FAILURE")
-                else:
-                    tdkTestObj.setResultStatus("FAILURE");
-                    print("ACTUAL RESULT %d:  %s " %(step,RadioEnvCondition));
-                    #Get the result of execution
-                    print("[TEST EXECUTION RESULT] : FAILURE");
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,RadioEnvCondition));
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
-        else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("ACTUAL RESULT %d:  %s " %(step,status));
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : FAILURE");
     else:
+
         tdkTestObj.setResultStatus("FAILURE");
-        print("ACTUAL RESULT %d: Get operation failed; Details : %s" %(step,status));
-        #Get the result of execution
         print("[TEST EXECUTION RESULT] : FAILURE");
 
+    ############################################################
+    # STEP 2 : Enable Interface if Required
+    ############################################################
+
+    step = step + 1;
+
+    if initialEnable == "false":
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.Enable"
+        );
+        tdkTestObj.addParameter(
+            "ParamValue",
+            "true"
+        );
+        tdkTestObj.addParameter(
+            "Type",
+            "bool"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+
+        print("\nTEST STEP %d : Enable Device.Cellular.Interface.1.Enable" %step);
+        print("EXPECTED RESULT %d : Cellular interface should be enabled" %step);
+
+        if expectedresult in actualresult:
+
+            enableModified = True;
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            sleep(20);
+
+        else:
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
+    else:
+
+        print("\nTEST STEP %d : Interface already enabled" %step);
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+    ############################################################
+    # STEP 3 : Verify CONNECTED Status
+    ############################################################
+
+    step = step + 1;
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.X_RDK_Status"
+    );
+
+    tdkTestObj.executeTestCase(expectedresult);
+
+    actualresult = tdkTestObj.getResult();
+    connectedStatus = tdkTestObj.getResultDetails();
+
+    print("\nTEST STEP %d : Verify Device.Cellular.X_RDK_Status" %step);
+    print("EXPECTED RESULT %d : Status should be CONNECTED" %step);
+    print("ACTUAL RESULT %d : Status is %s" %(step, connectedStatus));
+
+    if expectedresult in actualresult and connectedStatus == "CONNECTED":
+
+        tdkTestObj.setResultStatus("SUCCESS");
+        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+        ############################################################
+        # STEP 4 : Get Cellular Manager Status
+        ############################################################
+
+        step = step + 1;
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.X_RDK_Status"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+        status = tdkTestObj.getResultDetails();
+
+        print("\nTEST STEP %d : Get the cellular manager status using Device.Cellular.X_RDK_Status" %step);
+        print("EXPECTED RESULT %d : Should successfully get Device.Cellular.X_RDK_Status" %step);
+
+        if expectedresult in actualresult:
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("ACTUAL RESULT %d : Get operation success; Details : %s" %(step,status));
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            ############################################################
+            # STEP 5 : Verify CONNECTED or REGISTERED
+            ############################################################
+
+            step = step + 1;
+
+            print("\nTEST STEP %d : Check if the cellular manager status as CONNECTED or REGISTERED" %step);
+            print("EXPECTED RESULT %d : Should get the cellular manager status as CONNECTED or REGISTERED" %step);
+
+            if status == "CONNECTED" or status == "REGISTERED":
+
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("ACTUAL RESULT %d : %s" %(step,status));
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                ############################################################
+                # STEP 6 : Get Radio Environment Conditions
+                ############################################################
+
+                valid_conditions = {'EXCELLENT', 'GOOD', 'FAIR', 'POOR'};
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                tdkTestObj.addParameter(
+                    "ParamName",
+                    "Device.Cellular.Interface.1.X_RDK_RadioEnvConditions"
+                );
+
+                tdkTestObj.executeTestCase(expectedresult);
+
+                actualresult = tdkTestObj.getResult();
+                RadioEnvCondition = tdkTestObj.getResultDetails();
+
+                step = step + 1;
+
+                print("\nTEST STEP %d : Get the RadioEnvCondition using Device.Cellular.Interface.1.X_RDK_RadioEnvConditions" %step);
+                print("EXPECTED RESULT %d : Should successfully get Device.Cellular.Interface.1.X_RDK_RadioEnvConditions" %step);
+
+                if expectedresult in actualresult:
+
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("ACTUAL RESULT %d : Get operation success; Details : %s"
+                          %(step,RadioEnvCondition));
+                    print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                    ############################################################
+                    # STEP 7 : Validate Radio Environment Conditions
+                    ############################################################
+
+                    step = step + 1;
+
+                    print("\nTEST STEP %d : Validate Radio Environment Conditions" %step);
+                    print("EXPECTED RESULT %d : Value should be EXCELLENT, GOOD, FAIR or POOR" %step);
+
+                    if RadioEnvCondition in valid_conditions:
+
+                        tdkTestObj.setResultStatus("SUCCESS");
+                        print("ACTUAL RESULT %d : %s"
+                              %(step,RadioEnvCondition));
+                        print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                        ############################################################
+                        # STEP 8 : Get RSRP
+                        ############################################################
+
+                        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+                        tdkTestObj.addParameter(
+                            "ParamName",
+                            "Device.Cellular.Interface.1.RSRP"
+                        );
+
+                        tdkTestObj.executeTestCase(expectedresult);
+
+                        actualresult = tdkTestObj.getResult();
+                        RSRP = tdkTestObj.getResultDetails();
+
+                        step = step + 1;
+
+                        print("\nTEST STEP %d : Get the RSRP value using Device.Cellular.Interface.1.RSRP" %step);
+                        print("EXPECTED RESULT %d : Should get the RSRP value" %step);
+
+                        if expectedresult in actualresult:
+
+                            tdkTestObj.setResultStatus("SUCCESS");
+                            print("ACTUAL RESULT %d : Get operation success; Details : %s"
+                                  %(step,RSRP));
+                            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            ############################################################
+                            # STEP 9 : Validate RSRP vs Radio Conditions
+                            ############################################################
+
+                            step = step + 1;
+
+                            print("\nTEST STEP %d : Check if the RSRP value matches the respective RadioEnvConditions" %step);
+                            print("EXPECTED RESULT %d : RSRP value should match RadioEnvConditions" %step);
+
+                            if RadioEnvCondition == "EXCELLENT" and (int(RSRP) > -85):
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("ACTUAL RESULT %d : RadioEnvConditions %s matches RSRP %s"
+                                      %(step,RadioEnvCondition,RSRP));
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            elif RadioEnvCondition == "GOOD" and (-85 >= int(RSRP) > -95):
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("ACTUAL RESULT %d : RadioEnvConditions %s matches RSRP %s"
+                                      %(step,RadioEnvCondition,RSRP));
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            elif RadioEnvCondition == "FAIR" and (-95 >= int(RSRP) > -105):
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("ACTUAL RESULT %d : RadioEnvConditions %s matches RSRP %s"
+                                      %(step,RadioEnvCondition,RSRP));
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            elif RadioEnvCondition == "POOR" and (-105 >= int(RSRP) > -115):
+
+                                tdkTestObj.setResultStatus("SUCCESS");
+                                print("ACTUAL RESULT %d : RadioEnvConditions %s matches RSRP %s"
+                                      %(step,RadioEnvCondition,RSRP));
+                                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+                            else:
+
+                                tdkTestObj.setResultStatus("FAILURE");
+                                print("ACTUAL RESULT %d : RadioEnvConditions %s is not matching expected RSRP range : %s"
+                                      %(step,RadioEnvCondition,RSRP));
+                                print("[TEST EXECUTION RESULT] : FAILURE");
+
+                        else:
+
+                            tdkTestObj.setResultStatus("FAILURE");
+                            print("ACTUAL RESULT %d : Get operation failed; Details : %s"
+                                  %(step,RSRP));
+                            print("[TEST EXECUTION RESULT] : FAILURE");
+
+                    else:
+
+                        tdkTestObj.setResultStatus("FAILURE");
+                        print("ACTUAL RESULT %d : %s"
+                              %(step,RadioEnvCondition));
+                        print("[TEST EXECUTION RESULT] : FAILURE");
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT %d : Get operation failed; Details : %s"
+                          %(step,RadioEnvCondition));
+                    print("[TEST EXECUTION RESULT] : FAILURE");
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT %d : %s"
+                      %(step,status));
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("ACTUAL RESULT %d : Get operation failed; Details : %s"
+                  %(step,status));
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
+    else:
+
+        tdkTestObj.setResultStatus("FAILURE");
+        print("[TEST EXECUTION RESULT] : FAILURE");
+
+    ############################################################
+    # STEP 10 : Revert Interface State
+    ############################################################
+
+    if enableModified:
+
+        step = step + 1;
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set');
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.Interface.1.Enable"
+        );
+        tdkTestObj.addParameter(
+            "ParamValue",
+            initialEnable
+        );
+        tdkTestObj.addParameter(
+            "Type",
+            "bool"
+        );
+
+        tdkTestObj.executeTestCase(expectedresult);
+
+        actualresult = tdkTestObj.getResult();
+
+        print("\nTEST STEP %d : Revert Device.Cellular.Interface.1.Enable" %step);
+        print("EXPECTED RESULT %d : Original value should be restored" %step);
+
+        if expectedresult in actualresult:
+
+            tdkTestObj.setResultStatus("SUCCESS");
+            print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            sleep(20);
+
+            ############################################################
+            # STEP 11 : Verify Status After Revert
+            ############################################################
+
+            step = step + 1;
+
+            expectedRestoreStatus = \
+                "CONNECTED" if initialEnable == "true" else "DEREGISTERED";
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.X_RDK_Status"
+            );
+
+            tdkTestObj.executeTestCase(expectedresult);
+
+            actualresult = tdkTestObj.getResult();
+            restoreStatus = tdkTestObj.getResultDetails().strip();
+
+            print("\nTEST STEP %d : Verify Device.Cellular.X_RDK_Status after revert" %step);
+            print("EXPECTED RESULT %d : Status should be %s"
+                  %(step, expectedRestoreStatus));
+            print("ACTUAL RESULT %d : Status is %s"
+                  %(step, restoreStatus));
+
+            if expectedresult in actualresult and \
+               restoreStatus == expectedRestoreStatus:
+
+                tdkTestObj.setResultStatus("SUCCESS");
+                print("[TEST EXECUTION RESULT] : SUCCESS");
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE");
+                print("[TEST EXECUTION RESULT] : FAILURE");
+
+        else:
+
+            tdkTestObj.setResultStatus("FAILURE");
+            print("[TEST EXECUTION RESULT] : FAILURE");
+
     obj.unloadModule("tdkbtr181");
+
 else:
+
     print("Failed to load the module");
     obj.setLoadModuleStatus("FAILURE");
     print("Module loading failed");
+

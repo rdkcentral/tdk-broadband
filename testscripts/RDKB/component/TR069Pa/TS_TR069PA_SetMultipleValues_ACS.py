@@ -61,7 +61,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             values = queryParam.get("value")
             #Perform set task request to set the value of parameters
             queryResponse,step = settr069ACS(tdkTestObj,username,queryParam,step)
-            if queryResponse:
+            if queryResponse is not None:
                 #Perform get task request and search query to get the value of parameters after set
                 newValues,step = gettr069ACS(tdkTestObj,username,queryParam,step)
                 if newValues:
@@ -90,10 +90,21 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
                 print("EXPECTED RESULT %d: The value of %s should be reverted successfully via ACS server." % (step,names))
                 queryParam = {"name":names,"value": values}
                 status,queryResponse = tr069ACSQuery(username,queryParam,"set")
-                if status == 200 and queryResponse:
+                if status == 200 and queryResponse is not None:
+                    # Task executed synchronously - proceed directly
                     tdkTestObj.setResultStatus("SUCCESS")
                     print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,parameters))
                     print("[TEST EXECUTION RESULT] : SUCCESS")
+                elif status == 202 and queryResponse is not None:
+                    # Task queued - poll for terminal state
+                    if waitForTaskCompletionIfQueued(tdkTestObj, status, queryResponse, step, "SET", username):
+                        tdkTestObj.setResultStatus("SUCCESS")
+                        print("ACTUAL RESULT %d : Reverted %s to original value successfully." % (step,parameters))
+                        print("[TEST EXECUTION RESULT] : SUCCESS")
+                    else:
+                        tdkTestObj.setResultStatus("FAILURE")
+                        print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))
+                        print("[TEST EXECUTION RESULT] : FAILURE")
                 else:
                     tdkTestObj.setResultStatus("FAILURE")
                     print("ACTUAL RESULT %d : Failed to revert %s to original value. " % (step,parameters))

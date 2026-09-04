@@ -16,61 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>4</version>
-  <name>TS_WEBPA_5GHzSSIDAdvertisementEnabled</name>
-  <primitive_test_id/>
-  <primitive_test_name>WEBPA_Donothing</primitive_test_name>
-  <primitive_test_version>1</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To Check the enable and disable feature  of  5GHz SSID Advertisement.</synopsis>
-  <groups_id/>
-  <execution_time>5</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <box_type>Emulator</box_type>
-    <box_type>RPI</box_type>
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_WEBPA_33</test_case_id>
-    <test_objective>Using WEBPA get and set  the state of  5Ghz SSID advertisment</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI, Emulator</test_setup>
-    <pre_requisite>If SAT token is to be used, token should be created and made available in test manager. Also the config variables SAT_REQUIRED, SAT_TOKEN_FILE, SERVER_URI should be updated in webpaVariables.py</pre_requisite>
-    <api_or_interface_used>webpaQuery
-parseWebpaResponse
-webpaPreRequisite</api_or_interface_used>
-    <input_parameters>Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled</input_parameters>
-    <automation_approch>1. Load sysutil module
-2. Configure WEBPA server to send get request for Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled.
-3. Parse the WEBPA response
-4. Using sysutil ExecuteCmd command get the current state
-5. If webpa response status is SUCCESS, get operation was success otherwise failure
-6. Toggle the value using set based on the response received.
-7. Using sysutil ExecuteCmd command set the state.
-8.If webpa response status is SUCCESS, set operation was success otherwise failure.
-9.set the value back to original .
-10. Unload sysutil module</automation_approch>
-    <expected_output>WEBPA response status should be SUCCESS</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>sysutil</test_stub_interface>
-    <test_script>TS_WEBPA_5GHzSSIDAdvertisementEnabled</test_script>
-    <skipped>No</skipped>
-    <release_version>M70</release_version>
-    <remarks>None</remarks>
-  </test_cases>
-  <script_tags/>
-</xml>
-'''
+
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
 import time;
@@ -91,7 +37,8 @@ if "SUCCESS" in result.upper() :
     tdkTestObj,preRequisiteStatus = webpaPreRequisite(obj);
     if "SUCCESS" in preRequisiteStatus:
         #get the current state of SSID advertisent for 5GHz
-        print("TEST STEP 1: Get and save the state of SSID Advertisment for 5GHz ")
+        print("\nTEST STEP 1: Get and save the state of SSID Advertisment for 5GHz ")
+        print("EXPECTED RESULT 1: Should get the state of SSID Advertisment for 5GHz")
         queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled"}
         queryResponse = webpaQuery(obj,queryParam)
         parsedResponse = parseWebpaResponse(queryResponse, 1)
@@ -101,53 +48,63 @@ if "SUCCESS" in result.upper() :
         #Checking if the response value is not null
         if "SUCCESS" in parsedResponse[0] and parsedResponse[1] != "":
             tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS")
             OrgValue = parsedResponse[1];
-            print("SSID Advertisment for 5GHz's  State: ",OrgValue);
+            print("ACTUAL RESULT 1: SSID Advertisment for 5GHz's  State: ",OrgValue);
+            print("[TEST EXECUTION RESULT] : SUCCESS")
             #toggling by using set
-            print("TEST STEP 2: Toggling the value")
+            print("\nTEST STEP 2: Toggling the value of SSID Advertisment Enable for 5GHz")
+            print("EXPECTED RESULT 2: Should toggle the value of SSID Advertisment Enable for 5GHz")
             if parsedResponse[1] == "false":
                 flag="true"
-                queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled","value":flag,"dataType":3}
-                queryResponse = webpaQuery(obj, queryParam,"set")
-                setResponse = parseWebpaResponse(queryResponse, 1,"set")
-                tdkTestObj.executeTestCase("SUCCESS");
             else:
                 flag="false"
-                queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled","value":flag,"dataType":3}
+            queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled","value":flag,"dataType":3}
+            queryResponse = webpaQuery(obj, queryParam,"set")
+            setResponse = parseWebpaResponse(queryResponse, 1,"set")
+            if "SUCCESS" in setResponse[0] and setResponse[1] != "":
+                tdkTestObj.executeTestCase("SUCCESS")
+                print("ACTUAL RESULT 2: Toggled the value of SSID Advertisment Enable for 5GHz")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+                time.sleep(30)
+                #getting the set value which is toggled
+                print("\nTEST STEP 3: Get the value of SSID Advertisment Enable for 5GHz after toggle")
+                print("EXPECTED RESULT 3: Should get the value of SSID Advertisment Enable for 5GHz after toggle")
+                queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled"}
+                queryResponse = webpaQuery(obj, queryParam)
+                getResponse = parseWebpaResponse(queryResponse, 1)
+                tdkTestObj.executeTestCase("SUCCESS");
+                #check for successful set
+                if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    Value = parsedResponse[1];
+                    print("ACTUAL RESULT 3: Got the value of SSID Advertisment Enable for 5GHz after toggle as ",Value);
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT 3: Failed to get value of SSID Advertisment for 5GHz after toggle.");
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+                #Setting back to original
+                print("\nTEST STEP 4: Setting value of SSID Advertisment for 5GHz back to original value")
+                print("EXPECTED RESULT 4: Should set value of SSID Advertisment for 5GHz back to original value")
+                queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled","value":OrgValue,"dataType":3}
                 queryResponse = webpaQuery(obj, queryParam,"set")
                 setResponse = parseWebpaResponse(queryResponse, 1,"set")
                 tdkTestObj.executeTestCase("SUCCESS");
-            time.sleep(30)
-            #getting the set value which is toggled
-            print("TEST STEP 3: Getting the toggled value")
-            queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled"}
-            queryResponse = webpaQuery(obj, queryParam)
-            getResponse = parseWebpaResponse(queryResponse, 1)
-            tdkTestObj.executeTestCase("SUCCESS");
-            #check for successful set
-            if "SUCCESS" in getResponse[0] and getResponse[1] != "" and getResponse[1]== flag:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("[TEST EXECUTION RESULT] : SUCCESS")
-                Value = parsedResponse[1];
-                print("Ethernet SSID Advertisment for 5GHz State: ",Value);
+                if "SUCCESS" in setResponse[0] and setResponse[1] != "":
+                    tdkTestObj.setResultStatus("SUCCESS");
+                    print("ACTUAL RESULT 4: Revert operation is successful")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+                else:
+                    tdkTestObj.setResultStatus("FAILURE");
+                    print("ACTUAL RESULT 4: Revert operation failed")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
             else:
                 tdkTestObj.setResultStatus("FAILURE");
+                print("ACTUAL RESULT 2: Failed to toggle SSID Advertisment for 5GHz")
                 print("[TEST EXECUTION RESULT] : FAILURE")
-            #Setting back to original
-            print("TEST STEP 4: Setting back to original value")
-            queryParam = {"name":"Device.WiFi.AccessPoint.10101.SSIDAdvertisementEnabled","value":OrgValue,"dataType":3}
-            queryResponse = webpaQuery(obj, queryParam,"set")
-            setResponse = parseWebpaResponse(queryResponse, 1,"set")
-            tdkTestObj.executeTestCase("SUCCESS");
-            if "SUCCESS" in setResponse[0]:
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("TEST STEP 4 [TEST EXECUTION RESULT] : SUCCESS")
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("TEST STEP 4[TEST EXECUTION RESULT] : FAILURE")
         else:
             tdkTestObj.setResultStatus("FAILURE");
+            print("ACTUAL RESULT 1: Failed to get SSID Advertisment for 5GHz")
             print("[TEST EXECUTION RESULT] : FAILURE")
     else:
         tdkTestObj.setResultStatus("FAILURE");
