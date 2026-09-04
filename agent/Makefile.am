@@ -21,10 +21,12 @@ AM_CXXFLAGS = -DYOCTO_LIB_LOADING -DDEBUG_LEVEL_TRACE -DRDKVERSION="\"${RDK_VERS
               -I./include/ -I${top_srcdir}/agent/include -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)
 
 AM_CXXFLAGS += -DREDIRECT_FLAG=$(REDIRECT_FLAG)
-bin_PROGRAMS = rdk_tdk_agent_process tdk_cmd_utility
+#bin_PROGRAMS = rdk_tdk_agent_process tdk_cmd_utility
+bin_PROGRAMS = rdk_tdk_agent_process
 rdk_tdk_agent_processdir = ${bindir}
 rdk_tdk_agent_process_SOURCES = src/rpcmethods.cpp src/agentmain.cpp
 rdk_tdk_agent_process_SCRIPTS = scripts/runSysStat.sh scripts/TDK_version.txt scripts/RemoveLogs.sh scripts/file_copy.sh
-rdk_tdk_agent_process_LDADD = -ljsoncpp -ldl -lpthread -ljsonrpccpp-server -ljsonrpccpp-common -ljsonrpccpp-client -lssl -lcrypto
+#rdk_tdk_agent_process_LDADD = -ljsoncpp -ldl -lpthread -ljsonrpccpp-server -ljsonrpccpp-common -ljsonrpccpp-client -lssl -lcrypto
+rdk_tdk_agent_process_LDADD = -ljsoncpp -ldl -lpthread -ljsonrpccpp-server -ljsonrpccpp-common -ljsonrpccpp-client
 rdk_tdk_agent_process_includedir = ${includedir}
-tdk_cmd_utility_SOURCES = src/tdk_cmd_utility.cpp
+#tdk_cmd_utility_SOURCES = src/tdk_cmd_utility.cpp

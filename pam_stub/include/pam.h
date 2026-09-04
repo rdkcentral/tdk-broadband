@@ -50,23 +50,11 @@ class pam : public RDKTestStubInterface, public AbstractServer<pam>
 
                  pam(TcpSocketServer &ptrRpcServer) : AbstractServer <pam>(ptrRpcServer)
                 {
-                  this->bindAndAddMethod(Procedure("pam_bridge_GetParamUlongValue", PARAMS_BY_NAME, JSON_STRING,"paramName", JSON_STRING,"module", JSON_STRING,NULL), &pam::pam_bridge_GetParamUlongValue);
                   this->bindAndAddMethod(Procedure("pam_GetParameterNames", PARAMS_BY_NAME, JSON_STRING,"ParamName", JSON_STRING,"ParamList", JSON_STRING,NULL), &pam::pam_GetParameterNames);
                   this->bindAndAddMethod(Procedure("pam_SetParameterValues", PARAMS_BY_NAME,JSON_STRING,"ParamName", JSON_STRING,"ParamValue", JSON_STRING, "Type", JSON_STRING, NULL), &pam::pam_SetParameterValues);
 		  this->bindAndAddMethod(Procedure("pam_Setparams", PARAMS_BY_NAME,JSON_STRING,"ParamName", JSON_STRING,"ParamValue", JSON_STRING, "Type", JSON_STRING, NULL), &pam::pam_Setparams);
                   this->bindAndAddMethod(Procedure("pam_GetParameterValues", PARAMS_BY_NAME, JSON_STRING,"ParamName", JSON_STRING,NULL), &pam::pam_GetParameterValues);
-                  this->bindAndAddMethod(Procedure("pam_MTAAgentRestart", PARAMS_BY_NAME, JSON_STRING,NULL), &pam::pam_MTAAgentRestart);
                   this->bindAndAddMethod(Procedure("pam_CRRestart", PARAMS_BY_NAME, JSON_STRING,NULL), &pam::pam_CRRestart);
-                  this->bindAndAddMethod(Procedure("pam_Init", PARAMS_BY_NAME, JSON_STRING,NULL), &pam::pam_Init);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DmlMlanGetParamValue", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_DmlMlanGetParamValue);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DmlEthGetParamValue", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_DmlEthGetParamValue);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DmlDiGetParamValue", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_DmlDiGetParamValue);
-                  this->bindAndAddMethod(Procedure("COSAPAM_UpnpEnable", PARAMS_BY_NAME, JSON_STRING,"MethodName",JSON_STRING,"Value", JSON_INTEGER,NULL), &pam::COSAPAM_UpnpEnable);
-                  this->bindAndAddMethod(Procedure("COSAPAM_UpnpGetState", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_UpnpGetState);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DhcpGet", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_DhcpGet);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DhcpsEnable", PARAMS_BY_NAME,JSON_STRING ,"Value", JSON_INTEGER,NULL), &pam::COSAPAM_DhcpsEnable);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DnsGet", PARAMS_BY_NAME, JSON_STRING,"MethodName", JSON_STRING,NULL), &pam::COSAPAM_DnsGet);
-                  this->bindAndAddMethod(Procedure("COSAPAM_DnsEnable", PARAMS_BY_NAME, JSON_STRING,"MethodName",JSON_STRING ,"Value", JSON_INTEGER,NULL), &pam::COSAPAM_DnsEnable);
 	 	}
 
 	/*inherited functions*/
@@ -76,22 +64,10 @@ class pam : public RDKTestStubInterface, public AbstractServer<pam>
 	std::string testmodulepre_requisites();
         bool testmodulepost_requisites();
         /*pam Stub Wrapper functions*/
-	void pam_bridge_GetParamUlongValue(IN const Json::Value& req, OUT Json::Value& response);
         void pam_GetParameterNames(IN const Json::Value& req, OUT Json::Value& response);
 	void pam_SetParameterValues(IN const Json::Value& req, OUT Json::Value& response);
 	void pam_Setparams(IN const Json::Value& req, OUT Json::Value& response);
 	void pam_GetParameterValues(IN const Json::Value& req, OUT Json::Value& response);
-	void pam_MTAAgentRestart(IN const Json::Value& req, OUT Json::Value& response);
 	void pam_CRRestart(IN const Json::Value& req, OUT Json::Value& response);
-	void pam_Init(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DmlMlanGetParamValue(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DmlEthGetParamValue(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DmlDiGetParamValue(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_UpnpEnable(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_UpnpGetState(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DhcpGet(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DhcpsEnable(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DnsGet(IN const Json::Value& req, OUT Json::Value& response);
-        void COSAPAM_DnsEnable(IN const Json::Value& req, OUT Json::Value& response);
 };
 #endif //__PAM_STUB_H__
