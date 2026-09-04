@@ -16,82 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version="1.0" encoding="UTF-8"?><xml>
-  <id/>
-  <version>9</version>
-  <name>TS_ONEWIFI_CheckWiFiSSIDStatus_InBridgeMode</name>
-  <primitive_test_id/>
-  <primitive_test_name>onewifi_DoNothing</primitive_test_name>
-  <primitive_test_version>2</primitive_test_version>
-  <status>FREE</status>
-  <synopsis>To check if the WiFi SSID statuses is "down" when DUT is set to bridge-static mode.</synopsis>
-  <groups_id/>
-  <execution_time>10</execution_time>
-  <long_duration>false</long_duration>
-  <advanced_script>false</advanced_script>
-  <remarks/>
-  <skip>false</skip>
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ONEWIFI_170</test_case_id>
-    <test_objective>To check if the WiFi SSID statuses is "down" when DUT is set to bridge-static mode.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>None</api_or_interface_used>
-    <input_parameters>paramName : Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode
-paramValue : bridge-static
-paramType : string
-paramName : Device.WiFi.SSID.1.Status
-paramName : Device.WiFi.SSID.2.Status
-paramName : Device.WiFi.SSID.17.Status</input_parameters>
-    <automation_approch>1. Load the modules
-2. Get the initial lanmode using Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode
-3. Set to bridge-static if the lanmode was router initially. Cross check the SET with GET.
-4. Check the WiFi SSID status for all applicable radios using Device.WiFi.SSID.1.Status, Device.WiFi.SSID.2.Status and Device.WiFi.SSID.17.Status for 2.4G, 5G and 6G respectively. All the statuses should be Down in bridge mode.
-5. Revert to initial lanmode if required.
-6. Unload the modules</automation_approch>
-    <expected_output>The WiFi SSID statuses should be "down" when DUT is set to bridge-static mode.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>wifiagent</test_stub_interface>
-    <test_script>TS_ONEWIFI_CheckWiFiSSIDStatus_InBridgeMode</test_script>
-    <skipped>No</skipped>
-    <release_version>M98</release_version>
-    <remarks/>
-  </test_cases>
-  <script_tags/>
-</xml>
-
-'''
-def getParameter(tdkTestObj, param):
-    tdkTestObj.addParameter("paramName",param);
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    getValue = tdkTestObj.getResultDetails().strip();
-    getValue = getValue.split("VALUE:")[1].split(" ")[0].strip();
-    return actualresult, getValue;
-
-def setLanMode(tdkTestObj, setValue):
-    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
-    tdkTestObj.addParameter("paramValue",setValue);
-    tdkTestObj.addParameter("paramType","string");
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    sleep(120);
-    return actualresult, details;
 
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
@@ -115,6 +39,26 @@ loadmodulestatus =obj.getLoadModuleResult();
 loadmodulestatus1 =sysobj.getLoadModuleResult();
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
 print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus1) ;
+
+def getParameter(tdkTestObj, param):
+    tdkTestObj.addParameter("paramName",param);
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    getValue = tdkTestObj.getResultDetails().strip();
+    getValue = getValue.split("VALUE:")[1].split(" ")[0].strip();
+    return actualresult, getValue;
+
+def setLanMode(tdkTestObj, setValue):
+    tdkTestObj.addParameter("paramName","Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode");
+    tdkTestObj.addParameter("paramValue",setValue);
+    tdkTestObj.addParameter("paramType","string");
+    #Execute the test case in DUT
+    tdkTestObj.executeTestCase(expectedresult);
+    actualresult = tdkTestObj.getResult();
+    details = tdkTestObj.getResultDetails();
+    sleep(120);
+    return actualresult, details;
 
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     obj.setLoadModuleStatus("SUCCESS");
@@ -201,7 +145,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
         if lanmodeInitial == "bridge-static" or currLanMode == "bridge-static":
             step = step + 1;
             print("\nTEST STEP %d: Check the WiFi SSID status corresponding to the all the applicable radios in bridge mode" %step);
-            print("EXPECTED RESULT %d: The WiFi SSID status corresponding to all the appliacable radios should be down in bridge mode" %step);
+            print("EXPECTED RESULT %d: The WiFi SSID status corresponding to all the applicable radios should be down in bridge mode" %step);
 
             #Get 2.4G WiFi SSID Status
             print("\nFetching the WiFi SSID Status for 2.4G...");
@@ -284,7 +228,7 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
             #Revert operation
             if revert_flag == 1:
                 step = step + 1;
-                setValue = "router";
+                setValue = lanmodeInitial
                 tdkTestObj = obj.createTestStep('WIFIAgent_Set');
                 actualresult, details = setLanMode(tdkTestObj, setValue);
 
@@ -318,6 +262,6 @@ if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.uppe
     sysobj.unloadModule("sysutil");
     obj.unloadModule("wifiagent");
 else:
-    print("Failed to load sysutil module");
+    print("Failed to load wifiagent/sysutil module");
     obj.setLoadModuleStatus("FAILURE");
     sysobj.setLoadModuleStatus("FAILURE");

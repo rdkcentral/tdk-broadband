@@ -3,7 +3,7 @@
 ## Test Specification Document for Performance and Stability Validation Suite
 
 <strong>Version: 1.0</strong><br>
-<strong>Date: 2026-08-04</strong><br>
+<strong>Date: August 2026</strong><br>
 <strong>Purpose: Low-Level Test Specification for Performance and Stability Validation Suite</strong><br>
 <strong>Maintained by: TDKB Test Automation Team</strong><br>
 
@@ -13,17 +13,17 @@
 
 | # | Category | Description | Number of Tests |
 |---|---|---|---|
-| 1 | E2E | End-to-End throughput performance tests via iperf over wired and wireless paths | 6 |
+| 1 | Performance | End-to-End throughput performance tests via iperf over wired and wireless paths | 6 |
 | 2 | Stability | Long-duration stability tests covering reboots, factory resets, connectivity, DNS and WebPA load | 5 |
 
 ---
 
-<details>
-<summary><strong>E2E</strong></summary>
+<details open>
+<summary><strong>Performance</strong></summary>
 
-# E2E
+# Performance
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Measure TCP Throughput from LAN to WAN</strong></summary>
 
 ## Test Case 1: E2E_TCPFromLanToWan_GetThroughput
@@ -41,7 +41,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WAN - WAN system |
 
@@ -67,7 +67,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Measure TCP Throughput from LAN to WLAN</strong></summary>
 
 ## Test Case 2: E2E_WIFI_TCPFromLanToWlan_GetThroughput
@@ -85,7 +85,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -116,7 +116,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Measure TCP Throughput from WLAN to LAN</strong></summary>
 
 ## Test Case 3: E2E_WIFI_TCPFromWlanToLan_GetThroughput
@@ -134,7 +134,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -165,7 +165,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Measure Average TCP Throughput from WLAN to LAN over Configured Duration</strong></summary>
 
 ## Test Case 4: E2E_WIFI_TCPFromWlanToLan_Perf
@@ -183,7 +183,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 | WLAN Client - Wireless client |
 
@@ -216,7 +216,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Measure TCP Throughput from WLAN to WAN</strong></summary>
 
 ## Test Case 5: E2E_WIFI_TCPFromWlanToWan_GetThroughput
@@ -234,7 +234,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WLAN Client - Wireless client |
 | WAN - WAN system |
 
@@ -265,7 +265,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Measure Average TCP Throughput from WLAN to WAN over Configured Duration</strong></summary>
 
 ## Test Case 6: E2E_WIFI_TCPFromWlanToWan_Perf
@@ -283,7 +283,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WLAN Client - Wireless client |
 | WAN - WAN system |
 
@@ -320,12 +320,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Stability</strong></summary>
 
 # Stability
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Verify Gateway Stability across Multiple Reboots</strong></summary>
 
 ## Test Case 7: TS_STABILITY_MultipleReboots
@@ -343,7 +343,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -373,7 +373,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Verify Gateway Stability across Multiple Factory Resets</strong></summary>
 
 ## Test Case 8: TS_STABILITY_MultipleFactoryReset
@@ -391,7 +391,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -422,7 +422,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Verify Long-Run IPv4 Connectivity from LAN Client without Packet Loss</strong></summary>
 
 ## Test Case 9: TS_STABILITY_E2E_LongRunIPV4ConnectivityfromLanClient
@@ -440,7 +440,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 
 ## Test Configuration
@@ -473,7 +473,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Verify DNS Stability under Repeated Queries from LAN Client</strong></summary>
 
 ## Test Case 10: TS_STABILITY_E2E_MultipleDNSQueryfromLanClient
@@ -491,7 +491,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | LAN Client - Wired client |
 
 ## Test Configuration
@@ -526,7 +526,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Verify Device Stability under Continuous WebPA Configuration Updates</strong></summary>
 
 ## Test Case 11: TS_STABILITY_MultipleWebPAQuery
@@ -544,7 +544,7 @@ Positive
 
 | Component |
 |---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
