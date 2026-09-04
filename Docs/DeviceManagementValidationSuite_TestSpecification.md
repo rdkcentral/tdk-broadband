@@ -19,12 +19,12 @@
 | 5 | WebConfig | WebConfig based device configuration | 15 |
 
 ---
-<details>
+<details open>
 <summary><strong>WebPA</strong></summary>
 
 # WebPA
 
-<details>
+<details open>
 <summary><strong>Test Case 1: Toggle 2.4GHz MAC Filter Enable via WebPA</strong></summary>
 
 ## Test Case 1: TS_WEBPA_2.4GHzMACFilterEnable
@@ -63,7 +63,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 2: Toggle 5GHz MAC Filter Enable via WebPA</strong></summary>
 
 ## Test Case 2: TS_WEBPA_5GHzMACFilterEnable
@@ -103,7 +103,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 3: Toggle 5GHz SSID Advertisement Enable via WebPA</strong></summary>
 
 ## Test Case 3: TS_WEBPA_5GHzSSIDAdvertisementEnabled
@@ -143,7 +143,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 4: Verify Last Reboot Reason after WebPA-Triggered Reboot</strong></summary>
 
 ## Test Case 4: TS_WEBPA_GetLastRebootReason
@@ -179,7 +179,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 5: Verify Band Steering Capability Cannot Be Set to False via WebPA</strong></summary>
 
 ## Test Case 5: TS_WEBPA_SetBandSteeringCapability
@@ -218,12 +218,12 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>USP</strong></summary>
 
 # USP
 
-<details>
+<details open>
 <summary><strong>Test Case 6: Add and Delete USP Subscription with allow_partial as false</strong></summary>
 
 ## Test Case 6: TS_USPPA_AddDelete_ValidSubscription_allowpartial_false
@@ -264,7 +264,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 7: Add and Delete USP Subscription with allow_partial=true</strong></summary>
 
 ## Test Case 7: TS_USPPA_AddDelete_ValidSubscription_allowpartial_true
@@ -305,7 +305,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 8: Delete Non-Existent Object Instance via USP with allow_partial=false</strong></summary>
 
 ## Test Case 8: TS_USPPA_Delete_InvalidObjectInstance_allowpartial_false
@@ -342,7 +342,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 9: Delete Non-Existent Object Instance via USP with allow_partial=true</strong></summary>
 
 ## Test Case 9: TS_USPPA_Delete_InvalidObjectInstance_allowpartial_true
@@ -379,7 +379,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 10: Delete Invalid Object via USP with allow_partial=false</strong></summary>
 
 ## Test Case 10: TS_USPPA_Delete_InvalidObject_allowpartial_false
@@ -416,7 +416,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 11: Delete Invalid Object via USP with allow_partial=true</strong></summary>
 
 ## Test Case 11: TS_USPPA_Delete_InvalidObject_allowpartial_true
@@ -453,7 +453,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 12: GET Controller Data Model by Object Instance Path via USP</strong></summary>
 
 ## Test Case 12: TS_USPPA_GetControllerObjectInstancePath
@@ -490,7 +490,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 13: GET Controller Data Model by Object Path via USP</strong></summary>
 
 ## Test Case 13: TS_USPPA_GetControllerObjectPath
@@ -527,7 +527,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 14: GET Controller Instances (All Levels) via USP</strong></summary>
 
 ## Test Case 14: TS_USPPA_GetInstances_Controller_firstlevelonly_false
@@ -564,7 +564,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 15: GET Controller Instances (First Level Only) via USP</strong></summary>
 
 ## Test Case 15: TS_USPPA_GetInstances_Controller_firstlevelonly_true
@@ -601,7 +601,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 16: GET IP Interface Instances (All Levels) via USP</strong></summary>
 
 ## Test Case 16: TS_USPPA_GetInstances_DeviceInterfaces_firstlevelonly_false
@@ -638,7 +638,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 17: GET IP Interface Instances (First Level Only) via USP</strong></summary>
 
 ## Test Case 17: TS_USPPA_GetInstances_DeviceInterfaces_firstlevelonly_true
@@ -675,7 +675,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 18: GET 2.4GHz SSID Name via USP</strong></summary>
 
 ## Test Case 18: TS_USPPA_GetSSIDName
@@ -712,7 +712,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 19: GET Supported DM for Controller (All Levels, All Options) via USP</strong></summary>
 
 ## Test Case 19: TS_USPPA_GetSupportedDM_Controller_firstlevelonly_false_allOptions
@@ -749,7 +749,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 20: GET Supported DM for Controller (First Level, All Options) via USP</strong></summary>
 
 ## Test Case 20: TS_USPPA_GetSupportedDM_Controller_firstlevelonly_true_allOptions
@@ -786,7 +786,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 21: GET Supported DM for IP Interfaces (All Levels, All Options) via USP</strong></summary>
 
 ## Test Case 21: TS_USPPA_GetSupportedDM_DeviceInterfaces_firstlevelonly_false_allOptions
@@ -823,7 +823,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 22: GET Supported DM for IP Interfaces (First Level, All Options) via USP</strong></summary>
 
 ## Test Case 22: TS_USPPA_GetSupportedDM_DeviceInterfaces_firstlevelonly_true_allOptions
@@ -860,7 +860,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 23: GET Supported DM for LocalAgent Object (First Level, No Options) via USP</strong></summary>
 
 ## Test Case 23: TS_USPPA_GetSupportedDM_Object_firstlevelonly_true_noOptions
@@ -897,7 +897,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 24: GET Supported DM for Root Object (All Levels, Commands Only) via USP</strong></summary>
 
 ## Test Case 24: TS_USPPA_GetSupportedDM_rootObject_firstlevelonly_false_commandsOnly
@@ -934,7 +934,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 25: GET Supported DM for Root Object (All Levels, Events Only) via USP</strong></summary>
 
 ## Test Case 25: TS_USPPA_GetSupportedDM_rootObject_firstlevelonly_false_eventsOnly
@@ -971,7 +971,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 26: GET Supported DM for Root Object (First Level, All Options) via USP</strong></summary>
 
 ## Test Case 26: TS_USPPA_GetSupportedDM_rootObject_firstlevelonly_true_allOptions
@@ -1008,7 +1008,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 27: GET Supported DM for Unsupported Object via USP</strong></summary>
 
 ## Test Case 27: TS_USPPA_GetSupportedDM_unsupportedObject_firstlevelonly_false_allOptions
@@ -1045,7 +1045,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 28: GET Agent Supported USP Protocol Versions</strong></summary>
 
 ## Test Case 28: TS_USPPA_GetSupportedProtocolVersions
@@ -1082,7 +1082,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 29: GET USP Agent Endpoint ID</strong></summary>
 
 ## Test Case 29: TS_USPPA_GetUSPAgentEndpointID
@@ -1119,7 +1119,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 30: GET Invalid Parameter via USP</strong></summary>
 
 ## Test Case 30: TS_USPPA_Get_InvalidParameter
@@ -1156,7 +1156,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 31: Reboot Device via USP OPERATE without Response</strong></summary>
 
 ## Test Case 31: TS_USPPA_OperateReboot_sendresp_false
@@ -1195,7 +1195,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 32: Reboot Device via USP OPERATE with Response</strong></summary>
 
 ## Test Case 32: TS_USPPA_OperateReboot_sendresp_true
@@ -1235,7 +1235,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 33: Set Controller Periodic Notification Interval via USP</strong></summary>
 
 ## Test Case 33: TS_USPPA_SetControllerPeriodicNotifInterval
@@ -1277,7 +1277,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 34: Set Firewall Level via USP</strong></summary>
 
 ## Test Case 34: TS_USPPA_SetFirewallLevel
@@ -1321,12 +1321,12 @@ Positive
 </details>
 
 ---
-<details>
+<details open>
 <summary><strong>TR069</strong></summary>
 
 # TR069
 
-<details>
+<details open>
 <summary><strong>Test Case 35: Add and Delete NAT Port Mapping Object via ACS after Factory Reset</strong></summary>
 
 ## Test Case 35: TS_TR069PA_AddDeleteObject_AfterFactoryReset_ACS
@@ -1390,7 +1390,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 36: Verify Management Server URL Matches partners_defaults.json</strong></summary>
 
 ## Test Case 36: TS_TR069PA_CheckServerURL_FromJsonFile
@@ -1423,7 +1423,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 37: Trigger Factory Reset via TR069 ACS and Verify</strong></summary>
 
 ## Test Case 37: TS_TR069PA_FactoryReset_ACS
@@ -1473,7 +1473,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 38: Get LAN Mode via ACS and Verify against DUT</strong></summary>
 
 ## Test Case 38: TS_TR069PA_GetLanMode_ACS
@@ -1518,7 +1518,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 39: GET Multiple Parameter Values via ACS and Verify against DUT</strong></summary>
 
 ## Test Case 39: TS_TR069PA_GetMultipleValues_ACS
@@ -1564,7 +1564,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 40: GET Device Time Object Parameters via ACS</strong></summary>
 
 ## Test Case 40: TS_TR069PA_GetObject_ACS
@@ -1606,7 +1606,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 41: Trigger Device Reboot via TR069 ACS and Verify</strong></summary>
 
 ## Test Case 41: TS_TR069PA_Reboot_ACS
@@ -1657,7 +1657,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 42: Refresh All Device Parameters via ACS</strong></summary>
 
 ## Test Case 42: TS_TR069PA_RefreshAllParameters_ACS
@@ -1697,7 +1697,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 43: Refresh Device Time Parameter via ACS</strong></summary>
 
 ## Test Case 43: TS_TR069PA_RefreshParameter_ACS
@@ -1737,7 +1737,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 44: SET Multiple Parameter Values via ACS and Verify</strong></summary>
 
 ## Test Case 44: TS_TR069PA_SetMultipleValues_ACS
@@ -1793,7 +1793,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 45: Set NTP Server via ACS and Verify</strong></summary>
 
 ## Test Case 45: TS_TR069PA_SetNTPServer_ACS
@@ -1850,12 +1850,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>RFC</strong></summary>
 
 # RFC
 
-<details>
+<details open>
 <summary><strong>Test Case 46: Toggle Multiple DM Parameters Simultaneously via RFC and XConf</strong></summary>
 
 ## Test Case 46: TS_RFC_ToggleMultipleParameters
@@ -1900,7 +1900,7 @@ None
 ---
 
 
-<details>
+<details open>
 <summary><strong>Test Case 47: Verify RFC Config Fetch and DM Update Triggered by Device Reboot</strong></summary>
 
 ## Test Case 47: TS_RFC_ToggleParameter_viaReboot
@@ -1942,7 +1942,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 48: Verify RFC Feature Configuration Persists after Reboot</strong></summary>
 
 ## Test Case 48: TS_RFC_RebootPersistence_afterDMToggle
@@ -1986,7 +1986,7 @@ None
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 49: Toggle Single DM Parameter via RFC and XConf</strong></summary>
 
 ## Test Case 49: TS_RFC_ToggleSingleParameter
@@ -2032,12 +2032,12 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>WebConfig</strong></summary>
 
 # WebConfig
 
-<details>
+<details open>
 <summary><strong>Test Case 50: Reject Invalid LAN Subdoc (Swapped DHCP IPs) via WebConfig</strong></summary>
 
 ## Test Case 50: TS_WEBCONFIG_PAMValidationUsingInvalidLanSubdoc
@@ -2082,7 +2082,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 51: Apply Valid LAN Subdoc and Verify DHCPv4 Update via WebConfig</strong></summary>
 
 ## Test Case 51: TS_WEBCONFIG_PAMValidationUsingLanSubdoc
@@ -2130,7 +2130,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 52: Reject Partial LAN Subdoc (Missing Parameter) via WebConfig</strong></summary>
 
 ## Test Case 52: TS_WEBCONFIG_PAMValidationUsingPartialLanSubdoc
@@ -2174,7 +2174,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 53: Reject Invalid Port Forwarding Subdoc (Bad IP) via WebConfig</strong></summary>
 
 ## Test Case 53: TS_WEBCONFIG_PAMValidationUsingInvalidPortForwardingSubdoc
@@ -2220,7 +2220,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 54: Reject Partial Port Forwarding Subdoc (Missing Parameter) via WebConfig</strong></summary>
 
 ## Test Case 54: TS_WEBCONFIG_PAMValidationUsingPartialPortForwardingSubdoc
@@ -2265,7 +2265,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 55: Apply Valid Port Forwarding Subdoc and Verify NAT Mapping via WebConfig</strong></summary>
 
 ## Test Case 55: TS_WEBCONFIG_PAMValidationUsingPortForwardingSubdoc
@@ -2313,7 +2313,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 56: Reject Invalid 2.4GHz Private SSID Subdoc (SSID Too Long) via WebConfig</strong></summary>
 
 ## Test Case 56: TS_WEBCONFIG_2G_WIFIValidationUsingInvalidPrivateSSIDSubdoc
@@ -2359,7 +2359,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 57: Reject Partial 2.4GHz Private SSID Subdoc (Missing Parameter) via WebConfig</strong></summary>
 
 ## Test Case 57: TS_WEBCONFIG_2G_WIFIValidationUsingPartialPrivateSSIDSubdoc
@@ -2404,7 +2404,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 58: Apply Valid 2.4GHz Private SSID Subdoc and Verify WiFi Update via WebConfig</strong></summary>
 
 ## Test Case 58: TS_WEBCONFIG_2G_WIFIValidationUsingPrivateSSIDSubdoc
@@ -2453,7 +2453,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 59: Reject Invalid 5GHz Private SSID Subdoc (SSID Too Long) via WebConfig</strong></summary>
 
 ## Test Case 59: TS_WEBCONFIG_5G_WIFIValidationUsingInvalidPrivateSSIDSubdoc
@@ -2499,7 +2499,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 60: Reject Partial 5GHz Private SSID Subdoc (Missing Parameter) via WebConfig</strong></summary>
 
 ## Test Case 60: TS_WEBCONFIG_5G_WIFIValidationUsingPartialPrivateSSIDSubdoc
@@ -2544,7 +2544,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 61: Apply Valid 5GHz Private SSID Subdoc and Verify WiFi Update via WebConfig</strong></summary>
 
 ## Test Case 61: TS_WEBCONFIG_5G_WIFIValidationUsingPrivateSSIDSubdoc
@@ -2593,7 +2593,7 @@ Positive
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 62: Reject Invalid 6GHz Private SSID Subdoc (SSID Too Long) via WebConfig</strong></summary>
 
 ## Test Case 62: TS_WEBCONFIG_6G_WIFIValidationUsingInvalidPrivateSSIDSubdoc
@@ -2639,7 +2639,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 63: Reject Partial 6GHz Private SSID Subdoc (Missing Parameter) via WebConfig</strong></summary>
 
 ## Test Case 63: TS_WEBCONFIG_6G_WIFIValidationUsingPartialPrivateSSIDSubdoc
@@ -2684,7 +2684,7 @@ Negative
 
 ---
 
-<details>
+<details open>
 <summary><strong>Test Case 64: Apply Valid 6GHz Private SSID Subdoc and Verify WiFi Update via WebConfig</strong></summary>
 
 ## Test Case 64: TS_WEBCONFIG_6G_WIFIValidationUsingPrivateSSIDSubdoc
