@@ -4,7 +4,7 @@
 
 <strong>Version</strong>: 1.0<br>
 <strong>Date</strong>: August 2026<br>
-<strong>Purpose</strong>: Low-level test specification for the Platform Compliance Validation Suite covering E2E, SANITY, CCSP Common and RBUS test cases<br>
+<strong>Purpose</strong>: Low-level test specification for the Platform Compliance Validation Suite<br>
 <strong>Maintained by</strong>: TDKB Test Automation Team
 
 ## Table of Contents
@@ -27,7 +27,7 @@
 <details>
 <summary><strong>Test Case 1: Verify LAN IP address change is reflected on wired LAN client DHCP range</strong></summary>
 
-## Test Case 1: Verify LAN IP address change is reflected on wired LAN client DHCP range
+## Test Case 1: E2E_ChangeLanManagementEntry_LanIPAddress
 
 ## Objectives
 Verify that changes to the default LAN management LAN IP address and DHCP address range are reflected on the wired LAN client. The test validates that after modifying Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress, Device.DHCPv4.Server.Pool.1.MinAddress, and Device.DHCPv4.Server.Pool.1.MaxAddress, a connected LAN client obtains an IP address within the newly configured DHCP range.
@@ -42,8 +42,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -72,7 +72,7 @@ Positive
 <details>
 <summary><strong>Test Case 2: Verify primary DNS server resolves domain names from the LAN client</strong></summary>
 
-## Test Case 2: Verify primary DNS server resolves domain names from the LAN client
+## Test Case 2: E2E_DNS_ResolveDomainName_PrimaryDNS
 
 ## Objectives
 Verify that the gateway's primary IPv4 DNS server, as configured in Device.DNS.Client.Server.1.DNSServer, successfully resolves DNS queries issued from the LAN client. The test retrieves the Primary DNS Server IP from the DUT and uses it to perform an nslookup on the LAN client to confirm successful domain name resolution.
@@ -87,8 +87,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -108,7 +108,7 @@ None
 <details>
 <summary><strong>Test Case 3: Verify secondary DNS server resolves domain names from the LAN client</strong></summary>
 
-## Test Case 3: Verify secondary DNS server resolves domain names from the LAN client
+## Test Case 3: E2E_DNS_ResolveDomainName_SecondaryDNS
 
 ## Objectives
 Verify that the gateway's secondary IPv4 DNS server, as configured in Device.DNS.Client.Server.2.DNSServer, successfully resolves DNS queries issued from the LAN client. The test retrieves the Secondary DNS Server IP from the DUT and uses it to perform an nslookup on the LAN client to confirm successful domain name resolution.
@@ -123,8 +123,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -144,9 +144,7 @@ None
 <details>
 <summary><strong>Test Case 4: Verify wired LAN client has internet access through the gateway</strong></summary>
 
-## Test Case 4: Verify wired LAN client has internet access through the gateway
-
-> **Note:** Implementation details in this specification are based on the MD file only. No test script is available for this test case.
+## Test Case 4: E2E_LAN_AccessInternet
 
 ## Objectives
 Verify that a wired LAN client connected to the gateway has internet access. The test validates end-to-end connectivity from the LAN client through the gateway to the internet, confirming that the LAN client is connected to the gateway with a valid IP address and can successfully reach external internet hosts.
@@ -161,8 +159,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -182,7 +180,7 @@ None
 <details>
 <summary><strong>Test Case 5: Verify LAN client obtains IP from DUT DHCP server in router mode</strong></summary>
 
-## Test Case 5: Verify LAN client obtains IP from DUT DHCP server in router mode
+## Test Case 5: E2E_RouterMode_CheckLANIPAddress
 
 ## Objectives
 Verify that when the gateway is configured in Router mode (bridge mode disabled), the wired Ethernet LAN client obtains its IP address exclusively from the DUT's DHCP server. Pings from the LAN client to both the Default Gateway WAN IP address and the DHCP server IP address must succeed, confirming proper layer-3 routing is operational.
@@ -197,8 +195,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -226,7 +224,7 @@ Positive
 <details>
 <summary><strong>Test Case 6: Verify LAN client IP address falls within the configured DHCP range</strong></summary>
 
-## Test Case 6: Verify LAN client IP address falls within the configured DHCP range
+## Test Case 6: E2E_SANITY_CheckLANIPAddress
 
 ## Objectives
 Verify that a wired LAN client connected to the gateway obtains an IP address and that the assigned IP address falls within the expected DHCP range configured on the DUT. The test retrieves the DUT's LAN IP address to derive the DHCP range and confirms the LAN client's IP falls within that range.
@@ -241,8 +239,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| LAN Client – Wired Ethernet client connected to DUT LAN port |
+| DUT - Device under test |
+| LAN Client – Wired Ethernet client |
 
 ## Test Configuration
 
@@ -263,7 +261,7 @@ None
 <details>
 <summary><strong>Test Case 7: Verify configured SSID(s) are broadcasted and visible to WLAN client</strong></summary>
 
-## Test Case 7: Verify configured SSID(s) are broadcasted and visible to WLAN client
+## Test Case 7: E2E_SANITY_WIFI_CheckSSIDBroadcast
 
 ## Objectives
 Verify that the configured SSID(s) bands are broadcasted and visible to a WLAN client. The test sets the SSID names and key passphrases from the test configuration on the DUT, then confirms from the WLAN client that both SSIDs are discoverable on the network. 
@@ -278,7 +276,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
+| DUT - Device under test |
 | WLAN Client – Wi-Fi client used to scan for available SSIDs |
 
 ## Test Configuration
@@ -303,7 +301,7 @@ Positive
 <details>
 <summary><strong>Test Case 8: Verify WLAN client connects to SSID(s) and obtains valid IP address</strong></summary>
 
-## Test Case 8: Verify WLAN client connects SSID(s) and obtains valid IP address
+## Test Case 8: E2E_SANITY_WIFI_ConnectTo_SSID
 
 ## Objectives
 Verify that a WLAN client can successfully connect to SSID(s) configured on the DUT and that the WLAN client obtains a valid IP address within the expected DHCP range for each connection. 
@@ -318,8 +316,8 @@ Positive
 
 | Component |
 |-----------|
-| DUT – Broadband residential gateway (RDKB) |
-| WLAN Client – Wi-Fi client used to connect to DUT SSIDs |
+| DUT - Device under test |
+| WLAN Client – Wireless client |
 
 ## Test Configuration
 
@@ -347,7 +345,7 @@ Positive
 <details>
 <summary><strong>Test Case 9: Verify WLAN client connects to MLO SSID and accesses the internet</strong></summary>
 
-## Test Case 9: Verify WLAN client connects to MLO SSID and accesses the internet
+## Test Case 9: E2E_WIFI_WLAN_AccessInternet
 
 ## Objectives
 Verify that a WLAN (Wi-Fi) client can connect to the DUT's MLO SSID, obtain a valid IP address within the DHCP range, and successfully access the internet. The test confirms that the WLAN client's assigned IP falls within the expected range and that an external internet host is reachable via ping. This test is applicable to MLO-capable devices.
@@ -363,7 +361,7 @@ Positive
 | Component |
 |-----------|
 | DUT – Broadband residential gateway (RDKB, MLO-capable) |
-| WLAN Client – Wi-Fi client used to connect to DUT MLO SSID |
+| WLAN Client – Wireless client |
 
 ## Test Configuration
 
@@ -397,7 +395,7 @@ None
 <details>
 <summary><strong>Test Case 10: Verify brlan0 LAN bridge interface is up and its IP matches the TR-181 parameter</strong></summary>
 
-## Test Case 10: Verify brlan0 LAN bridge interface is up and its IP matches the TR-181 parameter
+## Test Case 10: TS_SANITY_Is_brlan0_Up
 
 ## Objectives
 This test verifies that the brlan0 LAN bridge interface is up and operational on the DUT. It checks that the IP address retrieved from the ifconfig command for brlan0 matches the IP address returned by the TR-181 parameter Device.X_CISCO_COM_DeviceControl.LanManagementEntry.{i}.LanIPAddress.
@@ -411,7 +409,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -431,7 +429,7 @@ None
 <details>
 <summary><strong>Test Case 11: Verify all CCSP processes are running on the DUT</strong></summary>
 
-## Test Case 11: Verify all CCSP processes are running on the DUT
+## Test Case 11: TS_SANITY_Is_CCSPProcesses_UP
 
 ## Objectives
 This test verifies that all CCSP processes listed in the platform configuration are up and running on the DUT. For the CcspHotspot process, the test first checks whether xfinitywifi is enabled before verifying the process status. All other CCSP processes are verified to be running and returning valid PIDs.
@@ -445,7 +443,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -465,7 +463,7 @@ None
 <details>
 <summary><strong>Test Case 12: Verify core CCSP components CR, PandM, and PSM are running</strong></summary>
 
-## Test Case 12: Verify core CCSP components CR, PandM, and PSM are running
+## Test Case 12: TS_SANITY_Is_CoreCCSP_UP
 
 ## Objectives
 This test verifies that the three core CCSP components — Component Registrar (CR), CcspPandMSsp (PandM), and PsmSsp (PSM) — are up and running on the DUT. CR status is verified via dmcli, and PandM and PSM processes are verified to be running using their PIDs.
@@ -479,7 +477,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -499,7 +497,7 @@ None
 <details>
 <summary><strong>Test Case 13: Verify DUT WAN interface obtains an IP address after reboot</strong></summary>
 
-## Test Case 13: Verify DUT WAN interface obtains an IP address after reboot
+## Test Case 13: TS_SANITY_Is_DeviceUp_AfterReboot
 
 ## Objectives
 This test verifies that the DUT comes back up and its WAN interface obtains an IP address after a reboot. It first confirms the WAN interface is up before the reboot, then initiates a device reboot and verifies that the WAN interface successfully obtains an IP address after the device comes back online.
@@ -513,7 +511,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -534,7 +532,7 @@ None
 <details>
 <summary><strong>Test Case 14: Verify dnsmasq configuration file is present and the process is running</strong></summary>
 
-## Test Case 14: Verify dnsmasq configuration file is present and the process is running
+## Test Case 14: TS_SANITY_Is_DNSMASQ_UP
 
 ## Objectives
 This test verifies that the dnsmasq DNS service is properly configured and operational on the DUT. It checks that the dnsmasq configuration file is present at the expected path retrieved from the platform configuration, and that the dnsmasq process is actively running.
@@ -548,7 +546,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -568,7 +566,7 @@ None
 <details>
 <summary><strong>Test Case 15: Verify Dropbear SSH process is running on the DUT</strong></summary>
 
-## Test Case 15: Verify Dropbear SSH process is running on the DUT
+## Test Case 15: TS_SANITY_Is_DROPBEAR_UP
 
 ## Objectives
 This test verifies that the Dropbear SSH process is running on the DUT. It retrieves the list of Dropbear processes to be verified from the platform configuration and checks that each process is active and returns a valid PID.
@@ -582,7 +580,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -601,7 +599,7 @@ None
 <details>
 <summary><strong>Test Case 16: Verify erouter0 WAN interface is up and its IP matches the TR-181 parameter</strong></summary>
 
-## Test Case 16: Verify erouter0 WAN interface is up and its IP matches the TR-181 parameter
+## Test Case 16: TS_SANITY_Is_erouter0_Up
 
 ## Objectives
 This test verifies that the erouter0 WAN interface is up and operational on the DUT. It checks that the IP address retrieved from the ifconfig command for erouter0 matches the IP address returned by the TR-181 parameter Device.IP.Interface.{i}.IPv4Address.{i}.IPAddress.
@@ -615,7 +613,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -635,7 +633,7 @@ None
 <details>
 <summary><strong>Test Case 17: Verify Lighttpd web server process is running on the DUT</strong></summary>
 
-## Test Case 17: Verify Lighttpd web server process is running on the DUT
+## Test Case 17: TS_SANITY_Is_LIGHTTPD_UP
 
 ## Objectives
 This test verifies that the Lighttpd web server process is running on the DUT. It retrieves the list of Lighttpd processes to be verified from the platform configuration and checks that each process is active and returns a valid PID.
@@ -649,7 +647,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -668,7 +666,7 @@ None
 <details>
 <summary><strong>Test Case 18: Verify SNMP process is running on the DUT</strong></summary>
 
-## Test Case 18: Verify SNMP process is running on the DUT
+## Test Case 18: TS_SANITY_Is_SNMP_UP
 
 ## Objectives
 This test verifies that the SNMP process is running on the DUT. It retrieves the list of SNMP processes to be verified from the platform configuration and checks that each process is active and returns a valid PID.
@@ -682,7 +680,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -701,7 +699,7 @@ None
 <details>
 <summary><strong>Test Case 19: Verify WEBPA process is running on the DUT</strong></summary>
 
-## Test Case 19: Verify WEBPA process is running on the DUT
+## Test Case 19: TS_SANITY_Is_WEBPA_UP
 
 ## Objectives
 This test verifies that the WEBPA process is running on the DUT. It retrieves the list of WEBPA processes to be verified from the platform configuration and checks that each process is active and returns a valid PID.
@@ -715,7 +713,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -734,7 +732,7 @@ None
 <details>
 <summary><strong>Test Case 20: Verify /minidumps directory is present on the DUT</strong></summary>
 
-## Test Case 20: Verify /minidumps directory is present on the DUT
+## Test Case 20: TS_SANITY_IsMinidumpsPresent
 
 ## Objectives
 This test verifies that the /minidumps directory is present on the DUT under the ARM console. The presence of this directory is a prerequisite for storing process crash minidump files.
@@ -748,7 +746,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -775,7 +773,7 @@ None
 <details>
 <summary><strong>Test Case 21: Verify brlan0 obtains an IPv6 global address when DUT is in router mode</strong></summary>
 
-## Test Case 21: Verify brlan0 obtains an IPv6 global address when DUT is in router mode
+## Test Case 21: TS_SANITY_CheckBrlan0IPV6_InRouterMode
 
 ## Objectives
 Verify that the brlan0 interface obtains an IPv6 global address when the DUT is operating in router mode. If the device is not already in router mode, the test transitions it to router mode and confirms the brlan0 interface receives a valid IPv6 global-scope address.
@@ -790,7 +788,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -815,7 +813,7 @@ Positive
 <details>
 <summary><strong>Test Case 22: Verify brlan0 IPv6 address assignment behaviour across LAN mode transitions</strong></summary>
 
-## Test Case 22: Verify brlan0 IPv6 address assignment behaviour across LAN mode transitions
+## Test Case 22: TS_SANITY_CheckBrlan0IPV6_WithLanModeTransition
 
 ## Objectives
 Verify that the brlan0 interface does not obtain an IPv6 address when the DUT is in bridge-static mode, and that it correctly obtains an IPv6 address after transitioning the LAN mode to router mode. This test validates the IPv6 address assignment behaviour across LAN mode transitions.
@@ -830,7 +828,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -858,7 +856,7 @@ Positive
 <details>
 <summary><strong>Test Case 23: Verify SelfHeal restores brlan0 interface within 15 minutes after it goes down</strong></summary>
 
-## Test Case 23: Verify SelfHeal restores brlan0 interface within 15 minutes after it goes down
+## Test Case 23: TS_SANITY_CheckBrlan0SelfHeal
 
 ## Objectives
 Verify that the SelfHeal mechanism brings up the brlan0 interface within 15 minutes after the interface has been brought down, given that the DUT is in router mode and SelfHeal is enabled. The test ensures that the device's self-recovery feature correctly restores the LAN bridge interface.
@@ -873,7 +871,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -907,7 +905,7 @@ Positive
 <details>
 <summary><strong>Test Case 24: Verify dnsmasq process is not running in bridge-static mode</strong></summary>
 
-## Test Case 24: Verify dnsmasq process is not running in bridge-static mode
+## Test Case 24: TS_SANITY_CheckDNSMasqInBridgeMode
 
 ## Objectives
 Verify that the dnsmasq process is not running when the DUT is operating in bridge-static mode. The test transitions the device to bridge-static mode if necessary, then confirms that dnsmasq is not active, as it is not expected to run in bridge mode.
@@ -922,7 +920,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -947,7 +945,7 @@ Positive
 <details>
 <summary><strong>Test Case 25: Verify no services are stuck in activating state after device boot</strong></summary>
 
-## Test Case 25: Verify no services are stuck in activating state after device boot
+## Test Case 25: TS_SANITY_CheckForAnyActivatingServices
 
 ## Objectives
 Verify that no services are found in an activating state after the device boots up. The test retrieves the current device uptime and checks for activating services. If the device uptime exceeds 10 minutes and no activating services are found in the current session, it initiates a device reboot and confirms that no services remain stuck in the activating state after the device comes back up.
@@ -962,7 +960,7 @@ Negative
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -983,7 +981,7 @@ None
 <details>
 <summary><strong>Test Case 26: Verify no failed services are present after device reboot</strong></summary>
 
-## Test Case 26: Verify no failed services are present after device reboot
+## Test Case 26: TS_SANITY_CheckForAnyFailedServices
 
 ## Objectives
 Verify that no failed services are present on the DUT after a device reboot. The test initiates a reboot, waits for the device to come back up, then queries systemctl for any failed services and validates that none exist.
@@ -998,7 +996,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1017,7 +1015,7 @@ None
 <details>
 <summary><strong>Test Case 27: Verify no duplicate instances of critical system processes are running</strong></summary>
 
-## Test Case 27: Verify no duplicate instances of critical system processes are running
+## Test Case 27: TS_SANITY_CheckForDuplicateProcess
 
 ## Objectives
 Verify that no duplicate instances of critical system processes are running on the DUT. The test retrieves the list of processes expected to have only a single instance from the test configuration, and for each process checks that exactly one instance is running. For conditional processes such as CcspTr069PaSsp, the TR-069 RFC feature is enabled if not already active before checking.
@@ -1032,7 +1030,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -1058,7 +1056,7 @@ Positive
 <details>
 <summary><strong>Test Case 28: Verify no zombie (defunct) processes are present on the DUT</strong></summary>
 
-## Test Case 28: Verify no zombie (defunct) processes are present on the DUT
+## Test Case 28: TS_SANITY_CheckForZombieProcess
 
 ## Objectives
 Verify that no zombie (defunct) processes are present on the DUT. The test executes a process listing command and checks that none of the running processes have a defunct status, ensuring the DUT is free of zombie processes.
@@ -1073,7 +1071,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1091,7 +1089,7 @@ None
 <details>
 <summary><strong>Test Case 29: Verify bridge-static LAN mode setting persists after device reboot</strong></summary>
 
-## Test Case 29: Verify bridge-static LAN mode setting persists after device reboot
+## Test Case 29: TS_SANITY_CheckLanMode_AfterReboot
 
 ## Objectives
 Verify that the bridge-static LAN mode setting persists after a device reboot. The test records the current LAN mode, sets it to bridge-static, reboots the device, and confirms that the bridge-static mode is retained after the device comes back up, before reverting to the original value.
@@ -1106,7 +1104,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 
@@ -1131,7 +1129,7 @@ Positive
 <details>
 <summary><strong>Test Case 30: Verify Lighttpd process remains running across LAN mode transitions</strong></summary>
 
-## Test Case 30: Verify Lighttpd process remains running across LAN mode transitions
+## Test Case 30: TS_SANITY_CheckLighttpdProcess_OnLanModeTransition
 
 ## Objectives
 Verify that the lighttpd process continues to run on the DUT when the LAN mode is transitioned between router and bridge-static modes. The test checks lighttpd is running before and after a LAN mode transition (from router to bridge-static or vice-versa), confirming that the web server process is unaffected by LAN mode changes.
@@ -1146,7 +1144,7 @@ Positive
 
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1169,7 +1167,7 @@ None
 <details>
 <summary><strong>Test Case 31: Verify minidump file is created and process recovers after a crash</strong></summary>
 
-## Test Case 31: Verify minidump file is created and process recovers after a crash
+## Test Case 31: TS_SANITY_CheckMinidumpsAfterProcessCrash
 
 ## Objectives
 To verify that a minidump file is created under the /minidumps directory after a process crash. The test crashes the CcspPandMSsp process using a segmentation fault signal and confirms that the dump file count in /minidumps increases. It also verifies that CcspPandMSsp recovers and resumes running after the crash.
@@ -1183,7 +1181,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1205,7 +1203,7 @@ None
 <details>
 <summary><strong>Test Case 32: Verify all critical processes are running within expected uptime after factory reset</strong></summary>
 
-## Test Case 32: Verify all critical processes are running within expected uptime after factory reset
+## Test Case 32: TS_SANITY_CheckProcessUptimeAfterFactoryReset
 
 ## Objectives
 To verify that all critical processes are up and running on the DUT within the expected uptime after a factory reset. The test initiates a factory reset, waits for the device to restore, and then checks that each process in the configured critical process list is running using its PID.
@@ -1219,7 +1217,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 | Parameter | Value |
@@ -1244,7 +1242,7 @@ Positive
 <details>
 <summary><strong>Test Case 33: Verify all critical processes are running within expected uptime after reboot</strong></summary>
 
-## Test Case 33: Verify all critical processes are running within expected uptime after reboot
+## Test Case 33: TS_SANITY_CheckProcessUptimeAfterReboot
 
 ## Objectives
 To verify that all critical processes are up and running on the DUT within the expected uptime after a device reboot. The test initiates a reboot, waits for the device to come back up, and then checks that each process in the configured critical process list is running using its PID.
@@ -1258,7 +1256,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1281,7 +1279,7 @@ None
 <details>
 <summary><strong>Test Case 34: Verify TR-069 RFC parameter is consistent with syscfg and controls CcspTr069PaSsp process</strong></summary>
 
-## Test Case 34: Verify TR-069 RFC parameter is consistent with syscfg and controls CcspTr069PaSsp process
+## Test Case 34: TS_SANITY_CheckTR069RFC_AndTR069Process
 
 ## Objectives
 To verify that the TR-181 parameter Device.DeviceInfo.X_RDKCENTRAL-COM_RFC.Feature.TR069support.Enable is consistent with the EnableTR69Binary value stored in syscfg.db. The test also validates that toggling the RFC parameter causes the CcspTr069PaSsp process to start or stop accordingly, and reverts the parameter to its initial state after the test.
@@ -1295,7 +1293,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 | Parameter | Value |
@@ -1322,7 +1320,7 @@ Positive
 <details>
 <summary><strong>Test Case 35: Verify UDHCPC zombie process is not present before and after reboot</strong></summary>
 
-## Test Case 35: Verify UDHCPC zombie process is not present before and after reboot
+## Test Case 35: TS_SANITY_CheckUDHCPCZombie
 
 ## Objectives
 To verify that the UDHCPC zombie process is not running on the DUT. The test checks the device uptime and the presence of UDHCPC zombie processes before and after a reboot (if uptime is greater than 5 minutes), ensuring the device remains free of UDHCPC zombie processes.
@@ -1336,7 +1334,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1357,7 +1355,7 @@ None
 <details>
 <summary><strong>Test Case 36: Verify LAN IP address set via TR-181 is reflected in brlan0 ifconfig output</strong></summary>
 
-## Test Case 36: Verify LAN IP address set via TR-181 is reflected in brlan0 ifconfig output
+## Test Case 36: TS_SANITY_SetLanManagementEntryLanIPAddress
 
 ## Objectives
 To verify that the LAN IP address set via the TR-181 parameter Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanIPAddress is correctly reflected in the ifconfig output of the brlan0 interface. The test iterates through a list of configured private IP addresses, sets each one, and verifies the change takes effect on the brlan0 interface within 20 seconds.
@@ -1371,7 +1369,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 | Parameter | Value |
@@ -1403,7 +1401,7 @@ Positive
 <details>
 <summary><strong>Test Case 37: Verify CcspBaseIf_busCheck returns CCSP_Message_Bus_OK via the message bus</strong></summary>
 
-## Test Case 37: Verify CcspBaseIf_busCheck returns CCSP_Message_Bus_OK via the message bus
+## Test Case 37: TS_CCSPCOMMON_MBUS_BusCheck
 
 ## Objectives
 To validate the CCSP Base Interface CcspBaseIf_busCheck function. The test initialises the CCSP message bus, registers the message bus path and capabilities, and then invokes the bus check function. The expected outcome is that CcspBaseIf_busCheck returns CCSP_Message_Bus_OK [100] via the Component Registry (CR) over the message bus.
@@ -1417,7 +1415,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1439,7 +1437,7 @@ None
 <details>
 <summary><strong>Test Case 38: Verify CcspBaseIf_isSystemReady returns OK and confirms all components are ready via message bus</strong></summary>
 
-## Test Case 38: Verify CcspBaseIf_isSystemReady returns OK and confirms all components are ready via message bus
+## Test Case 38: TS_CCSPCOMMON_MBUS_IsSystemReady
 
 ## Objectives
 To validate the CCSP Base Interface CcspBaseIf_isSystemReady function. The test initialises the CCSP message bus, registers the message bus path and capabilities, and then invokes the IsSystemReady function. The expected outcome is that CcspBaseIf_isSystemReady returns CCSP_Message_Bus_OK [100] and provides a non-null readyStatus output argument, confirming that the system and all registered components are ready via the Component Registry (CR) over the message bus.
@@ -1453,7 +1451,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1484,7 +1482,7 @@ None
 <details>
 <summary><strong>Test Case 39: Verify RBUS session creation and closure complete successfully</strong></summary>
 
-## Test Case 39: Verify RBUS session creation and closure complete successfully
+## Test Case 39: TS_RBUS_CreateAndCloseSession
 
 ## Objectives
 To verify the session lifecycle handling provided by the RBUS APIs rbus_createSession and rbus_closeSession. The test opens an RBUS connection, creates a session and stores the returned session ID, closes the session using that session ID, and then closes the RBUS connection, confirming that both session creation and closure complete successfully.
@@ -1498,7 +1496,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test (must be in RBUS mode) |
+| DUT - Device under test (must be in RBUS mode) |
 
 ## Test Configuration
 None
@@ -1519,7 +1517,7 @@ None
 <details>
 <summary><strong>Test Case 40: Verify rbus_open and rbus_close APIs complete successfully</strong></summary>
 
-## Test Case 40: Verify rbus_open and rbus_close APIs complete successfully
+## Test Case 40: TS_RBUS_OpenAndClose
 
 ## Objectives
 To validate the RBUS 2.0 APIs rbus_open and rbus_close. The test opens an RBUS connection using rbus_open with the component name "tdk_b" and then closes the connection using rbus_close, verifying that both operations complete successfully.
@@ -1533,7 +1531,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 
 ## Test Configuration
 None
@@ -1552,7 +1550,7 @@ None
 <details>
 <summary><strong>Test Case 41: Verify rbus_openBrokerConnection and rbus_closeBrokerConnection APIs complete successfully</strong></summary>
 
-## Test Case 41: Verify rbus_openBrokerConnection and rbus_closeBrokerConnection APIs complete successfully
+## Test Case 41: TS_RBUS_OpenAndCloseBrokerConnection
 
 ## Objectives
 To validate the RBUS APIs rbus_openBrokerConnection and rbus_closeBrokerConnection. The test opens an RBUS broker connection using rbus_openBrokerConnection with the component name "tdk-b" and then closes it using rbus_closeBrokerConnection, verifying that both operations complete successfully on a DUT in RBUS mode.
@@ -1566,7 +1564,7 @@ Positive
 ## Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test (must be in RBUS mode) |
+| DUT - Device under test (must be in RBUS mode) |
 
 ## Test Configuration
 None
