@@ -97,7 +97,7 @@ The Docker image is used to set up the client systems (LAN, WAN, and WLAN). Each
 
 **Setup files:** [Dockerfile](TestSetupConfiguration/setup_files/Dockerfile), [start-services.sh](TestSetupConfiguration/setup_files/start-services.sh), [telnet](TestSetupConfiguration/setup_files/telnet), [tftp](TestSetupConfiguration/setup_files/tftp), [xinetd.conf](TestSetupConfiguration/setup_files/xinetd.conf)
 
-1. Place the `Dockerfile`, `start-services.sh`, `telnet`, `tftp`, `xinetd.conf`, and [`tdkbE2EClientScripts`](https://code.rdkcentral.com/r/plugins/gitiles/rdk/tools/tdk/+/refs/heads/rdk-next/framework/web-app/fileStore/tdkbE2EClientScripts/) in the same folder as shown in the picture above.
+1. Place the `Dockerfile`, `start-services.sh`, `telnet`, `tftp`, `xinetd.conf`, and [`tdkbE2EClientScripts`](https://github.com/rdkcentral/tdk-core/tree/main/framework/fileStore/tdkbE2EClientScripts) in the same folder as shown in the picture above.
 
 2. Before building the image, specify the username and password for clients in the `start-services.sh` file.
 
@@ -242,26 +242,6 @@ Configuration details are to be populated as per sampleDevice.config and made av
 <br>
 
 <div style="background-color:#1e1e1e; border:1px solid #f0f0f0; border-radius:6px; padding:20px 24px; font-family:monospace; font-size:0.88em; line-height:1.6; white-space:pre-wrap;">
-##########################################################################
-# If not stated otherwise in this file or this component's Licenses.txt
-# file the following copyright and licenses apply:
-#
-# Copyright 2017 RDK Management
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-##########################################################################
-#
-
 #This section should have your device name. eg: If device name is RDKB-GW then the below section name and file name needs to be RDKB-GW.config
 [sampleDevice.config]
 
