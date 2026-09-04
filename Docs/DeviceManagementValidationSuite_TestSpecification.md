@@ -5,7 +5,7 @@
 
 <strong>Version</strong>: 1.0<br>
 <strong>Date</strong>: August 2026<br>
-<strong>Purpose</strong>: Low-level test specification coverage for Device Management WEBPA, USP, TR069, RFC, WEBCONFIG<br>
+<strong>Purpose</strong>: Low-level test specification for Device Management WEBPA, USP, TR069, RFC, WEBCONFIG<br>
 <strong>Maintained by</strong>: TDKB Test Automation Team
 
 ### Table of Contents
@@ -38,7 +38,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WebPA Server - Remote Feature Control communication server |
 
 ### Test Configuration
@@ -77,7 +77,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WebPA Server - Remote Feature Control communication server |
 
 ### Test Configuration
@@ -117,7 +117,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WebPA Server - Remote Feature Control communication server |
 
 ### Test Configuration
@@ -157,7 +157,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WebPA Server - Remote Feature Control communication server |
 
 ### Test Configuration
@@ -193,7 +193,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | WebPA Server - Remote Feature Control communication server |
 
 ### Test Configuration
@@ -1340,7 +1340,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1404,7 +1404,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1437,7 +1437,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1487,7 +1487,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1532,7 +1532,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1578,7 +1578,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1620,7 +1620,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1671,7 +1671,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1711,7 +1711,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1751,7 +1751,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1807,7 +1807,7 @@ Positive
 ### Test Environment
 | Component |
 |-----------|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | ACS Server - Remote Feature Control Auto Configuration Server |
 
 ### Test Configuration
@@ -1869,7 +1869,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | XConf Server - Remote Feature Control configuration server |
 
 ### Test Configuration
@@ -1914,7 +1914,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | XConf Server - Remote Feature Control configuration server |
 
 ### Test Configuration
@@ -1956,7 +1956,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | XConf Server - Remote Feature Control configuration server |
 
 ### Test Configuration
@@ -2000,7 +2000,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | XConf Server - Remote Feature Control configuration server |
 
 ### Test Configuration
@@ -2051,7 +2051,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2096,7 +2096,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2144,7 +2144,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2188,7 +2188,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2234,7 +2234,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2279,7 +2279,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2327,7 +2327,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2373,7 +2373,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2418,7 +2418,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2467,7 +2467,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2513,7 +2513,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2558,7 +2558,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2607,7 +2607,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2653,7 +2653,7 @@ Negative
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
@@ -2698,7 +2698,7 @@ Positive
 ### Test Environment
 | Component |
 |:---|
-| DUT - Gateway under test |
+| DUT - Device under test |
 | Webconfig Server - Remote configuration server |
 
 ### Test Configuration
