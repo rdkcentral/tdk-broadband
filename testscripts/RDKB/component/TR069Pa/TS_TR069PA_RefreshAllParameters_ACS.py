@@ -40,13 +40,11 @@ loadmodulestatus1=sysobj.getLoadModuleResult()
 if "SUCCESS" in loadmodulestatus.upper() and "SUCCESS" in loadmodulestatus1.upper():
     sysobj.setLoadModuleStatus("SUCCESS")
     tr181obj.setLoadModuleStatus("SUCCESS")
-
+    step = 0
     #Check for prerequisites
     tdkTestObj,username,initialValues,preRequisiteStatus = tr069ACSPreRequisite(tr181obj,sysobj)
     if "SUCCESS" in preRequisiteStatus:
-        step = 0
         queryParam = {"name":""}
-
         #Perform Refresh task request for all parameters
         step += 1
         print("\nTEST STEP %d: Send RefreshObject task for all device parameters via ACS." %(step))
