@@ -16,189 +16,179 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>5</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_ONEWIFI_SetWiFiTelemetryTxRxRateList</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id> </primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>onewifi_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>2</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>Enable TxRxRate telemetry markers for private APs</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_ONEWIFI_101</test_case_id>
-    <test_objective>Enable TxRxRate Telemetry markers for private APs </test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband</test_setup>
-    <pre_requisite>1.Ccsp Components  should be in a running state else invoke cosa_start.sh manually that includes all the ccsp components and TDK Component
-2.TDK Agent should be in running state or invoke it through StartTdk.sh script</pre_requisite>
-    <api_or_interface_used>N/A</api_or_interface_used>
-    <input_parameters>Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList</input_parameters>
-    <automation_approch>1. Load the module
-2. Get the current TxRx Rate List value
-3. Set the TxRx RateList with private AP's and it should be sucess
-4. Revert back the original value
-5. Unload the module</automation_approch>
-    <expected_output>Should be able to enable TxRxRate telemetry marker for Private WiFi APs</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>ONEWIFI</test_stub_interface>
-    <test_script>TS_ONEWIFI_SetWiFiTelemetryTxRxRateList</test_script>
-    <skipped>No</skipped>
-    <release_version>M75</release_version>
-    <remarks></remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
-#use tdklib library,which provides a wrapper for tdk testcase script
-import tdklib;
-from time import sleep;
 
-#Test component to be tested
-obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB");
+# use tdklib library, which provides a wrapper for tdk testcase script
+import tdklib
+from time import sleep
 
-#IP and Port of box, No need to change,
-#This will be replaced with correspoing Box Ip and port while executing script
+# Test component to be tested
+obj = tdklib.TDKScriptingLibrary("wifiagent","RDKB")
+
+# IP and Port of box, No need to change
+# This will be replaced with corresponding DUT IP and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_ONEWIFI_SetWiFiTelemetryTxRxRateList');
-#Get the result of connection with test component and DUT
-loadmodulestatus =obj.getLoadModuleResult();
-print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus) ;
+obj.configureTestCase(ip,port,'TS_ONEWIFI_SetWiFiTelemetryTxRxRateList')
+
+# Get the result of connection with test component and DUT
+loadmodulestatus = obj.getLoadModuleResult()
+print("[LIB LOAD STATUS]  :  %s" %loadmodulestatus)
 
 if "SUCCESS" in loadmodulestatus.upper():
-    #Set the result status of execution
-    obj.setLoadModuleStatus("SUCCESS");
-    tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-    tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
-    expectedresult="SUCCESS";
-    #Execute the test case in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    orgTxRxvalue = details.split("VALUE:")[1].split(' ')[0];
+    obj.setLoadModuleStatus("SUCCESS")
+    expectedresult = "SUCCESS"
+    step = 1
+    proceed_flag = 1
+    revert_flag = 0
 
-    if expectedresult in actualresult:
-        #Set the result status of execution
-        tdkTestObj.setResultStatus("SUCCESS");
-        print("TEST STEP 1: Get the current TxRxRateList value");
-        print("EXPECTED RESULT 1: Should get the current TxRxRateList value");
-        print("ACTUAL RESULT 1: Current TxRxRateList value is  %s" %orgTxRxvalue)
-        #Get the result of execution
-        print("[TEST EXECUTION RESULT] : SUCCESS");
-        newTxRxRateListTobeset = "1,2"
-        tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-        tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
-        tdkTestObj.addParameter("paramValue",newTxRxRateListTobeset);
-        tdkTestObj.addParameter("paramType","string");
-        expectedresult="SUCCESS";
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
+    # Get the number of radio entries
+    tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+    tdkTestObj.addParameter("paramName","Device.WiFi.RadioNumberOfEntries")
+    tdkTestObj.executeTestCase(expectedresult)
+    actualresult = tdkTestObj.getResult()
+    details = tdkTestObj.getResultDetails()
+
+    print("TEST STEP %d: Get the number of WiFi radio entries" %step)
+    print("EXPECTED RESULT %d: Should get a valid number of WiFi radio entries" %step)
+
+    if expectedresult in actualresult and "VALUE:" in details:
+        radioCount = details.split("VALUE:")[1].split(" ")[0].strip()
+        if radioCount.isdigit() and int(radioCount) in [2,3]:
+            radioCount = int(radioCount)
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: Number of WiFi radio entries is %d" %(step,radioCount))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            proceed_flag = 0
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Unsupported RadioNumberOfEntries value: %s" %(step,radioCount))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+    else:
+        proceed_flag = 0
+        tdkTestObj.setResultStatus("FAILURE")
+        print("ACTUAL RESULT %d: Failed to get RadioNumberOfEntries. Details: %s" %(step,details))
+        print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Create the private AP list based on the number of radios
+    if proceed_flag == 1:
+        if radioCount == 3:
+            ap_indices = [1,2,17]
+        else:
+            ap_indices = [1,2]
+
+        newTxRxRateListTobeset = ",".join(str(index) for index in ap_indices)
+        step += 1
+        print("TEST STEP %d: Generate the Private WiFi AP list based on the number of radios" %step)
+        print("EXPECTED RESULT %d: Should generate the applicable Private WiFi AP list" %step)
+        tdkTestObj.setResultStatus("SUCCESS")
+        print("ACTUAL RESULT %d: Private WiFi AP list is %s" %(step,newTxRxRateListTobeset))
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+
+    # Get the initial TxRxRateList
+    if proceed_flag == 1:
+        step += 1
+        paramName = "Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList"
+        tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+        tdkTestObj.addParameter("paramName",paramName)
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("TEST STEP %d: Get the current TxRxRateList value" %step)
+        print("EXPECTED RESULT %d: Should get the current TxRxRateList value" %step)
+
+        if expectedresult in actualresult and "VALUE:" in details:
+            orgTxRxvalue = details.split("VALUE:")[1].split("TYPE:")[0].strip()
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: Current TxRxRateList value is %s" %(step,orgTxRxvalue))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            proceed_flag = 0
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to get the current TxRxRateList value. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Set TxRxRateList with applicable Private WiFi AP indexes
+    if proceed_flag == 1:
+        step += 1
+        tdkTestObj = obj.createTestStep('WIFIAgent_Set')
+        tdkTestObj.addParameter("paramName",paramName)
+        tdkTestObj.addParameter("paramValue",newTxRxRateListTobeset)
+        tdkTestObj.addParameter("paramType","string")
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("TEST STEP %d: Set TxRxRateList with the applicable Private WiFi AP list" %step)
+        print("EXPECTED RESULT %d: Should set TxRxRateList to %s" %(step,newTxRxRateListTobeset))
 
         if expectedresult in actualresult:
-            #Set the result status of execution
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("TEST STEP 2: Set TxRxRateList as Private WiFi AP List (1,2)");
-            print("EXPECTED RESULT 2: Should  set a value as Prviate WiFi AP's (1,2)");
-            print("ACTUAL RESULT 2: Details:  %s " %details);
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : SUCCESS");
-            sleep(5);
-            tdkTestObj = obj.createTestStep('WIFIAgent_Get');
-            tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
-            #Execute the test case in DUT
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
-            newTxRxvalue = details.split("VALUE:")[1].split(' ')[0];
-
-            if expectedresult in actualresult and newTxRxvalue == newTxRxRateListTobeset:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("TEST STEP 3: Get the TxRxRateList value after set");
-                print("ACTUAL RESULT 3: TxRxRateList value after set is %s" %details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : SUCCESS");
-            else:
-                tdkTestObj.setResultStatus("FAILURE");
-                print("TEST STEP 3: Get the TxRxRateList value after set");
-                print("ACTUAL RESULT 3: Failed to get TxRxRateList value after set");
-                print("[TEST EXECUTION RESULT] : FAILURE");
-
-            #change TxRxValue state to previous one
-            tdkTestObj = obj.createTestStep('WIFIAgent_Set');
-            tdkTestObj.addParameter("paramName","Device.DeviceInfo.X_RDKCENTRAL-COM_WIFI_TELEMETRY.TxRxRateList");
-            tdkTestObj.addParameter("paramValue",orgTxRxvalue);
-            tdkTestObj.addParameter("paramType","string");
-            expectedresult="SUCCESS";
-            tdkTestObj.executeTestCase(expectedresult);
-            actualresult = tdkTestObj.getResult();
-            details = tdkTestObj.getResultDetails();
-
-            if expectedresult in actualresult:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("SUCCESS");
-                print("TEST STEP 4: Restore initial TxRxRateList value");
-                print("EXPECTED RESULT 4: Should Set initial TxRxRateList value");
-                print("ACTUAL RESULT 4: Details is %s " %details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : SUCCESS");
-            else:
-                #Set the result status of execution
-                tdkTestObj.setResultStatus("FAILURE");
-                print("TEST STEP 4: Restore initial TxRxRateList value");
-                print("EXPECTED RESULT 4: Should Set initial TxRxRateList value");
-                print("ACTUAL RESULT 4: Details is %s " %details);
-                #Get the result of execution
-                print("[TEST EXECUTION RESULT] : FAILURE");
+            revert_flag = 1
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: Set operation was successful. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+            sleep(5)
         else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("TEST STEP 2: Set TxRxRateList value as Private WiFi AP's (1,2)");
-            print("EXPECTED RESULT 2: Should  set a value as private WiFi AP's (1,2)");
-            print("ACTUAL RESULT 2: Details:  %s " %details);
-            #Get the result of execution
-            print("[TEST EXECUTION RESULT] : FAILURE");
+            proceed_flag = 0
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Set operation failed. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Validate the TxRxRateList SET operation
+    if proceed_flag == 1:
+        step += 1
+        tdkTestObj = obj.createTestStep('WIFIAgent_Get')
+        tdkTestObj.addParameter("paramName",paramName)
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("TEST STEP %d: Get and validate the TxRxRateList value after SET" %step)
+        print("EXPECTED RESULT %d: TxRxRateList should be %s" %(step,newTxRxRateListTobeset))
+
+        if expectedresult in actualresult and "VALUE:" in details:
+            newTxRxvalue = details.split("VALUE:")[1].split("TYPE:")[0].strip()
+            if newTxRxvalue == newTxRxRateListTobeset:
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("ACTUAL RESULT %d: TxRxRateList value after SET is %s" %(step,newTxRxvalue))
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+            else:
+                tdkTestObj.setResultStatus("FAILURE")
+                print("ACTUAL RESULT %d: Expected %s, but retrieved %s" %(step,newTxRxRateListTobeset,newTxRxvalue))
+                print("[TEST EXECUTION RESULT] : FAILURE")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to get TxRxRateList after SET. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
+
+    # Restore the initial TxRxRateList
+    if revert_flag == 1:
+        step += 1
+        tdkTestObj = obj.createTestStep('WIFIAgent_Set')
+        tdkTestObj.addParameter("paramName",paramName)
+        tdkTestObj.addParameter("paramValue",orgTxRxvalue)
+        tdkTestObj.addParameter("paramType","string")
+        tdkTestObj.executeTestCase(expectedresult)
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails()
+
+        print("TEST STEP %d: Restore the initial TxRxRateList value" %step)
+        print("EXPECTED RESULT %d: Should restore TxRxRateList to %s" %(step,orgTxRxvalue))
+
+        if expectedresult in actualresult:
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("ACTUAL RESULT %d: TxRxRateList was restored successfully. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+        else:
+            tdkTestObj.setResultStatus("FAILURE")
+            print("ACTUAL RESULT %d: Failed to restore TxRxRateList. Details: %s" %(step,details))
+            print("[TEST EXECUTION RESULT] : FAILURE")
     else:
-        tdkTestObj.setResultStatus("FAILURE");
-        print("TEST STEP 1: Get the current TxRxRateList Value")
-        print("EXPECTED RESULT 1: Failure in getting the current TxRxRateList value")
-        print("ACTUAL RESULT 1: Details is %s" %details);
-        print("[TEST EXECUTION RESULT] : FAILURE");
-    obj.unloadModule("wifiagent");
+        print("TxRxRateList revert operation is not required")
+
+    obj.unloadModule("wifiagent")
 else:
-    print("Failed to load wifiagent module");
-    obj.setLoadModuleStatus("FAILURE");
-    print("Module loading failed");
+    print("Failed to load wifiagent module")
+    obj.setLoadModuleStatus("FAILURE")
+    print("Module loading failed")
+

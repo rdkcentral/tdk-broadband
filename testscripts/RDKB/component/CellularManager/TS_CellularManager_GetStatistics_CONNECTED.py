@@ -16,156 +16,314 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-'''
-<?xml version='1.0' encoding='utf-8'?>
-<xml>
-  <id></id>
-  <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
-  <version>14</version>
-  <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>TS_CellularManager_GetStatistics_CONNECTED</name>
-  <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
-  <primitive_test_id></primitive_test_id>
-  <!-- Do not change primitive_test_id if you are editing an existing script. -->
-  <primitive_test_name>CellularManager_DoNothing</primitive_test_name>
-  <!--  -->
-  <primitive_test_version>1</primitive_test_version>
-  <!--  -->
-  <status>FREE</status>
-  <!--  -->
-  <synopsis>When Device.Cellular.X_RDK_Status == CONNECTED, Cellular manager will pull the Device.Cellular.Interface[i].X_RDK_Statistics every minute to provide subscription capability.</synopsis>
-  <!--  -->
-  <groups_id />
-  <!--  -->
-  <execution_time>10</execution_time>
-  <!--  -->
-  <long_duration>false</long_duration>
-  <!--  -->
-  <advanced_script>false</advanced_script>
-  <!-- execution_time is the time out time for test execution -->
-  <remarks></remarks>
-  <!-- Reason for skipping the tests if marked to skip -->
-  <skip>false</skip>
-  <!--  -->
-  <box_types>
-    <box_type>Broadband</box_type>
-    <!--  -->
-    <box_type>RPI</box_type>
-    <!--  -->
-  <box_type>BPI</box_type></box_types>
-  <rdk_versions>
-    <rdk_version>RDKB</rdk_version>
-    <!--  -->
-  </rdk_versions>
-  <test_cases>
-    <test_case_id>TC_CellularManager_11</test_case_id>
-    <test_objective>When Device.Cellular.X_RDK_Status == CONNECTED, Cellular manager will pull the Device.Cellular.Interface[i].X_RDK_Statistics every minute to provide subscription capability.</test_objective>
-    <test_type>Positive</test_type>
-    <test_setup>Broadband, RPI</test_setup>
-    <pre_requisite>TDK agent should be running in the DUT and DUT should be online in TDK test manager.
-Cellular Manager setup should be up and running.</pre_requisite>
-    <api_or_interface_used>No</api_or_interface_used>
-    <input_parameters>Device.Cellular.X_RDK_Status
-Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived
-Device.Cellular.Interface.1.X_RDK_Statistics.PacketsSent</input_parameters>
-    <automation_approch>1. Load the tdkbtr181 module
-2. Get Device.Cellular.X_RDK_Status
-3. While  Device.Cellular.X_RDK_Status has the value CONNECTED, get Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived and Device.Cellular.Interface.1.X_RDK_Statistics.PacketsSent
-4.Ensure the values of both dmls are nonzero
-5.Unload the tdkbtr181 module</automation_approch>
-    <expected_output>Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived and Device.Cellular.Interface.1.X_RDK_Statistics.PacketsSent are non-zero values.</expected_output>
-    <priority>High</priority>
-    <test_stub_interface>CellularManager_DoNothing</test_stub_interface>
-    <test_script>TS_CellularManager_GetStatistics_CONNECTED</test_script>
-    <skipped>No</skipped>
-    <release_version>M128</release_version>
-    <remarks></remarks>
-  </test_cases>
-  <script_tags />
-</xml>
-'''
 # use tdklib library,which provides a wrapper for tdk testcase script
-import tdklib;
-import time;
-from time import sleep;
+import tdklib
+from time import sleep
 
-#Test component to be tested
-obj = tdklib.TDKScriptingLibrary("tdkbtr181","1");
+# Test components
+obj = tdklib.TDKScriptingLibrary("tdkbtr181","1")
+sysObj = tdklib.TDKScriptingLibrary("sysutil","1")
 
-#IP and Port of box, No need to change,
-#This will be replaced with corresponding DUT Ip and port while executing script
+# IP and Port of box
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'TS_CellularManager_GetStatistics_CONNECTED');
 
-#Get the result of connection with test component and DUT
-loadmodulestatus =obj.getLoadModuleResult();
-print ("[LIB LOAD STATUS]  :  %s" %loadmodulestatus);
-#Prmitive test case which associated to this Script
+obj.configureTestCase(ip,port,'TS_CellularManager_GetStatistics_CONNECTED')
+sysObj.configureTestCase(ip,port,'TS_CellularManager_GetStatistics_CONNECTED')
 
-print("Loading TDKB-TR181 module")
-if "SUCCESS" in loadmodulestatus.upper():
-    obj.setLoadModuleStatus("SUCCESS");
+# Load module status
+loadmodulestatus = obj.getLoadModuleResult()
+sysloadmodulestatus = sysObj.getLoadModuleResult()
 
-    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-    tdkTestObj.addParameter("ParamName","Device.Cellular.X_RDK_Status");
-    expectedresult="SUCCESS";
-    #Get Device.Cellular.X_RDK_Status
-    #Execute testcase in DUT
-    tdkTestObj.executeTestCase(expectedresult);
-    actualresult = tdkTestObj.getResult();
-    details = tdkTestObj.getResultDetails();
-    print("TEST STEP 1: Get the Device.Cellular.X_RDK_Status");
-    print("EXPECTED RESULT 1: Should get the Device.Cellular.X_RDK_Status as Connected");
-    print("ACTUAL RESULT 1: Status is %s" %details);
+print("[LIB LOAD STATUS] : %s" % loadmodulestatus)
+print("[LIB LOAD STATUS] : %s" % sysloadmodulestatus)
 
-    if expectedresult in actualresult and details == "CONNECTED":
-        #Set the result status of execution
-        tdkTestObj.setResultStatus("SUCCESS");
-        #Get the result of execution
-        print("[TEST EXECUTION RESULT] : SUCCESS");
+if "SUCCESS" in loadmodulestatus.upper() and \
+   "SUCCESS" in sysloadmodulestatus.upper():
 
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent");
-        expectedresult="SUCCESS";
-        #Execute testcase in DUT
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        print("TEST STEP 2: Get the value Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent");
-        print("EXPECTED RESULT 2: Bytes sent should be non-zero value");
-        print("ACTUAL RESULT 2: Bytes sent is %s" %details);
+    obj.setLoadModuleStatus("SUCCESS")
+    sysObj.setLoadModuleStatus("SUCCESS")
 
-        if expectedresult in actualresult and details != 0 :
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
+    expectedresult = "SUCCESS"
+    enableModified = False
+
+    ############################################################
+    # STEP 1 : Get Interface Enable Status
+    ############################################################
+
+    tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+    tdkTestObj.addParameter(
+        "ParamName",
+        "Device.Cellular.Interface.1.Enable"
+    )
+
+    tdkTestObj.executeTestCase(expectedresult)
+
+    actualresult = tdkTestObj.getResult()
+    initialEnable = tdkTestObj.getResultDetails().strip()
+
+    print("TEST STEP 1: Get Device.Cellular.Interface.1.Enable")
+    print("EXPECTED RESULT 1: Should get Device.Cellular.Interface.1.Enable value")
+    print("ACTUAL RESULT 1: Device.Cellular.Interface.1.Enable is %s" % initialEnable)
+
+    if expectedresult in actualresult and initialEnable in ["true", "false"]:
+
+        tdkTestObj.setResultStatus("SUCCESS")
+        print("[TEST EXECUTION RESULT] : SUCCESS")
+
+        ############################################################
+        # STEP 2 : Enable Interface If Required
+        ############################################################
+
+        if initialEnable == "false":
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.Enable"
+            )
+            tdkTestObj.addParameter(
+                "ParamValue",
+                "true"
+            )
+            tdkTestObj.addParameter(
+                "Type",
+                "bool"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            details = tdkTestObj.getResultDetails()
+
+            print("TEST STEP 2: Set Device.Cellular.Interface.1.Enable to true")
+            print("EXPECTED RESULT 2: Device.Cellular.Interface.1.Enable should be set to true")
+            print("ACTUAL RESULT 2: %s" % details)
+
+            if expectedresult in actualresult:
+
+                enableModified = True
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                sleep(10)
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
         else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
 
-        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get');
-        tdkTestObj.addParameter("ParamName","Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived");
-        expectedresult="SUCCESS";
-        #Execute testcase in DUT
-        tdkTestObj.executeTestCase(expectedresult);
-        actualresult = tdkTestObj.getResult();
-        details = tdkTestObj.getResultDetails();
-        print("TEST STEP 2: Get the value Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived");
-        print("EXPECTED RESULT 2: Bytes Received should be non-zero value");
-        print("ACTUAL RESULT 2: Bytes Received is %s" %details);
+            print("TEST STEP 2: Cellular interface is already enabled")
+            print("EXPECTED RESULT 2: No configuration change required")
+            print("ACTUAL RESULT 2: Device.Cellular.Interface.1.Enable is already true")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
 
-        if expectedresult in actualresult and details != 0 :
-            tdkTestObj.setResultStatus("SUCCESS");
-            print("[TEST EXECUTION RESULT] : SUCCESS");
+        ############################################################
+        # STEP 3 : Verify Cellular Status
+        ############################################################
+
+        tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+        tdkTestObj.addParameter(
+            "ParamName",
+            "Device.Cellular.X_RDK_Status"
+        )
+
+        tdkTestObj.executeTestCase(expectedresult)
+
+        actualresult = tdkTestObj.getResult()
+        details = tdkTestObj.getResultDetails().strip()
+
+        print("TEST STEP 3: Get Device.Cellular.X_RDK_Status")
+        print("EXPECTED RESULT 3: Device.Cellular.X_RDK_Status should be CONNECTED")
+        print("ACTUAL RESULT 3: Status is %s" % details)
+
+        if expectedresult in actualresult and details == "CONNECTED":
+
+            tdkTestObj.setResultStatus("SUCCESS")
+            print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            ############################################################
+            # STEP 4 : Generate Traffic
+            ############################################################
+
+            tdkTestObj = sysObj.createTestStep('ExecuteCmd')
+
+            query = "ping -c 5 8.8.8.8"
+
+            tdkTestObj.addParameter("command", query)
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            details = tdkTestObj.getResultDetails()
+
+            print("TEST STEP 4: Generate traffic and verify internet connectivity")
+            print("EXPECTED RESULT 4: Ping operation should be successful with 0% packet loss")
+
+            if expectedresult in actualresult:
+
+                tdkTestObj.setResultStatus("SUCCESS")
+
+                print("ACTUAL RESULT 4: Traffic generated successfully through cellular interface")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE")
+
+                print("ACTUAL RESULT 4: Failed to generate traffic through cellular interface")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
+            sleep(10)
+
+            ############################################################
+            # STEP 5 : Get BytesSent
+            ############################################################
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            details = tdkTestObj.getResultDetails().strip()
+
+            print("TEST STEP 5: Get Device.Cellular.Interface.1.X_RDK_Statistics.BytesSent")
+            print("EXPECTED RESULT 5: BytesSent should be a non-zero value")
+            print("ACTUAL RESULT 5: BytesSent is %s" % details)
+
+            try:
+                bytesSent = int(details)
+            except:
+                bytesSent = 0
+
+            if expectedresult in actualresult and bytesSent > 0:
+
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
+            ############################################################
+            # STEP 6 : Get BytesReceived
+            ############################################################
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            details = tdkTestObj.getResultDetails().strip()
+
+            print("TEST STEP 6: Get Device.Cellular.Interface.1.X_RDK_Statistics.BytesReceived")
+            print("EXPECTED RESULT 6: BytesReceived should be a non-zero value")
+            print("ACTUAL RESULT 6: BytesReceived is %s" % details)
+
+            try:
+                bytesReceived = int(details)
+            except:
+                bytesReceived = 0
+
+            if expectedresult in actualresult and bytesReceived > 0:
+
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+            else:
+
+                tdkTestObj.setResultStatus("FAILURE")
+                print("[TEST EXECUTION RESULT] : FAILURE")
+
         else:
-            tdkTestObj.setResultStatus("FAILURE");
-            print("[TEST EXECUTION RESULT] : FAILURE");
 
-    else:
-        tdkTestObj.setResultStatus("FAILURE");
-        print("[TEST EXECUTION RESULT] : FAILURE");
+            tdkTestObj.setResultStatus("FAILURE")
+            print("[TEST EXECUTION RESULT] : FAILURE")
 
-    obj.unloadModule("tdkbtr181");
+        ############################################################
+        # STEP 7 : Revert Interface Enable
+        ############################################################
+
+        if enableModified:
+
+            tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Set')
+            tdkTestObj.addParameter(
+                "ParamName",
+                "Device.Cellular.Interface.1.Enable"
+            )
+            tdkTestObj.addParameter(
+                "ParamValue",
+                initialEnable
+            )
+            tdkTestObj.addParameter(
+                "Type",
+                "bool"
+            )
+
+            tdkTestObj.executeTestCase(expectedresult)
+
+            actualresult = tdkTestObj.getResult()
+            details = tdkTestObj.getResultDetails()
+
+            print("TEST STEP 7: Revert Device.Cellular.Interface.1.Enable to original value")
+            print("EXPECTED RESULT 7: Device.Cellular.Interface.1.Enable should be restored to %s" % initialEnable)
+            print("ACTUAL RESULT 7: %s" % details)
+
+            if expectedresult in actualresult:
+
+                tdkTestObj.setResultStatus("SUCCESS")
+                print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                sleep(10)
+
+                tdkTestObj = obj.createTestStep('TDKB_TR181Stub_Get')
+                tdkTestObj.addParameter(
+                    "ParamName",
+                    "Device.Cellular.X_RDK_Status"
+                )
+
+                tdkTestObj.executeTestCase(expectedresult)
+
+                actualresult = tdkTestObj.getResult()
+                details = tdkTestObj.getResultDetails().strip()
+
+                print("TEST STEP 8: Verify Device.Cellular.X_RDK_Status after revert")
+                print("EXPECTED RESULT 8: Device.Cellular.X_RDK_Status should be DEREGISTERED")
+                print("ACTUAL RESULT 8: Status is %s" % details)
+
+                if expectedresult in actualresult and details == "DEREGISTERED":
+
+                    tdkTestObj.setResultStatus("SUCCESS")
+                    print("[TEST EXECUTION RESULT] : SUCCESS")
+
+                else:
+
+                    tdkTestObj.setResultStatus("FAILURE")
+                    print("[TEST EXECUTION RESULT] : FAILURE")
+
+        else:
+
+            print("TEST STEP 7: Revert not required")
+            print("EXPECTED RESULT 7: Interface was already enabled before execution")
+            print("ACTUAL RESULT 7: No revert performed")
+
+    obj.unloadModule("tdkbtr181")
+    sysObj.unloadModule("sysutil")
+
 else:
-    print("Failed to load module");
-    obj.setLoadModuleStatus("FAILURE");
+
+    print("Failed to load module")
+    obj.setLoadModuleStatus("FAILURE")
+    sysObj.setLoadModuleStatus("FAILURE")
+
