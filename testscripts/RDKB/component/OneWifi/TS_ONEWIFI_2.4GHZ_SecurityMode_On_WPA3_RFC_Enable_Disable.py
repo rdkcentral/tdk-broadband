@@ -138,9 +138,9 @@ if "SUCCESS" in loadmodulestatus.upper():
         securityMode = paramResults["Device.WiFi.AccessPoint.1.Security.ModeEnabled"]
 
         print(f"TEST STEP {step}: Get the value of WPA3_Personal_Transition.Enable and security mode")
-        print(f"EXPECTED RESULT {step}: Value of WPA3_Personal_Transition.Enable should be false and security mode should be WPA2-Personal")
+        print(f"EXPECTED RESULT {step}: Value of WPA3_Personal_Transition.Enable should be true and security mode should be WPA3-Personal-Transition")
 
-        if "FAILURE" not in actualresult_all and rfc_wpa3 == "false" and securityMode == "WPA2-Personal":
+        if "FAILURE" not in actualresult_all and rfc_wpa3 == "true" and securityMode == "WPA3-Personal-Transition":
             tdkTestObj.setResultStatus("SUCCESS")
             print(f"ACTUAL RESULT {step}: WPA3_Personal_Transition.Enable is {rfc_wpa3} and security mode is {securityMode}")
             print("TEST EXECUTION RESULT : SUCCESS")
