@@ -25,7 +25,7 @@
   <primitive_test_name>onewifi_DoNothing</primitive_test_name>
   <primitive_test_version>1</primitive_test_version>
   <status>FREE</status>
-  <synopsis>Set different KeyPassphrase to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and check if the log "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios" is found in /rdklogs/logs/WiFilog.txt.0.</synopsis>
+  <synopsis>Set different KeyPassphrase to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and check if the log "Different passwords were configured on User Private SSID for 2g and 5g GHz radios" is found in /tmp/wifiDb.</synopsis>
   <groups_id/>
   <execution_time>2</execution_time>
   <long_duration>false</long_duration>
@@ -41,7 +41,7 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_ONEWIFI_169</test_case_id>
-    <test_objective>Set different KeyPassphrase to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and check if the log "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios" is found in /rdklogs/logs/WiFilog.txt.0.</test_objective>
+    <test_objective>Set different KeyPassphrase to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and check if the log "Different passwords were configured on User Private SSID for 2g and 5g GHz radios" is found in /tmp/wifiDb.</test_objective>
     <test_type>Positive</test_type>
     <test_setup>Broadband, RPI</test_setup>
     <pre_requisite>1.Ccsp Components in DUT should be in a running state that includes component under test Cable Modem
@@ -53,15 +53,15 @@ PASSWORD_2G : "test_password_2G"
 PASSWORD_5G : "test_password_5G"</input_parameters>
     <automation_approch>1. Load the modules
 2. Get the initial values of Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and store them.
-3. Get the initial number of log lines "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios"
- in WiFilog.txt.0 under /rdklogs/logs
+3. Get the initial number of log lines "Different passwords were configured on User Private SSID for 2g and 5g GHz radios"
+ in wifiDb under /tmp
 4. Set Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase to different KeyPassphrase values. Check if the SET operation is success.
 5. Validate the SET with GET
 6. Get the final count of log lines. It should be incremented by 2 from the initial value as different KeyPassphrase is set to both radios.
 7. Revert to initial values
 8. Unload the modules
 </automation_approch>
-    <expected_output>Different KeyPassphrase should be set successfully to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and the required log lines should be present under /rdklogs/logs/WiFilog.txt.0 after the SET operation.</expected_output>
+    <expected_output>Different KeyPassphrase should be set successfully to Device.WiFi.AccessPoint.1.Security.KeyPassphrase and Device.WiFi.AccessPoint.2.Security.KeyPassphrase and the required log lines should be present under /tmp/wifiDb after the SET operation.</expected_output>
     <priority>High</priority>
     <test_stub_interface>wifiagent</test_stub_interface>
     <test_script>TS_ONEWIFI_CheckPasswordConfigurationLog_WithDifferentKeyPassPhrase</test_script>
@@ -117,13 +117,13 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
         print("[TEST EXECUTION RESULT] : SUCCESS");
 
         #Check the number of log lines "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios" in WiFilog.txt.0
-        print("\nGet the number of log lines \"Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios\" in /rdklogs/logs/WiFilog.txt.0");
+        print("\nGet the number of log lines \"Different passwords were configured on User Private SSID for 2g and 5g GHz radios\" in /tmp/wifiDb");
         tdkTestObj1 = sysobj.createTestStep('ExecuteCmd');
-        file = "/rdklogs/logs/WiFilog.txt.0";
+        file = "/tmp/wifiDb";
         step = 2;
-        log = "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios";
+        log = "Different passwords were configured on User Private SSID for 2g and 5g GHz radios";
         count_initial = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-        print("The initial number of required log lines in WiFilog.txt.0 is : %d" %count_initial);
+        print("The initial number of required log lines in wifiDb is : %d" %count_initial);
 
         #Set the KeyPassphrase of 2.4G and 5G to the same values
         tdkTestObj = obj1.createTestStep("WIFIAgent_SetMultiple");
@@ -153,11 +153,11 @@ if "SUCCESS" in loadmodulestatus1.upper() and "SUCCESS" in loadmodulestatus2.upp
                 print("[TEST EXECUTION RESULT] : SUCCESS");
 
                 #Check the number of log lines "Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios" in WiFilog.txt.0
-                print("\nGet the number of log lines \"Different passwords were configured on User Private SSID for 2.4 and 5 GHz radios\" in /rdklogs/logs/WiFilog.txt.0");
+                print("\nGet the number of log lines \"Different passwords were configured on User Private SSID for 2g and 5g GHz radios\" in /tmp/wifiDb");
                 tdkTestObj1 = sysobj.createTestStep('ExecuteCmd');
                 step = 5;
                 count_final = getLogFileTotalLinesCount(tdkTestObj1, file, log, step);
-                print("The final number of required log lines in WiFilog.txt.0 is : %d" %count_final);
+                print("The final number of required log lines in wifiDb is : %d" %count_final);
 
                 #Check if the final log line number is incremented by 2 as the new KeyPassphrase set is done for both radios
                 print("\nTEST STEP 6 : Check if the final number of log lines is incremented by 2");
