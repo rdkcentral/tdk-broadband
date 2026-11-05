@@ -113,7 +113,7 @@ if "SUCCESS" in loadmodulestatus.upper():
             #Get the result of execution
             print("[TEST EXECUTION RESULT] : SUCCESS");
 
-            ExpectedStdList = ['b','g','n','ax'];
+            ExpectedStdList = ['b','g','n','ax','be'];
             for item in ActualList:
                 if item in ExpectedStdList:
                     returnStatus = "0";
@@ -124,7 +124,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("SUCCESS");
                 print("TEST STEP 2: Validate the Supported standards with operating Freq");
-                print("EXPECTED RESULT 2: Supported standards should be in ['b','g','n','ax'] when radio is 2.4G");
+                print("EXPECTED RESULT 2: Supported standards should be in ['b','g','n','ax','be'] when radio is 2.4G");
                 print("ACTUAL RESULT 2: Supported standards : ", ActualList);
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : SUCCESS");
@@ -132,7 +132,7 @@ if "SUCCESS" in loadmodulestatus.upper():
                 #Set the result status of execution
                 tdkTestObj.setResultStatus("FAILURE");
                 print("TEST STEP 2: Validate the Supported standards with operating Freq");
-                print("EXPECTED RESULT 2: Supported standards should be in ['b','g','n','ax'] when radio is 2.4G");
+                print("EXPECTED RESULT 2: Supported standards should be in ['b','g','n','ax','be'] when radio is 2.4G");
                 print("ACTUAL RESULT 2: Supported standards : ", ActualList);
                 #Get the result of execution
                 print("[TEST EXECUTION RESULT] : FAILURE");
