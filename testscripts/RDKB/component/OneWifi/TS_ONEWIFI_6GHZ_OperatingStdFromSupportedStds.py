@@ -70,12 +70,12 @@
     Device.WiFi.Radio.3.OperatingStandards</input_parameters>
     <automation_approch>1. Load the module
 2. Get and save Device.WiFi.Radio.3.SupportedStandards.
-3. Check if supported standard value has value of ax.
+3. Check if supported standard value has value of ax,be.
 4  Get Device.WiFi.Radio.3.OperatingStandards
 5. Check if operating standards are a subset of supported standards
 6. Unload wifiagent module
 </automation_approch>
-    <expected_output>supported standard value for 6ghz should be ax. And Device.WiFi.Radio.3.OperatingStandards is a subset of SupportedStandards list
+    <expected_output>supported standard value for 6ghz should be ax,be. And Device.WiFi.Radio.3.OperatingStandards is a subset of SupportedStandards list
 </expected_output>
     <priority>High</priority>
     <test_stub_interface>wifiAgent</test_stub_interface>
@@ -115,7 +115,7 @@ if "SUCCESS" in loadmodulestatus.upper():
     tdkTestObj.executeTestCase(expectedresult)
     actualresult = tdkTestObj.getResult()
     details = tdkTestObj.getResultDetails()
-    expectedBand = "ax"
+    expectedBand = "ax,be"
 
     print(f"TEST STEP {step}: Get the list of supported standards")
     print(f"EXPECTED RESULT {step}: Should get list of supported standards")
